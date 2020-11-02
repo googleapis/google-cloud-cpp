@@ -90,9 +90,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a12d96bee2f2b1ee53ce480332671be51"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#a12d96bee2f2b1ee53ce480332671be51">nack</a> ()</td></tr>
 <tr class="memdesc:a12d96bee2f2b1ee53ce480332671be51"><td class="mdescLeft">&#160;</td><td class="mdescRight">The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8" title="Rejects the message associated with this handler.">AckHandler::nack()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#a12d96bee2f2b1ee53ce480332671be51">More...</a><br /></td></tr>
 <tr class="separator:a12d96bee2f2b1ee53ce480332671be51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf542e31c55642ae1523ff45d1e814d6"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#abf542e31c55642ae1523ff45d1e814d6">ack_id</a> () const</td></tr>
-<tr class="memdesc:abf542e31c55642ae1523ff45d1e814d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a3881d0675fc9b50d8c6c5de828480d03" title="Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and logging.">AckHandler::ack_id()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#abf542e31c55642ae1523ff45d1e814d6">More...</a><br /></td></tr>
-<tr class="separator:abf542e31c55642ae1523ff45d1e814d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98a82990ccb9d760743709144dcbd67f"><td class="memItemLeft" align="right" valign="top">virtual std::int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#a98a82990ccb9d760743709144dcbd67f">delivery_attempt</a> () const</td></tr>
 <tr class="memdesc:a98a82990ccb9d760743709144dcbd67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#aa5673d48155edb9b0855f0c58b92d3e9" title="Returns the approximate number of times that Cloud Pub/Sub has attempted to deliver the associated me...">AckHandler::delivery_attempt()</a></code>  <a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html#a98a82990ccb9d760743709144dcbd67f">More...</a><br /></td></tr>
 <tr class="separator:a98a82990ccb9d760743709144dcbd67f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,7 +97,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Allow applications to mock an <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html" title="Defines the interface to acknowledge and reject messages.">AckHandler</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00094">94</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00090">90</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae9a49362ba8642756042171a8ed9eba9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae9a49362ba8642756042171a8ed9eba9">&#9670;&nbsp;</a></span>~Impl()</h2>
@@ -153,36 +150,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#ae0cba314ccf75c7e6f048d3dfaec995b" title="Acknowledges the message associated with this handler.">AckHandler::ack()</a></code> </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00098">98</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
-
-</div>
-</div>
-<a id="abf542e31c55642ae1523ff45d1e814d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf542e31c55642ae1523ff45d1e814d6">&#9670;&nbsp;</a></span>ack_id()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::string google::cloud::pubsub::v1::AckHandler::Impl::ack_id </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#a3881d0675fc9b50d8c6c5de828480d03" title="Returns the Cloud Pub/Sub acknowledgement ID, useful for debugging and logging.">AckHandler::ack_id()</a></code> </p>
-
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00102">102</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00094">94</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -211,7 +179,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#aa5673d48155edb9b0855f0c58b92d3e9" title="Returns the approximate number of times that Cloud Pub/Sub has attempted to deliver the associated me...">AckHandler::delivery_attempt()</a></code> </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00104">104</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00098">98</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +208,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The implementation for <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html#af59d345070792526791429611e5a25c8" title="Rejects the message associated with this handler.">AckHandler::nack()</a></code> </p>
 
-<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00100">100</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ack__handler_8h_source.html#l00096">96</a> of file <a class="el" href="ack__handler_8h_source.html">ack_handler.h</a>.</p>
 
 </div>
 </div>
