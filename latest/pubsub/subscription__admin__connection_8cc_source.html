@@ -325,102 +325,103 @@ $(function() {
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keywordflow">if</span> (options.tracing_enabled(<span class="stringliteral">&quot;rpc&quot;</span>)) {</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a>(INFO) &lt;&lt; <span class="stringliteral">&quot;Enabled logging for gRPC calls&quot;</span>;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    stub = std::make_shared&lt;pubsub_internal::SubscriberLogging&gt;(</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        std::move(stub), options.tracing_options());</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;SubscriptionAdminConnectionImpl&gt;(</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      std::move(stub), std::move(retry_policy), std::move(backoff_policy));</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;}</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> {</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a> {</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
-<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">  271</a></span>&#160;std::shared_ptr&lt;SubscriptionAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">MakeSubscriptionAdminConnection</a>(</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    std::unique_ptr&lt;pubsub::RetryPolicy const&gt; retry_policy,</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    std::unique_ptr&lt;pubsub::BackoffPolicy const&gt; backoff_policy) {</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keywordflow">if</span> (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <span class="keywordflow">if</span> (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">pubsub_internal::MakeSubscriptionAdminConnection</a>(</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      options,</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      pubsub_internal::CreateDefaultSubscriberStub(options, <span class="comment">/*channel_id=*/</span>0),</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      std::move(retry_policy), std::move(backoff_policy));</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;SubscriptionAdminConnection::~SubscriptionAdminConnection() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512">  287</a></span>&#160;SubscriptionAdminConnection::CreateSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSubscriptionParams.html">CreateSubscriptionParams</a>) {</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;}</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a30c496a3fbecaf59ffe296ea2e511f35">  293</a></span>&#160;SubscriptionAdminConnection::GetSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html">GetSubscriptionParams</a>) {</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;}</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a71ba53201845e0c5f3c015f6c25818c8">  299</a></span>&#160;SubscriptionAdminConnection::UpdateSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1UpdateSubscriptionParams.html">UpdateSubscriptionParams</a>) {</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;}</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a705529746304a0dfcba305abb27cc6d4">  303</a></span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a70fdf25c34703a1e0bb55d6fb44deeba">ListSubscriptionsRange</a> SubscriptionAdminConnection::ListSubscriptions(</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSubscriptionsParams.html">ListSubscriptionsParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">return</span> internal::UnimplementedPaginationRange&lt;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a70fdf25c34703a1e0bb55d6fb44deeba">ListSubscriptionsRange</a>&gt;::Create();</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;}</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
-<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a3773345bb04642af8add83741efdd43b">  309</a></span>&#160;Status SubscriptionAdminConnection::DeleteSubscription(</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSubscriptionParams.html">DeleteSubscriptionParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af3db0b218a96c4b65ea8f52bb4f75449">  315</a></span>&#160;Status SubscriptionAdminConnection::ModifyPushConfig(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ModifyPushConfigParams.html">ModifyPushConfigParams</a>) {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;}</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a72f544aac2fc81d2d48d55307343c44f">  321</a></span>&#160;SubscriptionAdminConnection::CreateSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams.html">CreateSnapshotParams</a>) {</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;}</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a59bdfc65e3c2cdf941911449f6f2fb6a">  325</a></span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt; SubscriptionAdminConnection::GetSnapshot(</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSnapshotParams.html">GetSnapshotParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;}</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ad19343ada262328b002119f2adc397c3">  332</a></span>&#160;SubscriptionAdminConnection::UpdateSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1UpdateSnapshotParams.html">UpdateSnapshotParams</a>) {</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;}</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
-<div class="line"><a name="l00336"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a4b37655d42deabd18f222249444c3358">  336</a></span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa5ae2eeb441e846d6396b6fd8be691ca">ListSnapshotsRange</a> SubscriptionAdminConnection::ListSnapshots(</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams.html">ListSnapshotsParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">return</span> internal::UnimplementedPaginationRange&lt;ListSnapshotsRange&gt;::Create();</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;}</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af2f12eef9008c1ab6f40fb4173f64085">  342</a></span>&#160;Status SubscriptionAdminConnection::DeleteSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSnapshotParams.html">DeleteSnapshotParams</a>) {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;}</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ace6b9f94a1b2debda92043e090212283">  346</a></span>&#160;StatusOr&lt;google::pubsub::v1::SeekResponse&gt; SubscriptionAdminConnection::Seek(</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1SeekParams.html">SeekParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;}</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}  <span class="comment">// namespace pubsub</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        std::move(stub), options.tracing_options(),</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        options.tracing_enabled(<span class="stringliteral">&quot;rpc-streams&quot;</span>));</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;SubscriptionAdminConnectionImpl&gt;(</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      std::move(stub), std::move(retry_policy), std::move(backoff_policy));</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a> {</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
+<div class="line"><a name="l00272"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">  272</a></span>&#160;std::shared_ptr&lt;SubscriptionAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">MakeSubscriptionAdminConnection</a>(</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">ConnectionOptions</a> <span class="keyword">const</span>&amp; options,</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    std::unique_ptr&lt;pubsub::RetryPolicy const&gt; retry_policy,</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    std::unique_ptr&lt;pubsub::BackoffPolicy const&gt; backoff_policy) {</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  <span class="keywordflow">if</span> (!retry_policy) retry_policy = pubsub_internal::DefaultRetryPolicy();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordflow">if</span> (!backoff_policy) backoff_policy = pubsub_internal::DefaultBackoffPolicy();</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">pubsub_internal::MakeSubscriptionAdminConnection</a>(</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      options,</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      pubsub_internal::CreateDefaultSubscriberStub(options, <span class="comment">/*channel_id=*/</span>0),</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      std::move(retry_policy), std::move(backoff_policy));</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;SubscriptionAdminConnection::~SubscriptionAdminConnection() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00288"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ab0b3150d22ebead9f4e432a750d92512">  288</a></span>&#160;SubscriptionAdminConnection::CreateSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSubscriptionParams.html">CreateSubscriptionParams</a>) {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;}</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a30c496a3fbecaf59ffe296ea2e511f35">  294</a></span>&#160;SubscriptionAdminConnection::GetSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html">GetSubscriptionParams</a>) {</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;StatusOr&lt;google::pubsub::v1::Subscription&gt;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a71ba53201845e0c5f3c015f6c25818c8">  300</a></span>&#160;SubscriptionAdminConnection::UpdateSubscription(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1UpdateSubscriptionParams.html">UpdateSubscriptionParams</a>) {</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;}</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a705529746304a0dfcba305abb27cc6d4">  304</a></span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a70fdf25c34703a1e0bb55d6fb44deeba">ListSubscriptionsRange</a> SubscriptionAdminConnection::ListSubscriptions(</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSubscriptionsParams.html">ListSubscriptionsParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keywordflow">return</span> internal::UnimplementedPaginationRange&lt;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a70fdf25c34703a1e0bb55d6fb44deeba">ListSubscriptionsRange</a>&gt;::Create();</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;}</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a3773345bb04642af8add83741efdd43b">  310</a></span>&#160;Status SubscriptionAdminConnection::DeleteSubscription(</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSubscriptionParams.html">DeleteSubscriptionParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af3db0b218a96c4b65ea8f52bb4f75449">  316</a></span>&#160;Status SubscriptionAdminConnection::ModifyPushConfig(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ModifyPushConfigParams.html">ModifyPushConfigParams</a>) {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;}</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a72f544aac2fc81d2d48d55307343c44f">  322</a></span>&#160;SubscriptionAdminConnection::CreateSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams.html">CreateSnapshotParams</a>) {</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a59bdfc65e3c2cdf941911449f6f2fb6a">  326</a></span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt; SubscriptionAdminConnection::GetSnapshot(</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSnapshotParams.html">GetSnapshotParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;StatusOr&lt;google::pubsub::v1::Snapshot&gt;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ad19343ada262328b002119f2adc397c3">  333</a></span>&#160;SubscriptionAdminConnection::UpdateSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1UpdateSnapshotParams.html">UpdateSnapshotParams</a>) {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;}</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00337"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#a4b37655d42deabd18f222249444c3358">  337</a></span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#aa5ae2eeb441e846d6396b6fd8be691ca">ListSnapshotsRange</a> SubscriptionAdminConnection::ListSnapshots(</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams.html">ListSnapshotsParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordflow">return</span> internal::UnimplementedPaginationRange&lt;ListSnapshotsRange&gt;::Create();</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00343"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#af2f12eef9008c1ab6f40fb4173f64085">  343</a></span>&#160;Status SubscriptionAdminConnection::DeleteSnapshot(<a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSnapshotParams.html">DeleteSnapshotParams</a>) {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;}</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html#ace6b9f94a1b2debda92043e090212283">  347</a></span>&#160;StatusOr&lt;google::pubsub::v1::SeekResponse&gt; SubscriptionAdminConnection::Seek(</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <a class="code" href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1SeekParams.html">SeekParams</a>) {  <span class="comment">// NOLINT(performance-unnecessary-value-param)</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="keywordflow">return</span> Status{StatusCode::kUnimplemented, <span class="stringliteral">&quot;needs-override&quot;</span>};</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;}</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;}  <span class="comment">// namespace pubsub</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="asubscription__admin__connection_8h_html"><div class="ttname"><a href="subscription__admin__connection_8h.html">subscription_admin_connection.h</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html">google::cloud::pubsub::v1::SubscriptionAdminConnection::GetSubscriptionParams</a></div><div class="ttdoc">Wrap the arguments for GetSubscription()</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__connection_8h_source.html#l00093">subscription_admin_connection.h:93</a></div></div>
@@ -429,7 +430,7 @@ $(function() {
 <div class="ttc" id="astructgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1ListSnapshotsParams.html">google::cloud::pubsub::v1::SubscriptionAdminConnection::ListSnapshotsParams</a></div><div class="ttdoc">Wrap the arguments for ListSnapshots()</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__connection_8h_source.html#l00128">subscription_admin_connection.h:128</a></div></div>
 <div class="ttc" id="asubscriber__metadata_8h_html"><div class="ttname"><a href="subscriber__metadata_8h.html">subscriber_metadata.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a06670f1b941887915dbe0671c4fe8f3d"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">google::cloud::pubsub::v1::MakeSubscriptionAdminConnection</a></div><div class="ttdeci">std::shared_ptr&lt; SubscriptionAdminConnection &gt; MakeSubscriptionAdminConnection(ConnectionOptions const &amp;options, std::unique_ptr&lt; pubsub::RetryPolicy const &gt; retry_policy, std::unique_ptr&lt; pubsub::BackoffPolicy const &gt; backoff_policy)</div><div class="ttdoc">Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__connection_8cc_source.html#l00271">subscription_admin_connection.cc:271</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a06670f1b941887915dbe0671c4fe8f3d"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a06670f1b941887915dbe0671c4fe8f3d">google::cloud::pubsub::v1::MakeSubscriptionAdminConnection</a></div><div class="ttdeci">std::shared_ptr&lt; SubscriptionAdminConnection &gt; MakeSubscriptionAdminConnection(ConnectionOptions const &amp;options, std::unique_ptr&lt; pubsub::RetryPolicy const &gt; retry_policy, std::unique_ptr&lt; pubsub::BackoffPolicy const &gt; backoff_policy)</div><div class="ttdoc">Returns an SubscriberConnection object to work with Cloud Pub/Sub subscriber APIs.</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__connection_8cc_source.html#l00272">subscription_admin_connection.cc:272</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams.html">google::cloud::pubsub::v1::SubscriptionAdminConnection::CreateSnapshotParams</a></div><div class="ttdoc">Wrap the arguments for CreateSnapshot()</div><div class="ttdef"><b>Definition:</b> <a href="subscription__admin__connection_8h_source.html#l00118">subscription_admin_connection.h:118</a></div></div>
 <div class="ttc" id="adefault__retry__policies_8h_html"><div class="ttname"><a href="default__retry__policies_8h.html">default_retry_policies.h</a></div></div>
 <div class="ttc" id="alog_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html">log.h</a></div></div>

@@ -177,27 +177,28 @@ $(function() {
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keywordflow">if</span> (connection_options.tracing_enabled(<span class="stringliteral">&quot;rpc&quot;</span>)) {</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a>(INFO) &lt;&lt; <span class="stringliteral">&quot;Enabled logging for gRPC calls&quot;</span>;</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    stub = std::make_shared&lt;pubsub_internal::SubscriberLogging&gt;(</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        std::move(stub), connection_options.tracing_options());</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keyword">auto</span> default_thread_pool_size = []() -&gt; std::size_t {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keyword">auto</span> constexpr kDefaultThreadPoolSize = 4;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> n = std::thread::hardware_concurrency();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">return</span> n == 0 ? kDefaultThreadPoolSize : n;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  };</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordflow">if</span> (connection_options.background_thread_pool_size() == 0) {</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    connection_options.set_background_thread_pool_size(</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        default_thread_pool_size());</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;SubscriberConnectionImpl&gt;(</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      std::move(subscription), std::move(options),</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      std::move(connection_options), std::move(stub), std::move(retry_policy),</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      std::move(backoff_policy));</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        std::move(stub), connection_options.tracing_options(),</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        connection_options.tracing_enabled(<span class="stringliteral">&quot;rpc-streams&quot;</span>));</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keyword">auto</span> default_thread_pool_size = []() -&gt; std::size_t {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">auto</span> constexpr kDefaultThreadPoolSize = 4;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> n = std::thread::hardware_concurrency();</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> n == 0 ? kDefaultThreadPoolSize : n;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  };</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="keywordflow">if</span> (connection_options.background_thread_pool_size() == 0) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    connection_options.set_background_thread_pool_size(</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        default_thread_pool_size());</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;SubscriberConnectionImpl&gt;(</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      std::move(subscription), std::move(options),</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      std::move(connection_options), std::move(stub), std::move(retry_policy),</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      std::move(backoff_policy));</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html">google::cloud::pubsub::v1::SubscriberConnection</a></div><div class="ttdoc">A connection to the Cloud Pub/Sub service to receive events.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__connection_8h_source.html#l00054">subscriber_connection.h:54</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1v1_html_a2421390acdf2c6b05f2f4bb0c3b9549e"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a2421390acdf2c6b05f2f4bb0c3b9549e">make_ready_future</a></div><div class="ttdeci">future&lt; typename internal::make_ready_return&lt; T &gt;::type &gt; make_ready_future(T &amp;&amp;t)</div></div>
