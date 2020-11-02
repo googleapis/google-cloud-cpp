@@ -7,16 +7,13 @@
   This attribute represents the pre-GA name for "Uniform Bucket Level Access"
   becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-## v1.20.0 - TBD
+## v1.21.0 - TBD
 
-### Storage
+## v1.20.0 - 2020-11
 
-**BREAKING CHANGES:**
+### Bigtable
 
-* Our public headers no longer include `nlohmann/json.hpp`. Please update your
-  code to directly include this header if you need it. We believe it is not a
-  good practice to depend on indirectly included headers, but do feel we should
-  warn our customers of this change.
+No user-facing changes.
 
 ### Pub/Sub
 
@@ -61,6 +58,31 @@ are close enough to a GA release that we think highlighting them is important.
   simply sets limits for the number of messages (and/or bytes) outstanding.
   These limits are propagated to the service, and the service will stop
   streaming if too many messages (or bytes) are outstanding.
+
+### Spanner
+
+No user-facing changes.
+
+### Storage
+
+**BREAKING CHANGES:**
+
+* Our public headers no longer include `nlohmann/json.hpp`. Please update your
+  code to directly include this header if you need it. We believe it is not a
+  good practice to depend on indirectly included headers, but do feel we should
+  warn our customers of this change.
+
+**OTHER CHANGES:**
+
+* Unexpected curl errors will now be retried (#5312)
+* docs: add error handling example from client->ReadObject() (#5274)
+* feat(storage): Create an example for Client::DeleteResumableUpload()
+* doc: prefer UBLA references over bucket-policy-only
+
+### Common Libraries
+
+* Fixed occasional crash on background thread shutdown (#5324)
+* `GCP_LOG` now serializes its output to `std::clog` (#5179)
 
 ## v1.19.0 - 2020-10
 
