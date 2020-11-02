@@ -39,6 +39,10 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Object returned by Table::ReadRows(), enumerates rows in the response.
  *
+ * @par Thread-safety
+ * Two threads operating concurrently on the same instance of this class or the
+ * iterators obtained from it are **not** guaranteed to work.
+ *
  * Iterate over the results of ReadRows() using the STL idioms.
  */
 class RowReader {

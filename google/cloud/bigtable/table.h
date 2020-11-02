@@ -84,8 +84,8 @@ inline std::string TableName(std::shared_ptr<DataClient> const& client,
  * @par Thread-safety
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
- * threads is guaranteed to work. Two threads operating on the same instance of
- * this class is not guaranteed to work.
+ * threads is guaranteed to work. Two threads operating concurrently on the same
+ * instance of this class is not guaranteed to work.
  *
  * @par Cost
  * Creating a new object of type `Table` is comparable to creating a few objects
@@ -369,6 +369,10 @@ class Table {
    * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
    * **not** an idempotent operation.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work.
+   *
    * @par Example
    * @snippet data_snippets.cc apply
    */
@@ -414,6 +418,11 @@ class Table {
    * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
    * **not** an idempotent operation.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
@@ -440,6 +449,11 @@ class Table {
    * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
    * **not** an idempotent operation.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
@@ -454,6 +468,13 @@ class Table {
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.  The values returned by
+   * different calls are independent with respect to thread-safety, please see
+   * the `RowReader` documentation for more details.
    *
    * @par Example
    * @snippet read_snippets.cc read rows
@@ -471,6 +492,13 @@ class Table {
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.  The values returned by
+   * different calls are independent with respect to thread-safety, please see
+   * the `RowReader` documentation for more details.
    *
    * @par Example
    * @snippet read_snippets.cc read rows with limit
@@ -490,6 +518,11 @@ class Table {
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet read_snippets.cc read row
@@ -512,6 +545,11 @@ class Table {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Check for Value Example
    * @snippet data_snippets.cc check and mutate
@@ -545,6 +583,11 @@ class Table {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet data_async_snippets.cc async check and mutate
    */
@@ -562,6 +605,11 @@ class Table {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Examples
    * @snippet data_snippets.cc sample row keys
@@ -585,6 +633,11 @@ class Table {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet data_snippets.cc read modify write
@@ -636,6 +689,10 @@ class Table {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work.
+   *
    * @par Example
    * @snippet data_async_snippets.cc async read modify write
    */
@@ -675,6 +732,11 @@ class Table {
    *
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet data_async_snippets.cc async read rows
@@ -719,6 +781,13 @@ class Table {
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread. The callbacks passed to this
+   * function may be executed on any thread running the provided completion
+   * queue.
+   *
    * @par Example
    * @snippet data_async_snippets.cc async read rows with limit
    */
@@ -757,6 +826,11 @@ class Table {
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet data_async_snippets.cc async read row

@@ -48,6 +48,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  * Applications must provide a `CompletionQueue` to (asynchronously) execute
  * these operations. The application is responsible of executing the
  * `CompletionQueue` event loop in one or more threads.
+ *
+ * @par Thread-safety
+ * Instances of this class are guaranteed to work when accessed concurrently
+ * from multiple threads.
  */
 class MutationBatcher {
  public:
