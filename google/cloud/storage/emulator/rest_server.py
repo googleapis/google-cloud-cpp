@@ -637,7 +637,8 @@ def resumable_upload_chunk(bucket_name):
         return gcs_type.object.Object.rest(upload.metadata, upload.rest_only)
     upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
     content_length = int(request.headers.get("content-length", 0))
-    if content_length != len(request.data):
+    data = utils.common.extract_media(request)
+    if content_length != len(data):
         utils.error.invalid("content-length header", None)
     content_range = request.headers.get("content-range")
     if content_range is not None:
@@ -688,12 +689,12 @@ def resumable_upload_chunk(bucket_name):
                 None,
                 rest_code=400,
             )
-        upload.media += request.data
+        upload.media += data
         upload.complete = total_object_size == len(upload.media) or (
             chunk_last_byte + 1 == total_object_size
         )
     else:
-        upload.media += request.data
+        upload.media += data
         upload.complete = True
     if upload.complete:
         blob, _ = gcs_type.object.Object.init(

@@ -156,7 +156,7 @@ class Object:
     @classmethod
     def init_media(cls, request, bucket):
         object_name = request.args.get("name", None)
-        media = request.data
+        media = utils.common.extract_media(request)
         if object_name is None:
             utils.error.missing("name", None)
         metadata = {
@@ -201,7 +201,7 @@ class Object:
 
     @classmethod
     def init_xml(cls, request, bucket, name):
-        media = request.data
+        media = utils.common.extract_media(request)
         metadata = {
             "bucket": bucket.name,
             "name": name,

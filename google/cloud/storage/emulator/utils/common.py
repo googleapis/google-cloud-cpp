@@ -198,13 +198,33 @@ def parse_multipart(request):
         return headers, result[-1]
 
     boundary = boundary.encode("utf-8")
-    parts = request.data.split(b"--" + boundary)
+    body = extract_media(request)
+    parts = body.split(b"--" + boundary)
     if parts[-1] != b"--\r\n":
         utils.error.missing("end marker (--%s--) in media body" % boundary, None)
     _, resource = parse_part(parts[1])
     metadata = json.loads(resource)
     media_headers, media = parse_part(parts[2])
     return metadata, media_headers, media
+
+
+def extract_media(request):
+    """Extract the media from a flask Request.
+
+    To avoid race conditions when using greenlets we cannot perform I/O in the
+    constructor of GcsObject, or in any of the operations that modify the state
+    of the service.  Because sometimes the media is uploaded with chunked encoding,
+    we need to do I/O before finishing the GcsObject creation. If we do this I/O
+    after the GcsObject creation started, the the state of the application may change
+    due to other I/O.
+
+    :param request:flask.Request the HTTP request.
+    :return: the full media of the request.
+    :rtype: str
+    """
+    if request.environ.get("HTTP_TRANSFER_ENCODING", "") == "chunked":
+        return request.environ.get("wsgi.input").read()
+    return request.data
 
 
 # === RESPONSE === #
