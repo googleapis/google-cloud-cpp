@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
     db = create_future.get();
     if (db) break;
     if (db.status().code() != google::cloud::StatusCode::kUnavailable) break;
-    std::this_thread::sleep_for(retry * std::chrono::seconds(1));
+    std::this_thread::sleep_for(retry * std::chrono::seconds(3));
   }
   std::cout << " DONE\n";
 
