@@ -62,8 +62,8 @@ start_testbench() {
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class gevent \
     --access-logfile - \
-    --pythonpath "${PROJECT_ROOT}/google/cloud/storage/testbench" \
-    testbench:application \
+    --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
+    "emulator:run()" \
     >testbench.log 2>&1 </dev/null &
   TESTBENCH_PID=$!
 
