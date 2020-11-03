@@ -14,21 +14,27 @@
 
 """Implement a holder for resumable upload's data and rewrite's data"""
 
-import types
-from google.protobuf import json_format
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-import simdjson
-import utils
 import hashlib
+import json
+import types
+
 import flask
+import utils
+
+from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.protobuf import json_format
 
 
 class DataHolder(types.SimpleNamespace):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    # === UPLOAD === #
+
     @classmethod
-    def init_upload(cls, request, metadata, bucket, location, upload_id):
+    def init_upload(
+        cls, request, metadata, bucket, location, upload_id, rest_only=None
+    ):
         return cls(
             request=request,
             metadata=metadata,
@@ -38,15 +44,19 @@ class DataHolder(types.SimpleNamespace):
             media=b"",
             complete=False,
             transfer=set(),
+            rest_only=rest_only,
         )
 
     @classmethod
     def init_resumable_rest(cls, request, bucket):
         name = request.args.get("name", "")
+        rest_only = {}
         if len(request.data) > 0:
             if name != "":
                 utils.error.invalid("name argument in non-empty payload", None)
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
+            if "customTime" in data:
+                rest_only["customTime"] = data.pop("customTime")
             metadata = json_format.ParseDict(data, resources_pb2.Object())
         else:
             metadata = resources_pb2.Object()
@@ -71,7 +81,9 @@ class DataHolder(types.SimpleNamespace):
         request = utils.common.FakeRequest(
             args=request.args.to_dict(), headers=headers, data=b""
         )
-        return cls.init_upload(request, metadata, bucket, location, upload_id)
+        return cls.init_upload(
+            request, metadata, bucket, location, upload_id, rest_only
+        )
 
     @classmethod
     def init_resumable_grpc(cls, request, bucket):
@@ -87,3 +99,33 @@ class DataHolder(types.SimpleNamespace):
             response.headers["Range"] = "bytes=0-%d" % (len(self.media) - 1)
         response.status_code = 308
         return response
+
+    # === REWRITE === #
+
+    @classmethod
+    def init_rewrite_rest(
+        cls, request, src_bucket_name, src_object_name, dst_bucket_name, dst_object_name
+    ):
+        fake_request = utils.common.FakeRequest(
+            args=request.args.to_dict(), headers={}, data=request.data
+        )
+        max_bytes_rewritten_per_call = min(
+            int(fake_request.args.get("maxBytesRewrittenPerCall", 1024 * 1024)),
+            1024 * 1024,
+        )
+        token = hashlib.sha256(
+            (
+                "%s/o/%s/rewriteTo/b/%s/o/%s"
+                % (src_bucket_name, src_object_name, dst_bucket_name, dst_object_name)
+            ).encode("utf-8")
+        ).hexdigest()
+        return cls(
+            request=fake_request,
+            src_bucket_name=src_bucket_name,
+            src_object_name=src_object_name,
+            dst_bucket_name=dst_bucket_name,
+            dst_object_name=dst_object_name,
+            token=token,
+            media=b"",
+            max_bytes_rewritten_per_call=max_bytes_rewritten_per_call,
+        )

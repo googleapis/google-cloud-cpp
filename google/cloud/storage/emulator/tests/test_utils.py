@@ -16,6 +16,7 @@
 
 import pytest
 import utils
+
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 

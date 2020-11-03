@@ -18,6 +18,7 @@ import hashlib
 import os
 
 import utils
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 
 PROJECT_NUMBER = os.getenv(

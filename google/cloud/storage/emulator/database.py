@@ -12,23 +12,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
+import os
+
 import gcs
 import utils
-import simdjson
-import os
+
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 
 class Database:
-    def __init__(self, buckets, objects, live_generations, uploads):
+    def __init__(self, buckets, objects, live_generations, uploads, rewrites):
         self.buckets = buckets
         self.objects = objects
         self.live_generations = live_generations
         self.uploads = uploads
+        self.rewrites = rewrites
 
     @classmethod
     def init(cls):
-        return cls({}, {}, {}, {})
+        return cls({}, {}, {}, {}, {})
 
     # === BUCKET === #
 
@@ -64,7 +67,7 @@ class Database:
 
     def delete_bucket(self, request, bucket_name, context):
         bucket = self.get_bucket(request, bucket_name, context)
-        if len(self.objects[bucket.metadata.name]) > 0:
+        if len(self.live_generations[bucket.metadata.name]) > 0:
             utils.error.invalid("Deleting non-empty bucket", context)
         del self.buckets[bucket.metadata.name]
         del self.objects[bucket.metadata.name]
@@ -79,7 +82,7 @@ class Database:
                 request = storage_pb2.InsertBucketRequest(bucket={"name": bucket_name})
             else:
                 request = utils.common.FakeRequest(
-                    args={}, data=simdjson.dumps({"name": bucket_name})
+                    args={}, data=json.dumps({"name": bucket_name})
                 )
             bucket_test, _ = gcs.bucket.Bucket.init(request, context)
             self.insert_bucket(request, bucket_test, context)
@@ -120,6 +123,7 @@ class Database:
             end_offset,
         ) = self.__extract_list_object_request(request, context)
         items = []
+        rest_onlys = []
         prefixes = set()
         for obj in bucket.values():
             generation = obj.metadata.generation
@@ -139,7 +143,8 @@ class Database:
                 prefixes.add(name[: delimiter_index + 1])
                 continue
             items.append(obj.metadata)
-        return items, list(prefixes)
+            rest_onlys.append(obj.rest_only)
+        return items, list(prefixes), rest_onlys
 
     def check_object_generation(
         self, request, bucket_name, object_name, is_source, context
@@ -188,19 +193,20 @@ class Database:
         self.live_generations[bucket_name][name] = generation
 
     def delete_object(self, request, bucket_name, object_name, context):
-        blob = self.get_object(request, bucket_name, object_name, False, context)
-        generation = blob.metadata.generation
-        live_generation = self.live_generations[bucket_name][object_name]
-        if generation == live_generation:
-            del self.live_generations[bucket_name][object_name]
-        del self.objects[bucket_name]["%s#%d" % (object_name, generation)]
+        _ = self.get_object(request, bucket_name, object_name, False, context)
+        generation = utils.generation.extract_generation(request, False, context)
+        live_generation = self.live_generations[bucket_name].get(object_name)
+        if generation == 0 or live_generation == generation:
+            self.live_generations[bucket_name].pop(object_name, None)
+        if generation != 0:
+            del self.objects[bucket_name]["%s#%d" % (object_name, generation)]
 
     # === UPLOAD === #
 
     def get_upload(self, upload_id, context):
         upload = self.uploads.get(upload_id)
         if upload is None:
-            utils.error.notfound("Upload %s does not exist." % upload_id, context)
+            utils.error.notfound("Upload %s" % upload_id, context)
         return upload
 
     def insert_upload(self, upload):
@@ -209,3 +215,18 @@ class Database:
     def delete_upload(self, upload_id, context):
         self.get_upload(upload_id, context)
         del self.uploads[upload_id]
+
+    # === REWRITE === #
+
+    def get_rewrite(self, token, context):
+        rewrite = self.rewrites.get(token)
+        if rewrite is None:
+            utils.error.notfound(404, "Rewrite %s" % token, context)
+        return rewrite
+
+    def insert_rewrite(self, rewrite):
+        self.rewrites[rewrite.token] = rewrite
+
+    def delete_rewrite(self, token, context):
+        self.get_rewrite(token, context)
+        del self.rewrites[token]

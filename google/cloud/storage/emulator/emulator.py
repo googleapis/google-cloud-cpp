@@ -12,18 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import database
+import json
 import logging
+
+import database
 import flask
-import httpbin
-import simdjson
-import utils
 import gcs as gcs_type
-from google.protobuf import json_format
+import httpbin
+import utils
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.protobuf import json_format
 
 db = None
 
@@ -327,11 +329,14 @@ def bucket_lock_retention_policy(bucket_name):
 @gcs.route("/b/<bucket_name>/o")
 def object_list(bucket_name):
     db.insert_test_bucket(None)
-    items, prefixes = db.list_object(flask.request, bucket_name, None)
+    items, prefixes, rest_onlys = db.list_object(flask.request, bucket_name, None)
     response = {
         "kind": "storage#objects",
         "nextPageToken": "",
-        "items": [gcs_type.object.Object.rest(blob) for blob in items],
+        "items": [
+            gcs_type.object.Object.rest(blob, rest_only)
+            for blob, rest_only in zip(items, rest_onlys)
+        ],
         "prefixes": prefixes,
     }
     fields = flask.request.args.get("fields", None)
@@ -372,7 +377,7 @@ def object_delete(bucket_name, object_name):
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/compose", methods=["POST"])
 def objects_compose(bucket_name, object_name):
     bucket = db.get_bucket_without_generation(bucket_name, None).metadata
-    payload = simdjson.loads(flask.request.data)
+    payload = json.loads(flask.request.data)
     source_objects = payload["sourceObjects"]
     if source_objects is None:
         utils.error.missing("source component", None)
@@ -427,8 +432,9 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
     dst_metadata.name = dst_object_name
     dst_media = b""
     dst_media += src_object.media
+    dst_rest_only = dict(src_object.rest_only)
     dst_object, _ = gcs_type.object.Object.init(
-        flask.request, dst_metadata, dst_media, dst_bucket, True, None
+        flask.request, dst_metadata, dst_media, dst_bucket, True, None, dst_rest_only
     )
     db.insert_object(flask.request, dst_bucket_name, dst_object, None)
     dst_object.patch(flask.request, None)
@@ -437,6 +443,70 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
         dst_object.metadata.time_created.ToDatetime()
     )
     return dst_object.rest_metadata()
+
+
+@gcs.route(
+    "/b/<src_bucket_name>/o/<path:src_object_name>/rewriteTo/b/<dst_bucket_name>/o/<path:dst_object_name>",
+    methods=["POST"],
+)
+def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_object_name):
+    db.insert_test_bucket(None)
+    token, rewrite = flask.request.args.get("rewriteToken"), None
+    src_object = None
+    if token is None:
+        rewrite = gcs_type.holder.DataHolder.init_rewrite_rest(
+            flask.request,
+            src_bucket_name,
+            src_object_name,
+            dst_bucket_name,
+            dst_object_name,
+        )
+        db.insert_rewrite(rewrite)
+    else:
+        rewrite = db.get_rewrite(token, None)
+    src_object = db.get_object(
+        rewrite.request, src_bucket_name, src_object_name, True, None
+    )
+    total_bytes_rewritten = len(rewrite.media)
+    total_bytes_rewritten += min(
+        rewrite.max_bytes_rewritten_per_call, len(src_object.media) - len(rewrite.media)
+    )
+    rewrite.media += src_object.media[len(rewrite.media) : total_bytes_rewritten]
+    done, dst_object = total_bytes_rewritten == len(src_object.media), None
+    response = {
+        "kind": "storage#rewriteResponse",
+        "totalBytesRewritten": len(rewrite.media),
+        "objectSize": len(src_object.media),
+        "done": done,
+    }
+    if done:
+        dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
+        dst_metadata = resources_pb2.Object()
+        dst_metadata.CopyFrom(src_object.metadata)
+        dst_rest_only = dict(src_object.rest_only)
+        dst_metadata.bucket = dst_bucket_name
+        dst_metadata.name = dst_object_name
+        dst_media = rewrite.media
+        dst_object, _ = gcs_type.object.Object.init(
+            flask.request,
+            dst_metadata,
+            dst_media,
+            dst_bucket,
+            True,
+            None,
+            dst_rest_only,
+        )
+        db.insert_object(flask.request, dst_bucket_name, dst_object, None)
+        dst_object.patch(rewrite.request, None)
+        dst_object.metadata.metageneration = 1
+        dst_object.metadata.updated.FromDatetime(
+            dst_object.metadata.time_created.ToDatetime()
+        )
+        resources = dst_object.rest_metadata()
+        response["resource"] = resources
+    else:
+        response["rewriteToken"] = rewrite.token
+    return response
 
 
 # === OBJECT ACCESS CONTROL === #
@@ -564,10 +634,11 @@ def resumable_upload_chunk(bucket_name):
         utils.error.missing("upload_id in resumable_upload_chunk", None)
     upload = db.get_upload(upload_id, None)
     if upload.complete:
-        return gcs_type.object.Object.rest(upload.metadata)
+        return gcs_type.object.Object.rest(upload.metadata, upload.rest_only)
     upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
     content_length = int(request.headers.get("content-length", 0))
-    if content_length != len(request.data):
+    data = utils.common.extract_media(request)
+    if content_length != len(data):
         utils.error.invalid("content-length header", None)
     content_range = request.headers.get("content-range")
     if content_range is not None:
@@ -576,7 +647,7 @@ def resumable_upload_chunk(bucket_name):
             utils.error.invalid("content-range header", None)
         if items[0] == "*":
             if upload.complete:
-                return gcs_type.object.Object.rest(upload.metadata)
+                return gcs_type.object.Object.rest(upload.metadata, upload.rest_only)
             if items[1] != "*" and int(items[1]) == len(upload.media):
                 upload.complete = True
                 blob, _ = gcs_type.object.Object.init(
@@ -618,16 +689,22 @@ def resumable_upload_chunk(bucket_name):
                 None,
                 rest_code=400,
             )
-        upload.media += request.data
+        upload.media += data
         upload.complete = total_object_size == len(upload.media) or (
             chunk_last_byte + 1 == total_object_size
         )
     else:
-        upload.media += request.data
+        upload.media += data
         upload.complete = True
     if upload.complete:
         blob, _ = gcs_type.object.Object.init(
-            upload.request, upload.metadata, upload.media, upload.bucket, False, None
+            upload.request,
+            upload.metadata,
+            upload.media,
+            upload.bucket,
+            False,
+            None,
+            upload.rest_only,
         )
         blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
             upload.transfer
@@ -672,6 +749,12 @@ def xml_get_object(bucket_name, object_name):
 
 # === SERVER === #
 
+# Define the WSGI application to handle HMAC key requests
+(PROJECTS_HANDLER_PATH, projects_app) = gcs_type.project.get_projects_app()
+
+# Define the WSGI application to handle IAM requests
+(IAM_HANDLER_PATH, iam_app) = gcs_type.iam.get_iam_app()
+
 
 server = DispatcherMiddleware(
     root,
@@ -680,6 +763,8 @@ server = DispatcherMiddleware(
         GCS_HANDLER_PATH: gcs,
         DOWNLOAD_HANDLER_PATH: download,
         UPLOAD_HANDLER_PATH: upload,
+        PROJECTS_HANDLER_PATH: projects_app,
+        IAM_HANDLER_PATH: iam_app,
     },
 )
 

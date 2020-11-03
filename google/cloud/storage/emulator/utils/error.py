@@ -14,9 +14,10 @@
 
 """Utils to raise error code and abort the server"""
 
+import json
+
 import flask
 import grpc
-import simdjson
 
 
 def generic(msg, rest_code, grpc_code, context):
@@ -44,7 +45,7 @@ def csek(context, rest_code=400, grpc_code=grpc.StatusCode.INVALID_ARGUMENT):
             "message": msg,
         }
     }
-    generic(simdjson.dumps(error_msg), rest_code, grpc_code, context)
+    generic(json.dumps(error_msg), rest_code, grpc_code, context)
 
 
 def invalid(msg, context, rest_code=400, grpc_code=grpc.StatusCode.INVALID_ARGUMENT):

@@ -16,13 +16,13 @@
 
 import datetime
 import hashlib
+import json
 import random
 import re
 
 import scalpl
-import simdjson
-
 import utils
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.iam.v1 import policy_pb2
@@ -144,8 +144,7 @@ class Bucket:
             metadata = request.bucket
         else:
             metadata = json_format.ParseDict(
-                cls.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                cls.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
             )
         cls.__validate_bucket_name(metadata.name, context)
         default_projection = CommonEnums.Projection.NO_ACL
@@ -235,7 +234,7 @@ class Bucket:
         if context is not None:
             policy = request.iam_request.policy
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             data.pop("kind", None)
             policy = json_format.ParseDict(data, policy_pb2.Policy())
         self.iam_policy = policy
@@ -258,8 +257,7 @@ class Bucket:
             metadata = request.metadata
         else:
             metadata = json_format.ParseDict(
-                self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -278,7 +276,7 @@ class Bucket:
             metadata = request.metadata
             update_mask = request.update_mask
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             if "labels" in data:
                 if data["labels"] is None:
                     self.metadata.labels.clear()
@@ -325,9 +323,9 @@ class Bucket:
         if must_exist:
             utils.error.notfound("ACL %s" % entity, context)
 
-    def __upsert_acl(self, entity, role, update_only, context):
+    def __upsert_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` ACL the same way.
-        index = self.__search_acl(entity, update_only, context)
+        index = self.__search_acl(entity, False, context)
         acl = utils.acl.create_bucket_acl(self.metadata.name, entity, role, context)
         if index is not None:
             self.metadata.acl[index].CopyFrom(acl)
@@ -348,27 +346,27 @@ class Bucket:
                 request.bucket_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def update_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.bucket_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.bucket_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
@@ -383,9 +381,9 @@ class Bucket:
         if must_exist:
             utils.error.notfound("Default Object ACL %s" % entity, context)
 
-    def __upsert_default_object_acl(self, entity, role, update_only, context):
+    def __upsert_default_object_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` Default Object ACL the same way.
-        index = self.__search_default_object_acl(entity, update_only, context)
+        index = self.__search_default_object_acl(entity, False, context)
         acl = utils.acl.create_default_object_acl(
             self.metadata.name, entity, role, context
         )
@@ -408,27 +406,27 @@ class Bucket:
                 request.object_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_default_object_acl(entity, role, False, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def update_default_object_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, True, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def patch_default_object_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, True, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def delete_default_object_acl(self, entity, context):
         del self.metadata.default_object_acl[
@@ -443,7 +441,7 @@ class Bucket:
             notification = request.notification
         else:
             notification = json_format.ParseDict(
-                simdjson.loads(request.data), resources_pb2.Notification()
+                json.loads(request.data), resources_pb2.Notification()
             )
         notification.id = "notification-%d" % random.getrandbits(16)
         self.notifications[notification.id] = notification

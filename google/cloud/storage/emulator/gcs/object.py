@@ -14,21 +14,23 @@
 
 """Implement a class to simulate GCS object."""
 
-import utils
-import flask
+import base64
+import datetime
+import hashlib
+import json
+import random
 import re
+import struct
 import sys
 import time
-import datetime
-import random
+
 import crc32c
-import base64
-import hashlib
-import struct
-import simdjson
-from google.protobuf import field_mask_pb2, json_format
+import flask
+import utils
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.protobuf import field_mask_pb2, json_format
 
 
 class Object:
@@ -48,10 +50,11 @@ class Object:
         "customer_encryption",
     ]
 
-    def __init__(self, metadata, media, bucket):
+    def __init__(self, metadata, media, bucket, rest_only=None):
         self.metadata = metadata
         self.media = media
         self.bucket = bucket
+        self.rest_only = rest_only
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
@@ -71,8 +74,11 @@ class Object:
         del metadata.acl[:]
         metadata.acl.extend(acls)
 
+    # TODO(#4893): Remove `rest_only`
     @classmethod
-    def init(cls, request, metadata, media, bucket, is_destination, context):
+    def init(
+        cls, request, metadata, media, bucket, is_destination, context, rest_only=None
+    ):
         if context is None:
             instruction = request.headers.get("x-goog-testbench-instructions")
             if instruction == "inject-upload-data-error":
@@ -133,19 +139,24 @@ class Object:
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
         return (
-            cls(metadata, media, bucket),
+            cls(metadata, media, bucket, rest_only),
             utils.common.extract_projection(request, default_projection, context),
         )
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
+        rest_only = {}
+        if "customTime" in metadata:
+            rest_only["customTime"] = metadata.pop("customTime")
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
-        return cls.init(request, metadata, media, bucket, is_destination, None)
+        return cls.init(
+            request, metadata, media, bucket, is_destination, None, rest_only
+        )
 
     @classmethod
     def init_media(cls, request, bucket):
         object_name = request.args.get("name", None)
-        media = request.data
+        media = utils.common.extract_media(request)
         if object_name is None:
             utils.error.missing("name", None)
         metadata = {
@@ -190,7 +201,7 @@ class Object:
 
     @classmethod
     def init_xml(cls, request, bucket, name):
-        media = request.data
+        media = utils.common.extract_media(request)
         metadata = {
             "bucket": bucket.name,
             "name": name,
@@ -229,8 +240,7 @@ class Object:
             metadata = request.metadata
         else:
             metadata = json_format.ParseDict(
-                self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Object(),
+                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Object()
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -247,7 +257,11 @@ class Object:
             metadata = request.metadata
             update_mask = request.update_mask
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
+            if "customTime" in data:
+                if self.rest_only is None:
+                    self.rest_only = {}
+                self.rest_only["customTime"] = data.pop("customTime")
             if "metadata" in data:
                 if data["metadata"] is None:
                     self.metadata.metadata.clear()
@@ -291,9 +305,9 @@ class Object:
         if must_exist:
             utils.error.notfound("ACL %s" % entity, context)
 
-    def __upsert_acl(self, entity, role, update_only, context):
+    def __upsert_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` ACL the same way.
-        index = self.__search_acl(entity, update_only, context)
+        index = self.__search_acl(entity, False, context)
         acl = utils.acl.create_object_acl(
             self.metadata.bucket,
             self.metadata.name,
@@ -321,44 +335,46 @@ class Object:
                 request.object_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def update_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
 
-    # === RESPOSE === #
+    # === RESPONSE === #
 
     @classmethod
-    def rest(cls, metadata):
+    def rest(cls, metadata, rest_only):
         response = json_format.MessageToDict(metadata)
         response["kind"] = "storage#object"
         response["crc32c"] = base64.b64encode(
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
+        if rest_only is not None:
+            response.update(rest_only)
         return response
 
     def rest_metadata(self):
-        return self.rest(self.metadata)
+        return self.rest(self.metadata, self.rest_only)
 
     def x_goog_hash_header(self):
         header = ""
