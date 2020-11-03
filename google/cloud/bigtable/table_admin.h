@@ -51,8 +51,8 @@ enum class Consistency {
  * @par Thread-safety
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
- * threads is guaranteed to work. Two threads operating on the same instance of
- * this class is not guaranteed to work.
+ * threads is guaranteed to work. Two threads operating concurrently on the same
+ * instance of this class is not guaranteed to work.
  *
  * @par Cost
  * Creating a new object of type `TableAdmin` is comparable to creating a few
@@ -228,6 +228,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_snippets.cc create table
    */
@@ -260,6 +265,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async create table
    */
@@ -277,6 +287,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc list tables
@@ -308,6 +323,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async list tables
    */
@@ -330,6 +350,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc get table
@@ -364,6 +389,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async get table
    */
@@ -382,6 +412,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc delete table
@@ -406,6 +441,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_async_snippets.cc async delete table
@@ -461,6 +501,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc create backup
    */
@@ -488,6 +533,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async create backup
    *
@@ -512,6 +562,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc get backup
@@ -548,6 +603,11 @@ class TableAdmin {
 
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
@@ -597,6 +657,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc update backup
    */
@@ -624,6 +689,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async update backup
    *
@@ -649,6 +719,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc delete backup
    */
@@ -662,6 +737,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc delete backup
@@ -697,6 +777,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
    */
@@ -723,6 +808,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
@@ -838,6 +928,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc list backups
    */
@@ -863,6 +958,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async list backups
@@ -915,6 +1015,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_snippets.cc restore table
    */
@@ -942,6 +1047,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async restore table
    *
@@ -959,6 +1069,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc modify table
@@ -988,6 +1103,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async modify table
    */
@@ -1006,6 +1126,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc drop rows by prefix
@@ -1033,6 +1158,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop rows by prefix
    */
@@ -1049,6 +1179,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc generate consistency token
@@ -1073,6 +1208,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async generate consistency token
    */
@@ -1089,6 +1229,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc check consistency
@@ -1114,6 +1259,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async check consistency
    */
@@ -1132,6 +1282,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
@@ -1157,6 +1312,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async wait for consistency
    */
@@ -1173,6 +1333,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_snippets.cc drop all rows
@@ -1196,6 +1361,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop all rows
    */
@@ -1210,6 +1380,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc get iam policy
@@ -1228,6 +1403,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc async get iam policy
@@ -1251,6 +1431,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc set iam policy
@@ -1276,6 +1461,11 @@ class TableAdmin {
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc async set iam policy
    */
@@ -1291,6 +1481,11 @@ class TableAdmin {
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc test iam permissions
@@ -1313,6 +1508,11 @@ class TableAdmin {
    *     `cq.Run()`.
    * @param table_id the ID of the table to query.
    * @param permissions set of permissions to check for the resource.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
    *
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc async test iam permissions
