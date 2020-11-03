@@ -31,7 +31,7 @@ class DataHolder(types.SimpleNamespace):
 
     @classmethod
     def init_upload(
-        cls, request, metadata, bucket, location, upload_id, customTime=None
+        cls, request, metadata, bucket, location, upload_id, rest_only=None
     ):
         return cls(
             request=request,
@@ -42,18 +42,19 @@ class DataHolder(types.SimpleNamespace):
             media=b"",
             complete=False,
             transfer=set(),
-            customTime=customTime,
+            rest_only=rest_only,
         )
 
     @classmethod
     def init_resumable_rest(cls, request, bucket):
         name = request.args.get("name", "")
-        customTime = None
+        rest_only = {}
         if len(request.data) > 0:
             if name != "":
                 utils.error.invalid("name argument in non-empty payload", None)
             data = simdjson.loads(request.data)
-            customTime = data.pop("customTime", None)
+            if "customTime" in data:
+                rest_only["customTime"] = data.pop("customTime")
             metadata = json_format.ParseDict(data, resources_pb2.Object())
         else:
             metadata = resources_pb2.Object()
@@ -79,7 +80,7 @@ class DataHolder(types.SimpleNamespace):
             args=request.args.to_dict(), headers=headers, data=b""
         )
         return cls.init_upload(
-            request, metadata, bucket, location, upload_id, customTime
+            request, metadata, bucket, location, upload_id, rest_only
         )
 
     @classmethod

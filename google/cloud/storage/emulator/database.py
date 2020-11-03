@@ -121,7 +121,7 @@ class Database:
             end_offset,
         ) = self.__extract_list_object_request(request, context)
         items = []
-        customTimes = []
+        rest_onlys = []
         prefixes = set()
         for obj in bucket.values():
             generation = obj.metadata.generation
@@ -141,8 +141,8 @@ class Database:
                 prefixes.add(name[: delimiter_index + 1])
                 continue
             items.append(obj.metadata)
-            customTimes.append(obj.customTime)
-        return items, list(prefixes), customTimes
+            rest_onlys.append(obj.rest_only)
+        return items, list(prefixes), rest_onlys
 
     def check_object_generation(
         self, request, bucket_name, object_name, is_source, context

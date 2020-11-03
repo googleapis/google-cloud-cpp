@@ -325,9 +325,9 @@ class Bucket:
         if must_exist:
             utils.error.notfound("ACL %s" % entity, context)
 
-    def __upsert_acl(self, entity, role, update_only, context):
+    def __upsert_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` ACL the same way.
-        index = self.__search_acl(entity, update_only, context)
+        index = self.__search_acl(entity, False, context)
         acl = utils.acl.create_bucket_acl(self.metadata.name, entity, role, context)
         if index is not None:
             self.metadata.acl[index].CopyFrom(acl)
@@ -350,7 +350,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def update_acl(self, request, entity, context):
         role = ""
@@ -359,7 +359,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
@@ -368,7 +368,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
@@ -383,9 +383,9 @@ class Bucket:
         if must_exist:
             utils.error.notfound("Default Object ACL %s" % entity, context)
 
-    def __upsert_default_object_acl(self, entity, role, update_only, context):
+    def __upsert_default_object_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` Default Object ACL the same way.
-        index = self.__search_default_object_acl(entity, update_only, context)
+        index = self.__search_default_object_acl(entity, False, context)
         acl = utils.acl.create_default_object_acl(
             self.metadata.name, entity, role, context
         )
@@ -410,7 +410,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_default_object_acl(entity, role, False, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def update_default_object_acl(self, request, entity, context):
         role = ""
@@ -419,7 +419,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, False, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def patch_default_object_acl(self, request, entity, context):
         role = ""
@@ -428,7 +428,7 @@ class Bucket:
         else:
             payload = simdjson.loads(request.data)
             role = payload["role"]
-        return self.__upsert_default_object_acl(entity, role, False, context)
+        return self.__upsert_default_object_acl(entity, role, context)
 
     def delete_default_object_acl(self, entity, context):
         del self.metadata.default_object_acl[
