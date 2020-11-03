@@ -267,7 +267,7 @@ Convenience shorthands for the schema views.</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables in a Cloud Bigtable instance. </p>
-<dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Cost</dt><dd>Creating a new object of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> is comparable to creating a few objects of type <code>std::string</code> or a few objects of type <code>std::shared_ptr&lt;int&gt;</code>. The class represents a shallow handle to a remote object.</dd></dl>
 <dl class="section user"><dt>Error Handling</dt><dd>This class uses <code>StatusOr&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code>StatusOr&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code>StatusOr&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Operations that do not return a value simply return a <code>google::cloud::Status</code> indicating success or the details of the error Please consult the <a href="#google::cloud::v1::StatusOr"><code>StatusOr&lt;T&gt;</code> documentation</a> for more details.</dd></dl>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
@@ -507,6 +507,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>consistency status or status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -572,6 +573,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -652,6 +654,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception. Note that the service only fills out the <code>table_name</code> field for this request.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -717,6 +720,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
@@ -784,6 +788,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
@@ -844,6 +849,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
@@ -902,6 +908,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -968,6 +975,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1026,6 +1034,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>consistency token or status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1090,6 +1099,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1151,6 +1161,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when either (a) the policy is fetched or (b) a non-retryable error occurs or (c) retry policy has been exhausted.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1225,6 +1236,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1292,6 +1304,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1369,6 +1382,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1438,6 +1452,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the information about table or status.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1509,6 +1524,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1581,6 +1597,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when either (a) the policy is created or (b) a non-retryable error occurs or (c) retry policy has been exhausted.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1673,6 +1690,7 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1735,6 +1753,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1813,6 +1832,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1877,6 +1897,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id,</div>
@@ -1925,7 +1946,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01333">1333</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01533">1533</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -1953,6 +1974,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id,</div>
@@ -2013,6 +2035,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the attributes of the newly created table. Notice that the server only populates the table_name() field at this time.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2055,6 +2078,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
 <div class="line">     std::string <span class="keyword">const</span>&amp; backup_id) {</div>
@@ -2103,6 +2127,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
 <div class="line">     std::string <span class="keyword">const</span>&amp; backup_id) {</div>
@@ -2141,6 +2166,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
 <div class="line">    google::cloud::Status status = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
@@ -2177,6 +2203,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START bigtable_truncate_table] [START bigtable_delete_rows]</span></div>
 <div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2226,6 +2253,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id,</div>
 <div class="line">     std::string <span class="keyword">const</span>&amp; prefix) {</div>
@@ -2265,6 +2293,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the consistency token for table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2313,6 +2342,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
@@ -2354,6 +2384,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the full IAM policy for the table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2410,6 +2441,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the information about the table or status.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2506,6 +2538,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
@@ -2557,6 +2590,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin) {</div>
@@ -2609,6 +2643,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
@@ -2713,6 +2748,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id,</div>
@@ -2767,6 +2803,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the current IAM policy for the table.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id,</div>
@@ -2824,7 +2861,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01328">1328</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01528">1528</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -2863,6 +2900,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"> </div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
@@ -2907,6 +2945,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
@@ -2973,6 +3012,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>

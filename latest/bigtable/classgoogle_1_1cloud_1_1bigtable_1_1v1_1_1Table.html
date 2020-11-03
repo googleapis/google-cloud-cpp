@@ -174,7 +174,7 @@ Helper functions to implement constructors with changed policies.</h2></td></tr>
 <li>to sample the row keys: <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a7d89ad8f5b46838e38e620f1912b43c3" title="Sample of the row keys in the table, including approximate data sizes.">Table::SampleRows()</a></code>.</li>
 </ul>
 <p>The class deals with the most common transient failures, and retries the underlying RPC calls subject to the policies configured by the application. These policies are documented in <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a6f2ea4d0c1c5119ba42d0ba4164f74b3" title="Constructor with default policies.">Table::Table()</a></code>.</p>
-<dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Cost</dt><dd>Creating a new object of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html" title="The main interface to interact with data in a Cloud Bigtable table.">Table</a></code> is comparable to creating a few objects of type <code>std::string</code> or a few objects of type <code>std::shared_ptr&lt;int&gt;</code>. The class represents a shallow handle to a remote object.</dd></dl>
 <dl class="section user"><dt>Error Handling</dt><dd>This class uses <code>StatusOr&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code>StatusOr&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code>StatusOr&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Operations that do not return a value simply return a <code>google::cloud::Status</code> indicating success or the details of the error Please consult the <a href="#google::cloud::v1::StatusOr"><code>StatusOr&lt;T&gt;</code> documentation</a> for more details.</dd></dl>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
@@ -604,6 +604,7 @@ template&lt;typename... Policies, typename std::enable_if&lt; ValidPolicies&lt; 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent if the provided mutations are idempotent. Note that <code><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac409cdf17f67843fc4279464cc240394" title="Create a mutation to set a cell value based on a bigtable::Cell.">google::cloud::bigtable::SetCell()</a></code> without an explicit timestamp is <b>not</b> an idempotent operation.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table) {</div>
 <div class="line">    <span class="keyword">auto</span> timestamp = std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(</div>
@@ -720,6 +721,7 @@ template&lt;typename... Policies, typename std::enable_if&lt; ValidPolicies&lt; 
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent if the provided mutations are idempotent. Note that <code><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac409cdf17f67843fc4279464cc240394" title="Create a mutation to set a cell value based on a bigtable::Cell.">google::cloud::bigtable::SetCell()</a></code> without an explicit timestamp is <b>not</b> an idempotent operation.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table, cbt::CompletionQueue cq) {</div>
@@ -831,6 +833,7 @@ template&lt;typename... Policies, typename std::enable_if&lt; ValidPolicies&lt; 
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -926,6 +929,7 @@ template&lt;typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A future, that becomes satisfied when the operation completes, at that point the future has the contents of all modified cells.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -951,7 +955,7 @@ template&lt;typename... Args&gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00643">643</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00700">700</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -999,6 +1003,7 @@ template&lt;typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when the operation completes, fails permanently or keeps failing transiently, but the retry policy has been exhausted. The future will return a tuple. The first element is a boolean, with value <code>false</code> if the row does not exist. If the first element is <code>true</code> the second element has the contents of the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Row.html" title="The in-memory representation of a Bigtable row.">Row</a>. Note that the contents may be empty if the filter expression removes all column families and columns.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
@@ -1112,6 +1117,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::make_ready_future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::promise;</div>
@@ -1147,7 +1153,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00683">683</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00745">745</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -1231,6 +1237,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread. The callbacks passed to this function may be executed on any thread running the provided completion queue.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::make_ready_future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::promise;</div>
@@ -1266,7 +1273,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00726">726</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00795">795</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -1294,6 +1301,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent if the provided mutations are idempotent. Note that <code><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac409cdf17f67843fc4279464cc240394" title="Create a mutation to set a cell value based on a bigtable::Cell.">google::cloud::bigtable::SetCell()</a></code> without an explicit timestamp is <b>not</b> an idempotent operation.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table) {</div>
 <div class="line">    <span class="comment">// Write several rows in a single operation, each row has some trivial data.</span></div>
@@ -1389,6 +1397,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the filter passed.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Check for Value Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table, std::string <span class="keyword">const</span>&amp; row_key) {</div>
@@ -1554,6 +1563,7 @@ template&lt;typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The new contents of all modified cells.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table, std::string <span class="keyword">const</span>&amp; row_key) {</div>
@@ -1572,7 +1582,7 @@ template&lt;typename... Args&gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00593">593</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00646">646</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -1612,6 +1622,7 @@ template&lt;typename... Args&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a tuple, the first element is a boolean, with value <code>false</code> if the row does not exist. If the first element is <code>true</code> the second element has the contents of the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Row.html" title="The in-memory representation of a Bigtable row.">Row</a>. Note that the contents may be empty if the filter expression removes all column families and columns.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table, std::string <span class="keyword">const</span>&amp; row_key) {</div>
@@ -1665,6 +1676,7 @@ template&lt;typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread. The values returned by different calls are independent with respect to thread-safety, please see the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RowReader.html" title="Object returned by Table::ReadRows(), enumerates rows in the response.">RowReader</a></code> documentation for more details.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table) {</div>
@@ -1725,6 +1737,7 @@ template&lt;typename... Args&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is a read-only operation and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread. The values returned by different calls are independent with respect to thread-safety, please see the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RowReader.html" title="Object returned by Table::ReadRows(), enumerates rows in the response.">RowReader</a></code> documentation for more details.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table) {</div>
@@ -1773,6 +1786,7 @@ template&lt;typename... Args&gt; </div>
 <p>Sample of the row keys in the table, including approximate data sizes. </p>
 <dl class="section return"><dt>Returns</dt><dd>Note that the sample may only include one element for small tables. In addition, the sample may include row keys that do not exist on the table, and may include the empty row key to indicate "end of table".</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Examples</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a> table) {</div>
@@ -1864,7 +1878,7 @@ template&lt;typename... Args&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00828">828</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table_8h_source.html#l00902">902</a> of file <a class="el" href="table_8h_source.html">table.h</a>.</p>
 
 </div>
 </div>
@@ -1882,11 +1896,11 @@ template&lt;typename... Args&gt; </div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Filter_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Filter.html">google::cloud::bigtable::v1::Filter</a></div><div class="ttdoc">Define the interfaces to create filter expressions.</div><div class="ttdef"><b>Definition:</b> <a href="filters_8h_source.html#l00049">filters.h:49</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_a7d89ad8f5b46838e38e620f1912b43c3"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a7d89ad8f5b46838e38e620f1912b43c3">google::cloud::bigtable::v1::Table::SampleRows</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt; bigtable::RowKeySample &gt; &gt; SampleRows()</div><div class="ttdoc">Sample of the row keys in the table, including approximate data sizes.</div><div class="ttdef"><b>Definition:</b> <a href="table_8cc_source.html#l00304">table.cc:304</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1SingleRowMutation_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1SingleRowMutation.html">google::cloud::bigtable::v1::SingleRowMutation</a></div><div class="ttdoc">Represent a single row mutation.</div><div class="ttdef"><b>Definition:</b> <a href="mutations_8h_source.html#l00293">mutations.h:293</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_adcbbae9a9344ec38cf0987e6433b8191"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#adcbbae9a9344ec38cf0987e6433b8191">google::cloud::bigtable::v1::Table::AsyncReadModifyWriteRow</a></div><div class="ttdeci">future&lt; StatusOr&lt; Row &gt; &gt; AsyncReadModifyWriteRow(std::string row_key, CompletionQueue &amp;cq, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</div><div class="ttdoc">Make an asynchronous request to atomically read and modify a row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8h_source.html#l00643">table.h:643</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_adcbbae9a9344ec38cf0987e6433b8191"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#adcbbae9a9344ec38cf0987e6433b8191">google::cloud::bigtable::v1::Table::AsyncReadModifyWriteRow</a></div><div class="ttdeci">future&lt; StatusOr&lt; Row &gt; &gt; AsyncReadModifyWriteRow(std::string row_key, CompletionQueue &amp;cq, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</div><div class="ttdoc">Make an asynchronous request to atomically read and modify a row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8h_source.html#l00700">table.h:700</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_aa71a3d0a41ce3f93948fe324d741a09a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#aa71a3d0a41ce3f93948fe324d741a09a">google::cloud::bigtable::v1::Table::AsyncCheckAndMutateRow</a></div><div class="ttdeci">future&lt; StatusOr&lt; MutationBranch &gt; &gt; AsyncCheckAndMutateRow(std::string row_key, Filter filter, std::vector&lt; Mutation &gt; true_mutations, std::vector&lt; Mutation &gt; false_mutations, CompletionQueue &amp;cq)</div><div class="ttdoc">Make an asynchronous request to conditionally mutate a row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8cc_source.html#l00256">table.cc:256</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_a2fe1685174cfbc3cab5ccb887451b6ab"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a2fe1685174cfbc3cab5ccb887451b6ab">google::cloud::bigtable::v1::Table::CheckAndMutateRow</a></div><div class="ttdeci">StatusOr&lt; MutationBranch &gt; CheckAndMutateRow(std::string row_key, Filter filter, std::vector&lt; Mutation &gt; true_mutations, std::vector&lt; Mutation &gt; false_mutations)</div><div class="ttdoc">Atomic test-and-set for a row using filter expressions.</div><div class="ttdef"><b>Definition:</b> <a href="table_8cc_source.html#l00226">table.cc:226</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell.html">google::cloud::bigtable::v1::Cell</a></div><div class="ttdoc">The in-memory representation of a Bigtable cell.</div><div class="ttdef"><b>Definition:</b> <a href="cell_8h_source.html#l00089">cell.h:89</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_a76145b69620f01fced8949911d8403a8"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a76145b69620f01fced8949911d8403a8">google::cloud::bigtable::v1::Table::ReadModifyWriteRow</a></div><div class="ttdeci">StatusOr&lt; Row &gt; ReadModifyWriteRow(std::string row_key, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</div><div class="ttdoc">Atomically read and modify the row in the server, returning the resulting row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8h_source.html#l00593">table.h:593</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_a76145b69620f01fced8949911d8403a8"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a76145b69620f01fced8949911d8403a8">google::cloud::bigtable::v1::Table::ReadModifyWriteRow</a></div><div class="ttdeci">StatusOr&lt; Row &gt; ReadModifyWriteRow(std::string row_key, bigtable::ReadModifyWriteRule rule, Args &amp;&amp;... rules)</div><div class="ttdoc">Atomically read and modify the row in the server, returning the resulting row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8h_source.html#l00646">table.h:646</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell_html_a6d01e22c1f3531142e18170d825bd8d0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell.html#a6d01e22c1f3531142e18170d825bd8d0">google::cloud::bigtable::v1::Cell::value</a></div><div class="ttdeci">CellValueType const  &amp; value() const &amp;</div><div class="ttdoc">Return the contents of this cell.</div><div class="ttdef"><b>Definition:</b> <a href="cell_8h_source.html#l00151">cell.h:151</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell_html_ad669a9bdafb01565e743cb646260792e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Cell.html#ad669a9bdafb01565e743cb646260792e">google::cloud::bigtable::v1::Cell::timestamp</a></div><div class="ttdeci">std::chrono::microseconds timestamp() const</div><div class="ttdoc">Return the timestamp of this cell.</div><div class="ttdef"><b>Definition:</b> <a href="cell_8h_source.html#l00145">cell.h:145</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1LimitedErrorCountRetryPolicy_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1LimitedErrorCountRetryPolicy.html">google::cloud::bigtable::v1::LimitedErrorCountRetryPolicy</a></div><div class="ttdoc">Implement a simple &quot;count errors and then stop&quot; retry policy.</div><div class="ttdef"><b>Definition:</b> <a href="rpc__retry__policy_8h_source.html#l00128">rpc_retry_policy.h:128</a></div></div>

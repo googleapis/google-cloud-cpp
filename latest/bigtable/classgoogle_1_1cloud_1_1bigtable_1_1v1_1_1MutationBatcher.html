@@ -110,9 +110,10 @@ Protected Member Functions</h2></td></tr>
 <div class="textblock"><p>Objects of this class pack single row mutations into bulk mutations. </p>
 <p>In order to maximize throughput when applying a lot of mutations to Cloud Bigtable, one should pack the mutations in <code>BulkMutations</code>. This class helps in doing so. Create a <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MutationBatcher.html" title="Objects of this class pack single row mutations into bulk mutations.">MutationBatcher</a></code> and use <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MutationBatcher.html#ab3b17c33a9e25fbfc88d9e32161e2f80" title="Asynchronously apply mutation.">MutationBatcher::AsyncApply()</a></code> to apply a large stream of mutations to the same <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html" title="The main interface to interact with data in a Cloud Bigtable table.">Table</a></code>. Objects of this class will efficiently create batches of <code>SingleRowMutations</code> and maintain multiple batches "in flight".</p>
 <p>This class also offers an easy-to-use flow control mechanism to avoid unbounded growth in its internal buffers.</p>
-<p>Applications must provide a <code>CompletionQueue</code> to (asynchronously) execute these operations. The application is responsible of executing the <code>CompletionQueue</code> event loop in one or more threads. </p>
+<p>Applications must provide a <code>CompletionQueue</code> to (asynchronously) execute these operations. The application is responsible of executing the <code>CompletionQueue</code> event loop in one or more threads.</p>
+<dl class="section user"><dt>Thread-safety</dt><dd>Instances of this class are guaranteed to work when accessed concurrently from multiple threads. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mutation__batcher_8h_source.html#l00052">52</a> of file <a class="el" href="mutation__batcher_8h_source.html">mutation_batcher.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutation__batcher_8h_source.html#l00056">56</a> of file <a class="el" href="mutation__batcher_8h_source.html">mutation_batcher.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6013f42021a024d5020f5da0bf266acd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6013f42021a024d5020f5da0bf266acd">&#9670;&nbsp;</a></span>MutationBatcher()</h2>
@@ -148,7 +149,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutation__batcher_8h_source.html#l00088">88</a> of file <a class="el" href="mutation__batcher_8h_source.html">mutation_batcher.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutation__batcher_8h_source.html#l00092">92</a> of file <a class="el" href="mutation__batcher_8h_source.html">mutation_batcher.h</a>.</p>
 
 </div>
 </div>
