@@ -14,12 +14,14 @@
 
 """Unit test for utils"""
 
+import json
+
+import gcs
 import pytest
 import utils
-import gcs
-import json
-from google.protobuf import json_format
+
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
+from google.protobuf import json_format
 
 
 class TestBucket:

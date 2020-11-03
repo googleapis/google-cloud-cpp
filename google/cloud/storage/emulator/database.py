@@ -12,10 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import gcs
-import utils
 import json
 import os
+
+import gcs
+import utils
+
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 

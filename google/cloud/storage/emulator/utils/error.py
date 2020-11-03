@@ -14,9 +14,10 @@
 
 """Utils to raise error code and abort the server"""
 
+import json
+
 import flask
 import grpc
-import json
 
 
 def generic(msg, rest_code, grpc_code, context):

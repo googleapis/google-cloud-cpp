@@ -14,12 +14,13 @@
 
 """Common utils"""
 
-import re
-import scalpl
-import types
-import utils
 import json
 import random
+import re
+import types
+
+import scalpl
+import utils
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
 content_range_split = re.compile(r"bytes (\*|[0-9]+-[0-9]+)\/(\*|[0-9]+)")

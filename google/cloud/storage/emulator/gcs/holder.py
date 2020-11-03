@@ -14,13 +14,15 @@
 
 """Implement a holder for resumable upload's data and rewrite's data"""
 
-import types
-from google.protobuf import json_format
-from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-import json
-import utils
 import hashlib
+import json
+import types
+
 import flask
+import utils
+
+from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.protobuf import json_format
 
 
 class DataHolder(types.SimpleNamespace):

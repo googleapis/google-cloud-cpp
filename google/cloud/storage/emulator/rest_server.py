@@ -12,18 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import database
-import logging
-import flask
-import httpbin
 import json
-import utils
+import logging
+
+import database
+import flask
 import gcs as gcs_type
-from google.protobuf import json_format
+import httpbin
+import utils
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
-from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.protobuf import json_format
 
 db = None
 

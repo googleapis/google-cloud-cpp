@@ -15,9 +15,10 @@
 """Simulate IAM operations."""
 
 import base64
-import utils
-import flask
 import json
+
+import flask
+import utils
 
 IAM_HANDLER_PATH = "/iamapi"
 iam = flask.Flask(__name__)

@@ -14,21 +14,23 @@
 
 """Implement a class to simulate GCS object."""
 
-import utils
-import flask
+import base64
+import datetime
+import hashlib
+import json
+import random
 import re
+import struct
 import sys
 import time
-import datetime
-import random
+
 import crc32c
-import base64
-import hashlib
-import struct
-import json
-from google.protobuf import field_mask_pb2, json_format
+import flask
+import utils
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.protobuf import field_mask_pb2, json_format
 
 
 class Object:
