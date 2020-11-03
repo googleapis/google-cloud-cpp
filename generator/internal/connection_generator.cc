@@ -46,8 +46,6 @@ Status ConnectionGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  //  GenerateLocalIncludes(
-  //      header_,
   HeaderLocalIncludes(
       {vars("connection_options_header_path"),
        vars("idempotency_policy_header_path"), vars("stub_header_path"),
@@ -55,7 +53,6 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/future.h", "google/cloud/internal/pagination_range.h",
        "google/cloud/polling_policy.h", "google/cloud/status_or.h",
        "google/cloud/version.h"});
-  //  GenerateSystemIncludes(header_,
   HeaderSystemIncludes({"google/longrunning/operations.grpc.pb.h", "memory"});
   HeaderPrint("\n");
 
@@ -170,14 +167,10 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  //  GenerateLocalIncludes(
-  //      cc_,
   CcLocalIncludes({vars("connection_header_path"),
                    vars("stub_factory_header_path"),
                    "google/cloud/internal/polling_loop.h",
                    "google/cloud/internal/retry_loop.h"});
-  //      FileType::kCcFile);
-  //  GenerateSystemIncludes(cc_,
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
