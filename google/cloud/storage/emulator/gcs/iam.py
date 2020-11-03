@@ -17,7 +17,7 @@
 import base64
 import utils
 import flask
-import simdjson
+import json
 
 IAM_HANDLER_PATH = "/iamapi"
 iam = flask.Flask(__name__)
@@ -27,7 +27,7 @@ iam.debug = True
 @iam.route("/projects/-/serviceAccounts/<service_account>:signBlob", methods=["POST"])
 def sign_blob(service_account):
     """Implement the `projects.serviceAccounts.signBlob` API."""
-    payload = simdjson.loads(flask.request.data)
+    payload = json.loads(flask.request.data)
     if payload.get("payload") is None:
         utils.error.missing("payload in the payload")
     try:
@@ -39,7 +39,7 @@ def sign_blob(service_account):
         "keyId": "fake-key-id-123",
         "signedBlob": base64.b64encode(blob).decode("utf-8"),
     }
-    return simdjson.dumps(response)
+    return json.dumps(response)
 
 
 def get_iam_app():

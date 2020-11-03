@@ -14,7 +14,7 @@
 
 import gcs
 import utils
-import simdjson
+import json
 import os
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
@@ -80,7 +80,7 @@ class Database:
                 request = storage_pb2.InsertBucketRequest(bucket={"name": bucket_name})
             else:
                 request = utils.common.FakeRequest(
-                    args={}, data=simdjson.dumps({"name": bucket_name})
+                    args={}, data=json.dumps({"name": bucket_name})
                 )
             bucket_test, _ = gcs.bucket.Bucket.init(request, context)
             self.insert_bucket(request, bucket_test, context)

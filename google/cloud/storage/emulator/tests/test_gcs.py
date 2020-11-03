@@ -17,7 +17,7 @@
 import pytest
 import utils
 import gcs
-import simdjson
+import json
 from google.protobuf import json_format
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
@@ -85,16 +85,14 @@ class TestBucket:
         ) == utils.acl.compute_predefined_default_object_acl("bucket", 5, "")
 
     def test_init_rest(self):
-        request = utils.common.FakeRequest(
-            args={}, data=simdjson.dumps({"name": "bucket"})
-        )
+        request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
         bucket, projection = gcs.bucket.Bucket.init(request, None)
         assert bucket.metadata.name == "bucket"
         assert projection == "noAcl"
 
         request = utils.common.FakeRequest(
             args={},
-            data=simdjson.dumps(
+            data=json.dumps(
                 {
                     "name": "bucket",
                     "acl": [
@@ -148,7 +146,7 @@ class TestBucket:
 
         request = utils.common.FakeRequest(
             args={},
-            data=simdjson.dumps(
+            data=json.dumps(
                 {
                     "name": "new_bucket",
                     "labels": {"method": "rest"},

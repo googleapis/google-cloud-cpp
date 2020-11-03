@@ -16,7 +16,7 @@
 
 import base64
 import flask
-import simdjson
+import json
 import random
 import time
 import utils
@@ -273,7 +273,7 @@ def hmac_keys_get(project_id, access_id):
 def hmac_keys_update(project_id, access_id):
     """Implement the `HmacKeys: delete` API."""
     project = get_project(project_id)
-    payload = simdjson.loads(flask.request.data)
+    payload = json.loads(flask.request.data)
     response = project.update_hmac_key(access_id, payload)
     fields = flask.request.args.get("fields", None)
     return utils.common.filter_response_rest(response, None, fields)

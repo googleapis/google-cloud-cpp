@@ -25,7 +25,7 @@ import crc32c
 import base64
 import hashlib
 import struct
-import simdjson
+import json
 from google.protobuf import field_mask_pb2, json_format
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
@@ -238,8 +238,7 @@ class Object:
             metadata = request.metadata
         else:
             metadata = json_format.ParseDict(
-                self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Object(),
+                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Object()
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -256,7 +255,7 @@ class Object:
             metadata = request.metadata
             update_mask = request.update_mask
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             if "customTime" in data:
                 if self.rest_only is None:
                     self.rest_only = {}
@@ -334,7 +333,7 @@ class Object:
                 request.object_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
         return self.__upsert_acl(entity, role, context)
 
@@ -343,7 +342,7 @@ class Object:
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_acl(entity, role, context)
 
@@ -352,7 +351,7 @@ class Object:
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_acl(entity, role, context)
 

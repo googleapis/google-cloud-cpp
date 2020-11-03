@@ -16,7 +16,7 @@ import database
 import logging
 import flask
 import httpbin
-import simdjson
+import json
 import utils
 import gcs as gcs_type
 from google.protobuf import json_format
@@ -375,7 +375,7 @@ def object_delete(bucket_name, object_name):
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/compose", methods=["POST"])
 def objects_compose(bucket_name, object_name):
     bucket = db.get_bucket_without_generation(bucket_name, None).metadata
-    payload = simdjson.loads(flask.request.data)
+    payload = json.loads(flask.request.data)
     source_objects = payload["sourceObjects"]
     if source_objects is None:
         utils.error.missing("source component", None)

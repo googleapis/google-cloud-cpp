@@ -20,7 +20,7 @@ import random
 import re
 
 import scalpl
-import simdjson
+import json
 
 import utils
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
@@ -144,8 +144,7 @@ class Bucket:
             metadata = request.bucket
         else:
             metadata = json_format.ParseDict(
-                cls.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                cls.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
             )
         cls.__validate_bucket_name(metadata.name, context)
         default_projection = CommonEnums.Projection.NO_ACL
@@ -235,7 +234,7 @@ class Bucket:
         if context is not None:
             policy = request.iam_request.policy
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             data.pop("kind", None)
             policy = json_format.ParseDict(data, policy_pb2.Policy())
         self.iam_policy = policy
@@ -258,8 +257,7 @@ class Bucket:
             metadata = request.metadata
         else:
             metadata = json_format.ParseDict(
-                self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -278,7 +276,7 @@ class Bucket:
             metadata = request.metadata
             update_mask = request.update_mask
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             if "labels" in data:
                 if data["labels"] is None:
                     self.metadata.labels.clear()
@@ -348,7 +346,7 @@ class Bucket:
                 request.bucket_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
         return self.__upsert_acl(entity, role, context)
 
@@ -357,7 +355,7 @@ class Bucket:
         if context is not None:
             role = request.bucket_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_acl(entity, role, context)
 
@@ -366,7 +364,7 @@ class Bucket:
         if context is not None:
             role = request.bucket_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_acl(entity, role, context)
 
@@ -408,7 +406,7 @@ class Bucket:
                 request.object_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
         return self.__upsert_default_object_acl(entity, role, context)
 
@@ -417,7 +415,7 @@ class Bucket:
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_default_object_acl(entity, role, context)
 
@@ -426,7 +424,7 @@ class Bucket:
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
         return self.__upsert_default_object_acl(entity, role, context)
 
@@ -443,7 +441,7 @@ class Bucket:
             notification = request.notification
         else:
             notification = json_format.ParseDict(
-                simdjson.loads(request.data), resources_pb2.Notification()
+                json.loads(request.data), resources_pb2.Notification()
             )
         notification.id = "notification-%d" % random.getrandbits(16)
         self.notifications[notification.id] = notification

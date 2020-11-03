@@ -17,7 +17,7 @@
 import types
 from google.protobuf import json_format
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
-import simdjson
+import json
 import utils
 import hashlib
 import flask
@@ -52,7 +52,7 @@ class DataHolder(types.SimpleNamespace):
         if len(request.data) > 0:
             if name != "":
                 utils.error.invalid("name argument in non-empty payload", None)
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
             if "customTime" in data:
                 rest_only["customTime"] = data.pop("customTime")
             metadata = json_format.ParseDict(data, resources_pb2.Object())

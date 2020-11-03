@@ -18,7 +18,7 @@ import re
 import scalpl
 import types
 import utils
-import simdjson
+import json
 import random
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
@@ -201,7 +201,7 @@ def parse_multipart(request):
     if parts[-1] != b"--\r\n":
         utils.error.missing("end marker (--%s--) in media body" % boundary, None)
     _, resource = parse_part(parts[1])
-    metadata = simdjson.loads(resource)
+    metadata = json.loads(resource)
     media_headers, media = parse_part(parts[2])
     return metadata, media_headers, media
 
