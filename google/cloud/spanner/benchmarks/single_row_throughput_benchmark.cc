@@ -99,21 +99,29 @@ int main(int argc, char* argv[]) {
   }
 
   google::cloud::spanner::DatabaseAdminClient admin_client;
-  auto create_future =
-      admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
+
+  std::cout << "# Waiting for database creation to complete " << std::flush;
+  google::cloud::StatusOr<google::spanner::admin::database::v1::Database> db;
+  int constexpr kMaxCreateDatabaseRetries = 3;
+  for (int retry = 0; retry <= kMaxCreateDatabaseRetries; ++retry) {
+    auto create_future =
+        admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
                                 Key   INT64 NOT NULL,
                                 Data  STRING(1024),
                              ) PRIMARY KEY (Key))sql"});
-  std::cout << "# Waiting for database creation to complete " << std::flush;
-  for (;;) {
-    auto status = create_future.wait_for(std::chrono::seconds(1));
-    if (status == std::future_status::ready) break;
-    std::cout << '.' << std::flush;
+    for (;;) {
+      auto status = create_future.wait_for(std::chrono::seconds(1));
+      if (status == std::future_status::ready) break;
+      std::cout << '.' << std::flush;
+    }
+    db = create_future.get();
+    if (db) break;
+    if (db.status().code() != google::cloud::StatusCode::kUnavailable) break;
+    std::this_thread::sleep_for(retry * std::chrono::seconds(3));
   }
   std::cout << " DONE\n";
 
   bool database_created = true;
-  auto db = create_future.get();
   if (!db) {
     if (user_specified_database &&
         db.status().code() == google::cloud::StatusCode::kAlreadyExists) {
