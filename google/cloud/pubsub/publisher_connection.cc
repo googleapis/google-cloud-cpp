@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
+#include "google/cloud/pubsub/internal/publisher_round_robin.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/future_void.h"
@@ -68,11 +69,16 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Topic topic, PublisherOptions options, ConnectionOptions connection_options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  auto stub = pubsub_internal::CreateDefaultPublisherStub(connection_options,
-                                                          /*channel_id=*/0);
+  std::vector<std::shared_ptr<pubsub_internal::PublisherStub>> children(
+      connection_options.num_channels());
+  int id = 0;
+  std::generate(children.begin(), children.end(), [&id, &connection_options] {
+    return pubsub_internal::CreateDefaultPublisherStub(connection_options,
+                                                       id++);
+  });
   return pubsub_internal::MakePublisherConnection(
       std::move(topic), std::move(options), std::move(connection_options),
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy));
+      std::move(children), std::move(retry_policy), std::move(backoff_policy));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -87,12 +93,27 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     std::shared_ptr<PublisherStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  std::vector<std::shared_ptr<PublisherStub>> children{std::move(stub)};
+  return MakePublisherConnection(
+      std::move(topic), std::move(options), std::move(connection_options),
+      std::move(children), std::move(retry_policy), std::move(backoff_policy));
+}
+
+std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
+    pubsub::Topic topic, pubsub::PublisherOptions options,
+    pubsub::ConnectionOptions connection_options,
+    std::vector<std::shared_ptr<PublisherStub>> stubs,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  if (stubs.empty()) return nullptr;
   if (!retry_policy) retry_policy = DefaultRetryPolicy();
   if (!backoff_policy) backoff_policy = DefaultBackoffPolicy();
-  stub = std::make_shared<pubsub_internal::PublisherMetadata>(std::move(stub));
+  std::shared_ptr<PublisherStub> stub =
+      std::make_shared<PublisherRoundRobin>(std::move(stubs));
+  stub = std::make_shared<PublisherMetadata>(std::move(stub));
   if (connection_options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<pubsub_internal::PublisherLogging>(
+    stub = std::make_shared<PublisherLogging>(
         std::move(stub), connection_options.tracing_options());
   }
 

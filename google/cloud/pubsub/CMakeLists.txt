@@ -53,6 +53,8 @@ add_library(
     internal/publisher_logging.h
     internal/publisher_metadata.cc
     internal/publisher_metadata.h
+    internal/publisher_round_robin.cc
+    internal/publisher_round_robin.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
     internal/rejects_with_ordering_key.cc
@@ -200,6 +202,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
+        internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
