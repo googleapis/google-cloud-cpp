@@ -120,8 +120,9 @@ TEST(GoldenClientTest, ListDatabases) {
   std::string expected_instance(
       "/projects/test-project/instances/test-instance");
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce([expected_instance](::google::test::admin::database::v1::
-                                        ListDatabasesRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
+                                              ListDatabasesRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
 
         return ListDatabasesRange(
@@ -144,6 +145,12 @@ TEST(GoldenClientTest, ListDatabases) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::ListDatabasesRequest request;
+  request.set_parent(expected_instance);
+  range = client.ListDatabases(request);
+  begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenClientTest, CreateDatabase) {
@@ -153,7 +160,8 @@ TEST(GoldenClientTest, CreateDatabase) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_instance](
               ::google::test::admin::database::v1::CreateDatabaseRequest const
                   &r) {
@@ -175,6 +183,16 @@ TEST(GoldenClientTest, CreateDatabase) {
   EXPECT_EQ(expected_database, db->name());
   EXPECT_EQ(::google::test::admin::database::v1::Database::CREATING,
             db->state());
+  ::google::test::admin::database::v1::CreateDatabaseRequest request;
+  request.set_parent(expected_instance);
+  request.set_create_statement("create database test-db");
+  fut = client.CreateDatabase(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  db = fut.get();
+  EXPECT_STATUS_OK(db);
+  EXPECT_EQ(expected_database, db->name());
+  EXPECT_EQ(::google::test::admin::database::v1::Database::CREATING,
+            db->state());
 }
 
 TEST(GoldenClientTest, GetDatabase) {
@@ -182,7 +200,8 @@ TEST(GoldenClientTest, GetDatabase) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, GetDatabase)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_database](
               ::google::test::admin::database::v1::GetDatabaseRequest const
                   &request) {
@@ -191,9 +210,13 @@ TEST(GoldenClientTest, GetDatabase) {
             response.set_name(request.name());
             return response;
           });
-
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetDatabase(expected_database);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(response->name(), expected_database);
+  ::google::test::admin::database::v1::GetDatabaseRequest request;
+  request.set_name(expected_database);
+  response = client.GetDatabase(request);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(response->name(), expected_database);
 }
@@ -203,8 +226,10 @@ TEST(GoldenClientTest, UpdateDatabase) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce([expected_database](::google::test::admin::database::v1::
-                                        UpdateDatabaseDdlRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_database](
+                          ::google::test::admin::database::v1::
+                              UpdateDatabaseDdlRequest const &r) {
         EXPECT_EQ(expected_database, r.database());
         EXPECT_THAT(r.statements(), ElementsAre("-- test only: NOT SQL"));
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
@@ -218,6 +243,14 @@ TEST(GoldenClientTest, UpdateDatabase) {
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
   EXPECT_THAT(db->statements(), ElementsAre("-- test only: NOT SQL"));
+  ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
+  request.set_database(expected_database);
+  request.add_statements("-- test only: NOT SQL");
+  fut = client.UpdateDatabaseDdl(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  db = fut.get();
+  EXPECT_STATUS_OK(db);
+  EXPECT_THAT(db->statements(), ElementsAre("-- test only: NOT SQL"));
 }
 
 TEST(GoldenClientTest, DropDatabase) {
@@ -225,7 +258,8 @@ TEST(GoldenClientTest, DropDatabase) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, DropDatabase)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_database](
               ::google::test::admin::database::v1::DropDatabaseRequest const
                   &request) {
@@ -235,6 +269,10 @@ TEST(GoldenClientTest, DropDatabase) {
   DatabaseAdminClient client(std::move(mock));
   auto response = client.DropDatabase(expected_database);
   EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(expected_database);
+  response = client.DropDatabase(request);
+  EXPECT_STATUS_OK(response);
 }
 
 TEST(GoldenClientTest, GetDatabaseDdl) {
@@ -242,8 +280,9 @@ TEST(GoldenClientTest, GetDatabaseDdl) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, GetDatabaseDdl)
-      .WillOnce([expected_database](::google::test::admin::database::v1::
-                                        GetDatabaseDdlRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_database](::google::test::admin::database::v1::
+                                              GetDatabaseDdlRequest const &r) {
         EXPECT_EQ(expected_database, r.database());
         ::google::test::admin::database::v1::GetDatabaseDdlResponse response;
         response.add_statements("CREATE DATABASE test-db");
@@ -254,6 +293,12 @@ TEST(GoldenClientTest, GetDatabaseDdl) {
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->statements_size());
   ASSERT_EQ("CREATE DATABASE test-db", response->statements(0));
+  ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
+  request.set_database(expected_database);
+  response = client.GetDatabaseDdl(request);
+  EXPECT_STATUS_OK(response);
+  ASSERT_EQ(1, response->statements_size());
+  ASSERT_EQ("CREATE DATABASE test-db", response->statements(0));
 }
 
 TEST(GoldenClientTest, SetIamPolicy) {
@@ -261,7 +306,8 @@ TEST(GoldenClientTest, SetIamPolicy) {
   std::string expected_database(
       "/projects/test-project/instances/test-instance/databases/test-db");
   EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_database](::google::iam::v1::SetIamPolicyRequest const &r) {
             EXPECT_EQ(expected_database, r.resource());
             return r.policy();
@@ -269,6 +315,11 @@ TEST(GoldenClientTest, SetIamPolicy) {
   DatabaseAdminClient client(std::move(mock));
   auto response =
       client.SetIamPolicy(expected_database, google::iam::v1::Policy{});
+  EXPECT_STATUS_OK(response);
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(expected_database);
+  *request.mutable_policy() = google::iam::v1::Policy{};
+  response = client.SetIamPolicy(request);
   EXPECT_STATUS_OK(response);
 }
 
@@ -279,8 +330,9 @@ TEST(GoldenClientTest, GetIamPolicy) {
   std::string const expected_role = "roles/spanner.databaseReader";
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce([expected_database, expected_role, expected_member](
-                    ::google::iam::v1::GetIamPolicyRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_database, expected_role, expected_member](
+                          ::google::iam::v1::GetIamPolicyRequest const &r) {
         EXPECT_EQ(expected_database, r.resource());
         google::iam::v1::Policy response;
         auto &binding = *response.add_bindings();
@@ -295,6 +347,14 @@ TEST(GoldenClientTest, GetIamPolicy) {
   ASSERT_EQ(expected_role, response->bindings().Get(0).role());
   ASSERT_EQ(1, response->bindings().Get(0).members().size());
   ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+  ::google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(expected_database);
+  response = client.GetIamPolicy(request);
+  EXPECT_STATUS_OK(response);
+  ASSERT_EQ(1, response->bindings().size());
+  ASSERT_EQ(expected_role, response->bindings().Get(0).role());
+  ASSERT_EQ(1, response->bindings().Get(0).members().size());
+  ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
 }
 
 TEST(GoldenClientTest, TestIamPermissions) {
@@ -303,18 +363,27 @@ TEST(GoldenClientTest, TestIamPermissions) {
       "/projects/test-project/instances/test-instance/databases/test-db");
   std::string expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce([expected_database, expected_permission](
-                    ::google::iam::v1::TestIamPermissionsRequest const &r) {
-        EXPECT_EQ(expected_database, r.resource());
-        EXPECT_EQ(1, r.permissions().size());
-        EXPECT_EQ(expected_permission, r.permissions(0));
-        google::iam::v1::TestIamPermissionsResponse response;
-        response.add_permissions(expected_permission);
-        return response;
-      });
+      .Times(2)
+      .WillRepeatedly(
+          [expected_database, expected_permission](
+              ::google::iam::v1::TestIamPermissionsRequest const &r) {
+            EXPECT_EQ(expected_database, r.resource());
+            EXPECT_EQ(1, r.permissions().size());
+            EXPECT_EQ(expected_permission, r.permissions(0));
+            google::iam::v1::TestIamPermissionsResponse response;
+            response.add_permissions(expected_permission);
+            return response;
+          });
   DatabaseAdminClient client(std::move(mock));
   auto response =
       client.TestIamPermissions(expected_database, {expected_permission});
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(1, response->permissions_size());
+  EXPECT_EQ(expected_permission, response->permissions(0));
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  request.set_resource(expected_database);
+  request.add_permissions(expected_permission);
+  response = client.TestIamPermissions(request);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(1, response->permissions_size());
   EXPECT_EQ(expected_permission, response->permissions(0));
@@ -332,7 +401,8 @@ TEST(GoldenClientTest, CreateBackup) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   EXPECT_CALL(*mock, CreateBackup)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_database, expire_time, backup_id, expected_backup_name](
               ::google::test::admin::database::v1::CreateBackupRequest const
                   &r) {
@@ -357,6 +427,17 @@ TEST(GoldenClientTest, CreateBackup) {
   EXPECT_EQ(expected_backup_name, response->name());
   EXPECT_EQ(::google::test::admin::database::v1::Backup::CREATING,
             response->state());
+  ::google::test::admin::database::v1::CreateBackupRequest request;
+  request.set_parent(expected_instance);
+  request.set_backup_id(backup_id);
+  *request.mutable_backup() = backup;
+  fut = client.CreateBackup(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  response = fut.get();
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(expected_backup_name, response->name());
+  EXPECT_EQ(::google::test::admin::database::v1::Backup::CREATING,
+            response->state());
 }
 
 TEST(GoldenClientTest, GetBackup) {
@@ -364,7 +445,8 @@ TEST(GoldenClientTest, GetBackup) {
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, GetBackup)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_backup_name](
               ::google::test::admin::database::v1::GetBackupRequest const &r) {
             EXPECT_EQ(expected_backup_name, r.name());
@@ -380,6 +462,13 @@ TEST(GoldenClientTest, GetBackup) {
   EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
             response->state());
   EXPECT_EQ(expected_backup_name, response->name());
+  ::google::test::admin::database::v1::GetBackupRequest request;
+  request.set_name(expected_backup_name);
+  response = client.GetBackup(request);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
+            response->state());
+  EXPECT_EQ(expected_backup_name, response->name());
 }
 
 TEST(GoldenClientTest, UpdateBackupExpireTime) {
@@ -391,7 +480,8 @@ TEST(GoldenClientTest, UpdateBackupExpireTime) {
   auto proto_expire_time =
       google::cloud::internal::ToProtoTimestamp(expire_time);
   EXPECT_CALL(*mock, UpdateBackup)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_backup_name, proto_expire_time](
               ::google::test::admin::database::v1::UpdateBackupRequest const
                   &r) {
@@ -420,6 +510,15 @@ TEST(GoldenClientTest, UpdateBackupExpireTime) {
             response->state());
   EXPECT_EQ(backup.name(), response->name());
   EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
+  ::google::test::admin::database::v1::UpdateBackupRequest request;
+  *request.mutable_backup() = backup;
+  *request.mutable_update_mask() = update_mask;
+  response = client.UpdateBackup(request);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
+            response->state());
+  EXPECT_EQ(backup.name(), response->name());
+  EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
 }
 
 TEST(GoldenClientTest, DeleteBackup) {
@@ -427,7 +526,8 @@ TEST(GoldenClientTest, DeleteBackup) {
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, DeleteBackup)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_backup_name](
               ::google::test::admin::database::v1::DeleteBackupRequest const
                   &r) {
@@ -437,6 +537,10 @@ TEST(GoldenClientTest, DeleteBackup) {
   DatabaseAdminClient client(std::move(mock));
   auto response = client.DeleteBackup(expected_backup_name);
   EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::DeleteBackupRequest request;
+  request.set_name(expected_backup_name);
+  response = client.DeleteBackup(request);
+  EXPECT_STATUS_OK(response);
 }
 
 TEST(GoldenClientTest, ListBackups) {
@@ -444,8 +548,9 @@ TEST(GoldenClientTest, ListBackups) {
   std::string expected_instance(
       "/projects/test-project/instances/test-instance");
   EXPECT_CALL(*mock, ListBackups)
-      .WillOnce([expected_instance](::google::test::admin::database::v1::
-                                        ListBackupsRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
+                                              ListBackupsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
         return ListBackupsRange(
             ::google::test::admin::database::v1::ListBackupsRequest{},
@@ -465,6 +570,12 @@ TEST(GoldenClientTest, ListBackups) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::ListBackupsRequest request;
+  request.set_parent(expected_instance);
+  range = client.ListBackups(request);
+  begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenClientTest, RestoreDatabase) {
@@ -476,9 +587,10 @@ TEST(GoldenClientTest, RestoreDatabase) {
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce([expected_backup_name, expected_database,
-                 expected_instance](::google::test::admin::database::v1::
-                                        RestoreDatabaseRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_backup_name, expected_database,
+                       expected_instance](::google::test::admin::database::v1::
+                                              RestoreDatabaseRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
         EXPECT_EQ(expected_database, r.database_id());
         EXPECT_EQ(expected_backup_name, r.backup());
@@ -497,6 +609,17 @@ TEST(GoldenClientTest, RestoreDatabase) {
   EXPECT_EQ(expected_database, database->name());
   EXPECT_EQ(::google::test::admin::database::v1::Database::READY_OPTIMIZING,
             database->state());
+  ::google::test::admin::database::v1::RestoreDatabaseRequest request;
+  request.set_parent(expected_instance);
+  request.set_database_id(expected_database);
+  request.set_backup(expected_backup_name);
+  fut = client.RestoreDatabase(request);
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  database = fut.get();
+  EXPECT_STATUS_OK(database);
+  EXPECT_EQ(expected_database, database->name());
+  EXPECT_EQ(::google::test::admin::database::v1::Database::READY_OPTIMIZING,
+            database->state());
 }
 
 TEST(GoldenClientTest, ListDatabaseOperations) {
@@ -504,7 +627,8 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
   std::string expected_instance(
       "/projects/test-project/instances/test-instance");
   EXPECT_CALL(*mock, ListDatabaseOperations)
-      .WillOnce(
+      .Times(2)
+      .WillRepeatedly(
           [expected_instance](::google::test::admin::database::v1::
                                   ListDatabaseOperationsRequest const &r) {
             EXPECT_EQ(expected_instance, r.parent());
@@ -527,6 +651,12 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
+  request.set_parent(expected_instance);
+  range = client.ListDatabaseOperations(request);
+  begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST(GoldenClientTest, ListBackupOperations) {
@@ -534,8 +664,10 @@ TEST(GoldenClientTest, ListBackupOperations) {
   std::string expected_instance(
       "/projects/test-project/instances/test-instance");
   EXPECT_CALL(*mock, ListBackupOperations)
-      .WillOnce([expected_instance](::google::test::admin::database::v1::
-                                        ListBackupOperationsRequest const &r) {
+      .Times(2)
+      .WillRepeatedly([expected_instance](
+                          ::google::test::admin::database::v1::
+                              ListBackupOperationsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
         return ListBackupOperationsRange(
             ::google::test::admin::database::v1::ListBackupOperationsRequest{},
@@ -553,6 +685,12 @@ TEST(GoldenClientTest, ListBackupOperations) {
   DatabaseAdminClient client(mock);
   auto range = client.ListBackupOperations(expected_instance);
   auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::ListBackupOperationsRequest request;
+  request.set_parent(expected_instance);
+  range = client.ListBackupOperations(request);
+  begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
