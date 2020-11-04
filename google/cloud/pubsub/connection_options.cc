@@ -31,7 +31,7 @@ std::string ConnectionOptionsTraits::user_agent_prefix() {
 
 int ConnectionOptionsTraits::default_num_channels() {
   auto const ncores = std::thread::hardware_concurrency();
-  return ncores == 0 ? 4 : static_cast<int>(ncores * 4);
+  return ncores == 0 ? 4 : static_cast<int>(ncores);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
