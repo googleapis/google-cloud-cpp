@@ -243,8 +243,6 @@ void DefaultCompletionQueueImpl::RunAsyncOnce() {
   run_async_queue_.pop_front();
   lk.unlock();
   f->exec();
-  lk.lock();
-  WakeUpRunAsyncThread(std::move(lk));
 }
 
 // A helper class to wake up the asynchronous thread.
@@ -296,9 +294,9 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnce
 
 void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
     std::unique_lock<std::mutex> lk) {
-  if (run_async_queue_.empty()) return;
+  if (run_async_queue_.empty() || shutdown_) return;
   if (thread_pool_size_ == 1) {
-    auto op = std::make_shared<WakeUpRunAsyncLoop>(shared_from_this());
+    auto op = std::make_shared<WakeUpRunAsyncOnce>(shared_from_this());
     StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
     return;
   }
