@@ -80,7 +80,7 @@ PublisherRoundRobin::AsyncPublish(
 
 std::shared_ptr<PublisherStub> PublisherRoundRobin::Child() {
   std::lock_guard<std::mutex> lk(mu_);
-  auto child = children_.at(current_);
+  auto child = children_[current_];
   current_ = (current_ + 1) % children_.size();
   return child;
 }

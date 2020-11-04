@@ -105,6 +105,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     std::vector<std::shared_ptr<PublisherStub>> stubs,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+  if (stubs.empty()) return nullptr;
   if (!retry_policy) retry_policy = DefaultRetryPolicy();
   if (!backoff_policy) backoff_policy = DefaultBackoffPolicy();
   std::shared_ptr<PublisherStub> stub =
