@@ -17,7 +17,6 @@
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
-//#include <openssl/rsa.h>
 #include <openssl/opensslv.h>
 #include <openssl/pem.h>
 #ifdef OPENSSL_IS_BORINGSSL
