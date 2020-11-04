@@ -792,7 +792,7 @@ ObjectMetadata GrpcClient::FromProto(google::storage::v1::Object object) {
   metadata.generation_ = object.generation();
   metadata.kms_key_name_ = std::move(*object.mutable_kms_key_name());
   metadata.md5_hash_ = object.md5_hash();
-  for (auto& kv : object.metadata()) {
+  for (auto const& kv : object.metadata()) {
     metadata.metadata_[kv.first] = kv.second;
   }
   if (object.has_retention_expiration_time()) {

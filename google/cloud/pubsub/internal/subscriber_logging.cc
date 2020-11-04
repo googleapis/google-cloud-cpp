@@ -101,9 +101,10 @@ SubscriberLogging::AsyncStreamingPull(
   auto prefix = std::string(__func__) + "(" + request_id + ")";
   GCP_LOG(DEBUG) << prefix
                  << " << request=" << DebugString(request, tracing_options_);
+  auto stream = child_->AsyncStreamingPull(cq, std::move(context), request);
+  if (!trace_streams_) return stream;
   return absl::make_unique<LoggingAsyncPullStream>(
-      child_->AsyncStreamingPull(cq, std::move(context), request),
-      tracing_options_, request_id);
+      std::move(stream), tracing_options_, request_id);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberLogging::CreateSnapshot(

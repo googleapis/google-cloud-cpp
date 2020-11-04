@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) try {
                       google::cloud::bigtable::Filter::PassAllFilter())) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << ":\n";
-    for (auto& cell : row->cells()) {
+    for (auto const& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
                 << "    @ " << cell.timestamp().count() << "us\n"
                 << "\t\"" << cell.value() << '"' << "\n";

@@ -23,7 +23,7 @@ source module lib/io.sh
 export CC=gcc
 export CXX=g++
 export DISTRO=fedora-install
-export DISTRO_VERSION=31
+export DISTRO_VERSION=33
 export CMAKE_SOURCE_DIR="."
 
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
@@ -82,7 +82,7 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
   # as errors.
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export CC=clang
   export CXX=clang++
   export BUILD_TYPE=Debug
@@ -95,7 +95,7 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   # TODO(4306): Enable the backup tests once they don't timeout too often.
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
   export BUILD_TOOL="Bazel"
@@ -127,7 +127,7 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export BAZEL_CONFIG="asan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -136,16 +136,20 @@ elif [[ "${BUILD_NAME}" = "msan" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora-libcxx-msan
-  export DISTRO_VERSION=32
+  export DISTRO_VERSION=33
   export BAZEL_CONFIG="msan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   # Compile with the ThreadSanitizer enabled.
-  export CC=clang
-  export CXX=clang++
-  export DISTRO=fedora
-  export DISTRO_VERSION=31
+  # We need to use clang-9 for the TSAN build because:
+  #   https://github.com/google/sanitizers/issues/1259
+  # Using Fedora >= 32 will push us to clang-10, and Fedora < 32 is EOL.
+  # Fortunately, Ubuntu:18.04 is a LTS release with clang-9 as an alternative.
+  export CC=clang-9
+  export CXX=clang++-9
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="tsan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -154,7 +158,7 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export BAZEL_CONFIG="ubsan"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -169,14 +173,14 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
   # Compile under fedora:31. This distro uses gcc-9.
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export CC=gcc
   export CXX=g++
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "clang-9" ]]; then
   # Compile under fedora:31. This distro uses clang-9.
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export CC=clang
   export CXX=clang++
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
@@ -218,7 +222,7 @@ elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   export CC=clang
   export CXX=clang++
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   export BAZEL_CONFIG="libcxx"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"

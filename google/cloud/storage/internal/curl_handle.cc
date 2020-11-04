@@ -35,7 +35,7 @@ std::size_t const kMaxDataDebugSize = 48;
 
 extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
                                        std::size_t size, void* userptr) {
-  auto debug_buffer = reinterpret_cast<std::string*>(userptr);
+  auto* debug_buffer = reinterpret_cast<std::string*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
       *debug_buffer += "== curl(Info): " + std::string(data, size);

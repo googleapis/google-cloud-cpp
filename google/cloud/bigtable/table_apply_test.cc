@@ -19,13 +19,15 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace bigtable = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::testing::_;
-
-/// Define helper types and functions for this test.
-namespace {
 
 auto mock_mutate_row = [](grpc::Status const& status) {
   return [status](grpc::ClientContext* context,
@@ -40,12 +42,9 @@ auto mock_mutate_row = [](grpc::Status const& status) {
 
 class TableApplyTest : public bigtable::testing::TableTestFixture {};
 
-}  // namespace
-
 /// @test Verify that Table::Apply() works in a simplest case.
 TEST_F(TableApplyTest, Simple) {
-  EXPECT_CALL(*client_, MutateRow(_, _, _))
-      .WillOnce(mock_mutate_row(grpc::Status::OK));
+  EXPECT_CALL(*client_, MutateRow).WillOnce(mock_mutate_row(grpc::Status::OK));
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
@@ -54,7 +53,7 @@ TEST_F(TableApplyTest, Simple) {
 
 /// @test Verify that Table::Apply() raises an exception on permanent failures.
 TEST_F(TableApplyTest, Failure) {
-  EXPECT_CALL(*client_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow)
       .WillRepeatedly(mock_mutate_row(
           grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh")));
 
@@ -66,7 +65,7 @@ TEST_F(TableApplyTest, Failure) {
 
 /// @test Verify that Table::Apply() retries on partial failures.
 TEST_F(TableApplyTest, Retry) {
-  EXPECT_CALL(*client_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow)
       .WillOnce(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(mock_mutate_row(
@@ -82,7 +81,7 @@ TEST_F(TableApplyTest, Retry) {
 
 /// @test Verify that Table::Apply() retries only idempotent mutations.
 TEST_F(TableApplyTest, RetryIdempotent) {
-  EXPECT_CALL(*client_, MutateRow(_, _, _))
+  EXPECT_CALL(*client_, MutateRow)
       .WillRepeatedly(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
@@ -91,3 +90,9 @@ TEST_F(TableApplyTest, RetryIdempotent) {
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(google::cloud::StatusCode::kUnavailable, status.code());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

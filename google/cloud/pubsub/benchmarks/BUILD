@@ -30,6 +30,7 @@ load(":pubsub_client_benchmark_programs.bzl", "pubsub_client_benchmark_programs"
         "//google/cloud/pubsub:pubsub_client",
         "//google/cloud/pubsub:pubsub_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_absl//absl/strings:str_format",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_benchmark_programs]

@@ -41,14 +41,6 @@ TEST(AckHandlerTest, AutoNackMove) {
   }
 }
 
-TEST(AckHandlerTest, AckId) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
-  EXPECT_CALL(*mock, ack_id()).WillOnce(Return("test-id"));
-  EXPECT_CALL(*mock, nack()).Times(1);
-  AckHandler handler(std::move(mock));
-  EXPECT_EQ("test-id", handler.ack_id());
-}
-
 TEST(AckHandlerTest, DeliveryAttempts) {
   auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, delivery_attempt()).WillOnce(Return(42));

@@ -1,8 +1,9 @@
-git+git://github.com/googleapis/python-storage@gapic-generation
+git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
 grpcio==1.32.0
 flask==1.1.2
-pysimdjson==3.0.0
 pytest==6.0.2
 httpbin==0.7.0
 scalpl==0.4.0
 crc32c==2.1
+gevent==20.9.0
+gunicorn==20.0.4

@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=32
+ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
 
 # Install the minimal packages needed to compile libcxx, install Bazel, and
 # then compile our code.
 RUN dnf makecache && \
-    dnf install -y clang clang-tools-extra cmake findutils gcc-c++ git \
-        llvm llvm-devel make ninja-build openssl-devel python3 python3-devel \
-        python3-lit python3-pip tar unzip which wget xz
+    dnf install -y ccache clang clang-tools-extra cmake findutils gcc-c++ \
+        git llvm llvm-devel make ninja-build openssl-devel python3 python3.8 \
+        python3-devel python3-lit python3-pip tar unzip which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -30,12 +30,10 @@ RUN echo 'root:' | chpasswd
 
 # Install the Python modules needed to run the storage testbench
 RUN pip3 install --upgrade pip
-RUN pip3 install setuptools
-RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
-    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
-    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
-    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
-    zope.event==4.5.0 zope.interface==5.1.0
+RUN pip3 install setuptools wheel
+RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
+RUN pip3 install grpcio==1.32.0 flask==1.1.2 pytest==6.0.2 httpbin==0.7.0 \
+    scalpl==0.4.0 crc32c==2.1 gevent==20.9.0 gunicorn==20.0.4
 
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxx-10.0.0.src.tar.xz
@@ -79,6 +77,7 @@ RUN cmake --build .build-libcxx --target install-cxx
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
+ENV CLOUDSDK_PYTHON=python3.8
 RUN /var/tmp/ci/install-cloud-sdk.sh
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN dnf makecache && dnf install -y java-latest-openjdk

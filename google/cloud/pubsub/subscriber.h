@@ -42,7 +42,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @snippet samples.cc subscribe
  *
  * @par Performance
- *
  * `Subscriber` objects are relatively cheap to create, copy, and move. However,
  * each `Subscriber` object must be created with a
  * `std::shared_ptr<SubscriberConnection>`, which itself is relatively expensive
@@ -51,14 +50,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * interface for more details.
  *
  * @par Thread Safety
- *
  * Instances of this class created via copy-construction or copy-assignment
  * share the underlying pool of connections. Access to these copies via multiple
  * threads is guaranteed to work. Two threads operating on the same instance of
  * this class is not guaranteed to work.
  *
  * @par Background Threads
- *
  * This class uses the background threads configured via `ConnectionOptions`.
  * Applications can create their own pool of background threads by (a) creating
  * their own #google::cloud::v1::CompletionQueue, (b) setting this completion
@@ -69,7 +66,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * @snippet samples.cc custom-thread-pool-subscriber
  *
  * @par Asynchronous Functions
- *
  * Some of the member functions in this class return a `future<T>` (or
  * `future<StatusOr<T>>`) object.  Readers are probably familiar with
  * [`std::future<T>`][std-future-link]. Our version adds a `.then()` function to
@@ -79,7 +75,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * documentation.
  *
  * @par Error Handling
- *
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
@@ -97,18 +92,35 @@ class Subscriber {
       : connection_(std::move(connection)) {}
 
   /**
-   * Create a new session to receive messages from @p subscription.
+   * Creates a new session to receive messages from @p subscription.
    *
    * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
    *   [`std::function<>`][std-function-link].
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * Will make multiple attempts to start a connection to the service, subject
+   * to the retry policies configured in the `SubscriberConnection`. Once a
+   * successful connection is established the library will try to resume the
+   * connection even if the connection fails with a permanent error. Resuming
+   * the connection is subject to the retry policies as described earlier.
+   *
+   * Note that calling `AckHandler::ack()` and/or `AckHandler::nack()` is
+   * handled differently with respect to retrying. Check the documentation of
+   * these functions for details.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc subscribe
    *
    * @param cb the callable invoked when messages are received. This must be
    *     usable to construct a
    *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
    * @return a future that is satisfied when the session will no longer receive
-   *     messages. For example because there was an unrecoverable error trying
+   *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
-   *     terminate the session too.
+   *     terminate the session and satisfy the future.
    *
    * [std-function-link]:
    * https://en.cppreference.com/w/cpp/utility/functional/function

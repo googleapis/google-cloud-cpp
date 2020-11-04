@@ -342,11 +342,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gcsa::CreateBackupRequest request;
     request.set_parent(p.database.instance().FullName());
     request.set_backup_id(p.backup_id);
-    auto backup = request.mutable_backup();
-    backup->set_database(p.database.FullName());
-    auto proto_expire_time =
+    auto& backup = *request.mutable_backup();
+    backup.set_database(p.database.FullName());
+    *backup.mutable_expire_time() =
         google::cloud::internal::ToProtoTimestamp(p.expire_time);
-    *backup->mutable_expire_time() = proto_expire_time;
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,

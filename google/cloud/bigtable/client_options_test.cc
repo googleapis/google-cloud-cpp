@@ -64,7 +64,6 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
     return ClientOptionsTestTraits::InstanceAdminEndpoint(options);
   }
 
- protected:
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host_;
   google::cloud::testing_util::ScopedEnvironment
       bigtable_instance_admin_emulator_host_;

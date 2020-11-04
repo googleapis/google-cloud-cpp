@@ -1570,10 +1570,10 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
 
-        auto new_binding = response->add_bindings();
-        new_binding->set_role("writer");
-        new_binding->add_members("abc@gmail.com");
-        new_binding->add_members("xyz@gmail.com");
+        auto& new_binding = *response->add_bindings();
+        new_binding.set_role("writer");
+        new_binding.add_members("abc@gmail.com");
+        new_binding.add_members("xyz@gmail.com");
         response->set_etag("test-tag");
         *status = grpc::Status::OK;
       });

@@ -229,6 +229,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
+          // NOLINTNEXTLINE(performance-no-automatic-move)
           [transient](F) { return transient; });
     };
 
@@ -292,6 +293,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
     };
     auto finish_response = [cq, transient]() mutable {
       return cq.MakeRelativeTimer(us(10)).then(
+          // NOLINTNEXTLINE(performance-no-automatic-move)
           [transient](F) { return transient; });
     };
 
@@ -496,17 +498,18 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                     Write(Property(&Request::subscription, std::string{}), _))
             .WillOnce(
                 [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
+                    grpc::WriteOptions const& options) {
                   EXPECT_THAT(request.ack_ids(), ElementsAre("fake-001"));
                   EXPECT_THAT(request.modify_deadline_ack_ids(), IsEmpty());
                   EXPECT_THAT(request.modify_deadline_seconds(), IsEmpty());
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
+                  EXPECT_TRUE(options.is_write_through());
                   return success_stream.AddAction("Write");
                 })
             .WillOnce(
                 [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
+                    grpc::WriteOptions const& options) {
                   EXPECT_THAT(request.ack_ids(), ElementsAre("fake-002"));
                   EXPECT_THAT(request.modify_deadline_ack_ids(),
                               ElementsAre("fake-003"));
@@ -514,6 +517,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                               ElementsAre(0));
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
+                  EXPECT_TRUE(options.is_write_through());
                   return success_stream.AddAction("Write");
                 })
             .WillOnce(

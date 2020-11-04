@@ -60,8 +60,8 @@ class Snapshot {
    */
   std::string FullName() const;
 
-  /// @name Equality operators
   //@{
+  /// @name Equality operators
   friend bool operator==(Snapshot const& a, Snapshot const& b);
   friend bool operator!=(Snapshot const& a, Snapshot const& b) {
     return !(a == b);

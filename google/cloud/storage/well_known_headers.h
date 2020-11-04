@@ -40,7 +40,7 @@ namespace internal {
 template <typename H, typename T>
 class WellKnownHeader {
  public:
-  WellKnownHeader() : value_{} {}
+  WellKnownHeader() = default;
   explicit WellKnownHeader(T value) : value_(std::move(value)) {}
 
   char const* header_name() const { return H::header_name(); }

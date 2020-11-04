@@ -37,7 +37,7 @@ namespace internal {
 template <typename P, typename T>
 class WellKnownParameter {
  public:
-  WellKnownParameter() : value_{} {}
+  WellKnownParameter() = default;
   explicit WellKnownParameter(T&& value) : value_(std::forward<T>(value)) {}
   explicit WellKnownParameter(T const& value) : value_(value) {}
 

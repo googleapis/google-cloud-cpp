@@ -93,7 +93,6 @@ class RowSet {
   /// Terminate the recursion.
   void AppendAll() {}
 
- private:
   ::google::bigtable::v2::RowSet row_set_;
 };
 }  // namespace BIGTABLE_CLIENT_NS

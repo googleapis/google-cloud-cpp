@@ -25,8 +25,7 @@ TEST(SubscriberOptionsTest, Default) {
   SubscriberOptions const options{};
   EXPECT_LT(0, options.max_outstanding_messages());
   EXPECT_LT(0, options.max_outstanding_bytes());
-  EXPECT_LE(options.concurrency_lwm(), options.concurrency_hwm());
-  EXPECT_LT(0, options.concurrency_hwm());
+  EXPECT_LT(0, options.max_concurrency());
 }
 
 TEST(SubscriberOptionsTest, SetMessageCount) {
@@ -46,17 +45,12 @@ TEST(SubscriberOptionsTest, SetBytes) {
 }
 
 TEST(SubscriberOptionsTest, SetConcurrency) {
-  auto options = SubscriberOptions{}.set_concurrency_watermarks(8, 16);
-  EXPECT_EQ(16, options.concurrency_hwm());
-  EXPECT_EQ(8, options.concurrency_lwm());
+  auto options = SubscriberOptions{}.set_max_concurrency(16);
+  EXPECT_EQ(16, options.max_concurrency());
 
-  options.set_concurrency_watermarks(0, 0);
-  EXPECT_EQ(1, options.concurrency_hwm());
-  EXPECT_EQ(0, options.concurrency_lwm());
-
-  options.set_concurrency_watermarks(10, 5);
-  EXPECT_EQ(5, options.concurrency_hwm());
-  EXPECT_EQ(5, options.concurrency_lwm());
+  // 0 resets to default
+  options.set_max_concurrency(0);
+  EXPECT_EQ(SubscriberOptions{}.max_concurrency(), options.max_concurrency());
 }
 
 }  // namespace

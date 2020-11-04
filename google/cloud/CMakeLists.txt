@@ -202,7 +202,7 @@ add_subdirectory(testing_util)
 function (google_cloud_cpp_common_define_benchmarks)
     find_package(benchmark CONFIG REQUIRED)
 
-    set(google_cloud_cpp_common_benchmarks # cmake-format: sortable
+    set(google_cloud_cpp_common_benchmarks # cmake-format: sort
     )
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
@@ -324,9 +324,13 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-               "google_cloud_cpp_common-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_common-config-version.cmake"
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    COMPATIBILITY ExactVersion)
+
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config.cmake"
@@ -497,8 +501,11 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     # Create and install the CMake configuration files.
     configure_file("grpc_utils/config.cmake.in"
                    "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-                   "google_cloud_cpp_grpc_utils-config-version.cmake" @ONLY)
+    write_basic_package_version_file(
+        "google_cloud_cpp_grpc_utils-config-version.cmake"
+        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+        COMPATIBILITY ExactVersion)
+
     install(
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"

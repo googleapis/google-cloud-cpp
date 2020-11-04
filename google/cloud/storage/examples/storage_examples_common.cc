@@ -50,7 +50,7 @@ Commands::value_type CreateCommandEntry(
                        : argv.size() != arg_names.size())) {
       std::ostringstream os;
       os << name;
-      for (auto& a : arg_names) {
+      for (auto const& a : arg_names) {
         os << " " << a;
       }
       throw Usage{std::move(os).str()};

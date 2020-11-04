@@ -58,6 +58,9 @@ std::string strerror(int errnum) {
 #ifdef _WIN32
   auto const result = strerror_s(error_msg, sizeof(error_msg) - 1, errnum);
 #else
+  // Cannot use `auto const*` because on macOS (and with the right settings on
+  // Linux) this can return `int`.
+  // NOLINTNEXTLINE(readability-qualified-auto)
   auto const result = strerror_r(errnum, error_msg, sizeof(error_msg) - 1);
 #endif  // _WIN32
   return handle_strerror_r_error(error_msg, errnum, result);

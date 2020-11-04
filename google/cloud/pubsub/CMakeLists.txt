@@ -20,7 +20,9 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
 set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION} (Beta)")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing")
+set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing"
+                            "examples")
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_PUBSUB_NS=v1")
 
 include(GoogleCloudCppCommon)
@@ -328,10 +330,13 @@ install(
     COMPONENT google_cloud_cpp_pubsub_development)
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "pubsub_client-config.cmake" @ONLY)
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config-version.cmake.in"
-    "pubsub_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "pubsub_client-config-version.cmake"
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    COMPATIBILITY ExactVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config-version.cmake"

@@ -173,18 +173,26 @@ int main(int argc, char* argv[]) {
     }
     return statements;
   }();
-  auto create_future =
-      admin_client.CreateDatabase(database, additional_statements);
+
   std::cout << "# Waiting for database creation to complete " << std::flush;
-  for (;;) {
-    auto status = create_future.wait_for(std::chrono::seconds(1));
-    if (status == std::future_status::ready) break;
-    std::cout << '.' << std::flush;
+  google::cloud::StatusOr<google::spanner::admin::database::v1::Database> db;
+  int constexpr kMaxCreateDatabaseRetries = 3;
+  for (int retry = 0; retry <= kMaxCreateDatabaseRetries; ++retry) {
+    auto create_future =
+        admin_client.CreateDatabase(database, additional_statements);
+    for (;;) {
+      auto status = create_future.wait_for(std::chrono::seconds(1));
+      if (status == std::future_status::ready) break;
+      std::cout << '.' << std::flush;
+    }
+    db = create_future.get();
+    if (db) break;
+    if (db.status().code() != google::cloud::StatusCode::kUnavailable) break;
+    std::this_thread::sleep_for(retry * std::chrono::seconds(3));
   }
   std::cout << " DONE\n";
 
   bool database_created = true;
-  auto db = create_future.get();
   if (!db) {
     if (user_specified_database &&
         db.status().code() == google::cloud::StatusCode::kAlreadyExists) {
@@ -254,8 +262,10 @@ struct BytesTraits {
       google::cloud::internal::DefaultPRNG& generator) {
     static std::string const kPopulation = [] {
       std::string result;
-      for (int c = std::numeric_limits<char>::min();
-           c <= std::numeric_limits<char>::max(); ++c) {
+      // NOLINTNEXTLINE(bugprone-signed-char-misuse)
+      int constexpr kCharMin = (std::numeric_limits<char>::min)();
+      int constexpr kCharMax = (std::numeric_limits<char>::max)();
+      for (auto c = kCharMin; c <= kCharMax; ++c) {
         result.push_back(static_cast<char>(c));
       }
       return result;

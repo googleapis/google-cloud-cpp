@@ -254,8 +254,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       last_response_(ResumableUploadResponse{
           {}, 0, {}, ResumableUploadResponse::kInProgress, {}}) {
   current_ios_buffer_.resize(max_buffer_size_);
-  auto pbeg = current_ios_buffer_.data();
-  auto pend = pbeg + current_ios_buffer_.size();
+  auto* pbeg = current_ios_buffer_.data();
+  auto* pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
   // Sessions start in a closed state for uploads that have already been
   // finalized.
@@ -350,7 +350,7 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);
-  auto pbeg = current_ios_buffer_.data();
+  auto* pbeg = current_ios_buffer_.data();
   setp(pbeg, pbeg);
 
   // Close the stream
@@ -396,7 +396,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   if (last_response_) {
     // Reset the internal buffer and copy any trailing bytes from `buffers` to
     // it.
-    auto pbeg = current_ios_buffer_.data();
+    auto* pbeg = current_ios_buffer_.data();
     setp(pbeg, pbeg + current_ios_buffer_.size());
     PopFrontBytes(buffers, rounded_size);
     for (auto const& b : buffers) {

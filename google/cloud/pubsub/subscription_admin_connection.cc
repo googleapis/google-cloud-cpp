@@ -256,7 +256,8 @@ MakeSubscriptionAdminConnection(
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), options.tracing_options());
+        std::move(stub), options.tracing_options(),
+        options.tracing_enabled("rpc-streams"));
   }
   return std::make_shared<SubscriptionAdminConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy));

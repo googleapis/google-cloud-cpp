@@ -20,6 +20,20 @@ release notes.
 Before beginning the release process, verify all CI builds are passing on
 master.
 
+### Update the API baseline
+
+Run the `update-abi` build to update the API baseline. Once you cut the release
+any new APIs are, well, released, and we should think carefully about removing
+them.
+
+```bash
+./ci/kokoro/docker/build.sh update-abi
+```
+
+This may take a while, leave it running while you perform the next step. You
+can, but are not required to, send a single PR to update the baseline and the
+`CHANGELOG.md` file.
+
 ### Update CHANGELOG.md
 
 Update `CHANGELOG.md` based on the release notes for Bigtable, Storage,
@@ -30,6 +44,13 @@ Spanner, and the common libraries:
 git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/bigtable
+```
+
+```bash
+# Summarize the output of this into CHANGELOG.md under the "Pub/Sub" header
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
+    upstream/master -- google/cloud/pubsub
 ```
 
 ```bash
@@ -110,6 +131,7 @@ Cloud C++ internal testing dashboard and specify the branch name (e.g.
 doxygen documentation to the staging bucket for googleapis.dev hosting. The
 uploaded documentation will generally be live in an hour at the following URLs:
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+* https://googleapis.dev/cpp/google-cloud-pubsub/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
@@ -141,8 +163,8 @@ Please note that we use more strict settings for release branches than for
   * The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * The `Kokoro Ubuntu`, `Kokoro Windows`, `cla/google`, and
-    `continuous-integration/travis-ci` checks are required to pass.
+  * _At a minimum_ the `cla/google`, `kokoro/docker/asan`, and `kokoro/docker/clang-tidy`
+    checks are required to pass, but more may be selected.
 
 * The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.

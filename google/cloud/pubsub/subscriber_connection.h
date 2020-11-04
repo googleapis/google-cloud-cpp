@@ -44,40 +44,41 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * To create a concrete instance that connects you to the real Cloud Pub/Sub
  * service, see `MakeSubscriberConnection()`.
+ *
+ * @par The *Params nested classes
+ * Applications may define classes derived from `SubscriberConnection`, for
+ * example, because they want to mock the class. To avoid breaking all such
+ * derived classes when we change the number or type of the arguments to the
+ * member functions we define lightweight structures to pass the arguments.
  */
 class SubscriberConnection {
  public:
   virtual ~SubscriberConnection() = 0;
 
-  //@{
-  /**
-   * @name The parameter wrapper types.
-   *
-   * Define the arguments for each member function.
-   *
-   * Applications may define classes derived from `SubscriberConnection`, for
-   * example, because they want to mock the class. To avoid breaking all such
-   * derived classes when we change the number or type of the arguments to the
-   * member functions we define light weight structures to pass the arguments.
-   */
-
   /// Wrap the arguments for `Subscribe()`
   struct SubscribeParams {
     ApplicationCallback callback;
   };
-  //@}
 
   /// Defines the interface for `Subscriber::Subscribe()`
   virtual future<Status> Subscribe(SubscribeParams p);
 };
 
 /**
- * Returns a `SubscriberConnection` object to work with Cloud Pub/Sub subscriber
- * APIs.
+ * Creates a new `SubscriberConnection` object to work with `Subscriber`.
  *
  * The `SubscriberConnection` class is not intended for direct use in
  * applications, it is provided for applications wanting to mock the
  * `SubscriberClient` behavior in their tests.
+ *
+ * @par Performance
+ * Creating a new `SubscriberConnection` is relatively expensive. This typically
+ * initiate connections to the service, and therefore these objects should be
+ * shared and reused when possible. Note that gRPC reuses existing OS resources
+ * (sockets) whenever possible, so applications may experience better
+ * performance on the second (and subsequent) calls to this function with the
+ * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * and applications should not rely on it.
  *
  * @see `SubscriberConnection`
  *

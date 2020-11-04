@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -70,17 +71,17 @@ class BackoffPolicyMock : public BackoffPolicy {
 /// @test No failures scenario.
 TEST(RetryObjectReadSourceTest, NoFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce([raw_source](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
-  EXPECT_CALL(*raw_source, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
@@ -124,7 +125,6 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 /// @test Recovery from a transient failures when creating the raw source
 TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
@@ -133,10 +133,11 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   EXPECT_CALL(*raw_client, ReadObject(_))
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
-      .WillOnce([raw_source](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
-  EXPECT_CALL(*raw_source, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
@@ -146,7 +147,7 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
 /// @test A permanent error after a successful read
 TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source = new MockObjectReadSource;
+  auto* raw_source = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
@@ -171,10 +172,6 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
 /// @test Test if backoff policy is reset on success
 TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source1 = new MockObjectReadSource;
-  auto raw_source2 = new MockObjectReadSource;
-  auto raw_source3 = new MockObjectReadSource;
-  auto raw_source4 = new MockObjectReadSource;
   int num_backoff_policy_called = 0;
   BackoffPolicyMock backoff_policy_mock;
   EXPECT_CALL(*backoff_policy_mock.state_, OnCompletion()).WillRepeatedly([&] {
@@ -188,28 +185,29 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 
   EXPECT_EQ(0, num_backoff_policy_called);
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce([raw_source1](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source1);
+  EXPECT_CALL(*raw_client, ReadObject)
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
-      .WillOnce([raw_source2](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source2);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
-      .WillOnce([raw_source3](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source3);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(ReadSourceResult{}))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
-      .WillOnce([raw_source4](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source4);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
-  EXPECT_CALL(*raw_source1, Read(_, _)).WillOnce(Return(TransientError()));
-
-  EXPECT_CALL(*raw_source2, Read(_, _)).WillOnce(Return(TransientError()));
-
-  EXPECT_CALL(*raw_source3, Read(_, _))
-      .WillOnce(Return(ReadSourceResult{}))
-      .WillOnce(Return(TransientError()));
-
-  EXPECT_CALL(*raw_source4, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
@@ -239,23 +237,22 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 /// @test Check that retry policy is shared between reads and resetting session
 TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source1 = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce([raw_source1](ReadObjectRangeRequest const&) {
-        return std::unique_ptr<ObjectReadSource>(raw_source1);
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(ReadSourceResult{}))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); });
-
-  EXPECT_CALL(*raw_source1, Read(_, _))
-      .WillOnce(Return(ReadSourceResult{}))
-      .WillOnce(Return(TransientError()));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
@@ -271,29 +268,27 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 /// @test `ReadLast` behaviour after a transient failure
 TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto raw_source1 = new MockObjectReadSource;
-  auto raw_source2 = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   EXPECT_CALL(*raw_client, ReadObject(_))
-      .WillOnce([raw_source1](ReadObjectRangeRequest const& req) {
+      .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
-        return std::unique_ptr<ObjectReadSource>(raw_source1);
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(1024),
+                                              HttpResponse{200, "", {}}}))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
-      .WillOnce([raw_source2](ReadObjectRangeRequest const& req) {
+      .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(5, req.GetOption<ReadLast>().value());
-        return std::unique_ptr<ObjectReadSource>(raw_source2);
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
-
-  EXPECT_CALL(*raw_source1, Read(_, _))
-      .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(1024),
-                                        HttpResponse{200, "", {}}}))
-      .WillOnce(Return(TransientError()));
-
-  EXPECT_CALL(*raw_source2, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
 
   ReadObjectRangeRequest req("test_bucket", "test_object");
   req.set_option(ReadLast(1029));

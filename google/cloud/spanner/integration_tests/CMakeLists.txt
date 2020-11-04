@@ -22,7 +22,7 @@ function (spanner_client_define_integration_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(spanner_client_integration_tests
-        # cmake-format: sortable
+        # cmake-format: sort
         backup_integration_test.cc
         client_integration_test.cc
         client_stress_test.cc

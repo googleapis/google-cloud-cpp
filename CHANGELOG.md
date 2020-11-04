@@ -1,15 +1,19 @@
 # Changelog
 
-## v1.20.0 - TBD
+**FUTURE BREAKING CHANGES:**
 
-### Storage
+* **Storage:** on or about 2021-01-15 we are planning to remove the
+  `bucket_policy_only` attribute from `storage::BucketIamConfiguration` struct.
+  This attribute represents the pre-GA name for "Uniform Bucket Level Access"
+  becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-**BREAKING CHANGES:**
+## v1.21.0 - TBD
 
-* Our public headers no longer include `nlohmann/json.hpp`. Please update your
-  code to directly include this header if you need it. We believe it is not a
-  good practice to depend on indirectly included headers, but do feel we should
-  warn our customers of this change.
+## v1.20.0 - 2020-11
+
+### Bigtable
+
+No user-facing changes.
 
 ### Pub/Sub
 
@@ -17,6 +21,13 @@
 
 While the Pub/Sub library is not GA, and breaking changes are to be expected, we
 are close enough to a GA release that we think highlighting them is important.
+
+* Simplify the concurrency control configuration in `pubsub::SubscriberOptions`.
+  Applications only need to set the maximum number of messages that will be
+  scheduled in parallel.
+
+* Remove `pubsub::AckHandler::ack_id()` accessor. We believe application
+  developers should have no need for this field.
 
 * Rename `pubsub::SubscriptionOptions` to `pubsub::SubscriberOptions` as these
   are bound to a specific subscriber object.
@@ -47,6 +58,31 @@ are close enough to a GA release that we think highlighting them is important.
   simply sets limits for the number of messages (and/or bytes) outstanding.
   These limits are propagated to the service, and the service will stop
   streaming if too many messages (or bytes) are outstanding.
+
+### Spanner
+
+No user-facing changes.
+
+### Storage
+
+**BREAKING CHANGES:**
+
+* Our public headers no longer include `nlohmann/json.hpp`. Please update your
+  code to directly include this header if you need it. We believe it is not a
+  good practice to depend on indirectly included headers, but do feel we should
+  warn our customers of this change.
+
+**OTHER CHANGES:**
+
+* Unexpected curl errors will now be retried (#5312)
+* docs: add error handling example from `client->ReadObject()` (#5274)
+* feat(storage): Create an example for `Client::DeleteResumableUpload()`
+* doc: prefer UBLA references over bucket-policy-only
+
+### Common Libraries
+
+* Fixed occasional crash on background thread shutdown (#5324)
+* `GCP_LOG` now serializes its output to `std::clog` (#5179)
 
 ## v1.19.0 - 2020-10
 

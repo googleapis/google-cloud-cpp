@@ -31,7 +31,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * application callbacks, and requesting more data from the service.
  *
  * @par Callback Concurrency Control
- *
+ * @parblock
  * The subscription configuration determines the upper limit (set
  * `set_concurrency_watermarks()`) how many callbacks are *scheduled* at a time.
  * As long as this limit is not reached the library will continue to schedule
@@ -51,9 +51,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * The default value for the concurrency high watermarks is set to the value
  * returned by `std::thread::hardware_concurrency()` (or 4 if your standard
  * library returns `0` for this parameter).
+ * @endparblock
  *
  * @par Message Flow Control
- *
+ * @parblock
  * The subscription will request more messages from the service as long as
  * both the outstanding message count (see `set_message_count_watermarks()`)
  * and the number of bytes in the outstanding messages (see
@@ -68,6 +69,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * `AckHandler::nack()` function is called on the associated `AckHandler`. Note
  * that if the concurrency control algorithm has not scheduled a callback this
  * can also put back pressure on the flow control algorithm.
+ * @endparblock
  *
  * @par Example: setting the concurrency control parameters
  * @snippet samples.cc subscriber-concurrency
@@ -107,8 +109,8 @@ class SubscriberOptions {
    *
    * The Cloud Pub/Sub C++ client library uses streaming pull requests to
    * receive messages from the service. The service will stop delivering
-   * messages if @p message_count or more messages have not been acked nor
-   * nacked.
+   * messages if @p message_count or more messages have not been acknowledged
+   * nor rejected.
    *
    * @par Example
    * @snippet samples.cc subscriber-flow-control
@@ -126,8 +128,8 @@ class SubscriberOptions {
    *
    * The Cloud Pub/Sub C++ client library uses streaming pull requests to
    * receive messages from the service. The service will stop delivering
-   * messages if @p bytes or more worth of messages have not been acked nor
-   * nacked.
+   * messages if @p bytes or more worth of messages have not been
+   * acknowledged nor rejected.
    *
    * @par Example
    * @snippet samples.cc subscriber-flow-control
@@ -139,20 +141,17 @@ class SubscriberOptions {
   std::int64_t max_outstanding_bytes() const { return max_outstanding_bytes_; }
 
   /**
-   * Set the high watermark and low watermarks for callback concurrency.
+   * Set the maximum callback concurrency.
    *
    * The Cloud Pub/Sub C++ client library will schedule parallel callbacks as
-   * long as the number of outstanding callbacks is less than the high
-   * watermark. Once the watermark is reached the client will not resume
-   * scheduling callbacks until the number of outstanding callbacks is at or
-   * below the low watermark. Using hysteresis prevents instability.
+   * long as the number of outstanding callbacks is less than this maximum.
    *
    * Note that this controls the number of callbacks *scheduled*, not the number
    * of callbacks actually executing at a time. The application needs to create
    * (or configure) the background threads pool with enough parallelism to
    * execute more than one callback at a time.
    *
-   * Some applications many want to share a thread pool across many
+   * Some applications may want to share a thread pool across many
    * subscriptions, the additional level of control (scheduled vs. running
    * callbacks) allows applications, for example, to ensure that at most `K`
    * threads in the pool are used by any given subscription.
@@ -160,18 +159,12 @@ class SubscriberOptions {
    * @par Example
    * @snippet samples.cc subscriber-concurrency
    *
-   * @note applications that want to have a single outstanding callback can set
-   *     these parameters to `lwm==0` and `hwm==1`.
-   *
-   * @param hwm the high watermark, if this parameter is `0` the high watermark
-   *     is set to `1`, to avoid starvation for the callbacks
-   * @param lwm the low watermark, if this parameter greater than @p hwm then
-   *    the low watermark is set to the same value as the high watermark
+   * @param v the new value, 0 resets to the default
    */
-  SubscriberOptions& set_concurrency_watermarks(std::size_t lwm,
-                                                std::size_t hwm);
-  std::size_t concurrency_lwm() const { return concurrency_lwm_; }
-  std::size_t concurrency_hwm() const { return concurrency_hwm_; }
+  SubscriberOptions& set_max_concurrency(std::size_t v);
+
+  /// Maximum number of callbacks scheduled by the library at a time.
+  std::size_t max_concurrency() const { return max_concurrency_; }
 
   /**
    * Control how often the session polls for automatic shutdowns.
@@ -191,17 +184,16 @@ class SubscriberOptions {
   }
 
  private:
-  static std::size_t DefaultConcurrencyHwm() {
-    auto constexpr kDefaultHwm = 4;
+  static std::size_t DefaultMaxConcurrency() {
+    auto constexpr kDefaultMaxConcurrency = 4;
     auto const n = std::thread::hardware_concurrency();
-    return n == 0 ? kDefaultHwm : n;
+    return n == 0 ? kDefaultMaxConcurrency : n;
   }
 
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
   std::int64_t max_outstanding_messages_ = 1000;
   std::int64_t max_outstanding_bytes_ = 100 * 1024 * 1024L;
-  std::size_t concurrency_lwm_ = 0;
-  std::size_t concurrency_hwm_ = DefaultConcurrencyHwm();
+  std::size_t max_concurrency_ = DefaultMaxConcurrency();
   std::chrono::milliseconds shutdown_polling_period_ = std::chrono::seconds(5);
 };
 

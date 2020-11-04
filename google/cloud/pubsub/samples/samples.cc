@@ -706,7 +706,8 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
       auto message_id = publisher.Publish(
           pubsub::MessageBuilder{}
               .SetData("Hello World! [" + std::to_string(i) + "]")
-              .SetAttributes({{"origin", "cpp-sample"}, {"username", "gcp"}})
+              .SetAttribute("origin", "cpp-sample")
+              .SetAttribute("username", "gcp")
               .Build());
       done.push_back(message_id.then([i](future<StatusOr<std::string>> f) {
         auto id = f.get();
@@ -735,7 +736,7 @@ void PublishHelper(google::cloud::pubsub::Publisher publisher,
     std::string const value = i % 2 == 0 ? "true" : "false";
     done.push_back(
         publisher.Publish(pubsub::MessageBuilder{}
-                              .SetAttributes({{"is-even", value}})
+                              .SetAttribute("is-even", value)
                               .SetData(prefix + " [" + std::to_string(i) + "]")
                               .Build()));
   }
@@ -796,7 +797,7 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
     };
     std::vector<future<void>> done;
     for (auto const& datum : data) {
-      auto& da = datum;  // workaround MSVC capture rules
+      auto const& da = datum;  // workaround MSVC lambda capture confusion
       auto handler = [da, publisher](future<StatusOr<std::string>> f) mutable {
         auto const msg = da.ordering_key + "#" + da.data;
         auto id = f.get();
@@ -1226,8 +1227,7 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
         pubsub::Subscription(std::move(project_id), std::move(subscription_id)),
-        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
-            /*lwm=*/4, /*hwm=*/8),
+        pubsub::SubscriberOptions{}.set_max_concurrency(8),
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
     std::mutex mu;
@@ -1249,8 +1249,8 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
     };
 
     // Create a subscription where up to 8 messages are handled concurrently. By
-    // default the library uses `0` and `std::thread::hardwarde_concurrency()`
-    // for the concurrency watermarks.
+    // default the library uses `std::thread::hardware_concurrency()` as the
+    // maximum number of concurrent callbacks.
     auto session = subscriber.Subscribe(std::move(handler));
     {
       std::unique_lock<std::mutex> lk(mu);

@@ -23,7 +23,6 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
-#include <limits>
 
 namespace google {
 namespace cloud {
@@ -521,7 +520,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     }
 
     std::vector<ReadPartition> read_partitions;
-    for (auto& partition : response->partitions()) {
+    for (auto const& partition : response->partitions()) {
       read_partitions.push_back(internal::MakeReadPartition(
           response->transaction().id(), session->session_name(),
           partition.partition_token(), params.table, params.keys,
@@ -789,7 +788,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     }
 
     std::vector<QueryPartition> query_partitions;
-    for (auto& partition : response->partitions()) {
+    for (auto const& partition : response->partitions()) {
       query_partitions.push_back(internal::MakeQueryPartition(
           response->transaction().id(), session->session_name(),
           partition.partition_token(), params.statement));

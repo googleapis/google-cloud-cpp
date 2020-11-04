@@ -191,7 +191,7 @@ class CurlInitializer {
 }  // namespace
 
 std::string CurlSslLibraryId() {
-  auto vinfo = curl_version_info(CURLVERSION_NOW);
+  auto* vinfo = curl_version_info(CURLVERSION_NOW);
   auto const is_null = vinfo == nullptr || vinfo->ssl_version == nullptr;
   return is_null ? "" : vinfo->ssl_version;
 }
@@ -223,7 +223,7 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
     // Invalid header (should end in \r\n), ignore.
     return size;
   }
-  auto separator = std::find(data, data + size, ':');
+  auto const* separator = std::find(data, data + size, ':');
   std::string header_name = std::string(data, separator);
   std::string header_value;
   // If there is a value, capture it, but ignore the final \r\n.

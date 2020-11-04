@@ -272,20 +272,20 @@ Options AutoRun() {
       GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID").value();
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value();
-  auto const table_id = "gcs2cbt-auto-run";
-  auto const object_name = "gcs2cbt-sample-data.csv";
+  auto constexpr kTableId = "gcs2cbt-auto-run";
+  auto constexpr kObjectName = "gcs2cbt-sample-data.csv";
   auto gcs_client = gcs::Client::CreateDefaultClient().value();
-  auto const test_data = R"""(RowId,Header1,Header2,Header3
+  auto constexpr kTestData = R"""(RowId,Header1,Header2,Header3
 1,v1,v2,v3
 3,v1,v2,v3
 )""";
-  gcs_client.InsertObject(bucket_name, object_name, test_data).value();
+  gcs_client.InsertObject(bucket_name, kObjectName, kTestData).value();
 
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
   auto schema = admin.CreateTable(
-      table_id,
+      kTableId,
       cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(2)}}, {}));
   // Throw the error unless it is "already exists"
   if (!schema &&
@@ -295,8 +295,8 @@ Options AutoRun() {
 
   char const* argv[] = {
       "auto-run",          "--key=1", "--separator=,", project_id.c_str(),
-      instance_id.c_str(), table_id,  "fam",           bucket_name.c_str(),
-      object_name};
+      instance_id.c_str(), kTableId,  "fam",           bucket_name.c_str(),
+      kObjectName};
   int argc = sizeof(argv) / sizeof(argv[0]);
   return ParseArgsNoAutoRun(argc, argv);
 }

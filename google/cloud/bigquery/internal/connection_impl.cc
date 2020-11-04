@@ -20,7 +20,6 @@
 #include "absl/strings/str_split.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
 #include <memory>
-#include <sstream>
 #include <string>
 
 namespace google {

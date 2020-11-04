@@ -75,8 +75,8 @@ using PubsubMessageDataType = std::decay<decltype(
  */
 class Message {
  public:
-  /// @name accessors
   //@{
+  /// @name accessors
   PubsubMessageDataType const& data() const& { return proto_.data(); }
   PubsubMessageDataType&& data() && {
     return std::move(*proto_.mutable_data());
@@ -93,17 +93,19 @@ class Message {
   }
   //@}
 
-  /// @name Copy and move
   //@{
+  /// @name Copy and move
   Message(Message const&) = default;
   Message& operator=(Message const&) = default;
   Message(Message&&) = default;
   Message& operator=(Message&&) = default;
   //@}
 
-  /// @name Equality operators
   //@{
+  /// @name Equality operators
+  /// Compares two messages.
   friend bool operator==(Message const& a, Message const& b);
+  /// Compares two messages.
   friend bool operator!=(Message const& a, Message const& b) {
     return !(a == b);
   }
@@ -120,6 +122,8 @@ class Message {
   friend ::google::pubsub::v1::PubsubMessage&& pubsub_internal::ToProto(
       Message&& m);
   friend std::size_t pubsub_internal::MessageSize(Message const&);
+
+  /// Construct `Message` objects.
   friend class MessageBuilder;
 
   Message() = default;
@@ -132,40 +136,69 @@ class Message {
   google::pubsub::v1::PubsubMessage proto_;
 };
 
-/**
+/** @relates Message
  * Constructs `Message` objects.
  */
 class MessageBuilder {
  public:
   MessageBuilder() = default;
 
-  /// Create a new message.
+  /// Creates a new message.
   Message Build() && { return Message(std::move(proto_)); }
 
-  /// Create a message with the data in @p data
+  /// Sets the message payload to @p data
   MessageBuilder& SetData(std::string data) & {
     proto_.set_data(std::move(data));
     return *this;
   }
 
-  /// Create a message with the data in @p data
+  /// Sets the message payload to @p data
   MessageBuilder&& SetData(std::string data) && {
     SetData(std::move(data));
     return std::move(*this);
   }
 
-  /// Create the message with ordering key @p key
+  /// Sets the ordering key to @p key
   MessageBuilder& SetOrderingKey(std::string key) & {
     proto_.set_ordering_key(std::move(key));
     return *this;
   }
 
-  /// Create the message with ordering key @p key
+  /// Sets the ordering key to @p key
   MessageBuilder&& SetOrderingKey(std::string key) && {
     return std::move(SetOrderingKey(std::move(key)));
   }
 
-  /// Create a message with the attributes from the range [@p begin, @p end)
+  /// Inserts an attribute to the message, leaving the message unchanged if @p
+  /// key is already present.
+  MessageBuilder& InsertAttribute(std::string const& key,
+                                  std::string const& value) & {
+    using value_type =
+        google::protobuf::Map<std::string, std::string>::value_type;
+    proto_.mutable_attributes()->insert(value_type{key, value});
+    return *this;
+  }
+
+  /// Inserts an attribute to the message, leaving the message unchanged if @p
+  /// key is already present.
+  MessageBuilder&& InsertAttribute(std::string const& key,
+                                   std::string const& value) && {
+    return std::move(InsertAttribute(key, value));
+  }
+
+  /// Inserts or sets an attribute on the message.
+  MessageBuilder& SetAttribute(std::string const& key, std::string value) & {
+    (*proto_.mutable_attributes())[key] = std::move(value);
+    return *this;
+  }
+
+  /// Inserts or sets an attribute on the message.
+  MessageBuilder&& SetAttribute(std::string const& key, std::string value) && {
+    return std::move(SetAttribute(key, std::move(value)));
+  }
+
+  /// Sets the attributes in the message to the attributes from the range [@p
+  /// begin, @p end)
   template <typename Iterator>
   MessageBuilder& SetAttributes(Iterator begin, Iterator end) & {
     google::protobuf::Map<std::string, std::string> tmp;
@@ -179,14 +212,15 @@ class MessageBuilder {
     return *this;
   }
 
-  /// Create a message with the attributes from the range [@p begin, @p end)
+  /// Sets the attributes in the message to the attributes from the range [@p
+  /// begin, @p end)
   template <typename Iterator>
   MessageBuilder&& SetAttributes(Iterator begin, Iterator end) && {
     SetAttributes(std::move(begin), std::move(end));
     return std::move(*this);
   }
 
-  /// Create a message with the attributes in @p v
+  /// Sets the attributes in the message to @p v
   MessageBuilder& SetAttributes(
       // NOLINTNEXTLINE(performance-unnecessary-value-param)
       std::vector<std::pair<std::string, std::string>> v) & {
@@ -200,7 +234,7 @@ class MessageBuilder {
     return *this;
   }
 
-  /// Create a message with the attributes in @p v
+  /// Sets the attributes in the message to @p v
   MessageBuilder&& SetAttributes(
       // NOLINTNEXTLINE(performance-unnecessary-value-param)
       std::vector<std::pair<std::string, std::string>> v) && {
@@ -208,13 +242,13 @@ class MessageBuilder {
     return std::move(*this);
   }
 
-  /// Create a message with the attributes in @p v
+  /// Sets the attributes in the message to @p v
   template <typename Pair>
   MessageBuilder& SetAttributes(std::vector<Pair> v) & {
     return SetAttributes(v.begin(), v.end());
   }
 
-  /// Create a message with the attributes in @p v
+  /// Sets the attributes in the message to @p v
   template <typename Pair>
   MessageBuilder&& SetAttributes(std::vector<Pair> v) && {
     SetAttributes(std::move(v));

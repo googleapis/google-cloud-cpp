@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -59,19 +60,8 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   EXPECT_EQ(200, result->response.status_code)
       << ", status_code=" << result->response.status_code
       << ", payload=" << result->response.payload << ", headers={"
-      << [&result] {
-           std::string joined;
-           char const* sep = "";
-           for (auto&& kv : result->response.headers) {
-             joined += sep;
-             joined += kv.first;
-             joined += "=";
-             joined += kv.second;
-             sep = ", ";
-           }
-           joined += "}";
-           return joined;
-         }();
+      << absl::StrJoin(result->response.headers, ", ", absl::PairFormatter("="))
+      << "}";
 
   EXPECT_EQ(kDownloadedLines, count);
 }

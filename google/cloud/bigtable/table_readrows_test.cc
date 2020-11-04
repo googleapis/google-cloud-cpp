@@ -16,18 +16,21 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "absl/memory/memory.h"
 
-namespace bigtable = google::cloud::bigtable;
-using testing::_;
-using testing::DoAll;
-using testing::Return;
-using testing::SetArgPointee;
-
-/// Define helper types and functions for this test.
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::bigtable::testing::MockReadRowsReader;
+using ::testing::DoAll;
+using ::testing::Return;
+using ::testing::SetArgPointee;
+using ::testing::WithoutArgs;
+
 class TableReadRowsTest : public bigtable::testing::TableTestFixture {};
-using bigtable::testing::MockReadRowsReader;
-}  // anonymous namespace
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(
@@ -42,12 +45,12 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  EXPECT_CALL(*stream, Read(_))
+  auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+  EXPECT_CALL(*stream, Read)
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-  EXPECT_CALL(*client_, ReadRows(_, _)).WillOnce(stream->MakeMockReturner());
+  EXPECT_CALL(*client_, ReadRows).WillOnce(stream->MakeMockReturner());
 
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
@@ -83,15 +86,15 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-  auto stream_retry =
+  auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+  auto* stream_retry =
       new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
 
-  EXPECT_CALL(*client_, ReadRows(_, _))
+  EXPECT_CALL(*client_, ReadRows)
       .WillOnce(stream->MakeMockReturner())
       .WillOnce(stream_retry->MakeMockReturner());
 
-  EXPECT_CALL(*stream, Read(_))
+  EXPECT_CALL(*stream, Read)
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
 
@@ -99,7 +102,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  EXPECT_CALL(*stream_retry, Read(_))
+  EXPECT_CALL(*stream_retry, Read)
       .WillOnce(DoAll(SetArgPointee<0>(response_retry), Return(true)))
       .WillOnce(Return(false));
 
@@ -120,14 +123,14 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 }
 
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
-  EXPECT_CALL(*client_, ReadRows(_, _)).WillRepeatedly(testing::WithoutArgs([] {
-    auto stream =
-        new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
-    EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*client_, ReadRows).WillRepeatedly(WithoutArgs([] {
+    auto stream = absl::make_unique<MockReadRowsReader>(
+        "google.bigtable.v2.Bigtable.ReadRows");
+    EXPECT_CALL(*stream, Read).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
         .WillOnce(
             Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
-    return stream->AsUniqueMocked();
+    return stream;
   }));
 
   auto table = bigtable::Table(
@@ -144,3 +147,9 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   ++it;
   ASSERT_EQ(reader.end(), it);
 }
+
+}  // anonymous namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

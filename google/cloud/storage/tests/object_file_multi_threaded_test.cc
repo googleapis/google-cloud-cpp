@@ -69,7 +69,7 @@ class ObjectFileMultiThreadedTest
       return MakeRandomData(kObjectSize);
     }();
     int index = 0;
-    for (auto& n : object_names) {
+    for (auto const& n : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
         std::unique_lock<std::mutex> lk(mu_);
@@ -106,7 +106,7 @@ class ObjectFileMultiThreadedTest
                            int thread_count, int modulo) {
     int index = 0;
     Status status;
-    for (auto& name : object_names) {
+    for (auto const& name : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
         std::unique_lock<std::mutex> lk(mu_);
@@ -157,7 +157,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
                                 &object_names](int modulo) {
     std::cout << '+' << std::flush;
     int index = 0;
-    for (auto& name : object_names) {
+    for (auto const& name : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
         std::unique_lock<std::mutex> lk(mu_);
@@ -180,7 +180,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   }
   std::cout << " DONE\n";
 
-  for (auto& name : object_names) {
+  for (auto const& name : object_names) {
     EXPECT_EQ(0, std::remove(name.c_str()));
   }
 

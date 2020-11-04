@@ -137,9 +137,8 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   };
 
   auto response = CreateTestingSubscriptionSession(
-      subscription,
-      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
-      {handler});
+      subscription, pubsub::SubscriberOptions{}.set_max_concurrency(1), mock,
+      cq, {handler});
   {
     std::unique_lock<std::mutex> lk(ack_id_mu);
     ack_id_cv.wait(lk, [&] { return expected_ack_id >= kAckCount; });
@@ -178,9 +177,8 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto response = CreateTestingSubscriptionSession(
-      subscription,
-      pubsub::SubscriberOptions{}.set_concurrency_watermarks(0, 1), mock, cq,
-      {handler});
+      subscription, pubsub::SubscriberOptions{}.set_max_concurrency(1), mock,
+      cq, {handler});
   enough_messages.get_future()
       .then([&](future<void>) { response.cancel(); })
       .get();
@@ -378,8 +376,7 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
 
     auto session = CreateSubscriptionSession(
         subscription,
-        pubsub::SubscriberOptions{}.set_concurrency_watermarks(
-            kMessageCount / 2, 2 * kMessageCount),
+        pubsub::SubscriberOptions{}.set_max_concurrency(2 * kMessageCount),
         mock, background.cq(), "fake-client-id", {handler},
         pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy());
     {
@@ -441,7 +438,7 @@ TEST(SubscriptionSessionTest, FireAndForget) {
           subscription,
           pubsub::SubscriberOptions{}
               .set_max_outstanding_messages(kMessageCount / 2)
-              .set_concurrency_watermarks(0, kMessageCount / 2)
+              .set_max_concurrency(kMessageCount / 2)
               .set_shutdown_polling_period(std::chrono::milliseconds(20)),
           mock, background.cq(), "fake-client-id", {handler},
           pubsub_testing::TestRetryPolicy(),

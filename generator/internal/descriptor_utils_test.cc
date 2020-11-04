@@ -69,6 +69,13 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
         std::make_pair("class_comment_block", "// TODO: pull in comments"),
         std::make_pair("client_class_name", "FrobberServiceClient"),
+        std::make_pair("connection_class_name", "FrobberServiceConnection"),
+        std::make_pair("connection_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection.gcpcxx.pb.cc"),
+        std::make_pair("connection_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_connection.gcpcxx.pb.h"),
         std::make_pair("connection_options_header_path",
                        "google/cloud/frobber/connection_options.gcpcxx.pb.h"),
         std::make_pair("connection_options_cc_path",

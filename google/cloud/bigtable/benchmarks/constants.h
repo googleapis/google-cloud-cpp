@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_CONSTANTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_CONSTANTS_H
 
+#include <cinttypes>
+
 namespace google {
 namespace cloud {
 namespace bigtable {
@@ -28,34 +30,34 @@ namespace benchmarks {
  * Most of these were requirements in the original bugs (#189, #196).
  */
 /// The size of the table.
-constexpr long kDefaultTableSize = 10000000;  // NOLINT(google-runtime-int)
+std::int64_t constexpr kDefaultTableSize = 10000000L;
 
 /// The name of the column family used in the benchmark.
 constexpr char kColumnFamily[] = "cf";
 
 /// The number of fields (aka columns, aka column qualifiers) in each row.
-constexpr int kNumFields = 10;
+int constexpr kNumFields = 10;
 
 /// The size of each value.
-constexpr int kFieldSize = 100;
+int constexpr kFieldSize = 100;
 
 /// The size of each BulkApply request.
-constexpr long kBulkSize = 1000;  // NOLINT(google-runtime-int)
+std::int64_t constexpr kBulkSize = 1000;
 
 /// The number of threads running the latency test.
-constexpr int kDefaultThreads = 8;
+int constexpr kDefaultThreads = 8;
 
 /// How long does the test last by default.
-constexpr int kDefaultTestDuration = 30;
+int constexpr kDefaultTestDuration = 30;
 
 /// How many shards are used to populate the table.
-constexpr int kPopulateShardCount = 10;
+int constexpr kPopulateShardCount = 10;
 
 /// How many times each PopulateTable shard reports progress.
-constexpr int kPopulateShardProgressMarks = 4;
+int constexpr kPopulateShardProgressMarks = 4;
 
 /// How many random bytes in the table id.
-constexpr int kTableIdRandomLetters = 8;
+int constexpr kTableIdRandomLetters = 8;
 //@}
 
 }  // namespace benchmarks

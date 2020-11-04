@@ -95,7 +95,7 @@ RowStreamIterator& RowStreamIterator::operator++() {
 }
 
 RowStreamIterator RowStreamIterator::operator++(int) {
-  auto const old = *this;
+  auto old = *this;
   ++*this;
   return old;
 }

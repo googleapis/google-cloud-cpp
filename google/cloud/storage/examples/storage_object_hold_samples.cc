@@ -140,11 +140,12 @@ void RunAll(std::vector<std::string> const& argv) {
       examples::MakeRandomObjectName(generator, "object-");
   auto const object_name_2 =
       examples::MakeRandomObjectName(generator, "object-");
-  auto const text = R"""(Some text to populate the test objects)""";
+  auto constexpr kText = R"""(Some text to populate the test objects)""";
 
   std::cout << "\nCreating the EventBasedHold object" << std::endl;
   (void)client
-      .InsertObject(bucket_name, object_name_1, text, gcs::IfGenerationMatch(0))
+      .InsertObject(bucket_name, object_name_1, kText,
+                    gcs::IfGenerationMatch(0))
       .value();
 
   std::cout << "\nRunning the SetObjectEventBasedHold() example" << std::endl;
@@ -159,7 +160,8 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreating the TemporaryHold object" << std::endl;
   (void)client
-      .InsertObject(bucket_name, object_name_2, text, gcs::IfGenerationMatch(0))
+      .InsertObject(bucket_name, object_name_2, kText,
+                    gcs::IfGenerationMatch(0))
       .value();
 
   std::cout << "\nRunning the SetObjectTemporaryHold() example" << std::endl;

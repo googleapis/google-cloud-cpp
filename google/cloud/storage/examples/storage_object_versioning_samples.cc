@@ -187,14 +187,16 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the GetObjectVersioning() example [2]" << std::endl;
   GetObjectVersioning(client, {bucket_name});
 
-  auto const text = R"""(Some text to insert into the test objects.)""";
+  auto constexpr kText = R"""(Some text to insert into the test objects.)""";
   auto const src_object_name =
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
   auto const dst_object_name =
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
 
-  auto meta_1 = client.InsertObject(bucket_name, src_object_name, text).value();
-  auto meta_2 = client.InsertObject(bucket_name, src_object_name, text).value();
+  auto meta_1 =
+      client.InsertObject(bucket_name, src_object_name, kText).value();
+  auto meta_2 =
+      client.InsertObject(bucket_name, src_object_name, kText).value();
 
   std::cout << "\nRunning the CopyVersionedObject() example" << std::endl;
   CopyVersionedObject(

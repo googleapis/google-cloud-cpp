@@ -47,6 +47,12 @@ bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method);
 bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the given method's response is contained in the longrunning
+ * metadata field.
+ */
+bool IsLongrunningMetadataTypeUsedAsResponse(
+    google::protobuf::MethodDescriptor const& method);
+/**
  * If method meets pagination criteria, provides paginated field type and field
  * name.
  *
@@ -60,13 +66,11 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method);
  */
 template <typename T, typename... Ps>
 std::function<bool(T const&)> GenericAll(Ps&&... p) {
-  std::vector<std::function<bool(T const&)>> predicates(
-      {std::forward<Ps>(p)...});
-  return [predicates](T const& m) -> bool {
-    for (auto const& p : predicates) {
-      if (!p(m)) return false;
-    }
-    return true;
+  using function = std::function<bool(T const&)>;
+  std::vector<function> predicates({std::forward<Ps>(p)...});
+  return [predicates](T const& m) {
+    return std::all_of(predicates.begin(), predicates.end(),
+                       [&m](function const& p) { return p(m); });
   };
 }
 
@@ -82,13 +86,11 @@ std::function<bool(google::protobuf::MethodDescriptor const&)> All(Ps&&... p) {
  */
 template <typename T, typename... Ps>
 std::function<bool(T const&)> GenericAny(Ps&&... p) {
-  std::vector<std::function<bool(T const&)>> predicates(
-      {std::forward<Ps>(p)...});
-  return [predicates](T const& m) -> bool {
-    for (auto const& p : predicates) {
-      if (p(m)) return true;
-    }
-    return false;
+  using function = std::function<bool(T const&)>;
+  std::vector<function> predicates({std::forward<Ps>(p)...});
+  return [predicates](T const& m) {
+    return std::any_of(predicates.begin(), predicates.end(),
+                       [&m](function const& p) { return p(m); });
   };
 }
 

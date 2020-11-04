@@ -42,7 +42,7 @@ class GrpcClient;
  */
 class ObjectAccessControl : private internal::AccessControlCommon {
  public:
-  ObjectAccessControl() : generation_(0) {}
+  ObjectAccessControl() = default;
 
   using AccessControlCommon::ROLE_OWNER;
   using AccessControlCommon::ROLE_READER;
@@ -90,7 +90,7 @@ class ObjectAccessControl : private internal::AccessControlCommon {
   friend struct internal::ObjectAccessControlParser;
   friend class internal::GrpcClient;
 
-  std::int64_t generation_{0};
+  std::int64_t generation_ = 0;
   std::string object_;
 };
 

@@ -67,10 +67,10 @@ constexpr int kScanSizes[] = {100, 1000, 10000};
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size,  // NOLINT(google-runtime-int)
+                             std::int64_t table_size,
                              std::string app_profile_id,
                              std::string const& table_id,
-                             long scan_size,  // NOLINT(google-runtime-int)
+                             std::int64_t scan_size,
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
 
@@ -125,10 +125,10 @@ namespace {
 
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::shared_ptr<bigtable::DataClient> data_client,
-                             long table_size,  // NOLINT(google-runtime-int)
+                             std::int64_t table_size,
                              std::string app_profile_id,
                              std::string const& table_id,
-                             long scan_size,  // NOLINT(google-runtime-int)
+                             std::int64_t scan_size,
                              std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
 
@@ -136,8 +136,8 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                         table_id);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  // NOLINTNEXTLINE(google-runtime-int)
-  std::uniform_int_distribution<long> prng(0, table_size - scan_size - 1);
+  std::uniform_int_distribution<std::int64_t> prng(0,
+                                                   table_size - scan_size - 1);
 
   auto test_start = std::chrono::steady_clock::now();
   while (std::chrono::steady_clock::now() < test_start + test_duration) {

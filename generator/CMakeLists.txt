@@ -14,8 +14,10 @@
 # limitations under the License.
 # ~~~
 
+set(DOXYGEN_EXCLUDE_SYMBOLS "generator_internal")
+set(DOXYGEN_EXAMPLE_PATH "")
 include(GoogleCloudCppCommon)
-include(FindProtobufWithTargets)
+
 # TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
 set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
@@ -29,6 +31,8 @@ add_library(
     generator.h
     internal/codegen_utils.cc
     internal/codegen_utils.h
+    internal/connection_generator.cc
+    internal/connection_generator.h
     internal/connection_options_generator.cc
     internal/connection_options_generator.h
     internal/descriptor_utils.cc

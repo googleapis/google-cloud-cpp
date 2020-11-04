@@ -79,7 +79,6 @@ class ReadModifyWriteRule {
    */
   ReadModifyWriteRule() = default;
 
- private:
   google::bigtable::v2::ReadModifyWriteRule rule_;
 };
 

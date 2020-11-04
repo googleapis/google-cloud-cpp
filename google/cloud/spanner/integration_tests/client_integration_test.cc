@@ -64,7 +64,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
   }
 
  protected:
-  bool EmulatorUnimplemented(Status const& status) {
+  bool EmulatorUnimplemented(Status const& status) const {
     return emulator_ && status.code() == StatusCode::kUnimplemented;
   }
 

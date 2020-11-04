@@ -244,7 +244,7 @@ function (spanner_client_define_tests)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(spanner_client_unit_tests
-        # cmake-format: sortable
+        # cmake-format: sort
         backup_test.cc
         bytes_test.cc
         client_options_test.cc
@@ -335,7 +335,7 @@ function (spanner_client_define_benchmarks)
     find_package(benchmark CONFIG REQUIRED)
 
     set(spanner_client_benchmarks
-        # cmake-format: sortable
+        # cmake-format: sort
         bytes_benchmark.cc internal/merge_chunk_benchmark.cc
         numeric_benchmark.cc row_benchmark.cc)
 
@@ -426,9 +426,13 @@ install(
     COMPONENT google_cloud_cpp_spanner_development)
 
 # Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-               "spanner_client-config-version.cmake" @ONLY)
+write_basic_package_version_file(
+    "spanner_client-config-version.cmake"
+    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    COMPATIBILITY ExactVersion)
+
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"

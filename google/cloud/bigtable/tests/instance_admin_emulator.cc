@@ -57,7 +57,7 @@ class InstanceAdminEmulator final
       response->set_allocated_response(contents.release());
 
       // Add cluster into clusters_
-      for (auto& kv : request->clusters()) {
+      for (auto const& kv : request->clusters()) {
         auto cluster = kv.second;
         auto cluster_name = name + "/clusters/" + kv.first;
         cluster.set_name(cluster_name);

@@ -18,4 +18,5 @@
 
 pubsub_client_benchmark_programs = [
     "endurance.cc",
+    "throughput.cc",
 ]

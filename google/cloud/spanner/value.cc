@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/strerror.h"
-#include "google/cloud/log.h"
 #include "absl/time/civil_time.h"
 #include <cerrno>
 #include <cmath>
@@ -33,7 +32,7 @@ namespace {
 
 // Compares two sets of Type and Value protos for equality. This method calls
 // itself recursively to compare subtypes and subvalues.
-bool Equal(google::spanner::v1::Type const& pt1,
+bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
            google::protobuf::Value const& pv1,
            google::spanner::v1::Type const& pt2,
            google::protobuf::Value const& pv2) {
@@ -109,7 +108,8 @@ std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
 // format themselves differently in each case.
 enum class StreamMode { kScalar, kAggregate };
 
-std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
+std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                           google::protobuf::Value const& v,
                            google::spanner::v1::Type const& t,
                            StreamMode mode) {
   if (v.kind_case() == google::protobuf::Value::kNullValue) {

@@ -128,8 +128,8 @@ class Row {
   template <typename Tuple>
   StatusOr<Tuple> get() const& {
     if (size() != std::tuple_size<Tuple>::value) {
-      auto const msg = "Tuple has the wrong number of elements";
-      return Status(StatusCode::kInvalidArgument, msg);
+      auto constexpr kMsg = "Tuple has the wrong number of elements";
+      return Status(StatusCode::kInvalidArgument, kMsg);
     }
     Tuple tup;
     auto it = values_.begin();
@@ -148,8 +148,8 @@ class Row {
   template <typename Tuple>
   StatusOr<Tuple> get() && {
     if (size() != std::tuple_size<Tuple>::value) {
-      auto const msg = "Tuple has the wrong number of elements";
-      return Status(StatusCode::kInvalidArgument, msg);
+      auto constexpr kMsg = "Tuple has the wrong number of elements";
+      return Status(StatusCode::kInvalidArgument, kMsg);
     }
     Tuple tup;
     auto it = std::make_move_iterator(values_.begin());

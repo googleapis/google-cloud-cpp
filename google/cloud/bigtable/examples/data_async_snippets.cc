@@ -208,7 +208,7 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
                 return;
               }
               std::cout << "key: " << tuple->second.row_key() << "\n";
-              for (auto& cell : tuple->second.cells()) {
+              for (auto const& cell : tuple->second.cells()) {
                 std::cout << "    " << cell.family_name() << ":"
                           << cell.column_qualifier() << " = <";
                 if (cell.column_qualifier() == "counter") {

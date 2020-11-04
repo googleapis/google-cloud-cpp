@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=31
+ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
 ARG NCPU=4
 
@@ -20,11 +20,11 @@ ARG NCPU=4
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker abi-dumper \
+    dnf install -y abi-compliance-checker abi-dumper ccache \
         clang clang-tools-extra cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel libcurl-devel \
         make ninja-build npm openssl-devel pkgconfig protobuf-compiler python3 \
-        python3-pip ShellCheck tar unzip w3m wget which zlib-devel
+        python3.8 python3-pip ShellCheck tar unzip w3m wget which zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -55,12 +55,10 @@ RUN pip3 install black==19.3b0
 
 # Install the Python modules needed to run the storage testbench
 RUN dnf makecache && dnf install -y python3-devel
-RUN pip3 install setuptools
-RUN pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
-    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
-    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
-    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
-    zope.event==4.5.0 zope.interface==5.1.0
+RUN pip3 install setuptools wheel
+RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
+RUN pip3 install grpcio==1.32.0 flask==1.1.2 pytest==6.0.2 httpbin==0.7.0 \
+    scalpl==0.4.0 crc32c==2.1 gevent==20.9.0 gunicorn==20.0.4
 
 # Install cspell for spell checking.
 RUN npm install -g cspell
@@ -136,6 +134,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.0.tar.gz | \
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
+ENV CLOUDSDK_PYTHON=python3.8
 RUN /var/tmp/ci/install-cloud-sdk.sh
 # The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
 # Bazel needs the '-devel' version with javac.

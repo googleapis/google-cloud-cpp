@@ -63,7 +63,6 @@ class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
         cq_(cq_impl_),
         client_(new testing::MockAdminClient) {}
 
- protected:
   std::shared_ptr<PollingPolicy const> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;

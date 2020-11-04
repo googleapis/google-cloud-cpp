@@ -86,7 +86,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     if (fp == nullptr) {
       return static_cast<PKCS12*>(nullptr);
     }
-    auto result = d2i_PKCS12_fp(fp, nullptr);
+    auto* result = d2i_PKCS12_fp(fp, nullptr);
     fclose(fp);
     return result;
   }(source);

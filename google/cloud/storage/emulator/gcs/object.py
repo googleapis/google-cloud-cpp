@@ -14,17 +14,23 @@
 
 """Implement a class to simulate GCS object."""
 
-import utils
-import datetime
-import random
-import crc32c
 import base64
+import datetime
 import hashlib
+import json
+import random
+import re
 import struct
-import simdjson
-from google.protobuf import field_mask_pb2, json_format
+import sys
+import time
+
+import crc32c
+import flask
+import utils
+
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
+from google.protobuf import field_mask_pb2, json_format
 
 
 class Object:
@@ -44,10 +50,11 @@ class Object:
         "customer_encryption",
     ]
 
-    def __init__(self, metadata, media, bucket):
+    def __init__(self, metadata, media, bucket, rest_only=None):
         self.metadata = metadata
         self.media = media
         self.bucket = bucket
+        self.rest_only = rest_only
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
@@ -67,13 +74,17 @@ class Object:
         del metadata.acl[:]
         metadata.acl.extend(acls)
 
+    # TODO(#4893): Remove `rest_only`
     @classmethod
-    def init(cls, request, metadata, media, bucket, is_destination, context):
-        if context is not None:
+    def init(
+        cls, request, metadata, media, bucket, is_destination, context, rest_only=None
+    ):
+        if context is None:
             instruction = request.headers.get("x-goog-testbench-instructions")
             if instruction == "inject-upload-data-error":
                 media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
+        metadata.bucket = bucket.name
         metadata.generation = random.getrandbits(63)
         metadata.metageneration = 1
         metadata.id = "%s/o/%s#%d" % (
@@ -127,20 +138,27 @@ class Object:
                 )
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
+        if context is None and rest_only is None:
+            rest_only = {}
         return (
-            cls(metadata, media, bucket),
+            cls(metadata, media, bucket, rest_only),
             utils.common.extract_projection(request, default_projection, context),
         )
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
+        rest_only = {}
+        if "customTime" in metadata:
+            rest_only["customTime"] = metadata.pop("customTime")
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
-        return cls.init(request, metadata, media, bucket, is_destination, None)
+        return cls.init(
+            request, metadata, media, bucket, is_destination, None, rest_only
+        )
 
     @classmethod
     def init_media(cls, request, bucket):
         object_name = request.args.get("name", None)
-        media = request.data
+        media = utils.common.extract_media(request)
         if object_name is None:
             utils.error.missing("name", None)
         metadata = {
@@ -185,7 +203,7 @@ class Object:
 
     @classmethod
     def init_xml(cls, request, bucket, name):
-        media = request.data
+        media = utils.common.extract_media(request)
         metadata = {
             "bucket": bucket.name,
             "name": name,
@@ -224,8 +242,7 @@ class Object:
             metadata = request.metadata
         else:
             metadata = json_format.ParseDict(
-                self.__preprocess_rest(simdjson.loads(request.data)),
-                resources_pb2.Bucket(),
+                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Object()
             )
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
@@ -242,7 +259,9 @@ class Object:
             metadata = request.metadata
             update_mask = request.update_mask
         else:
-            data = simdjson.loads(request.data)
+            data = json.loads(request.data)
+            if "customTime" in data:
+                self.rest_only["customTime"] = data.pop("customTime")
             if "metadata" in data:
                 if data["metadata"] is None:
                     self.metadata.metadata.clear()
@@ -253,7 +272,7 @@ class Object:
                         else:
                             self.metadata.metadata[key] = value
             data.pop("metadata", None)
-            metadata = json_format.ParseDict(data, resources_pb2.Bucket())
+            metadata = json_format.ParseDict(data, resources_pb2.Object())
             paths = set()
             for key in utils.common.nested_key(data):
                 key = utils.common.to_snake_case(key)
@@ -286,9 +305,9 @@ class Object:
         if must_exist:
             utils.error.notfound("ACL %s" % entity, context)
 
-    def __upsert_acl(self, entity, role, update_only, context):
+    def __upsert_acl(self, entity, role, context):
         # For simplicity, we treat `insert`, `update` and `patch` ACL the same way.
-        index = self.__search_acl(entity, update_only, context)
+        index = self.__search_acl(entity, False, context)
         acl = utils.acl.create_object_acl(
             self.metadata.bucket,
             self.metadata.name,
@@ -316,27 +335,149 @@ class Object:
                 request.object_access_control.role,
             )
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             entity, role = payload["entity"], payload["role"]
-        return self.__upsert_acl(entity, role, False, context)
+        return self.__upsert_acl(entity, role, context)
 
     def update_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def patch_acl(self, request, entity, context):
         role = ""
         if context is not None:
             role = request.object_access_control.role
         else:
-            payload = simdjson.loads(request.data)
+            payload = json.loads(request.data)
             role = payload["role"]
-        return self.__upsert_acl(entity, role, True, context)
+        return self.__upsert_acl(entity, role, context)
 
     def delete_acl(self, entity, context):
         del self.metadata.acl[self.__search_acl(entity, True, context)]
+
+    # === RESPONSE === #
+
+    @classmethod
+    def rest(cls, metadata, rest_only):
+        response = json_format.MessageToDict(metadata)
+        response["kind"] = "storage#object"
+        response["crc32c"] = base64.b64encode(
+            struct.pack(">I", response["crc32c"])
+        ).decode("utf-8")
+        response.update(rest_only)
+        return response
+
+    def rest_metadata(self):
+        return self.rest(self.metadata, self.rest_only)
+
+    def x_goog_hash_header(self):
+        header = ""
+        if "x_testbench_crc32c" in self.metadata.metadata:
+            header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
+        if "x_testbench_md5" in self.metadata.metadata:
+            if header != "":
+                header += ","
+            header += "md5=" + self.metadata.metadata["x_testbench_md5"]
+        return header if header != "" else None
+
+    def rest_media(self, request):
+        range_header = request.headers.get("range")
+        response_payload = self.media
+        begin = 0
+        end = len(response_payload)
+        if range_header is not None:
+            m = re.match("bytes=([0-9]+)-([0-9]+)", range_header)
+            if m:
+                begin = int(m.group(1))
+                end = int(m.group(2))
+                response_payload = response_payload[begin : end + 1]
+            m = re.match("bytes=([0-9]+)-$", range_header)
+            if m:
+                begin = int(m.group(1))
+                response_payload = response_payload[begin:]
+            m = re.match("bytes=-([0-9]+)$", range_header)
+            if m:
+                last = int(m.group(1))
+                response_payload = response_payload[-last:]
+
+        streamer, length, headers = None, len(response_payload), {}
+        content_range = "bytes %d-%d/%d" % (begin, end - 1, length)
+
+        instructions = request.headers.get("x-goog-testbench-instructions")
+        if instructions == "return-broken-stream":
+            headers["Content-Length"] = length
+
+            def streamer():
+                chunk_size = 64 * 1024
+                for r in range(0, len(response_payload), chunk_size):
+                    if r > 1024 * 1024:
+                        print("\n\n###### EXIT to simulate crash\n")
+                        sys.exit(1)
+                    time.sleep(0.1)
+                    chunk_end = min(r + chunk_size, len(response_payload))
+                    yield response_payload[r:chunk_end]
+
+        elif instructions == "return-corrupted-data":
+            media = utils.common.corrupt_media(response_payload)
+
+            def streamer():
+                yield media
+
+        elif instructions is not None and instructions.startswith(u"stall-always"):
+
+            def streamer():
+                chunk_size = 16 * 1024
+                for r in range(begin, end, chunk_size):
+                    chunk_end = min(r + chunk_size, end)
+                    if r == begin:
+                        time.sleep(10)
+                    yield response_payload[r:chunk_end]
+
+        elif instructions == "stall-at-256KiB" and begin == 0:
+
+            def streamer():
+                chunk_size = 16 * 1024
+                for r in range(begin, end, chunk_size):
+                    chunk_end = min(r + chunk_size, end)
+                    if r == 256 * 1024:
+                        time.sleep(10)
+                    yield response_payload[r:chunk_end]
+
+        elif instructions is not None and instructions.startswith(
+            u"return-503-after-256K"
+        ):
+            if begin == 0:
+
+                def streamer():
+                    chunk_size = 4 * 1024
+                    for r in range(0, len(response_payload), chunk_size):
+                        if r >= 256 * 1024:
+                            print("\n\n###### EXIT to simulate crash\n")
+                            sys.exit(1)
+                        time.sleep(0.01)
+                        chunk_end = min(r + chunk_size, len(response_payload))
+                        yield response_payload[r:chunk_end]
+
+            elif instructions.endswith(u"/retry-1"):
+                print("## Return error for retry 1")
+                return flask.Response("Service Unavailable", status=503)
+            elif instructions.endswith(u"/retry-2"):
+                print("## Return error for retry 2")
+                return flask.Response("Service Unavailable", status=503)
+            else:
+                print("## Return success for %s" % instructions)
+                return flask.Response(response_payload, status=200, headers=headers)
+        else:
+
+            def streamer():
+                yield response_payload
+
+        headers["Content-Range"] = content_range
+        headers["x-goog-hash"] = self.x_goog_hash_header()
+        headers["x-goog-generation"] = self.metadata.generation
+        return flask.Response(streamer(), status=200, headers=headers)
