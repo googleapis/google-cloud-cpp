@@ -307,7 +307,7 @@ TEST(GoldenClientTest, TestIamPermissions) {
                     ::google::iam::v1::TestIamPermissionsRequest const &r) {
         EXPECT_EQ(expected_database, r.resource());
         EXPECT_EQ(1, r.permissions().size());
-        EXPECT_EQ(expected_permission, r.permissions().at(0));
+        EXPECT_EQ(expected_permission, r.permissions(0));
         google::iam::v1::TestIamPermissionsResponse response;
         response.add_permissions(expected_permission);
         return response;
