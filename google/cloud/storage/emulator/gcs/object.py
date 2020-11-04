@@ -138,6 +138,8 @@ class Object:
                 )
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
+        if context is None and rest_only is None:
+            rest_only = {}
         return (
             cls(metadata, media, bucket, rest_only),
             utils.common.extract_projection(request, default_projection, context),
@@ -259,8 +261,6 @@ class Object:
         else:
             data = json.loads(request.data)
             if "customTime" in data:
-                if self.rest_only is None:
-                    self.rest_only = {}
                 self.rest_only["customTime"] = data.pop("customTime")
             if "metadata" in data:
                 if data["metadata"] is None:
@@ -369,8 +369,7 @@ class Object:
         response["crc32c"] = base64.b64encode(
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
-        if rest_only is not None:
-            response.update(rest_only)
+        response.update(rest_only)
         return response
 
     def rest_metadata(self):
