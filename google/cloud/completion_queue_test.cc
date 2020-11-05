@@ -642,6 +642,51 @@ TEST(CompletionQueueTest, NoRunAsyncAfterShutdown) {
   EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(0)));
 }
 
+class RunAsyncTest : public ::testing::TestWithParam<int> {};
+
+TEST_P(RunAsyncTest, Torture) {
+  CompletionQueue cq;
+  std::vector<std::thread> runners(GetParam());
+  std::generate(runners.begin(), runners.end(),
+                [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
+
+  auto constexpr kThreads = 16;
+  auto const iterations = GetParam() == 1 ? 50 : 100 * GetParam();
+  std::mutex mu;
+  std::condition_variable cv;
+  int timer_count = kThreads * iterations;
+  int async_count = kThreads * iterations;
+  auto on_timer = [&](future<StatusOr<std::chrono::system_clock::time_point>>) {
+    std::lock_guard<std::mutex> lk(mu);
+    if (--timer_count == 0) cv.notify_one();
+  };
+  auto on_async = [&] {
+    std::lock_guard<std::mutex> lk(mu);
+    if (--async_count == 0) cv.notify_one();
+  };
+  auto wait = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return timer_count == 0 && async_count == 0; });
+  };
+  auto worker = [&](CompletionQueue cq) {
+    for (int i = 0; i != iterations; ++i) {
+      cq.MakeRelativeTimer(std::chrono::microseconds(1)).then(on_timer);
+      cq.RunAsync(on_async);
+    }
+  };
+  std::vector<std::thread> workers(kThreads);
+  std::generate(workers.begin(), workers.end(), [&worker, &cq] {
+    return std::thread{worker, cq};
+  });
+  for (auto& w : workers) w.join();
+  wait();
+  cq.Shutdown();
+  for (auto& r : runners) r.join();
+}
+
+INSTANTIATE_TEST_SUITE_P(RunAsyncTest, RunAsyncTest,
+                         ::testing::Values(1, 4, 16));
+
 // Sets up a timer that reschedules itself and verifies we can shut down
 // cleanly whether we call `CancelAll()` on the queue first or not.
 namespace {
