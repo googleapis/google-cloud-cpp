@@ -382,7 +382,7 @@ TEST(BatchingPublisherConnectionTest, BatchTorture) {
       ordering_key, mock, background.cq(), pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
 
-  auto worker = [publisher](int iterations) {
+  auto worker = [&](int iterations) {
     auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
     auto publish_single = [&] {
