@@ -52,29 +52,6 @@ auto constexpr kMaxThreads = 16;
 auto constexpr kMinExecutions = 1 << 9;
 auto constexpr kMaxExecutions = 1 << 11;
 
-class AsyncFunction : public internal::AsyncGrpcOperation {
- public:
-  explicit AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun)
-      : fun_(std::move(fun)) {}
-
-  void Set(grpc::CompletionQueue& cq, void* tag) {
-    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
-  }
-
-  void Cancel() override {}
-
- private:
-  bool Notify(bool ok) override {
-    auto f = std::move(fun_);
-    if (!ok) return true;  // do not run async operations on shutdown CQs
-    f->exec();
-    return true;
-  }
-
-  std::unique_ptr<internal::RunAsyncBase> fun_;
-  grpc::Alarm alarm_;
-};
-
 class Wait {
  public:
   explicit Wait(int count) : count_(count) {}
@@ -83,11 +60,11 @@ class Wait {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [&] { return count_ == 0; });
   }
+
   void Done() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (--count_ > 0) return;
+    if (--count_ == 0) cv_.notify_one();
     lk.unlock();
-    cv_.notify_one();
   }
 
  private:
