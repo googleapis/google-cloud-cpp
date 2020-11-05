@@ -18,6 +18,7 @@ import logging
 import database
 import flask
 import gcs as gcs_type
+import grpc_server
 import httpbin
 import utils
 from werkzeug import serving
@@ -28,6 +29,7 @@ from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.protobuf import json_format
 
 db = None
+grpc_is_running = False
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -36,6 +38,15 @@ root.debug = True
 
 @root.route("/")
 def index():
+    return "OK"
+
+
+@root.route("/start_grpc")
+def start_grpc():
+    global grpc_is_running
+    if not grpc_is_running:
+        port = flask.request.args.get("port", "8000")
+        grpc_server.run(port, db)
     return "OK"
 
 
@@ -773,8 +784,6 @@ def run():
     global db
     logging.basicConfig()
     db = database.Database.init()
-    # grpc_port = int(os.getenv("GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_GRPC_PORT", 8000))
-    # grpc_server.run(grpc_port, db)
     return server
 
 

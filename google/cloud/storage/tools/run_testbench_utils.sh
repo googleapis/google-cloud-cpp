@@ -60,7 +60,8 @@ start_testbench() {
   trap kill_testbench EXIT
 
   gunicorn --bind "0.0.0.0:${port}" \
-    --worker-class gevent \
+    --worker-class sync \
+    --threads 10 \
     --access-logfile - \
     --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
     "emulator:run()" \
@@ -104,6 +105,10 @@ start_testbench() {
   else
     echo "Successfully connected to testbench [${TESTBENCH_PID}]"
   fi
+
+  grpc_port=8000
+  curl "http://localhost:${testbench_port}/start_grpc?port=${grpc_port}"
+  export CLOUD_STORAGE_GRPC_ENDPOINT="localhost:${grpc_port}"
 
   echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment set-up."
 }

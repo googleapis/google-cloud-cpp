@@ -35,11 +35,9 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # These can only run against production
 production_only_targets=(
-  "//google/cloud/storage/examples:storage_grpc_samples"
   "//google/cloud/storage/examples:storage_policy_doc_samples"
   "//google/cloud/storage/examples:storage_signed_url_v2_samples"
   "//google/cloud/storage/examples:storage_signed_url_v4_samples"
-  "//google/cloud/storage/tests:grpc_integration_test"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
 )
@@ -72,6 +70,7 @@ done
 # are missing too.
 testbench_args=(
   "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
+  "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
