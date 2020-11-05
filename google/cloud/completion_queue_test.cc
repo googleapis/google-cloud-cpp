@@ -684,6 +684,38 @@ TEST_P(RunAsyncTest, Torture) {
   for (auto& r : runners) r.join();
 }
 
+TEST_P(RunAsyncTest, TortureBursts) {
+  CompletionQueue cq;
+  std::vector<std::thread> tasks(16);
+  std::generate(tasks.begin(), tasks.end(), [&cq] {
+    return std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
+  });
+
+  auto burst = [&](std::int64_t n) {
+    std::mutex mu;
+    std::condition_variable cv;
+    std::int64_t remaining = n;
+    auto on_async = [&] {
+      std::unique_lock<std::mutex> lk(mu);
+      if (--remaining == 0) cv.notify_one();
+      lk.unlock();
+    };
+    auto wait = [&] {
+      std::unique_lock<std::mutex> lk(mu);
+      cv.wait(lk, [&] { return remaining == 0; });
+    };
+    for (std::int64_t i = 0; i != n; ++i) {
+      cq.RunAsync(on_async);
+    }
+    wait();
+    return 0;
+  };
+
+  for (int i = 0; i != 100; ++i) burst(GetParam() * 128);
+  cq.Shutdown();
+  for (auto& t : tasks) t.join();
+}
+
 INSTANTIATE_TEST_SUITE_P(RunAsyncTest, RunAsyncTest,
                          ::testing::Values(1, 4, 16));
 
