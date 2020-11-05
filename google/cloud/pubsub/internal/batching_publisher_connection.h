@@ -67,6 +67,7 @@ class BatchingPublisherConnection
         backoff_policy_(std::move(backoff_policy)) {}
 
   void OnTimer();
+  future<StatusOr<std::string>> CorkedError();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
   void FlushImpl(std::unique_lock<std::mutex> lk);
 

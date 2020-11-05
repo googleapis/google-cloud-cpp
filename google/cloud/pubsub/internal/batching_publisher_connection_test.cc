@@ -16,13 +16,15 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <condition_variable>
 #include <deque>
 #include <mutex>
+#include <numeric>
+#include <random>
 
 namespace google {
 namespace cloud {
@@ -159,7 +161,7 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
   // see https://cloud.google.com/pubsub/pricing
   auto constexpr kMessageSizeOverhead = 20;
   auto constexpr kMaxMessageBytes =
-      sizeof("test-data-N") + kMessageSizeOverhead + 2;
+      2 * (sizeof("test-data-N") + kMessageSizeOverhead + 2);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto const ordering_key = std::string{};
   auto publisher = BatchingPublisherConnection::Create(
@@ -188,6 +190,221 @@ TEST(BatchingPublisherConnectionTest, BatchByMessageSize) {
 
   r0.get();
   r1.get();
+}
+
+TEST(BatchingPublisherConnectionTest, BatchByMessageSizeLargeMessageBreak) {
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  auto constexpr kSinglePayload = 128;
+  auto constexpr kBatchLimit = 4 * kSinglePayload;
+  auto const single_payload = std::string(kSinglePayload, 'A');
+  auto const double_payload = std::string(2 * kSinglePayload, 'B');
+
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(3, request.messages_size());
+        EXPECT_EQ(single_payload, request.messages(0).data());
+        EXPECT_EQ(single_payload, request.messages(1).data());
+        EXPECT_EQ(single_payload, request.messages(2).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-0");
+        response.add_message_ids("test-message-id-1");
+        response.add_message_ids("test-message-id-2");
+        return make_ready_future(make_status_or(response));
+      })
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ(double_payload, request.messages(0).data());
+        google::pubsub::v1::PublishResponse response;
+        response.add_message_ids("test-message-id-3");
+        return make_ready_future(make_status_or(response));
+      });
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto const ordering_key = std::string{};
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(100)
+          .set_maximum_batch_bytes(kBatchLimit),
+      ordering_key, mock, background.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  std::vector<future<Status>> results;
+  for (int i = 0; i != 3; ++i) {
+    results.push_back(
+        publisher
+            ->Publish(
+                {pubsub::MessageBuilder{}.SetData(single_payload).Build()})
+            .then([](future<StatusOr<std::string>> f) {
+              return f.get().status();
+            }));
+  }
+  // This will exceed the maximum size, it should flush the previously held
+  // messages.
+  results.push_back(
+      publisher
+          ->Publish({pubsub::MessageBuilder{}.SetData(double_payload).Build()})
+          .then([](future<StatusOr<std::string>> f) {
+            return f.get().status();
+          }));
+  publisher->Flush({});
+  for (auto& r : results) EXPECT_STATUS_OK(r.get());
+}
+
+TEST(BatchingPublisherConnectionTest, BatchByMessageSizeOversizedSingleton) {
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  auto constexpr kSinglePayload = 128;
+  auto constexpr kBatchLimit = 4 * kSinglePayload;
+  auto const single_payload = std::string(kSinglePayload, 'A');
+  auto const oversized_payload = std::string(5 * kSinglePayload, 'B');
+
+  std::atomic<int> ack_id_generator{0};
+  auto generate_acks =
+      [&ack_id_generator](google::pubsub::v1::PublishRequest const& r) {
+        google::pubsub::v1::PublishResponse response;
+        for (int i = 0; i != r.messages_size(); ++i) {
+          response.add_message_ids("ack-" + std::to_string(++ack_id_generator));
+        }
+        return make_ready_future(make_status_or(response));
+      };
+
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(3, request.messages_size());
+        EXPECT_EQ(single_payload, request.messages(0).data());
+        EXPECT_EQ(single_payload, request.messages(1).data());
+        EXPECT_EQ(single_payload, request.messages(2).data());
+        return generate_acks(request);
+      })
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(1, request.messages_size());
+        EXPECT_EQ(oversized_payload, request.messages(0).data());
+        return generate_acks(request);
+      })
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_EQ(3, request.messages_size());
+        EXPECT_EQ(single_payload, request.messages(0).data());
+        EXPECT_EQ(single_payload, request.messages(1).data());
+        EXPECT_EQ(single_payload, request.messages(2).data());
+        return generate_acks(request);
+      });
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto const ordering_key = std::string{};
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(100)
+          .set_maximum_batch_bytes(kBatchLimit),
+      ordering_key, mock, background.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+  std::vector<future<Status>> results;
+  auto publish_single = [&] {
+    results.push_back(
+        publisher
+            ->Publish(
+                {pubsub::MessageBuilder{}.SetData(single_payload).Build()})
+            .then([](future<StatusOr<std::string>> f) {
+              return f.get().status();
+            }));
+  };
+  for (int i = 0; i != 3; ++i) publish_single();
+  // This will exceed the maximum size, it should flush the previously held
+  // messages *and* it should be immediately sent because it is too large by
+  // itself.
+  results.push_back(
+      publisher
+          ->Publish(
+              {pubsub::MessageBuilder{}.SetData(oversized_payload).Build()})
+          .then([](future<StatusOr<std::string>> f) {
+            return f.get().status();
+          }));
+  for (int i = 0; i != 3; ++i) publish_single();
+  publisher->Flush({});
+  for (auto& r : results) EXPECT_STATUS_OK(r.get());
+}
+
+TEST(BatchingPublisherConnectionTest, BatchTorture) {
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  auto constexpr kMaxMessages = 20;
+  auto constexpr kMaxSinglePayload = 2048;
+  auto constexpr kMaxPayload = kMaxMessages * kMaxSinglePayload / 2;
+
+  std::atomic<int> ack_id_generator{0};
+  auto generate_acks =
+      [&ack_id_generator](google::pubsub::v1::PublishRequest const& r) {
+        google::pubsub::v1::PublishResponse response;
+        for (int i = 0; i != r.messages_size(); ++i) {
+          response.add_message_ids("ack-" + std::to_string(++ack_id_generator));
+        }
+        return make_ready_future(make_status_or(response));
+      };
+
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const& request) {
+        EXPECT_EQ(topic.FullName(), request.topic());
+        EXPECT_LE(request.messages_size(), kMaxMessages);
+        std::size_t size = 0;
+        for (auto const& m : request.messages()) size += MessageProtoSize(m);
+        EXPECT_LE(size, kMaxPayload);
+        return generate_acks(request);
+      });
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
+  auto const ordering_key = std::string{};
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(kMaxMessages)
+          .set_maximum_batch_bytes(kMaxPayload),
+      ordering_key, mock, background.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+
+  auto worker = [&](int iterations) {
+    auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
+
+    auto publish_single = [&] {
+      auto const size =
+          std::uniform_int_distribution<std::size_t>(0, kMaxSinglePayload)(gen);
+      return publisher
+          ->Publish({pubsub::MessageBuilder{}
+                         .SetData(std::string(size, 'Y'))
+                         .Build()})
+          .then(
+              [](future<StatusOr<std::string>> f) { return f.get().status(); });
+    };
+    std::vector<future<Status>> results;
+    for (int i = 0; i != iterations; ++i) results.push_back(publish_single());
+    for (auto& r : results) EXPECT_STATUS_OK(r.get());
+  };
+  std::vector<std::thread> workers(4);
+  std::generate(workers.begin(), workers.end(), [&] {
+    return std::thread{worker, 1000};
+  });
+  publisher->Flush({});
+  for (auto& w : workers) w.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
