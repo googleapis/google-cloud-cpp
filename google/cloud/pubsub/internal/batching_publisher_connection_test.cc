@@ -838,7 +838,7 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
     using ms = std::chrono::milliseconds;
     EXPECT_EQ(std::future_status::timeout, r.wait_for(ms(0)));
   }
-  // Trigger the first response, the should all fail with the error response.
+  // Trigger the first response. They should all fail with the error response.
   wait_pending().set_value();
   for (auto& r : responses) {
     EXPECT_THAT(
