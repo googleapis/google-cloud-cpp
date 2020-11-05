@@ -89,6 +89,56 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
 }  // namespace
 
+// A helper class to wake up the asynchronous thread and drain the RunAsync()
+// queue in a loop.
+class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
+    : public internal::AsyncGrpcOperation {
+ public:
+  explicit WakeUpRunAsyncLoop(std::weak_ptr<DefaultCompletionQueueImpl> w)
+      : weak_(std::move(w)) {}
+
+  void Set(grpc::CompletionQueue& cq, void* tag) {
+    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
+  }
+
+  void Cancel() override {}
+
+ private:
+  bool Notify(bool ok) override {
+    if (!ok) return true;  // do not run async operations on shutdown CQs
+    if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
+    return true;
+  }
+
+  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
+  grpc::Alarm alarm_;
+};
+
+// A helper class to wake up the asynchronous thread and drain the RunAsync()
+// one element at a time.
+class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
+    : public internal::AsyncGrpcOperation {
+ public:
+  explicit WakeUpRunAsyncOnIdle(std::weak_ptr<DefaultCompletionQueueImpl> w)
+      : weak_(std::move(w)) {}
+
+  void Set(grpc::CompletionQueue& cq, void* tag) {
+    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
+  }
+
+  void Cancel() override {}
+
+ private:
+  bool Notify(bool ok) override {
+    if (!ok) return true;  // do not run async operations on shutdown CQs
+    if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
+    return true;
+  }
+
+  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
+  grpc::Alarm alarm_;
+};
+
 void DefaultCompletionQueueImpl::Run() {
   class ThreadPoolCount {
    public:
@@ -116,6 +166,7 @@ void DefaultCompletionQueueImpl::Run() {
           "unexpected status from AsyncNext()");
     }
     auto op = FindOperation(tag);
+    ++notify_counter_;
     if (op->Notify(ok)) {
       ForgetOperation(tag);
     }
@@ -220,7 +271,7 @@ void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
   }
 }
 
-void DefaultCompletionQueueImpl::RunAsyncLoop() {
+void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
   std::unique_lock<std::mutex> lk(mu_);
   while (!run_async_queue_.empty() && !shutdown_) {
     auto f = std::move(run_async_queue_.front());
@@ -236,67 +287,29 @@ void DefaultCompletionQueueImpl::RunAsyncLoop() {
   --run_async_thread_pool_size_;
 }
 
-void DefaultCompletionQueueImpl::RunAsyncOnce() {
+void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (run_async_queue_.empty()) return;
   auto f = std::move(run_async_queue_.front());
   run_async_queue_.pop_front();
   lk.unlock();
   f->exec();
+  lk.lock();
+  if (run_async_queue_.empty()) {
+    --run_async_thread_pool_size_;
+    return;
+  }
+  auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
+  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
 }
-
-// A helper class to wake up the asynchronous thread.
-class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
-    : public internal::AsyncGrpcOperation {
- public:
-  explicit WakeUpRunAsyncLoop(std::weak_ptr<DefaultCompletionQueueImpl> w)
-      : weak_(std::move(w)) {}
-
-  void Set(grpc::CompletionQueue& cq, void* tag) {
-    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
-  }
-
-  void Cancel() override {}
-
- private:
-  bool Notify(bool ok) override {
-    if (!ok) return true;  // do not run async operations on shutdown CQs
-    if (auto self = weak_.lock()) self->RunAsyncLoop();
-    return true;
-  }
-
-  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
-  grpc::Alarm alarm_;
-};
-
-class DefaultCompletionQueueImpl::WakeUpRunAsyncOnce
-    : public internal::AsyncGrpcOperation {
- public:
-  explicit WakeUpRunAsyncOnce(std::weak_ptr<DefaultCompletionQueueImpl> w)
-      : weak_(std::move(w)) {}
-
-  void Set(grpc::CompletionQueue& cq, void* tag) {
-    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
-  }
-
-  void Cancel() override {}
-
- private:
-  bool Notify(bool ok) override {
-    if (!ok) return true;  // do not run async operations on shutdown CQs
-    if (auto self = weak_.lock()) self->RunAsyncOnce();
-    return true;
-  }
-
-  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
-  grpc::Alarm alarm_;
-};
 
 void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
     std::unique_lock<std::mutex> lk) {
   if (run_async_queue_.empty() || shutdown_) return;
-  if (thread_pool_size_ == 1) {
-    auto op = std::make_shared<WakeUpRunAsyncOnce>(shared_from_this());
+  if (thread_pool_size_ <= 1) {
+    if (run_async_thread_pool_size_ > 0) return;
+    ++run_async_thread_pool_size_;
+    auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
     StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
     return;
   }

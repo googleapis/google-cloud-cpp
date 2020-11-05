@@ -17,6 +17,8 @@
 
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
+#include <atomic>
+#include <cinttypes>
 #include <deque>
 #include <unordered_map>
 
@@ -62,6 +64,9 @@ class DefaultCompletionQueueImpl
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() override;
 
+  /// Some counters for testing and debugging.
+  std::int64_t notify_counter() const { return notify_counter_.load(); }
+
  private:
   /// Start an operation with the lock already held.
   void StartOperation(std::unique_lock<std::mutex> lk,
@@ -84,12 +89,12 @@ class DefaultCompletionQueueImpl
     ++thread_pool_size_;
   }
 
-  void RunAsyncLoop();
-  void RunAsyncOnce();
+  void DrainRunAsyncLoop();
+  void DrainRunAsyncOnIdle();
   void WakeUpRunAsyncThread(std::unique_lock<std::mutex> lk);
 
   class WakeUpRunAsyncLoop;
-  class WakeUpRunAsyncOnce;
+  class WakeUpRunAsyncOnIdle;
 
   std::mutex mu_;
   grpc::CompletionQueue cq_;
@@ -100,6 +105,7 @@ class DefaultCompletionQueueImpl
   bool shutdown_{false};  // GUARDED_BY(mu_)
   std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;  // GUARDED_BY(mu_)
+  std::atomic<std::int64_t> notify_counter_{0};
 };
 
 }  // namespace internal

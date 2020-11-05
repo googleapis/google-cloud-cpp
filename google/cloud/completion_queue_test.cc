@@ -490,7 +490,8 @@ TEST(CompletionQueueTest, RunAsyncThread) {
 }
 
 TEST(CompletionQueueTest, RunAsyncParallel) {
-  CompletionQueue cq;
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
+  CompletionQueue cq(impl);
   auto constexpr kRunners = 16;
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
@@ -519,14 +520,16 @@ TEST(CompletionQueueTest, RunAsyncParallel) {
   };
 
   // Start an async function and block it... this will help us verify that
-  // different functions get called in different functions. Start with just one:
+  // different functions get called in different threads. Start with just one:
   cq.RunAsync([&] { add_promise().get(); });
   wait().set_value();
 
   // Verify we never exceed 15 threads running in parallel, because we want to
   // reserve 1 thread for the I/O loop.
-  for (int i = 0; i != 100; ++i) {
-    auto const n = 4 * kRunners;
+  auto constexpr kIterations = 100;
+  auto constexpr kRepeats = 8;
+  for (int i = 0; i != kIterations; ++i) {
+    auto const n = kRepeats * kRunners;
     for (int j = 0; j != n; ++j) cq.RunAsync([&] { add_promise().get(); });
     for (int j = 0; j != n; ++j) wait().set_value();
   }
@@ -534,6 +537,48 @@ TEST(CompletionQueueTest, RunAsyncParallel) {
 
   cq.Shutdown();
   for (auto& t : runners) t.join();
+  // We do not expect a lot of calls to Notify(), maybe kRunners * kIterations
+  // at most, but let's be conservative.
+  EXPECT_LE(impl->notify_counter(), kIterations * kRunners * kRepeats / 4);
+}
+
+TEST(CompletionQueueTest, RunAsyncSingleThreaded) {
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
+
+  // Make each function in RunAsync() block under control of this thread.
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> waiting;
+  auto add_promise = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    waiting.emplace_back();
+    auto f = waiting.back().get_future();
+    lk.unlock();
+    cv.notify_one();
+    return f;
+  };
+  auto wait = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !waiting.empty(); });
+    auto f = std::move(waiting.front());
+    waiting.pop_front();
+    return f;
+  };
+
+  // Verify that scheduling multiple async functions works.
+  auto constexpr kIterations = 100;
+  for (int i = 0; i != kIterations; ++i) {
+    cq.RunAsync([&] { add_promise().get(); });
+  }
+  for (int i = 0; i != kIterations; ++i) {
+    wait().set_value();
+  }
+
+  cq.Shutdown();
+  t.join();
+  EXPECT_LT(kIterations / 2, impl->notify_counter());
 }
 
 TEST(CompletionQueueTest, RunAsyncSingleThread) {
