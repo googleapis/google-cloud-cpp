@@ -208,14 +208,15 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
         return make_ready_future(make_status_or(response));
       });
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  auto const ordering_key = std::string{};
+  // Start with an inactive message queue, to avoid flakes due to scheduling
+  // problems.
+  CompletionQueue cq;
   auto publisher = BatchingPublisherConnection::Create(
       topic,
       pubsub::PublisherOptions{}
           .set_maximum_hold_time(std::chrono::milliseconds(5))
           .set_maximum_batch_message_count(4),
-      ordering_key, mock, background.cq(), pubsub_testing::TestRetryPolicy(),
+      /*ordering_key=*/{}, mock, cq, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
   auto r0 =
       publisher
@@ -234,8 +235,15 @@ TEST(BatchingPublisherConnectionTest, BatchByMaximumHoldTime) {
             EXPECT_EQ("test-message-id-1", *r);
           });
 
+  // Now that the two messages are queued, we can activate the completion queue.
+  // It should flush the messages in about 5ms.
+  std::thread t{[](CompletionQueue cq) { cq.Run(); }, cq};
+
   r0.get();
   r1.get();
+
+  cq.Shutdown();
+  t.join();
 }
 
 TEST(BatchingPublisherConnectionTest, BatchByFlush) {
