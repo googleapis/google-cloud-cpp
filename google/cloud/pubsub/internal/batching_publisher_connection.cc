@@ -190,8 +190,6 @@ future<StatusOr<std::string>> BatchingPublisherConnection::CorkedError() {
   return f;
 }
 
-void Fits(std::unique_lock<std::mutex> const& lk, std::size_t bytes);
-
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   if (pending_.messages().empty() || corked_) return;
 
