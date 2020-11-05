@@ -658,6 +658,8 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchCorked) {
                                 .SetData("d-" + std::to_string(i))
                                 .SetOrderingKey("test-key")
                                 .Build()}));
+    // Calling ResumePublish() should have no side effects.
+    publisher->ResumePublish({"test-key"});
   }
 
   // None of the responses should be ready because the mock has not sent a
@@ -679,7 +681,7 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchCorked) {
   }
 }
 
-TEST(BatchingPublisherConnectionTest, OrderingBatchRejectAfterError) {
+TEST(BatchingPublisherConnectionTest, OrderingBatchErrorRejectAfterError) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   pubsub::Topic const topic("test-project", "test-topic");
   auto const expected_status = Status{StatusCode::kPermissionDenied, "uh-oh"};
@@ -704,6 +706,56 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchRejectAfterError) {
                                        .Build()})
                         .get();
     EXPECT_EQ(response.status(), expected_status);
+  }
+}
+
+TEST(BatchingPublisherConnectionTest, OrderingBatchErrorResume) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  pubsub::Topic const topic("test-project", "test-topic");
+  auto const expected_status = Status{StatusCode::kPermissionDenied, "uh-oh"};
+
+  EXPECT_CALL(*mock, AsyncPublish)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::PublishRequest const& request) {
+        google::pubsub::v1::PublishResponse response;
+        for (auto const& m : request.messages()) {
+          response.add_message_ids("id-" + std::string(m.data()));
+        }
+        return make_ready_future(make_status_or(response));
+      });
+
+  auto constexpr kBatchSize = 2;
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}.set_maximum_batch_message_count(kBatchSize),
+      "test-key", mock, background.cq(), pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+
+  // Simulate a previous error
+  publisher->DiscardCorked(expected_status);
+  for (int i = 0; i != 3 * kBatchSize; ++i) {
+    auto response = publisher
+                        ->Publish({pubsub::MessageBuilder{}
+                                       .SetData("d-" + std::to_string(i))
+                                       .SetOrderingKey("test-key")
+                                       .Build()})
+                        .get();
+    EXPECT_EQ(response.status(), expected_status);
+  }
+  publisher->ResumePublish({"test-key"});
+  std::vector<future<StatusOr<std::string>>> responses;
+  for (int i = 0; i != 3 * kBatchSize; ++i) {
+    responses.push_back(
+        publisher->Publish({pubsub::MessageBuilder{}
+                                .SetData("d-" + std::to_string(i))
+                                .SetOrderingKey("test-key")
+                                .Build()}));
+  }
+  publisher->Flush({});
+  for (auto& r : responses) {
+    EXPECT_THAT(r.get().status(), StatusIs(StatusCode::kOk));
   }
 }
 
@@ -786,7 +838,7 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
     using ms = std::chrono::milliseconds;
     EXPECT_EQ(std::future_status::timeout, r.wait_for(ms(0)));
   }
-  // Trigger the first response.
+  // Trigger the first response, the should all fail with the error response.
   wait_pending().set_value();
   for (auto& r : responses) {
     EXPECT_THAT(
@@ -812,6 +864,8 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
   for (auto& r : responses) {
     ASSERT_STATUS_OK(r.get());
   }
+  // Cancel pending timer to speed up the test.
+  background.cq().CancelAll();
 }
 
 }  // namespace
