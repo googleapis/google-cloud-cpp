@@ -148,12 +148,14 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
     FlushImpl(std::move(lk));
     return;
   }
-  // If the batch is empty obviously we do not need a timer, and if it has more
-  // than one element then we have setup a timer previously and there is no need
-  // to set it again.
-  if (pending_.messages_size() != 1) return;
+  // Only reset the timer if needed.
+  if (timer_.valid()) return;
   auto const expiration = batch_expiration_ =
       std::chrono::system_clock::now() + options_.maximum_hold_time();
+  if (timer_.valid()) {
+    timer_.cancel();
+    timer_ = {};
+  }
   lk.unlock();
   // We need a weak_ptr<> because this class owns the completion queue,
   // creating a lambda with a shared_ptr<> owning this class would create a
@@ -162,14 +164,24 @@ void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
   auto weak = std::weak_ptr<BatchingPublisherConnection>(shared_from_this());
   // Note that at this point the lock is released, so whether the timer
   // schedules later on schedules in this thread has no effect.
-  cq_.MakeDeadlineTimer(expiration)
-      .then([weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
-        if (auto self = weak.lock()) self->OnTimer();
-      });
+  auto timer =
+      cq_.MakeDeadlineTimer(expiration)
+          .then(
+              [weak](future<StatusOr<std::chrono::system_clock::time_point>>) {
+                if (auto self = weak.lock()) self->OnTimer();
+              });
+  lk.lock();
+  if (!timer_.valid()) {
+    timer_ = std::move(timer);
+    return;
+  }
+  lk.unlock();
+  timer.cancel();
 }
 
 void BatchingPublisherConnection::OnTimer() {
   std::unique_lock<std::mutex> lk(mu_);
+  timer_ = {};
   if (std::chrono::system_clock::now() < batch_expiration_) {
     // We may get many "old" timers for batches that have already flushed due to
     // size. Trying to cancel these timers is a bit hopeless, they might trigger
@@ -202,6 +214,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   request.Swap(&pending_);
   corked_on_pending_push_ = RequiresOrdering();
   current_bytes_ = 0;
+  if (timer_.valid()) timer_.cancel();
   lk.unlock();
 
   auto context = absl::make_unique<grpc::ClientContext>();

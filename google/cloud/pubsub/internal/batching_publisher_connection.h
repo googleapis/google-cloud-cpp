@@ -93,6 +93,8 @@ class BatchingPublisherConnection
   std::chrono::system_clock::time_point batch_expiration_;
   bool corked_on_pending_push_ = false;
   Status corked_on_status_;
+
+  future<void> timer_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

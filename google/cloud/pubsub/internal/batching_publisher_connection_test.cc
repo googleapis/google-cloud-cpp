@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -866,6 +867,92 @@ TEST(BatchingPublisherConnectionTest, OrderingBatchDiscardOnError) {
   }
   // Cancel pending timer to speed up the test.
   background.cq().CancelAll();
+}
+
+TEST(BatchingPublisherConnectionTest, OrderingResetTimerOnCompletion) {
+  pubsub::Topic const topic("test-project", "test-topic");
+
+  std::mutex mu;
+  std::condition_variable cv;
+  std::deque<promise<void>> pending;
+  auto add_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    pending.emplace_back();
+    cv.notify_one();
+    return pending.back().get_future();
+  };
+  auto wait_pending = [&] {
+    std::unique_lock<std::mutex> lk(mu);
+    cv.wait(lk, [&] { return !pending.empty(); });
+    auto p = std::move(pending.front());
+    pending.pop_front();
+    return p;
+  };
+  auto handle_async_push =
+      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+          google::pubsub::v1::PublishRequest const& request) {
+        google::pubsub::v1::PublishResponse response;
+        for (auto const& m : request.messages()) {
+          response.add_message_ids("id-" + std::string(m.data()));
+        }
+        return add_pending().then(
+            [response](future<void>) { return make_status_or(response); });
+      };
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  EXPECT_CALL(*mock, AsyncPublish).WillRepeatedly(handle_async_push);
+
+  // Create an inactive queue, so no timers will ever "run", you can set them,
+  // but they won't execute.
+  CompletionQueue cq;
+  auto constexpr kBatchSize = 4;
+  auto const hold_time = std::chrono::milliseconds(5);
+  auto publisher = BatchingPublisherConnection::Create(
+      topic,
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(kBatchSize)
+          .set_maximum_hold_time(hold_time),
+      "test-key", mock, cq, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+
+  auto publish = [&](int count) {
+    std::vector<future<StatusOr<std::string>>> r;
+    for (int i = 0; i != count; ++i) {
+      r.push_back(publisher->Publish({pubsub::MessageBuilder{}
+                                          .SetData("d-" + std::to_string(i))
+                                          .SetOrderingKey("test-key")
+                                          .Build()}));
+    }
+    return r;
+  };
+
+  // Create a batch and flush it. Because we control when `AsyncPull()` succeeds
+  // this batch will be pending and cork any future requests.
+  auto r0 = publish(kBatchSize);
+  publisher->Flush({});
+
+  // Create a timer, because timers are sequenced, because CQ sequence the
+  // timers this one will expire after any timers created by `publisher`.
+  auto timer = cq.MakeRelativeTimer(hold_time);
+
+  // Now create a partial batch. It is too small to flush something that would
+  // not be sent by itself.
+  auto r1 = publish(kBatchSize / 2);
+
+  // Activate the queue, giving the timers a chance to run.
+  std::thread t{[](CompletionQueue cq) { cq.Run(); }, cq};
+  timer.get();
+
+  // Trigger the first response. The responses should be successful.
+  wait_pending().set_value();
+  for (auto& r : r0) EXPECT_THAT(r.get().status(), StatusIs(StatusCode::kOk));
+
+  // The partial batch should be sent eventually. That will unblock
+  // wait_pending() and the remaining code.
+  wait_pending().set_value();
+  for (auto& r : r1) EXPECT_THAT(r.get().status(), StatusIs(StatusCode::kOk));
+
+  cq.Shutdown();
+  t.join();
 }
 
 }  // namespace
