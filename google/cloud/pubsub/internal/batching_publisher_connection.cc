@@ -71,7 +71,7 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
   auto const bytes = pubsub_internal::MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
   do {
-    if (!corked_status_.ok()) return CorkedError();
+    if (!corked_on_status_.ok()) return CorkedError();
     auto const has_capacity =
         current_bytes_ + bytes < options_.maximum_batch_bytes();
     if (has_capacity || waiters_.empty()) break;
@@ -107,21 +107,24 @@ void BatchingPublisherConnection::Flush(FlushParams) {
 
 void BatchingPublisherConnection::ResumePublish(ResumePublishParams p) {
   if (ordering_key_ != p.ordering_key) return;
-  UnCork();
+  std::unique_lock<std::mutex> lk(mu_);
+  corked_on_status_ = {};
+  MaybeFlush(std::move(lk));
 }
 
 void BatchingPublisherConnection::UnCork() {
   std::unique_lock<std::mutex> lk(mu_);
-  corked_ = false;
-  corked_status_ = {};
+  corked_on_pending_push_ = false;
   MaybeFlush(std::move(lk));
 }
 
 void BatchingPublisherConnection::DiscardCorked(Status const& status) {
   auto waiters = [&] {
     std::unique_lock<std::mutex> lk(mu_);
-    corked_ = true;
-    corked_status_ = status;
+    // This is the result of a request, so no longer corked waiting for it.
+    corked_on_pending_push_ = false;
+    // An error should block more messages only if ordering is required.
+    if (RequiresOrdering()) corked_on_status_ = status;
     pending_.Clear();
     std::vector<promise<StatusOr<std::string>>> tmp;
     tmp.swap(waiters_);
@@ -185,19 +188,19 @@ future<StatusOr<std::string>> BatchingPublisherConnection::CorkedError() {
     Status status;
     void operator()() { p.set_value(std::move(status)); }
   };
-  cq_.RunAsync(MoveCapture{std::move(p), corked_status_});
+  cq_.RunAsync(MoveCapture{std::move(p), corked_on_status_});
 
   return f;
 }
 
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.messages().empty() || corked_) return;
+  if (pending_.messages().empty() || IsCorked(lk)) return;
 
   Batch batch;
   batch.waiters.swap(waiters_);
   google::pubsub::v1::PublishRequest request;
   request.Swap(&pending_);
-  corked_ = !ordering_key_.empty();
+  corked_on_pending_push_ = RequiresOrdering();
   current_bytes_ = 0;
   lk.unlock();
 
