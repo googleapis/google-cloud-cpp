@@ -75,7 +75,7 @@ class Wait {
 
 void BM_Baseline(benchmark::State& state) {
   auto runner = [&](std::int64_t n) {
-    Wait wait(static_cast<int>(n));
+    Wait wait(n);
     std::deque<std::function<void()>> queue;
     for (std::int64_t i = 0; i != n; ++i) {
       queue.emplace_back([&wait] { wait.OneDone(); });
