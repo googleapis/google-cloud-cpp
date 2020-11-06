@@ -86,7 +86,7 @@ class DefaultCompletionQueueImpl
 
   void RunStop() {
     std::lock_guard<std::mutex> lk(mu_);
-    ++thread_pool_size_;
+    --thread_pool_size_;
   }
 
   void DrainRunAsyncLoop();
