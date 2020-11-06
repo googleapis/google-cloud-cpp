@@ -115,6 +115,13 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
+std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
+    pubsub::Subscription subscription, pubsub::SubscriberOptions options,
+    pubsub::ConnectionOptions connection_options,
+    std::vector<std::shared_ptr<SubscriberStub>> stubs,
+    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
+    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

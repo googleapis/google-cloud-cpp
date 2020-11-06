@@ -29,6 +29,7 @@ pubsub_client_unit_tests = [
     "internal/streaming_subscription_batch_source_test.cc",
     "internal/subscriber_logging_test.cc",
     "internal/subscriber_metadata_test.cc",
+    "internal/subscriber_round_robin_test.cc",
     "internal/subscription_concurrency_control_test.cc",
     "internal/subscription_lease_management_test.cc",
     "internal/subscription_message_queue_test.cc",
