@@ -27,8 +27,8 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-namespace internal {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 namespace {
 
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
@@ -221,8 +221,8 @@ class AcceptanceTest : public ::testing::Test {
 #include "google/cloud/bigtable/internal/readrowsparser_acceptance_tests.inc"
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

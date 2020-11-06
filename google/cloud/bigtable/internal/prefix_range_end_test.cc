@@ -18,8 +18,8 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-namespace internal {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
 namespace {
 
 TEST(PrefixRangeEndTest, Simple) {
@@ -42,8 +42,8 @@ TEST(PrefixRangeEndTest, MostlyFFs) {
 }
 
 }  // namespace
-}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
