@@ -151,8 +151,8 @@ TEST(SubscriptionMessageQueueTest, Basic) {
 
   EXPECT_THAT(received, ElementsAre(IsProtoEqual(messages[0]),
                                     IsProtoEqual(messages[1])));
-  uut->AckMessage("ack-m0", 0);
-  uut->NackMessage("ack-m1", 1);
+  uut->AckMessage("ack-m0");
+  uut->NackMessage("ack-m1");
 
   received.clear();
   uut->Shutdown();
@@ -247,21 +247,21 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
               ElementsAre("id--000000", "id--000001", "id--000002"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack--000000", 0);
-  uut->AckMessage("ack--000001", 0);
-  uut->AckMessage("ack--000002", 0);
+  uut->AckMessage("ack--000000");
+  uut->AckMessage("ack--000001");
+  uut->AckMessage("ack--000002");
   EXPECT_THAT(received["k0"], IsEmpty());
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
   received.clear();  // keep expectations shorter
-  uut->NackMessage("ack-k0-000000", 0);
+  uut->NackMessage("ack-k0-000000");
   uut->Read(4);
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
   EXPECT_THAT(received["k1"], IsEmpty());
   EXPECT_THAT(received[{}], IsEmpty());
 
-  uut->NackMessage("ack-k1-000000", 0);
+  uut->NackMessage("ack-k1-000000");
   uut->Read(1);
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
   EXPECT_THAT(received["k1"], ElementsAre("id-k1-000001"));
@@ -269,18 +269,18 @@ TEST(SubscriptionMessageQueueTest, RespectOrderingKeys) {
 
   received.clear();  // keep expectations shorter
   batch_callback(AsPullResponse(GenerateOrderKeyMessages({}, 3, 2)));
-  uut->AckMessage("ack-k0-000001", 0);
-  uut->AckMessage("ack-k1-000001", 0);
+  uut->AckMessage("ack-k0-000001");
+  uut->AckMessage("ack-k1-000001");
   uut->Read(2);
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000002"));
   EXPECT_THAT(received["k1"], ElementsAre("id-k1-000002"));
   EXPECT_THAT(received[{}], ElementsAre("id--000003", "id--000004"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack-k0-000002", 0);
-  uut->AckMessage("ack-k1-000002", 0);
-  uut->AckMessage("ack--000003", 0);
-  uut->AckMessage("ack--000004", 0);
+  uut->AckMessage("ack-k0-000002");
+  uut->AckMessage("ack-k1-000002");
+  uut->AckMessage("ack--000003");
+  uut->AckMessage("ack--000004");
   uut->Read(4);
   EXPECT_THAT(received["k0"], IsEmpty());
   EXPECT_THAT(received["k1"], IsEmpty());
@@ -333,13 +333,13 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesNoKey) {
                                         "id--000000", "id--000001"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack--000000", 0);
-  uut->NackMessage("ack--000001", 0);
+  uut->AckMessage("ack--000000");
+  uut->NackMessage("ack--000001");
   uut->Read(2);
   EXPECT_THAT(received[{}], ElementsAre("id--000002", "id--000003"));
 
-  uut->AckMessage("ack--000000", 0);
-  uut->AckMessage("ack--000001", 0);
+  uut->AckMessage("ack--000000");
+  uut->AckMessage("ack--000001");
   uut->Read(2);
   EXPECT_THAT(received[{}], ElementsAre("id--000002", "id--000003",
                                         "id--000004", "id--000005"));
@@ -379,15 +379,15 @@ TEST(SubscriptionMessageQueueTest, DuplicateMessagesWithKey) {
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack-k0-000000", 0);
+  uut->AckMessage("ack-k0-000000");
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000000"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack-k0-000000", 0);
+  uut->AckMessage("ack-k0-000000");
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000001"));
 
   received.clear();  // keep expectations shorter
-  uut->AckMessage("ack-k0-000001", 0);
+  uut->AckMessage("ack-k0-000001");
   EXPECT_THAT(received["k0"], ElementsAre("id-k0-000002"));
 
   uut->Shutdown();
@@ -439,7 +439,7 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
         notify = (++received_count >= message_count);
       }
       if (notify) cv.notify_one();
-      uut->AckMessage(m.ack_id(), 0);
+      uut->AckMessage(m.ack_id());
       uut->Read(1);
     });
   };
