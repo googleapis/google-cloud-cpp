@@ -44,8 +44,8 @@ class SubscriptionConcurrencyControl
 
   void Start(pubsub::ApplicationCallback);
   void Shutdown();
-  void AckMessage(std::string const& ack_id, std::size_t size);
-  void NackMessage(std::string const& ack_id, std::size_t size);
+  void AckMessage(std::string const& ack_id);
+  void NackMessage(std::string const& ack_id);
 
  private:
   SubscriptionConcurrencyControl(

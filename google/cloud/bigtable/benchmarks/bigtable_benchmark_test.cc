@@ -17,14 +17,14 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
-using ::google::cloud::bigtable::benchmarks::Benchmark;
-using ::google::cloud::bigtable::benchmarks::BenchmarkResult;
-using ::google::cloud::bigtable::benchmarks::kBulkSize;
-using ::google::cloud::bigtable::benchmarks::MakeBenchmarkSetup;
-using ::google::cloud::bigtable::benchmarks::OperationResult;
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace benchmarks {
+namespace {
+
 using ::testing::HasSubstr;
 
-namespace {
 char arg0[] = "program";
 char arg1[] = "foo";
 char arg2[] = "bar";
@@ -33,7 +33,6 @@ char arg4[] = "4";
 char arg5[] = "300";
 char arg6[] = "10000";
 char arg7[] = "True";
-}  // anonymous namespace
 
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
@@ -139,7 +138,7 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   result.operations.resize(100);
   int count = 0;
   std::generate(result.operations.begin(), result.operations.end(), [&count]() {
-    return OperationResult{google::cloud::Status{},
+    return OperationResult{::google::cloud::Status{},
                            std::chrono::microseconds(++count * 100)};
   });
 
@@ -174,7 +173,7 @@ TEST(BenchmarkTest, PrintCsv) {
   result.operations.resize(100);
   int count = 0;
   std::generate(result.operations.begin(), result.operations.end(), [&count]() {
-    return OperationResult{google::cloud::Status{},
+    return OperationResult{::google::cloud::Status{},
                            std::chrono::microseconds(++count * 100)};
   });
 
@@ -192,9 +191,9 @@ TEST(BenchmarkTest, PrintCsv) {
   // fairly minimal.
 
   // The output includes the version and compiler info.
-  EXPECT_THAT(output, HasSubstr(google::cloud::bigtable::version_string()));
-  EXPECT_THAT(output, HasSubstr(google::cloud::internal::compiler()));
-  EXPECT_THAT(output, HasSubstr(google::cloud::internal::compiler_flags()));
+  EXPECT_THAT(output, HasSubstr(version_string()));
+  EXPECT_THAT(output, HasSubstr(::google::cloud::internal::compiler()));
+  EXPECT_THAT(output, HasSubstr(::google::cloud::internal::compiler_flags()));
 
   // The output includes the latency results.
   EXPECT_THAT(output, HasSubstr(",100,"));    // p0
@@ -204,3 +203,9 @@ TEST(BenchmarkTest, PrintCsv) {
   // The output includes the throughput.
   EXPECT_THAT(output, HasSubstr(",123,"));
 }
+
+}  // namespace
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

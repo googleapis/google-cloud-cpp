@@ -26,6 +26,11 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <condition_variable>
+#include <mutex>
+#include <set>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -158,6 +163,23 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
 }
 
 TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
+  // Declare these before any helpers that launch threads. Their lifetime must
+  // be longer than any thread pools created by the test, because they are used
+  // by those threads.
+  //
+  // Under heavy load (such as we experience in the CI builds) the main thread
+  // would call the destructor for these objects before the threads are done
+  // with them.
+  std::mutex callback_mu;
+  std::condition_variable callback_cv;
+  std::set<std::string> received_ids;
+  int ack_count = 0;
+  int callback_count = 0;
+  auto wait_received_count = [&](std::size_t count) {
+    std::unique_lock<std::mutex> lk(callback_mu);
+    callback_cv.wait(lk, [&] { return received_ids.size() >= count; });
+  };
+
   auto publisher = Publisher(MakePublisherConnection(
       topic_, {},
       pubsub::ConnectionOptions{}.set_background_thread_pool_size(2)));
@@ -169,35 +191,34 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   auto source =
       std::make_shared<pubsub_internal::StreamingSubscriptionBatchSource>(
           background.cq(), shutdown, stub, subscription_.FullName(),
-          "test-client-0001", pubsub::SubscriberOptions{},
+          "test-client-0001",
+          pubsub::SubscriberOptions{}.set_max_deadline_time(
+              std::chrono::seconds(300)),
           pubsub_testing::TestRetryPolicy(),
           pubsub_testing::TestBackoffPolicy());
 
-  std::mutex callback_mu;
-  std::condition_variable callback_cv;
-  std::vector<std::string> received_ids;
-  int ack_count = 0;
-  int callback_count = 0;
-  auto wait_ack_count = [&](int count) {
-    std::unique_lock<std::mutex> lk(callback_mu);
-    callback_cv.wait(lk, [&] { return ack_count >= count; });
-  };
+  // This must be declared after `source` as it captures it and uses it to send
+  // back acknowledgements.
   auto callback =
       [&](StatusOr<google::pubsub::v1::StreamingPullResponse> const& response) {
         ASSERT_STATUS_OK(response);
-        std::cout << "callback(" << response->received_messages_size() << ")"
-                  << std::endl;
         {
           std::lock_guard<std::mutex> lk(callback_mu);
           for (auto const& m : response->received_messages()) {
-            received_ids.push_back(m.message().message_id());
+            received_ids.insert(m.message().message_id());
           }
           ++callback_count;
           for (auto const& m : response->received_messages()) {
             source->AckMessage(m.ack_id());
           }
           ack_count += response->received_messages_size();
+          std::cout << "callback(" << response->received_messages_size() << ")"
+                    << ", ack_count=" << ack_count
+                    << ", received_ids.size()=" << received_ids.size()
+                    << std::endl;
         }
+        // This condition variable must have a lifetime longer than the thread
+        // pools.
         callback_cv.notify_one();
       };
 
@@ -205,13 +226,13 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
   source->Start(std::move(callback));
 
   auto constexpr kPublishCount = 1000;
-  std::set<std::string> expected_ids = [&] {
-    std::set<std::string> ids;
+  auto const expected_ids = [&] {
     std::vector<future<StatusOr<std::string>>> message_ids;
     for (int i = 0; i != kPublishCount; ++i) {
       message_ids.push_back(publisher.Publish(
           MessageBuilder{}.SetData("message-" + std::to_string(i)).Build()));
     }
+    std::set<std::string> ids;
     for (auto& id : message_ids) {
       auto r = id.get();
       EXPECT_STATUS_OK(r);
@@ -220,18 +241,23 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
     return ids;
   }();
 
-  wait_ack_count(kPublishCount);
-  {
-    std::lock_guard<std::mutex> lk(callback_mu);
-    for (auto const& id : received_ids) {
-      expected_ids.erase(id);
-    }
-    EXPECT_TRUE(expected_ids.empty());
-  }
+  wait_received_count(expected_ids.size());
 
+  // Wait until all the background callbacks complete.
   shutdown->MarkAsShutdown("test", {});
   source->Shutdown();
+
   EXPECT_STATUS_OK(done.get());
+
+  auto diff = [&] {
+    // No locks needed as the background threads have stopped.
+    std::vector<std::string> diff;
+    std::set_symmetric_difference(received_ids.begin(), received_ids.end(),
+                                  expected_ids.begin(), expected_ids.end(),
+                                  std::back_inserter(diff));
+    return diff;
+  }();
+  EXPECT_THAT(diff, IsEmpty());
 }
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {

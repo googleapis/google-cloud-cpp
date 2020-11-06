@@ -19,8 +19,12 @@
 #include <gmock/gmock.h>
 #include <thread>
 
-namespace bigtable = google::cloud::bigtable;
-using bigtable::benchmarks::CreateEmbeddedServer;
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace benchmarks {
+namespace {
+
 using std::chrono::milliseconds;
 
 TEST(EmbeddedServer, WaitAndShutdown) {
@@ -39,15 +43,14 @@ TEST(EmbeddedServer, Admin) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
+  ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_admin_endpoint(server->address());
-  bigtable::TableAdmin admin(
-      bigtable::CreateDefaultAdminClient("fake-project", options),
-      "fake-instance");
+  TableAdmin admin(CreateDefaultAdminClient("fake-project", options),
+                   "fake-instance");
 
-  auto gc = bigtable::GcRule::MaxNumVersions(42);
+  auto gc = GcRule::MaxNumVersions(42);
   EXPECT_EQ(0, server->create_table_count());
-  admin.CreateTable("fake-table-01", bigtable::TableConfig({{"fam", gc}}, {}));
+  admin.CreateTable("fake-table-01", TableConfig({{"fam", gc}}, {}));
   EXPECT_EQ(1, server->create_table_count());
 
   EXPECT_EQ(0, server->delete_table_count());
@@ -62,15 +65,14 @@ TEST(EmbeddedServer, TableApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
+  ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            "fake-project", "fake-instance", options),
-                        "fake-table");
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
+              "fake-table");
 
-  bigtable::SingleRowMutation mutation(
-      "row1", {bigtable::SetCell("fam", "col", milliseconds(0), "val"),
-               bigtable::SetCell("fam", "col", milliseconds(0), "val")});
+  SingleRowMutation mutation("row1",
+                             {SetCell("fam", "col", milliseconds(0), "val"),
+                              SetCell("fam", "col", milliseconds(0), "val")});
 
   EXPECT_EQ(0, server->mutate_row_count());
   auto status = table.Apply(std::move(mutation));
@@ -85,17 +87,16 @@ TEST(EmbeddedServer, TableBulkApply) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
+  ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            "fake-project", "fake-instance", options),
-                        "fake-table");
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
+              "fake-table");
 
-  bigtable::BulkMutation bulk;
-  bulk.emplace_back(bigtable::SingleRowMutation(
-      "row1", {bigtable::SetCell("fam", "col", milliseconds(0), "val")}));
-  bulk.emplace_back(bigtable::SingleRowMutation(
-      "row2", {bigtable::SetCell("fam", "col", milliseconds(0), "val")}));
+  BulkMutation bulk;
+  bulk.emplace_back(SingleRowMutation(
+      "row1", {SetCell("fam", "col", milliseconds(0), "val")}));
+  bulk.emplace_back(SingleRowMutation(
+      "row2", {SetCell("fam", "col", milliseconds(0), "val")}));
 
   EXPECT_EQ(0, server->mutate_rows_count());
   auto failures = table.BulkApply(std::move(bulk));
@@ -110,15 +111,13 @@ TEST(EmbeddedServer, ReadRows1) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
+  ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            "fake-project", "fake-instance", options),
-                        "fake-table");
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
+              "fake-table");
 
   EXPECT_EQ(0, server->read_rows_count());
-  auto reader = table.ReadRows(bigtable::RowSet("row1"), 1,
-                               bigtable::Filter::PassAllFilter());
+  auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(1, count);
   EXPECT_EQ(1, server->read_rows_count());
@@ -131,16 +130,14 @@ TEST(EmbeddedServer, ReadRows100) {
   auto server = CreateEmbeddedServer();
   std::thread wait_thread([&server]() { server->Wait(); });
 
-  bigtable::ClientOptions options(grpc::InsecureChannelCredentials());
+  ClientOptions options(grpc::InsecureChannelCredentials());
   options.set_data_endpoint(server->address());
-  bigtable::Table table(bigtable::CreateDefaultDataClient(
-                            "fake-project", "fake-instance", options),
-                        "fake-table");
+  Table table(CreateDefaultDataClient("fake-project", "fake-instance", options),
+              "fake-table");
 
   EXPECT_EQ(0, server->read_rows_count());
-  auto reader =
-      table.ReadRows(bigtable::RowSet(bigtable::RowRange::StartingAt("foo")),
-                     100, bigtable::Filter::PassAllFilter());
+  auto reader = table.ReadRows(RowSet(RowRange::StartingAt("foo")), 100,
+                               Filter::PassAllFilter());
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(100, count);
   EXPECT_EQ(1, server->read_rows_count());
@@ -148,3 +145,9 @@ TEST(EmbeddedServer, ReadRows100) {
   server->Shutdown();
   wait_thread.join();
 }
+
+}  // namespace
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

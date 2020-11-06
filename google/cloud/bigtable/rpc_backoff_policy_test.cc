@@ -18,20 +18,22 @@
 #include <chrono>
 #include <vector>
 
-namespace bigtable = ::google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
-namespace {
 /// Create a grpc::Status with a status code for transient errors.
 grpc::Status CreateTransientError() {
   return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
 }
 
-}  // anonymous namespace
-
 /// @test A simple test for the ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Simple) {
-  bigtable::ExponentialBackoffPolicy tested(10_ms, 500_ms);
+  ExponentialBackoffPolicy tested(10_ms, 500_ms);
 
   EXPECT_GE(10_ms, tested.OnCompletion(CreateTransientError()));
   EXPECT_NE(500_ms, tested.OnCompletion(CreateTransientError()));
@@ -45,7 +47,7 @@ TEST(ExponentialBackoffRetryPolicy, Simple) {
 
 /// @test Test cloning for ExponentialBackoffRetryPolicy.
 TEST(ExponentialBackoffRetryPolicy, Clone) {
-  bigtable::ExponentialBackoffPolicy original(10_ms, 50_ms);
+  ExponentialBackoffPolicy original(10_ms, 50_ms);
   auto tested = original.clone();
 
   EXPECT_GE(10_ms, tested->OnCompletion(CreateTransientError()));
@@ -55,8 +57,8 @@ TEST(ExponentialBackoffRetryPolicy, Clone) {
 /// @test Test for testing randomness for 2 objects of
 /// ExponentialBackoffRetryPolicy such that no two clients have same sleep time.
 TEST(ExponentialBackoffRetryPolicy, Randomness) {
-  bigtable::ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
-  bigtable::ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
+  ExponentialBackoffPolicy test_object1(10_ms, 1500_ms);
+  ExponentialBackoffPolicy test_object2(10_ms, 1500_ms);
   std::vector<std::chrono::milliseconds::rep> output1;
   std::vector<std::chrono::milliseconds::rep> output2;
 
@@ -70,3 +72,9 @@ TEST(ExponentialBackoffRetryPolicy, Randomness) {
   }
   EXPECT_NE(output1, output2);
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

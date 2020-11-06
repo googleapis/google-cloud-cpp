@@ -55,24 +55,18 @@ class SubscriptionMessageSource {
    * Positive acknowledgment the message associated with @p ack_id.
    *
    * The application has successfully handled this message and no new deliveries
-   * are necessary. The @p size parameter should be the original message size
-   * estimate. The @p size parameter may be used by the message source to flow
-   * control large messages.
+   * are necessary.
    */
-  virtual future<Status> AckMessage(std::string const& ack_id,
-                                    std::size_t size) = 0;
+  virtual future<Status> AckMessage(std::string const& ack_id) = 0;
 
   /**
-   * Negative acknowledgment for message associated with @p ack_id.
+   * Reject the message associated with @p ack_id.
    *
-   * The application was not able to handle this message. Nacking a message
+   * The application was not able to handle this message. Rejecting a message
    * allows the service to re-deliver it, subject to the topic and subscription
-   * configuration. The @p size parameter should be the original message size
-   * estimate. The @p size parameter may be used by the message source to flow
-   * control large messages.
+   * configuration.
    */
-  virtual future<Status> NackMessage(std::string const& ack_id,
-                                     std::size_t size) = 0;
+  virtual future<Status> NackMessage(std::string const& ack_id) = 0;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -16,7 +16,11 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
@@ -25,48 +29,48 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ns;
 
 TEST(GcRule, MaxNumVersions) {
-  auto proto = bigtable::GcRule::MaxNumVersions(3).as_proto();
+  auto proto = GcRule::MaxNumVersions(3).as_proto();
   EXPECT_EQ(3, proto.max_num_versions());
 }
 
 TEST(GcRule, MaxAgeHours) {
-  auto proto = bigtable::GcRule::MaxAge(1_h).as_proto();
+  auto proto = GcRule::MaxAge(1_h).as_proto();
   EXPECT_EQ(3600, proto.max_age().seconds());
   EXPECT_EQ(0, proto.max_age().nanos());
 }
 
 TEST(GcRule, MaxAgeMinutes) {
-  auto proto = bigtable::GcRule::MaxAge(2_min).as_proto();
+  auto proto = GcRule::MaxAge(2_min).as_proto();
   EXPECT_EQ(120, proto.max_age().seconds());
   EXPECT_EQ(0, proto.max_age().nanos());
 }
 
 TEST(GcRule, MaxAgeSeconds) {
-  auto proto = bigtable::GcRule::MaxAge(3_s).as_proto();
+  auto proto = GcRule::MaxAge(3_s).as_proto();
   EXPECT_EQ(3, proto.max_age().seconds());
   EXPECT_EQ(0, proto.max_age().nanos());
 }
 
 TEST(GcRule, MaxAgeMicroseconds) {
-  auto proto = bigtable::GcRule::MaxAge(5_us).as_proto();
+  auto proto = GcRule::MaxAge(5_us).as_proto();
   EXPECT_EQ(0, proto.max_age().seconds());
   EXPECT_EQ(5000, proto.max_age().nanos());
 }
 
 TEST(GcRule, MaxAgeNanoseconds) {
-  auto proto = bigtable::GcRule::MaxAge(6_ns).as_proto();
+  auto proto = GcRule::MaxAge(6_ns).as_proto();
   EXPECT_EQ(0, proto.max_age().seconds());
   EXPECT_EQ(6, proto.max_age().nanos());
 }
 
 TEST(GcRule, MaxAgeMixed) {
-  auto proto = bigtable::GcRule::MaxAge(1_min + 2_s + 7_ns).as_proto();
+  auto proto = GcRule::MaxAge(1_min + 2_s + 7_ns).as_proto();
   EXPECT_EQ(62, proto.max_age().seconds());
   EXPECT_EQ(7, proto.max_age().nanos());
 }
 
 TEST(GcRule, IntersectionSingle) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto = GC::Intersection(GC::MaxNumVersions(42)).as_proto();
   EXPECT_TRUE(proto.has_intersection());
   EXPECT_EQ(1, proto.intersection().rules_size());
@@ -74,7 +78,7 @@ TEST(GcRule, IntersectionSingle) {
 }
 
 TEST(GcRule, IntersectionMultiple) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto = GC::Intersection(GC::MaxNumVersions(42), GC::MaxAge(2_s + 3_us))
                    .as_proto();
   EXPECT_TRUE(proto.has_intersection());
@@ -85,14 +89,14 @@ TEST(GcRule, IntersectionMultiple) {
 }
 
 TEST(GcRule, IntersectionNone) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto = GC::Intersection().as_proto();
   EXPECT_TRUE(proto.has_intersection());
   EXPECT_EQ(0, proto.intersection().rules_size());
 }
 
 TEST(GcRule, UnionSingle) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto = GC::Union(GC::MaxNumVersions(42)).as_proto();
   EXPECT_TRUE(proto.has_union_());
   EXPECT_EQ(1, proto.union_().rules_size());
@@ -100,7 +104,7 @@ TEST(GcRule, UnionSingle) {
 }
 
 TEST(GcRule, UnionMultiple) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto =
       GC::Union(GC::MaxNumVersions(42), GC::MaxAge(2_s + 3_us)).as_proto();
   EXPECT_TRUE(proto.has_union_());
@@ -111,15 +115,15 @@ TEST(GcRule, UnionMultiple) {
 }
 
 TEST(GcRule, UnionNone) {
-  using GC = bigtable::GcRule;
+  using GC = GcRule;
   auto proto = GC::Union().as_proto();
   EXPECT_TRUE(proto.has_union_());
   EXPECT_EQ(0, proto.union_().rules_size());
 }
 
 TEST(ColumnFamilyModification, Create) {
-  using M = bigtable::ColumnFamilyModification;
-  using GC = bigtable::GcRule;
+  using M = ColumnFamilyModification;
+  using GC = GcRule;
   auto proto = M::Create("foo", GC::MaxNumVersions(2)).as_proto();
   ASSERT_TRUE(proto.has_create());
   EXPECT_EQ("foo", proto.id());
@@ -127,8 +131,8 @@ TEST(ColumnFamilyModification, Create) {
 }
 
 TEST(ColumnFamilyModification, Update) {
-  using M = bigtable::ColumnFamilyModification;
-  using GC = bigtable::GcRule;
+  using M = ColumnFamilyModification;
+  using GC = GcRule;
   auto proto = M::Update("foo", GC::MaxNumVersions(2)).as_proto();
   ASSERT_TRUE(proto.has_update());
   EXPECT_EQ("foo", proto.id());
@@ -136,8 +140,14 @@ TEST(ColumnFamilyModification, Update) {
 }
 
 TEST(ColumnFamilyModification, Drop) {
-  using M = bigtable::ColumnFamilyModification;
+  using M = ColumnFamilyModification;
   auto proto = M::Drop("foo").as_proto();
   EXPECT_TRUE(proto.drop());
   EXPECT_EQ("foo", proto.id());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

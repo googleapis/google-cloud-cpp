@@ -15,23 +15,27 @@
 #include "google/cloud/bigtable/row_set.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 TEST(RowSetTest, DefaultConstructor) {
-  auto proto = bigtable::RowSet().as_proto();
+  auto proto = RowSet().as_proto();
   EXPECT_EQ(0, proto.row_keys_size());
   EXPECT_EQ(0, proto.row_ranges_size());
 }
 
 TEST(RowSetTest, AppendRange) {
-  bigtable::RowSet row_set;
-  row_set.Append(bigtable::RowRange::Range("a", "b"));
+  RowSet row_set;
+  row_set.Append(RowRange::Range("a", "b"));
   auto proto = row_set.as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
   EXPECT_EQ("a", proto.row_ranges(0).start_key_closed());
   EXPECT_EQ("b", proto.row_ranges(0).end_key_open());
 
-  row_set.Append(bigtable::RowRange::Range("f", "k"));
+  row_set.Append(RowRange::Range("f", "k"));
   proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_ranges_size());
   EXPECT_EQ("f", proto.row_ranges(1).start_key_closed());
@@ -39,7 +43,7 @@ TEST(RowSetTest, AppendRange) {
 }
 
 TEST(RowSetTest, AppendRowKey) {
-  bigtable::RowSet row_set;
+  RowSet row_set;
   row_set.Append(std::string("foo"));
   auto proto = row_set.as_proto();
   ASSERT_EQ(1, proto.row_keys_size());
@@ -52,9 +56,9 @@ TEST(RowSetTest, AppendRowKey) {
 }
 
 TEST(RowSetTest, AppendMixed) {
-  bigtable::RowSet row_set;
+  RowSet row_set;
   row_set.Append("foo");
-  row_set.Append(bigtable::RowRange::Range("a", "b"));
+  row_set.Append(RowRange::Range("a", "b"));
 
   auto proto = row_set.as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
@@ -62,9 +66,8 @@ TEST(RowSetTest, AppendMixed) {
 }
 
 TEST(RowSetTest, VariadicConstructor) {
-  using R = bigtable::RowRange;
-  bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
-                           "bar");
+  using R = RowRange;
+  RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"), "bar");
   auto const& proto = row_set.as_proto();
   ASSERT_EQ(2, proto.row_ranges_size());
   EXPECT_EQ(R::Range("a", "b"), R(proto.row_ranges(0)));
@@ -73,13 +76,12 @@ TEST(RowSetTest, VariadicConstructor) {
   EXPECT_EQ("foo", proto.row_keys(0));
   EXPECT_EQ("bar", proto.row_keys(1));
 
-  EXPECT_TRUE(bigtable::RowSet(R::Empty()).IsEmpty());
+  EXPECT_TRUE(RowSet(R::Empty()).IsEmpty());
 }
 
 TEST(RowSetTest, IntersectRightOpen) {
-  using R = bigtable::RowRange;
-  bigtable::RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"),
-                           "zzz");
+  using R = RowRange;
+  RowSet row_set(R::Range("a", "b"), "foo", R::LeftOpen("k", "m"), "zzz");
 
   auto proto = row_set.Intersect(R::StartingAt("l")).as_proto();
   ASSERT_EQ(1, proto.row_ranges_size());
@@ -89,13 +91,12 @@ TEST(RowSetTest, IntersectRightOpen) {
 }
 
 TEST(RowSetTest, DefaultSetNotEmpty) {
-  bigtable::RowSet row_set;
+  RowSet row_set;
   EXPECT_FALSE(row_set.IsEmpty());
 }
 
 TEST(RowSetTest, IntersectDefaultSetKeepsArgument) {
-  using R = bigtable::RowRange;
-  using bigtable::RowSet;
+  using R = RowRange;
   auto proto = RowSet().Intersect(R::Range("a", "b")).as_proto();
   EXPECT_TRUE(proto.row_keys().empty());
   ASSERT_EQ(1, proto.row_ranges_size());
@@ -103,15 +104,19 @@ TEST(RowSetTest, IntersectDefaultSetKeepsArgument) {
 }
 
 TEST(RowSetTest, IntersectWithEmptyIsEmpty) {
-  using R = bigtable::RowRange;
-  using bigtable::RowSet;
+  using R = RowRange;
   EXPECT_TRUE(RowSet().Intersect(R::Empty()).IsEmpty());
   EXPECT_TRUE(RowSet("a", R::Range("a", "b")).Intersect(R::Empty()).IsEmpty());
 }
 
 TEST(RowSetTest, IntersectWithDisjointIsEmpty) {
-  using R = bigtable::RowRange;
-  using bigtable::RowSet;
+  using R = RowRange;
   EXPECT_TRUE(
       RowSet("a", R::Range("a", "b")).Intersect(R::Range("c", "d")).IsEmpty());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

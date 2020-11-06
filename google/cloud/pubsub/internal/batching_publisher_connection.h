@@ -67,8 +67,15 @@ class BatchingPublisherConnection
         backoff_policy_(std::move(backoff_policy)) {}
 
   void OnTimer();
+  future<StatusOr<std::string>> CorkedError();
   void MaybeFlush(std::unique_lock<std::mutex> lk);
   void FlushImpl(std::unique_lock<std::mutex> lk);
+
+  bool RequiresOrdering() const { return !ordering_key_.empty(); }
+
+  bool IsCorked(std::unique_lock<std::mutex> const&) const {
+    return corked_on_pending_push_ || !corked_on_status_.ok();
+  }
 
   pubsub::Topic const topic_;
   std::string const topic_full_name_;
@@ -84,8 +91,8 @@ class BatchingPublisherConnection
   google::pubsub::v1::PublishRequest pending_;
   std::size_t current_bytes_ = 0;
   std::chrono::system_clock::time_point batch_expiration_;
-  bool corked_ = false;
-  Status corked_status_;
+  bool corked_on_pending_push_ = false;
+  Status corked_on_status_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

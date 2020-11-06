@@ -26,19 +26,17 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
  public:
   explicit AckHandlerImpl(
       std::shared_ptr<SubscriptionConcurrencyControl> const& source,
-      std::string ack_id, std::int32_t delivery_attempt,
-      std::size_t message_size)
+      std::string ack_id, std::int32_t delivery_attempt)
       : source_(source),
         ack_id_(std::move(ack_id)),
-        delivery_attempt_(delivery_attempt),
-        message_size_(message_size) {}
+        delivery_attempt_(delivery_attempt) {}
   ~AckHandlerImpl() override = default;
 
   void ack() override {
-    if (auto s = source_.lock()) s->AckMessage(ack_id_, message_size_);
+    if (auto s = source_.lock()) s->AckMessage(ack_id_);
   }
   void nack() override {
-    if (auto s = source_.lock()) s->NackMessage(ack_id_, message_size_);
+    if (auto s = source_.lock()) s->NackMessage(ack_id_);
   }
   std::int32_t delivery_attempt() const override { return delivery_attempt_; }
 
@@ -46,7 +44,6 @@ class AckHandlerImpl : public pubsub::AckHandler::Impl {
   std::weak_ptr<SubscriptionConcurrencyControl> source_;
   std::string ack_id_;
   std::int32_t delivery_attempt_;
-  std::size_t message_size_;
 };
 
 }  // namespace
@@ -71,15 +68,13 @@ void SubscriptionConcurrencyControl::Shutdown() {
   source_->Shutdown();
 }
 
-void SubscriptionConcurrencyControl::AckMessage(std::string const& ack_id,
-                                                std::size_t size) {
-  source_->AckMessage(ack_id, size);
+void SubscriptionConcurrencyControl::AckMessage(std::string const& ack_id) {
+  source_->AckMessage(ack_id);
   MessageHandled();
 }
 
-void SubscriptionConcurrencyControl::NackMessage(std::string const& ack_id,
-                                                 std::size_t size) {
-  source_->NackMessage(ack_id, size);
+void SubscriptionConcurrencyControl::NackMessage(std::string const& ack_id) {
+  source_->NackMessage(ack_id);
   MessageHandled();
 }
 
@@ -115,8 +110,7 @@ void SubscriptionConcurrencyControl::OnMessage(
     }
   };
   auto handler = absl::make_unique<AckHandlerImpl>(
-      shared_from_this(), std::move(*m.mutable_ack_id()), m.delivery_attempt(),
-      MessageProtoSize(m.message()));
+      shared_from_this(), std::move(*m.mutable_ack_id()), m.delivery_attempt());
   auto message = FromProto(std::move(*m.mutable_message()));
   shutdown_manager_->StartAsyncOperation(
       __func__, "callback", cq_,

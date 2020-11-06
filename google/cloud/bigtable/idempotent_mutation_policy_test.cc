@@ -16,34 +16,43 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
 /// @test Verify that the default policy works as expected.
 TEST(IdempotentMutationPolicyTest, Simple) {
-  auto policy = bigtable::DefaultIdempotentMutationPolicy();
-  EXPECT_TRUE(policy->is_idempotent(
-      bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
-  EXPECT_TRUE(policy->is_idempotent(bigtable::DeleteFromFamily("fam").op));
-
+  auto policy = DefaultIdempotentMutationPolicy();
   EXPECT_TRUE(
-      policy->is_idempotent(bigtable::SetCell("fam", "col", 0_ms, "v1").op));
-  EXPECT_FALSE(policy->is_idempotent(bigtable::SetCell("fam", "c2", "v2").op));
+      policy->is_idempotent(DeleteFromColumn("fam", "col", 0_us, 10_us).op));
+  EXPECT_TRUE(policy->is_idempotent(DeleteFromFamily("fam").op));
+
+  EXPECT_TRUE(policy->is_idempotent(SetCell("fam", "col", 0_ms, "v1").op));
+  EXPECT_FALSE(policy->is_idempotent(SetCell("fam", "c2", "v2").op));
 }
 
 /// @test Verify that bigtable::AlwaysRetryMutationPolicy works as expected.
 TEST(IdempotentMutationPolicyTest, AlwaysRetry) {
-  bigtable::AlwaysRetryMutationPolicy policy;
-  EXPECT_TRUE(policy.is_idempotent(
-      bigtable::DeleteFromColumn("fam", "col", 0_us, 10_us).op));
-  EXPECT_TRUE(policy.is_idempotent(bigtable::DeleteFromFamily("fam").op));
-
+  AlwaysRetryMutationPolicy policy;
   EXPECT_TRUE(
-      policy.is_idempotent(bigtable::SetCell("fam", "col", 0_ms, "v1").op));
-  EXPECT_TRUE(policy.is_idempotent(bigtable::SetCell("fam", "c2", "v2").op));
+      policy.is_idempotent(DeleteFromColumn("fam", "col", 0_us, 10_us).op));
+  EXPECT_TRUE(policy.is_idempotent(DeleteFromFamily("fam").op));
+
+  EXPECT_TRUE(policy.is_idempotent(SetCell("fam", "col", 0_ms, "v1").op));
+  EXPECT_TRUE(policy.is_idempotent(SetCell("fam", "c2", "v2").op));
 
   auto clone = policy.clone();
-  EXPECT_TRUE(clone->is_idempotent(bigtable::SetCell("f", "c", "v").op));
-  EXPECT_TRUE(clone->is_idempotent(bigtable::SetCell("f", "c", 10_ms, "v").op));
+  EXPECT_TRUE(clone->is_idempotent(SetCell("f", "c", "v").op));
+  EXPECT_TRUE(clone->is_idempotent(SetCell("f", "c", 10_ms, "v").op));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -68,21 +68,21 @@ struct Batch {
 
 future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
     PublishParams p) {
-  promise<StatusOr<std::string>> pr;
-  auto f = pr.get_future();
   auto const bytes = pubsub_internal::MessageSize(p.message);
   std::unique_lock<std::mutex> lk(mu_);
-  if (!corked_status_.ok()) {
-    struct MoveCapture {
-      promise<StatusOr<std::string>> p;
-      Status status;
-      void operator()() { p.set_value(std::move(status)); }
-    };
-    cq_.RunAsync(MoveCapture{std::move(pr), corked_status_});
-    return f;
-  }
+  do {
+    if (!corked_on_status_.ok()) return CorkedError();
+    auto const has_capacity =
+        current_bytes_ + bytes < options_.maximum_batch_bytes();
+    if (has_capacity || waiters_.empty()) break;
+    // We need to flush the existing batch, that will release the lock.
+    FlushImpl(std::move(lk));
+    lk = std::unique_lock<std::mutex>(mu_);
+  } while (true);
+
   auto proto = pubsub_internal::ToProto(std::move(p.message));
-  waiters_.push_back(std::move(pr));
+  waiters_.emplace_back();
+  auto f = waiters_.back().get_future();
 
   // Use RAII to preserve the strong exception guarantee.
   struct UndoPush {
@@ -107,21 +107,24 @@ void BatchingPublisherConnection::Flush(FlushParams) {
 
 void BatchingPublisherConnection::ResumePublish(ResumePublishParams p) {
   if (ordering_key_ != p.ordering_key) return;
-  UnCork();
+  std::unique_lock<std::mutex> lk(mu_);
+  corked_on_status_ = {};
+  MaybeFlush(std::move(lk));
 }
 
 void BatchingPublisherConnection::UnCork() {
   std::unique_lock<std::mutex> lk(mu_);
-  corked_ = false;
-  corked_status_ = {};
+  corked_on_pending_push_ = false;
   MaybeFlush(std::move(lk));
 }
 
 void BatchingPublisherConnection::DiscardCorked(Status const& status) {
   auto waiters = [&] {
     std::unique_lock<std::mutex> lk(mu_);
-    corked_ = true;
-    corked_status_ = status;
+    // This is the result of a request, so no longer corked waiting for it.
+    corked_on_pending_push_ = false;
+    // An error should block more messages only if ordering is required.
+    if (RequiresOrdering()) corked_on_status_ = status;
     pending_.Clear();
     std::vector<promise<StatusOr<std::string>>> tmp;
     tmp.swap(waiters_);
@@ -138,12 +141,10 @@ void BatchingPublisherConnection::DiscardCorked(Status const& status) {
 }
 
 void BatchingPublisherConnection::MaybeFlush(std::unique_lock<std::mutex> lk) {
-  if (pending_.messages_size() >=
-      static_cast<std::int32_t>(options_.maximum_batch_message_count())) {
-    FlushImpl(std::move(lk));
-    return;
-  }
-  if (current_bytes_ >= options_.maximum_batch_bytes()) {
+  auto const too_many_messages =
+      waiters_.size() >= options_.maximum_batch_message_count();
+  auto const too_many_bytes = current_bytes_ >= options_.maximum_batch_bytes();
+  if (too_many_messages || too_many_bytes) {
     FlushImpl(std::move(lk));
     return;
   }
@@ -178,14 +179,28 @@ void BatchingPublisherConnection::OnTimer() {
   FlushImpl(std::move(lk));
 }
 
+future<StatusOr<std::string>> BatchingPublisherConnection::CorkedError() {
+  promise<StatusOr<std::string>> p;
+  auto f = p.get_future();
+
+  struct MoveCapture {
+    promise<StatusOr<std::string>> p;
+    Status status;
+    void operator()() { p.set_value(std::move(status)); }
+  };
+  cq_.RunAsync(MoveCapture{std::move(p), corked_on_status_});
+
+  return f;
+}
+
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.messages().empty() || corked_) return;
+  if (pending_.messages().empty() || IsCorked(lk)) return;
 
   Batch batch;
   batch.waiters.swap(waiters_);
   google::pubsub::v1::PublishRequest request;
   request.Swap(&pending_);
-  corked_ = !ordering_key_.empty();
+  corked_on_pending_push_ = RequiresOrdering();
   current_bytes_ = 0;
   lk.unlock();
 

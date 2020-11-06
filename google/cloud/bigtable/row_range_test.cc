@@ -15,31 +15,36 @@
 #include "google/cloud/bigtable/row_range.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btproto = ::google::bigtable::v2;
-namespace bigtable = google::cloud::bigtable;
 
 TEST(RowRangeTest, InfiniteRange) {
-  auto proto = bigtable::RowRange::InfiniteRange().as_proto();
+  auto proto = RowRange::InfiniteRange().as_proto();
   EXPECT_EQ(btproto::RowRange::START_KEY_NOT_SET, proto.start_key_case());
   EXPECT_EQ(btproto::RowRange::END_KEY_NOT_SET, proto.end_key_case());
 }
 
 TEST(RowRangeTest, StartingAt) {
-  auto proto = bigtable::RowRange::StartingAt("foo").as_proto();
+  auto proto = RowRange::StartingAt("foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
   EXPECT_EQ("foo", proto.start_key_closed());
   EXPECT_EQ(btproto::RowRange::END_KEY_NOT_SET, proto.end_key_case());
 }
 
 TEST(RowRangeTest, EndingAt) {
-  auto proto = bigtable::RowRange::EndingAt("foo").as_proto();
+  auto proto = RowRange::EndingAt("foo").as_proto();
   EXPECT_EQ(btproto::RowRange::START_KEY_NOT_SET, proto.start_key_case());
   EXPECT_EQ(btproto::RowRange::kEndKeyClosed, proto.end_key_case());
   EXPECT_EQ("foo", proto.end_key_closed());
 }
 
 TEST(RowRangeTest, Range) {
-  auto proto = bigtable::RowRange::Range("bar", "foo").as_proto();
+  auto proto = RowRange::Range("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
   EXPECT_EQ("bar", proto.start_key_closed());
   EXPECT_EQ(btproto::RowRange::kEndKeyOpen, proto.end_key_case());
@@ -47,7 +52,7 @@ TEST(RowRangeTest, Range) {
 }
 
 TEST(RowRangeTest, Prefix) {
-  auto proto = bigtable::RowRange::Prefix("bar/baz/").as_proto();
+  auto proto = RowRange::Prefix("bar/baz/").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
   EXPECT_EQ("bar/baz/", proto.start_key_closed());
   EXPECT_EQ(btproto::RowRange::kEndKeyOpen, proto.end_key_case());
@@ -55,7 +60,7 @@ TEST(RowRangeTest, Prefix) {
 }
 
 TEST(RowRangeTest, RightOpen) {
-  auto proto = bigtable::RowRange::RightOpen("bar", "foo").as_proto();
+  auto proto = RowRange::RightOpen("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
   EXPECT_EQ("bar", proto.start_key_closed());
   EXPECT_EQ(btproto::RowRange::kEndKeyOpen, proto.end_key_case());
@@ -63,7 +68,7 @@ TEST(RowRangeTest, RightOpen) {
 }
 
 TEST(RowRangeTest, LeftOpen) {
-  auto proto = bigtable::RowRange::LeftOpen("bar", "foo").as_proto();
+  auto proto = RowRange::LeftOpen("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyOpen, proto.start_key_case());
   EXPECT_EQ("bar", proto.start_key_open());
   EXPECT_EQ(btproto::RowRange::kEndKeyClosed, proto.end_key_case());
@@ -71,7 +76,7 @@ TEST(RowRangeTest, LeftOpen) {
 }
 
 TEST(RowRangeTest, Open) {
-  auto proto = bigtable::RowRange::Open("bar", "foo").as_proto();
+  auto proto = RowRange::Open("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyOpen, proto.start_key_case());
   EXPECT_EQ("bar", proto.start_key_open());
   EXPECT_EQ(btproto::RowRange::kEndKeyOpen, proto.end_key_case());
@@ -79,7 +84,7 @@ TEST(RowRangeTest, Open) {
 }
 
 TEST(RowRangeTest, Closed) {
-  auto proto = bigtable::RowRange::Closed("bar", "foo").as_proto();
+  auto proto = RowRange::Closed("bar", "foo").as_proto();
   EXPECT_EQ(btproto::RowRange::kStartKeyClosed, proto.start_key_case());
   EXPECT_EQ("bar", proto.start_key_closed());
   EXPECT_EQ(btproto::RowRange::kEndKeyClosed, proto.end_key_case());
@@ -87,21 +92,21 @@ TEST(RowRangeTest, Closed) {
 }
 
 TEST(RowRangeTest, IsEmpty) {
-  EXPECT_TRUE(bigtable::RowRange::Empty().IsEmpty());
-  EXPECT_FALSE(bigtable::RowRange::InfiniteRange().IsEmpty());
-  EXPECT_FALSE(bigtable::RowRange::StartingAt("bar").IsEmpty());
-  EXPECT_FALSE(bigtable::RowRange::Range("bar", "foo").IsEmpty());
-  EXPECT_TRUE(bigtable::RowRange::Range("foo", "foo").IsEmpty());
-  EXPECT_TRUE(bigtable::RowRange::Range("foo", "bar").IsEmpty());
-  EXPECT_FALSE(bigtable::RowRange::StartingAt("").IsEmpty());
+  EXPECT_TRUE(RowRange::Empty().IsEmpty());
+  EXPECT_FALSE(RowRange::InfiniteRange().IsEmpty());
+  EXPECT_FALSE(RowRange::StartingAt("bar").IsEmpty());
+  EXPECT_FALSE(RowRange::Range("bar", "foo").IsEmpty());
+  EXPECT_TRUE(RowRange::Range("foo", "foo").IsEmpty());
+  EXPECT_TRUE(RowRange::Range("foo", "bar").IsEmpty());
+  EXPECT_FALSE(RowRange::StartingAt("").IsEmpty());
 
   std::string const only_00 = std::string("\0", 1);
-  EXPECT_FALSE(bigtable::RowRange::RightOpen("", only_00).IsEmpty());
-  EXPECT_TRUE(bigtable::RowRange::Open("", only_00).IsEmpty());
+  EXPECT_FALSE(RowRange::RightOpen("", only_00).IsEmpty());
+  EXPECT_TRUE(RowRange::Open("", only_00).IsEmpty());
 }
 
 TEST(RowRangeTest, ContainsRightOpen) {
-  auto range = bigtable::RowRange::RightOpen("bar", "foo");
+  auto range = RowRange::RightOpen("bar", "foo");
   EXPECT_FALSE(range.Contains("baq"));
   EXPECT_TRUE(range.Contains("bar"));
   EXPECT_FALSE(range.Contains("foo"));
@@ -110,7 +115,7 @@ TEST(RowRangeTest, ContainsRightOpen) {
 }
 
 TEST(RowRangeTest, ContainsLeftOpen) {
-  auto range = bigtable::RowRange::LeftOpen("bar", "foo");
+  auto range = RowRange::LeftOpen("bar", "foo");
   EXPECT_FALSE(range.Contains("baq"));
   EXPECT_FALSE(range.Contains("bar"));
   EXPECT_TRUE(range.Contains("foo"));
@@ -119,7 +124,7 @@ TEST(RowRangeTest, ContainsLeftOpen) {
 }
 
 TEST(RowRangeTest, ContainsOpen) {
-  auto range = bigtable::RowRange::Open("bar", "foo");
+  auto range = RowRange::Open("bar", "foo");
   EXPECT_FALSE(range.Contains("baq"));
   EXPECT_FALSE(range.Contains("bar"));
   EXPECT_FALSE(range.Contains("foo"));
@@ -128,7 +133,7 @@ TEST(RowRangeTest, ContainsOpen) {
 }
 
 TEST(RowRangeTest, ContainsClosed) {
-  auto range = bigtable::RowRange::Closed("bar", "foo");
+  auto range = RowRange::Closed("bar", "foo");
   EXPECT_FALSE(range.Contains("baq"));
   EXPECT_TRUE(range.Contains("bar"));
   EXPECT_TRUE(range.Contains("foo"));
@@ -137,7 +142,7 @@ TEST(RowRangeTest, ContainsClosed) {
 }
 
 TEST(RowRangeTest, ContainsPrefix) {
-  auto range = bigtable::RowRange::Prefix("foo");
+  auto range = RowRange::Prefix("foo");
   EXPECT_FALSE(range.Contains("fop"));
   EXPECT_TRUE(range.Contains("foo"));
   EXPECT_TRUE(range.Contains("foo-bar"));
@@ -148,7 +153,7 @@ TEST(RowRangeTest, ContainsPrefix) {
 
 TEST(RowRangeTest, ContainsPrefixWithFFFF) {
   std::string many_ffs("\xFF\xFF\xFF\xFF\xFF", 5);
-  auto range = bigtable::RowRange::Prefix(many_ffs);
+  auto range = RowRange::Prefix(many_ffs);
   EXPECT_FALSE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFE", 5)));
   EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF", 5)));
   EXPECT_TRUE(range.Contains(std::string("\xFF\xFF\xFF\xFF\xFF/")));
@@ -157,7 +162,7 @@ TEST(RowRangeTest, ContainsPrefixWithFFFF) {
 }
 
 TEST(RowRangeTest, ContainsStartingAt) {
-  auto range = bigtable::RowRange::StartingAt("foo");
+  auto range = RowRange::StartingAt("foo");
   EXPECT_FALSE(range.Contains(""));
   EXPECT_FALSE(range.Contains("fon"));
   EXPECT_TRUE(range.Contains("foo"));
@@ -165,7 +170,7 @@ TEST(RowRangeTest, ContainsStartingAt) {
 }
 
 TEST(RowRangeTest, ContainsEndingAt) {
-  auto range = bigtable::RowRange::EndingAt("foo");
+  auto range = RowRange::EndingAt("foo");
   EXPECT_TRUE(range.Contains(""));
   EXPECT_TRUE(range.Contains(std::string("\x01", 1)));
   EXPECT_TRUE(range.Contains("foo"));
@@ -174,37 +179,37 @@ TEST(RowRangeTest, ContainsEndingAt) {
 
 TEST(RowRangeTest, StreamingRightOpen) {
   std::ostringstream os;
-  os << bigtable::RowRange::RightOpen("a", "b");
+  os << RowRange::RightOpen("a", "b");
   EXPECT_EQ("['a', 'b')", os.str());
 }
 
 TEST(RowRangeTest, StreamingLeftOpen) {
   std::ostringstream os;
-  os << bigtable::RowRange::LeftOpen("a", "b");
+  os << RowRange::LeftOpen("a", "b");
   EXPECT_EQ("('a', 'b']", os.str());
 }
 
 TEST(RowRangeTest, StreamingClosed) {
   std::ostringstream os;
-  os << bigtable::RowRange::Closed("a", "b");
+  os << RowRange::Closed("a", "b");
   EXPECT_EQ("['a', 'b']", os.str());
 }
 
 TEST(RowRangeTest, StreamingOpen) {
   std::ostringstream os;
-  os << bigtable::RowRange::Open("a", "b");
+  os << RowRange::Open("a", "b");
   EXPECT_EQ("('a', 'b')", os.str());
 }
 
 TEST(RowRangeTest, StreamingStartingAt) {
   std::ostringstream os;
-  os << bigtable::RowRange::StartingAt("a");
+  os << RowRange::StartingAt("a");
   EXPECT_EQ("['a', '')", os.str());
 }
 
 TEST(RowRangeTest, StreamingEndingAt) {
   std::ostringstream os;
-  os << bigtable::RowRange::EndingAt("a");
+  os << RowRange::EndingAt("a");
   EXPECT_EQ("['', 'a']", os.str());
 }
 
@@ -214,7 +219,7 @@ std::string const kC00 = std::string("c\x00", 2);
 std::string const kAFFFF00 = std::string("a\xFF\xFF\x00", 4);
 
 TEST(RowRangeTest, EqualsRightOpen) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::RightOpen("a", "d"), R::RightOpen("a", "d"));
   EXPECT_NE(R::RightOpen("a", "d"), R::RightOpen("a", "c"));
   EXPECT_NE(R::RightOpen("a", "d"), R::RightOpen("b", "d"));
@@ -229,7 +234,7 @@ TEST(RowRangeTest, EqualsRightOpen) {
 }
 
 TEST(RowRangeTest, EqualsLeftOpen) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::LeftOpen("a", "d"), R::LeftOpen("a", "d"));
   EXPECT_NE(R::LeftOpen("a", "d"), R::LeftOpen("a", "c"));
   EXPECT_NE(R::LeftOpen("a", "d"), R::LeftOpen("b", "d"));
@@ -244,7 +249,7 @@ TEST(RowRangeTest, EqualsLeftOpen) {
 }
 
 TEST(RowRangeTest, EqualsClosed) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::Closed("a", "d"), R::Closed("a", "d"));
   EXPECT_NE(R::Closed("a", "d"), R::Closed("a", "c"));
   EXPECT_NE(R::Closed("a", "d"), R::Closed("b", "d"));
@@ -259,7 +264,7 @@ TEST(RowRangeTest, EqualsClosed) {
 }
 
 TEST(RowRangeTest, EqualsOpen) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::Open("a", "d"), R::Open("a", "d"));
   EXPECT_NE(R::Open("a", "d"), R::Open("a", "c"));
   EXPECT_NE(R::Open("a", "d"), R::Open("b", "d"));
@@ -274,7 +279,7 @@ TEST(RowRangeTest, EqualsOpen) {
 }
 
 TEST(RowRangeTest, EqualsStartingAt) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::StartingAt("a"), R::StartingAt("a"));
   EXPECT_EQ(R::StartingAt("a"), R::RightOpen("a", ""));
   EXPECT_NE(R::StartingAt("a"), R::StartingAt("b"));
@@ -289,7 +294,7 @@ TEST(RowRangeTest, EqualsStartingAt) {
 }
 
 TEST(RowRangeTest, EqualsEndingAt) {
-  using R = bigtable::RowRange;
+  using R = RowRange;
   EXPECT_EQ(R::EndingAt("b"), R::EndingAt("b"));
   EXPECT_NE(R::EndingAt("b"), R::Closed("", "b"));
   EXPECT_NE(R::EndingAt("b"), R::EndingAt("a"));
@@ -305,7 +310,7 @@ TEST(RowRangeTest, EqualsEndingAt) {
 
 // This is a fairly exhausting (and maybe exhaustive) set of cases for
 // intersecting a RightOpen range against other ranges.
-using R = bigtable::RowRange;
+using R = RowRange;
 
 TEST(RowRangeTest, IntersectRightOpenEmpty) {
   auto tuple = R::RightOpen("c", "m").Intersect(R::Empty());
@@ -729,3 +734,9 @@ TEST(RowRangeTest, IntersectEndingAtEndingAt) {
   EXPECT_TRUE(std::get<0>(tuple));
   EXPECT_EQ(R::EndingAt("k"), std::get<1>(tuple));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

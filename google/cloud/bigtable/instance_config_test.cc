@@ -15,12 +15,15 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 TEST(InstanceConfigTest, Constructor) {
-  bigtable::InstanceConfig config(
-      "my-instance", "pretty name",
-      {{"my-cluster", {"somewhere", 7, bigtable::ClusterConfig::SSD}}});
+  InstanceConfig config("my-instance", "pretty name",
+                        {{"my-cluster", {"somewhere", 7, ClusterConfig::SSD}}});
   auto const& proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
   EXPECT_EQ("pretty name", proto.instance().display_name());
@@ -28,17 +31,16 @@ TEST(InstanceConfigTest, Constructor) {
   auto cluster = proto.clusters().at("my-cluster");
   EXPECT_EQ("somewhere", cluster.location());
   EXPECT_EQ(7, cluster.serve_nodes());
-  EXPECT_EQ(bigtable::ClusterConfig::SSD, cluster.default_storage_type());
+  EXPECT_EQ(ClusterConfig::SSD, cluster.default_storage_type());
 }
 
 TEST(InstanceConfigTest, ConstructorManyClusters) {
-  bigtable::InstanceConfig config(
-      "my-instance", "pretty name",
-      {
-          {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
-          {"cluster-2", {"elsewhere", 7, bigtable::ClusterConfig::HDD}},
-          {"cluster-3", {"nowhere", 17, bigtable::ClusterConfig::HDD}},
-      });
+  InstanceConfig config("my-instance", "pretty name",
+                        {
+                            {"cluster-1", {"somewhere", 7, ClusterConfig::SSD}},
+                            {"cluster-2", {"elsewhere", 7, ClusterConfig::HDD}},
+                            {"cluster-3", {"nowhere", 17, ClusterConfig::HDD}},
+                        });
   auto const& proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
   EXPECT_EQ("pretty name", proto.instance().display_name());
@@ -47,20 +49,19 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
   auto c1 = proto.clusters().at("cluster-1");
   EXPECT_EQ("somewhere", c1.location());
   EXPECT_EQ(7, c1.serve_nodes());
-  EXPECT_EQ(bigtable::ClusterConfig::SSD, c1.default_storage_type());
+  EXPECT_EQ(ClusterConfig::SSD, c1.default_storage_type());
 
   auto c3 = proto.clusters().at("cluster-3");
   EXPECT_EQ("nowhere", c3.location());
   EXPECT_EQ(17, c3.serve_nodes());
-  EXPECT_EQ(bigtable::ClusterConfig::HDD, c3.default_storage_type());
+  EXPECT_EQ(ClusterConfig::HDD, c3.default_storage_type());
 }
 
 TEST(InstanceConfigTest, SetLabels) {
-  bigtable::InstanceConfig config(
-      "my-instance", "pretty name",
-      {
-          {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
-      });
+  InstanceConfig config("my-instance", "pretty name",
+                        {
+                            {"cluster-1", {"somewhere", 7, ClusterConfig::SSD}},
+                        });
 
   config.insert_label("foo", "bar").emplace_label("baz", "qux");
 
@@ -73,3 +74,9 @@ TEST(InstanceConfigTest, SetLabels) {
   EXPECT_EQ("bar", proto.instance().labels().at("foo"));
   EXPECT_EQ("qux", proto.instance().labels().at("baz"));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

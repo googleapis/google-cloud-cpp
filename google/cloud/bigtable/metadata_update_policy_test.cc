@@ -21,20 +21,21 @@
 #include <map>
 #include <thread>
 
-namespace bigtable = google::cloud::bigtable;
-
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
-class MetadataUpdatePolicyTest
-    : public bigtable::testing::EmbeddedServerTestFixture {};
-}  // anonymous namespace
+
+class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
 
 using ::testing::HasSubstr;
 
 /// @test A test for setting metadata for admin operations.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
   grpc::string expected = "parent=" + std::string(kInstanceName);
-  auto gc = bigtable::GcRule::MaxNumVersions(42);
-  admin_->CreateTable(kTableName, bigtable::TableConfig({{"fam", gc}}, {}));
+  auto gc = GcRule::MaxNumVersions(42);
+  admin_->CreateTable(kTableName, TableConfig({{"fam", gc}}, {}));
   // Get metadata from embedded server
   auto client_metadata = admin_service_.client_metadata();
   auto range = client_metadata.equal_range("x-goog-request-params");
@@ -56,8 +57,7 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
 /// @test A test for setting metadata when table is known.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   grpc::string expected = "table_name=" + std::string(kTableName);
-  auto reader = table_->ReadRows(bigtable::RowSet("row1"), 1,
-                                 bigtable::Filter::PassAllFilter());
+  auto reader = table_->ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
   reader.begin();
   // Get metadata from embedded server
@@ -70,11 +70,16 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
 /// @test A cloning test for normal construction of metadata .
 TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   auto const x_google_request_params = "parent=" + std::string(kInstanceName);
-  bigtable::MetadataUpdatePolicy created(kInstanceName,
-                                         bigtable::MetadataParamTypes::PARENT);
+  MetadataUpdatePolicy created(kInstanceName, MetadataParamTypes::PARENT);
   EXPECT_EQ(x_google_request_params, created.value());
   EXPECT_THAT(created.api_client_header(), HasSubstr("gl-cpp/"));
   EXPECT_THAT(created.api_client_header(), HasSubstr("gccl/"));
   EXPECT_THAT(created.api_client_header(),
               ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
