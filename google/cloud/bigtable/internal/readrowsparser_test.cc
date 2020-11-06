@@ -32,7 +32,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
-using ::google::cloud::bigtable::internal::ReadRowsParser;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   grpc::Status status;
