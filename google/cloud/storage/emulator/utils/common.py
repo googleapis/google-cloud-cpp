@@ -59,6 +59,7 @@ class FakeRequest(types.SimpleNamespace):
         "destination_predefined_acl": "destinationPredefinedAcl",
         "generation": "generation",
         "source_generation": "sourceGeneration",
+        "projection": "projection",
     }
 
     def __init__(self, **kwargs):
@@ -292,11 +293,7 @@ def extract_media(request):
 
 def extract_projection(request, default, context):
     if context is not None:
-        return (
-            request.projection
-            if hasattr(request, "projection") and request.projection != 0
-            else default
-        )
+        return request.projection if request.projection != 0 else default
     else:
         projection_map = ["noAcl", "full"]
         projection = request.args.get("projection")
