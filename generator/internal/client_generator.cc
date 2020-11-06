@@ -70,8 +70,8 @@ Status ClientGenerator::GenerateHeader() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string = absl::StrCat(
-          "  $method_name$($method_signature", i, "$);\n\n");
+      std::string method_string =
+          absl::StrCat("  $method_name$($method_signature", i, "$);\n\n");
       HeaderPrintMethod(
           method,
           {MethodPattern(
@@ -196,9 +196,8 @@ Status ClientGenerator::GenerateCc() {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      std::string method_string =
-          absl::StrCat("$client_class_name$::$method_name$($method_signature",
-                       i, "$) {\n");
+      std::string method_string = absl::StrCat(
+          "$client_class_name$::$method_name$($method_signature", i, "$) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(
