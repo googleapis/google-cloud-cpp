@@ -51,7 +51,7 @@ production_only_targets=(
 pushd "${HOME}" >/dev/null
 # Start the testbench on a fixed port, otherwise the Bazel cache gets
 # invalidated on each run.
-start_testbench 8585
+start_testbench 8585 8000
 popd >/dev/null
 
 excluded_targets=(

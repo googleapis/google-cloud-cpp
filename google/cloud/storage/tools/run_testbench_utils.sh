@@ -106,8 +106,17 @@ start_testbench() {
     echo "Successfully connected to testbench [${TESTBENCH_PID}]"
   fi
 
-  grpc_port=8000
-  curl "http://localhost:${testbench_port}/start_grpc?port=${grpc_port}"
+  port="${2:-0}"
+  local grpc_port=""
+  grpc_port=$(curl -s "http://localhost:${testbench_port}/start_grpc?port=${port}")
+
+  if [[ "$grpc_port" -eq "$grpc_port" ]]; then
+    echo "Successfully connected to gRPC server at port ${grpc_port}"
+  else
+    echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_COLOR_RESET}" >&2
+    cat testbench.log
+    exit 1
+  fi
   export CLOUD_STORAGE_GRPC_ENDPOINT="localhost:${grpc_port}"
 
   echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment set-up."

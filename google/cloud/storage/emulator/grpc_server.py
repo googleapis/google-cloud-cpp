@@ -151,6 +151,7 @@ def run(port, database):
     global db
     db = database
     storage_pb2_grpc.add_StorageServicer_to_server(StorageServicer(), server)
-    server.add_insecure_port("localhost:" + port)
+    port = server.add_insecure_port("localhost:" + port)
     db.raii(server)
     server.start()
+    return port

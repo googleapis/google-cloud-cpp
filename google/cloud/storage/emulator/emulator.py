@@ -29,7 +29,7 @@ from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.protobuf import json_format
 
 db = None
-grpc_is_running = False
+grpc_port = 0
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -43,11 +43,12 @@ def index():
 
 @root.route("/start_grpc")
 def start_grpc():
-    global grpc_is_running
-    if not grpc_is_running:
-        port = flask.request.args.get("port", "8000")
-        grpc_server.run(port, db)
-    return "OK"
+    global grpc_port
+    if grpc_port == 0:
+        port = flask.request.args.get("port", "0")
+        grpc_port = grpc_server.run(port, db)
+        return str(grpc_port)
+    return str(grpc_port)
 
 
 @root.route("/<path:object_name>", subdomain="<bucket_name>")
