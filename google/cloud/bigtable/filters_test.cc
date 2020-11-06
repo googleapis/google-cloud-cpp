@@ -17,39 +17,44 @@
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btproto = ::google::bigtable::v2;
-namespace bigtable = google::cloud::bigtable;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
 TEST(FiltersTest, PassAllFilter) {
-  auto proto = bigtable::Filter::PassAllFilter().as_proto();
+  auto proto = Filter::PassAllFilter().as_proto();
   EXPECT_TRUE(proto.pass_all_filter());
 }
 
 TEST(FiltersTest, BlockAllFilter) {
-  auto proto = bigtable::Filter::BlockAllFilter().as_proto();
+  auto proto = Filter::BlockAllFilter().as_proto();
   EXPECT_TRUE(proto.block_all_filter());
 }
 
 TEST(FiltersTest, Latest) {
-  auto proto = bigtable::Filter::Latest(3).as_proto();
+  auto proto = Filter::Latest(3).as_proto();
   EXPECT_EQ(3, proto.cells_per_column_limit_filter());
 }
 
 TEST(FiltersTest, FamilyRegex) {
-  auto proto = bigtable::Filter::FamilyRegex("fam[123]").as_proto();
+  auto proto = Filter::FamilyRegex("fam[123]").as_proto();
   EXPECT_EQ("fam[123]", proto.family_name_regex_filter());
 }
 
 TEST(FiltersTest, ColumnRegex) {
-  auto proto = bigtable::Filter::ColumnRegex("col[A-E]").as_proto();
+  auto proto = Filter::ColumnRegex("col[A-E]").as_proto();
   EXPECT_EQ("col[A-E]", proto.column_qualifier_regex_filter());
 }
 
 TEST(FiltersTest, ColumnRange) {
-  auto proto = bigtable::Filter::ColumnRange("fam", "colA", "colF").as_proto();
+  auto proto = Filter::ColumnRange("fam", "colA", "colF").as_proto();
   EXPECT_EQ("fam", proto.column_range_filter().family_name());
   EXPECT_EQ(btproto::ColumnRange::kStartQualifierClosed,
             proto.column_range_filter().start_qualifier_case());
@@ -60,53 +65,51 @@ TEST(FiltersTest, ColumnRange) {
 }
 
 TEST(FiltersTest, ColumnName) {
-  auto proto = bigtable::Filter::ColumnName("fam", "colA").as_proto();
+  auto proto = Filter::ColumnName("fam", "colA").as_proto();
   EXPECT_EQ("fam", proto.column_range_filter().family_name());
   EXPECT_EQ("colA", proto.column_range_filter().start_qualifier_closed());
   EXPECT_EQ("colA", proto.column_range_filter().end_qualifier_closed());
 }
 
 TEST(FiltersTest, TimestampRangeMicros) {
-  auto proto = bigtable::Filter::TimestampRangeMicros(0, 10).as_proto();
+  auto proto = Filter::TimestampRangeMicros(0, 10).as_proto();
   EXPECT_EQ(0, proto.timestamp_range_filter().start_timestamp_micros());
   EXPECT_EQ(10, proto.timestamp_range_filter().end_timestamp_micros());
 }
 
 TEST(FiltersTest, TimestampRange) {
-  auto proto = bigtable::Filter::TimestampRange(10_us, 10_ms).as_proto();
+  auto proto = Filter::TimestampRange(10_us, 10_ms).as_proto();
   EXPECT_EQ(10, proto.timestamp_range_filter().start_timestamp_micros());
   EXPECT_EQ(10000, proto.timestamp_range_filter().end_timestamp_micros());
 }
 
 TEST(FiltersTest, RowKeysRegex) {
-  auto proto =
-      bigtable::Filter::RowKeysRegex("[A-Za-z][A-Za-z0-9_]*").as_proto();
+  auto proto = Filter::RowKeysRegex("[A-Za-z][A-Za-z0-9_]*").as_proto();
   EXPECT_EQ("[A-Za-z][A-Za-z0-9_]*", proto.row_key_regex_filter());
 }
 
 TEST(FiltersTest, CellsRowLimit) {
-  auto proto = bigtable::Filter::CellsRowLimit(3).as_proto();
+  auto proto = Filter::CellsRowLimit(3).as_proto();
   EXPECT_EQ(3, proto.cells_per_row_limit_filter());
 }
 
 TEST(FiltersTest, ValueRegex) {
-  auto proto = bigtable::Filter::ValueRegex("foo:\\n  'bar.*'").as_proto();
+  auto proto = Filter::ValueRegex("foo:\\n  'bar.*'").as_proto();
   EXPECT_EQ("foo:\\n  'bar.*'", proto.value_regex_filter());
 }
 
 TEST(FiltersTest, CellsRowOffset) {
-  auto proto = bigtable::Filter::CellsRowOffset(42).as_proto();
+  auto proto = Filter::CellsRowOffset(42).as_proto();
   EXPECT_EQ(42, proto.cells_per_row_offset_filter());
 }
 
 TEST(FiltersTEst, RowSample) {
-  auto proto = bigtable::Filter::RowSample(0.5).as_proto();
+  auto proto = Filter::RowSample(0.5).as_proto();
   ASSERT_DOUBLE_EQ(0.5, proto.row_sample_filter());
 }
 
 TEST(FiltersTest, ValueRangeLeftOpen) {
-  auto proto =
-      bigtable::Filter::ValueRangeLeftOpen("2017-02", "2017-09").as_proto();
+  auto proto = Filter::ValueRangeLeftOpen("2017-02", "2017-09").as_proto();
   ASSERT_EQ(btproto::ValueRange::kStartValueOpen,
             proto.value_range_filter().start_value_case());
   ASSERT_EQ(btproto::ValueRange::kEndValueClosed,
@@ -116,7 +119,7 @@ TEST(FiltersTest, ValueRangeLeftOpen) {
 }
 
 TEST(FiltersTest, ValueRangeRightOpen) {
-  auto proto = bigtable::Filter::ValueRangeRightOpen("2017", "2018").as_proto();
+  auto proto = Filter::ValueRangeRightOpen("2017", "2018").as_proto();
   ASSERT_EQ(btproto::ValueRange::kStartValueClosed,
             proto.value_range_filter().start_value_case());
   ASSERT_EQ(btproto::ValueRange::kEndValueOpen,
@@ -126,7 +129,7 @@ TEST(FiltersTest, ValueRangeRightOpen) {
 }
 
 TEST(FiltersTest, ValueRangeClosed) {
-  auto proto = bigtable::Filter::ValueRangeClosed("2017", "2018").as_proto();
+  auto proto = Filter::ValueRangeClosed("2017", "2018").as_proto();
   ASSERT_EQ(btproto::ValueRange::kStartValueClosed,
             proto.value_range_filter().start_value_case());
   ASSERT_EQ(btproto::ValueRange::kEndValueClosed,
@@ -136,7 +139,7 @@ TEST(FiltersTest, ValueRangeClosed) {
 }
 
 TEST(FiltersTest, ValueRangeOpen) {
-  auto proto = bigtable::Filter::ValueRangeOpen("2016", "2019").as_proto();
+  auto proto = Filter::ValueRangeOpen("2016", "2019").as_proto();
   ASSERT_EQ(btproto::ValueRange::kStartValueOpen,
             proto.value_range_filter().start_value_case());
   ASSERT_EQ(btproto::ValueRange::kEndValueOpen,
@@ -146,8 +149,7 @@ TEST(FiltersTest, ValueRangeOpen) {
 }
 
 TEST(FiltersTest, ColumnRangeRightOpen) {
-  auto proto =
-      bigtable::Filter::ColumnRangeRightOpen("fam", "col1", "col3").as_proto();
+  auto proto = Filter::ColumnRangeRightOpen("fam", "col1", "col3").as_proto();
   ASSERT_EQ(btproto::ColumnRange::kStartQualifierClosed,
             proto.column_range_filter().start_qualifier_case());
   ASSERT_EQ(btproto::ColumnRange::kEndQualifierOpen,
@@ -158,8 +160,7 @@ TEST(FiltersTest, ColumnRangeRightOpen) {
 }
 
 TEST(FiltersTest, ColumnRangeLeftOpen) {
-  auto proto =
-      bigtable::Filter::ColumnRangeLeftOpen("fam", "col1", "col3").as_proto();
+  auto proto = Filter::ColumnRangeLeftOpen("fam", "col1", "col3").as_proto();
   ASSERT_EQ(btproto::ColumnRange::kStartQualifierOpen,
             proto.column_range_filter().start_qualifier_case());
   ASSERT_EQ(btproto::ColumnRange::kEndQualifierClosed,
@@ -170,8 +171,7 @@ TEST(FiltersTest, ColumnRangeLeftOpen) {
 }
 
 TEST(FiltersTest, ColumnRangeClosed) {
-  auto proto =
-      bigtable::Filter::ColumnRangeClosed("fam", "col1", "col3").as_proto();
+  auto proto = Filter::ColumnRangeClosed("fam", "col1", "col3").as_proto();
   ASSERT_EQ(btproto::ColumnRange::kStartQualifierClosed,
             proto.column_range_filter().start_qualifier_case());
   ASSERT_EQ(btproto::ColumnRange::kEndQualifierClosed,
@@ -182,8 +182,7 @@ TEST(FiltersTest, ColumnRangeClosed) {
 }
 
 TEST(FiltersTest, ColumnRangeOpen) {
-  auto proto =
-      bigtable::Filter::ColumnRangeOpen("fam", "col1", "col3").as_proto();
+  auto proto = Filter::ColumnRangeOpen("fam", "col1", "col3").as_proto();
   ASSERT_EQ(btproto::ColumnRange::kStartQualifierOpen,
             proto.column_range_filter().start_qualifier_case());
   ASSERT_EQ(btproto::ColumnRange::kEndQualifierOpen,
@@ -194,18 +193,18 @@ TEST(FiltersTest, ColumnRangeOpen) {
 }
 
 TEST(FiltersTest, StripValueTransformer) {
-  auto proto = bigtable::Filter::StripValueTransformer().as_proto();
+  auto proto = Filter::StripValueTransformer().as_proto();
   EXPECT_TRUE(proto.strip_value_transformer());
 }
 
 TEST(FiltersTest, ApplyLabelTransformer) {
-  auto proto = bigtable::Filter::ApplyLabelTransformer("foo").as_proto();
+  auto proto = Filter::ApplyLabelTransformer("foo").as_proto();
   EXPECT_EQ("foo", proto.apply_label_transformer());
 }
 
 /// @test Verify that `bigtable::Filter::Condition` works as expected.
 TEST(FiltersTest, Condition) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Condition(F::ColumnRegex("foo"), F::CellsRowLimit(1),
                              F::CellsRowOffset(2));
   auto const& proto = filter.as_proto();
@@ -220,7 +219,7 @@ TEST(FiltersTest, Condition) {
 
 /// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainMultipleArgs) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto const& proto = filter.as_proto();
@@ -235,7 +234,7 @@ TEST(FiltersTest, ChainMultipleArgs) {
 
 /// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainNoArgs) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Chain();
   auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
@@ -245,7 +244,7 @@ TEST(FiltersTest, ChainNoArgs) {
 
 /// @test Verify that `bigtable::Filter::Chain` works as expected.
 TEST(FiltersTest, ChainOneArg) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Chain(F::Latest(2));
   auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_chain());
@@ -256,7 +255,7 @@ TEST(FiltersTest, ChainOneArg) {
 
 /// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
 TEST(FiltersTest, ChainFromRangeMany) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{F::FamilyRegex("fam"), F::ColumnRegex("col"),
                                    F::CellsRowOffset(2), F::Latest(1)};
   auto filter =
@@ -273,7 +272,7 @@ TEST(FiltersTest, ChainFromRangeMany) {
 
 /// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
 TEST(FiltersTest, ChainFromRangeEmpty) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{};
   auto filter =
       F::ChainFromRange(filter_collection.begin(), filter_collection.end());
@@ -285,7 +284,7 @@ TEST(FiltersTest, ChainFromRangeEmpty) {
 
 /// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
 TEST(FiltersTest, ChainFromRangeSingle) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{F::Latest(2)};
   auto filter =
       F::ChainFromRange(filter_collection.begin(), filter_collection.end());
@@ -298,7 +297,7 @@ TEST(FiltersTest, ChainFromRangeSingle) {
 
 /// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveMultipleArgs) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Interleave(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                               F::CellsRowOffset(2), F::Latest(1));
   auto const& proto = filter.as_proto();
@@ -313,7 +312,7 @@ TEST(FiltersTest, InterleaveMultipleArgs) {
 
 /// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveNoArgs) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Interleave();
   auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
@@ -323,7 +322,7 @@ TEST(FiltersTest, InterleaveNoArgs) {
 
 /// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveOneArg) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Interleave(F::Latest(2));
   auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.has_interleave());
@@ -334,7 +333,7 @@ TEST(FiltersTest, InterleaveOneArg) {
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
 TEST(FiltersTest, InterleaveFromRangeMany) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{F::FamilyRegex("fam"), F::ColumnRegex("col"),
                                    F::CellsRowOffset(2), F::Latest(1)};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
@@ -351,7 +350,7 @@ TEST(FiltersTest, InterleaveFromRangeMany) {
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
 TEST(FiltersTest, InterleaveFromRangeEmpty) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
                                        filter_collection.end());
@@ -363,7 +362,7 @@ TEST(FiltersTest, InterleaveFromRangeEmpty) {
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
 TEST(FiltersTest, InterleaveFromRangeSingle) {
-  using F = bigtable::Filter;
+  using F = Filter;
   std::vector<F> filter_collection{F::Latest(2)};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
                                        filter_collection.end());
@@ -376,14 +375,14 @@ TEST(FiltersTest, InterleaveFromRangeSingle) {
 
 /// @test Verify that `bigtable::Filter::Sink` works as expected.
 TEST(FiltersTest, Sink) {
-  auto filter = bigtable::Filter::Sink();
+  auto filter = Filter::Sink();
   auto const& proto = filter.as_proto();
   ASSERT_TRUE(proto.sink());
 }
 
 /// @test Verify that `bigtable::Filter::as_proto` works as expected.
 TEST(FiltersTest, MoveProto) {
-  using F = bigtable::Filter;
+  using F = Filter;
   auto filter = F::Chain(F::FamilyRegex("fam"), F::ColumnRegex("col"),
                          F::CellsRowOffset(2), F::Latest(1));
   auto proto_copy = filter.as_proto();
@@ -404,7 +403,7 @@ TEST(FiltersTest, MoveProto) {
 
 /// @test Verify that the ctor receiving a v2 RowFilter works as expected.
 TEST(FiltersTest, RowFilterCtor) {
-  using F = bigtable::Filter;
+  using F = Filter;
   // We use a simple filter just as a sanity check.
   btproto::RowFilter row_filter;
   row_filter.set_row_key_regex_filter("[A-Za-z][A-Za-z0-9_]*");
@@ -414,3 +413,9 @@ TEST(FiltersTest, RowFilterCtor) {
   differencer.ReportDifferencesToString(&delta);
   EXPECT_TRUE(differencer.Compare(row_filter, filter.as_proto())) << delta;
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

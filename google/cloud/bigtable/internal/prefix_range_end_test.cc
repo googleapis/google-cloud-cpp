@@ -15,23 +15,35 @@
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+namespace {
 
 TEST(PrefixRangeEndTest, Simple) {
   // This test assumes ASCII.
-  EXPECT_EQ("foo0", bigtable::internal::PrefixRangeEnd("foo/"));
-  EXPECT_EQ("fop", bigtable::internal::PrefixRangeEnd("foo"));
+  EXPECT_EQ("foo0", PrefixRangeEnd("foo/"));
+  EXPECT_EQ("fop", PrefixRangeEnd("foo"));
 }
 
 TEST(PrefixRangeEndTest, AllFFs) {
   char const* all_ff = "\xFF\xFF\xFF";
-  auto actual = bigtable::internal::PrefixRangeEnd(std::string(all_ff, 3));
+  auto actual = PrefixRangeEnd(std::string(all_ff, 3));
   EXPECT_EQ("", actual);
 }
 
 TEST(PrefixRangeEndTest, MostlyFFs) {
   char const* mostly_ff = "\xA0\xFF\xFF";
   char const* expected = "\xA1\x00\x00";
-  auto actual = bigtable::internal::PrefixRangeEnd(std::string(mostly_ff, 3));
+  auto actual = PrefixRangeEnd(std::string(mostly_ff, 3));
   EXPECT_EQ(std::string(expected, 3), actual);
 }
+
+}  // namespace
+}  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

@@ -19,7 +19,12 @@
 #include <chrono>
 #include <thread>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
 /// Create a grpc::Status with a status code for transient errors.
 grpc::Status CreateTransientError() {
   return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
@@ -30,7 +35,6 @@ grpc::Status CreatePermanentError() {
   return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
-namespace bigtable = google::cloud::bigtable;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
 auto const kLimitedTimeTestPeriod = 50_ms;
@@ -41,7 +45,7 @@ auto const kLimitedTimeTolerance = 10_ms;
  *
  * This eliminates some amount of code duplication in the following tests.
  */
-void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
+void CheckLimitedTime(RPCRetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] {
         return tested.OnFailure(
@@ -51,17 +55,15 @@ void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
       kLimitedTimeTolerance);
 }
 
-}  // anonymous namespace
-
 /// @test A simple test for the LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Simple) {
-  bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
+  LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   CheckLimitedTime(tested);
 }
 
 /// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
 TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
-  bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
+  LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
   EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK));
   EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
   EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
@@ -69,20 +71,20 @@ TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
 
 /// @test Test cloning for LimitedTimeRetryPolicy.
 TEST(LimitedTimeRetryPolicy, Clone) {
-  bigtable::LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
+  LimitedTimeRetryPolicy original(kLimitedTimeTestPeriod);
   auto tested = original.clone();
   CheckLimitedTime(*tested);
 }
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedTimeRetryPolicy, OnNonRetryable) {
-  bigtable::LimitedTimeRetryPolicy tested(10_ms);
+  LimitedTimeRetryPolicy tested(10_ms);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
 
 /// @test A simple test for the LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Simple) {
-  bigtable::LimitedErrorCountRetryPolicy tested(3);
+  LimitedErrorCountRetryPolicy tested(3);
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
   EXPECT_TRUE(tested.OnFailure(CreateTransientError()));
@@ -92,7 +94,7 @@ TEST(LimitedErrorCountRetryPolicy, Simple) {
 
 /// @test Test cloning for LimitedErrorCountRetryPolicy.
 TEST(LimitedErrorCountRetryPolicy, Clone) {
-  bigtable::LimitedErrorCountRetryPolicy original(3);
+  LimitedErrorCountRetryPolicy original(3);
   auto tested = original.clone();
   EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
   EXPECT_TRUE(tested->OnFailure(CreateTransientError()));
@@ -103,6 +105,12 @@ TEST(LimitedErrorCountRetryPolicy, Clone) {
 
 /// @test Verify that non-retryable errors cause an immediate failure.
 TEST(LimitedErrorCountRetryPolicy, OnNonRetryable) {
-  bigtable::LimitedErrorCountRetryPolicy tested(3);
+  LimitedErrorCountRetryPolicy tested(3);
   EXPECT_FALSE(tested.OnFailure(CreatePermanentError()));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
