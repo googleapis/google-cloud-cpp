@@ -54,14 +54,14 @@ auto constexpr kMaxExecutions = 1 << 11;
 
 class Wait {
  public:
-  explicit Wait(int count) : count_(count) {}
+  explicit Wait(std::int64_t count) : count_(count) {}
 
   void BlockUntilDone() {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [&] { return count_ == 0; });
   }
 
-  void Done() {
+  void OneDone() {
     std::unique_lock<std::mutex> lk(mu_);
     if (--count_ == 0) cv_.notify_one();
     lk.unlock();
@@ -70,7 +70,7 @@ class Wait {
  private:
   std::mutex mu_;
   std::condition_variable cv_;
-  int count_;
+  std::int64_t count_;
 };
 
 void BM_Baseline(benchmark::State& state) {
@@ -78,7 +78,7 @@ void BM_Baseline(benchmark::State& state) {
     Wait wait(static_cast<int>(n));
     std::deque<std::function<void()>> queue;
     for (std::int64_t i = 0; i != n; ++i) {
-      queue.emplace_back([&wait] { wait.Done(); });
+      queue.emplace_back([&wait] { wait.OneDone(); });
     }
     while (!queue.empty()) {
       auto f = std::move(queue.front());
@@ -107,9 +107,9 @@ void BM_CompletionQueueRunAsync(benchmark::State& state) {
   });
 
   auto runner = [&](std::int64_t n) {
-    Wait wait(static_cast<int>(n));
+    Wait wait(n);
     for (std::int64_t i = 0; i != n; ++i) {
-      cq.RunAsync([&wait] { wait.Done(); });
+      cq.RunAsync([&wait] { wait.OneDone(); });
     }
     wait.BlockUntilDone();
     return 0;

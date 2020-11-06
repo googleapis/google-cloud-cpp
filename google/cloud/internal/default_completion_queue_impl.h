@@ -66,6 +66,8 @@ class DefaultCompletionQueueImpl
 
   /// Some counters for testing and debugging.
   std::int64_t notify_counter() const { return notify_counter_.load(); }
+  std::size_t thread_pool_hwm() const { return thread_pool_hwm_; }
+  std::size_t run_async_pool_hwm() const { return run_async_pool_hwm_; }
 
  private:
   /// Start an operation with the lock already held.
@@ -82,6 +84,7 @@ class DefaultCompletionQueueImpl
   void RunStart() {
     std::lock_guard<std::mutex> lk(mu_);
     ++thread_pool_size_;
+    thread_pool_hwm_ = (std::max)(thread_pool_hwm_, thread_pool_size_);
   }
 
   void RunStop() {
@@ -99,13 +102,16 @@ class DefaultCompletionQueueImpl
   std::mutex mu_;
   grpc::CompletionQueue cq_;
   std::size_t thread_pool_size_ = 0;
-  std::size_t wakeup_threshold_ = 1;
-  std::size_t run_async_thread_pool_size_ = 0;
+  std::size_t run_async_pool_size_ = 0;
   std::deque<std::unique_ptr<internal::RunAsyncBase>> run_async_queue_;
   bool shutdown_{false};  // GUARDED_BY(mu_)
   std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;  // GUARDED_BY(mu_)
+
+  // These are metrics used in testing.
   std::atomic<std::int64_t> notify_counter_{0};
+  std::size_t thread_pool_hwm_ = 0;
+  std::size_t run_async_pool_hwm_ = 0;
 };
 
 }  // namespace internal

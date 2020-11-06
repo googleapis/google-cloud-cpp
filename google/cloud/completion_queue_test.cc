@@ -489,6 +489,37 @@ TEST(CompletionQueueTest, RunAsyncThread) {
   for (auto& t : runners) t.join();
 }
 
+class RunAsyncBlocker {
+ public:
+  RunAsyncBlocker() = default;
+
+  std::size_t MaxSize() const { return max_size_; }
+
+  future<void> AddPromise() {
+    std::unique_lock<std::mutex> lk(mu_);
+    waiting_.emplace_back();
+    auto f = waiting_.back().get_future();
+    max_size_ = (std::max)(max_size_, waiting_.size());
+    lk.unlock();
+    cv_.notify_one();
+    return f;
+  }
+
+  promise<void> WaitForPromise() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&] { return !waiting_.empty(); });
+    auto p = std::move(waiting_.front());
+    waiting_.pop_front();
+    return p;
+  }
+
+ private:
+  std::mutex mu_;
+  std::condition_variable cv_;
+  std::deque<promise<void>> waiting_;
+  std::size_t max_size_ = 0;
+};
+
 TEST(CompletionQueueTest, RunAsyncParallel) {
   auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
   CompletionQueue cq(impl);
@@ -497,31 +528,13 @@ TEST(CompletionQueueTest, RunAsyncParallel) {
   std::generate(runners.begin(), runners.end(),
                 [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
 
-  std::mutex mu;
-  std::condition_variable cv;
-  std::deque<promise<void>> waiting;
-  std::size_t actual_max_runners = 0;
-  auto add_promise = [&] {
-    promise<void> p;
-    auto f = p.get_future();
-    std::unique_lock<std::mutex> lk(mu);
-    waiting.push_back(std::move(p));
-    actual_max_runners = (std::max)(actual_max_runners, waiting.size());
-    lk.unlock();
-    cv.notify_one();
-    return f;
-  };
-  auto wait = [&] {
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&] { return !waiting.empty(); });
-    auto f = std::move(waiting.front());
-    waiting.pop_front();
-    return f;
-  };
+  RunAsyncBlocker blocker;
+  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
+  auto wait = [&blocker] { return blocker.WaitForPromise(); };
 
   // Start an async function and block it... this will help us verify that
   // different functions get called in different threads. Start with just one:
-  cq.RunAsync([&] { add_promise().get(); });
+  cq.RunAsync(on_run_async);
   wait().set_value();
 
   // Verify we never exceed 15 threads running in parallel, because we want to
@@ -530,10 +543,10 @@ TEST(CompletionQueueTest, RunAsyncParallel) {
   auto constexpr kRepeats = 8;
   for (int i = 0; i != kIterations; ++i) {
     auto const n = kRepeats * kRunners;
-    for (int j = 0; j != n; ++j) cq.RunAsync([&] { add_promise().get(); });
+    for (int j = 0; j != n; ++j) cq.RunAsync(on_run_async);
     for (int j = 0; j != n; ++j) wait().set_value();
   }
-  EXPECT_GT(kRunners, actual_max_runners);
+  EXPECT_GT(kRunners, blocker.MaxSize());
 
   cq.Shutdown();
   for (auto& t : runners) t.join();
@@ -548,33 +561,14 @@ TEST(CompletionQueueTest, RunAsyncSingleThreaded) {
   std::thread t{[&] { cq.Run(); }};
 
   // Make each function in RunAsync() block under control of this thread.
-  std::mutex mu;
-  std::condition_variable cv;
-  std::deque<promise<void>> waiting;
-  auto add_promise = [&] {
-    std::unique_lock<std::mutex> lk(mu);
-    waiting.emplace_back();
-    auto f = waiting.back().get_future();
-    lk.unlock();
-    cv.notify_one();
-    return f;
-  };
-  auto wait = [&] {
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&] { return !waiting.empty(); });
-    auto f = std::move(waiting.front());
-    waiting.pop_front();
-    return f;
-  };
+  RunAsyncBlocker blocker;
+  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
+  auto wait = [&blocker] { return blocker.WaitForPromise(); };
 
   // Verify that scheduling multiple async functions works.
   auto constexpr kIterations = 100;
-  for (int i = 0; i != kIterations; ++i) {
-    cq.RunAsync([&] { add_promise().get(); });
-  }
-  for (int i = 0; i != kIterations; ++i) {
-    wait().set_value();
-  }
+  for (int i = 0; i != kIterations; ++i) cq.RunAsync(on_run_async);
+  for (int i = 0; i != kIterations; ++i) wait().set_value();
 
   cq.Shutdown();
   t.join();
@@ -585,31 +579,13 @@ TEST(CompletionQueueTest, RunAsyncSingleThread) {
   CompletionQueue cq;
   std::thread runner{[](CompletionQueue cq) { cq.Run(); }, cq};
 
-  std::mutex mu;
-  std::condition_variable cv;
-  std::deque<promise<void>> waiting;
-  std::size_t actual_max_runners = 0;
-  auto add_promise = [&] {
-    promise<void> p;
-    auto f = p.get_future();
-    std::unique_lock<std::mutex> lk(mu);
-    waiting.push_back(std::move(p));
-    actual_max_runners = (std::max)(actual_max_runners, waiting.size());
-    lk.unlock();
-    cv.notify_one();
-    return f;
-  };
-  auto wait = [&] {
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&] { return !waiting.empty(); });
-    auto f = std::move(waiting.front());
-    waiting.pop_front();
-    return f;
-  };
+  RunAsyncBlocker blocker;
+  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
+  auto wait = [&blocker] { return blocker.WaitForPromise(); };
 
   // Verify we can schedule multiple calls and they eventually all finish.
   for (int i = 0; i != 32; ++i) {
-    cq.RunAsync([&] { add_promise().get(); });
+    cq.RunAsync(on_run_async);
     wait().set_value();
   }
 
@@ -645,7 +621,9 @@ TEST(CompletionQueueTest, NoRunAsyncAfterShutdown) {
 class RunAsyncTest : public ::testing::TestWithParam<int> {};
 
 TEST_P(RunAsyncTest, Torture) {
-  CompletionQueue cq;
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+
   std::vector<std::thread> runners(GetParam());
   std::generate(runners.begin(), runners.end(),
                 [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
@@ -682,11 +660,26 @@ TEST_P(RunAsyncTest, Torture) {
   wait();
   cq.Shutdown();
   for (auto& r : runners) r.join();
+
+  // This test is largely here to trigger (now fixed) race conditions under TSAN
+  // and/or deadlocks under load. Just getting here is enough to declare
+  // success, but we should verify that at least some interesting stuff happened
+  EXPECT_GE(impl->thread_pool_hwm(), GetParam() / 2);
+  EXPECT_GE(impl->run_async_pool_hwm(), GetParam() / 2);
+  // We expect at least one notify per timer.
+  EXPECT_GE(impl->notify_counter(), kThreads * iterations);
+  // We expect at most one notify per RunAsync(), because this test sequences
+  // the RunAsync() calls we often hit the upper bound.
+  EXPECT_LE(impl->notify_counter(),
+            kThreads * iterations + kThreads * iterations);
 }
 
 TEST_P(RunAsyncTest, TortureBursts) {
-  CompletionQueue cq;
-  std::vector<std::thread> tasks(16);
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+
+  auto constexpr kThreads = 16;
+  std::vector<std::thread> tasks(kThreads);
   std::generate(tasks.begin(), tasks.end(), [&cq] {
     return std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
   });
@@ -711,9 +704,19 @@ TEST_P(RunAsyncTest, TortureBursts) {
     return 0;
   };
 
-  for (int i = 0; i != 100; ++i) burst(GetParam() * 128);
+  auto constexpr kBurstCount = 100;
+  auto const burst_size = GetParam() * kThreads * 8;
+  for (int i = 0; i != kBurstCount; ++i) burst(burst_size);
   cq.Shutdown();
   for (auto& t : tasks) t.join();
+
+  // This test is largely here to trigger (now fixed) race conditions under TSAN
+  // and/or deadlocks under load. Just getting here is enough to declare
+  // success, but we should verify that at least some interesting stuff happened
+  EXPECT_GE(impl->thread_pool_hwm(), kThreads / 2);
+  EXPECT_GE(impl->run_async_pool_hwm(), kThreads / 2);
+  EXPECT_GE(impl->notify_counter(), kBurstCount);
+  EXPECT_LE(impl->notify_counter(), kBurstCount * burst_size / 2);
 }
 
 INSTANTIATE_TEST_SUITE_P(RunAsyncTest, RunAsyncTest,

@@ -279,12 +279,8 @@ void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
     lk.unlock();
     f->exec();
     lk.lock();
-    if (run_async_queue_.size() < wakeup_threshold_ / 4) {
-      wakeup_threshold_ = wakeup_threshold_ / 2;
-    }
   }
-  if (run_async_queue_.empty()) wakeup_threshold_ = 1;
-  --run_async_thread_pool_size_;
+  --run_async_pool_size_;
 }
 
 void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
@@ -296,7 +292,7 @@ void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
   f->exec();
   lk.lock();
   if (run_async_queue_.empty()) {
-    --run_async_thread_pool_size_;
+    --run_async_pool_size_;
     return;
   }
   auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
@@ -305,20 +301,21 @@ void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
 
 void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
     std::unique_lock<std::mutex> lk) {
+  // Nothing to do, just return.
   if (run_async_queue_.empty() || shutdown_) return;
   if (thread_pool_size_ <= 1) {
-    if (run_async_thread_pool_size_ > 0) return;
-    ++run_async_thread_pool_size_;
+    if (run_async_pool_size_ > 0) return;
+    ++run_async_pool_size_;
+    run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
     auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
     StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
     return;
   }
   // Always leave one thread for I/O
-  if (run_async_thread_pool_size_ >= thread_pool_size_ - 1) return;
-  if (run_async_queue_.size() < wakeup_threshold_) return;
+  if (run_async_pool_size_ >= thread_pool_size_ - 1) return;
   auto op = std::make_shared<WakeUpRunAsyncLoop>(shared_from_this());
-  ++run_async_thread_pool_size_;
-  wakeup_threshold_ *= 2;
+  ++run_async_pool_size_;
+  run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
   StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
 }
 
