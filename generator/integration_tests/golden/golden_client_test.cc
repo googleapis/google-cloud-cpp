@@ -117,8 +117,8 @@ public:
 
 TEST(GoldenClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabases)
       .Times(2)
       .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
@@ -155,10 +155,10 @@ TEST(GoldenClientTest, ListDatabases) {
 
 TEST(GoldenClientTest, CreateDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, CreateDatabase)
       .Times(2)
       .WillRepeatedly(
@@ -197,8 +197,8 @@ TEST(GoldenClientTest, CreateDatabase) {
 
 TEST(GoldenClientTest, GetDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabase)
       .Times(2)
       .WillRepeatedly(
@@ -223,8 +223,8 @@ TEST(GoldenClientTest, GetDatabase) {
 
 TEST(GoldenClientTest, UpdateDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
       .Times(2)
       .WillRepeatedly([expected_database](
@@ -255,8 +255,8 @@ TEST(GoldenClientTest, UpdateDatabase) {
 
 TEST(GoldenClientTest, DropDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, DropDatabase)
       .Times(2)
       .WillRepeatedly(
@@ -277,8 +277,8 @@ TEST(GoldenClientTest, DropDatabase) {
 
 TEST(GoldenClientTest, GetDatabaseDdl) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .Times(2)
       .WillRepeatedly([expected_database](::google::test::admin::database::v1::
@@ -303,8 +303,8 @@ TEST(GoldenClientTest, GetDatabaseDdl) {
 
 TEST(GoldenClientTest, SetIamPolicy) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, SetIamPolicy)
       .Times(2)
       .WillRepeatedly(
@@ -325,8 +325,8 @@ TEST(GoldenClientTest, SetIamPolicy) {
 
 TEST(GoldenClientTest, GetIamPolicy) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   std::string const expected_role = "roles/spanner.databaseReader";
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy)
@@ -359,8 +359,8 @@ TEST(GoldenClientTest, GetIamPolicy) {
 
 TEST(GoldenClientTest, TestIamPermissions) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-db");
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   std::string expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, TestIamPermissions)
       .Times(2)
@@ -391,10 +391,10 @@ TEST(GoldenClientTest, TestIamPermissions) {
 
 TEST(GoldenClientTest, CreateBackup) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-database");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   std::string backup_id = "test-backup";
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
@@ -545,8 +545,8 @@ TEST(GoldenClientTest, DeleteBackup) {
 
 TEST(GoldenClientTest, ListBackups) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackups)
       .Times(2)
       .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
@@ -580,10 +580,10 @@ TEST(GoldenClientTest, ListBackups) {
 
 TEST(GoldenClientTest, RestoreDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
-  std::string expected_database(
-      "/projects/test-project/instances/test-instance/databases/test-database");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
+  std::string expected_database =
+      "/projects/test-project/instances/test-instance/databases/test-db";
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, RestoreDatabase)
@@ -624,8 +624,8 @@ TEST(GoldenClientTest, RestoreDatabase) {
 
 TEST(GoldenClientTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .Times(2)
       .WillRepeatedly(
@@ -661,8 +661,8 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
 
 TEST(GoldenClientTest, ListBackupOperations) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  std::string expected_instance(
-      "/projects/test-project/instances/test-instance");
+  std::string expected_instance =
+      "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackupOperations)
       .Times(2)
       .WillRepeatedly([expected_instance](
