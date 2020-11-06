@@ -170,6 +170,13 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="no" # super builds do not support integration tests.
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
+  # TODO(#4094): remove this build.
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=33
+  export CC=gcc
+  export CXX=g++
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "gcc-10" ]]; then
   # Compile under fedora:33. This distro uses gcc-10.
   export DISTRO=fedora-install
