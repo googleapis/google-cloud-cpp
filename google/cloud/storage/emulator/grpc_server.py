@@ -110,7 +110,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             else:
                 return
         blob, _ = gcs_type.object.Object.init(
-            upload.request, upload.metadata, upload.media, upload.bucket, False, None
+            upload.request, upload.metadata, upload.media, upload.bucket, False, context
         )
         db.insert_object(upload.request, upload.bucket.name, blob, context)
         return blob.metadata
@@ -151,6 +151,6 @@ def run(port, database):
     global db
     db = database
     storage_pb2_grpc.add_StorageServicer_to_server(StorageServicer(), server)
-    server.add_insecure_port("[::]:" + port)
+    server.add_insecure_port("localhost:" + port)
     db.raii(server)
     server.start()

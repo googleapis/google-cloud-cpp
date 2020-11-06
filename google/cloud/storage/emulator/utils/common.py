@@ -105,6 +105,13 @@ class FakeRequest(types.SimpleNamespace):
             if hasattr(request, proto_field) and request.HasField(proto_field):
                 self.args[args_field] = getattr(request, proto_field).value
                 setattr(self, proto_field, getattr(request, proto_field))
+        for (
+            proto_field,
+            args_field,
+        ) in FakeRequest.protobuf_scalar_to_json_args.items():
+            if hasattr(request, proto_field):
+                self.args[args_field] = getattr(request, proto_field)
+                setattr(self, proto_field, getattr(request, proto_field))
         csek_field = "common_object_request_params"
         if hasattr(request, csek_field):
             algorithm, key_b64, key_sha256_b64 = utils.csek.extract(
@@ -285,7 +292,11 @@ def extract_media(request):
 
 def extract_projection(request, default, context):
     if context is not None:
-        return request.projection if request.projection != 0 else default
+        return (
+            request.projection
+            if hasattr(request, "projection") and request.projection != 0
+            else default
+        )
     else:
         projection_map = ["noAcl", "full"]
         projection = request.args.get("projection")
