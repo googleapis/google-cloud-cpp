@@ -21,10 +21,10 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
+namespace {
 
 using ::testing::HasSubstr;
 
-namespace {
 char arg0[] = "program";
 char arg1[] = "foo";
 char arg2[] = "bar";
@@ -33,7 +33,6 @@ char arg4[] = "4";
 char arg5[] = "300";
 char arg6[] = "10000";
 char arg7[] = "True";
-}  // namespace
 
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
@@ -205,6 +204,7 @@ TEST(BenchmarkTest, PrintCsv) {
   EXPECT_THAT(output, HasSubstr(",123,"));
 }
 
+}  // namespace
 }  // namespace benchmarks
 }  // namespace bigtable
 }  // namespace cloud

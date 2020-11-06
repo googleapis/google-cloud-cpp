@@ -21,10 +21,10 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
+namespace {
 
 using ::testing::HasSubstr;
 
-namespace {
 char arg0[] = "program";
 char arg1[] = "foo";
 char arg2[] = "bar";
@@ -35,7 +35,6 @@ char arg6[] = "10000";
 char arg7[] = "True";
 char arg8[] = "20";
 char arg9[] = "Unused";
-}  // namespace
 
 TEST(BenchmarksSetup, Basic) {
   char* argv[] = {arg0, arg1, arg2, arg3};
@@ -222,6 +221,7 @@ TEST(BenchmarkSetup, TableSize) {
   EXPECT_FALSE(MakeBenchmarkSetup("table-size", argc, argv));
 }
 
+}  // namespace
 }  // namespace benchmarks
 }  // namespace bigtable
 }  // namespace cloud

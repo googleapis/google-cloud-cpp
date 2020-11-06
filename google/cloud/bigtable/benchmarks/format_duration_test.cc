@@ -19,6 +19,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
+namespace {
 
 using ::std::chrono::hours;
 using ::std::chrono::microseconds;
@@ -98,6 +99,7 @@ TEST(BenchmarksFormatDuration, NoMillis) {
   EXPECT_EQ("1h2m3s", os.str());
 }
 
+}  // namespace
 }  // namespace benchmarks
 }  // namespace bigtable
 }  // namespace cloud

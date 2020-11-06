@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
+namespace {
 
 using std::chrono::milliseconds;
 
@@ -145,6 +146,7 @@ TEST(EmbeddedServer, ReadRows100) {
   wait_thread.join();
 }
 
+}  // namespace
 }  // namespace benchmarks
 }  // namespace bigtable
 }  // namespace cloud
