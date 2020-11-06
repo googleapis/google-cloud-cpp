@@ -1,15 +1,15 @@
 var searchData=
 [
-  ['cancel_298',['Cancel',['../classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html#a7ef789103c0ecc4c92565a04af097683',1,'google::cloud::v1::AsyncOperation']]],
-  ['cancelall_299',['CancelAll',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a178d873b760bb87ba26960aff4b84164',1,'google::cloud::v1::CompletionQueue']]],
-  ['channel_5fpool_5fdomain_300',['channel_pool_domain',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac',1,'google::cloud::v1::ConnectionOptions']]],
-  ['clearbackends_301',['ClearBackends',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81',1,'google::cloud::v1::LogSink']]],
-  ['clone_302',['clone',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421',1,'google::cloud::v1::PollingPolicy::clone()'],['../classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a436bc52392088c7051d3d9e1a243120c',1,'google::cloud::v1::GenericPollingPolicy::clone()']]],
-  ['code_303',['code',['../classgoogle_1_1cloud_1_1v1_1_1Status.html#a8df5a85749c7653de743f2228d25026b',1,'google::cloud::v1::Status']]],
-  ['compiletimeenabled_304',['CompileTimeEnabled',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a59e32abf0644157ae217f0df12316b42',1,'google::cloud::v1::LogSink']]],
-  ['completionqueue_305',['CompletionQueue',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a046fcd2a14f38d366b10133ad87b6910',1,'google::cloud::v1::CompletionQueue::CompletionQueue()'],['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a30da4327185cd5ee2d5b254a4d9ffec6',1,'google::cloud::v1::CompletionQueue::CompletionQueue(std::shared_ptr&lt; internal::CompletionQueueImpl &gt; impl)']]],
-  ['connectionoptions_306',['ConnectionOptions',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#abd8e6ccf71187282f613957fe98f39f1',1,'google::cloud::v1::ConnectionOptions::ConnectionOptions()'],['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ac03711083aa777bc008bd9000acf19aa',1,'google::cloud::v1::ConnectionOptions::ConnectionOptions(std::shared_ptr&lt; grpc::ChannelCredentials &gt; credentials)']]],
-  ['cq_307',['cq',['../classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html#a150043ae94e4de0ec7ff2b8c316cd46d',1,'google::cloud::v1::BackgroundThreads']]],
-  ['createchannelarguments_308',['CreateChannelArguments',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a83484d52c6ba34dab4d5f8c2d8550fee',1,'google::cloud::v1::ConnectionOptions']]],
-  ['credentials_309',['credentials',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a99d7cc1df601d52a353a2e18a8d49de5',1,'google::cloud::v1::ConnectionOptions']]]
+  ['cancel_300',['Cancel',['../classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html#a7ef789103c0ecc4c92565a04af097683',1,'google::cloud::v1::AsyncOperation']]],
+  ['cancelall_301',['CancelAll',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a178d873b760bb87ba26960aff4b84164',1,'google::cloud::v1::CompletionQueue']]],
+  ['channel_5fpool_5fdomain_302',['channel_pool_domain',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a9d6e14b49b3d22ebcbaae1452dc814ac',1,'google::cloud::v1::ConnectionOptions']]],
+  ['clearbackends_303',['ClearBackends',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81',1,'google::cloud::v1::LogSink']]],
+  ['clone_304',['clone',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html#ab9e0c3858787fd148ef44b1463bb2421',1,'google::cloud::v1::PollingPolicy::clone()'],['../classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html#a436bc52392088c7051d3d9e1a243120c',1,'google::cloud::v1::GenericPollingPolicy::clone()']]],
+  ['code_305',['code',['../classgoogle_1_1cloud_1_1v1_1_1Status.html#a8df5a85749c7653de743f2228d25026b',1,'google::cloud::v1::Status']]],
+  ['compiletimeenabled_306',['CompileTimeEnabled',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a59e32abf0644157ae217f0df12316b42',1,'google::cloud::v1::LogSink']]],
+  ['completionqueue_307',['CompletionQueue',['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a046fcd2a14f38d366b10133ad87b6910',1,'google::cloud::v1::CompletionQueue::CompletionQueue()'],['../classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a30da4327185cd5ee2d5b254a4d9ffec6',1,'google::cloud::v1::CompletionQueue::CompletionQueue(std::shared_ptr&lt; internal::CompletionQueueImpl &gt; impl)']]],
+  ['connectionoptions_308',['ConnectionOptions',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#abd8e6ccf71187282f613957fe98f39f1',1,'google::cloud::v1::ConnectionOptions::ConnectionOptions()'],['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ac03711083aa777bc008bd9000acf19aa',1,'google::cloud::v1::ConnectionOptions::ConnectionOptions(std::shared_ptr&lt; grpc::ChannelCredentials &gt; credentials)']]],
+  ['cq_309',['cq',['../classgoogle_1_1cloud_1_1v1_1_1BackgroundThreads.html#a150043ae94e4de0ec7ff2b8c316cd46d',1,'google::cloud::v1::BackgroundThreads']]],
+  ['createchannelarguments_310',['CreateChannelArguments',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a83484d52c6ba34dab4d5f8c2d8550fee',1,'google::cloud::v1::ConnectionOptions']]],
+  ['credentials_311',['credentials',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a99d7cc1df601d52a353a2e18a8d49de5',1,'google::cloud::v1::ConnectionOptions']]]
 ];
