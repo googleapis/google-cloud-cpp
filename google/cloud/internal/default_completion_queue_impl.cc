@@ -301,7 +301,6 @@ void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
 
 void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
     std::unique_lock<std::mutex> lk) {
-  // Nothing to do, just return.
   if (run_async_queue_.empty() || shutdown_) return;
   if (thread_pool_size_ <= 1) {
     if (run_async_pool_size_ > 0) return;
