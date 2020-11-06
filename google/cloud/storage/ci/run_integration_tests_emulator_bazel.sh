@@ -90,4 +90,9 @@ testbench_args=(
   "${excluded_targets[@]}"
 exit_status=$?
 
+if [[ "$exit_status" -ne 0 ]]; then
+  source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+  dump_log testbench.log
+fi
+
 exit "${exit_status}"

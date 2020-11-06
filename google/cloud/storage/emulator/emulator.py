@@ -43,6 +43,14 @@ def index():
 
 @root.route("/start_grpc")
 def start_grpc():
+    # The reason is `Gunicorn` will spawn a new subprocess ( a worker )
+    # when running `Flask` server. If we start `gRPC` server before
+    # the spawn of the subprocess, it's nearly impossible to share
+    # the `database` with the new subprocess because Python will copy
+    # everything in the memory from the parent process to the subprocess
+    # ( So we have 2 separate instance of `database` ). The endpoint
+    # will start the `gRPC` server in the same subprocess
+    # so there is only one instance of `database`.
     global grpc_port
     if grpc_port == 0:
         port = flask.request.args.get("port", "0")

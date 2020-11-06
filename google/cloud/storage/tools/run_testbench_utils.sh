@@ -108,7 +108,7 @@ start_testbench() {
 
   port="${2:-0}"
   local grpc_port=""
-  grpc_port=$(curl -s "http://localhost:${testbench_port}/start_grpc?port=${port}")
+  grpc_port=$(curl -s --retry 5 --retry-max-time 40 "http://localhost:${testbench_port}/start_grpc?port=${port}")
 
   if [[ "$grpc_port" -eq "$grpc_port" ]]; then
     echo "Successfully connected to gRPC server at port ${grpc_port}"
