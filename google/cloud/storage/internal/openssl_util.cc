@@ -226,20 +226,6 @@ std::vector<std::uint8_t> SignStringWithPem(
     handle_openssl_failure("Could not parse PEM to get private key.");
   }
 
-  EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new(private_key.get(), nullptr);
-  if (!ctx) {
-    handle_openssl_failure("context could not be created");
-  }
-#ifdef OPENSSL_IS_BORINGSSL 
-  // validates the private component of the key given by ctx
-  int const valid_private_key_code = 1;
-  if (valid_private_key_code !=
-      EVP_PKEY_private_check(
-          ctx)) {  // return 1 for success or others for failure
-    handle_openssl_failure("Not a valid private key.");
-  }
-#endif 
-
   int const digest_sign_success_code = 1;
   if (digest_sign_success_code !=
       EVP_DigestSignInit(digest_ctx.get(),

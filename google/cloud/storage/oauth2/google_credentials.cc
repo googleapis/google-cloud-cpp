@@ -298,6 +298,14 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
                                                          options);
 }
 
+StatusOr<std::string> MakeJWTAssertionChecked(
+    ServiceAccountCredentialsInfo& info) {
+  std::chrono::system_clock::time_point now;
+  auto assertion_components = AssertionComponentsFromInfo(info, now);
+  return MakeJWTAssertion(assertion_components.first,
+                          assertion_components.second, info.private_key);
+}
+
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, absl::optional<std::set<std::string>> scopes,
@@ -305,6 +313,10 @@ CreateServiceAccountCredentialsFromJsonContents(
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
+  }
+  auto jwt_assertion = MakeJWTAssertionChecked(info.value());
+  if (!jwt_assertion) {
+    return StatusOr<std::shared_ptr<Credentials>>(jwt_assertion.status());
   }
   // These are supplied as extra parameters to this method, not in the JSON
   // file.
