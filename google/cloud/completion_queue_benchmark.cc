@@ -15,7 +15,6 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include <benchmark/benchmark.h>
-#include <grpcpp/alarm.h>
 #include <condition_variable>
 #include <deque>
 #include <functional>
@@ -28,24 +27,24 @@ namespace {
 
 // Run on (96 X 2000.15 MHz CPU s)
 // CPU Caches:
-//   L1 Data 32K (x48)
-//   L1 Instruction 32K (x48)
-//   L2 Unified 1024K (x48)
-//   L3 Unified 39424K (x2)
-// Load Average: 3.82, 3.86, 10.47
-// -----------------------------------------------------------------------------
+//  L1 Data 32K (x48)
+//  L1 Instruction 32K (x48)
+//  L2 Unified 1024K (x48)
+//  L3 Unified 39424K (x2)
+// Load Average: 2.90, 9.21, 73.15
+//-----------------------------------------------------------------------------
 // Benchmark                                   Time             CPU   Iterations
-// -----------------------------------------------------------------------------
-// BM_Baseline/16/512                      15636 ns        15635 ns        42684
-// BM_Baseline/16/1024                     31056 ns        31054 ns        22962
-// BM_Baseline/16/2048                     61495 ns        61490 ns        10967
-// BM_Baseline_BigO                        30.11 N         30.11 N
+//-----------------------------------------------------------------------------
+// BM_Baseline/16/512                      15345 ns        15344 ns        44845
+// BM_Baseline/16/1024                     30807 ns        30802 ns        22416
+// BM_Baseline/16/2048                     62403 ns        62390 ns        11096
+// BM_Baseline_BigO                        30.37 N         30.37 N
 // BM_Baseline_RMS                             1 %             1 %
-// BM_CompletionQueueRunAsync/16/512      941518 ns       159425 ns         3787
-// BM_CompletionQueueRunAsync/16/1024     988488 ns       231439 ns         3044
-// BM_CompletionQueueRunAsync/16/2048    1690328 ns       455215 ns         1456
-// BM_CompletionQueueRunAsync_BigO        900.28 N        227.23 N
-// BM_CompletionQueueRunAsync_RMS             24 %             9 %
+// BM_CompletionQueueRunAsync/16/512      916720 ns       189304 ns         3450
+// BM_CompletionQueueRunAsync/16/1024     990193 ns       243485 ns         2668
+// BM_CompletionQueueRunAsync/16/2048    1976575 ns       420878 ns         1713
+// BM_CompletionQueueRunAsync_BigO       1004.78 N        219.47 N
+// BM_CompletionQueueRunAsync_RMS             18 %            17 %
 
 auto constexpr kMinThreads = 16;
 auto constexpr kMaxThreads = 16;
