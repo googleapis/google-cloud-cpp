@@ -234,14 +234,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### crc32c
@@ -338,14 +338,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### gRPC
@@ -464,14 +464,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -613,14 +613,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -746,14 +746,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -879,14 +879,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -1040,14 +1040,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### crc32c
@@ -1135,14 +1135,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -1300,14 +1300,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
@@ -1457,14 +1457,14 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-sudo cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-sudo ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
 ```
 
 #### Protobuf
