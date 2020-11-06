@@ -100,7 +100,7 @@ BENCHMARK(BM_Baseline)
 
 void BM_CompletionQueueRunAsync(benchmark::State& state) {
   CompletionQueue cq;
-  std::vector<std::thread> tasks(state.range(0));
+  std::vector<std::thread> tasks(static_cast<std::size_t>(state.range(0)));
   std::generate(tasks.begin(), tasks.end(), [&cq] {
     return std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
   });
