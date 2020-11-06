@@ -31,7 +31,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::StartsWith;
 
@@ -90,11 +89,11 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
   }
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*source, AckMessage("ack-0-0", _));
-    EXPECT_CALL(*source, NackMessage("ack-0-1", _));
-    EXPECT_CALL(*source, AckMessage("ack-1-0", _));
-    EXPECT_CALL(*source, NackMessage("ack-1-1", _));
-    EXPECT_CALL(*source, NackMessage("ack-1-2", _));
+    EXPECT_CALL(*source, AckMessage("ack-0-0"));
+    EXPECT_CALL(*source, NackMessage("ack-0-1"));
+    EXPECT_CALL(*source, AckMessage("ack-1-0"));
+    EXPECT_CALL(*source, NackMessage("ack-1-1"));
+    EXPECT_CALL(*source, NackMessage("ack-1-2"));
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
@@ -168,11 +167,11 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
   }
   {
     ::testing::InSequence sequence;
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-0-"), _)).Times(8);
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"), _)).Times(1);
-    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"), _)).Times(1);
-    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"), _)).Times(1);
-    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"), _)).Times(5);
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-0-"))).Times(8);
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"))).Times(1);
+    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"))).Times(1);
+    EXPECT_CALL(*source, AckMessage(StartsWith("ack-1-"))).Times(1);
+    EXPECT_CALL(*source, NackMessage(StartsWith("ack-1-"))).Times(5);
   }
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
@@ -456,9 +455,8 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
   }
   EXPECT_CALL(*source, AckMessage)
       .Times(5)
-      .WillRepeatedly([](std::string const&, std::size_t) {
-        return make_ready_future(Status{});
-      });
+      .WillRepeatedly(
+          [](std::string const&) { return make_ready_future(Status{}); });
   EXPECT_CALL(*source, Read(1)).Times(5);
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
