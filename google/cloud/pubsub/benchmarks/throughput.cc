@@ -599,6 +599,7 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
           "--subscriber-thread-count=1",
           "--subscriber-io-threads=1",
           "--subscriber-io-channels=1",
+          "--subscriber-max-outstanding-messages=0",
           "--subscriber-max-outstanding-bytes=100MiB",
           "--subscriber-max-concurrency=1000",
           "--iteration-duration=1s",
