@@ -87,39 +87,76 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   grpc::Alarm alarm_;
 };
 
-class AsyncFunction : public internal::AsyncGrpcOperation {
+}  // namespace
+
+// A helper class to wake up the asynchronous thread and drain the RunAsync()
+// queue in a loop.
+class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
+    : public internal::AsyncGrpcOperation {
  public:
-  explicit AsyncFunction(std::unique_ptr<internal::RunAsyncBase> fun)
-      : fun_(std::move(fun)), alarm_(absl::make_unique<grpc::Alarm>()) {}
+  explicit WakeUpRunAsyncLoop(std::weak_ptr<DefaultCompletionQueueImpl> w)
+      : weak_(std::move(w)) {}
 
   void Set(grpc::CompletionQueue& cq, void* tag) {
-    alarm_->Set(&cq, std::chrono::system_clock::now(), tag);
+    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
   }
 
   void Cancel() override {}
 
  private:
   bool Notify(bool ok) override {
-    auto f = std::move(fun_);
-    alarm_.reset();
     if (!ok) return true;  // do not run async operations on shutdown CQs
-    f->exec();
+    if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
     return true;
   }
 
-  std::unique_ptr<internal::RunAsyncBase> fun_;
-  std::unique_ptr<grpc::Alarm> alarm_;
+  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
+  grpc::Alarm alarm_;
 };
 
-}  // namespace
+// A helper class to wake up the asynchronous thread and drain the RunAsync()
+// one element at a time.
+class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
+    : public internal::AsyncGrpcOperation {
+ public:
+  explicit WakeUpRunAsyncOnIdle(std::weak_ptr<DefaultCompletionQueueImpl> w)
+      : weak_(std::move(w)) {}
+
+  void Set(grpc::CompletionQueue& cq, void* tag) {
+    alarm_.Set(&cq, std::chrono::system_clock::now(), tag);
+  }
+
+  void Cancel() override {}
+
+ private:
+  bool Notify(bool ok) override {
+    if (!ok) return true;  // do not run async operations on shutdown CQs
+    if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
+    return true;
+  }
+
+  std::weak_ptr<DefaultCompletionQueueImpl> weak_;
+  grpc::Alarm alarm_;
+};
 
 void DefaultCompletionQueueImpl::Run() {
-  void* tag;
-  bool ok;
+  class ThreadPoolCount {
+   public:
+    explicit ThreadPoolCount(DefaultCompletionQueueImpl* self) : self_(self) {
+      self_->RunStart();
+    }
+    ~ThreadPoolCount() { self_->RunStop(); }
+
+   private:
+    DefaultCompletionQueueImpl* self_;
+  } count(this);
+
   auto deadline = [] {
     return std::chrono::system_clock::now() + kLoopTimeout;
   };
 
+  void* tag;
+  bool ok;
   for (auto status = cq_.AsyncNext(&tag, &ok, deadline());
        status != grpc::CompletionQueue::SHUTDOWN;
        status = cq_.AsyncNext(&tag, &ok, deadline())) {
@@ -129,6 +166,7 @@ void DefaultCompletionQueueImpl::Run() {
           "unexpected status from AsyncNext()");
     }
     auto op = FindOperation(tag);
+    ++notify_counter_;
     if (op->Notify(ok)) {
       ForgetOperation(tag);
     }
@@ -176,15 +214,24 @@ DefaultCompletionQueueImpl::MakeRelativeTimer(
 
 void DefaultCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
-  auto op = std::make_shared<AsyncFunction>(std::move(function));
-  StartOperation(op, [&](void* tag) { op->Set(cq(), tag); });
+  std::unique_lock<std::mutex> lk(mu_);
+  run_async_queue_.push_back(std::move(function));
+  WakeUpRunAsyncThread(std::move(lk));
 }
 
 void DefaultCompletionQueueImpl::StartOperation(
     std::shared_ptr<AsyncGrpcOperation> op,
     absl::FunctionRef<void(void*)> start) {
+  StartOperation(std::unique_lock<std::mutex>(mu_), std::move(op),
+                 std::move(start));
+}
+
+grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
+
+void DefaultCompletionQueueImpl::StartOperation(
+    std::unique_lock<std::mutex> lk, std::shared_ptr<AsyncGrpcOperation> op,
+    absl::FunctionRef<void(void*)> start) {
   void* tag = op.get();
-  std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_) {
     lk.unlock();
     op->Notify(/*ok=*/false);
@@ -202,8 +249,6 @@ void DefaultCompletionQueueImpl::StartOperation(
      << " https://github.com/google-cloud-cpp/issues";
   google::cloud::internal::ThrowRuntimeError(std::move(os).str());
 }
-
-grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
 
 std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
     void* tag) {
@@ -224,6 +269,53 @@ void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
         "assertion failure: searching for async op tag when trying to "
         "unregister");
   }
+}
+
+void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
+  std::unique_lock<std::mutex> lk(mu_);
+  while (!run_async_queue_.empty() && !shutdown_) {
+    auto f = std::move(run_async_queue_.front());
+    run_async_queue_.pop_front();
+    lk.unlock();
+    f->exec();
+    lk.lock();
+  }
+  --run_async_pool_size_;
+}
+
+void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (run_async_queue_.empty()) return;
+  auto f = std::move(run_async_queue_.front());
+  run_async_queue_.pop_front();
+  lk.unlock();
+  f->exec();
+  lk.lock();
+  if (run_async_queue_.empty()) {
+    --run_async_pool_size_;
+    return;
+  }
+  auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
+  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+}
+
+void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
+    std::unique_lock<std::mutex> lk) {
+  if (run_async_queue_.empty() || shutdown_) return;
+  if (thread_pool_size_ <= 1) {
+    if (run_async_pool_size_ > 0) return;
+    ++run_async_pool_size_;
+    run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
+    auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
+    StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+    return;
+  }
+  // Always leave one thread for I/O
+  if (run_async_pool_size_ >= thread_pool_size_ - 1) return;
+  auto op = std::make_shared<WakeUpRunAsyncLoop>(shared_from_this());
+  ++run_async_pool_size_;
+  run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
+  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
 }
 
 }  // namespace internal
