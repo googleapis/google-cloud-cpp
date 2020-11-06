@@ -18,6 +18,8 @@ set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
     connection_options.gcpcxx.pb.cc
     connection_options.gcpcxx.pb.h
+    database_admin_client.gcpcxx.pb.cc
+    database_admin_client.gcpcxx.pb.h
     database_admin_connection.gcpcxx.pb.cc
     database_admin_connection.gcpcxx.pb.h
     database_admin_connection_idempotency_policy.gcpcxx.pb.cc
@@ -43,6 +45,8 @@ add_library(
     google_cloud_cpp_generator_golden_lib # cmake-format: sort
     connection_options.gcpcxx.pb.cc
     connection_options.gcpcxx.pb.h
+    database_admin_client.gcpcxx.pb.cc
+    database_admin_client.gcpcxx.pb.h
     database_admin_connection.gcpcxx.pb.cc
     database_admin_connection.gcpcxx.pb.h
     database_admin_connection_idempotency_policy.gcpcxx.pb.cc
@@ -84,6 +88,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
+        golden_client_test.cc
         golden_connection_options_test.cc
         golden_connection_test.cc
         golden_idempotency_policy_test.cc
