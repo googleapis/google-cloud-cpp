@@ -15,11 +15,15 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 TEST(InstanceAdminClientTest, Default) {
-  auto admin_client = bigtable::CreateDefaultInstanceAdminClient(
-      "test-project", bigtable::ClientOptions().set_connection_pool_size(1));
+  auto admin_client = CreateDefaultInstanceAdminClient(
+      "test-project", ClientOptions().set_connection_pool_size(1));
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 
@@ -34,3 +38,9 @@ TEST(InstanceAdminClientTest, Default) {
   EXPECT_TRUE(stub1);
   EXPECT_NE(stub0.get(), stub1.get());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

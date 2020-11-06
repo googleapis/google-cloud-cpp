@@ -16,7 +16,11 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gtest/gtest.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 /// @test Verify Cell instantiation and trivial accessors.
 TEST(CellTest, Simple) {
@@ -26,7 +30,7 @@ TEST(CellTest, Simple) {
   std::int64_t timestamp = 42;
   std::string value = "value";
 
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
+  Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
@@ -42,7 +46,7 @@ TEST(CellTest, SimpleNumericValue) {
   std::string column_qualifier = "column";
   std::int64_t timestamp = 42;
   std::int64_t value = 343321020;
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
+  Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
@@ -60,7 +64,7 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   std::string column_qualifier = "column";
   std::int64_t timestamp = 42;
   std::int64_t value = -343321020;
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
+  Cell cell(row_key, family_name, column_qualifier, timestamp, value);
   EXPECT_EQ(row_key, cell.row_key());
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
@@ -79,13 +83,19 @@ TEST(CellTest, RValueRefAccessors) {
   std::int64_t timestamp = 42;
   std::string value = "value";
 
-  bigtable::Cell cell(row_key, family_name, column_qualifier, timestamp, value);
+  Cell cell(row_key, family_name, column_qualifier, timestamp, value);
 
   static_assert(
-      !std::is_lvalue_reference<decltype(bigtable::Cell(cell).value())>::value,
+      !std::is_lvalue_reference<decltype(Cell(cell).value())>::value,
       "Member function `value` is expected to return a value from an r-value "
       "reference to row.");
 
   auto moved_value = std::move(cell).value();
   EXPECT_EQ(value, moved_value);
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

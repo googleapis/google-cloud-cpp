@@ -17,20 +17,25 @@
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
 
 TEST(TableConfig, Simple) {
-  bigtable::TableConfig config;
+  TableConfig config;
   EXPECT_TRUE(config.column_families().empty());
   EXPECT_TRUE(config.initial_splits().empty());
-  EXPECT_EQ(bigtable::TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED,
+  EXPECT_EQ(TableConfig::TIMESTAMP_GRANULARITY_UNSPECIFIED,
             config.timestamp_granularity());
 
-  config.add_column_family("fam", bigtable::GcRule::MaxNumVersions(2));
+  config.add_column_family("fam", GcRule::MaxNumVersions(2));
   config.add_initial_split("foo");
   config.add_initial_split("qux");
-  config.set_timestamp_granularity(bigtable::TableConfig::MILLIS);
+  config.set_timestamp_granularity(TableConfig::MILLIS);
 
   auto const& families = config.column_families();
   auto it = families.find("fam");
@@ -65,8 +70,7 @@ initial_splits { key: 'qux' }
 }
 
 TEST(TableConfig, ComplexConstructor) {
-  bigtable::TableConfig config({{"fam", bigtable::GcRule::MaxNumVersions(3)}},
-                               {"foo", "qux"});
+  TableConfig config({{"fam", GcRule::MaxNumVersions(3)}}, {"foo", "qux"});
 
   auto const& families = config.column_families();
   auto it = families.find("fam");
@@ -77,3 +81,9 @@ TEST(TableConfig, ComplexConstructor) {
   EXPECT_EQ("foo", splits[0]);
   EXPECT_EQ("qux", splits[1]);
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

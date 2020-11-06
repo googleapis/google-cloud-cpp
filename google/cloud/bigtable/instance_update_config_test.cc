@@ -16,8 +16,13 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btadmin = ::google::bigtable::admin::v2;
-namespace bigtable = google::cloud::bigtable;
 
 TEST(InstanceUpdateConfigTest, Constructor) {
   std::string instance_text = R"(
@@ -36,9 +41,9 @@ TEST(InstanceUpdateConfigTest, Constructor) {
   )";
 
   btadmin::Instance instance;
-  ASSERT_TRUE(
-      google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
-  bigtable::InstanceUpdateConfig config(std::move(instance));
+  ASSERT_TRUE(::google::protobuf::TextFormat::ParseFromString(instance_text,
+                                                              &instance));
+  InstanceUpdateConfig config(std::move(instance));
   auto const& proto = config.as_proto();
   EXPECT_EQ("projects/my-project/instances/test-instance",
             proto.instance().name());
@@ -63,9 +68,9 @@ TEST(InstanceUpdateConfigTest, UpdateMask) {
   )";
 
   btadmin::Instance instance;
-  ASSERT_TRUE(
-      google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
-  bigtable::InstanceUpdateConfig config(std::move(instance));
+  ASSERT_TRUE(::google::protobuf::TextFormat::ParseFromString(instance_text,
+                                                              &instance));
+  InstanceUpdateConfig config(std::move(instance));
   config.set_display_name("foo1");
   auto proto = config.as_proto();
   EXPECT_EQ("projects/my-project/instances/test-instance",
@@ -89,9 +94,9 @@ TEST(InstanceUpdateConfigTest, SetLabels) {
   )";
 
   btadmin::Instance instance;
-  ASSERT_TRUE(
-      google::protobuf::TextFormat::ParseFromString(instance_text, &instance));
-  bigtable::InstanceUpdateConfig config(std::move(instance));
+  ASSERT_TRUE(::google::protobuf::TextFormat::ParseFromString(instance_text,
+                                                              &instance));
+  InstanceUpdateConfig config(std::move(instance));
 
   config.insert_label("foo", "bar").emplace_label("baz", "qux");
 
@@ -103,3 +108,9 @@ TEST(InstanceUpdateConfigTest, SetLabels) {
   EXPECT_EQ("bar", proto.instance().labels().at("foo"));
   EXPECT_EQ("qux", proto.instance().labels().at("baz"));
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

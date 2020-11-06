@@ -15,13 +15,17 @@
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include <gmock/gmock.h>
 
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
 namespace btproto = ::google::bigtable::v2;
-namespace bigtable = google::cloud::bigtable;
 
 TEST(ReadModifyWriteRuleTest, AppendValue) {
   auto const proto =
-      bigtable::ReadModifyWriteRule::AppendValue("fam", "col", "foo")
-          .as_proto();
+      ReadModifyWriteRule::AppendValue("fam", "col", "foo").as_proto();
   EXPECT_EQ(btproto::ReadModifyWriteRule::kAppendValue, proto.rule_case());
   EXPECT_EQ("foo", proto.append_value());
   EXPECT_EQ("fam", proto.family_name());
@@ -30,10 +34,15 @@ TEST(ReadModifyWriteRuleTest, AppendValue) {
 
 TEST(ReadModifyWriteRuleTest, IncrementAmount) {
   auto const proto =
-      bigtable::ReadModifyWriteRule::IncrementAmount("fam", "col", 42)
-          .as_proto();
+      ReadModifyWriteRule::IncrementAmount("fam", "col", 42).as_proto();
   EXPECT_EQ(btproto::ReadModifyWriteRule::kIncrementAmount, proto.rule_case());
   EXPECT_EQ(42, proto.increment_amount());
   EXPECT_EQ("fam", proto.family_name());
   EXPECT_EQ("col", proto.column_qualifier());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

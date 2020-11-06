@@ -15,12 +15,16 @@
 #include "google/cloud/bigtable/data_client.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 TEST(DataClientTest, Default) {
-  auto data_client = bigtable::CreateDefaultDataClient(
-      "test-project", "test-instance",
-      bigtable::ClientOptions().set_connection_pool_size(1));
+  auto data_client =
+      CreateDefaultDataClient("test-project", "test-instance",
+                              ClientOptions().set_connection_pool_size(1));
   ASSERT_TRUE(data_client);
   EXPECT_EQ("test-project", data_client->project_id());
   EXPECT_EQ("test-instance", data_client->instance_id());
@@ -36,3 +40,9 @@ TEST(DataClientTest, Default) {
   EXPECT_TRUE(channel1);
   EXPECT_NE(channel0.get(), channel1.get());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

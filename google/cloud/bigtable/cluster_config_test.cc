@@ -15,25 +15,35 @@
 #include "google/cloud/bigtable/cluster_config.h"
 #include <gmock/gmock.h>
 
-namespace bigtable = google::cloud::bigtable;
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
 
 TEST(ClusterConfigTest, Constructor) {
-  bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::SSD);
+  ClusterConfig config("somewhere", 7, ClusterConfig::SSD);
   auto const& proto = config.as_proto();
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
-  EXPECT_EQ(bigtable::ClusterConfig::SSD, proto.default_storage_type());
+  EXPECT_EQ(ClusterConfig::SSD, proto.default_storage_type());
 }
 
 TEST(ClusterConfigTest, Move) {
-  bigtable::ClusterConfig config("somewhere", 7, bigtable::ClusterConfig::HDD);
+  ClusterConfig config("somewhere", 7, ClusterConfig::HDD);
   auto proto = std::move(config).as_proto();
   // Verify that as_proto() for rvalue-references returns the right type.
-  static_assert(std::is_rvalue_reference<decltype(
-                    std::move(std::declval<bigtable::ClusterConfig>())
-                        .as_proto())>::value,
-                "Return type from as_proto() must be rvalue-reference");
+  static_assert(
+      std::is_rvalue_reference<decltype(
+          std::move(std::declval<ClusterConfig>()).as_proto())>::value,
+      "Return type from as_proto() must be rvalue-reference");
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
-  EXPECT_EQ(bigtable::ClusterConfig::HDD, proto.default_storage_type());
+  EXPECT_EQ(ClusterConfig::HDD, proto.default_storage_type());
 }
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

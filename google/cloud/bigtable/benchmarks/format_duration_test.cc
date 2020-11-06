@@ -15,7 +15,11 @@
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include <gmock/gmock.h>
 
-using ::google::cloud::bigtable::benchmarks::FormatDuration;
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace benchmarks {
+
 using ::std::chrono::hours;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
@@ -93,3 +97,8 @@ TEST(BenchmarksFormatDuration, NoMillis) {
   os << FormatDuration(duration);
   EXPECT_EQ("1h2m3s", os.str());
 }
+
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

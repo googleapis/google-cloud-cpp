@@ -24,8 +24,15 @@
 #include <sstream>
 #include <vector>
 
-using google::bigtable::v2::ReadRowsResponse_CellChunk;
-using google::cloud::bigtable::internal::ReadRowsParser;
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace internal {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace {
+
+using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
+using ::google::cloud::bigtable::internal::ReadRowsParser;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   grpc::Status status;
@@ -134,11 +141,6 @@ TEST(ReadRowsParserTest, NextWithNoDataThrows) {
 }
 
 // **** Acceptance tests helpers ****
-
-namespace google {
-namespace cloud {
-namespace bigtable {
-
 // Can also be used by gtest to print Cell values
 void PrintTo(Cell const& c, std::ostream* os) {
   *os << "rk: " << std::string(c.row_key()) << "\n";
@@ -161,10 +163,6 @@ std::string CellToString(Cell const& cell) {
   return ss.str();
 }
 
-}  // namespace bigtable
-}  // namespace cloud
-}  // namespace google
-
 class AcceptanceTest : public ::testing::Test {
  protected:
   std::vector<std::string> ExtractCells() {
@@ -172,8 +170,7 @@ class AcceptanceTest : public ::testing::Test {
 
     for (auto const& r : rows_) {
       std::transform(r.cells().begin(), r.cells().end(),
-                     std::back_inserter(cells),
-                     google::cloud::bigtable::CellToString);
+                     std::back_inserter(cells), CellToString);
     }
     return cells;
   }
@@ -223,3 +220,10 @@ class AcceptanceTest : public ::testing::Test {
 
 // Auto-generated acceptance tests
 #include "google/cloud/bigtable/internal/readrowsparser_acceptance_tests.inc"
+
+}  // namespace
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace internal
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

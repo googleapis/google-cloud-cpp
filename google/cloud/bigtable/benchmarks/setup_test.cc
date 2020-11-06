@@ -17,11 +17,11 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
-using ::google::cloud::bigtable::benchmarks::kDefaultTableSize;
-using ::google::cloud::bigtable::benchmarks::kDefaultTestDuration;
-using ::google::cloud::bigtable::benchmarks::kDefaultThreads;
-using ::google::cloud::bigtable::benchmarks::kTableIdRandomLetters;
-using ::google::cloud::bigtable::benchmarks::MakeBenchmarkSetup;
+namespace google {
+namespace cloud {
+namespace bigtable {
+namespace benchmarks {
+
 using ::testing::HasSubstr;
 
 namespace {
@@ -35,7 +35,7 @@ char arg6[] = "10000";
 char arg7[] = "True";
 char arg8[] = "20";
 char arg9[] = "Unused";
-}  // anonymous namespace
+}  // namespace
 
 TEST(BenchmarksSetup, Basic) {
   char* argv[] = {arg0, arg1, arg2, arg3};
@@ -137,7 +137,7 @@ TEST(BenchmarkSetup, Test3) {
 }
 
 TEST(BenchmarkSetup, Test2) {
-  google::cloud::testing_util::ScopedEnvironment env(
+  ::google::cloud::testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0, arg1, arg2};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -145,7 +145,7 @@ TEST(BenchmarkSetup, Test2) {
 }
 
 TEST(BenchmarkSetup, Test1) {
-  google::cloud::testing_util::ScopedEnvironment env(
+  ::google::cloud::testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0, arg1};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -153,7 +153,7 @@ TEST(BenchmarkSetup, Test1) {
 }
 
 TEST(BenchmarkSetup, Test0) {
-  google::cloud::testing_util::ScopedEnvironment env(
+  ::google::cloud::testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   char* argv[] = {arg0};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -161,11 +161,11 @@ TEST(BenchmarkSetup, Test0) {
 }
 
 TEST(BenchmarkSetup, TestAutoRun) {
-  google::cloud::testing_util::ScopedEnvironment auto_run(
+  ::google::cloud::testing_util::ScopedEnvironment auto_run(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
-  google::cloud::testing_util::ScopedEnvironment project_id(
+  ::google::cloud::testing_util::ScopedEnvironment project_id(
       "GOOGLE_CLOUD_PROJECT", "test-unused-project");
-  google::cloud::testing_util::ScopedEnvironment instance_id(
+  ::google::cloud::testing_util::ScopedEnvironment instance_id(
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", "test-instance");
   char* argv[] = {arg0};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -176,11 +176,11 @@ TEST(BenchmarkSetup, TestAutoRun) {
 }
 
 TEST(BenchmarkSetup, TestAutoRunMissingProject) {
-  google::cloud::testing_util::ScopedEnvironment auto_run(
+  ::google::cloud::testing_util::ScopedEnvironment auto_run(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
-  google::cloud::testing_util::ScopedEnvironment project_id(
+  ::google::cloud::testing_util::ScopedEnvironment project_id(
       "GOOGLE_CLOUD_PROJECT", {});
-  google::cloud::testing_util::ScopedEnvironment instance_id(
+  ::google::cloud::testing_util::ScopedEnvironment instance_id(
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", "test-instance");
   char* argv[] = {arg0};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -190,11 +190,11 @@ TEST(BenchmarkSetup, TestAutoRunMissingProject) {
 }
 
 TEST(BenchmarkSetup, TestAutoRunMissingInstanceId) {
-  google::cloud::testing_util::ScopedEnvironment auto_run(
+  ::google::cloud::testing_util::ScopedEnvironment auto_run(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "yes");
-  google::cloud::testing_util::ScopedEnvironment project_id(
+  ::google::cloud::testing_util::ScopedEnvironment project_id(
       "GOOGLE_CLOUD_PROJECT", "test-unused-project");
-  google::cloud::testing_util::ScopedEnvironment instance_id(
+  ::google::cloud::testing_util::ScopedEnvironment instance_id(
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID", {});
   char* argv[] = {arg0};
   int argc = sizeof(argv) / sizeof(argv[0]);
@@ -221,3 +221,8 @@ TEST(BenchmarkSetup, TableSize) {
   // TableSize parameter should be >= 100.
   EXPECT_FALSE(MakeBenchmarkSetup("table-size", argc, argv));
 }
+
+}  // namespace benchmarks
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google
