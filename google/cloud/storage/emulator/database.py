@@ -33,6 +33,13 @@ class Database:
     def init(cls):
         return cls({}, {}, {}, {}, {})
 
+    def raii(self, grpc_server):
+        self.grpc_server = grpc_server
+
+    def __del__(self):
+        if hasattr(self, "grpc_server") and self.grpc_server is not None:
+            self.grpc_server.stop(None)
+
     # === BUCKET === #
 
     def __check_bucket_metageneration(self, request, bucket, context):

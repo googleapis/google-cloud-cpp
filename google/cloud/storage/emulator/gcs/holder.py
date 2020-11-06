@@ -86,12 +86,14 @@ class DataHolder(types.SimpleNamespace):
         )
 
     @classmethod
-    def init_resumable_grpc(cls, request, bucket):
+    def init_resumable_grpc(cls, request, bucket, context):
         metadata = request.insert_object_spec.resource
         upload_id = hashlib.sha256(
             ("%s/o/%s" % (bucket.name, metadata.name)).encode("utf-8")
         ).hexdigest()
-        return cls.init_upload(request, metadata, bucket, "", upload_id)
+        fake_request = utils.common.FakeRequest.init_protobuf(request, context)
+        fake_request.update_protobuf(request.insert_object_spec, context)
+        return cls.init_upload(fake_request, metadata, bucket, "", upload_id)
 
     def resumable_status_rest(self):
         response = flask.make_response()
