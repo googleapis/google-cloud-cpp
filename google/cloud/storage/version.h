@@ -63,6 +63,9 @@ int constexpr version_minor() { return STORAGE_CLIENT_VERSION_MINOR; }
  */
 int constexpr version_patch() { return STORAGE_CLIENT_VERSION_PATCH; }
 
+// TODO(coryan) - remove, this is to force a rebuild and retest.
+int constexpr version_unused() { return 42; }
+
 /// Returns a single integer representing the Major/Minor/Patch version.
 int constexpr version() {
   static_assert(::google::cloud::version_major() == version_major(),
