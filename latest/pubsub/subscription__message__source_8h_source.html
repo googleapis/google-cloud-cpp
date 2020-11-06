@@ -112,19 +112,17 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> Read(std::size_t max_callbacks) = 0;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keyword">virtual</span> future&lt;Status&gt; AckMessage(std::string <span class="keyword">const</span>&amp; ack_id,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                                    std::size_t size) = 0;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">virtual</span> future&lt;Status&gt; NackMessage(std::string <span class="keyword">const</span>&amp; ack_id,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                                     std::size_t size) = 0;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_MESSAGE_SOURCE_H</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keyword">virtual</span> future&lt;Status&gt; AckMessage(std::string <span class="keyword">const</span>&amp; ack_id) = 0;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">virtual</span> future&lt;Status&gt; NackMessage(std::string <span class="keyword">const</span>&amp; ack_id) = 0;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;};</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_MESSAGE_SOURCE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astatus_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status_8h.html">status.h</a></div></div>
 <div class="ttc" id="afuture_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/future_8h.html">future.h</a></div></div>
