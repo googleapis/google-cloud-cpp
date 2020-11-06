@@ -101,8 +101,11 @@ foreach (fname ${storage_client_integration_tests})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (fname # cmake-format: sort
-               key_file_integration_test.cc signed_url_integration_test.cc)
+foreach (
+    fname
+    # cmake-format: sort
+    grpc_integration_test.cc key_file_integration_test.cc
+    signed_url_integration_test.cc)
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS

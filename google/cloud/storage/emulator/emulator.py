@@ -18,7 +18,6 @@ import logging
 import database
 import flask
 import gcs as gcs_type
-import grpc_server
 import httpbin
 import utils
 from werkzeug import serving
@@ -29,7 +28,6 @@ from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.protobuf import json_format
 
 db = None
-grpc_port = 0
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -39,24 +37,6 @@ root.debug = True
 @root.route("/")
 def index():
     return "OK"
-
-
-@root.route("/start_grpc")
-def start_grpc():
-    # The reason is `Gunicorn` will spawn a new subprocess ( a worker )
-    # when running `Flask` server. If we start `gRPC` server before
-    # the spawn of the subprocess, it's nearly impossible to share
-    # the `database` with the new subprocess because Python will copy
-    # everything in the memory from the parent process to the subprocess
-    # ( So we have 2 separate instance of `database` ). The endpoint
-    # will start the `gRPC` server in the same subprocess
-    # so there is only one instance of `database`.
-    global grpc_port
-    if grpc_port == 0:
-        port = flask.request.args.get("port", "0")
-        grpc_port = grpc_server.run(port, db)
-        return str(grpc_port)
-    return str(grpc_port)
 
 
 @root.route("/<path:object_name>", subdomain="<bucket_name>")
@@ -793,6 +773,8 @@ def run():
     global db
     logging.basicConfig()
     db = database.Database.init()
+    # grpc_port = int(os.getenv("GOOGLE_CLOUD_CPP_STORAGE_EMULATOR_GRPC_PORT", 8000))
+    # grpc_server.run(grpc_port, db)
     return server
 
 
