@@ -41,8 +41,11 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
+    internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
+    internal/default_batch_sink.cc
+    internal/default_batch_sink.h
     internal/default_retry_policies.cc
     internal/default_retry_policies.h
     internal/emulator_overrides.cc
@@ -59,6 +62,8 @@ add_library(
     internal/publisher_stub.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
+    internal/sequential_batch_sink.cc
+    internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
     internal/session_shutdown_manager.h
     internal/streaming_subscription_batch_source.cc
@@ -178,6 +183,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         pubsub_client_testing # cmake-format: sort
         testing/fake_streaming_pull.cc
         testing/fake_streaming_pull.h
+        testing/mock_batch_sink.h
         testing/mock_publisher_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
@@ -200,12 +206,14 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         # cmake-format: sort
         ack_handler_test.cc
         internal/batching_publisher_connection_test.cc
+        internal/default_batch_sink_test.cc
         internal/emulator_overrides_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
         internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
+        internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
         internal/subscriber_logging_test.cc
