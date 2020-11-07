@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_BATCHING_PUBLISHER_CONNECTION_H
 
+#include "google/cloud/pubsub/internal/batch_sink.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
+#include <memory>
 #include <mutex>
 
 namespace google {
@@ -30,41 +32,32 @@ class BatchingPublisherConnection
  public:
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, pubsub::PublisherOptions options,
-      std::string ordering_key,
-      std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
+      std::string ordering_key, std::shared_ptr<BatchSink> sink,
+      google::cloud::CompletionQueue cq) {
     return std::shared_ptr<BatchingPublisherConnection>(
-        new BatchingPublisherConnection(
-            std::move(topic), std::move(options), std::move(ordering_key),
-            std::move(stub), std::move(cq), std::move(retry_policy),
-            std::move(backoff_policy)));
+        new BatchingPublisherConnection(std::move(topic), std::move(options),
+                                        std::move(ordering_key),
+                                        std::move(sink), std::move(cq)));
   }
 
   future<StatusOr<std::string>> Publish(PublishParams p) override;
   void Flush(FlushParams) override;
   void ResumePublish(ResumePublishParams p) override;
 
-  void UnCork();
-  void DiscardCorked(Status const& status);
+  void HandleError(Status const& status);
 
  private:
-  explicit BatchingPublisherConnection(
-      pubsub::Topic topic, pubsub::PublisherOptions options,
-      std::string ordering_key,
-      std::shared_ptr<pubsub_internal::PublisherStub> stub,
-      google::cloud::CompletionQueue cq,
-      std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+  explicit BatchingPublisherConnection(pubsub::Topic topic,
+                                       pubsub::PublisherOptions options,
+                                       std::string ordering_key,
+                                       std::shared_ptr<BatchSink> sink,
+                                       google::cloud::CompletionQueue cq)
       : topic_(std::move(topic)),
         topic_full_name_(topic_.FullName()),
         options_(std::move(options)),
         ordering_key_(std::move(ordering_key)),
-        stub_(std::move(stub)),
-        cq_(std::move(cq)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        sink_(std::move(sink)),
+        cq_(std::move(cq)) {}
 
   void OnTimer();
   future<StatusOr<std::string>> CorkedError();
@@ -73,25 +66,19 @@ class BatchingPublisherConnection
 
   bool RequiresOrdering() const { return !ordering_key_.empty(); }
 
-  bool IsCorked(std::unique_lock<std::mutex> const&) const {
-    return corked_on_pending_push_ || !corked_on_status_.ok();
-  }
-
   pubsub::Topic const topic_;
   std::string const topic_full_name_;
   pubsub::PublisherOptions const options_;
   std::string const ordering_key_;
-  std::shared_ptr<pubsub_internal::PublisherStub> stub_;
+  std::shared_ptr<BatchSink> const sink_;
   google::cloud::CompletionQueue cq_;
-  std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
-  std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
 
   std::mutex mu_;
   std::vector<promise<StatusOr<std::string>>> waiters_;
   google::pubsub::v1::PublishRequest pending_;
   std::size_t current_bytes_ = 0;
   std::chrono::system_clock::time_point batch_expiration_;
-  bool corked_on_pending_push_ = false;
+
   Status corked_on_status_;
 };
 
