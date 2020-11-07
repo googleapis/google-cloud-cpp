@@ -29,7 +29,7 @@ namespace testing_util {
 /**
  * A helper to sequence asynchronous operations.
  *
- * Mocks for asynchronous operations often need to create futures that the the
+ * Mocks for asynchronous operations often need to create futures that the
  * test controls. The mock creates new futures by calling `PushBack()` and then
  * using `.then()` to convert the `future<void>` into the desired type. The main
  * test calls `.PopFront()` to satisfy the futures as needed.
