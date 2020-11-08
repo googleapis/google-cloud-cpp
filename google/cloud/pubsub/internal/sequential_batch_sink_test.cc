@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -29,6 +30,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Unused;
@@ -59,35 +61,6 @@ google::pubsub::v1::PublishResponse MakeResponse(
   }
   return response;
 }
-
-/// A helper class for mocks to create futures that are then satisfied under the
-/// test control.
-class AsyncSequencer {
- public:
-  AsyncSequencer() = default;
-
-  future<void> PushBack() {
-    std::unique_lock<std::mutex> lk(mu_);
-    queue_.emplace_back();
-    auto f = queue_.back().get_future();
-    lk.unlock();
-    cv_.notify_one();
-    return f;
-  }
-
-  promise<void> PopFront() {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [&] { return !queue_.empty(); });
-    auto p = std::move(queue_.front());
-    queue_.pop_front();
-    return p;
-  }
-
- private:
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::deque<promise<void>> queue_;
-};
 
 TEST(DefaultBatchSinkTest, BasicNoErrors) {
   AsyncSequencer sequencer;
