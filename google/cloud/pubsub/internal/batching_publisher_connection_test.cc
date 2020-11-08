@@ -50,20 +50,23 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   pubsub::Topic const topic("test-project", "test-topic");
 
+  AsyncSequencer async;
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
-        EXPECT_EQ(topic.FullName(), request.topic());
-        std::vector<std::string> data;
-        std::transform(request.messages().begin(), request.messages().end(),
-                       std::back_inserter(data),
-                       [](google::pubsub::v1::PubsubMessage const& m) {
-                         return std::string(m.data());
-                       });
-        EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
-        google::pubsub::v1::PublishResponse response;
-        response.add_message_ids("test-message-id-0");
-        response.add_message_ids("test-message-id-1");
-        return make_ready_future(make_status_or(response));
+        return async.PushBack().then([topic, request](future<void>) {
+          EXPECT_EQ(topic.FullName(), request.topic());
+          std::vector<std::string> data;
+          std::transform(request.messages().begin(), request.messages().end(),
+                         std::back_inserter(data),
+                         [](google::pubsub::v1::PubsubMessage const& m) {
+                           return std::string(m.data());
+                         });
+          EXPECT_THAT(data, ElementsAre("test-data-0", "test-data-1"));
+          google::pubsub::v1::PublishResponse response;
+          response.add_message_ids("test-message-id-0");
+          response.add_message_ids("test-message-id-1");
+          return make_status_or(response);
+        });
       });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
@@ -99,6 +102,9 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
             EXPECT_NE(main_thread, std::this_thread::get_id());
           }));
   publisher->Flush({});
+  // Use the CQ threads to satisfy the AsyncPull future, like we do in the
+  // normal code.
+  background.cq().RunAsync([&async] { async.PopFront().set_value(); });
   for (auto& p : published) p.get();
 }
 
