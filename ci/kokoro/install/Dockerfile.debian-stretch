@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=stretch
 FROM debian:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START INSTALL.md]
+## [START packaging.md]
 
 # First install the development tools and libcurl.
 # On Debian 9, libcurl links against openssl-1.0.2, and one must link
@@ -192,7 +192,7 @@ RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```
 
-## [END INSTALL.md]
+## [END packaging.md]
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
