@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START INSTALL.md]
+## [START packaging.md]
 
 # First install the development tools and OpenSSL. The development tools
 # distributed with CentOS 7 are too old to build the project. In these
@@ -218,7 +218,7 @@ RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```
 
-## [END INSTALL.md]
+## [END packaging.md]
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 

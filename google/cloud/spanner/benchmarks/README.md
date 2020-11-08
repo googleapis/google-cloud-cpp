@@ -31,8 +31,10 @@ established) to remain stable unless there is good reason to add overhead.
 We recommend that you compile and run these experiments on a VM running on the
 same region as the spanner instance you will use for the tests. Create and
 configure the VM instance, and then install the development tools for whatever
-platform you chose. See the [INSTALL](../../../../INSTALL.md#table-of-contents)
-instructions for your distribution.
+platform you chose. See [doc/packaging.md][packaging-doc-link] for install
+instructions for your platform.
+
+[packaging-doc-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/doc/packaging.md
 
 ### Compiling the library
 

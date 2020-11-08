@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=8
 FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START INSTALL.md]
+## [START packaging.md]
 
 # Install the minimal development tools, libcurl, OpenSSL, and the c-ares
 # library (required by gRPC):
@@ -179,7 +179,7 @@ RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```
 
-## [END INSTALL.md]
+## [END packaging.md]
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
