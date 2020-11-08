@@ -154,7 +154,8 @@ int main(int argc, char* argv[]) {
 
   auto const topic = pubsub::Topic(config->project_id, config->topic_id);
 
-  std::cout << "Timestamp,Op,Iteration,Count,Bytes,ElapsedUs,MBs" << std::endl;
+  std::cout << "timestamp,elapsed(us),op,iteration,count,msgs/s,bytes,MB/s"
+            << std::endl;
 
   std::vector<std::thread> tasks;
   if (config->publisher) {
@@ -199,10 +200,13 @@ void PrintResult(Config const& config, std::string const& operation,
   auto const mbs =
       absl::StrFormat("%.02f", static_cast<double>(bytes) /
                                    static_cast<double>(elapsed_us.count()));
+  auto const msgs =
+      absl::StrFormat("%.02f", static_cast<double>(count) * 1000000.0 /
+                                   static_cast<double>(elapsed_us.count()));
   std::lock_guard<std::mutex> lk(cout_mu);
-  std::cout << Timestamp() << ',' << operation << ',' << iteration << ','
-            << count << ',' << bytes << ',' << elapsed_us.count() << ',' << mbs
-            << std::endl;
+  std::cout << Timestamp() << ',' << elapsed_us.count() << ',' << operation
+            << ',' << iteration << ',' << count << ',' << msgs << ',' << bytes
+            << ',' << mbs << std::endl;
 }
 
 std::atomic<std::int64_t> send_count{0};
