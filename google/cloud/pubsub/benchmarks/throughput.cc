@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/strings/str_format.h"
+#include <atomic>
 #include <chrono>
 #include <cinttypes>
 #include <functional>
@@ -229,8 +230,7 @@ class PublishWorker {
     using std::chrono::steady_clock;
 
     auto const start = std::chrono::steady_clock::now();
-    for (std::int64_t i = 0; true; ++i) {
-      if (WaitUntilCanPublish()) break;  // returns true on shutdown
+    for (std::int64_t i = 0; NotShutdownAndReady(); ++i) {
       auto const elapsed =
           duration_cast<std::chrono::microseconds>(steady_clock::now() - start);
       publisher_
@@ -256,14 +256,14 @@ class PublishWorker {
   std::int64_t lwm_count() const { return lwm_count_; }
 
  private:
-  bool WaitUntilCanPublish() {
+  bool NotShutdownAndReady() {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [&] { return !blocked_ || shutdown_; });
-    if (shutdown_) return true;
-    if (++pending_ <= config_.publisher_pending_hwm) return false;
+    if (shutdown_) return false;
+    if (++pending_ <= config_.publisher_pending_hwm) return true;
     blocked_ = true;
     ++hwm_count_;
-    return false;
+    return true;
   }
 
   void WaitUntilAllAcked() {
