@@ -706,7 +706,15 @@ TEST_P(RunAsyncTest, TortureBursts) {
 
   auto constexpr kBurstCount = 100;
   auto const burst_size = GetParam() * kThreads * 8;
-  for (int i = 0; i != kBurstCount; ++i) burst(burst_size);
+  for (int i = 0; i != kBurstCount; ++i) {
+    // In the single-threaded case, the CQ may have DrainAsyncOnIdle() calls
+    // scheduled from the previous iteration. We need to drain them from the
+    // queue or they may skew the counts below. We could have just changed the
+    // expected count, but that seems like it makes the test less interesting.
+    cq.MakeRelativeTimer(std::chrono::microseconds(10)).get();
+    cq.MakeRelativeTimer(std::chrono::microseconds(10)).get();
+    burst(burst_size);
+  }
   cq.Shutdown();
   for (auto& t : tasks) t.join();
 
