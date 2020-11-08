@@ -707,7 +707,7 @@ TEST_P(RunAsyncTest, TortureBursts) {
   auto constexpr kBurstCount = 100;
   auto const burst_size = GetParam() * kThreads * 8;
   for (int i = 0; i != kBurstCount; ++i) {
-    // On the single-threaded case, the CQ may have DrainAsyncOnIdle() calls
+    // In the single-threaded case, the CQ may have DrainAsyncOnIdle() calls
     // scheduled from the previous iteration. We need to drain them from the
     // queue or they may skew the counts below. We could have just changed the
     // expected count, but that seems like it makes the test less interesting.
