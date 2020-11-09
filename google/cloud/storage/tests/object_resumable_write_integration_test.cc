@@ -199,7 +199,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
+TEST_F(ObjectResumableWriteIntegrationTest,
+       DISABLED_WriteResumeFinalizedUpload) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
