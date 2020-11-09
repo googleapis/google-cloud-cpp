@@ -62,4 +62,9 @@ exit_status=$?
 kill_testbench
 trap '' EXIT
 
+if [[ "$exit_status" -ne 0 ]]; then
+  source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+  dump_log "${HOME}/testbench.log"
+fi
+
 exit "${exit_status}"

@@ -252,6 +252,7 @@ class TestCommonUtils:
         request = utils.common.FakeRequest(
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
             data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "myObject", "metadata": {"test": "test"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            environ={},
         )
         metadata, media_header, media = utils.common.parse_multipart(request)
         assert metadata == {"name": "myObject", "metadata": {"test": "test"}}

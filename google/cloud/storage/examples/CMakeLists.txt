@@ -97,8 +97,8 @@ if (BUILD_TESTING)
     # We just know that these tests need to be run against production.
     set(storage_integration_tests_production
         # cmake-format: sort
-        storage_grpc_samples.cc storage_policy_doc_samples.cc
-        storage_signed_url_v2_samples.cc storage_signed_url_v4_samples.cc)
+        storage_policy_doc_samples.cc storage_signed_url_v2_samples.cc
+        storage_signed_url_v4_samples.cc)
     foreach (fname ${storage_integration_tests_production})
         google_cloud_cpp_set_target_name(target "storage_examples" "${fname}")
         set_tests_properties(
