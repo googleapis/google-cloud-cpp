@@ -26,7 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::ElementsAre;
+using ::testing::UnorderedElementsAre;
 
 google::pubsub::v1::StreamingPullResponse GenerateMessages(
     std::string const& prefix, int count) {
@@ -61,7 +61,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
         // messages.
         .WillOnce([&](std::vector<std::string> const& ack_ids,
                       std::chrono::seconds extension) {
-          EXPECT_THAT(ack_ids, ElementsAre("ack-0-0", "ack-0-2"));
+          EXPECT_THAT(ack_ids, UnorderedElementsAre("ack-0-0", "ack-0-2"));
           EXPECT_LE(std::abs((kTestDeadline - extension).count()), 2);
           return make_ready_future(Status{});
         });
@@ -71,12 +71,12 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
         // The a simulated timer refreshes the leases.
         .WillOnce([&](std::vector<std::string> const& ack_ids,
                       std::chrono::seconds extension) {
-          EXPECT_THAT(ack_ids, ElementsAre("ack-0-0"));
+          EXPECT_THAT(ack_ids, UnorderedElementsAre("ack-0-0"));
           EXPECT_LE(std::abs((kTestDeadline - extension).count()), 2);
           return make_ready_future(Status{});
         });
     // Then all unhandled messages are nacked on shutdown.
-    EXPECT_CALL(*mock, BulkNack(ElementsAre("ack-0-0")))
+    EXPECT_CALL(*mock, BulkNack(UnorderedElementsAre("ack-0-0")))
         .WillOnce([](std::vector<std::string> const&) {
           return make_ready_future(Status{});
         });
