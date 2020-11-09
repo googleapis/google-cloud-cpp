@@ -170,6 +170,7 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
+using ::google::cloud::pubsub_internal::MessageSize;
 using ::google::cloud::testing_util::Timer;
 
 std::mutex cout_mu;
@@ -188,14 +189,13 @@ std::string Timestamp() {
       std::chrono::system_clock::now());
 }
 
-void PrintResult(Config const& config, std::string const& operation,
-                 int iteration, std::int64_t count, Timer const& usage) {
+void PrintResult(std::string const& operation, int iteration,
+                 std::int64_t count, std::int64_t bytes, Timer const& usage) {
   using std::chrono::duration_cast;
   using std::chrono::microseconds;
   using std::chrono::seconds;
 
   auto const elapsed_us = duration_cast<microseconds>(usage.elapsed_time());
-  auto const bytes = count * config.payload_size;
   auto const mbs =
       absl::StrFormat("%.02f", static_cast<double>(bytes) /
                                    static_cast<double>(elapsed_us.count()));
@@ -206,7 +206,9 @@ void PrintResult(Config const& config, std::string const& operation,
 }
 
 std::atomic<std::int64_t> send_count{0};
+std::atomic<std::int64_t> send_bytes{0};
 std::atomic<std::int64_t> ack_count{0};
+std::atomic<std::int64_t> ack_bytes{0};
 std::atomic<std::int64_t> error_count{0};
 
 /// Run a single thread publishing events
@@ -233,21 +235,24 @@ class PublishWorker {
     for (std::int64_t i = 0; NotShutdownAndReady(); ++i) {
       auto const elapsed =
           duration_cast<std::chrono::microseconds>(steady_clock::now() - start);
-      publisher_
-          .Publish(pubsub::MessageBuilder{}
-                       .SetAttributes({
-                           {"sendTime", std::to_string(elapsed.count())},
-                           {"clientId", std::to_string(id_)},
-                           {"sequenceNumber", std::to_string(i)},
-                       })
-                       .SetData(data)
-                       .Build())
-          .then([this](future<StatusOr<std::string>> f) {
+      auto message = pubsub::MessageBuilder{}
+                         .SetAttributes({
+                             {"sendTime", std::to_string(elapsed.count())},
+                             {"clientId", std::to_string(id_)},
+                             {"sequenceNumber", std::to_string(i)},
+                         })
+                         .SetData(data)
+                         .Build();
+      auto const bytes = MessageSize(message);
+      publisher_.Publish(std::move(message))
+          .then([this, bytes](future<StatusOr<std::string>> f) {
             ++ack_count;
+            ack_bytes.fetch_add(bytes);
             if (!f.get()) ++error_count;
             OnAck();
           });
       ++send_count;
+      send_bytes.fetch_add(bytes);
     }
     WaitUntilAllAcked();
   }
@@ -338,13 +343,17 @@ void PublisherTask(Config const& config) {
     Timer usage;
     usage.Start();
     auto const start_send_count = send_count.load();
+    auto const start_send_bytes = send_bytes.load();
     auto const start_ack_count = ack_count.load();
+    auto const start_ack_bytes = ack_bytes.load();
     std::this_thread::sleep_for(config.iteration_duration);
     auto const send_count_last = send_count.load() - start_send_count;
+    auto const send_bytes_last = send_bytes.load() - start_send_bytes;
     auto const ack_count_last = ack_count.load() - start_ack_count;
+    auto const ack_bytes_last = ack_bytes.load() - start_ack_bytes;
     usage.Stop();
-    PrintResult(config, "Pub", i, send_count_last, usage);
-    PrintResult(config, "Ack", i, ack_count_last, usage);
+    PrintResult("Pub", i, send_count_last, send_bytes_last, usage);
+    PrintResult("Ack", i, ack_count_last, ack_bytes_last, usage);
   }
 
   for (auto& w : workers) w->Shutdown();
@@ -389,9 +398,11 @@ void SubscriberTask(Config const& config) {
       pubsub::Subscription(config.project_id, config.subscription_id),
       std::move(subscriber_options), std::move(connection_options)));
   std::atomic<std::int64_t> received_count{0};
-  auto handler = [&received_count](pubsub::Message const&,
-                                   pubsub::AckHandler h) {
+  std::atomic<std::int64_t> received_bytes{0};
+  auto handler = [&received_count, &received_bytes](pubsub::Message const& m,
+                                                    pubsub::AckHandler h) {
     ++received_count;
+    received_bytes.fetch_add(MessageSize(m));
     std::move(h).ack();
   };
 
@@ -405,10 +416,12 @@ void SubscriberTask(Config const& config) {
     Timer usage;
     usage.Start();
     auto const start_count = received_count.load();
+    auto const start_bytes = received_bytes.load();
     std::this_thread::sleep_for(config.iteration_duration);
     auto const count = received_count.load() - start_count;
+    auto const bytes = received_bytes.load() - start_bytes;
     usage.Stop();
-    PrintResult(config, "Sub", i, count, usage);
+    PrintResult("Sub", i, count, bytes, usage);
   }
   for (auto& s : sessions) s.cancel();
   Status last_status;
