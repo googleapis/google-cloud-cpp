@@ -274,7 +274,7 @@ class PublishWorker {
           });
       ++send_count;
       send_bytes.fetch_add(bytes);
-      if (enable_pacing && i != 0 && i % kPacingCount == 0) {
+      if (enable_pacing && (i + 1) % kPacingCount == 0) {
         auto const now = steady_clock::now();
         if (now < pacing_time) std::this_thread::sleep_for(pacing_time - now);
         pacing_time = now + pacing_period;
