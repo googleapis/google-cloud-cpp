@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
-#include "google/cloud/pubsub/internal/emulator_overrides.h"
+#include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/grpc_error_delegate.h"
 
 namespace google {
@@ -124,17 +124,9 @@ class DefaultPublisherStub : public PublisherStub {
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
     pubsub::ConnectionOptions options, int channel_id) {
-  options = EmulatorOverrides(std::move(options));
-  auto channel_arguments = options.CreateChannelArguments();
-  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
-  // its value here to allow compiling against older versions.
-  channel_arguments.SetInt("grpc.channel_id", channel_id);
-
-  auto grpc_stub = google::pubsub::v1::Publisher::NewStub(
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                std::move(channel_arguments)));
-
-  return std::make_shared<DefaultPublisherStub>(std::move(grpc_stub));
+  return std::make_shared<DefaultPublisherStub>(
+      google::pubsub::v1::Publisher::NewStub(
+          CreateChannel(std::move(options), channel_id)));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
