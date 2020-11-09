@@ -112,6 +112,7 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    internal/absl_flat_hash_map_quiet.h
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
@@ -173,8 +174,8 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
-                                   Threads::Threads)
+    google_cloud_cpp_common PUBLIC absl::flat_hash_map absl::memory
+                                   absl::optional absl::time Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

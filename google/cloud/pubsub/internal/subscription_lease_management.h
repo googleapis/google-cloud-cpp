@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/version.h"
-#include "absl/container/flat_hash_map.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include <chrono>
 #include <memory>
 

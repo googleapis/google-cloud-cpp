@@ -14,9 +14,9 @@
 
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "absl/container/flat_hash_map.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>

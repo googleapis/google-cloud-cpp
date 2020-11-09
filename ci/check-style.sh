@@ -77,6 +77,7 @@ time {
     grep -zE '\.(h|cc)$' |
     while IFS= read -r -d $'\0' file; do
       sed -e 's;#include "absl/strings/str_\(cat\|replace\|join\).h";#include "google/cloud/internal/absl_str_\1_quiet.h";' \
+        -e 's;#include "absl/container/\(flat_hash_map\).h";#include "google/cloud/internal/absl_\1_quiet.h";' \
         "${file}" >"${file}.tmp"
       replace_original_if_changed "${file}" "${file}.tmp"
     done
