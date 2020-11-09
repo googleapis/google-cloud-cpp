@@ -110,9 +110,10 @@ start_testbench() {
   local grpc_port=""
   grpc_port=$(curl -s --retry 5 --retry-max-time 40 "http://localhost:${testbench_port}/start_grpc?port=${port}")
 
-  if [[ "$grpc_port" -eq "$grpc_port" ]]; then
+  if [ "${grpc_port}" -eq "${grpc_port}" ] 2>/dev/null; then
     echo "Successfully connected to gRPC server at port ${grpc_port}"
   else
+    echo "${IO_COLOR_RED}${grpc_port} must be an integer" >&2
     echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_COLOR_RESET}" >&2
     cat testbench.log
     exit 1
