@@ -218,12 +218,14 @@ std::string FormatClassCommentsFromServiceComments(
   if (service.GetSourceLocation(&service_source_location) &&
       !service_source_location.leading_comments.empty()) {
     return absl::StrReplaceAll(
-        absl::StrCat(
-            "/**\n *",
-            absl::StrReplaceAll(service_source_location.leading_comments,
-                                {{"\n", "\n * "}}),
-            "\n", " */"),
-        {{"*  ", "* "}});
+        absl::StrReplaceAll(
+            absl::StrCat(
+                "/**\n *",
+                absl::StrReplaceAll(service_source_location.leading_comments,
+                                    {{"\n", "\n * "}}),
+                "\n", " */"),
+            {{"*  ", "* "}}),
+        {{"* \n", "*\n"}});
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
                  << " no leading_comments to format.\n";
@@ -266,11 +268,13 @@ std::string FormatMethodCommentsFromRpcComments(
       parameter_comment_string +=
           absl::StrFormat("   * @param %s %s\n", param.first, param.second);
     }
-    return absl::StrCat(
-        "/**\n   *",
-        absl::StrReplaceAll(method_source_location.leading_comments,
-                            {{"\n", "\n   *"}}),
-        "\n", parameter_comment_string, "   */\n");;
+    return absl::StrReplaceAll(
+        absl::StrCat(
+            "/**\n   *",
+            absl::StrReplaceAll(method_source_location.leading_comments,
+                                {{"\n", "\n   *"}}),
+            "\n", parameter_comment_string, "   */\n"),
+        {{"* \n", "*\n"}});
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                  << " no leading_comments to format.\n";
