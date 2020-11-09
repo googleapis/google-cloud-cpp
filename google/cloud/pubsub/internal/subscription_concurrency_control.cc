@@ -24,10 +24,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 class AckHandlerImpl : public pubsub::AckHandler::Impl {
  public:
-  explicit AckHandlerImpl(
-      std::shared_ptr<SubscriptionConcurrencyControl> const& source,
-      std::string ack_id, std::int32_t delivery_attempt)
-      : source_(source),
+  explicit AckHandlerImpl(std::weak_ptr<SubscriptionConcurrencyControl> w,
+                          std::string ack_id, std::int32_t delivery_attempt)
+      : source_(std::move(w)),
         ack_id_(std::move(ack_id)),
         delivery_attempt_(delivery_attempt) {}
   ~AckHandlerImpl() override = default;
@@ -98,24 +97,25 @@ void SubscriptionConcurrencyControl::OnMessage(
   lk.unlock();
 
   struct MoveCapture {
-    std::shared_ptr<SessionShutdownManager> shutdown_manager;
-    pubsub::ApplicationCallback callback;
-    pubsub::Message m;
-    std::unique_ptr<AckHandlerImpl> h;
+    std::weak_ptr<SubscriptionConcurrencyControl> w;
+    google::pubsub::v1::ReceivedMessage m;
     void operator()() {
-      shutdown_manager->StartOperation("OnMessage/callback", "handler", [&] {
-        callback(std::move(m), pubsub::AckHandler(std::move(h)));
-      });
-      shutdown_manager->FinishedOperation("callback");
+      if (auto s = w.lock()) s->OnMessageAsync(std::move(m), std::move(w));
     }
   };
-  auto handler = absl::make_unique<AckHandlerImpl>(
-      shared_from_this(), std::move(*m.mutable_ack_id()), m.delivery_attempt());
-  auto message = FromProto(std::move(*m.mutable_message()));
   shutdown_manager_->StartAsyncOperation(
-      __func__, "callback", cq_,
-      MoveCapture{shutdown_manager_, callback_, std::move(message),
-                  std::move(handler)});
+      __func__, "callback", cq_, MoveCapture{shared_from_this(), std::move(m)});
+}
+
+void SubscriptionConcurrencyControl::OnMessageAsync(
+    google::pubsub::v1::ReceivedMessage m,
+    std::weak_ptr<SubscriptionConcurrencyControl> w) {
+  shutdown_manager_->StartOperation(__func__, "handler", [&] {
+    pubsub::AckHandler h(absl::make_unique<AckHandlerImpl>(
+        std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt()));
+    callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
+  });
+  shutdown_manager_->FinishedOperation("callback");
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
