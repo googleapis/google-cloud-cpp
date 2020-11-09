@@ -12,10 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Tests entry"""
+py_test(
+    name = "test_gcs",
+    size = "small",
+    srcs = ["tests/test_gcs.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
+    imports = ["."],
+    main = "tests/test_gcs.py",
+)
 
-from tests import test_gcs, test_utils
-
-if __name__ == "__main__":
-    test_utils.run()
-    test_gcs.run()
+py_test(
+    name = "test_utils",
+    size = "small",
+    srcs = ["tests/test_utils.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
+    imports = ["."],
+    main = "tests/test_utils.py",
+)
