@@ -78,7 +78,6 @@ def google_cloud_cpp_deps():
                 "https://github.com/googleapis/googleapis/archive/spanner_commit_stats.tar.gz",
             ],
             strip_prefix = "googleapis-spanner_commit_stats",
-            sha256 = "198b878c673acbce48335b6de7575ff658106d75bb1b0616a0e0f27402a90356",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
