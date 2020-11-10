@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/generator.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
@@ -67,7 +68,7 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
   for (auto& t : tasks) {
     auto result = t.get();
     if (!result.ok()) {
-      error_message += result.message();
+      absl::StrAppend(&error_message, result.message(), "\n");
     }
   }
 
