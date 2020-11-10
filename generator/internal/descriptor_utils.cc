@@ -213,7 +213,7 @@ std::string DefaultIdempotencyFromHttpOperation(
 }
 
 std::string ChompByValue(std::string const& s) {
-  return (s[s.size() - 1] == '\n') ? s.substr(0, s.size() - 1) : s;
+  return (!s.empty() && s.back() == '\n') ? s.substr(0, s.size() - 1) : s;
 }
 
 std::string FormatClassCommentsFromServiceComments(
