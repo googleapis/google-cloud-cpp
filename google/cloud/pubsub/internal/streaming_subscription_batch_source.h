@@ -37,6 +37,28 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+/**
+ * Configuration parameters to batch Ack/Nack responses.
+ *
+ * To minimize I/O overhead we batch the Ack/Nack responses from the application
+ * into larger `Write()` requests. Some test set these numbers to different
+ * values, and in the future we may expose them to the application via
+ * `pubsub::SubscriberOptions`. For now they are only available in
+ * `pubsub_internal` because it is always easy to add new APIs later vs.
+ * removing these any APIs or accessors.
+ */
+struct AckBatchingConfig {
+  AckBatchingConfig() = default;
+  AckBatchingConfig(std::size_t s, std::chrono::milliseconds t)
+      : max_batch_size(s), max_hold_time(t) {}
+
+  // The defaults are biased towards high-throughput applications. Note that
+  // the max_hold_time is small enough that it should not make a big difference,
+  // the minimum ack deadline is 10 seconds.
+  std::size_t max_batch_size = 1000;
+  std::chrono::milliseconds max_hold_time{100};
+};
+
 class StreamingSubscriptionBatchSource
     : public SubscriptionBatchSource,
       public std::enable_shared_from_this<StreamingSubscriptionBatchSource> {
@@ -47,7 +69,8 @@ class StreamingSubscriptionBatchSource
       std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
       std::string client_id, pubsub::SubscriberOptions const& options,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy)
+      std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy,
+      AckBatchingConfig ack_batching_config = {})
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         stub_(std::move(stub)),
@@ -57,7 +80,8 @@ class StreamingSubscriptionBatchSource
         max_outstanding_bytes_(options.max_outstanding_bytes()),
         max_deadline_time_(options.max_deadline_time()),
         retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        backoff_policy_(std::move(backoff_policy)),
+        ack_batching_config_(std::move(ack_batching_config)) {}
 
   ~StreamingSubscriptionBatchSource() override = default;
 
@@ -71,7 +95,6 @@ class StreamingSubscriptionBatchSource
                     std::chrono::seconds extension) override;
 
   using AsyncPullStream = SubscriberStub::AsyncPullStream;
-  using StreamShptr = std::shared_ptr<AsyncPullStream>;
 
   enum class StreamState {
     kNull,
@@ -117,8 +140,11 @@ class StreamingSubscriptionBatchSource
   void ShutdownStream(std::unique_lock<std::mutex> lk, char const* reason);
   void OnFinish(Status status);
 
-  void DrainQueues(std::unique_lock<std::mutex>);
+  void DrainQueues(std::unique_lock<std::mutex> lk, bool force_flush);
   void OnWrite(bool ok);
+
+  void StartWriteTimer();
+  void OnWriteTimer(Status const&);
 
   void ChangeState(std::unique_lock<std::mutex> const& lk, StreamState s,
                    char const* where, char const* reason);
@@ -133,6 +159,7 @@ class StreamingSubscriptionBatchSource
   std::chrono::seconds const max_deadline_time_;
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
+  AckBatchingConfig const ack_batching_config_;
 
   std::mutex mu_;
   BatchCallback callback_;
