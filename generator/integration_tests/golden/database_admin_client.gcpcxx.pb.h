@@ -31,111 +31,511 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
+/**
+ * Cloud Test Database Admin API
+ *
+ * The Cloud Test Database Admin API can be used to create, drop, and
+ * list databases. It also enables updating the schema of pre-existing
+ * databases. It can be also used to create, delete and list backups for a
+ * database and to restore from an existing backup.
+ */
 class DatabaseAdminClient {
  public:
   explicit DatabaseAdminClient(ConnectionOptions const& options = ConnectionOptions());
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection);
   ~DatabaseAdminClient();
 
+  /**
+   * Lists Cloud Test databases.
+   *
+   * @param parent  Required. The instance whose databases should be listed.
+   *  Values are of the form `projects/<project>/instances/<instance>`.
+   */
   ListDatabasesRange
   ListDatabases(std::string const& parent);
 
+  /**
+   * Creates a new Cloud Test database and starts to prepare it for serving.
+   * The returned [long-running operation][google.longrunning.Operation] will
+   * have a name of the format `<database_name>/operations/<operation_id>` and
+   * can be used to track preparation of the database. The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata]. The
+   * [response][google.longrunning.Operation.response] field type is
+   * [Database][google.test.admin.database.v1.Database], if successful.
+   *
+   * @param parent  Required. The name of the instance that will serve the new database.
+   *  Values are of the form `projects/<project>/instances/<instance>`.
+   * @param create_statement  Required. A `CREATE DATABASE` statement, which specifies the ID of the
+   *  new database.  The database ID must conform to the regular expression
+   *  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
+   *  If the database ID is a reserved word or if it contains a hyphen, the
+   *  database ID must be enclosed in backticks (`` ` ``).
+   */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement);
 
+  /**
+   * Gets the state of a Cloud Test database.
+   *
+   * @param name  Required. The name of the requested database. Values are of the form
+   *  `projects/<project>/instances/<instance>/databases/<database>`.
+   */
   StatusOr<::google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name);
 
+  /**
+   * Updates the schema of a Cloud Test database by
+   * creating/altering/dropping tables, columns, indexes, etc. The returned
+   * [long-running operation][google.longrunning.Operation] will have a name of
+   * the format `<database_name>/operations/<operation_id>` and can be used to
+   * track execution of the schema change(s). The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
+   *
+   * @param database  Required. The database to update.
+   * @param statements  Required. DDL statements to be applied to the database.
+   */
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements);
 
+  /**
+   * Drops (aka deletes) a Cloud Test database.
+   * Completed backups for the database will be retained according to their
+   * `expire_time`.
+   *
+   * @param database  Required. The database to be dropped.
+   */
   Status
   DropDatabase(std::string const& database);
 
+  /**
+   * Returns the schema of a Cloud Test database as a list of formatted
+   * DDL statements. This method does not show pending schema updates, those may
+   * be queried using the [Operations][google.longrunning.Operations] API.
+   *
+   * @param database  Required. The database whose schema we wish to get.
+   */
   StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
 
+  /**
+   * Sets the access control policy on a database or backup resource.
+   * Replaces any existing policy.
+   *
+   * Authorization requires `test.databases.setIamPolicy`
+   * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+   * For backups, authorization requires `test.backups.setIamPolicy`
+   * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+   *
+   * @param resource  REQUIRED: The resource for which the policy is being specified.
+   *  See the operation documentation for the appropriate value for this field.
+   * @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
+   *  the policy is limited to a few 10s of KB. An empty policy is a
+   *  valid policy but certain Cloud Platform services (such as Projects)
+   *  might reject them.
+   */
   StatusOr<::google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, ::google::iam::v1::Policy const& policy);
 
+  /**
+   * Gets the access control policy for a database or backup resource.
+   * Returns an empty policy if a database or backup exists but does not have a
+   * policy set.
+   *
+   * Authorization requires `test.databases.getIamPolicy` permission on
+   * [resource][google.iam.v1.GetIamPolicyRequest.resource].
+   * For backups, authorization requires `test.backups.getIamPolicy`
+   * permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
+   *
+   * @param resource  REQUIRED: The resource for which the policy is being requested.
+   *  See the operation documentation for the appropriate value for this field.
+   */
   StatusOr<::google::iam::v1::Policy>
   GetIamPolicy(std::string const& resource);
 
+  /**
+   * Returns permissions that the caller has on the specified database or backup
+   * resource.
+   *
+   * Attempting this RPC on a non-existent Cloud Test database will
+   * result in a NOT_FOUND error if the user has
+   * `test.databases.list` permission on the containing Cloud
+   * Test instance. Otherwise returns an empty set of permissions.
+   * Calling this method on a backup that does not exist will
+   * result in a NOT_FOUND error if the user has
+   * `test.backups.list` permission on the containing instance.
+   *
+   * @param resource  REQUIRED: The resource for which the policy detail is being requested.
+   *  See the operation documentation for the appropriate value for this field.
+   * @param permissions  The set of permissions to check for the `resource`. Permissions with
+   *  wildcards (such as '*' or 'storage.*') are not allowed. For more
+   *  information see
+   *  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
+   */
   StatusOr<::google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions);
 
+  /**
+   * Starts creating a new Cloud Test Backup.
+   * The returned backup [long-running operation][google.longrunning.Operation]
+   * will have a name of the format
+   * `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
+   * and can be used to track creation of the backup. The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. The
+   * [response][google.longrunning.Operation.response] field type is
+   * [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling the returned operation will stop the
+   * creation and delete the backup.
+   * There can be only one pending backup creation per database. Backup creation
+   * of different databases can run concurrently.
+   *
+   * @param parent  Required. The name of the instance in which the backup will be
+   *  created. This must be the same instance that contains the database the
+   *  backup will be created from. The backup will be stored in the
+   *  location(s) specified in the instance configuration of this
+   *  instance. Values are of the form
+   *  `projects/<project>/instances/<instance>`.
+   * @param backup  Required. The backup to create.
+   * @param backup_id  Required. The id of the backup to be created. The `backup_id` appended to
+   *  `parent` forms the full backup name of the form
+   *  `projects/<project>/instances/<instance>/backups/<backup_id>`.
+   */
   future<StatusOr<::google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, ::google::test::admin::database::v1::Backup const& backup, std::string const& backup_id);
 
+  /**
+   * Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param name  Required. Name of the backup.
+   *  Values are of the form
+   *  `projects/<project>/instances/<instance>/backups/<backup>`.
+   */
   StatusOr<::google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name);
 
+  /**
+   * Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param backup  Required. The backup to update. `backup.name`, and the fields to be updated
+   *  as specified by `update_mask` are required. Other fields are ignored.
+   *  Update is only supported for the following fields:
+   *   * `backup.expire_time`.
+   * @param update_mask  Required. A mask specifying which fields (e.g. `expire_time`) in the
+   *  Backup resource should be updated. This mask is relative to the Backup
+   *  resource, not to the request message. The field mask must always be
+   *  specified; this prevents any future fields from being erased accidentally
+   *  by clients that do not know about them.
+   */
   StatusOr<::google::test::admin::database::v1::Backup>
   UpdateBackup(::google::test::admin::database::v1::Backup const& backup, ::google::protobuf::FieldMask const& update_mask);
 
+  /**
+   * Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param name  Required. Name of the backup to delete.
+   *  Values are of the form
+   *  `projects/<project>/instances/<instance>/backups/<backup>`.
+   */
   Status
   DeleteBackup(std::string const& name);
 
+  /**
+   * Lists completed and pending backups.
+   * Backups returned are ordered by `create_time` in descending order,
+   * starting from the most recent `create_time`.
+   *
+   * @param parent  Required. The instance to list backups from.  Values are of the
+   *  form `projects/<project>/instances/<instance>`.
+   */
   ListBackupsRange
   ListBackups(std::string const& parent);
 
+  /**
+   * Create a new database by restoring from a completed backup. The new
+   * database must be in the same project and in an instance with the same
+   * instance configuration as the instance containing
+   * the backup. The returned database [long-running
+   * operation][google.longrunning.Operation] has a name of the format
+   * `projects/<project>/instances/<instance>/databases/<database>/operations/<operation_id>`,
+   * and can be used to track the progress of the operation, and to cancel it.
+   * The [metadata][google.longrunning.Operation.metadata] field type is
+   * [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata].
+   * The [response][google.longrunning.Operation.response] type
+   * is [Database][google.test.admin.database.v1.Database], if
+   * successful. Cancelling the returned operation will stop the restore and
+   * delete the database.
+   * There can be only one database being restored into an instance at a time.
+   * Once the restore operation completes, a new restore operation can be
+   * initiated, without waiting for the optimize operation associated with the
+   * first restore to complete.
+   *
+   * @param parent  Required. The name of the instance in which to create the
+   *  restored database. This instance must be in the same project and
+   *  have the same instance configuration as the instance containing
+   *  the source backup. Values are of the form
+   *  `projects/<project>/instances/<instance>`.
+   * @param database_id  Required. The id of the database to create and restore to. This
+   *  database must not already exist. The `database_id` appended to
+   *  `parent` forms the full database name of the form
+   *  `projects/<project>/instances/<instance>/databases/<database_id>`.
+   * @param backup  Name of the backup from which to restore.  Values are of the form
+   *  `projects/<project>/instances/<instance>/backups/<backup>`.
+   */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup);
 
+  /**
+   * Lists database [longrunning-operations][google.longrunning.Operation].
+   * A database operation has a name of the form
+   * `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
+   * The long-running operation
+   * [metadata][google.longrunning.Operation.metadata] field type
+   * `metadata.type_url` describes the type of the metadata. Operations returned
+   * include those that have completed/failed/canceled within the last 7 days,
+   * and pending operations.
+   *
+   * @param parent  Required. The instance of the database operations.
+   *  Values are of the form `projects/<project>/instances/<instance>`.
+   */
   ListDatabaseOperationsRange
   ListDatabaseOperations(std::string const& parent);
 
+  /**
+   * Lists the backup [long-running operations][google.longrunning.Operation] in
+   * the given instance. A backup operation has a name of the form
+   * `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
+   * The long-running operation
+   * [metadata][google.longrunning.Operation.metadata] field type
+   * `metadata.type_url` describes the type of the metadata. Operations returned
+   * include those that have completed/failed/canceled within the last 7 days,
+   * and pending operations. Operations returned are ordered by
+   * `operation.metadata.value.progress.start_time` in descending order starting
+   * from the most recently started operation.
+   *
+   * @param parent  Required. The instance of the backup operations. Values are of
+   *  the form `projects/<project>/instances/<instance>`.
+   */
   ListBackupOperationsRange
   ListBackupOperations(std::string const& parent);
 
+  /**
+   * Lists Cloud Test databases.
+   *
+   * @param request `::google::test::admin::database::v1::ListDatabasesRequest`
+   */
   ListDatabasesRange
   ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request);
 
+  /**
+   * Creates a new Cloud Test database and starts to prepare it for serving.
+   * The returned [long-running operation][google.longrunning.Operation] will
+   * have a name of the format `<database_name>/operations/<operation_id>` and
+   * can be used to track preparation of the database. The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [CreateDatabaseMetadata][google.test.admin.database.v1.CreateDatabaseMetadata]. The
+   * [response][google.longrunning.Operation.response] field type is
+   * [Database][google.test.admin.database.v1.Database], if successful.
+   *
+   * @param request `::google::test::admin::database::v1::CreateDatabaseRequest`
+   */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request);
 
+  /**
+   * Gets the state of a Cloud Test database.
+   *
+   * @param request `::google::test::admin::database::v1::GetDatabaseRequest`
+   */
   StatusOr<::google::test::admin::database::v1::Database>
   GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request);
 
+  /**
+   * Updates the schema of a Cloud Test database by
+   * creating/altering/dropping tables, columns, indexes, etc. The returned
+   * [long-running operation][google.longrunning.Operation] will have a name of
+   * the format `<database_name>/operations/<operation_id>` and can be used to
+   * track execution of the schema change(s). The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
+   *
+   * @param request `::google::test::admin::database::v1::UpdateDatabaseDdlRequest`
+   */
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
+  /**
+   * Drops (aka deletes) a Cloud Test database.
+   * Completed backups for the database will be retained according to their
+   * `expire_time`.
+   *
+   * @param request `::google::test::admin::database::v1::DropDatabaseRequest`
+   */
   Status
   DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request);
 
+  /**
+   * Returns the schema of a Cloud Test database as a list of formatted
+   * DDL statements. This method does not show pending schema updates, those may
+   * be queried using the [Operations][google.longrunning.Operations] API.
+   *
+   * @param request `::google::test::admin::database::v1::GetDatabaseDdlRequest`
+   */
   StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
 
+  /**
+   * Sets the access control policy on a database or backup resource.
+   * Replaces any existing policy.
+   *
+   * Authorization requires `test.databases.setIamPolicy`
+   * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+   * For backups, authorization requires `test.backups.setIamPolicy`
+   * permission on [resource][google.iam.v1.SetIamPolicyRequest.resource].
+   *
+   * @param request `::google::iam::v1::SetIamPolicyRequest`
+   */
   StatusOr<::google::iam::v1::Policy>
   SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const& request);
 
+  /**
+   * Gets the access control policy for a database or backup resource.
+   * Returns an empty policy if a database or backup exists but does not have a
+   * policy set.
+   *
+   * Authorization requires `test.databases.getIamPolicy` permission on
+   * [resource][google.iam.v1.GetIamPolicyRequest.resource].
+   * For backups, authorization requires `test.backups.getIamPolicy`
+   * permission on [resource][google.iam.v1.GetIamPolicyRequest.resource].
+   *
+   * @param request `::google::iam::v1::GetIamPolicyRequest`
+   */
   StatusOr<::google::iam::v1::Policy>
   GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const& request);
 
+  /**
+   * Returns permissions that the caller has on the specified database or backup
+   * resource.
+   *
+   * Attempting this RPC on a non-existent Cloud Test database will
+   * result in a NOT_FOUND error if the user has
+   * `test.databases.list` permission on the containing Cloud
+   * Test instance. Otherwise returns an empty set of permissions.
+   * Calling this method on a backup that does not exist will
+   * result in a NOT_FOUND error if the user has
+   * `test.backups.list` permission on the containing instance.
+   *
+   * @param request `::google::iam::v1::TestIamPermissionsRequest`
+   */
   StatusOr<::google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const& request);
 
+  /**
+   * Starts creating a new Cloud Test Backup.
+   * The returned backup [long-running operation][google.longrunning.Operation]
+   * will have a name of the format
+   * `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation_id>`
+   * and can be used to track creation of the backup. The
+   * [metadata][google.longrunning.Operation.metadata] field type is
+   * [CreateBackupMetadata][google.test.admin.database.v1.CreateBackupMetadata]. The
+   * [response][google.longrunning.Operation.response] field type is
+   * [Backup][google.test.admin.database.v1.Backup], if successful. Cancelling the returned operation will stop the
+   * creation and delete the backup.
+   * There can be only one pending backup creation per database. Backup creation
+   * of different databases can run concurrently.
+   *
+   * @param request `::google::test::admin::database::v1::CreateBackupRequest`
+   */
   future<StatusOr<::google::test::admin::database::v1::Backup>>
   CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const& request);
 
+  /**
+   * Gets metadata on a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param request `::google::test::admin::database::v1::GetBackupRequest`
+   */
   StatusOr<::google::test::admin::database::v1::Backup>
   GetBackup(::google::test::admin::database::v1::GetBackupRequest const& request);
 
+  /**
+   * Updates a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param request `::google::test::admin::database::v1::UpdateBackupRequest`
+   */
   StatusOr<::google::test::admin::database::v1::Backup>
   UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const& request);
 
+  /**
+   * Deletes a pending or completed [Backup][google.test.admin.database.v1.Backup].
+   *
+   * @param request `::google::test::admin::database::v1::DeleteBackupRequest`
+   */
   Status
   DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request);
 
+  /**
+   * Lists completed and pending backups.
+   * Backups returned are ordered by `create_time` in descending order,
+   * starting from the most recent `create_time`.
+   *
+   * @param request `::google::test::admin::database::v1::ListBackupsRequest`
+   */
   ListBackupsRange
   ListBackups(::google::test::admin::database::v1::ListBackupsRequest request);
 
+  /**
+   * Create a new database by restoring from a completed backup. The new
+   * database must be in the same project and in an instance with the same
+   * instance configuration as the instance containing
+   * the backup. The returned database [long-running
+   * operation][google.longrunning.Operation] has a name of the format
+   * `projects/<project>/instances/<instance>/databases/<database>/operations/<operation_id>`,
+   * and can be used to track the progress of the operation, and to cancel it.
+   * The [metadata][google.longrunning.Operation.metadata] field type is
+   * [RestoreDatabaseMetadata][google.test.admin.database.v1.RestoreDatabaseMetadata].
+   * The [response][google.longrunning.Operation.response] type
+   * is [Database][google.test.admin.database.v1.Database], if
+   * successful. Cancelling the returned operation will stop the restore and
+   * delete the database.
+   * There can be only one database being restored into an instance at a time.
+   * Once the restore operation completes, a new restore operation can be
+   * initiated, without waiting for the optimize operation associated with the
+   * first restore to complete.
+   *
+   * @param request `::google::test::admin::database::v1::RestoreDatabaseRequest`
+   */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
+  /**
+   * Lists database [longrunning-operations][google.longrunning.Operation].
+   * A database operation has a name of the form
+   * `projects/<project>/instances/<instance>/databases/<database>/operations/<operation>`.
+   * The long-running operation
+   * [metadata][google.longrunning.Operation.metadata] field type
+   * `metadata.type_url` describes the type of the metadata. Operations returned
+   * include those that have completed/failed/canceled within the last 7 days,
+   * and pending operations.
+   *
+   * @param request `::google::test::admin::database::v1::ListDatabaseOperationsRequest`
+   */
   ListDatabaseOperationsRange
   ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request);
 
+  /**
+   * Lists the backup [long-running operations][google.longrunning.Operation] in
+   * the given instance. A backup operation has a name of the form
+   * `projects/<project>/instances/<instance>/backups/<backup>/operations/<operation>`.
+   * The long-running operation
+   * [metadata][google.longrunning.Operation.metadata] field type
+   * `metadata.type_url` describes the type of the metadata. Operations returned
+   * include those that have completed/failed/canceled within the last 7 days,
+   * and pending operations. Operations returned are ordered by
+   * `operation.metadata.value.progress.start_time` in descending order starting
+   * from the most recently started operation.
+   *
+   * @param request `::google::test::admin::database::v1::ListBackupOperationsRequest`
+   */
   ListBackupOperationsRange
   ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request);
 

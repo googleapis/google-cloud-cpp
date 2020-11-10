@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/client_generator.h"
@@ -210,13 +211,87 @@ std::string DefaultIdempotencyFromHttpOperation(
       std::exit(1);
   }
 }
+
+std::string ChompByValue(std::string const& s) {
+  return (!s.empty() && s.back() == '\n') ? s.substr(0, s.size() - 1) : s;
+}
+
+std::string FormatClassCommentsFromServiceComments(
+    google::protobuf::ServiceDescriptor const& service) {
+  google::protobuf::SourceLocation service_source_location;
+  if (service.GetSourceLocation(&service_source_location) &&
+      !service_source_location.leading_comments.empty()) {
+    std::string chomped_leading_comments =
+        ChompByValue(service_source_location.leading_comments);
+    std::string doxygen_formatted_comments = absl::StrCat(
+        "/**\n *",
+        absl::StrReplaceAll(chomped_leading_comments,
+                            {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
+        "\n */");
+    return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
+  }
+  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
+                 << " no leading_comments to format.\n";
+  return {};
+}
+
+enum class MethodParameterStyle { kApiMethodSignature, kProtobufReqeust };
+
+std::string FormatMethodCommentsFromRpcComments(
+    google::protobuf::MethodDescriptor const& method,
+    MethodParameterStyle parameter_style) {
+  google::protobuf::SourceLocation method_source_location;
+  if (method.GetSourceLocation(&method_source_location) &&
+      !method_source_location.leading_comments.empty()) {
+    std::vector<std::pair<std::string, std::string>> parameter_comments;
+    if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
+      auto method_signature_extension =
+          method.options().GetRepeatedExtension(google::api::method_signature);
+      for (auto const& signature : method_signature_extension) {
+        google::protobuf::Descriptor const* input_type = method.input_type();
+        std::vector<std::string> parameters = absl::StrSplit(signature, ",");
+        for (auto const& parameter : parameters) {
+          google::protobuf::FieldDescriptor const* parameter_descriptor =
+              input_type->FindFieldByName(parameter);
+          google::protobuf::SourceLocation loc;
+          parameter_descriptor->GetSourceLocation(&loc);
+          std::string chomped_parameter = ChompByValue(loc.leading_comments);
+          parameter_comments.emplace_back(
+              parameter,
+              absl::StrReplaceAll(chomped_parameter, {{"\n\n", "\n   *\n   * "},
+                                                      {"\n", "\n   * "}}));
+        }
+      }
+    } else {
+      google::protobuf::Descriptor const* input_type = method.input_type();
+      parameter_comments.emplace_back(
+          "request",
+          absl::StrCat("`", ProtoNameToCppName(input_type->full_name()), "`"));
+    }
+
+    std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
+        method_source_location.leading_comments, {{"\n", "\n   *"}});
+
+    std::string parameter_comment_string;
+    for (auto const& param : parameter_comments) {
+      parameter_comment_string +=
+          absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+    }
+    return absl::StrCat("/**\n   *", doxygen_formatted_function_comments, "\n",
+                        parameter_comment_string, "   */");
+  }
+  GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
+                 << " no leading_comments to format.\n";
+  return {};
+}
 }  // namespace
 
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
-  vars["class_comment_block"] = "// TODO: pull in comments";
+  vars["class_comment_block"] =
+      FormatClassCommentsFromServiceComments(descriptor);
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
   vars["client_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()), "_client",
@@ -299,6 +374,11 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
+    method_vars["method_signature_comment_block"] =
+        FormatMethodCommentsFromRpcComments(
+            method, MethodParameterStyle::kApiMethodSignature);
+    method_vars["request_comment_block"] = FormatMethodCommentsFromRpcComments(
+        method, MethodParameterStyle::kProtobufReqeust);
     method_vars["default_idempotency"] =
         DefaultIdempotencyFromHttpOperation(method);
     method_vars["method_name"] = method.name();

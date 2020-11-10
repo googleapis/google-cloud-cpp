@@ -67,7 +67,6 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
-        std::make_pair("class_comment_block", "// TODO: pull in comments"),
         std::make_pair("client_class_name", "FrobberServiceClient"),
         std::make_pair("client_cc_path",
                        "google/cloud/frobber/"
