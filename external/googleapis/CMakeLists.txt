@@ -21,8 +21,6 @@ cmake_minimum_required(VERSION 3.5)
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
     "https://github.com/googleapis/googleapis/archive/spanner_cmek_and_pitr_lite.tar.gz"
 )
-set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "ef6f78f8823812a92c714eda2379177c72f154c9143119bca67e724bf98321c5")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -96,7 +94,6 @@ ExternalProject_Add(
     EXCLUDE_FROM_ALL ON
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
-    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
