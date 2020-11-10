@@ -359,7 +359,7 @@ void StreamingSubscriptionBatchSource::StartWriteTimer() {
 void StreamingSubscriptionBatchSource::OnWriteTimer(Status const& s) {
   if (!s.ok()) return;
   std::unique_lock<std::mutex> lk(mu_);
-  DrainQueues(std::move(lk), 1);
+  DrainQueues(std::move(lk), true);
   StartWriteTimer();
 }
 
