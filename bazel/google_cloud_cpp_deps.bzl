@@ -78,7 +78,6 @@ def google_cloud_cpp_deps():
                 "https://github.com/googleapis/googleapis/archive/spanner_cmek_and_pitr_lite.tar.gz",
             ],
             strip_prefix = "googleapis-spanner_cmek_and_pitr_lite",
-            sha256 = "ef6f78f8823812a92c714eda2379177c72f154c9143119bca67e724bf98321c5",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
