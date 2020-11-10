@@ -18,6 +18,7 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
 #include <google/api/client.pb.h>
+#include <future>
 #include <string>
 #include <vector>
 
@@ -54,14 +55,25 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
         file->service(i), context, *command_line_args));
   }
 
-  for (auto const& class_generators : services) {
-    for (auto const& c : class_generators) {
-      auto result = c->Generate();
-      if (!result.ok()) {
-        *error = result.message();
-        return false;
-      }
+  std::vector<std::future<Status>> tasks;
+  for (auto const& code_generators : services) {
+    for (auto const& c : code_generators) {
+      tasks.push_back(
+          std::async(std::launch::async, [&c]() { return c->Generate(); }));
     }
+  }
+
+  std::string error_message;
+  for (auto& t : tasks) {
+    auto result = t.get();
+    if (!result.ok()) {
+      error_message += result.message();
+    }
+  }
+
+  if (!error_message.empty()) {
+    *error = error_message;
+    return false;
   }
   return true;
 }
