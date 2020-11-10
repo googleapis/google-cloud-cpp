@@ -75,10 +75,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/370e9f9ac14dbc73f56e15257bccc06dfebd4196.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/spanner_commit_stats.tar.gz",
             ],
-            strip_prefix = "googleapis-370e9f9ac14dbc73f56e15257bccc06dfebd4196",
-            sha256 = "71ebb74007fd32626896fa2056c31d436c5e96774ac160482b5f25df5a90c6b9",
+            strip_prefix = "googleapis-spanner_commit_stats",
+            sha256 = "198b878c673acbce48335b6de7575ff658106d75bb1b0616a0e0f27402a90356",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
