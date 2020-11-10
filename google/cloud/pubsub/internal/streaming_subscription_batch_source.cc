@@ -27,6 +27,7 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   callback_ = std::move(callback);
   lk.unlock();
 
+  StartWriteTimer();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
     StartStream(retry_policy_->clone(), backoff_policy_->clone());
   });
@@ -43,13 +44,13 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   ack_queue_.push_back(ack_id);
-  DrainQueues(std::move(lk));
+  DrainQueues(std::move(lk), false);
 }
 
 void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   nack_queue_.push_back(ack_id);
-  DrainQueues(std::move(lk));
+  DrainQueues(std::move(lk), false);
 }
 
 void StreamingSubscriptionBatchSource::BulkNack(
@@ -58,7 +59,7 @@ void StreamingSubscriptionBatchSource::BulkNack(
   for (auto& a : ack_ids) {
     nack_queue_.push_back(std::move(a));
   }
-  DrainQueues(std::move(lk));
+  DrainQueues(std::move(lk), false);
 }
 
 void StreamingSubscriptionBatchSource::ExtendLeases(
@@ -67,7 +68,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   for (auto& a : ack_ids) {
     deadlines_queue_.emplace_back(std::move(a), extension);
   }
-  DrainQueues(std::move(lk));
+  DrainQueues(std::move(lk), false);
 }
 
 void StreamingSubscriptionBatchSource::StartStream(
@@ -298,8 +299,10 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
 }
 
 void StreamingSubscriptionBatchSource::DrainQueues(
-    std::unique_lock<std::mutex> lk) {
-  if (ack_queue_.empty() && nack_queue_.empty() && deadlines_queue_.empty()) {
+    std::unique_lock<std::mutex> lk, bool force_flush) {
+  auto const threshold = force_flush ? 1 : ack_batching_config_.max_batch_size;
+  if (ack_queue_.size() < threshold && nack_queue_.size() < threshold &&
+      deadlines_queue_.empty()) {
     return;
   }
   if (stream_state_ != StreamState::kActive || pending_write_) return;
@@ -339,10 +342,25 @@ void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   pending_write_ = false;
   if (ok && stream_state_ == StreamState::kActive && !shutdown_) {
-    DrainQueues(std::move(lk));
+    DrainQueues(std::move(lk), false);
     return;
   }
   ShutdownStream(std::move(lk), ok ? "state" : "write error");
+}
+
+void StreamingSubscriptionBatchSource::StartWriteTimer() {
+  auto weak = WeakFromThis();
+  using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {
+    if (auto self = weak.lock()) self->OnWriteTimer(f.get().status());
+  });
+}
+
+void StreamingSubscriptionBatchSource::OnWriteTimer(Status const& s) {
+  if (!s.ok()) return;
+  std::unique_lock<std::mutex> lk(mu_);
+  DrainQueues(std::move(lk), true);
+  StartWriteTimer();
 }
 
 std::ostream& operator<<(std::ostream& os,
