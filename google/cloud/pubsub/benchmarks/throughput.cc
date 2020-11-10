@@ -396,7 +396,7 @@ void PublisherTask(Config const& config) {
       });
   std::cout << "# Publisher: error_count=" << error_count
             << ", ack_count=" << ack_count << ", send_count=" << send_count
-            << ", hwm_count=" << hwm_count << ", lwm_count" << lwm_count
+            << ", hwm_count=" << hwm_count << ", lwm_count=" << lwm_count
             << std::endl;
 }
 
