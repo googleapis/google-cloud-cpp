@@ -38,7 +38,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * list databases. It also enables updating the schema of pre-existing
  * databases. It can be also used to create, delete and list backups for a
  * database and to restore from an existing backup.
- *
  */
 class DatabaseAdminClient {
  public:
@@ -51,7 +50,6 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
-   *
    */
   ListDatabasesRange
   ListDatabases(std::string const& parent);
@@ -68,13 +66,11 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The name of the instance that will serve the new database.
    *  Values are of the form `projects/<project>/instances/<instance>`.
-   *
    * @param create_statement  Required. A `CREATE DATABASE` statement, which specifies the ID of the
    *  new database.  The database ID must conform to the regular expression
    *  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
    *  If the database ID is a reserved word or if it contains a hyphen, the
    *  database ID must be enclosed in backticks (`` ` ``).
-   *
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement);
@@ -84,7 +80,6 @@ class DatabaseAdminClient {
    *
    * @param name  Required. The name of the requested database. Values are of the form
    *  `projects/<project>/instances/<instance>/databases/<database>`.
-   *
    */
   StatusOr<::google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name);
@@ -99,9 +94,7 @@ class DatabaseAdminClient {
    * [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
    *
    * @param database  Required. The database to update.
-   *
    * @param statements  Required. DDL statements to be applied to the database.
-   *
    */
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements);
@@ -112,7 +105,6 @@ class DatabaseAdminClient {
    * `expire_time`.
    *
    * @param database  Required. The database to be dropped.
-   *
    */
   Status
   DropDatabase(std::string const& database);
@@ -123,7 +115,6 @@ class DatabaseAdminClient {
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
    * @param database  Required. The database whose schema we wish to get.
-   *
    */
   StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
@@ -139,12 +130,10 @@ class DatabaseAdminClient {
    *
    * @param resource  REQUIRED: The resource for which the policy is being specified.
    *  See the operation documentation for the appropriate value for this field.
-   *
    * @param policy  REQUIRED: The complete policy to be applied to the `resource`. The size of
    *  the policy is limited to a few 10s of KB. An empty policy is a
    *  valid policy but certain Cloud Platform services (such as Projects)
    *  might reject them.
-   *
    */
   StatusOr<::google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, ::google::iam::v1::Policy const& policy);
@@ -161,7 +150,6 @@ class DatabaseAdminClient {
    *
    * @param resource  REQUIRED: The resource for which the policy is being requested.
    *  See the operation documentation for the appropriate value for this field.
-   *
    */
   StatusOr<::google::iam::v1::Policy>
   GetIamPolicy(std::string const& resource);
@@ -180,12 +168,10 @@ class DatabaseAdminClient {
    *
    * @param resource  REQUIRED: The resource for which the policy detail is being requested.
    *  See the operation documentation for the appropriate value for this field.
-   *
    * @param permissions  The set of permissions to check for the `resource`. Permissions with
    *  wildcards (such as '*' or 'storage.*') are not allowed. For more
    *  information see
    *  [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).
-   *
    */
   StatusOr<::google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions);
@@ -210,13 +196,10 @@ class DatabaseAdminClient {
    *  location(s) specified in the instance configuration of this
    *  instance. Values are of the form
    *  `projects/<project>/instances/<instance>`.
-   *
    * @param backup  Required. The backup to create.
-   *
    * @param backup_id  Required. The id of the backup to be created. The `backup_id` appended to
    *  `parent` forms the full backup name of the form
    *  `projects/<project>/instances/<instance>/backups/<backup_id>`.
-   *
    */
   future<StatusOr<::google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, ::google::test::admin::database::v1::Backup const& backup, std::string const& backup_id);
@@ -227,7 +210,6 @@ class DatabaseAdminClient {
    * @param name  Required. Name of the backup.
    *  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   *
    */
   StatusOr<::google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name);
@@ -239,13 +221,11 @@ class DatabaseAdminClient {
    *  as specified by `update_mask` are required. Other fields are ignored.
    *  Update is only supported for the following fields:
    *   * `backup.expire_time`.
-   *
    * @param update_mask  Required. A mask specifying which fields (e.g. `expire_time`) in the
    *  Backup resource should be updated. This mask is relative to the Backup
    *  resource, not to the request message. The field mask must always be
    *  specified; this prevents any future fields from being erased accidentally
    *  by clients that do not know about them.
-   *
    */
   StatusOr<::google::test::admin::database::v1::Backup>
   UpdateBackup(::google::test::admin::database::v1::Backup const& backup, ::google::protobuf::FieldMask const& update_mask);
@@ -256,7 +236,6 @@ class DatabaseAdminClient {
    * @param name  Required. Name of the backup to delete.
    *  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   *
    */
   Status
   DeleteBackup(std::string const& name);
@@ -268,7 +247,6 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance to list backups from.  Values are of the
    *  form `projects/<project>/instances/<instance>`.
-   *
    */
   ListBackupsRange
   ListBackups(std::string const& parent);
@@ -297,15 +275,12 @@ class DatabaseAdminClient {
    *  have the same instance configuration as the instance containing
    *  the source backup. Values are of the form
    *  `projects/<project>/instances/<instance>`.
-   *
    * @param database_id  Required. The id of the database to create and restore to. This
    *  database must not already exist. The `database_id` appended to
    *  `parent` forms the full database name of the form
    *  `projects/<project>/instances/<instance>/databases/<database_id>`.
-   *
    * @param backup  Name of the backup from which to restore.  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   *
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup);
@@ -322,7 +297,6 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
-   *
    */
   ListDatabaseOperationsRange
   ListDatabaseOperations(std::string const& parent);
@@ -341,7 +315,6 @@ class DatabaseAdminClient {
    *
    * @param parent  Required. The instance of the backup operations. Values are of
    *  the form `projects/<project>/instances/<instance>`.
-   *
    */
   ListBackupOperationsRange
   ListBackupOperations(std::string const& parent);

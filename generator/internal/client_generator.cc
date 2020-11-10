@@ -77,7 +77,7 @@ Status ClientGenerator::GenerateHeader() {
           method,
           {MethodPattern(
                {
-                   {"  $method_signature_comment_block$"},
+                   {"  $method_signature_comment_block$\n"},
                    {IsResponseTypeEmpty,
                     // clang-format off
                    "  Status\n",
@@ -89,7 +89,7 @@ Status ClientGenerator::GenerateHeader() {
                    Not(IsPaginated))),
            MethodPattern(
                {
-                   {"  $method_signature_comment_block$"},
+                   {"  $method_signature_comment_block$\n"},
                    {IsResponseTypeEmpty,
                     // clang-format off
                     "  future<Status>\n",
@@ -101,7 +101,7 @@ Status ClientGenerator::GenerateHeader() {
            MethodPattern(
                {
                    // clang-format off
-                   {"  $method_signature_comment_block$"
+                   {"  $method_signature_comment_block$\n"
                     "  $method_name$Range\n"},
                    {method_string},
                    // clang-format on
@@ -116,7 +116,7 @@ Status ClientGenerator::GenerateHeader() {
         method,
         {MethodPattern(
              {
-                 {"  $request_comment_block$"},
+                 {"  $request_comment_block$\n"},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -129,7 +129,7 @@ Status ClientGenerator::GenerateHeader() {
                  Not(IsPaginated))),
          MethodPattern(
              {
-                 {"  $request_comment_block$"},
+                 {"  $request_comment_block$\n"},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -142,7 +142,7 @@ Status ClientGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-                  {"  $request_comment_block$"},
+                  {"  $request_comment_block$\n"},
    {"  $method_name$Range\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on

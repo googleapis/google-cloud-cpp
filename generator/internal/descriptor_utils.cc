@@ -212,20 +212,23 @@ std::string DefaultIdempotencyFromHttpOperation(
   }
 }
 
+std::string ChompByValue(std::string const& s) {
+  return (s[s.size() - 1] == '\n') ? s.substr(0, s.size() - 1) : s;
+}
+
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service) {
   google::protobuf::SourceLocation service_source_location;
   if (service.GetSourceLocation(&service_source_location) &&
       !service_source_location.leading_comments.empty()) {
-    return absl::StrReplaceAll(
-        absl::StrReplaceAll(
-            absl::StrCat(
-                "/**\n *",
-                absl::StrReplaceAll(service_source_location.leading_comments,
-                                    {{"\n", "\n * "}}),
-                "\n", " */"),
-            {{"*  ", "* "}}),
-        {{"* \n", "*\n"}});
+    std::string chomped_leading_comments =
+        ChompByValue(service_source_location.leading_comments);
+    std::string doxygen_formatted_comments = absl::StrCat(
+        "/**\n *",
+        absl::StrReplaceAll(chomped_leading_comments,
+                            {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
+        "\n */");
+    return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
                  << " no leading_comments to format.\n";
@@ -252,9 +255,11 @@ std::string FormatMethodCommentsFromRpcComments(
               input_type->FindFieldByName(parameter);
           google::protobuf::SourceLocation loc;
           parameter_descriptor->GetSourceLocation(&loc);
+          std::string chomped_parameter = ChompByValue(loc.leading_comments);
           parameter_comments.emplace_back(
               parameter,
-              absl::StrReplaceAll(loc.leading_comments, {{"\n", "\n   * "}}));
+              absl::StrReplaceAll(chomped_parameter, {{"\n\n", "\n   *\n   * "},
+                                                      {"\n", "\n   * "}}));
         }
       }
     } else {
@@ -263,18 +268,17 @@ std::string FormatMethodCommentsFromRpcComments(
           "request",
           absl::StrCat("`", ProtoNameToCppName(input_type->full_name()), "`"));
     }
+
+    std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
+        method_source_location.leading_comments, {{"\n", "\n   *"}});
+
     std::string parameter_comment_string;
     for (auto const& param : parameter_comments) {
       parameter_comment_string +=
           absl::StrFormat("   * @param %s %s\n", param.first, param.second);
     }
-    return absl::StrReplaceAll(
-        absl::StrCat(
-            "/**\n   *",
-            absl::StrReplaceAll(method_source_location.leading_comments,
-                                {{"\n", "\n   *"}}),
-            "\n", parameter_comment_string, "   */\n"),
-        {{"* \n", "*\n"}});
+    return absl::StrCat("/**\n   *", doxygen_formatted_function_comments, "\n",
+                        parameter_comment_string, "   */");
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                  << " no leading_comments to format.\n";
