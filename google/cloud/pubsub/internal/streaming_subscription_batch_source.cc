@@ -342,7 +342,7 @@ void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   pending_write_ = false;
   if (ok && stream_state_ == StreamState::kActive && !shutdown_) {
-    DrainQueues(std::move(lk), false) ;
+    DrainQueues(std::move(lk), false);
     return;
   }
   ShutdownStream(std::move(lk), ok ? "state" : "write error");
