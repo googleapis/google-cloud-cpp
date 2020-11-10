@@ -15,6 +15,7 @@
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -28,6 +29,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ReturnRef;
@@ -66,25 +68,6 @@ class MockStub {
  public:
   MOCK_METHOD(MockReturnType, FakeRpc,
               (grpc::ClientContext*, grpc::CompletionQueue*), ());
-};
-
-class MockCompletionQueueImpl : public CompletionQueueImpl {
- public:
-  MOCK_METHOD0(Run, void());
-  MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD0(CancelAll, void());
-  MOCK_METHOD1(MakeDeadlineTimer,
-               future<StatusOr<std::chrono::system_clock::time_point>>(
-                   std::chrono::system_clock::time_point));
-  MOCK_METHOD1(MakeRelativeTimer,
-               future<StatusOr<std::chrono::system_clock::time_point>>(
-                   std::chrono::nanoseconds));
-  MOCK_METHOD1(RunAsync, void(std::unique_ptr<RunAsyncBase>));
-
-  MOCK_METHOD2(StartOperation, void(std::shared_ptr<AsyncGrpcOperation>,
-                                    absl::FunctionRef<void(void*)>));
-
-  MOCK_METHOD0(cq, grpc::CompletionQueue&());
 };
 
 TEST(AsyncReadWriteStreamingRpcTest, Basic) {
