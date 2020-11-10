@@ -21,8 +21,6 @@ cmake_minimum_required(VERSION 3.5)
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
     "https://github.com/googleapis/googleapis/archive/spanner_commit_stats.tar.gz"
 )
-set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "198b878c673acbce48335b6de7575ff658106d75bb1b0616a0e0f27402a90356")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -96,7 +94,6 @@ ExternalProject_Add(
     EXCLUDE_FROM_ALL ON
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
-    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
