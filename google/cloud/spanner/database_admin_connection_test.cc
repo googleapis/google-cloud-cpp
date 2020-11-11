@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
+#include "google/cloud/kms_key_name.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -75,7 +76,48 @@ TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
-  auto fut = conn->CreateDatabase({dbase, {}});
+  auto fut = conn->CreateDatabase({dbase, {}, absl::nullopt});
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto db = fut.get();
+  EXPECT_STATUS_OK(db);
+
+  EXPECT_EQ("test-db", db->name());
+}
+
+/// @test Verify creating a database with an encryption key.
+TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, CreateDatabase(_, _))
+      .WillOnce(
+          [](grpc::ClientContext&, gcsa::CreateDatabaseRequest const& request) {
+            EXPECT_TRUE(request.has_encryption_config());
+            EXPECT_EQ(request.encryption_config().kms_key_name(),
+                      "projects/test-project/locations/some-location/keyRings/"
+                      "a-key-ring/cryptoKeys/a-key-name");
+            google::longrunning::Operation op;
+            op.set_name("test-operation-name");
+            op.set_done(false);
+            return make_status_or(op);
+          });
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database database;
+        database.set_name("test-db");
+        op.mutable_response()->PackFrom(database);
+        return make_status_or(op);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  KmsKeyName encryption_key("test-project", "some-location", "a-key-ring",
+                            "a-key-name");
+  auto fut = conn->CreateDatabase({dbase, {}, encryption_key});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
@@ -96,7 +138,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
-  auto fut = conn->CreateDatabase({dbase, {}});
+  auto fut = conn->CreateDatabase({dbase, {}, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
@@ -289,7 +331,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseErrorInPoll) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
-  auto db = conn->CreateDatabase({dbase, {}}).get();
+  auto db = conn->CreateDatabase({dbase, {}, absl::nullopt}).get();
   EXPECT_THAT(db, StatusIs(StatusCode::kPermissionDenied));
 }
 
