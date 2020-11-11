@@ -19,11 +19,8 @@ FROM fedora:${DISTRO_VERSION}
 RUN dnf makecache && \
     dnf install -y ccache clang clang-tools-extra cmake diffutils findutils \
         gcc-c++ git libcxx-devel libcxxabi-devel libasan libubsan libtsan \
-        llvm make openssl-devel pkgconfig python3 python3.8 python3-devel \
-        python3-pip tar unzip wget which zlib-devel
-
-# Link `python` to `python3`
-RUN ln -s $(which python3) /usr/bin/python
+        llvm make openssl-devel pkgconfig python python3.8 python3-devel \
+        python-pip tar unzip wget which zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -36,7 +33,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
 RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
 RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
-    crc32c==2.1 gevent==20.9.0 gunicorn==20.0.4
+    crc32c==2.1 gunicorn==20.0.4
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
