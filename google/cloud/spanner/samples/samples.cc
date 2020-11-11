@@ -422,13 +422,43 @@ void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
 }
 
-//! [create-database]
-// [START spanner_create_database]
-// [START spanner_create_database_with_version_retention_period]
+//! [create-database] [START spanner_create_database]
 void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& database_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> extra_statements;
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX)
+      ) PRIMARY KEY (SingerId))""");
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Albums (
+          SingerId     INT64 NOT NULL,
+          AlbumId      INT64 NOT NULL,
+          AlbumTitle   STRING(MAX)
+      ) PRIMARY KEY (SingerId, AlbumId),
+          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
+  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
+      client.CreateDatabase(database, std::move(extra_statements));
+  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  if (!db) throw std::runtime_error(db.status().message());
+  std::cout << "Created database [" << database << "]\n";
+}
+//! [create-database] [END spanner_create_database]
+
+// [START spanner_create_database_with_version_retention_period]
+void CreateDatabaseWithVersionRetentionPeriod(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
   using ::google::cloud::future;
   using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
@@ -461,8 +491,6 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
   std::cout << "Database DDL is:\n" << ddl->DebugString();
 }
 // [END spanner_create_database_with_version_retention_period]
-// [END spanner_create_database]
-//! [create-database]
 
 //! [create-database-with-encryption-key]
 // [START spanner_create_database_with_encryption_key]
@@ -2984,6 +3012,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("create-database", CreateDatabase),
       {"create-database-with-encryption-key",
        CreateDatabaseWithEncryptionKeyCommand},
+      make_database_command_entry("create-database",
+                                  CreateDatabaseWithVersionRetentionPeriod),
       make_database_command_entry("create-table-with-datatypes",
                                   CreateTableWithDatatypes),
       make_database_command_entry("create-table-with-timestamp",
@@ -3305,6 +3335,15 @@ void RunAll(bool emulator) {
               << std::endl;
     CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
                                     instance_id, database_id, encryption_key);
+
+    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
+    std::cout << "\nRunning "
+              << "spanner_create_database_with_version_retention_period sample"
+              << std::endl;
+    CreateDatabaseWithVersionRetentionPeriod(database_admin_client, project_id,
+                                             instance_id, database_id);
   }
 
   std::cout << "\nRunning spanner_create_table_with_datatypes sample"
