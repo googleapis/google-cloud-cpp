@@ -47,12 +47,16 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
       admin_client, project_id, *instance_id,
       std::chrono::system_clock::now() - std::chrono::hours(48));
 
-  // TODO(#5024): Remove these checks when the emulator supports NUMERIC.
   bool const emulator =
       google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
 
   std::cout << "Creating database and table " << std::flush;
   std::vector<std::string> extra_statements;
+  if (!emulator) {
+    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                               "SET OPTIONS (version_retention_period='2h')");
+  }
   extra_statements.emplace_back(R"sql(
         CREATE TABLE Singers (
           SingerId   INT64 NOT NULL,
@@ -72,6 +76,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           DateValue DATE,
       )sql";
   if (!emulator) {
+    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(NumericValue NUMERIC,)sql");
   }
   create_datatypes.append(R"sql(
@@ -84,6 +89,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
           ArrayDateValue ARRAY<DATE>
       )sql");
   if (!emulator) {
+    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
     create_datatypes.append(R"sql(,ArrayNumericValue ARRAY<NUMERIC>)sql");
   }
   create_datatypes.append(R"sql(

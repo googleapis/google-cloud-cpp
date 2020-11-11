@@ -422,7 +422,9 @@ void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
 }
 
-//! [create-database] [START spanner_create_database]
+//! [create-database]
+// [START spanner_create_database]
+// [START spanner_create_database_with_version_retention_period]
 void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
@@ -432,6 +434,8 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   std::vector<std::string> extra_statements;
+  extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                             "SET OPTIONS (version_retention_period='2h')");
   extra_statements.emplace_back(R"""(
       CREATE TABLE Singers (
           SingerId   INT64 NOT NULL,
@@ -450,9 +454,15 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
       client.CreateDatabase(database, std::move(extra_statements));
   StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
   if (!db) throw std::runtime_error(db.status().message());
-  std::cout << "Created database [" << database << "]\n";
+  std::cout << "Created database [" << database << "]:\n" << db->DebugString();
+
+  auto ddl = client.GetDatabaseDdl(database);
+  if (!ddl) throw std::runtime_error(ddl.status().message());
+  std::cout << "Database DDL is:\n" << ddl->DebugString();
 }
-//! [create-database] [END spanner_create_database]
+// [END spanner_create_database_with_version_retention_period]
+// [END spanner_create_database]
+//! [create-database]
 
 //! [create-database-with-encryption-key]
 // [START spanner_create_database_with_encryption_key]
