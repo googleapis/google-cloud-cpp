@@ -247,7 +247,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
                             "` SET OPTIONS (version_retention_period='7d')")})
           .get();
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -295,7 +295,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_EQ("", database->version_retention_period());
   } else {
     EXPECT_NE("", database->version_retention_period());  // default value
@@ -310,7 +310,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
                             "` SET OPTIONS (version_retention_period='7d')")})
           .get();
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_THAT(update, Not(IsOk()));
   } else {
     ASSERT_THAT(update, IsOk());
@@ -324,7 +324,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_EQ("", get->version_retention_period());
   } else {
     EXPECT_EQ("7d", get->version_retention_period());
@@ -341,7 +341,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   ASSERT_THAT(list_db, IsOk());
   EXPECT_EQ(database->name(), list_db->name());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_EQ("", list_db->version_retention_period());
   } else {
     EXPECT_EQ("7d", list_db->version_retention_period());
@@ -351,7 +351,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   auto ddl = client_.GetDatabaseDdl(database_);
   ASSERT_THAT(ddl, IsOk());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
   } else {
     EXPECT_THAT(ddl->statements(),
                 Contains(ContainsRegex("version_retention_period *= *'7d'")));
@@ -371,7 +371,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_EQ("", database->version_retention_period());
   } else {
     EXPECT_NE("", database->version_retention_period());  // default value
@@ -381,7 +381,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   ASSERT_THAT(get0, IsOk());
   EXPECT_EQ(database->name(), get0->name());
   if (emulator_) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     EXPECT_EQ("", get0->version_retention_period());
   } else {
     EXPECT_NE("", get0->version_retention_period());  // default value

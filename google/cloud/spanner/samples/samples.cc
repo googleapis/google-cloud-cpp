@@ -3327,6 +3327,7 @@ void RunAll(bool emulator) {
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
   // TODO(#5048): Remove this check when the emulator supports CMEK.
+  // TODO(#5479): Awaiting emulator support for version_retention_period.
   if (!emulator) {
     std::cout << "\nRunning spanner_drop_database sample" << std::endl;
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
