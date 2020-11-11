@@ -315,9 +315,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   } else {
     ASSERT_THAT(update, IsOk());
     EXPECT_EQ(database->name(), update->database());
-    EXPECT_THAT(
-        update->statements(),
-        Contains(ContainsRegex("version_retention_period *= *'7d'")));
+    EXPECT_THAT(update->statements(),
+                Contains(ContainsRegex("version_retention_period *= *'7d'")));
   }
 
   // Verify that version_retention_period is returned from GetDatabase().
@@ -354,9 +353,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   if (emulator_) {
     // TODO(#9999): Awaiting emulator support for version_retention_period.
   } else {
-    EXPECT_THAT(
-        ddl->statements(),
-        Contains(ContainsRegex("version_retention_period\\s*=\\s*'7d'")));
+    EXPECT_THAT(ddl->statements(),
+                Contains(ContainsRegex("version_retention_period *= *'7d'")));
   }
 
   auto drop = client_.DropDatabase(database_);
