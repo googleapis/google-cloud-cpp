@@ -138,7 +138,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);\n\n");
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
   // clang-format on
 
   HeaderPrint(  // clang-format off
@@ -147,7 +147,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);\n\n");
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -273,7 +273,7 @@ Status ConnectionGenerator::GenerateCc() {
       "      std::unique_ptr<RetryPolicy> retry_policy,\n"
       "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"
       "      std::unique_ptr<PollingPolicy> polling_policy,\n"
-      "      std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> "
+      "      std::unique_ptr<$idempotency_class_name$> "
       "idempotency_policy)\n"
       "      : stub_(std::move(stub)),\n"
       "        retry_policy_prototype_(std::move(retry_policy)),\n"
@@ -289,7 +289,7 @@ Status ConnectionGenerator::GenerateCc() {
       "          DefaultRetryPolicy(),\n"
       "          DefaultBackoffPolicy(),\n"
       "          DefaultPollingPolicy(),\n"
-      "          MakeDefaultDatabaseAdminConnectionIdempotencyPolicy()) {}\n"
+      "          MakeDefault$idempotency_class_name$()) {}\n"
       "\n"
       "  ~$connection_class_name$Impl() override = default;\n\n");
   //  clang-format on
@@ -463,7 +463,7 @@ Status ConnectionGenerator::GenerateCc() {
     "  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;\n"
     "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"
     "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n"
-    "  std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy_;\n"
+    "  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
     "};\n");
   // clang-format on
 
@@ -483,7 +483,7 @@ Status ConnectionGenerator::GenerateCc() {
     "retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {\n"
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options),\n"
     "      std::move(retry_policy), std::move(backoff_policy),\n"
@@ -497,7 +497,7 @@ Status ConnectionGenerator::GenerateCc() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {\n"
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      std::move(stub), std::move(retry_policy), std::move(backoff_policy),\n"
     "      std::move(polling_policy), std::move(idempotency_policy));\n"

@@ -187,7 +187,7 @@ Status ClientGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "$client_class_name$::$client_class_name$(ConnectionOptions const& options)\n"
-    " : connection_(MakeDatabaseAdminConnection(options)) {}\n");
+    " : connection_(Make$connection_class_name$(options)) {}\n");
   // clang-format on
 
   CcPrint(  // clang-format off
