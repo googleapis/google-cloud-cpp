@@ -138,7 +138,7 @@ class Object:
                 )
             cls.__insert_predefined_acl(metadata, bucket, predefined_acl, context)
         bucket.iam_configuration.uniform_bucket_level_access.enabled = is_uniform
-        if context is None and rest_only is None:
+        if rest_only is None:
             rest_only = {}
         return (
             cls(metadata, media, bucket, rest_only),

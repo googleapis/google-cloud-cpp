@@ -17,6 +17,9 @@
 
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
+#include <atomic>
+#include <cinttypes>
+#include <deque>
 #include <unordered_map>
 
 namespace google {
@@ -27,7 +30,9 @@ namespace internal {
 /**
  * The default implementation for `CompletionQueue`.
  */
-class DefaultCompletionQueueImpl : public CompletionQueueImpl {
+class DefaultCompletionQueueImpl
+    : public CompletionQueueImpl,
+      public std::enable_shared_from_this<DefaultCompletionQueueImpl> {
  public:
   DefaultCompletionQueueImpl() = default;
   ~DefaultCompletionQueueImpl() override = default;
@@ -59,18 +64,54 @@ class DefaultCompletionQueueImpl : public CompletionQueueImpl {
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() override;
 
+  /// Some counters for testing and debugging.
+  std::int64_t notify_counter() const { return notify_counter_.load(); }
+  std::size_t thread_pool_hwm() const { return thread_pool_hwm_; }
+  std::size_t run_async_pool_hwm() const { return run_async_pool_hwm_; }
+
  private:
+  /// Start an operation with the lock already held.
+  void StartOperation(std::unique_lock<std::mutex> lk,
+                      std::shared_ptr<AsyncGrpcOperation> op,
+                      absl::FunctionRef<void(void*)> start);
+
   /// Return the asynchronous operation associated with @p tag.
   std::shared_ptr<AsyncGrpcOperation> FindOperation(void* tag);
 
   /// Unregister @p tag from pending operations.
   void ForgetOperation(void* tag);
 
+  void RunStart() {
+    std::lock_guard<std::mutex> lk(mu_);
+    ++thread_pool_size_;
+    thread_pool_hwm_ = (std::max)(thread_pool_hwm_, thread_pool_size_);
+  }
+
+  void RunStop() {
+    std::lock_guard<std::mutex> lk(mu_);
+    --thread_pool_size_;
+  }
+
+  void DrainRunAsyncLoop();
+  void DrainRunAsyncOnIdle();
+  void WakeUpRunAsyncThread(std::unique_lock<std::mutex> lk);
+
+  class WakeUpRunAsyncLoop;
+  class WakeUpRunAsyncOnIdle;
+
+  std::mutex mu_;
   grpc::CompletionQueue cq_;
-  mutable std::mutex mu_;
+  std::size_t thread_pool_size_ = 0;
+  std::size_t run_async_pool_size_ = 0;
+  std::deque<std::unique_ptr<internal::RunAsyncBase>> run_async_queue_;
   bool shutdown_{false};  // GUARDED_BY(mu_)
   std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;  // GUARDED_BY(mu_)
+
+  // These are metrics used in testing.
+  std::atomic<std::int64_t> notify_counter_{0};
+  std::size_t thread_pool_hwm_ = 0;
+  std::size_t run_async_pool_hwm_ = 0;
 };
 
 }  // namespace internal

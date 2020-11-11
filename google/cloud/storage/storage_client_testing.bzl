@@ -18,6 +18,7 @@
 
 storage_client_testing_hdrs = [
     "testing/canonical_errors.h",
+    "testing/constants.h",
     "testing/mock_client.h",
     "testing/mock_fake_clock.h",
     "testing/mock_http_request.h",
@@ -27,6 +28,7 @@ storage_client_testing_hdrs = [
     "testing/retry_tests.h",
     "testing/storage_integration_test.h",
     "testing/temp_file.h",
+    "testing/write_base64.h",
 ]
 
 storage_client_testing_srcs = [
@@ -37,4 +39,5 @@ storage_client_testing_srcs = [
     "testing/remove_stale_buckets.cc",
     "testing/storage_integration_test.cc",
     "testing/temp_file.cc",
+    "testing/write_base64.cc",
 ]

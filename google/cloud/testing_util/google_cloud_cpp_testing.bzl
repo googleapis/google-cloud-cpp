@@ -18,6 +18,7 @@
 
 google_cloud_cpp_testing_hdrs = [
     "assert_ok.h",
+    "async_sequencer.h",
     "capture_log_lines_backend.h",
     "check_predicate_becomes_false.h",
     "chrono_literals.h",
@@ -36,6 +37,7 @@ google_cloud_cpp_testing_hdrs = [
 
 google_cloud_cpp_testing_srcs = [
     "assert_ok.cc",
+    "async_sequencer.cc",
     "capture_log_lines_backend.cc",
     "command_line_parsing.cc",
     "crash_handler.cc",

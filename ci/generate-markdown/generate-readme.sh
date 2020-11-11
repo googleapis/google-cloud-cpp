@@ -85,13 +85,6 @@ For application developers who prefer to build from source, the quickstart
 guides for each library (see above) include instructions on how to incorporate
 the library into their CMake-based or Bazel-based builds.
 
-## Supported Platforms
-
-* Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
-* Environments with or without exceptions
-* Bazel and CMake builds
-
 ## Quickstart
 
 Each library (linked above) contains a directory named `quickstart/` that's
@@ -118,6 +111,15 @@ sed -n '/^#/,$p' "${BINDIR}/../../google/cloud/storage/quickstart/quickstart.cc"
 
 cat <<"EOF"
 ```
+
+## Support
+
+* This project supports Windows, macOS, Linux
+* This project supports C++11 (and higher) compilers (we test with GCC \>= 5.4, Clang >= 3.8, and MSVC \>= 2019)
+* This project supports Bazel and CMake builds. See the [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
+* This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/master/doc/packaging.md)
+* This project works with or without exceptions enabled
+* This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
 
 ## Contact us
 

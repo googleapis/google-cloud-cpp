@@ -67,8 +67,13 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
-        std::make_pair("class_comment_block", "// TODO: pull in comments"),
         std::make_pair("client_class_name", "FrobberServiceClient"),
+        std::make_pair("client_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_client.gcpcxx.pb.cc"),
+        std::make_pair("client_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_client.gcpcxx.pb.h"),
         std::make_pair("connection_class_name", "FrobberServiceConnection"),
         std::make_pair("connection_cc_path",
                        "google/cloud/frobber/"
@@ -383,6 +388,13 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_signature1",
                              "std::int32_t const& number, "
                              "::google::protobuf::Bar const& widget"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_setters0",
+                             "  request.set_name(name);\n"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_request_setters1",
+                             "  request.set_number(number);\n"
+                             "  *request.mutable_widget() = widget;\n"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_param_key", "parent"),
         MethodVarsTestValues("google.protobuf.Service.Method5",

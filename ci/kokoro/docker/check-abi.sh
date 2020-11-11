@@ -52,8 +52,16 @@ if [[ "${UPDATE_ABI}" == "yes" ]]; then
     -public-headers "${INCLUDEDIR}" \
     -lver "expected" \
     -o "${ACTUAL_DUMP_PATH}" &&
-    gzip -c "${ACTUAL_DUMP_PATH}" >"${EXPECTED_DUMP_PATH}"
-  exit $?
+    gzip -c "${ACTUAL_DUMP_PATH}" >"${EXPECTED_DUMP_PATH}.tmp"
+  exit_status=$?
+  if [[ $exit_status -eq 0 ]]; then
+    if zdiff "${EXPECTED_DUMP_PATH}.tmp" "${EXPECTED_DUMP_PATH}"; then
+      rm -f "${EXPECTED_DUMP_PATH}.tmp"
+    else
+      mv -f "${EXPECTED_DUMP_PATH}.tmp" "${EXPECTED_DUMP_PATH}"
+    fi
+  fi
+  exit $exit_status
 fi
 
 io::log "Checking ABI of ${LIBRARY}"

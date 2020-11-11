@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
+#include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
@@ -21,6 +22,7 @@
 #include "google/cloud/pubsub/internal/publisher_round_robin.h"
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
+#include "google/cloud/pubsub/internal/sequential_batch_sink.h"
 #include "google/cloud/future_void.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -130,24 +132,18 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
   auto background = connection_options.background_threads_factory()();
   auto make_connection = [&]() -> std::shared_ptr<pubsub::PublisherConnection> {
     auto cq = background->cq();
+    std::shared_ptr<BatchSink> sink = DefaultBatchSink::Create(
+        stub, cq, std::move(retry_policy), std::move(backoff_policy));
     if (options.message_ordering()) {
-      // We need to copy these values because we will call `clone()` on them
-      // multiple times.
-      std::shared_ptr<pubsub::RetryPolicy const> retry =
-          std::move(retry_policy);
-      std::shared_ptr<pubsub::BackoffPolicy const> backoff =
-          std::move(backoff_policy);
-      auto factory = [topic, options, stub, cq, retry,
-                      backoff](std::string const& ordering_key) {
-        return BatchingPublisherConnection::Create(topic, options, ordering_key,
-                                                   stub, cq, retry->clone(),
-                                                   backoff->clone());
+      auto factory = [topic, options, sink, cq](std::string const& key) {
+        return BatchingPublisherConnection::Create(
+            topic, options, key, SequentialBatchSink::Create(std::move(sink)),
+            cq);
       };
       return OrderingKeyPublisherConnection::Create(std::move(factory));
     }
     return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
-        std::move(topic), std::move(options), {}, std::move(stub),
-        std::move(cq), std::move(retry_policy), std::move(backoff_policy)));
+        std::move(topic), std::move(options), {}, sink, std::move(cq)));
   };
   return std::make_shared<pubsub::ContainingPublisherConnection>(
       std::move(background), make_connection());

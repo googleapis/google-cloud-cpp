@@ -17,6 +17,7 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <crc32c/crc32c.h>
@@ -44,9 +45,16 @@ using ::testing::Not;
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
+    : public google::cloud::storage::testing::StorageIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {
  protected:
+  GrpcIntegrationTest()
+      : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}) {}
+
   void SetUp() override {
+    std::string const grpc_config_value = GetParam();
+    google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                    grpc_config_value);
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
@@ -55,11 +63,10 @@ class GrpcIntegrationTest
 
  private:
   std::string project_id_;
-  testing_util::ScopedEnvironment grpc_config_{
-      "GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", "metadata"};
+  testing_util::ScopedEnvironment grpc_config_;
 };
 
-TEST_F(GrpcIntegrationTest, BucketCRUD) {
+TEST_P(GrpcIntegrationTest, BucketCRUD) {
   auto client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -91,7 +98,7 @@ TEST_F(GrpcIntegrationTest, BucketCRUD) {
   EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
 }
 
-TEST_F(GrpcIntegrationTest, ObjectCRUD) {
+TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
 
@@ -124,7 +131,7 @@ TEST_F(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-TEST_F(GrpcIntegrationTest, WriteResume) {
+TEST_P(GrpcIntegrationTest, WriteResume) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -172,7 +179,8 @@ TEST_F(GrpcIntegrationTest, WriteResume) {
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 /// @test Verify that NOT_FOUND is returned for missing objects
-TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
+TEST_P(GrpcIntegrationTest, GetObjectMediaNotFound) {
+  if (UsingTestbench()) GTEST_SKIP();
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
 
@@ -210,7 +218,7 @@ TEST_F(GrpcIntegrationTest, GetObjectMediaNotFound) {
 }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
-TEST_F(GrpcIntegrationTest, InsertLarge) {
+TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
 
@@ -244,7 +252,7 @@ TEST_F(GrpcIntegrationTest, InsertLarge) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
+TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
 
@@ -278,6 +286,11 @@ TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
   auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_bucket_status);
 }
+
+INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
+                         ::testing::Values("media"));
+INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMetadataTest, GrpcIntegrationTest,
+                         ::testing::Values("metadata"));
 
 }  // namespace
 }  // namespace internal

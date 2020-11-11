@@ -20,6 +20,8 @@ if (BUILD_TESTING)
         google_cloud_cpp_testing # cmake-format: sort
         assert_ok.cc
         assert_ok.h
+        async_sequencer.cc
+        async_sequencer.h
         capture_log_lines_backend.cc
         capture_log_lines_backend.h
         check_predicate_becomes_false.h
@@ -96,6 +98,7 @@ if (BUILD_TESTING)
         is_proto_equal.cc
         is_proto_equal.h
         mock_async_response_reader.h
+        mock_completion_queue_impl.h
         validate_metadata.cc
         validate_metadata.h)
     target_link_libraries(

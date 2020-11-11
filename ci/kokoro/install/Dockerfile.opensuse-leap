@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=latest
 FROM opensuse/leap:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START INSTALL.md]
+## [START packaging.md]
 
 # Install the minimal development tools, libcurl and OpenSSL. The gRPC Makefile
 # uses `which` to determine whether the compiler is available. Install this
@@ -52,14 +52,14 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     cd abseil-cpp-20200225.2 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
+      -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out/abseil && \
-    cmake --build cmake-out/abseil --target install -- -j ${NCPU} && \
-    ldconfig && \
-    cd /var/tmp && rm -fr build
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
 # ```
 
 # #### Protobuf
@@ -194,7 +194,7 @@ RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```
 
-## [END INSTALL.md]
+## [END packaging.md]
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 

@@ -226,28 +226,94 @@ class TestBucket:
 
 
 class TestObject:
-    def testInitMedia(self):
+    def test_init_media(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
         bucket, projection = gcs.bucket.Bucket.init(request, "")
         request = utils.common.FakeRequest(
-            args={"name": "object"}, data=b"12345678", headers={}
+            args={"name": "object"}, data=b"12345678", headers={}, environ={}
         )
         blob, _ = gcs.object.Object.init_media(request, bucket.metadata)
         assert blob.metadata.name == "object"
         assert blob.media == b"12345678"
 
-    def testInitMultiPart(self):
+    def test_init_multipart(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
         bucket, _ = gcs.bucket.Bucket.init(request, "")
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
             data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"key": "value"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            environ={},
         )
         blob, _ = gcs.object.Object.init_multipart(request, bucket.metadata)
         assert blob.metadata.name == "object"
         assert blob.media == b"123456789"
         assert blob.metadata.metadata["key"] == "value"
+
+    def test_grpc_to_rest(self):
+        # Make sure that object created by `gRPC` works with `REST`'s request.
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        bucket = bucket.metadata
+        spec = storage_pb2.InsertObjectSpec(
+            resource={"name": "object", "bucket": "bucket"}
+        )
+        request = storage_pb2.StartResumableWriteRequest(insert_object_spec=spec)
+        upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
+        blob, _ = gcs.object.Object.init(
+            upload.request, upload.metadata, b"123456789", upload.bucket, False, ""
+        )
+
+        assert blob.rest_only == {}
+        assert blob.media == b"123456789"
+        assert blob.metadata.name == "object"
+        assert blob.metadata.bucket == "bucket"
+
+        # `REST` GET
+
+        rest_metadata = blob.rest_metadata()
+        assert rest_metadata["name"] == "object"
+        assert rest_metadata["bucket"] == "bucket"
+        assert blob.metadata.metadata.get("method") is None
+
+        # `REST` PATCH
+
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"metadata": {"method": "rest"}})
+        )
+        blob.patch(request, None)
+
+        assert blob.metadata.metadata["method"] == "rest"
+
+    def test_rest_to_grpc(self):
+        # Make sure that object created by `REST` works with `gRPC`'s request.
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        request = utils.common.FakeRequest(
+            args={},
+            headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            environ={},
+        )
+        blob, _ = gcs.object.Object.init_multipart(request, bucket.metadata)
+        assert blob.metadata.bucket == "bucket"
+        assert blob.metadata.name == "object"
+        assert blob.media == b"123456789"
+        assert blob.metadata.metadata["method"] == "rest"
+
+        # `grpc` PATCH
+
+        request = storage_pb2.PatchObjectRequest(
+            bucket="bucket",
+            object="object",
+            metadata={"metadata": {"method": "grpc"}},
+            update_mask={"paths": ["metadata"]},
+        )
+        blob.patch(request, "")
+        assert blob.metadata.bucket == "bucket"
+        assert blob.metadata.name == "object"
+        assert blob.media == b"123456789"
+        assert blob.metadata.metadata["method"] == "grpc"
 
 
 def run():

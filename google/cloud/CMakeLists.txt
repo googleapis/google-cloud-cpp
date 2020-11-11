@@ -112,6 +112,7 @@ add_library(
     iam_bindings.h
     iam_policy.cc
     iam_policy.h
+    internal/absl_flat_hash_map_quiet.h
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
@@ -173,8 +174,8 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::memory absl::optional absl::time
-                                   Threads::Threads)
+    google_cloud_cpp_common PUBLIC absl::flat_hash_map absl::memory
+                                   absl::optional absl::time Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -398,7 +399,40 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
 
+    # Define the benchmarks in a function so we have a new scope for variable
+    # names.
+    function (google_cloud_cpp_grpc_utils_define_benchmarks)
+        find_package(benchmark CONFIG REQUIRED)
+
+        set(google_cloud_cpp_grpc_utils_benchmarks
+            # cmake-format: sortable
+            completion_queue_benchmark.cc)
+
+        # Export the list of benchmarks to a .bzl file so we do not need to
+        # maintain the list in two places.
+        export_list_to_bazel(
+            "google_cloud_cpp_grpc_utils_benchmarks.bzl"
+            "google_cloud_cpp_grpc_utils_benchmarks" YEAR "2020")
+
+        # Create a custom target so we can say "build all the benchmarks"
+        add_custom_target(google-cloud-cpp-grpc-utils-benchmarks)
+
+        # Generate a target for each benchmark.
+        foreach (fname ${google_cloud_cpp_grpc_utils_benchmarks})
+            google_cloud_cpp_add_executable(target "common" "${fname}")
+            add_test(NAME ${target} COMMAND ${target})
+            target_link_libraries(
+                ${target}
+                PRIVATE google_cloud_cpp_grpc_utils google_cloud_cpp_common
+                        benchmark::benchmark_main)
+            google_cloud_cpp_add_common_options(${target})
+
+            add_dependencies(google-cloud-cpp-grpc-utils-benchmarks ${target})
+        endforeach ()
+    endfunction ()
+
     if (BUILD_TESTING)
+        google_cloud_cpp_grpc_utils_define_benchmarks()
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_unit_tests
             # cmake-format: sort

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
-#include "google/cloud/internal/async_retry_loop.h"
 
 namespace google {
 namespace cloud {
@@ -23,9 +22,6 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 // A helper callable to handle a response, it is a bit large for a lambda, and
 // we need move-capture anyways.
 struct Batch {
-  // We are going to use the completion queue as an executor, so we might as
-  // well name it as one.
-  google::cloud::CompletionQueue executor;
   std::vector<promise<StatusOr<std::string>>> waiters;
   std::weak_ptr<BatchingPublisherConnection> weak;
 
@@ -33,7 +29,7 @@ struct Batch {
     auto response = f.get();
     if (!response) {
       SatisfyAllWaiters(response.status());
-      if (auto batcher = weak.lock()) batcher->DiscardCorked(response.status());
+      if (auto batcher = weak.lock()) batcher->HandleError(response.status());
       return;
     }
     if (static_cast<std::size_t>(response->message_ids_size()) !=
@@ -42,27 +38,14 @@ struct Batch {
           Status(StatusCode::kUnknown, "mismatched message id count"));
       return;
     }
-    struct SetValue {
-      promise<StatusOr<std::string>> waiter;
-      std::string value;
-      void operator()() { waiter.set_value(std::move(value)); }
-    };
     int idx = 0;
     for (auto& w : waiters) {
-      executor.RunAsync(SetValue{std::move(w), response->message_ids(idx++)});
+      w.set_value(std::move(*response->mutable_message_ids(idx++)));
     }
-    if (auto batcher = weak.lock()) batcher->UnCork();
   }
 
   void SatisfyAllWaiters(Status const& status) {
-    struct SetStatus {
-      promise<StatusOr<std::string>> waiter;
-      Status status;
-      void operator()() { waiter.set_value(std::move(status)); }
-    };
-    for (auto& w : waiters) {
-      executor.RunAsync(SetStatus{std::move(w), status});
-    }
+    for (auto& w : waiters) w.set_value(status);
   }
 };
 
@@ -72,10 +55,17 @@ future<StatusOr<std::string>> BatchingPublisherConnection::Publish(
   std::unique_lock<std::mutex> lk(mu_);
   do {
     if (!corked_on_status_.ok()) return CorkedError();
-    auto const has_capacity =
-        current_bytes_ + bytes < options_.maximum_batch_bytes();
-    if (has_capacity || waiters_.empty()) break;
-    // We need to flush the existing batch, that will release the lock.
+    // If empty we need to create the batch, even if it would be oversized,
+    // otherwise the message may be dropped.
+    if (waiters_.empty()) break;
+    auto const has_bytes_capacity =
+        current_bytes_ + bytes <= options_.maximum_batch_bytes();
+    auto const has_messages_capacity =
+        waiters_.size() < options_.maximum_batch_message_count();
+    // If there is enough room just add the message below.
+    if (has_bytes_capacity && has_messages_capacity) break;
+    // We need to flush the existing batch, that will release the lock, and then
+    // we try again.
     FlushImpl(std::move(lk));
     lk = std::unique_lock<std::mutex>(mu_);
   } while (true);
@@ -107,29 +97,23 @@ void BatchingPublisherConnection::Flush(FlushParams) {
 
 void BatchingPublisherConnection::ResumePublish(ResumePublishParams p) {
   if (ordering_key_ != p.ordering_key) return;
-  std::unique_lock<std::mutex> lk(mu_);
-  corked_on_status_ = {};
-  MaybeFlush(std::move(lk));
-}
-
-void BatchingPublisherConnection::UnCork() {
-  std::unique_lock<std::mutex> lk(mu_);
-  corked_on_pending_push_ = false;
-  MaybeFlush(std::move(lk));
-}
-
-void BatchingPublisherConnection::DiscardCorked(Status const& status) {
-  auto waiters = [&] {
+  {
     std::unique_lock<std::mutex> lk(mu_);
-    // This is the result of a request, so no longer corked waiting for it.
-    corked_on_pending_push_ = false;
-    // An error should block more messages only if ordering is required.
-    if (RequiresOrdering()) corked_on_status_ = status;
-    pending_.Clear();
-    std::vector<promise<StatusOr<std::string>>> tmp;
-    tmp.swap(waiters_);
-    return tmp;
-  }();
+    corked_on_status_ = {};
+  }
+  sink_->ResumePublish(p.ordering_key);
+}
+
+void BatchingPublisherConnection::HandleError(Status const& status) {
+  std::unique_lock<std::mutex> lk(mu_);
+  // An error should discard pending messages and block future messages only
+  // if ordering is required.
+  if (!RequiresOrdering()) return;
+  corked_on_status_ = status;
+  pending_.Clear();
+  std::vector<promise<StatusOr<std::string>>> waiters;
+  waiters.swap(waiters_);
+  lk.unlock();
   for (auto& p : waiters) {
     struct MoveCapture {
       promise<StatusOr<std::string>> p;
@@ -194,33 +178,18 @@ future<StatusOr<std::string>> BatchingPublisherConnection::CorkedError() {
 }
 
 void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
-  if (pending_.messages().empty() || IsCorked(lk)) return;
+  if (pending_.messages().empty()) return;
 
   Batch batch;
   batch.waiters.swap(waiters_);
   google::pubsub::v1::PublishRequest request;
   request.Swap(&pending_);
-  corked_on_pending_push_ = RequiresOrdering();
   current_bytes_ = 0;
   lk.unlock();
 
-  auto context = absl::make_unique<grpc::ClientContext>();
-
-  batch.executor = cq_;
   batch.weak = shared_from_this();
   request.set_topic(topic_full_name_);
-
-  auto& stub = stub_;
-  google::cloud::internal::AsyncRetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(),
-      google::cloud::internal::Idempotency::kIdempotent, cq_,
-      [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::pubsub::v1::PublishRequest const& request) {
-        return stub->AsyncPublish(cq, std::move(context), request);
-      },
-      std::move(request), __func__)
-      .then(std::move(batch));
+  sink_->AsyncPublish(request).then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
