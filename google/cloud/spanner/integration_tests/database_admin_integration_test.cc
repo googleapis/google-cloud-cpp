@@ -33,11 +33,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 // Constants used to identify the encryption key.
 // For staging, the location must be us-central1.
@@ -248,7 +248,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
           .get();
   if (emulator_) {
     // TODO(#9999): Awaiting emulator support for version_retention_period.
-    EXPECT_THAT(database, StatusIs(StatusCode::kInvalidArgument));
+    EXPECT_THAT(database, Not(IsOk()));
     return;
   }
   ASSERT_THAT(database, IsOk());
@@ -282,7 +282,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreateFailure) {
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='0')")})
           .get();
-  EXPECT_THAT(database, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(database, Not(IsOk()));
 }
 
 /// @test Verify setting version_retention_period via UpdateDatabase().
@@ -294,7 +294,12 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
                       .get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
-  EXPECT_EQ("1h", database->version_retention_period());  // default
+  if (emulator_) {
+    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", database->version_retention_period());
+  } else {
+    EXPECT_NE("", database->version_retention_period());  // default value
+  }
 
   // Set the version_retention_period via UpdateDatabase().
   auto update =
@@ -306,7 +311,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
           .get();
   if (emulator_) {
     // TODO(#9999): Awaiting emulator support for version_retention_period.
-    EXPECT_THAT(update, StatusIs(StatusCode::kInvalidArgument));
+    EXPECT_THAT(update, Not(IsOk()));
   } else {
     ASSERT_THAT(update, IsOk());
     EXPECT_EQ(database->name(), update->database());
@@ -367,7 +372,12 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
                       .get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
-  EXPECT_EQ("1h", database->version_retention_period());  // default
+  if (emulator_) {
+    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", database->version_retention_period());
+  } else {
+    EXPECT_NE("", database->version_retention_period());  // default value
+  }
 
   auto get0 = client_.GetDatabase(database_);
   ASSERT_THAT(get0, IsOk());
@@ -388,7 +398,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='0')")})
           .get();
-  EXPECT_THAT(update, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(update, Not(IsOk()));
 
   // Also verify that version_retention_period was NOT changed.
   auto get = client_.GetDatabase(database_);
