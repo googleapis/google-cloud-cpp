@@ -351,6 +351,7 @@ if (BUILD_TESTING)
     add_library(
         storage_client_testing # cmake-format: sort
         testing/canonical_errors.h
+        testing/constants.h
         testing/mock_client.h
         testing/mock_fake_clock.cc
         testing/mock_fake_clock.h
@@ -366,7 +367,9 @@ if (BUILD_TESTING)
         testing/storage_integration_test.cc
         testing/storage_integration_test.h
         testing/temp_file.cc
-        testing/temp_file.h)
+        testing/temp_file.h
+        testing/write_base64.cc
+        testing/write_base64.h)
     target_link_libraries(
         storage_client_testing
         PUBLIC absl::memory
