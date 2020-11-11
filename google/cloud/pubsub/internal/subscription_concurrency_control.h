@@ -60,6 +60,8 @@ class SubscriptionConcurrencyControl
 
   void MessageHandled();
   void OnMessage(google::pubsub::v1::ReceivedMessage m);
+  void OnMessageAsync(google::pubsub::v1::ReceivedMessage m,
+                      std::weak_ptr<SubscriptionConcurrencyControl> w);
 
   std::size_t total_messages() const {
     return message_count_ + messages_requested_;
