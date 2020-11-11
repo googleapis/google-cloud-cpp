@@ -23,7 +23,9 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/kms_key_name.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/optional.h"
 #include <chrono>
 
 namespace google {
@@ -129,6 +131,9 @@ class DatabaseAdminClient {
    * or dashes (`-`), that is, they must belong to the `[a-z0-9_-]` character
    * set.
    *
+   * @p encryption_key The name of the Cloud KMS key used to encrypt and decrypt
+   * the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -143,7 +148,8 @@ class DatabaseAdminClient {
    *     for the regular expression that must be satisfied by the database id.
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(Database db, std::vector<std::string> extra_statements = {});
+  CreateDatabase(Database db, std::vector<std::string> extra_statements = {},
+                 absl::optional<KmsKeyName> encryption_key = absl::nullopt);
 
   /**
    * Retrieve metadata information about a database.

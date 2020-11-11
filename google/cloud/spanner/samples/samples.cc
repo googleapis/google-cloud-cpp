@@ -454,6 +454,78 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [create-database] [END spanner_create_database]
 
+//! [create-database-with-encryption-key]
+// [START spanner_create_database_with_encryption_key]
+void CreateDatabaseWithEncryptionKey(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id,
+    google::cloud::KmsKeyName const& encryption_key) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  using ::google::cloud::spanner::Database;
+  Database database(project_id, instance_id, database_id);
+  std::vector<std::string> extra_statements;
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX)
+      ) PRIMARY KEY (SingerId))""");
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Albums (
+          SingerId     INT64 NOT NULL,
+          AlbumId      INT64 NOT NULL,
+          AlbumTitle   STRING(MAX)
+      ) PRIMARY KEY (SingerId, AlbumId),
+          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
+  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
+      client.CreateDatabase(database, std::move(extra_statements),
+                            encryption_key);
+  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  if (!db) throw std::runtime_error(db.status().message());
+  std::cout << "Created database [" << database << "]\n";
+
+  // Verify the encryption key matches the value used during creation.
+  auto get_database = client.GetDatabase(database);
+  if (!get_database) throw std::runtime_error(get_database.status().message());
+  if (!get_database->has_encryption_config()) {
+    throw std::runtime_error("Encryption Config is not present");
+  }
+  auto key_name = google::cloud::MakeKmsKeyName(
+      get_database->encryption_config().kms_key_name());
+  if (!key_name.ok()) {
+    std::ostringstream os;
+    os << key_name.status();
+    throw std::runtime_error("Failed to parse kms_key_name: " + os.str());
+  }
+  std::cout << "Encryption key name: " << *key_name << std::endl;
+  if (*key_name != encryption_key) {
+    throw std::runtime_error("Encryption key name mismatch: expected " +
+                             encryption_key.FullName() + " actual " +
+                             key_name->FullName());
+  }
+}
+// [END spanner_create_database_with_encryption_key]
+//! [create-database-with-encryption-key]
+
+void CreateDatabaseWithEncryptionKeyCommand(
+    std::vector<std::string> const& argv) {
+  if (argv.size() != 6) {
+    throw std::runtime_error(
+        "create-database-with-encryption-key <project-id> <instance-id> "
+        "<database-id> <location> <key-ring> <key-name>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  google::cloud::KmsKeyName encryption_key(/*project_id=*/argv[0],
+                                           /*location=*/argv[3],
+                                           /*key_ring=*/argv[4],
+                                           /*kms_key_name=*/argv[5]);
+  CreateDatabaseWithEncryptionKey(std::move(client), argv[0], argv[1], argv[2],
+                                  encryption_key);
+}
+
 // [START spanner_create_table_with_datatypes]
 void CreateTableWithDatatypes(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -2900,6 +2972,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"remove-database-reader", RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", InstanceTestIamPermissionsCommand},
       make_database_command_entry("create-database", CreateDatabase),
+      {"create-database-with-encryption-key",
+       CreateDatabaseWithEncryptionKeyCommand},
       make_database_command_entry("create-table-with-datatypes",
                                   CreateTableWithDatatypes),
       make_database_command_entry("create-table-with-timestamp",
@@ -3114,6 +3188,9 @@ void RunAll(bool emulator) {
   std::string database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
+  google::cloud::KmsKeyName encryption_key(
+      project_id, "us-central1", "spanner-cmek", "spanner-cmek-test-key");
+
   google::cloud::spanner::DatabaseAdminClient database_admin_client(
       MakeDatabaseAdminConnection(
           google::cloud::spanner::ConnectionOptions{},
@@ -3208,6 +3285,17 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_create_database sample" << std::endl;
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
+
+  // TODO(#5048): Remove this check when the emulator supports CMEK.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
+    std::cout << "\nRunning spanner_create_database_with_encryption_key sample"
+              << std::endl;
+    CreateDatabaseWithEncryptionKey(database_admin_client, project_id,
+                                    instance_id, database_id, encryption_key);
+  }
 
   std::cout << "\nRunning spanner_create_table_with_datatypes sample"
             << std::endl;

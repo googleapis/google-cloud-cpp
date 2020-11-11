@@ -42,7 +42,11 @@ StatusOr<std::string> PickRandomInstance(
     std::string const sep = "/instances/";
     std::string const valid_instance_name = sep + "test-instance-";
     auto pos = name.rfind(valid_instance_name);
-    if (pos != std::string::npos) {
+    if (pos != std::string::npos &&
+        // TODO(#4312) temporarily force use of an instance with a single
+        // digit identifier (i.e. test-instance-9, but not test-instance-12).
+        // Remove this before merging into the main branch.
+        name.rfind('-') == name.size() - 2) {
       instance_ids.push_back(name.substr(pos + sep.size()));
     }
   }

@@ -155,6 +155,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_parent(p.database.instance().FullName());
     request.set_create_statement("CREATE DATABASE `" +
                                  p.database.database_id() + "`");
+    if (p.encryption_key) {
+      request.mutable_encryption_config()->set_kms_key_name(
+          p.encryption_key->FullName());
+    }
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
