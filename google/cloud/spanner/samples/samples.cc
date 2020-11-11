@@ -487,7 +487,7 @@ void CreateDatabaseWithEncryptionKey(
   if (!db) throw std::runtime_error(db.status().message());
   std::cout << "Created database [" << database << "]\n";
 
-  // Veerify the encryption key matches the value used during creation.
+  // Verify the encryption key matches the value used during creation.
   auto get_database = client.GetDatabase(database);
   if (!get_database) throw std::runtime_error(get_database.status().message());
   if (!get_database->has_encryption_config()) {
