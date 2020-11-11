@@ -225,15 +225,26 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
   return std::make_pair(assertion_header.dump(), assertion_payload.dump());
 }
 
-std::string MakeJWTAssertion(std::string const& header,
-                             std::string const& payload,
-                             std::string const& pem_contents) {
+StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
+                                              std::string const& payload,
+                                              std::string const& pem_contents) {
   std::string encoded_header = internal::UrlsafeBase64Encode(header);
   std::string encoded_payload = internal::UrlsafeBase64Encode(payload);
   std::string encoded_signature = internal::UrlsafeBase64Encode(
       internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
-                                  pem_contents, JwtSigningAlgorithms::RS256));
+                                  pem_contents, JwtSigningAlgorithms::RS256)
+          .value());
   return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
+}
+
+std::string MakeJWTAssertion(std::string const& header,
+                             std::string const& payload,
+                             std::string const& pem_contents) {
+  auto result = MakeJWTAssertionNoThrow(header, payload, pem_contents);
+  if (!result)
+    google::cloud::internal::ThrowRuntimeError(
+        std::move(result).status().message());
+  return *std::move(result);
 }
 
 std::string CreateServiceAccountRefreshPayload(

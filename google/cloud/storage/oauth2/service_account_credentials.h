@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <condition_variable>
 #include <ctime>
@@ -85,11 +86,17 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now);
 
+// Does not through exception rather returns Status.
+// Given a key and a JSON header and payload, creates a JWT assertion string
+StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
+                                              std::string const& payload,
+                                              std::string const& pem_contents);
 /**
  * Given a key and a JSON header and payload, creates a JWT assertion string.
  *
  * @see https://tools.ietf.org/html/rfc7519
  */
+// std::string MakeJWTAssertion(ServiceAccountCredentialsInfo const& info);
 std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
                              std::string const& pem_contents);
