@@ -52,7 +52,12 @@ if [[ "${UPDATE_ABI}" == "yes" ]]; then
     -public-headers "${INCLUDEDIR}" \
     -lver "expected" \
     -o "${ACTUAL_DUMP_PATH}" &&
-    gzip -c "${ACTUAL_DUMP_PATH}" >"${EXPECTED_DUMP_PATH}"
+    gzip -c "${ACTUAL_DUMP_PATH}" >"${EXPECTED_DUMP_PATH}.tmp"
+  if zdiff "${EXPECTED_DUMP_PATH}.tmp" "${EXPECTED_DUMP_PATH}"; then
+    rm -f "${EXPECTED_DUMP_PATH}.tmp"
+  else
+    mv -f "${EXPECTED_DUMP_PATH}.tmp" "${EXPECTED_DUMP_PATH}"
+  fi
   exit $?
 fi
 
