@@ -317,7 +317,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
     EXPECT_EQ(database->name(), update->database());
     EXPECT_THAT(
         update->statements(),
-        Contains(ContainsRegex("version_retention_period\\s*=\\s*'7d'")));
+        Contains(ContainsRegex("version_retention_period *= *'7d'")));
   }
 
   // Verify that version_retention_period is returned from GetDatabase().
