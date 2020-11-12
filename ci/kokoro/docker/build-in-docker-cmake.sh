@@ -432,13 +432,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   GOOGLE_CLOUD_CPP_VERSION=$(pkg-config storage_client --modversion) || true
   GOOGLE_CLOUD_CPP_VERSION_MAJOR=$(echo "${GOOGLE_CLOUD_CPP_VERSION}" | cut -d'.' -f1)
 
-  # @E is a parameter substitution that provides an escaped version of the
-  # string, i.e 1.21.0 functionally becomes 1\.21\.0. Otherwise, the regex
-  # match below will fail.
-  GOOGLE_CLOUD_CPP_VERSION_ESCAPED="${GOOGLE_CLOUD_CPP_VERSION@E}"
-
   mapfile -t files < <(find /var/tmp/staging/ -type f | grep -vE \
-    "\.(h|inc|proto|cmake|pc|a|so|so\.${GOOGLE_CLOUD_CPP_VERSION_ESCAPED}|so\.${GOOGLE_CLOUD_CPP_VERSION_MAJOR})\$")
+    "\.(h|inc|proto|cmake|pc|a|so|so\.${GOOGLE_CLOUD_CPP_VERSION}|so\.${GOOGLE_CLOUD_CPP_VERSION_MAJOR})\$")
   if [[ "${#files[@]}" -gt 0 ]]; then
     io::log_red "Installed files do not match expectation."
     echo "Found:"
