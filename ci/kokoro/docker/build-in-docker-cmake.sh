@@ -424,6 +424,31 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
     /bin/false
   fi
 
+  io::log_yellow "Verify no extraneous files were installed."
+  # This script is only run on a Fedora-based build, so it's fine that this
+  # setting is not portable.
+  export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig"
+
+  # Get the version of one of the libraries. These should all be the same, so
+  # it does not matter what we use.
+  GOOGLE_CLOUD_CPP_VERSION=$(pkg-config storage_client --modversion) || true
+  export GOOGLE_CLOUD_CPP_VERSION
+  export GOOGLE_CLOUD_CPP_VERSION_MAJOR="${GOOGLE_CLOUD_CPP_VERSION:0:1}"
+
+  # @E is a parameter substitution that provides an escaped version of the
+  # string, i.e 1.21.0 functionally becomes 1\.21\.0.
+  export GOOGLE_CLOUD_CPP_VERSION_ESCAPED="${GOOGLE_CLOUD_CPP_VERSION@E}"
+
+  files=$(find /var/tmp/staging/ -type f | grep -vE \
+    "\.(h|inc|proto|cmake|pc|a|so|so\.${GOOGLE_CLOUD_CPP_VERSION_ESCAPED}|so\.${GOOGLE_CLOUD_CPP_VERSION_MAJOR})\$")
+  export files
+  if [[ "${#files[@]}" -gt 0 ]]; then
+    io::log_red "Installed files do not match expectation."
+    echo "Found:"
+    echo "${files[@]}"
+    /bin/false
+  fi
+
   if [[ "${CHECK_ABI:-}" == "yes" ]]; then
     io::log_yellow "Checking ABI compatibility."
     libraries=(
