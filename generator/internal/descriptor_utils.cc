@@ -54,6 +54,8 @@ std::string CppTypeToString(FieldDescriptor const* field) {
     case FieldDescriptor::CPPTYPE_FLOAT:
     case FieldDescriptor::CPPTYPE_BOOL:
     case FieldDescriptor::CPPTYPE_ENUM:
+      return std::string(field->cpp_type_name());
+
     case FieldDescriptor::CPPTYPE_STRING:
       return std::string("std::") + std::string(field->cpp_type_name());
 
@@ -121,7 +123,16 @@ void SetMethodSignatureMethodVars(
         method_request_setters += absl::StrFormat("  request.set_%s(%s);\n",
                                                   parameters[j], parameters[j]);
       }
-      method_signature += absl::StrFormat(" const& %s", parameters[j]);
+
+      switch (parameter_descriptor->cpp_type()) {
+        case FieldDescriptor::CPPTYPE_STRING:
+        case FieldDescriptor::CPPTYPE_MESSAGE:
+          method_signature += absl::StrFormat(" const& %s", parameters[j]);
+          break;
+        default:
+          method_signature += absl::StrFormat(" %s", parameters[j]);
+      }
+
       if (j < parameters.size() - 1) {
         method_signature += ", ";
       }
