@@ -39,7 +39,7 @@ class BatchSink {
 
   /// Asynchronously publishes a batch of messages.
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
-      google::pubsub::v1::PublishRequest const& request) = 0;
+      google::pubsub::v1::PublishRequest request) = 0;
 
   /// Resume publishing
   virtual void ResumePublish(std::string const& ordering_key) = 0;

@@ -25,22 +25,21 @@ SequentialBatchSink::SequentialBatchSink(
     : sink_(std::move(sink)) {}
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
-SequentialBatchSink::AsyncPublish(
-    google::pubsub::v1::PublishRequest const& request) {
+SequentialBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
   std::unique_lock<std::mutex> lk(mu_);
   if (!corked_on_error_.ok()) {
     return make_ready_future(StatusOr<PublishResponse>(corked_on_error_));
   }
   if (corked_on_pending_) {
-    queue_.push_back({request, {}});
+    queue_.push_back({std::move(request), {}});
     return queue_.back().promise.get_future();
   }
   corked_on_pending_ = true;
   lk.unlock();
 
   auto weak = WeakFromThis();
-  return sink_->AsyncPublish(request).then(
-      [weak](future<StatusOr<PublishResponse>> f) {
+  return sink_->AsyncPublish(std::move(request))
+      .then([weak](future<StatusOr<PublishResponse>> f) {
         auto r = f.get();
         auto status = r ? Status{} : r.status();
         if (auto self = weak.lock()) self->OnPublish(std::move(status));
@@ -93,7 +92,7 @@ void SequentialBatchSink::OnPublish(Status s) {
       if (auto self = weak.lock()) self->OnPublish(std::move(status));
     }
   };
-  sink_->AsyncPublish(pr.request)
+  sink_->AsyncPublish(std::move(pr.request))
       .then(MoveCaptureRequest{WeakFromThis(), std::move(pr.promise)});
 }
 

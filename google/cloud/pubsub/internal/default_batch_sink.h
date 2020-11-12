@@ -43,7 +43,7 @@ class DefaultBatchSink : public BatchSink {
   ~DefaultBatchSink() override = default;
 
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
-      google::pubsub::v1::PublishRequest const& request) override;
+      google::pubsub::v1::PublishRequest request) override;
 
   void ResumePublish(std::string const& ordering_key) override;
 
