@@ -26,11 +26,5 @@ cbt -project "${GOOGLE_CLOUD_PROJECT}" -instance test-instance \
 
 ## Storage
 
-You need to create at least one bucket:
-
-```bash
-gsutil mb -p "${GOOGLE_CLOUD_PROJECT}" \
-    "gs://${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-```
-
-<!-- TODO(#...) - document all the steps to create resources -->
+The instructions for setting up storage resources are found in
+[doc/setup-test-resources.md](google/cloud/storage/doc/setup-test-resources.md).
