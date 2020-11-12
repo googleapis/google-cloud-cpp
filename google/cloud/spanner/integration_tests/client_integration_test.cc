@@ -897,7 +897,7 @@ TEST_F(ClientIntegrationTest, InformationSchema) {
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
     if (emulator_) {
-      // TODO(#9999): Awaiting emulator support for version_retention_period.
+      // TODO(#5479): Awaiting emulator support for version_retention_period.
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
       EXPECT_THAT(row, IsOk());

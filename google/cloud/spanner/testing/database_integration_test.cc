@@ -53,7 +53,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   std::cout << "Creating database and table " << std::flush;
   std::vector<std::string> extra_statements;
   if (!emulator) {
-    // TODO(#9999): Awaiting emulator support for version_retention_period.
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
     extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
                                "SET OPTIONS (version_retention_period='2h')");
   }
