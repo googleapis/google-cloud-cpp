@@ -71,8 +71,8 @@ class SubscriptionMessageQueue
   void Start(MessageCallback cb) override;
   void Shutdown() override;
   void Read(std::size_t max_callbacks) override;
-  future<Status> AckMessage(std::string const& ack_id) override;
-  future<Status> NackMessage(std::string const& ack_id) override;
+  void AckMessage(std::string const& ack_id) override;
+  void NackMessage(std::string const& ack_id) override;
 
  private:
   explicit SubscriptionMessageQueue(
