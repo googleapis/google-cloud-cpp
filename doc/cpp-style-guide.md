@@ -15,22 +15,6 @@ not end with a trailing underscore.
 
 [link to GSG's section on include guards](https://google.github.io/styleguide/cppguide.html#The__define_Guard)
 
-## Reference Arguments
-
-Function return values are preferred over argument out-params. However, when an
-out-param is appropriate, prefer a non-const reference.
-
-As of this writing, this rule violates the GSG.
-
-[link to GSG's section on reference arguments](https://google.github.io/styleguide/cppguide.html#Reference_Arguments)
-
-## Preincrement and Predecrement
-
-Always use the prefix forms (`++i`) of increment and decrement unless the
-post-increment *semantics* are needed.
-
-[link to GSG's section on prefix increment/decrement](https://google.github.io/styleguide/cppguide.html#Preincrement_and_Predecrement)
-
 ## Where to put `const`
 
 Put the const on the right of what it modifies, as in `std::string const&`.
@@ -56,12 +40,6 @@ string const & str;  // BAD
 ```
 
 [link to GSG's section on pointer and reference expressions](https://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions)
-
-## Enumerator Names
-
-Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAME`.
-
-[link to GSG's section on enumerator names](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
 
 ## Order of Includes
 
