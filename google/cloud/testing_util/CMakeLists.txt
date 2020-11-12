@@ -20,7 +20,6 @@ if (BUILD_TESTING)
         google_cloud_cpp_testing # cmake-format: sort
         assert_ok.cc
         assert_ok.h
-        async_sequencer.cc
         async_sequencer.h
         capture_log_lines_backend.cc
         capture_log_lines_backend.h
