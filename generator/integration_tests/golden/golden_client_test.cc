@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/database_admin_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_database_admin_connection.gcpcxx.pb.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -30,90 +31,8 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-// using ::protobuf::util::FieldMaskUtil::IsPathInFieldMask;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-
-class MockDatabaseAdminConnection : public DatabaseAdminConnection {
-public:
-  ~MockDatabaseAdminConnection() = default;
-
-  MOCK_METHOD(
-      ListDatabasesRange, ListDatabases,
-      (::google::test::admin::database::v1::ListDatabasesRequest request),
-      (override));
-  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Database>>,
-              CreateDatabase,
-              (::google::test::admin::database::v1::CreateDatabaseRequest const
-                   &request),
-              (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
-      (::google::test::admin::database::v1::GetDatabaseRequest const &request),
-      (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>,
-      UpdateDatabaseDdl,
-      (::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-           &request),
-      (override));
-  MOCK_METHOD(
-      Status, DropDatabase,
-      (::google::test::admin::database::v1::DropDatabaseRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
-      GetDatabaseDdl,
-      (::google::test::admin::database::v1::GetDatabaseDdlRequest const
-           &request),
-      (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
-              (::google::iam::v1::SetIamPolicyRequest const &request),
-              (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
-              (::google::iam::v1::GetIamPolicyRequest const &request),
-              (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (::google::iam::v1::TestIamPermissionsRequest const &request),
-              (override));
-  MOCK_METHOD(
-      future<StatusOr<::google::test::admin::database::v1::Backup>>,
-      CreateBackup,
-      (::google::test::admin::database::v1::CreateBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
-      (::google::test::admin::database::v1::GetBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
-      (::google::test::admin::database::v1::UpdateBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      Status, DeleteBackup,
-      (::google::test::admin::database::v1::DeleteBackupRequest const &request),
-      (override));
-  MOCK_METHOD(ListBackupsRange, ListBackups,
-              (::google::test::admin::database::v1::ListBackupsRequest request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Database>>,
-              RestoreDatabase,
-              (::google::test::admin::database::v1::RestoreDatabaseRequest const
-                   &request),
-              (override));
-  MOCK_METHOD(
-      ListDatabaseOperationsRange, ListDatabaseOperations,
-      (::google::test::admin::database::v1::ListDatabaseOperationsRequest
-           request),
-      (override));
-  MOCK_METHOD(ListBackupOperationsRange, ListBackupOperations,
-              (::google::test::admin::database::v1::ListBackupOperationsRequest
-                   request),
-              (override));
-};
 
 TEST(GoldenClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
