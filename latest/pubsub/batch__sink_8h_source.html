@@ -104,7 +104,7 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">virtual</span> ~BatchSink() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">virtual</span> future&lt;StatusOr&lt;google::pubsub::v1::PublishResponse&gt;&gt; AsyncPublish(</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      google::pubsub::v1::PublishRequest <span class="keyword">const</span>&amp; request) = 0;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      google::pubsub::v1::PublishRequest request) = 0;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> ResumePublish(std::string <span class="keyword">const</span>&amp; ordering_key) = 0;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>

@@ -104,26 +104,25 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;      backoff_policy_(std::move(backoff_policy)) {}</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;future&lt;StatusOr&lt;google::pubsub::v1::PublishResponse&gt;&gt;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;DefaultBatchSink::AsyncPublish(</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    google::pubsub::v1::PublishRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">auto</span>&amp; stub = stub_;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keywordflow">return</span> google::cloud::internal::AsyncRetryLoop(</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      retry_policy_-&gt;clone(), backoff_policy_-&gt;clone(),</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      google::cloud::internal::Idempotency::kIdempotent, cq_,</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      [stub](google::cloud::CompletionQueue&amp; cq,</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;             std::unique_ptr&lt;grpc::ClientContext&gt; context,</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;             google::pubsub::v1::PublishRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        return stub-&gt;AsyncPublish(cq, std::move(context), request);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      },</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      std::move(request), __func__);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span> DefaultBatchSink::ResumePublish(std::string <span class="keyword">const</span>&amp;) {}</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">auto</span>&amp; stub = stub_;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">return</span> google::cloud::internal::AsyncRetryLoop(</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      retry_policy_-&gt;clone(), backoff_policy_-&gt;clone(),</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;      google::cloud::internal::Idempotency::kIdempotent, cq_,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      [stub](google::cloud::CompletionQueue&amp; cq,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;             std::unique_ptr&lt;grpc::ClientContext&gt; context,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;             google::pubsub::v1::PublishRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        return stub-&gt;AsyncPublish(cq, std::move(context), request);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;      },</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;      std::move(request), __func__);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> DefaultBatchSink::ResumePublish(std::string <span class="keyword">const</span>&amp;) {}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="adefault__batch__sink_8h_html"><div class="ttname"><a href="default__batch__sink_8h.html">default_batch_sink.h</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
