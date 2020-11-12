@@ -23,6 +23,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
+#include <google/protobuf/util/time_util.h>
 
 namespace google {
 namespace cloud {
@@ -913,6 +914,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   for (auto&& m : params.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
+  request.set_return_commit_stats(params.options.return_stats());
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
     auto begin = BeginTransaction(
@@ -943,6 +945,13 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   if (!timestamp) return std::move(timestamp).status();
   CommitResult r;
   r.commit_timestamp = *std::move(timestamp);
+  if (response->has_commit_stats()) {
+    r.commit_stats.emplace(
+        CommitStats{response->commit_stats().mutation_count(),
+                    std::chrono::nanoseconds(
+                        google::protobuf::util::TimeUtil::DurationToNanoseconds(
+                            response->commit_stats().overload_delay()))});
+  }
   return r;
 }
 
