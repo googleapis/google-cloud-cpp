@@ -425,9 +425,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   fi
 
   io::log_yellow "Verify no extraneous files were installed."
-  # This script is only run on a Fedora-based build, so it's fine that this
-  # setting is not portable.
-  export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:/usr/local/lib64/pkgconfig"
+  export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
 
   # Get the version of one of the libraries. These should all be the same, so
   # it does not matter what we use.
@@ -435,7 +433,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   GOOGLE_CLOUD_CPP_VERSION_MAJOR=$(echo "${GOOGLE_CLOUD_CPP_VERSION}" | cut -d'.' -f1)
 
   # @E is a parameter substitution that provides an escaped version of the
-  # string, i.e 1.21.0 functionally becomes 1\.21\.0.
+  # string, i.e 1.21.0 functionally becomes 1\.21\.0. Otherwise, the regex
+  # match below will fail.
   GOOGLE_CLOUD_CPP_VERSION_ESCAPED="${GOOGLE_CLOUD_CPP_VERSION@E}"
 
   mapfile -t files < <(find /var/tmp/staging/ -type f | grep -vE \
