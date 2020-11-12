@@ -230,6 +230,12 @@ StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& pem_contents) {
   std::string encoded_header = internal::UrlsafeBase64Encode(header);
   std::string encoded_payload = internal::UrlsafeBase64Encode(payload);
+  auto pem_signature =
+      internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
+                                  pem_contents, JwtSigningAlgorithms::RS256);
+  if (!pem_signature) {
+    return pem_signature.status();
+  }
   std::string encoded_signature = internal::UrlsafeBase64Encode(
       internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
                                   pem_contents, JwtSigningAlgorithms::RS256)
