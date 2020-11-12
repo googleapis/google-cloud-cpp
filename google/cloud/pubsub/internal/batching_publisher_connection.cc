@@ -189,7 +189,7 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
 
   batch.weak = shared_from_this();
   request.set_topic(topic_full_name_);
-  sink_->AsyncPublish(request).then(std::move(batch));
+  sink_->AsyncPublish(std::move(request)).then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

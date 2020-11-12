@@ -31,8 +31,7 @@ DefaultBatchSink::DefaultBatchSink(
       backoff_policy_(std::move(backoff_policy)) {}
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
-DefaultBatchSink::AsyncPublish(
-    google::pubsub::v1::PublishRequest const& request) {
+DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
   auto& stub = stub_;
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(),
