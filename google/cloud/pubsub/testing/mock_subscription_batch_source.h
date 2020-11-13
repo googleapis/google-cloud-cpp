@@ -32,8 +32,6 @@ class MockSubscriptionBatchSource
   MOCK_METHOD1(AckMessage, void(std::string const& ack_id));
   MOCK_METHOD1(NackMessage, void(std::string const& ack_id));
   MOCK_METHOD1(BulkNack, void(std::vector<std::string> ack_ids));
-  MOCK_METHOD2(ExtendLeases, void(std::vector<std::string> ack_ids,
-                                  std::chrono::seconds extension));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

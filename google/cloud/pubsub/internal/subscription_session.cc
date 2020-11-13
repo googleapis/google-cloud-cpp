@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
-#include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -170,13 +169,9 @@ future<Status> CreateSubscriptionSession(
       executor, shutdown_manager, stub, subscription.FullName(),
       std::move(client_id), options, std::move(retry_policy),
       std::move(backoff_policy));
-  auto lease_management = SubscriptionLeaseManagement::Create(
-      executor, shutdown_manager, std::move(batch),
-      options.max_deadline_time());
-
-  return SubscriptionSessionImpl::Create(
-      options, std::move(executor), std::move(shutdown_manager),
-      std::move(lease_management), std::move(p));
+  return SubscriptionSessionImpl::Create(options, std::move(executor),
+                                         std::move(shutdown_manager),
+                                         std::move(batch), std::move(p));
 }
 
 future<Status> CreateTestingSubscriptionSession(
@@ -202,21 +197,9 @@ future<Status> CreateTestingSubscriptionSession(
       executor, shutdown_manager, stub, subscription.FullName(),
       "test-client-id", options, std::move(retry_policy),
       std::move(backoff_policy));
-
-  auto cq = executor;  // need a copy to make it mutable
-  auto timer = [cq](std::chrono::system_clock::time_point) mutable {
-    return cq.MakeRelativeTimer(std::chrono::milliseconds(50))
-        .then([](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-          return f.get().status();
-        });
-  };
-  auto lease_management = SubscriptionLeaseManagement::CreateForTesting(
-      executor, shutdown_manager, timer, std::move(batch),
-      options.max_deadline_time());
-
-  return SubscriptionSessionImpl::Create(
-      options, std::move(executor), std::move(shutdown_manager),
-      std::move(lease_management), std::move(p));
+  return SubscriptionSessionImpl::Create(options, std::move(executor),
+                                         std::move(shutdown_manager),
+                                         std::move(batch), std::move(p));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

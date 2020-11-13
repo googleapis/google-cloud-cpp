@@ -43,7 +43,9 @@ using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
 using ::testing::Property;
+using ::testing::UnorderedElementsAre;
 using ::testing::Unused;
 
 class FakeStream {
@@ -603,18 +605,6 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
                   return success_stream.AddAction("Write");
-                })
-            .WillOnce(
-                [&](google::pubsub::v1::StreamingPullRequest const& request,
-                    grpc::WriteOptions const&) {
-                  EXPECT_THAT(request.modify_deadline_ack_ids(),
-                              ElementsAre("fake-006"));
-                  EXPECT_THAT(request.modify_deadline_seconds(),
-                              ElementsAre(10));
-                  EXPECT_THAT(request.ack_ids(), IsEmpty());
-                  EXPECT_THAT(request.client_id(), IsEmpty());
-                  EXPECT_THAT(request.subscription(), IsEmpty());
-                  return success_stream.AddAction("Write");
                 });
         return stream;
       });
@@ -643,9 +633,6 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   uut->BulkNack({"fake-004", "fake-005"});
   success_stream.WaitForAction().set_value(true);  // Write()
 
-  uut->ExtendLeases({"fake-006"}, std::chrono::seconds(10));
-  success_stream.WaitForAction().set_value(true);  // Write()
-
   shutdown->MarkAsShutdown("test", {});
   uut->Shutdown();
   last_read.set_value(false);                      // Read()
@@ -658,16 +645,33 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
 
+  // We will configure StreamingSubscriptionBatchSource's to use this period
+  // in its periodic timer.
+  auto constexpr kHz = std::chrono::milliseconds(42);
+
+  // How often do we flush the buffers.
+  auto constexpr kAckHz = std::chrono::milliseconds(250);
+
+  // We mock the wall clock by changing this variable, we start with an easy
+  // to recognize value.
+  auto start = std::chrono::system_clock::time_point{} +
+               std::chrono::seconds(1000000000ULL);
+  std::chrono::system_clock::time_point mocked_now = start;
+  MockFunction<std::chrono::system_clock::time_point()> mock_clock;
+  EXPECT_CALL(mock_clock, Call).WillRepeatedly([&] { return mocked_now; });
+
   AsyncSequencer<void> async;
-  auto cq_impl =
+  AsyncSequencer<void> timer;
+  auto mock_cq =
       std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
-  EXPECT_CALL(*cq_impl, MakeRelativeTimer)
-      .WillRepeatedly([&async](std::chrono::nanoseconds) {
-        return async.PushBack().then([](future<void>) {
-          return make_status_or(std::chrono::system_clock::now());
-        });
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds d) {
+        EXPECT_EQ(d, kHz);
+        auto deadline = mocked_now + d;
+        return timer.PushBack().then(
+            [deadline](future<void>) { return make_status_or(deadline); });
       });
-  EXPECT_CALL(*cq_impl, RunAsync)
+  EXPECT_CALL(*mock_cq, RunAsync)
       .WillRepeatedly([&async](std::unique_ptr<internal::RunAsyncBase> f) {
         struct MoveCapture {
           std::unique_ptr<internal::RunAsyncBase> function;
@@ -698,7 +702,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
                   EXPECT_TRUE(options.is_write_through());
-                  return success_stream.AddAction("Write");
+                  return success_stream.AddAction("Write/1");
                 })
             .WillOnce(
                 [&](Request const& request, grpc::WriteOptions const& options) {
@@ -708,7 +712,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
                   EXPECT_TRUE(options.is_write_through());
-                  return success_stream.AddAction("Write");
+                  return success_stream.AddAction("Write/2");
                 })
             .WillOnce(
                 [&](Request const& request, grpc::WriteOptions const& options) {
@@ -718,22 +722,25 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
                   EXPECT_THAT(request.client_id(), IsEmpty());
                   EXPECT_THAT(request.subscription(), IsEmpty());
                   EXPECT_TRUE(options.is_write_through());
-                  return success_stream.AddAction("Write");
+                  return success_stream.AddAction("Write/3");
                 });
         return stream;
       });
 
   // Create an inactive completion queue to avoid flakes due to timing
-  google::cloud::CompletionQueue cq(cq_impl);
+  google::cloud::CompletionQueue cq(mock_cq);
   auto shutdown = std::make_shared<SessionShutdownManager>();
+  StreamingSubscriptionBatchSource::TimerConfig timer_config;
+  timer_config.clock = mock_clock.AsStdFunction();
+  timer_config.period = kHz;
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
       cq, shutdown, mock, subscription.FullName(), client_id,
       TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
-      AckBatchingConfig(kBatchSize, std::chrono::hours(24)));
+      AckBatchingConfig(kBatchSize, kAckHz), std::move(timer_config));
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
-  auto timer = async.PopFront();                   // MakeRelativeTimer()
+  auto periodic = timer.PopFront();                // MakeRelativeTimer()
   success_stream.WaitForAction().set_value(true);  // Start()
   success_stream.WaitForAction().set_value(true);  // Write()
   success_stream.WaitForAction().set_value(true);  // Read()
@@ -755,8 +762,13 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   for (int i = 0; i != kBatchSize / 2; ++i) {
     uut->AckMessage("fake-b2-" + std::to_string(i));
   }
-  // Run the the timer
-  timer.set_value();
+  // Triggering the clock now should have no effect.
+  periodic.set_value();
+  periodic = timer.PopFront();
+  // Advance the clock to the pointer where it should trigger a flush
+  mocked_now = start + 2 * kAckHz;
+  periodic.set_value();
+
   // That should trigger the request
   success_stream.WaitForAction().set_value(true);
 
@@ -764,6 +776,158 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   uut->Shutdown();
   last_read.set_value(false);                      // Read()
   success_stream.WaitForAction().set_value(true);  // Finish()
+
+  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
+
+  // We will configure StreamingSubscriptionBatchSource's to use this period
+  // in its periodic timer.
+  auto constexpr kHz = std::chrono::milliseconds(42);
+
+  // We will configure StreamingSubscriptionBatchSource to flush leases every
+  auto constexpr kLeaseHz = std::chrono::seconds(7);
+
+  // We mock the wall clock by changing this variable, we start with an easy
+  // to recognize value.
+  auto start = std::chrono::system_clock::time_point{} +
+               std::chrono::seconds(1000000000ULL);
+  std::chrono::system_clock::time_point mocked_now = start;
+  MockFunction<std::chrono::system_clock::time_point()> mock_clock;
+  EXPECT_CALL(mock_clock, Call).WillRepeatedly([&] { return mocked_now; });
+
+  AsyncSequencer<void> async;
+  AsyncSequencer<void> timer;
+  auto mock_cq =
+      std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillRepeatedly([&](std::chrono::nanoseconds d) {
+        EXPECT_EQ(d, kHz);
+        auto deadline = mocked_now + d;
+        return timer.PushBack().then(
+            [deadline](future<void>) { return make_status_or(deadline); });
+      });
+  EXPECT_CALL(*mock_cq, RunAsync)
+      .WillRepeatedly([&async](std::unique_ptr<internal::RunAsyncBase> f) {
+        struct MoveCapture {
+          std::unique_ptr<internal::RunAsyncBase> function;
+          void operator()(future<void>) const { function->exec(); }
+        };
+        return async.PushBack().then(MoveCapture{std::move(f)});
+      });
+
+  auto constexpr kBatchSize = 10;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  AsyncSequencer<int> async_pull;
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue&,
+                    std::unique_ptr<grpc::ClientContext>,
+                    google::pubsub::v1::StreamingPullRequest const&) {
+        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        using Response = google::pubsub::v1::StreamingPullResponse;
+        using Request = google::pubsub::v1::StreamingPullRequest;
+
+        auto mock_start = [&async_pull] {
+          return async_pull.PushBack("Start").then(
+              [](future<int>) { return true; });
+        };
+        auto mock_write = [&async_pull](Unused, Unused) {
+          return async_pull.PushBack("Write").then(
+              [](future<int>) { return true; });
+        };
+        auto mock_read = [&async_pull] {
+          return async_pull.PushBack("Read").then([](future<int> f) {
+            auto size = f.get();
+            if (size < 0) return absl::optional<Response>{};
+            Response response;
+            for (int i = 0; i != size; ++i) {
+              auto& m = *response.add_received_messages();
+              m.set_ack_id("ack-" + std::to_string(i));
+              m.mutable_message()->set_message_id("msg-" + std::to_string(i));
+            }
+            return absl::make_optional(std::move(response));
+          });
+        };
+        auto mock_finish = [&async_pull] {
+          return async_pull.PushBack("Finish").then([](future<int> f) {
+            if (f.get() == 0) return Status{};
+            return Status{StatusCode::kUnknown, "mock-error"};
+          });
+        };
+
+        EXPECT_CALL(*stream, Start).WillOnce(mock_start);
+        EXPECT_CALL(*stream, Write).WillOnce(mock_write);
+        EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+        EXPECT_CALL(*stream, Read).WillRepeatedly(mock_read);
+        EXPECT_CALL(*stream, Finish).WillOnce(mock_finish);
+
+        EXPECT_CALL(*stream,
+                    Write(Property(&Request::subscription, std::string{}), _))
+            .WillOnce([&async_pull](Request const& request, Unused) mutable {
+              EXPECT_THAT(request.ack_ids(), ElementsAre("ack-0", "ack-3"));
+              EXPECT_THAT(request.modify_deadline_ack_ids(),
+                          UnorderedElementsAre("ack-1", "ack-2", "ack-4"));
+              // The exact location of the Nack is an implementation detail, but
+              // it should be there, and should be a Nack.
+              int index = 0;
+              for (auto const& a : request.modify_deadline_ack_ids()) {
+                if (a == "ack-1") {
+                  EXPECT_EQ(0, request.modify_deadline_seconds(index));
+                  break;
+                }
+                ++index;
+              }
+              return async_pull.PushBack("Write/Ack").then([](future<int>) {
+                return true;
+              });
+            });
+
+        return stream;
+      });
+
+  // Create an inactive completion queue to avoid flakes due to timing
+  google::cloud::CompletionQueue cq(mock_cq);
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  StreamingSubscriptionBatchSource::TimerConfig timer_config;
+  timer_config.clock = mock_clock.AsStdFunction();
+  timer_config.period = kHz;
+  timer_config.lease_refresh = kLeaseHz;
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      cq, shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      AckBatchingConfig(kBatchSize, std::chrono::hours(24)),
+      std::move(timer_config));
+
+  auto done = shutdown->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+  auto periodic = timer.PopFront();    // MakeRelativeTimer()
+  async_pull.PopFront().set_value(0);  // Start()
+  async_pull.PopFront().set_value(0);  // Write()
+  async_pull.PopFront().set_value(5);  // Read()
+  async.PopFront().set_value();        // RunAsync(ReadLoop())
+  auto read = async_pull.PopFront();
+
+  uut->AckMessage("ack-0");
+  uut->AckMessage("ack-3");
+  uut->NackMessage("ack-1");
+
+  // A timer trigger should have no effect because the clock has not advanced.
+  periodic.set_value();
+  periodic = timer.PopFront();
+  // Advance the clock to a point where the leases should be refreshed and fire
+  // the timer.
+  mocked_now = start + kLeaseHz + std::chrono::seconds(1);
+  periodic.set_value();
+  periodic = timer.PopFront();
+  async_pull.PopFront().set_value(0);
+
+  shutdown->MarkAsShutdown("test", {});
+  uut->Shutdown();
+  read.set_value(-1);                  // Read()
+  async_pull.PopFront().set_value(0);  // Finish()
 
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }

@@ -23,9 +23,11 @@
 #include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <iosfwd>
@@ -59,10 +61,50 @@ struct AckBatchingConfig {
   std::chrono::milliseconds max_hold_time{100};
 };
 
+/**
+ * Keep a single StreamingPull active.
+ *
+ * Creates a single StreamingPull request active:
+ *
+ * - Once successfully connected [1], it resumes the request if the streaming
+ *   pull is terminated with any failure.
+ * - Sends at most one `Read()` and at most one `Write()` request to the
+ *   underlying gRPC abstraction.
+ * - On shutdown, wait for any pending `Read()` and `Write()` requests to
+ *   complete before calling `Finish()`.
+ * - Invoke a callback when `Read()` receives data.
+ * - To preserve ordering, only once the callback returns is a new `Read()`
+ *   request issued.
+ * - To minimize I/O buffers nacks and acks into a single `Write()` request.
+ * - Periodically flush any buffered acks or nacks.
+ * - Periodically update the leases for any messages that have not been acked
+ *   nor nacked.
+ *
+ * For testing purposes the clock may be mocked via a `std::function<>`.
+ *
+ * Flushing and lease updates are implemented using a simple periodic timer, the
+ * timer remains active even when there is no data to flush.
+ *
+ * [1]: A streaming pull is "connected" once the first `Read()` request
+ *      completes without error.
+ */
 class StreamingSubscriptionBatchSource
     : public SubscriptionBatchSource,
       public std::enable_shared_from_this<StreamingSubscriptionBatchSource> {
  public:
+  using Clock = std::function<std::chrono::system_clock::time_point(void)>;
+
+  static auto constexpr kMinimumAckDeadline = std::chrono::seconds(10);
+  static auto constexpr kMaximumAckDeadline = std::chrono::seconds(600);
+
+  struct TimerConfig {
+    TimerConfig() : clock([] { return std::chrono::system_clock::now(); }) {}
+
+    Clock clock;
+    std::chrono::milliseconds period{10};
+    std::chrono::milliseconds lease_refresh{kMinimumAckDeadline / 2};
+  };
+
   explicit StreamingSubscriptionBatchSource(
       google::cloud::CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
@@ -70,7 +112,7 @@ class StreamingSubscriptionBatchSource
       std::string client_id, pubsub::SubscriberOptions const& options,
       std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
       std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy,
-      AckBatchingConfig ack_batching_config = {})
+      AckBatchingConfig ack_batching_config = {}, TimerConfig timer_config = {})
       : cq_(std::move(cq)),
         shutdown_manager_(std::move(shutdown_manager)),
         stub_(std::move(stub)),
@@ -81,7 +123,8 @@ class StreamingSubscriptionBatchSource
         max_deadline_time_(options.max_deadline_time()),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
-        ack_batching_config_(std::move(ack_batching_config)) {}
+        ack_batching_config_(std::move(ack_batching_config)),
+        timer_config_(std::move(timer_config)) {}
 
   ~StreamingSubscriptionBatchSource() override = default;
 
@@ -91,8 +134,6 @@ class StreamingSubscriptionBatchSource
   void AckMessage(std::string const& ack_id) override;
   void NackMessage(std::string const& ack_id) override;
   void BulkNack(std::vector<std::string> ack_ids) override;
-  void ExtendLeases(std::vector<std::string> ack_ids,
-                    std::chrono::seconds extension) override;
 
   using AsyncPullStream = SubscriberStub::AsyncPullStream;
 
@@ -142,8 +183,8 @@ class StreamingSubscriptionBatchSource
   void DrainQueues(std::unique_lock<std::mutex> lk, bool force_flush);
   void OnWrite(bool ok);
 
-  void StartWriteTimer();
-  void OnWriteTimer(Status const&);
+  void StartTimer();
+  void OnTimer(Status const&);
 
   void ChangeState(std::unique_lock<std::mutex> const& lk, StreamState s,
                    char const* where, char const* reason);
@@ -159,6 +200,7 @@ class StreamingSubscriptionBatchSource
   std::unique_ptr<pubsub::RetryPolicy const> retry_policy_;
   std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy_;
   AckBatchingConfig const ack_batching_config_;
+  TimerConfig const timer_config_;
 
   std::mutex mu_;
   BatchCallback callback_;
@@ -170,7 +212,13 @@ class StreamingSubscriptionBatchSource
   std::shared_ptr<AsyncPullStream> stream_;
   std::vector<std::string> ack_queue_;
   std::vector<std::string> nack_queue_;
-  std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
+
+  struct LeaseStatus {
+    std::chrono::system_clock::time_point maximum_extension;
+  };
+  absl::flat_hash_map<std::string, LeaseStatus> leases_;
+  std::chrono::system_clock::time_point flush_deadline_;
+  std::chrono::system_clock::time_point lease_refresh_deadline_;
 };
 
 std::ostream& operator<<(std::ostream& os,

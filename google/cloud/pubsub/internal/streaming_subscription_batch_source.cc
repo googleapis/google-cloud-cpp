@@ -21,13 +21,22 @@ namespace cloud {
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+std::chrono::seconds constexpr StreamingSubscriptionBatchSource::
+    kMinimumAckDeadline;
+std::chrono::seconds constexpr StreamingSubscriptionBatchSource::
+    kMaximumAckDeadline;
+
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
   if (callback_) return;
   callback_ = std::move(callback);
+
+  auto const now = timer_config_.clock();
+  flush_deadline_ = now + ack_batching_config_.max_hold_time;
+  lease_refresh_deadline_ = now + timer_config_.lease_refresh;
   lk.unlock();
 
-  StartWriteTimer();
+  StartTimer();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
     StartStream(retry_policy_->clone(), backoff_policy_->clone());
   });
@@ -43,12 +52,14 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   ack_queue_.push_back(ack_id);
+  leases_.erase(ack_id);
   DrainQueues(std::move(lk), false);
 }
 
 void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
   std::unique_lock<std::mutex> lk(mu_);
   nack_queue_.push_back(ack_id);
+  leases_.erase(ack_id);
   DrainQueues(std::move(lk), false);
 }
 
@@ -57,15 +68,6 @@ void StreamingSubscriptionBatchSource::BulkNack(
   std::unique_lock<std::mutex> lk(mu_);
   for (auto& a : ack_ids) {
     nack_queue_.push_back(std::move(a));
-  }
-  DrainQueues(std::move(lk), false);
-}
-
-void StreamingSubscriptionBatchSource::ExtendLeases(
-    std::vector<std::string> ack_ids, std::chrono::seconds extension) {
-  std::unique_lock<std::mutex> lk(mu_);
-  for (auto& a : ack_ids) {
-    deadlines_queue_.emplace_back(std::move(a), extension);
   }
   DrainQueues(std::move(lk), false);
 }
@@ -272,6 +274,10 @@ void StreamingSubscriptionBatchSource::OnRead(
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;
   if (response && stream_state_ == StreamState::kActive && !shutdown_) {
+    auto const maximum_extension = timer_config_.clock() + max_deadline_time_;
+    for (auto const& m : response->received_messages()) {
+      leases_.emplace(m.ack_id(), LeaseStatus{maximum_extension});
+    }
     lk.unlock();
     callback_(*std::move(response));
     cq_.RunAsync([weak] {
@@ -316,33 +322,50 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
 
 void StreamingSubscriptionBatchSource::DrainQueues(
     std::unique_lock<std::mutex> lk, bool force_flush) {
-  auto const threshold = force_flush ? 1 : ack_batching_config_.max_batch_size;
-  if (ack_queue_.size() < threshold && nack_queue_.size() < threshold &&
-      deadlines_queue_.empty()) {
+  auto const threshold = ack_batching_config_.max_batch_size;
+  if (!force_flush && ack_queue_.size() < threshold &&
+      nack_queue_.size() < threshold) {
     return;
   }
   if (stream_state_ != StreamState::kActive || pending_write_) return;
+
+  auto const now = timer_config_.clock();
+  flush_deadline_ = now + ack_batching_config_.max_hold_time;
+
   auto stream = stream_;
   pending_write_ = true;
+  google::pubsub::v1::StreamingPullRequest request;
 
   std::vector<std::string> acks;
   acks.swap(ack_queue_);
   std::vector<std::string> nacks;
   nacks.swap(nack_queue_);
-  std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
-  deadlines.swap(deadlines_queue_);
+
+  std::vector<std::string> lease_extensions;
+  // We try to avoid work while holding the `lk` lock, but rarely (about once
+  // every 5 seconds) we need to update the leases. That requires a potentially
+  // long loop.
+  auto increase_request_capacity = [&request](int growth) {
+    request.mutable_modify_deadline_ack_ids()->Reserve(
+        request.modify_deadline_ack_ids().Capacity() + growth);
+    request.mutable_modify_deadline_seconds()->Reserve(
+        request.modify_deadline_seconds().Capacity() + growth);
+  };
+  if (now > lease_refresh_deadline_) {
+    lease_refresh_deadline_ = now + timer_config_.lease_refresh;
+    increase_request_capacity(static_cast<int>(leases_.size()));
+    for (auto const& kv : leases_) {
+      request.add_modify_deadline_ack_ids(kv.first);
+      request.add_modify_deadline_seconds(kMinimumAckDeadline.count());
+    }
+  }
   lk.unlock();
 
-  google::pubsub::v1::StreamingPullRequest request;
   for (auto& a : acks) request.add_ack_ids(std::move(a));
+  increase_request_capacity(static_cast<int>(nacks.size()));
   for (auto& n : nacks) {
     request.add_modify_deadline_ack_ids(std::move(n));
     request.add_modify_deadline_seconds(0);
-  }
-  for (auto& d : deadlines) {
-    request.add_modify_deadline_ack_ids(std::move(d.first));
-    request.add_modify_deadline_seconds(
-        static_cast<std::int32_t>(d.second.count()));
   }
   // Note that we do not use `AsyncRetryLoop()` here. The ack/nack pipeline is
   // best-effort anyway, there is no guarantee that the server will act on any
@@ -364,19 +387,22 @@ void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   ShutdownStream(std::move(lk), ok ? "state" : "write error");
 }
 
-void StreamingSubscriptionBatchSource::StartWriteTimer() {
+void StreamingSubscriptionBatchSource::StartTimer() {
   auto weak = WeakFromThis();
   using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {
-    if (auto self = weak.lock()) self->OnWriteTimer(f.get().status());
+  cq_.MakeRelativeTimer(timer_config_.period).then([weak](F f) {
+    if (auto self = weak.lock()) self->OnTimer(f.get().status());
   });
 }
 
-void StreamingSubscriptionBatchSource::OnWriteTimer(Status const& s) {
+void StreamingSubscriptionBatchSource::OnTimer(Status const& s) {
   if (!s.ok()) return;
   std::unique_lock<std::mutex> lk(mu_);
-  DrainQueues(std::move(lk), true);
-  StartWriteTimer();
+  auto const now = timer_config_.clock();
+  if (now > flush_deadline_ || now > lease_refresh_deadline_) {
+    DrainQueues(std::move(lk), true);
+  }
+  StartTimer();
 }
 
 std::ostream& operator<<(std::ostream& os,
