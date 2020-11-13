@@ -47,6 +47,94 @@ The experiment can create a topic and subscription or receive their names from
 the command-line. Typically integration tests will create the topic and
 subscription while manual execution will use pre-existing Pub/Sub resources.
 
+### Running the Experiment
+
+The main audience for this guide are `google-cloud-cpp` developers that want to
+reproduce the benchmark results. This document assumes that you are familiar
+with the steps to compile the code in this repository, please check the
+top-level [README](../../../../README.md) if necessary.
+
+:warning: Running these benchmarks can easily exceed the free tier for Cloud
+Pub/Sub, generating hundreds of dollars in charges may take only a few minutes.
+Please consult the [pricing guide][pubsub-pricing].
+
+[pubsub-pricing]: https://cloud.google.com/pubsub/pricing
+
+In this example we assume that `GOOGLE_CLOUD_PROJECT` is an environment variable
+set to the GCP project you want to use. We also assume you have compiled the
+code and it is located in `$BINARY_DIR`.
+
+#### Create the Cloud Pub/Sub Topic and Subscriptions
+
+Before running the experiment setup a cloud topic and subscription. You only
+need to do this once, you can run the experiment multiple times using the same
+resources.
+
+```sh
+gcloud pubsub topics create --project=${GOOGLE_CLOUD_PROJECT} bench
+gcloud pubsub subscriptions create --project=${GOOGLE_CLOUD_PROJECT} \
+    --topic bench bench
+```
+
+#### Start the Publisher
+
+You would typically run the publisher and subscriber on separate GCE instances,
+but you can run this on any workstation. For best results use a regional
+endpoint, in the same region as your instance:
+
+```sh
+ENDPOINT=us-central1-pubsub.googleapis.com  # example, change as needed
+```
+
+Then start the publisher, note that these settings far exceed the
+[default quota][pubsub-quota] for a topic (which was 200MB/s when we wrote this
+document):
+
+[pubsub-quota]: https://cloud.google.com/pubsub/quotas#quotas
+
+```sh
+/usr/bin/time ${BINARY_DIR}/google/cloud/pubsub/benchmarks/throughput \
+    --endpoint=${ENDPOINT} \
+    --project-id=${GOOGLE_CLOUD_PROJECT} \
+    --topic-id=bench \
+    --subscription-id=bench \
+    --maximum-runtime=24h \
+    --publisher=true \
+    --publisher-pending-lwm=224MiB \
+    --publisher-pending-hwm=256MiB \
+    --publisher-target-messages-per-second=0 \
+    --minimum-runtime=1h \
+    --iteration-duration=5m \
+    --publisher-max-batch-bytes=10MB \
+    --publisher-io-channels=16 \
+    --publisher-io-threads=1 \
+    --publisher-thread-count=12 \
+    --payload-size=1KiB
+```
+
+#### Start the Subscriber
+
+Start the subscriber, note that these settings far exceed the
+[default quota][pubsub-quota] for a subscription (which was 200MB/s when we
+wrote this document):
+
+```sh
+/usr/bin/time ${BINARY_DIR}/google/cloud/pubsub/benchmarks/throughput \
+    --endpoint=${ENDPOINT} \
+    --project-id=${GOOGLE_CLOUD_PROJECT} \
+    --topic-id=bench \
+    --subscription-id=bench \
+    --maximum-runtime=24h \
+    --subscriber=true \
+    --subscriber-max-outstanding-messages=0 \
+    --subscriber-max-outstanding-bytes=100MiB \
+    --minimum-runtime=1h \
+    --iteration-duration=5m \
+    --subscriber-io-channels=32 \
+    --subscriber-io-threads=4 \
+    --subscriber-thread-count=128
+```
+
 ## Endurance Experiment
 
 This experiment is largely a torture test for the library. The objective is to
