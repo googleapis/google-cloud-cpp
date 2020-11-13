@@ -62,8 +62,8 @@ struct Config {
   int publisher_io_channels = 0;
   int publisher_max_batch_size = 1000;
   std::int64_t publisher_max_batch_bytes = 10 * kMB;
-  std::int64_t publisher_pending_lwm = 1000000;
-  std::int64_t publisher_pending_hwm = 2000000;
+  std::int64_t publisher_pending_lwm = 112 * kMiB;
+  std::int64_t publisher_pending_hwm = 128 * kMiB;
   std::int64_t publisher_target_messages_per_second = 1200 * 2000;
 
   bool subscriber = false;
@@ -209,6 +209,30 @@ void PrintResult(std::string const& operation, int iteration,
             << ',' << mbs << std::endl;
 }
 
+pubsub::Publisher CreatePublisher(Config const& config) {
+  auto publisher_options =
+      pubsub::PublisherOptions{}
+          .set_maximum_batch_message_count(config.publisher_max_batch_size)
+          .set_maximum_batch_bytes(
+              static_cast<std::size_t>(config.publisher_max_batch_bytes));
+  auto connection_options =
+      pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
+  if (!config.endpoint.empty()) {
+    connection_options.set_endpoint(config.endpoint);
+  }
+  if (config.publisher_io_threads != 0) {
+    connection_options.set_background_thread_pool_size(
+        config.publisher_io_threads);
+  }
+  if (config.publisher_io_channels != 0) {
+    connection_options.set_num_channels(config.publisher_io_channels);
+  }
+
+  return pubsub::Publisher(pubsub::MakePublisherConnection(
+      pubsub::Topic(config.project_id, config.topic_id),
+      std::move(publisher_options), std::move(connection_options)));
+}
+
 std::atomic<std::int64_t> send_count{0};
 std::atomic<std::int64_t> send_bytes{0};
 std::atomic<std::int64_t> ack_count{0};
@@ -218,8 +242,7 @@ std::atomic<std::int64_t> error_count{0};
 /// Run a single thread publishing events
 class PublishWorker {
  public:
-  PublishWorker(Config config, int id, pubsub::Publisher publisher)
-      : config_(std::move(config)), id_(id), publisher_(std::move(publisher)) {}
+  PublishWorker(Config config, int id) : config_(std::move(config)), id_(id) {}
 
   void Shutdown() {
     std::unique_lock<std::mutex> lk(mu_);
@@ -228,6 +251,8 @@ class PublishWorker {
   }
 
   void Run() {
+    auto publisher = CreatePublisher(config_);
+
     auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
     auto const data = google::cloud::internal::Sample(
         gen, static_cast<int>(config_.payload_size), "0123456789");
@@ -265,7 +290,7 @@ class PublishWorker {
                          .SetData(data)
                          .Build();
       auto const bytes = MessageSize(message);
-      publisher_.Publish(std::move(message))
+      publisher.Publish(std::move(message))
           .then([this, bytes](future<StatusOr<std::string>> f) {
             ++ack_count;
             ack_bytes.fetch_add(bytes);
@@ -291,7 +316,8 @@ class PublishWorker {
     std::unique_lock<std::mutex> lk(mu_);
     cv_.wait(lk, [&] { return !blocked_ || shutdown_; });
     if (shutdown_) return false;
-    if (++pending_ <= config_.publisher_pending_hwm) return true;
+    pending_ += config_.payload_size;
+    if (pending_ <= config_.publisher_pending_hwm) return true;
     blocked_ = true;
     ++hwm_count_;
     return true;
@@ -304,7 +330,8 @@ class PublishWorker {
 
   void OnAck() {
     std::unique_lock<std::mutex> lk(mu_);
-    if (--pending_ == 0) {
+    pending_ -= config_.payload_size;
+    if (pending_ == 0) {
       blocked_ = false;
       cv_.notify_all();
       return;
@@ -318,7 +345,6 @@ class PublishWorker {
 
   Config const config_;
   int const id_;
-  pubsub::Publisher publisher_;
   std::mutex mu_;
   std::condition_variable cv_;
   bool shutdown_ = false;
@@ -329,34 +355,11 @@ class PublishWorker {
 };
 
 void PublisherTask(Config const& config) {
-  auto publisher_options =
-      pubsub::PublisherOptions{}
-          .set_maximum_batch_message_count(config.publisher_max_batch_size)
-          .set_maximum_batch_bytes(
-              static_cast<std::size_t>(config.publisher_max_batch_bytes));
-  auto connection_options =
-      pubsub::ConnectionOptions{}.set_channel_pool_domain("Publisher");
-  if (!config.endpoint.empty()) {
-    connection_options.set_endpoint(config.endpoint);
-  }
-  if (config.publisher_io_threads != 0) {
-    connection_options.set_background_thread_pool_size(
-        config.publisher_io_threads);
-  }
-  if (config.publisher_io_channels != 0) {
-    connection_options.set_num_channels(config.publisher_io_channels);
-  }
-
-  pubsub::Publisher publisher(pubsub::MakePublisherConnection(
-      pubsub::Topic(config.project_id, config.topic_id),
-      std::move(publisher_options), std::move(connection_options)));
-
   std::vector<std::shared_ptr<PublishWorker>> workers;
   int task_id = 0;
   std::generate_n(
-      std::back_inserter(workers), config.publisher_thread_count, [&] {
-        return std::make_shared<PublishWorker>(config, task_id++, publisher);
-      });
+      std::back_inserter(workers), config.publisher_thread_count,
+      [&] { return std::make_shared<PublishWorker>(config, task_id++); });
   std::vector<std::thread> tasks(workers.size());
   auto activate = [](std::shared_ptr<PublishWorker> const& w) {
     return std::thread{[w] { w->Run(); }};
@@ -472,8 +475,10 @@ void PrintPublisher(std::ostream& os, Config const& config) {
      << "\n# Publisher Max Batch Size: " << config.publisher_max_batch_size
      << "\n# Publisher Max Batch Bytes: "
      << FormatSize(config.publisher_max_batch_bytes)
-     << "\n# Publisher Pending LWM: " << config.publisher_pending_lwm
-     << "\n# Publisher Pending HWM: " << config.publisher_pending_hwm
+     << "\n# Publisher Pending LWM: "
+     << FormatSize(config.publisher_pending_lwm)
+     << "\n# Publisher Pending HWM: "
+     << FormatSize(config.publisher_pending_hwm)
      << "\n# Publisher Target messages/s: "
      << config.publisher_target_messages_per_second;
 }
@@ -574,13 +579,17 @@ google::cloud::StatusOr<Config> ParseArgsImpl(std::vector<std::string> args,
        [&options](std::string const& val) {
          options.publisher_max_batch_bytes = ParseSize(val);
        }},
-      {"--publisher-pending-lwm", "message generation flow control",
+      {"--publisher-pending-lwm",
+       "message generation flow control, maximum size of messages with a "
+       "pending ack",
        [&options](std::string const& val) {
-         options.publisher_pending_lwm = std::stol(val);
+         options.publisher_pending_lwm = ParseSize(val);
        }},
-      {"--publisher-pending-hwm", "message generation flow control",
+      {"--publisher-pending-hwm",
+       "message generation flow control, maximum size of messages with a "
+       "pending ack",
        [&options](std::string const& val) {
-         options.publisher_pending_hwm = std::stol(val);
+         options.publisher_pending_hwm = ParseSize(val);
        }},
       {"--publisher-target-messages-per-second",
        "limit the number of messages generated per second."
@@ -697,8 +706,8 @@ google::cloud::StatusOr<Config> SelfTest(std::string const& cmd) {
           "--publisher-io-channels=1",
           "--publisher-max-batch-size=2",
           "--publisher-max-batch-bytes=1KiB",
-          "--publisher-pending-lwm=100000",
-          "--publisher-pending-hwm=200000",
+          "--publisher-pending-lwm=8MiB",
+          "--publisher-pending-hwm=10MiB",
           "--publisher-target-messages-per-second=1000000",
           "--subscriber=true",
           "--subscriber-thread-count=1",
