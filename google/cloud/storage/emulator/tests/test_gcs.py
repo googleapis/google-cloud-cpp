@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,82 +16,123 @@
 """Unit test for utils"""
 
 import json
+import unittest
 
 import gcs
-import pytest
 import utils
 
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
+from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 from google.protobuf import json_format
 
 
-class TestBucket:
+class TestBucket(unittest.TestCase):
     def test_init_grpc(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
         bucket, projection = gcs.bucket.Bucket.init(request, "")
-        assert bucket.metadata.name == "bucket"
-        assert projection == 1
-        assert list(bucket.metadata.acl) == utils.acl.compute_predefined_bucket_acl(
-            "bucket", 3, ""
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
+        self.assertListEqual(
+            list(bucket.metadata.acl),
+            utils.acl.compute_predefined_bucket_acl(
+                "bucket", CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PROJECT_PRIVATE, ""
+            ),
         )
-        assert list(
-            bucket.metadata.default_object_acl
-        ) == utils.acl.compute_predefined_default_object_acl("bucket", 5, "")
+        self.assertListEqual(
+            list(bucket.metadata.default_object_acl),
+            utils.acl.compute_predefined_default_object_acl(
+                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
+            ),
+        )
 
         # WITH ACL
         request = storage_pb2.InsertBucketRequest(
             bucket={
                 "name": "bucket",
-                "acl": utils.acl.compute_predefined_bucket_acl("bucket", 1, ""),
+                "acl": utils.acl.compute_predefined_bucket_acl(
+                    "bucket",
+                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
+                    "",
+                ),
             }
         )
         bucket, projection = gcs.bucket.Bucket.init(request, "")
-        assert bucket.metadata.name == "bucket"
-        assert projection == 2
-        assert list(bucket.metadata.acl) == utils.acl.compute_predefined_bucket_acl(
-            "bucket", 1, ""
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, CommonEnums.Projection.FULL)
+        self.assertEqual(
+            list(bucket.metadata.acl),
+            utils.acl.compute_predefined_bucket_acl(
+                "bucket",
+                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
+                "",
+            ),
         )
-        assert list(
-            bucket.metadata.default_object_acl
-        ) == utils.acl.compute_predefined_default_object_acl("bucket", 5, "")
+        self.assertListEqual(
+            list(bucket.metadata.default_object_acl),
+            utils.acl.compute_predefined_default_object_acl(
+                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
+            ),
+        )
 
         # WITH PREDEFINED ACL
         request = storage_pb2.InsertBucketRequest(
-            bucket={"name": "bucket"}, predefined_acl=5
+            bucket={"name": "bucket"},
+            predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PUBLIC_READ_WRITE,
         )
         bucket, projection = gcs.bucket.Bucket.init(request, "")
-        assert bucket.metadata.name == "bucket"
-        assert projection == 1
-        assert list(bucket.metadata.acl) == utils.acl.compute_predefined_bucket_acl(
-            "bucket", 5, ""
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
+        self.assertEqual(
+            list(bucket.metadata.acl),
+            utils.acl.compute_predefined_bucket_acl(
+                "bucket",
+                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PUBLIC_READ_WRITE,
+                "",
+            ),
         )
-        assert list(
-            bucket.metadata.default_object_acl
-        ) == utils.acl.compute_predefined_default_object_acl("bucket", 5, "")
+        self.assertListEqual(
+            list(bucket.metadata.default_object_acl),
+            utils.acl.compute_predefined_default_object_acl(
+                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
+            ),
+        )
 
         # WITH ACL AND PREDEFINED ACL
         request = storage_pb2.InsertBucketRequest(
             bucket={
                 "name": "bucket",
-                "acl": utils.acl.compute_predefined_bucket_acl("bucket", 1, ""),
+                "acl": utils.acl.compute_predefined_bucket_acl(
+                    "bucket",
+                    CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
+                    "",
+                ),
             },
-            predefined_acl=2,
+            predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE,
         )
         bucket, projection = gcs.bucket.Bucket.init(request, "")
-        assert bucket.metadata.name == "bucket"
-        assert projection == 2
-        assert list(bucket.metadata.acl) == utils.acl.compute_predefined_bucket_acl(
-            "bucket", 1, ""
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, CommonEnums.Projection.FULL)
+        self.assertEqual(
+            list(bucket.metadata.acl),
+            utils.acl.compute_predefined_bucket_acl(
+                "bucket",
+                CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
+                "",
+            ),
         )
-        assert list(
-            bucket.metadata.default_object_acl
-        ) == utils.acl.compute_predefined_default_object_acl("bucket", 5, "")
+        self.assertListEqual(
+            list(bucket.metadata.default_object_acl),
+            utils.acl.compute_predefined_default_object_acl(
+                "bucket", CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE, ""
+            ),
+        )
 
     def test_init_rest(self):
         request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
         bucket, projection = gcs.bucket.Bucket.init(request, None)
-        assert bucket.metadata.name == "bucket"
-        assert projection == "noAcl"
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, "noAcl")
 
         request = utils.common.FakeRequest(
             args={},
@@ -107,10 +149,13 @@ class TestBucket:
             ),
         )
         bucket, projection = gcs.bucket.Bucket.init(request, None)
-        assert bucket.metadata.name == "bucket"
-        assert projection == "full"
-        assert list(bucket.metadata.acl) == utils.acl.compute_predefined_bucket_acl(
-            "bucket", "authenticatedRead", None
+        self.assertEqual(bucket.metadata.name, "bucket")
+        self.assertEqual(projection, "full")
+        self.assertEqual(
+            list(bucket.metadata.acl),
+            utils.acl.compute_predefined_bucket_acl(
+                "bucket", "authenticatedRead", None
+            ),
         )
 
     def test_patch(self):
@@ -123,11 +168,11 @@ class TestBucket:
             }
         )
         bucket, projection = gcs.bucket.Bucket.init(request, "")
-        assert bucket.metadata.labels.get("init") == "true"
-        assert bucket.metadata.labels.get("patch") == "false"
-        assert bucket.metadata.labels.get("method") is None
-        assert bucket.metadata.website.main_page_suffix == ""
-        assert bucket.metadata.website.not_found_page == "notfound.html"
+        self.assertEqual(bucket.metadata.labels.get("init"), "true")
+        self.assertEqual(bucket.metadata.labels.get("patch"), "false")
+        self.assertIsNone(bucket.metadata.labels.get("method"))
+        self.assertEqual(bucket.metadata.website.main_page_suffix, "")
+        self.assertEqual(bucket.metadata.website.not_found_page, "notfound.html")
 
         request = storage_pb2.PatchBucketRequest(
             bucket="bucket",
@@ -139,12 +184,12 @@ class TestBucket:
         )
         bucket.patch(request, "")
         # GRPC can not update a part of map field.
-        assert bucket.metadata.labels.get("init") is None
-        assert bucket.metadata.labels.get("patch") == "true"
-        assert bucket.metadata.labels.get("method") == "grpc"
-        assert bucket.metadata.website.main_page_suffix == "bucket"
+        self.assertIsNone(bucket.metadata.labels.get("init"))
+        self.assertEqual(bucket.metadata.labels.get("patch"), "true")
+        self.assertEqual(bucket.metadata.labels.get("method"), "grpc")
+        self.assertEqual(bucket.metadata.website.main_page_suffix, "bucket")
         # `update_mask` does not update `website.not_found_page`
-        assert bucket.metadata.website.not_found_page == "notfound.html"
+        self.assertEqual(bucket.metadata.website.not_found_page, "notfound.html")
 
         request = utils.common.FakeRequest(
             args={},
@@ -158,13 +203,13 @@ class TestBucket:
         )
         bucket.patch(request, None)
         # REST should only update modifiable field.
-        assert bucket.metadata.name == "bucket"
+        self.assertEqual(bucket.metadata.name, "bucket")
         # REST can update a part of map field.
-        assert bucket.metadata.labels.get("init") is None
-        assert bucket.metadata.labels.get("patch") == "true"
-        assert bucket.metadata.labels.get("method") == "rest"
-        assert bucket.metadata.website.main_page_suffix == "bucket"
-        assert bucket.metadata.website.not_found_page == "404.html"
+        self.assertIsNone(bucket.metadata.labels.get("init"))
+        self.assertEqual(bucket.metadata.labels.get("patch"), "true")
+        self.assertEqual(bucket.metadata.labels.get("method"), "rest")
+        self.assertEqual(bucket.metadata.website.main_page_suffix, "bucket")
+        self.assertEqual(bucket.metadata.website.not_found_page, "404.html")
 
     def test_acl(self):
         # Both REST and GRPC share almost the same implementation so we only test GRPC here.
@@ -178,22 +223,22 @@ class TestBucket:
         bucket.insert_acl(request, "")
 
         acl = bucket.get_acl(entity, "")
-        assert acl.entity == entity
-        assert acl.email == "bucket.acl@example.com"
-        assert acl.role == "READER"
+        self.assertEqual(acl.entity, entity)
+        self.assertEqual(acl.email, "bucket.acl@example.com")
+        self.assertEqual(acl.role, "READER")
 
         request = storage_pb2.PatchBucketAccessControlRequest(
             bucket="bucket", entity=entity, bucket_access_control={"role": "OWNER"}
         )
         bucket.patch_acl(request, entity, "")
         acl = bucket.get_acl(entity, "")
-        assert acl.entity == entity
-        assert acl.email == "bucket.acl@example.com"
-        assert acl.role == "OWNER"
+        self.assertEqual(acl.entity, entity)
+        self.assertEqual(acl.email, "bucket.acl@example.com")
+        self.assertEqual(acl.role, "OWNER")
 
         bucket.delete_acl(entity, "")
-        for acl in bucket.metadata.acl:
-            assert acl.entity != entity
+        with self.assertRaises(Exception):
+            bucket.get_acl(entity, None)
 
     def test_default_object_acl(self):
         # Both REST and GRPC share almost the same implementation so we only test GRPC here.
@@ -207,74 +252,74 @@ class TestBucket:
         bucket.insert_default_object_acl(request, "")
 
         acl = bucket.get_default_object_acl(entity, "")
-        assert acl.entity == entity
-        assert acl.email == "bucket.default_object_acl@example.com"
-        assert acl.role == "READER"
+        self.assertEqual(acl.entity, entity)
+        self.assertEqual(acl.email, "bucket.default_object_acl@example.com")
+        self.assertEqual(acl.role, "READER")
 
         request = storage_pb2.PatchDefaultObjectAccessControlRequest(
             bucket="bucket", entity=entity, object_access_control={"role": "OWNER"}
         )
         bucket.patch_default_object_acl(request, entity, "")
         acl = bucket.get_default_object_acl(entity, "")
-        assert acl.entity == entity
-        assert acl.email == "bucket.default_object_acl@example.com"
-        assert acl.role == "OWNER"
+        self.assertEqual(acl.entity, entity)
+        self.assertEqual(acl.email, "bucket.default_object_acl@example.com")
+        self.assertEqual(acl.role, "OWNER")
 
         bucket.delete_default_object_acl(entity, "")
-        for acl in bucket.metadata.default_object_acl:
-            assert acl.entity != entity
+        with self.assertRaises(Exception):
+            bucket.get_default_object_acl(entity, None)
 
 
-class TestObject:
-    def test_init_media(self):
+class TestObject(unittest.TestCase):
+    def setUp(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, projection = gcs.bucket.Bucket.init(request, "")
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        self.bucket = bucket
+
+    def test_init_media(self):
         request = utils.common.FakeRequest(
             args={"name": "object"}, data=b"12345678", headers={}, environ={}
         )
-        blob, _ = gcs.object.Object.init_media(request, bucket.metadata)
-        assert blob.metadata.name == "object"
-        assert blob.media == b"12345678"
+        blob, _ = gcs.object.Object.init_media(request, self.bucket.metadata)
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.media, b"12345678")
 
     def test_init_multipart(self):
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
             data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"key": "value"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
-        blob, _ = gcs.object.Object.init_multipart(request, bucket.metadata)
-        assert blob.metadata.name == "object"
-        assert blob.media == b"123456789"
-        assert blob.metadata.metadata["key"] == "value"
+        blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.media, b"123456789")
+        self.assertEqual(blob.metadata.metadata["key"], "value")
 
     def test_grpc_to_rest(self):
         # Make sure that object created by `gRPC` works with `REST`'s request.
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
-        bucket = bucket.metadata
         spec = storage_pb2.InsertObjectSpec(
             resource={"name": "object", "bucket": "bucket"}
         )
         request = storage_pb2.StartResumableWriteRequest(insert_object_spec=spec)
-        upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
+        upload = gcs.holder.DataHolder.init_resumable_grpc(
+            request, self.bucket.metadata, ""
+        )
         blob, _ = gcs.object.Object.init(
             upload.request, upload.metadata, b"123456789", upload.bucket, False, ""
         )
 
-        assert blob.rest_only == {}
-        assert blob.media == b"123456789"
-        assert blob.metadata.name == "object"
-        assert blob.metadata.bucket == "bucket"
+        self.assertDictEqual(blob.rest_only, {})
+        self.assertEqual(blob.metadata.bucket, "bucket")
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.media, b"123456789")
 
         # `REST` GET
 
         rest_metadata = blob.rest_metadata()
-        assert rest_metadata["name"] == "object"
-        assert rest_metadata["bucket"] == "bucket"
-        assert blob.metadata.metadata.get("method") is None
+        self.assertEqual(rest_metadata["bucket"], "bucket")
+        self.assertEqual(rest_metadata["name"], "object")
+        self.assertIsNone(blob.metadata.metadata.get("method"))
 
         # `REST` PATCH
 
@@ -282,24 +327,21 @@ class TestObject:
             args={}, data=json.dumps({"metadata": {"method": "rest"}})
         )
         blob.patch(request, None)
-
-        assert blob.metadata.metadata["method"] == "rest"
+        self.assertEqual(blob.metadata.metadata["method"], "rest")
 
     def test_rest_to_grpc(self):
         # Make sure that object created by `REST` works with `gRPC`'s request.
-        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
-        bucket, _ = gcs.bucket.Bucket.init(request, "")
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
             data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
-        blob, _ = gcs.object.Object.init_multipart(request, bucket.metadata)
-        assert blob.metadata.bucket == "bucket"
-        assert blob.metadata.name == "object"
-        assert blob.media == b"123456789"
-        assert blob.metadata.metadata["method"] == "rest"
+        blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
+        self.assertEqual(blob.metadata.bucket, "bucket")
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.media, b"123456789")
+        self.assertEqual(blob.metadata.metadata["method"], "rest")
 
         # `grpc` PATCH
 
@@ -310,11 +352,49 @@ class TestObject:
             update_mask={"paths": ["metadata"]},
         )
         blob.patch(request, "")
-        assert blob.metadata.bucket == "bucket"
-        assert blob.metadata.name == "object"
-        assert blob.media == b"123456789"
-        assert blob.metadata.metadata["method"] == "grpc"
+        self.assertEqual(blob.metadata.bucket, "bucket")
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.media, b"123456789")
+        self.assertEqual(blob.metadata.metadata["method"], "grpc")
 
 
-def run():
-    pytest.main(["-v"])
+class TestHolder(unittest.TestCase):
+    def test_init_resumable_grpc(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, _ = gcs.bucket.Bucket.init(request, "")
+        bucket = bucket.metadata
+        insert_object_spec = storage_pb2.InsertObjectSpec(
+            resource={"name": "object", "bucket": "bucket"},
+            predefined_acl=CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE,
+            if_generation_not_match={"value": 1},
+            if_metageneration_match={"value": 2},
+            if_metageneration_not_match={"value": 3},
+            projection=CommonEnums.Projection.FULL,
+        )
+        request = storage_pb2.InsertObjectRequest(
+            insert_object_spec=insert_object_spec, write_offset=0
+        )
+        upload = gcs.holder.DataHolder.init_resumable_grpc(request, bucket, "")
+        self.assertEqual(
+            upload.metadata, resources_pb2.Object(name="object", bucket="bucket")
+        )
+        predefined_acl = utils.acl.extract_predefined_acl(upload.request, False, "")
+        self.assertEqual(
+            predefined_acl, CommonEnums.PredefinedObjectAcl.OBJECT_ACL_PROJECT_PRIVATE
+        )
+        match, not_match = utils.generation.extract_precondition(
+            upload.request, False, False, ""
+        )
+        self.assertIsNone(match)
+        self.assertEqual(not_match, 1)
+        match, not_match = utils.generation.extract_precondition(
+            upload.request, True, False, ""
+        )
+        self.assertEqual(match, 2)
+        self.assertEqual(not_match, 3)
+        projection = utils.common.extract_projection(upload.request, False, "")
+        self.assertEqual(projection, CommonEnums.Projection.FULL)
+
+
+if __name__ == "__main__":
+    unittest.main()
