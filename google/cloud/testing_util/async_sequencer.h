@@ -60,18 +60,39 @@ namespace testing_util {
  * EXPECT_EQ(f1.get(), 84);
  * @endcode
  */
+template <typename T>
 class AsyncSequencer {
  public:
   AsyncSequencer() = default;
 
-  future<void> PushBack();
+  future<T> PushBack() { return PushBack("unnamed"); }
+  promise<T> PopFront() { return std::move(PopFrontWithName().first); }
 
-  promise<void> PopFront();
+  future<T> PushBack(std::string name) {
+    std::unique_lock<std::mutex> lk(mu_);
+    queue_.emplace_back(promise<T>{}, std::move(name));
+    auto f = queue_.back().first.get_future();
+    max_size_ = (std::max)(max_size_, queue_.size());
+    lk.unlock();
+    cv_.notify_one();
+    return f;
+  }
+
+  std::pair<promise<T>, std::string> PopFrontWithName() {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [&] { return !queue_.empty(); });
+    auto p = std::move(queue_.front());
+    queue_.pop_front();
+    return p;
+  }
+
+  std::size_t MaxSize() const { return max_size_; }
 
  private:
   std::mutex mu_;
   std::condition_variable cv_;
-  std::deque<promise<void>> queue_;
+  std::deque<std::pair<promise<T>, std::string>> queue_;
+  std::size_t max_size_ = 0;
 };
 
 }  // namespace testing_util

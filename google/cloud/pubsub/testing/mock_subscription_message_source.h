@@ -30,8 +30,8 @@ class MockSubscriptionMessageSource
   MOCK_METHOD1(Start, void(pubsub_internal::MessageCallback));
   MOCK_METHOD0(Shutdown, void());
   MOCK_METHOD1(Read, void(std::size_t max_callbacks));
-  MOCK_METHOD1(AckMessage, future<Status>(std::string const& ack_id));
-  MOCK_METHOD1(NackMessage, future<Status>(std::string const& ack_id));
+  MOCK_METHOD1(AckMessage, void(std::string const& ack_id));
+  MOCK_METHOD1(NackMessage, void(std::string const& ack_id));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

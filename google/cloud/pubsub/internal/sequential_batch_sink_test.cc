@@ -63,7 +63,7 @@ google::pubsub::v1::PublishResponse MakeResponse(
 }
 
 TEST(DefaultBatchSinkTest, BasicNoErrors) {
-  AsyncSequencer sequencer;
+  AsyncSequencer<void> sequencer;
 
   // We will use this function to ensure the mock calls happen *after* some
   // code below.
@@ -122,7 +122,7 @@ TEST(DefaultBatchSinkTest, BasicNoErrors) {
 }
 
 TEST(DefaultBatchSinkTest, BasicErrorHandling) {
-  AsyncSequencer sequencer;
+  AsyncSequencer<void> sequencer;
 
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   {

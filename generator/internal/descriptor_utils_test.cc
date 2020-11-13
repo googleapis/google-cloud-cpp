@@ -176,6 +176,8 @@ class CreateMethodVarsTest
           type: TYPE_MESSAGE
           type_name: "google.protobuf.Bar"
         }
+        field { name: "toggle" number: 4 type: TYPE_BOOL }
+        field { name: "title" number: 5 type: TYPE_STRING }
       }
       message_type { name: "Empty" }
       message_type {
@@ -261,6 +263,8 @@ class CreateMethodVarsTest
           options {
             [google.api.method_signature]: "name"
             [google.api.method_signature]: "number,widget"
+            [google.api.method_signature]: "toggle"
+            [google.api.method_signature]: "name,title"
             [google.api.http] {
               post: "/v1/{parent=projects/*/instances/*}/databases"
               body: "*"
@@ -386,8 +390,13 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_signature0", "std::string const& name"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature1",
-                             "std::int32_t const& number, "
+                             "std::int32_t number, "
                              "::google::protobuf::Bar const& widget"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature2", "bool toggle"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_signature3",
+            "std::string const& name, std::string const& title"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),

@@ -50,12 +50,9 @@ class FakeStream {
   explicit FakeStream(Status finish) : finish_(std::move(finish)) {}
 
   promise<bool> WaitForAction() {
-    GCP_LOG(DEBUG) << __func__ << "()";
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [this] { return !actions_.empty(); });
-    auto action = std::move(actions_.front());
-    actions_.pop_front();
-    return action;
+    auto p = async_.PopFrontWithName();
+    GCP_LOG(DEBUG) << __func__ << "(" << p.second << ")";
+    return std::move(p.first);
   }
 
   std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeWriteFailureStream(
@@ -95,19 +92,12 @@ class FakeStream {
 
   future<bool> AddAction(char const* caller) {
     GCP_LOG(DEBUG) << __func__ << "(" << caller << ")";
-    std::unique_lock<std::mutex> lk(mu_);
-    actions_.emplace_back(promise<bool>{});
-    auto f = actions_.back().get_future();
-    lk.unlock();
-    cv_.notify_one();
-    return f;
+    return async_.PushBack(caller);
   }
 
  private:
   Status finish_;
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::deque<promise<bool>> actions_;
+  google::cloud::testing_util::AsyncSequencer<bool> async_;
 };
 
 pubsub::SubscriberOptions TestSubscriptionOptions() {
@@ -598,7 +588,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
 
-  google::cloud::testing_util::AsyncSequencer async;
+  google::cloud::testing_util::AsyncSequencer<void> async;
   auto cq_impl =
       std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
   EXPECT_CALL(*cq_impl, MakeRelativeTimer)
