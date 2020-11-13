@@ -13,10 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Stop on errors. This is similar to `set -e` on Unix shells.
-$ErrorActionPreference = "Stop"
-
-# Install dependencies for GCS emulator.
-pip install setuptools wheel
-pip install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
-pip install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 crc32c==2.1 gevent==20.9.0 gunicorn==20.0.4
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) No dependencies required for Bazel builds."

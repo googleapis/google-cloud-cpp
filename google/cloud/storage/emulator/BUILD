@@ -22,6 +22,7 @@ py_test(
     srcs = ["tests/test_gcs.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
     imports = ["."],
     main = "tests/test_gcs.py",
+    tags = ["manual"],
 )
 
 py_test(
@@ -30,4 +31,5 @@ py_test(
     srcs = ["tests/test_utils.py"] + glob(["gcs/*.py"]) + glob(["utils/*.py"]),
     imports = ["."],
     main = "tests/test_utils.py",
+    tags = ["manual"],
 )
