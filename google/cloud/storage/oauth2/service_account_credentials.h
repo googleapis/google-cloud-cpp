@@ -35,6 +35,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
+                                              std::string const& payload,
+                                              std::string const& pem_contents);
+}  // namespace internal
+
 namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
 struct ServiceAccountCredentialsInfo {
@@ -86,11 +92,6 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now);
 
-namespace internal {
-StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
-                                              std::string const& payload,
-                                              std::string const& pem_contents);
-}  // namespace internal
 /**
  * Given a key and a JSON header and payload, creates a JWT assertion string.
  *
@@ -185,8 +186,8 @@ class ServiceAccountCredentials : public Credentials {
                     "The current_credentials cannot sign blobs for " +
                         signing_account.value());
     }
-    return google::cloud::storage::v1::internal::SignStringWithPem(
-        blob, info_.private_key, JwtSigningAlgorithms::RS256);
+    return internal::SignStringWithPem(blob, info_.private_key,
+                                       JwtSigningAlgorithms::RS256);
   }
 
   std::string AccountEmail() const override { return info_.client_email; }

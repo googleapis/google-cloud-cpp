@@ -380,12 +380,10 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       std::string const& encoded_payload = tokens[1];
 
       auto header_bytes =
-          google::cloud::storage::v1::internal::UrlsafeBase64Decode(
-              encoded_header);
+          storage::internal::UrlsafeBase64Decode(encoded_header);
       std::string header_str{header_bytes.begin(), header_bytes.end()};
       auto payload_bytes =
-          google::cloud::storage::v1::internal::UrlsafeBase64Decode(
-              encoded_payload);
+          storage::internal::UrlsafeBase64Decode(encoded_payload);
       std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
 
       auto header = nlohmann::json::parse(header_str);
@@ -505,8 +503,7 @@ x-goog-meta-foo:bar,baz
       "hRW9bSCCV8w1Ex+"
       "QxmB5z7P7zZn2pl7JAcL850emTo8f2tfv1xXWQGhACvIJeMdPmyjbc04Ye4M8Ljpkg3YhE6l"
       "4GwC2MnI8TkuoHe4Bj2MvA8mM8TVwIvpBs6Etsj6Jdaz4rg==";
-  EXPECT_EQ(expected_signed,
-            google::cloud::storage::v1::internal::Base64Encode(*actual));
+  EXPECT_EQ(expected_signed, storage::internal::Base64Encode(*actual));
 }
 
 /// @test Verify that signing blobs fails with invalid e-mail.
