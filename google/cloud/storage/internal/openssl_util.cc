@@ -181,8 +181,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
   auto digest_ctx = GetDigestCtx();
   if (!digest_ctx) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not create context for OpenSSL digest. ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not create context for OpenSSL digest. ");
   }
 
   EVP_MD const* digest_type = nullptr;
@@ -193,8 +193,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
   }
   if (digest_type == nullptr) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not find specified digest in OpenSSL. ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not find specified digest in OpenSSL. ");
   }
 
   auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
@@ -203,8 +203,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
       &BIO_free);
   if (!pem_buffer) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not create PEM buffer. ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not create PEM buffer. ");
   }
 
   auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
@@ -219,8 +219,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
       &EVP_PKEY_free);
   if (!private_key) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not parse PEM to get private key ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not parse PEM to get private key ");
   }
 
   int const digest_sign_success_code = 1;
@@ -231,15 +231,15 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
                          nullptr,  // `ENGINE *e`
                          private_key.get())) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not initialize PEM digest. ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not initialize PEM digest. ");
   }
 
   if (digest_sign_success_code !=
       EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.length())) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not update PEM digest. ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not update PEM digest. ");
   }
 
   std::size_t signed_str_size = 0;
@@ -251,8 +251,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
                           nullptr,  // unsigned char *sig
                           &signed_str_size)) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not finalize PEM digest (1/2). ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not finalize PEM digest (1/2). ");
   }
 
   std::vector<unsigned char> signed_str(signed_str_size);
@@ -260,8 +260,8 @@ StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
                                                       signed_str.data(),
                                                       &signed_str_size)) {
     return Status(StatusCode::kInvalidArgument,
-                  "Invalid ServiceAccountCredentials,"
-                  "Could not finalize PEM digest (2/2). ");
+                  "Invalid ServiceAccountCredentials: "
+                  "could not finalize PEM digest (2/2). ");
   }
 
   return StatusOr<std::vector<unsigned char>>(

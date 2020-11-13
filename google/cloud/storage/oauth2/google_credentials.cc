@@ -161,8 +161,8 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
   auto gce_creds = std::make_shared<ComputeEngineCredentials<>>();
-  auto override_val =
-      google::cloud::internal::GetEnv(internal::GceCheckOverrideEnvVar());
+  auto override_val = google::cloud::internal::GetEnv(
+      google::cloud::storage::v1::internal::GceCheckOverrideEnvVar());
   if (override_val.has_value() ? (std::string("1") == *override_val)
                                : gce_creds->AuthorizationHeader().ok()) {
     return StatusOr<std::shared_ptr<Credentials>>(std::move(gce_creds));
@@ -308,7 +308,7 @@ CreateServiceAccountCredentialsFromJsonContents(
   }
   std::chrono::system_clock::time_point now;
   auto components = AssertionComponentsFromInfo(*info, now);
-  auto jwt_assertion = MakeJWTAssertionNoThrow(
+  auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
   if (!jwt_assertion) {
     return std::move(jwt_assertion).status();
