@@ -400,7 +400,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
-  Connection::CommitParams actual_commit_params{txn, {}};
+  Connection::CommitParams actual_commit_params{txn, {}, {}};
 
   auto source = absl::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
@@ -423,7 +423,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
                       Return(ByMove(RowStream(std::move(source))))));
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
-                      Return(CommitResult{*timestamp})));
+                      Return(CommitResult{*timestamp, absl::nullopt})));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
@@ -607,7 +607,7 @@ TEST(ClientTest, CommitMutatorRerunTransientFailures) {
         return Status(StatusCode::kAborted, "Aborted transaction");
       })
       .WillOnce([&timestamp](Connection::CommitParams const&) {
-        return CommitResult{*timestamp};
+        return CommitResult{*timestamp, absl::nullopt};
       });
 
   auto mutator = [](Transaction const&) -> StatusOr<Mutations> {
@@ -678,7 +678,7 @@ TEST(ClientTest, CommitMutations) {
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce([&mutation, &timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.mutations, Mutations{mutation});
-        return CommitResult{*timestamp};
+        return CommitResult{*timestamp, absl::nullopt};
       });
 
   Client client(conn);
@@ -777,7 +777,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
             EXPECT_THAT(cp.transaction, HasSession(session_name));
             EXPECT_THAT(cp.transaction, HasBegin());
             SetTransactionId(cp.transaction, "last-transaction-id");
-            return CommitResult{*timestamp};
+            return CommitResult{*timestamp, absl::nullopt};
           });
   // But only after some aborts, the first of which sets the session.
   EXPECT_CALL(*conn, Commit(_))
@@ -815,7 +815,7 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-3"));
-        return CommitResult{*timestamp};
+        return CommitResult{*timestamp, absl::nullopt};
       });
 
   int n = 0;
@@ -844,7 +844,7 @@ TEST(ClientTest, CommitSessionNotFound) {
       })
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-2"));
-        return CommitResult{*timestamp};
+        return CommitResult{*timestamp, absl::nullopt};
       });
 
   int n = 0;
@@ -858,6 +858,28 @@ TEST(ClientTest, CommitSessionNotFound) {
   auto result = client.Commit(mutator);
   EXPECT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
+TEST(ClientTest, CommitStats) {
+  auto timestamp = internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
+  ASSERT_STATUS_OK(timestamp);
+  CommitStats stats{42, std::chrono::nanoseconds(123456789)};
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce([&timestamp, &stats](Connection::CommitParams const& cp) {
+        EXPECT_TRUE(cp.options.return_stats());
+        return CommitResult{*timestamp, stats};
+      });
+
+  Client client(conn);
+  auto result =
+      client.Commit(Mutations{}, CommitOptions{}.set_return_stats(true));
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+  ASSERT_TRUE(result->commit_stats.has_value());
+  EXPECT_EQ(42, result->commit_stats->mutation_count);
+  EXPECT_EQ(123456789, result->commit_stats->overload_delay.count());
 }
 
 TEST(ClientTest, ProfileQuerySuccess) {
