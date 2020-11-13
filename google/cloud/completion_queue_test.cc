@@ -635,9 +635,17 @@ TEST_P(RunAsyncTest, Torture) {
 
   // This test is largely here to trigger (now fixed) race conditions under TSAN
   // and/or deadlocks under load. Just getting here is enough to declare
-  // success, but we should verify that at least some interesting stuff happened
+  // success, but we should verify that at least some interesting stuff
+  // happened.
   EXPECT_GE(impl->thread_pool_hwm(), GetParam() / 2);
-  EXPECT_GE(impl->run_async_pool_hwm(), GetParam() / 2);
+  // We would like to assert "RunAsync() used a good portion of the available
+  // threads". That is flaky when the "available" threads is small. With one
+  // thread obviously just 1 gets used. Even with 4 threads, by design it will
+  // be at most 3, and at least 1, but it does not always hit 2. It seems all we
+  // can do reliably is test for the entire range.
+  auto const max_run_async_pool_hwm = GetParam() > 1 ? GetParam() - 1 : 1;
+  EXPECT_GE(impl->run_async_pool_hwm(), 1);
+  EXPECT_LE(impl->run_async_pool_hwm(), max_run_async_pool_hwm);
   // We expect at least one notify per timer.
   EXPECT_GE(impl->notify_counter(), kThreads * iterations);
   // We expect at most one notify per RunAsync(), because this test sequences
