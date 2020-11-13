@@ -33,6 +33,7 @@ google_cloud_cpp_generator_golden_files = [
     "internal/database_admin_stub.gcpcxx.pb.h",
     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
     "internal/database_admin_stub_factory.gcpcxx.pb.h",
+    "mocks/mock_database_admin_connection.gcpcxx.pb.h",
     "retry_policy.gcpcxx.pb.h",
     "retry_traits.h",
 ]

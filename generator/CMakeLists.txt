@@ -46,6 +46,8 @@ add_library(
     internal/logging_decorator_generator.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
+    internal/mock_connection_generator.cc
+    internal/mock_connection_generator.h
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
