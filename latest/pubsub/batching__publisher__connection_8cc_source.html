@@ -257,18 +257,21 @@ $(function() {
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  batch.waiters.swap(waiters_);</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  google::pubsub::v1::PublishRequest request;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  request.Swap(&amp;pending_);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  current_bytes_ = 0;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  lk.unlock();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  batch.weak = shared_from_this();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  request.set_topic(topic_full_name_);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  sink_-&gt;AsyncPublish(std::move(request)).then(std::move(batch));</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="comment">// Reserve enough capacity for the next batch.</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  pending_.mutable_messages()-&gt;Reserve(</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(options_.maximum_batch_message_count()));</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  current_bytes_ = 0;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  lk.unlock();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  batch.weak = shared_from_this();</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  request.set_topic(topic_full_name_);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  sink_-&gt;AsyncPublish(std::move(request)).then(std::move(batch));</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="abatching__publisher__connection_8h_html"><div class="ttname"><a href="batching__publisher__connection_8h.html">batching_publisher_connection.h</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
