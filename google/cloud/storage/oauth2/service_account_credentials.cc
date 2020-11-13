@@ -29,25 +29,24 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 namespace internal {
+using google::cloud::storage::v1::internal::SignStringWithPem;
+using google::cloud::storage::v1::internal::UrlsafeBase64Encode;
+
 StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
                                               std::string const& payload,
                                               std::string const& pem_contents) {
-  std::string encoded_header =
-      google::cloud::storage::v1::internal::UrlsafeBase64Encode(header);
-  std::string encoded_payload =
-      google::cloud::storage::v1::internal::UrlsafeBase64Encode(payload);
-  auto pem_signature = google::cloud::storage::v1::internal::SignStringWithPem(
-      encoded_header + '.' + encoded_payload, pem_contents,
-      JwtSigningAlgorithms::RS256);
+  std::string encoded_header = UrlsafeBase64Encode(header);
+  std::string encoded_payload = UrlsafeBase64Encode(payload);
+  auto pem_signature =
+      SignStringWithPem(encoded_header + '.' + encoded_payload, pem_contents,
+                        JwtSigningAlgorithms::RS256);
   if (!pem_signature) {
     return pem_signature.status();
   }
-  std::string encoded_signature =
-      google::cloud::storage::v1::internal::UrlsafeBase64Encode(
-          google::cloud::storage::v1::internal::SignStringWithPem(
-              encoded_header + '.' + encoded_payload, pem_contents,
-              JwtSigningAlgorithms::RS256)
-              .value());
+  std::string encoded_signature = UrlsafeBase64Encode(
+      SignStringWithPem(encoded_header + '.' + encoded_payload, pem_contents,
+                        JwtSigningAlgorithms::RS256)
+          .value());
   return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
 }
 }  // namespace internal
