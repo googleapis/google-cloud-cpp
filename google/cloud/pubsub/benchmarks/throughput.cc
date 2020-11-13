@@ -403,7 +403,7 @@ void PublisherTask(Config const& config) {
             << std::endl;
 }
 
-void SubscriberTask(Config const& config) {
+pubsub::Subscriber CreateSubscriber(Config const& config) {
   auto subscriber_options =
       pubsub::SubscriberOptions{}
           .set_max_outstanding_messages(
@@ -423,9 +423,17 @@ void SubscriberTask(Config const& config) {
     connection_options.set_num_channels(config.subscriber_io_channels);
   }
 
-  pubsub::Subscriber subscriber(pubsub::MakeSubscriberConnection(
+  return pubsub::Subscriber(pubsub::MakeSubscriberConnection(
       pubsub::Subscription(config.project_id, config.subscription_id),
       std::move(subscriber_options), std::move(connection_options)));
+}
+
+void SubscriberTask(Config const& config) {
+  std::vector<pubsub::Subscriber> subscribers;
+  std::generate_n(std::back_inserter(subscribers),
+                  config.subscriber_thread_count,
+                  [config] { return CreateSubscriber(config); });
+
   std::atomic<std::int64_t> received_count{0};
   std::atomic<std::int64_t> received_bytes{0};
   auto handler = [&received_count, &received_bytes](pubsub::Message const& m,
@@ -436,8 +444,9 @@ void SubscriberTask(Config const& config) {
   };
 
   std::vector<future<Status>> sessions;
-  std::generate_n(std::back_inserter(sessions), config.subscriber_thread_count,
-                  [&] { return subscriber.Subscribe(handler); });
+  std::transform(
+      subscribers.begin(), subscribers.end(), std::back_inserter(sessions),
+      [&handler](pubsub::Subscriber s) { return s.Subscribe(handler); });
 
   auto const start = std::chrono::steady_clock::now();
   for (int i = 0; !Done(config, i, start); ++i) {
