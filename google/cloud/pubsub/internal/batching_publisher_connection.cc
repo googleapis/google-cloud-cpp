@@ -184,6 +184,9 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   batch.waiters.swap(waiters_);
   google::pubsub::v1::PublishRequest request;
   request.Swap(&pending_);
+  // Reserve enough capacity for the next batch.
+  pending_.mutable_messages()->Reserve(
+      static_cast<int>(options_.maximum_batch_message_count()));
   current_bytes_ = 0;
   lk.unlock();
 
