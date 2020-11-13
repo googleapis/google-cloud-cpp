@@ -188,7 +188,8 @@ StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
 StatusOr<CommitResult> Client::Commit(
     std::function<StatusOr<Mutations>(Transaction)> const& mutator,
     std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    CommitOptions const& options) {
   // The status-code discriminator of TransactionRerunPolicy.
   using RerunnablePolicy = internal::SafeTransactionRerun;
 
@@ -218,7 +219,7 @@ StatusOr<CommitResult> Client::Commit(
 #endif
     auto status = mutations.status();
     if (RerunnablePolicy::IsOk(status)) {
-      auto result = Commit(txn, *mutations);
+      auto result = Commit(txn, *mutations, options);
       status = result.status();
       if (!RerunnablePolicy::IsTransientFailure(status)) {
         return result;
@@ -257,7 +258,8 @@ StatusOr<CommitResult> Client::Commit(
 }
 
 StatusOr<CommitResult> Client::Commit(
-    std::function<StatusOr<Mutations>(Transaction)> const& mutator) {
+    std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+    CommitOptions const& options) {
   auto const rerun_maximum_duration = std::chrono::minutes(10);
   auto default_commit_rerun_policy =
       LimitedTimeTransactionRerunPolicy(rerun_maximum_duration).clone();
@@ -271,16 +273,19 @@ StatusOr<CommitResult> Client::Commit(
           .clone();
 
   return Commit(mutator, std::move(default_commit_rerun_policy),
-                std::move(default_commit_backoff_policy));
+                std::move(default_commit_backoff_policy), options);
 }
 
-StatusOr<CommitResult> Client::Commit(Mutations mutations) {
-  return Commit([&mutations](Transaction const&) { return mutations; });
+StatusOr<CommitResult> Client::Commit(Mutations mutations,
+                                      CommitOptions const& options) {
+  return Commit([&mutations](Transaction const&) { return mutations; },
+                options);
 }
 
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
-                                      Mutations mutations) {
-  return conn_->Commit({std::move(transaction), std::move(mutations)});
+                                      Mutations mutations,
+                                      CommitOptions const& options) {
+  return conn_->Commit({std::move(transaction), std::move(mutations), options});
 }
 
 Status Client::Rollback(Transaction transaction) {
