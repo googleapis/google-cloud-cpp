@@ -3395,8 +3395,10 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_read_write_transaction sample" << std::endl;
   ReadWriteTransaction(client);
 
-  std::cout << "\nRunning spanner_get_commit_stats sample" << std::endl;
-  GetCommitStatistics(client);
+  if (!emulator) {
+    std::cout << "\nRunning spanner_get_commit_stats sample" << std::endl;
+    GetCommitStatistics(client);
+  }
 
   std::cout << "\nRunning spanner_dml_standard_insert sample" << std::endl;
   DmlStandardInsert(client);
