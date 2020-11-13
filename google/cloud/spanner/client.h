@@ -586,7 +586,7 @@ class Client {
    * @param mutations The mutations to be executed when this transaction
    *     commits. All mutations are applied atomically, in the order they appear
    *     in this list.
-   * @param options The options to apply to the commit.
+   * @param options to apply to the commit.
    *
    * @return A `StatusOr` containing the result of the commit or error status
    *     on failure.

@@ -1933,6 +1933,7 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   using ::google::cloud::StatusOr;
 
+  //! [commit-options]
   auto commit = client.Commit(
       spanner::Mutations{
           spanner::UpdateMutationBuilder(
@@ -1941,6 +1942,7 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
               .EmplaceRow(2, 2, 400000)
               .Build()},
       spanner::CommitOptions{}.set_return_stats(true));
+  //! [commit-options]
 
   if (!commit) throw std::runtime_error(commit.status().message());
   std::cout << "Updated data with " << commit->commit_stats->mutation_count

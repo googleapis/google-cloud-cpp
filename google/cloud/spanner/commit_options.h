@@ -24,6 +24,9 @@ inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Set options on calls to `spanner::Client::Commit()`.
+ *
+ * @par Example
+ * @snippet samples.cc commit-options
  */
 class CommitOptions {
  public:
