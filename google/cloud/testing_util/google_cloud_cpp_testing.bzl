@@ -37,7 +37,6 @@ google_cloud_cpp_testing_hdrs = [
 
 google_cloud_cpp_testing_srcs = [
     "assert_ok.cc",
-    "async_sequencer.cc",
     "capture_log_lines_backend.cc",
     "command_line_parsing.cc",
     "crash_handler.cc",

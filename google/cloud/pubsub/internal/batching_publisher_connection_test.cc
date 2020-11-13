@@ -50,7 +50,7 @@ TEST(BatchingPublisherConnectionTest, DefaultMakesProgress) {
   auto mock = std::make_shared<pubsub_testing::MockBatchSink>();
   pubsub::Topic const topic("test-project", "test-topic");
 
-  AsyncSequencer async;
+  AsyncSequencer<void> async;
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const& request) {
         return async.PushBack().then([topic, request](future<void>) {
@@ -585,7 +585,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingPartialBatch) {
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
 
-  AsyncSequencer async;
+  AsyncSequencer<void> async;
   EXPECT_CALL(*mock, AsyncPublish)
       .WillOnce([&](google::pubsub::v1::PublishRequest const&) {
         return async.PushBack().then([error_status](future<void>) {
@@ -633,7 +633,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
 
   auto const error_status = Status(StatusCode::kPermissionDenied, "uh-oh");
 
-  AsyncSequencer async;
+  AsyncSequencer<void> async;
   {
     ::testing::InSequence sequence;
     EXPECT_CALL(*mock, AsyncPublish)
