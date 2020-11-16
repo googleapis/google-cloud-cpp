@@ -322,6 +322,7 @@ class TestObject(unittest.TestCase):
         self.assertEqual(blob.metadata.name, "object")
         self.assertEqual(blob.media, b"123456789")
         self.assertEqual(blob.metadata.metadata["key"], "value")
+        self.assertEqual(blob.metadata.content_type, "image/jpeg")
 
     def test_grpc_to_rest(self):
         # Make sure that object created by `gRPC` works with `REST`'s request.
@@ -397,6 +398,7 @@ class TestObject(unittest.TestCase):
         blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
         self.assertEqual(blob.metadata.name, "object")
         self.assertEqual(blob.metadata.metadata["method"], "rest")
+        self.assertEqual(blob.metadata.content_type, "image/jpeg")
 
         request = utils.common.FakeRequest(
             args={},
@@ -404,6 +406,8 @@ class TestObject(unittest.TestCase):
         )
         blob.update(request, None)
         self.assertEqual(blob.metadata.metadata["method"], "rest_update")
+        # Modifiable fields will be replaced by default value when updating
+        self.assertEqual(blob.metadata.content_type, "")
 
         request = utils.common.FakeRequest(
             args={},
