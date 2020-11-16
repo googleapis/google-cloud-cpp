@@ -47,11 +47,13 @@ class Bucket:
         "location_type",
         "iam_configuration",
     ]
+    rest_only_fields = []
 
-    def __init__(self, metadata, notifications, iam_policy):
+    def __init__(self, metadata, notifications, iam_policy, rest_only):
         self.metadata = metadata
         self.notifications = notifications
         self.iam_policy = iam_policy
+        self.rest_only = rest_only
 
     @classmethod
     def __validate_bucket_name(cls, bucket_name, context):
@@ -83,16 +85,21 @@ class Bucket:
         for key in keys:
             if key.endswith("createdBefore"):
                 proxy[key] = proxy[key] + "T00:00:00Z"
-        return proxy.data
+        rest_only = {}
+        for field in Bucket.rest_only_fields:
+            if field in proxy:
+                rest_only[field] = proxy.pop(field)
+        return proxy.data, rest_only
 
     @classmethod
-    def __postprocess_rest(cls, data):
+    def __postprocess_rest(cls, data, rest_only):
         proxy = scalpl.Cut(data)
         keys = utils.common.nested_key(data)
         for key in keys:
             if key.endswith("createdBefore"):
                 proxy[key] = proxy[key].replace("T00:00:00Z", "")
         proxy["kind"] = "storage#bucket"
+        proxy.update(rest_only)
         return proxy.data
 
     @classmethod
@@ -137,15 +144,14 @@ class Bucket:
     # === INITIALIZATION === #
 
     @classmethod
-    def init(cls, request, context):
+    def init(cls, request, context, rest_only=None):
         time_created = datetime.datetime.now()
         metadata = None
         if context is not None:
             metadata = request.bucket
         else:
-            metadata = json_format.ParseDict(
-                cls.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
-            )
+            metadata, rest_only = cls.__preprocess_rest(json.loads(request.data))
+            metadata = json_format.ParseDict(metadata, resources_pb2.Bucket())
         cls.__validate_bucket_name(metadata.name, context)
         default_projection = CommonEnums.Projection.NO_ACL
         if len(metadata.acl) != 0 or len(metadata.default_object_acl) != 0:
@@ -169,8 +175,8 @@ class Bucket:
                 )
             cls.__insert_predefined_acl(metadata, predefined_acl, context)
         if len(metadata.default_object_acl) == 0:
-            predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
-                request, context
+            predefined_default_object_acl = (
+                utils.acl.extract_predefined_default_object_acl(request, context)
             )
             if (
                 predefined_default_object_acl
@@ -200,8 +206,10 @@ class Bucket:
         metadata.owner.entity_id = hashlib.md5(
             metadata.owner.entity.encode("utf-8")
         ).hexdigest()
+        if rest_only is None:
+            rest_only = {}
         return (
-            cls(metadata, {}, cls.__init_iam_policy(metadata, context)),
+            cls(metadata, {}, cls.__init_iam_policy(metadata, context), rest_only),
             utils.common.extract_projection(request, default_projection, context),
         )
 
@@ -256,9 +264,9 @@ class Bucket:
         if context is not None:
             metadata = request.metadata
         else:
-            metadata = json_format.ParseDict(
-                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Bucket()
-            )
+            metadata, rest_only = self.__preprocess_rest(json.loads(request.data))
+            self.rest_only.update(rest_only)
+            metadata = json_format.ParseDict(metadata, resources_pb2.Bucket())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata, utils.acl.extract_predefined_acl(request, False, context), context
@@ -287,7 +295,8 @@ class Bucket:
                         else:
                             self.metadata.labels[key] = value
             data.pop("labels", None)
-            data = Bucket.__preprocess_rest(data)
+            data, rest_only = self.__preprocess_rest(data)
+            self.rest_only.update(rest_only)
             metadata = json_format.ParseDict(data, resources_pb2.Bucket())
             paths = set()
             for key in utils.common.nested_key(data):
@@ -457,4 +466,4 @@ class Bucket:
 
     def rest(self):
         response = json_format.MessageToDict(self.metadata)
-        return Bucket.__postprocess_rest(response)
+        return Bucket.__postprocess_rest(response, self.rest_only)

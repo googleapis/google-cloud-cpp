@@ -128,6 +128,25 @@ class TestBucket(unittest.TestCase):
             ),
         )
 
+    def test_grpc_to_rest(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+        self.assertEqual(bucket.metadata.name, "bucket")
+
+        # `REST` GET
+
+        rest_metadata = bucket.rest()
+        self.assertEqual(rest_metadata["name"], "bucket")
+        self.assertIsNone(bucket.metadata.labels.get("method"))
+
+        # `REST` PATCH
+
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"labels": {"method": "rest"}})
+        )
+        bucket.patch(request, None)
+        self.assertEqual(bucket.metadata.labels["method"], "rest")
+
     def test_init_rest(self):
         request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
         bucket, projection = gcs.bucket.Bucket.init(request, None)
