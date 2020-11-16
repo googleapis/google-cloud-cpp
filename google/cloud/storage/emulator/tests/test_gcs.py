@@ -232,8 +232,7 @@ class TestBucket(unittest.TestCase):
 
         # We want to make sure REST `UPDATE` does not throw any exception.
         request = utils.common.FakeRequest(
-            args={},
-            data=json.dumps({"labels": {"method": "rest_update"}}),
+            args={}, data=json.dumps({"labels": {"method": "rest_update"}})
         )
         bucket.update(request, None)
         self.assertEqual(bucket.metadata.labels["method"], "rest_update")
@@ -401,8 +400,7 @@ class TestObject(unittest.TestCase):
         self.assertEqual(blob.metadata.content_type, "image/jpeg")
 
         request = utils.common.FakeRequest(
-            args={},
-            data=json.dumps({"metadata": {"method": "rest_update"}}),
+            args={}, data=json.dumps({"metadata": {"method": "rest_update"}})
         )
         blob.update(request, None)
         self.assertEqual(blob.metadata.metadata["method"], "rest_update")
@@ -410,8 +408,7 @@ class TestObject(unittest.TestCase):
         self.assertEqual(blob.metadata.content_type, "")
 
         request = utils.common.FakeRequest(
-            args={},
-            data=json.dumps({"metadata": {"method": "rest_patch"}}),
+            args={}, data=json.dumps({"metadata": {"method": "rest_patch"}})
         )
         blob.patch(request, None)
         self.assertEqual(blob.metadata.metadata["method"], "rest_patch")
