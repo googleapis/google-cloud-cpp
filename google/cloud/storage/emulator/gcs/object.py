@@ -50,11 +50,21 @@ class Object:
         "customer_encryption",
     ]
 
+    rest_only_fields = ["customTime"]
+
     def __init__(self, metadata, media, bucket, rest_only=None):
         self.metadata = metadata
         self.media = media
         self.bucket = bucket
         self.rest_only = rest_only
+
+    @classmethod
+    def __extract_rest_only(cls, data):
+        rest_only = {}
+        for field in Object.rest_only_fields:
+            if field in data:
+                rest_only[field] = data.pop(field)
+        return rest_only
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
@@ -147,9 +157,7 @@ class Object:
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
-        rest_only = {}
-        if "customTime" in metadata:
-            rest_only["customTime"] = metadata.pop("customTime")
+        rest_only = cls.__extract_rest_only(metadata)
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
         return cls.init(
             request, metadata, media, bucket, is_destination, None, rest_only
@@ -241,9 +249,10 @@ class Object:
         if context is not None:
             metadata = request.metadata
         else:
-            metadata = json_format.ParseDict(
-                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Object()
-            )
+            data = json.loads(request.data)
+            rest_only = self.__extract_rest_only(data)
+            self.rest_only.update(rest_only)
+            metadata = json_format.ParseDict(data, resources_pb2.Object())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata,
@@ -260,8 +269,8 @@ class Object:
             update_mask = request.update_mask
         else:
             data = json.loads(request.data)
-            if "customTime" in data:
-                self.rest_only["customTime"] = data.pop("customTime")
+            rest_only = self.__extract_rest_only(data)
+            self.rest_only.update(rest_only)
             if "metadata" in data:
                 if data["metadata"] is None:
                     self.metadata.metadata.clear()
