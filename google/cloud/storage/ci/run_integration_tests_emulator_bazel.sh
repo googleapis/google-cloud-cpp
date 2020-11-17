@@ -30,6 +30,15 @@ BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
+# Run the unittests of the emulator before running integration tests.
+"${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
+  "//google/cloud/storage/emulator:test_gcs"
+exit_status=$?
+
+if [[ "$exit_status" -ne 0 ]]; then
+  exit "${exit_status}"
+fi
+
 # Configure run_testbench_utils.sh to run the GCS testbench.
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 

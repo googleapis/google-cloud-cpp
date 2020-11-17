@@ -196,6 +196,25 @@ void StreamingSubscriptionBatchSource::OnInitialError(RetryLoopState rs) {
 
 void StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,
                                                        Status status) {
+  if (status.code() == StatusCode::kUnavailable) {
+    // Cloud Pub/Sub terminates a streaming pull trying to get data from an
+    // empty subscription with this message. This should be treated as-if there
+    // was at least a successful connection established once. The rationale is
+    // that we *know* we were able to connect to the service (so this is not a
+    // kUnavailable for network reasons), and we *know* this is not an error due
+    // to permissions, or resource naming, or some other kind of non-retryable
+    // error.
+    auto constexpr kProbablyEmptySubscription =
+        "The service was unable to fulfill your request."
+        " Please try again. [code=8a75]";
+    if (status.message() == kProbablyEmptySubscription) {
+      shutdown_manager_->StartOperation(__func__, "reconnect", [&] {
+        StartStream(retry_policy_->clone(), backoff_policy_->clone());
+        shutdown_manager_->FinishedOperation("reconnect");
+      });
+      return;
+    }
+  }
   if (!rs.retry_policy->OnFailure(status)) {
     OnRetryFailure(std::move(status));
     return;

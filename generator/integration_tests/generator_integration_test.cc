@@ -152,6 +152,7 @@ INSTANTIATE_TEST_SUITE_P(
                     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
                     "internal/database_admin_stub.gcpcxx.pb.h",
                     "internal/database_admin_stub.gcpcxx.pb.cc",
+                    "mocks/mock_database_admin_connection.gcpcxx.pb.h",
                     "retry_policy.gcpcxx.pb.h"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
            info) {

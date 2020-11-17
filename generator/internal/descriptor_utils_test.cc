@@ -109,6 +109,11 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("metadata_header_path",
                        "google/cloud/frobber/internal/"
                        "frobber_metadata_decorator.gcpcxx.pb.h"),
+        std::make_pair("mock_connection_class_name",
+                       "MockFrobberServiceConnection"),
+        std::make_pair("mock_connection_header_path",
+                       "google/cloud/frobber/mocks/"
+                       "mock_frobber_connection.gcpcxx.pb.h"),
         std::make_pair("product_namespace", "frobber"),
         std::make_pair("product_internal_namespace", "frobber_internal"),
         std::make_pair("proto_file_name",

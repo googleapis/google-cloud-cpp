@@ -424,6 +424,23 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
     /bin/false
   fi
 
+  io::log_yellow "Verify no extraneous files were installed."
+  export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
+
+  # Get the version of one of the libraries. These should all be the same, so
+  # it does not matter what we use.
+  GOOGLE_CLOUD_CPP_VERSION=$(pkg-config storage_client --modversion) || true
+  GOOGLE_CLOUD_CPP_VERSION_MAJOR=$(echo "${GOOGLE_CLOUD_CPP_VERSION}" | cut -d'.' -f1)
+
+  mapfile -t files < <(find /var/tmp/staging/ -type f | grep -vE \
+    "\.(h|inc|proto|cmake|pc|a|so|so\.${GOOGLE_CLOUD_CPP_VERSION}|so\.${GOOGLE_CLOUD_CPP_VERSION_MAJOR})\$")
+  if [[ "${#files[@]}" -gt 0 ]]; then
+    io::log_red "Installed files do not match expectation."
+    echo "Found:"
+    echo "${files[@]}"
+    /bin/false
+  fi
+
   if [[ "${CHECK_ABI:-}" == "yes" ]]; then
     io::log_yellow "Checking ABI compatibility."
     libraries=(
