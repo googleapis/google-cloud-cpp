@@ -306,6 +306,13 @@ CreateServiceAccountCredentialsFromJsonContents(
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
+  std::chrono::system_clock::time_point now;
+  auto components = AssertionComponentsFromInfo(*info, now);
+  auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
+      components.first, components.second, info->private_key);
+  if (!jwt_assertion) {
+    return std::move(jwt_assertion).status();
+  }
   // These are supplied as extra parameters to this method, not in the JSON
   // file.
   info->subject = std::move(subject);
