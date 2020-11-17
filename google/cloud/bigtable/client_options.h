@@ -17,8 +17,11 @@
 
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
+#include "google/cloud/tracing_options.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/resource_quota.h>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -29,6 +32,8 @@ struct InstanceAdminTraits;
 std::string DefaultDataEndpoint();
 std::string DefaultAdminEndpoint();
 std::string DefaultInstanceAdminEndpoint();
+std::set<std::string> DefaultTracingComponents();
+TracingOptions DefaultTracingOptions();
 }  // namespace internal
 
 /**
@@ -296,6 +301,32 @@ class ClientOptions {
   /// Return the user agent prefix used by the library.
   static std::string UserAgentPrefix();
 
+  /**
+   * Return whether tracing is enabled for the given @p component.
+   *
+   * The C++ clients can log interesting events to help library and application
+   * developers troubleshoot problems. This flag returns true if tracing should
+   * be enabled by clients configured with this option.
+   */
+  bool tracing_enabled(std::string const& component) const {
+    return tracing_components_.find(component) != tracing_components_.end();
+  }
+
+  /// Enable tracing for @p component in clients configured with this object.
+  ClientOptions& enable_tracing(std::string const& component) {
+    tracing_components_.insert(component);
+    return *this;
+  }
+
+  /// Disable tracing for @p component in clients configured with this object.
+  ClientOptions& disable_tracing(std::string const& component) {
+    tracing_components_.erase(component);
+    return *this;
+  }
+
+  /// Return the options for use when tracing RPCs.
+  TracingOptions const& tracing_options() const { return tracing_options_; }
+
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
@@ -316,6 +347,8 @@ class ClientOptions {
   // testing, where the emulator for instance admin operations may be different
   // than the emulator for admin and data operations.
   std::string instance_admin_endpoint_;
+  std::set<std::string> tracing_components_;
+  TracingOptions tracing_options_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -61,6 +61,20 @@ std::string DefaultInstanceAdminEndpoint() {
   return DefaultAdminEndpoint();
 }
 
+std::set<std::string> DefaultTracingComponents() {
+  auto tracing =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  if (!tracing.has_value()) return {};
+  return absl::StrSplit(*tracing, ',');
+}
+
+TracingOptions DefaultTracingOptions() {
+  auto tracing_options =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
+  if (!tracing_options) return {};
+  return TracingOptions{}.SetOptions(*tracing_options);
+}
+
 }  // namespace internal
 
 inline std::size_t CalculateDefaultConnectionPoolSize() {
@@ -80,7 +94,9 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       connection_pool_size_(CalculateDefaultConnectionPoolSize()),
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com"),
-      instance_admin_endpoint_("bigtableadmin.googleapis.com") {
+      instance_admin_endpoint_("bigtableadmin.googleapis.com"),
+      tracing_components_(internal::DefaultTracingComponents()),
+      tracing_options_(internal::DefaultTracingOptions()) {
   static std::string const kUserAgentPrefix = UserAgentPrefix();
   channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
   channel_arguments_.SetMaxSendMessageSize(

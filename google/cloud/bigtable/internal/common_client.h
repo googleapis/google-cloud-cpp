@@ -84,6 +84,8 @@ class CommonClient {
     return channel;
   }
 
+  ClientOptions& Options() { return options_; }
+
  private:
   /// Make sure the connections exit, and create them if needed.
   void CheckConnections(std::unique_lock<std::mutex>& lk) {
