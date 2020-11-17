@@ -180,7 +180,7 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 /// @test Verify that NOT_FOUND is returned for missing objects
 TEST_P(GrpcIntegrationTest, GetObjectMediaNotFound) {
-  if (UsingTestbench()) GTEST_SKIP();
+  if (GetParam() == "media") GTEST_SKIP();
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
 
@@ -194,8 +194,9 @@ TEST_P(GrpcIntegrationTest, GetObjectMediaNotFound) {
 
   auto object_name = MakeRandomObjectName();
 
-  auto channel = grpc::CreateChannel("storage.googleapis.com",
-                                     grpc::GoogleDefaultCredentials());
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+  auto channel = google::cloud::storage::internal::CreateGrpcChannel(*options);
   auto stub = google::storage::v1::Storage::NewStub(channel);
 
   grpc::ClientContext context;
