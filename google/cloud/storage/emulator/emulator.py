@@ -365,7 +365,7 @@ def object_list(bucket_name):
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PUT"])
 def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
-    blob.patch(flask.request, None)
+    blob.update(flask.request, None)
     projection = utils.common.extract_projection(
         flask.request, CommonEnums.Projection.FULL, None
     )

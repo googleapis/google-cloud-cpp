@@ -26,10 +26,20 @@ from google.protobuf import json_format
 
 
 class DataHolder(types.SimpleNamespace):
+    rest_only_fields = ["customTime"]
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     # === UPLOAD === #
+
+    @classmethod
+    def __extract_rest_only(cls, data):
+        rest_only = {}
+        for field in DataHolder.rest_only_fields:
+            if field in data:
+                rest_only[field] = data.pop(field)
+        return rest_only
 
     @classmethod
     def init_upload(
@@ -55,8 +65,7 @@ class DataHolder(types.SimpleNamespace):
             if name != "":
                 utils.error.invalid("name argument in non-empty payload", None)
             data = json.loads(request.data)
-            if "customTime" in data:
-                rest_only["customTime"] = data.pop("customTime")
+            rest_only = cls.__extract_rest_only(data)
             metadata = json_format.ParseDict(data, resources_pb2.Object())
         else:
             metadata = resources_pb2.Object()

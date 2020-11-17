@@ -128,6 +128,25 @@ class TestBucket(unittest.TestCase):
             ),
         )
 
+    def test_grpc_to_rest(self):
+        request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
+        bucket, projection = gcs.bucket.Bucket.init(request, "")
+        self.assertEqual(bucket.metadata.name, "bucket")
+
+        # `REST` GET
+
+        rest_metadata = bucket.rest()
+        self.assertEqual(rest_metadata["name"], "bucket")
+        self.assertIsNone(bucket.metadata.labels.get("method"))
+
+        # `REST` PATCH
+
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"labels": {"method": "rest"}})
+        )
+        bucket.patch(request, None)
+        self.assertEqual(bucket.metadata.labels["method"], "rest")
+
     def test_init_rest(self):
         request = utils.common.FakeRequest(args={}, data=json.dumps({"name": "bucket"}))
         bucket, projection = gcs.bucket.Bucket.init(request, None)
@@ -210,6 +229,13 @@ class TestBucket(unittest.TestCase):
         self.assertEqual(bucket.metadata.labels.get("method"), "rest")
         self.assertEqual(bucket.metadata.website.main_page_suffix, "bucket")
         self.assertEqual(bucket.metadata.website.not_found_page, "404.html")
+
+        # We want to make sure REST `UPDATE` does not throw any exception.
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"labels": {"method": "rest_update"}})
+        )
+        bucket.update(request, None)
+        self.assertEqual(bucket.metadata.labels["method"], "rest_update")
 
     def test_acl(self):
         # Both REST and GRPC share almost the same implementation so we only test GRPC here.
@@ -295,6 +321,7 @@ class TestObject(unittest.TestCase):
         self.assertEqual(blob.metadata.name, "object")
         self.assertEqual(blob.media, b"123456789")
         self.assertEqual(blob.metadata.metadata["key"], "value")
+        self.assertEqual(blob.metadata.content_type, "image/jpeg")
 
     def test_grpc_to_rest(self):
         # Make sure that object created by `gRPC` works with `REST`'s request.
@@ -356,6 +383,35 @@ class TestObject(unittest.TestCase):
         self.assertEqual(blob.metadata.name, "object")
         self.assertEqual(blob.media, b"123456789")
         self.assertEqual(blob.metadata.metadata["method"], "grpc")
+
+    def test_update_and_patch(self):
+        # Because Object's `update` and `patch` are similar to Bucket'ones, we only
+        # want to make sure that REST `UPDATE` and `PATCH` does not throw any exception.
+
+        request = utils.common.FakeRequest(
+            args={},
+            headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            environ={},
+        )
+        blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
+        self.assertEqual(blob.metadata.name, "object")
+        self.assertEqual(blob.metadata.metadata["method"], "rest")
+        self.assertEqual(blob.metadata.content_type, "image/jpeg")
+
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"metadata": {"method": "rest_update"}})
+        )
+        blob.update(request, None)
+        self.assertEqual(blob.metadata.metadata["method"], "rest_update")
+        # Modifiable fields will be replaced by default value when updating
+        self.assertEqual(blob.metadata.content_type, "")
+
+        request = utils.common.FakeRequest(
+            args={}, data=json.dumps({"metadata": {"method": "rest_patch"}})
+        )
+        blob.patch(request, None)
+        self.assertEqual(blob.metadata.metadata["method"], "rest_patch")
 
 
 class TestHolder(unittest.TestCase):

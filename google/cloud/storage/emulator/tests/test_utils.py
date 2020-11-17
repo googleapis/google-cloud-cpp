@@ -294,7 +294,7 @@ class TestCommonUtils(unittest.TestCase):
         self.assertDictEqual(
             metadata, {"name": "myObject", "metadata": {"test": "test"}}
         )
-        self.assertDictEqual(media_header, {"Content-Type": "image/jpeg"})
+        self.assertDictEqual(media_header, {"content-type": "image/jpeg"})
         self.assertEqual(media, b"123456789")
 
 
