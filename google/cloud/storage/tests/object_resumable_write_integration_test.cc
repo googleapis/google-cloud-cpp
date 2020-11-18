@@ -190,8 +190,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   if (meta.has_metadata("x_testbench_upload")) {
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
-  if (meta.has_metadata("x_testbench_transfer_encoding")) {
-    EXPECT_THAT(meta.metadata("x_testbench_transfer_encoding"),
+  if (meta.has_metadata("x_emulator_transfer_encoding")) {
+    EXPECT_THAT(meta.metadata("x_emulator_transfer_encoding"),
                 Not(HasSubstr("chunked")));
   }
 

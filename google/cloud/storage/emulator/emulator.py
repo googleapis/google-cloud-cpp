@@ -686,7 +686,7 @@ def resumable_upload_chunk(bucket_name):
                     False,
                     None,
                 )
-                blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+                blob.metadata.metadata["x_emulator_transfer_encoding"] = ":".join(
                     upload.transfer
                 )
                 blob.metadata.metadata["x_testbench_upload"] = "resumable"
@@ -734,7 +734,7 @@ def resumable_upload_chunk(bucket_name):
             None,
             upload.rest_only,
         )
-        blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+        blob.metadata.metadata["x_emulator_transfer_encoding"] = ":".join(
             upload.transfer
         )
         blob.metadata.metadata["x_testbench_upload"] = "resumable"
