@@ -200,7 +200,7 @@ class Object:
         )
         metadata["metadata"]["x_emulator_upload"] = "multipart"
         if "md5Hash" in metadata:
-            metadata["metadata"]["x_testbench_md5"] = metadata["md5Hash"]
+            metadata["metadata"]["x_emulator_md5"] = metadata["md5Hash"]
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
             metadata["metadata"]["x_testbench_crc32c"] = metadata["crc32c"]
@@ -388,10 +388,10 @@ class Object:
         header = ""
         if "x_testbench_crc32c" in self.metadata.metadata:
             header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
-        if "x_testbench_md5" in self.metadata.metadata:
+        if "x_emulator_md5" in self.metadata.metadata:
             if header != "":
                 header += ","
-            header += "md5=" + self.metadata.metadata["x_testbench_md5"]
+            header += "md5=" + self.metadata.metadata["x_emulator_md5"]
         return header if header != "" else None
 
     def rest_media(self, request):

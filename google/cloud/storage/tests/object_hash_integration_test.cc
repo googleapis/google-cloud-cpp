@@ -99,7 +99,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -161,7 +161,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
