@@ -14,6 +14,7 @@
 
 ARG DISTRO_VERSION=18.04
 FROM ubuntu:${DISTRO_VERSION}
+ARG NCPU=4
 
 RUN apt-get update && \
     apt-get --no-install-recommends install -y \

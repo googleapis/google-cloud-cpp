@@ -14,6 +14,7 @@
 
 ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
+ARG NCPU=4
 
 # Install the tools necessary to run Bazel and CMake Super builds.
 RUN dnf makecache && \
@@ -46,5 +47,3 @@ RUN dnf makecache && dnf install -y java-latest-openjdk
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh
-
-RUN dnf makecache && dnf install -y llvm

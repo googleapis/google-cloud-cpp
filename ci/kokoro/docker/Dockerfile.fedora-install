@@ -32,8 +32,7 @@ RUN dnf makecache && \
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
 
-# Install the the buildifier tool, which does not compile with the default
-# golang compiler for Ubuntu 16.04 and Ubuntu 18.04.
+# Install the buildifier tool to detect formatting errors in BUILD files.
 RUN wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
 RUN chmod 755 /usr/bin/buildifier
 
