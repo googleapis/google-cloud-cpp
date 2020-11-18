@@ -138,6 +138,40 @@ option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
 
+# Accepts a comma separated list of libraries to enable, i.e:
+# `-DGOOGLE_CLOUD_CPP_ENABLE=storage,spanner`. Currently, this cannot be
+# combined with the `GOOGLE_CLOUD_CPP_ENABLE_*` options above. This variable
+# takes precedence.
+if (GOOGLE_CLOUD_CPP_ENABLE)
+    list(
+        APPEND
+        GOOGLE_CLOUD_CPP_LIBRARIES
+        bigquery
+        bigtable
+        spanner
+        storage
+        firestore
+        pubsub
+        generator)
+    string(REPLACE "," ";" OPTIONS "${GOOGLE_CLOUD_CPP_ENABLE}")
+    # Enable building any library found in the list.
+    foreach (option ${OPTIONS})
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_LIBRARIES "${option}")
+        string(TOUPPER "${option}" _option)
+        set(_option "GOOGLE_CLOUD_CPP_ENABLE_${_option}")
+        set(${_option} ON)
+    endforeach ()
+
+    # Disable building any library that wasn't explicitly enabled.
+    foreach (library ${GOOGLE_CLOUD_CPP_LIBRARIES})
+        string(TOUPPER "${library}" _library)
+        set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
+        set(${_library}
+            OFF
+            CACHE BOOL "Enable building the ${library} library." FORCE)
+    endforeach ()
+endif ()
+
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
     CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION
