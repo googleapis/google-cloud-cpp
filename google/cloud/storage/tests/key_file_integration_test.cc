@@ -33,7 +33,7 @@ class KeyFileIntegrationTest
  protected:
   void SetUp() override {
     // The testbench does not implement signed URLs.
-    if (UsingTestbench()) GTEST_SKIP();
+    if (UsingEmulator()) GTEST_SKIP();
 
     std::string const key_file_envvar = GetParam();
 

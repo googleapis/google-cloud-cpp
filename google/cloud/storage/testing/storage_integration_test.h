@@ -85,7 +85,7 @@ class StorageIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomData(std::size_t desired_size);
 
-  static bool UsingTestbench();
+  static bool UsingEmulator();
 
   static bool UsingGrpc();
 

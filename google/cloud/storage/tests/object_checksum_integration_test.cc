@@ -298,7 +298,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -342,7 +342,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -386,7 +386,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -422,7 +422,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -459,7 +459,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

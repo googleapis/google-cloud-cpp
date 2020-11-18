@@ -42,7 +42,7 @@ class ObjectInsertIntegrationTest
       : application_credentials_("GOOGLE_APPLICATION_CREDENTIALS", {}) {}
 
   void SetUp() override {
-    if (!UsingTestbench()) {
+    if (!UsingEmulator()) {
       // This test was chosen (more or less arbitrarily) to validate that both
       // P12 and JSON credentials are usable in production. The positives for
       // this test are (1) it is relatively short (less than 60 seconds), (2) it

@@ -46,7 +46,7 @@ StorageIntegrationTest::MakeIntegrationTestClient() {
 
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeBucketIntegrationTestClient() {
-  if (UsingTestbench()) return MakeIntegrationTestClient();
+  if (UsingEmulator()) return MakeIntegrationTestClient();
 
   auto constexpr kInitialDelay = std::chrono::seconds(5);
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
@@ -105,7 +105,7 @@ StorageIntegrationTest::MakeIntegrationTestClient(
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
   std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
   auto constexpr kShortDelayForTestbench = std::chrono::milliseconds(10);
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     initial_delay = kShortDelayForTestbench;
   }
 
@@ -159,7 +159,7 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
   return CreateKeyFromGenerator(generator_);
 }
 
-bool StorageIntegrationTest::UsingTestbench() {
+bool StorageIntegrationTest::UsingEmulator() {
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
       .has_value();
 }

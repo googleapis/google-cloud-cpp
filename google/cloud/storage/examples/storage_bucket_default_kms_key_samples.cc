@@ -134,7 +134,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the RemoveBucketDefaultKmsKey() example" << std::endl;
   RemoveBucketDefaultKmsKey(client, {bucket_name});
 
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

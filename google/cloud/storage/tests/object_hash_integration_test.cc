@@ -398,7 +398,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -440,7 +440,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -483,7 +483,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -518,7 +518,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -554,7 +554,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   // This test is disabled when not using the testbench as it relies on the
   // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

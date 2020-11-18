@@ -23,7 +23,7 @@ namespace cloud {
 namespace storage {
 namespace examples {
 
-bool UsingTestbench() {
+bool UsingEmulator() {
   return !google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
               .value_or("")
               .empty();

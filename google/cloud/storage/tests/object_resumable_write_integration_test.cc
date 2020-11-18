@@ -66,7 +66,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
@@ -114,7 +114,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
@@ -153,7 +153,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
   }
@@ -229,7 +229,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
     ObjectMetadata meta = os.metadata().value();
     EXPECT_EQ(object_name, meta.name());
     EXPECT_EQ(bucket_name_, meta.bucket());
-    if (UsingTestbench()) {
+    if (UsingEmulator()) {
       EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
       EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
     }
@@ -306,7 +306,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
-  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
+  if (UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   auto constexpr kMiB = 1024 * 1024L;
   auto constexpr kChunkSize = 2 * kMiB;
 
@@ -380,7 +380,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
-  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
+  if (UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

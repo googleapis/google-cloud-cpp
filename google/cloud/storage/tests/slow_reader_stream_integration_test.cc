@@ -32,7 +32,7 @@ class SlowReaderStreamIntegrationTest
  protected:
   void SetUp() override {
     // Too slow to run against production.
-    if (!UsingTestbench()) GTEST_SKIP();
+    if (!UsingEmulator()) GTEST_SKIP();
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
@@ -60,7 +60,7 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
   // in the middle.
 
   ObjectReadStream stream;
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     stream = client->ReadObject(
         bucket_name_, object_name,
         CustomHeader("x-goog-testbench-instructions", "return-broken-stream"));
@@ -68,8 +68,8 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
     stream = client->ReadObject(bucket_name_, object_name);
   }
 
-  auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
-  auto const period_increment = std::chrono::seconds(UsingTestbench() ? 5 : 60);
+  auto slow_reader_period = std::chrono::seconds(UsingEmulator() ? 1 : 400);
+  auto const period_increment = std::chrono::seconds(UsingEmulator() ? 5 : 60);
   auto const max_slow_reader_period = std::chrono::minutes(10);
   std::vector<char> buffer;
   std::int64_t read_count = 0;

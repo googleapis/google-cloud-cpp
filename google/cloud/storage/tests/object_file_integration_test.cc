@@ -434,7 +434,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
   }
@@ -474,7 +474,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  if (UsingTestbench()) {
+  if (UsingEmulator()) {
     ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
     EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
   }

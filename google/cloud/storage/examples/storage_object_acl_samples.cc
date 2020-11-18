@@ -307,7 +307,7 @@ void RunAll(std::vector<std::string> const& argv) {
   RemoveObjectOwner(client, {bucket_name, object_name, entity});
 
   (void)client.DeleteObject(bucket_name, object_name);
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 
