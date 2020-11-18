@@ -47,8 +47,8 @@ std::string XmlEndpoint(ClientOptions const& options) {
 }
 
 std::string IamEndpoint(ClientOptions const& options) {
-  auto testbench = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
-  if (testbench) return *testbench + "/iamapi";
+  auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return *emulator + "/iamapi";
   return options.iam_endpoint();
 }
 

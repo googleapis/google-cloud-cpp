@@ -37,7 +37,7 @@ class StorageIntegrationTest : public ::testing::Test {
   /**
    * Return a client suitable for most integration tests.
    *
-   * Most integration tests, particularly when running against the testbench,
+   * Most integration tests, particularly when running against the emulator,
    * should use short backoff and retry periods. This returns a client so
    * configured.
    */

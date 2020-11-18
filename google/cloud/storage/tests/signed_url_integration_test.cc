@@ -48,7 +48,7 @@ class SignedUrlIntegrationTest
 };
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
-  // The testbench does not implement signed URLs.
+  // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -81,7 +81,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
-  // The testbench does not implement signed URLs.
+  // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -114,7 +114,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
-  // The testbench does not implement signed URLs.
+  // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -147,7 +147,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
-  // The testbench does not implement signed URLs.
+  // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

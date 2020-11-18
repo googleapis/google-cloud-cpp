@@ -204,7 +204,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the testbench, we have some more information to
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_TRUE(insert_meta->has_metadata("x_emulator_crc32c"));
@@ -296,8 +296,8 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -340,8 +340,8 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -384,8 +384,8 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -420,8 +420,8 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -457,8 +457,8 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

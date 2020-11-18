@@ -56,7 +56,7 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
   ASSERT_STATUS_OK(source_meta);
 
   // Create an iostream to read the object back. When running against the
-  // testbench we can fail quickly by asking the testbench to break the stream
+  // emulator we can fail quickly by asking the emulator to break the stream
   // in the middle.
 
   ObjectReadStream stream;

@@ -43,7 +43,7 @@ TEST(StorageExamplesCommon, RandomObject) {
 }
 
 TEST(StorageExamplesCommon, CreateCommandEntryUsage) {
-  // Set the client to use the testbench, this avoids any problems trying to
+  // Set the client to use the emulator, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");
@@ -72,7 +72,7 @@ TEST(StorageExamplesCommon, CreateCommandEntryUsage) {
 }
 
 TEST(StorageExamplesCommon, CreateCommandEntryNoArguments) {
-  // Set the client to use the testbench, this avoids any problems trying to
+  // Set the client to use the emulator, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");
@@ -112,7 +112,7 @@ TEST(StorageExamplesCommon, CreateCommandEntryNoArguments) {
 }
 
 TEST(StorageExamplesCommon, CreateCommandEntryVarargs) {
-  // Set the client to use the testbench, this avoids any problems trying to
+  // Set the client to use the emulator, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");

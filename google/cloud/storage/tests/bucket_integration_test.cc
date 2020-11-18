@@ -889,7 +889,7 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   ASSERT_STATUS_OK(client);
 
   // Try to create an invalid bucket (the name should not start with an
-  // uppercase letter), the service (or testbench) will reject the request and
+  // uppercase letter), the service (or emulator) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(

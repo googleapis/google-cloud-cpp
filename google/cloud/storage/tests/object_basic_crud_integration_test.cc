@@ -151,12 +151,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 }
 
 StatusOr<Client> CreateNonDefaultClient() {
-  auto testbench =
+  auto emulator =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  if (!testbench) {
+  if (!emulator) {
     // Use a different spelling of the default endpoint. This disables the
     // allegedly "slightly faster" XML endpoints, but should continue to work.
     options.set_endpoint("https://storage.googleapis.com:443");
@@ -164,8 +164,8 @@ StatusOr<Client> CreateNonDefaultClient() {
     if (!creds) return std::move(creds).status();
     options.set_credentials(*std::move(creds));
   } else {
-    // Use the testbench endpoint, but not through the environment variable
-    options.set_endpoint(*testbench);
+    // Use the emulator endpoint, but not through the environment variable
+    options.set_endpoint(*emulator);
     options.set_credentials(oauth2::CreateAnonymousCredentials());
   }
   return Client(options);

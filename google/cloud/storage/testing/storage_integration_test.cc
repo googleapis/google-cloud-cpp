@@ -104,9 +104,9 @@ StorageIntegrationTest::MakeIntegrationTestClient(
 
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
   std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
-  auto constexpr kShortDelayForTestbench = std::chrono::milliseconds(10);
+  auto constexpr kShortDelayForEmulator = std::chrono::milliseconds(10);
   if (UsingEmulator()) {
-    initial_delay = kShortDelayForTestbench;
+    initial_delay = kShortDelayForEmulator;
   }
 
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);

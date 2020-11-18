@@ -84,7 +84,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -125,7 +125,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -165,7 +165,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
 
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -206,7 +206,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
 
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -246,7 +246,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
 
 /// @test Read a relatively large object using chunks of different sizes.
 TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -531,7 +531,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
-  ScopedEnvironment disable_testbench("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment disable_emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -552,7 +552,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -569,7 +569,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -588,7 +588,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -619,7 +619,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};

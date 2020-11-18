@@ -151,7 +151,7 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
             internal::IamEndpoint(options));
 }
 
-TEST_F(ClientOptionsTest, EndpointsTestBench) {
+TEST_F(ClientOptionsTest, EndpointsEmulator) {
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());

@@ -96,7 +96,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the testbench, we have some more information to
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
@@ -158,7 +158,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_emulator_upload")) {
-    // When running against the testbench, we have some more information to
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
@@ -396,8 +396,8 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -438,8 +438,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -481,8 +481,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -516,8 +516,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -552,8 +552,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
