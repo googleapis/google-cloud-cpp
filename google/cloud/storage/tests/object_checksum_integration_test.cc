@@ -312,7 +312,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -357,7 +357,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -401,7 +401,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -438,7 +438,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -468,8 +468,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   // Create a stream to upload an object.
   ObjectWriteStream stream = client->WriteObject(
       bucket_name_, object_name, DisableMD5Hash(true), IfGenerationMatch(0),
-      CustomHeader("x-goog-testbench-instructions",
-                   "inject-upload-data-error"));
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 

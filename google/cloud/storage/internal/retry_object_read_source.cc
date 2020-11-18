@@ -75,7 +75,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   std::string instructions;
   if (request_.HasOption<CustomHeader>()) {
     auto name = request_.GetOption<CustomHeader>().custom_header_name();
-    has_testbench_instructions = (name == "x-goog-testbench-instructions");
+    has_testbench_instructions = (name == "x-goog-emulator-instructions");
     instructions = request_.GetOption<CustomHeader>().value();
   }
 
@@ -94,7 +94,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
 
     if (has_testbench_instructions) {
       request_.set_multiple_options(
-          CustomHeader("x-goog-testbench-instructions",
+          CustomHeader("x-goog-emulator-instructions",
                        instructions + "/retry-" + std::to_string(++counter)));
     }
 

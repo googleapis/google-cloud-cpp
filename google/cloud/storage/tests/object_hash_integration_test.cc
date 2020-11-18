@@ -412,7 +412,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -455,7 +455,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -498,7 +498,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -534,7 +534,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -564,8 +564,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   ObjectWriteStream stream = client->WriteObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfGenerationMatch(0),
-      CustomHeader("x-goog-testbench-instructions",
-                   "inject-upload-data-error"));
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 

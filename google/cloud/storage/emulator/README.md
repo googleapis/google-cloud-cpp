@@ -38,36 +38,36 @@ CLOUD_STORAGE_GRPC_ENDPOINT=localhost:8000 # For gRPC API
 
 ## Force Failures
 
-You can force the following failures by using the `x-goog-testbench-instructions` header.
+You can force the following failures by using the `x-goog-emulator-instructions` header.
 
 ### return-broken-stream
 
-Set request headers with `x-goog-testbench-instructions: return-broken-stream`.
+Set request headers with `x-goog-emulator-instructions: return-broken-stream`.
 Emulator will fail after sending 1024*1024 bytes.
 
 ### return-corrupted-data
 
-Set request headers with `x-goog-testbench-instructions: return-corrupted-data`.
+Set request headers with `x-goog-emulator-instructions: return-corrupted-data`.
 Emulator will return corrupted data.
 
 ### stall-always
 
-Set request headers with `x-goog-testbench-instructions: stall-always`.
+Set request headers with `x-goog-emulator-instructions: stall-always`.
 Emulator will stall at the beginning.
 
 ### stall-at-256KiB
 
-Set request headers with `x-goog-testbench-instructions: stall-at-256KiB`.
+Set request headers with `x-goog-emulator-instructions: stall-at-256KiB`.
 Emulator will stall at 256KiB bytes.
 
 ### return-503-after-256K
 
-Set request headers with `x-goog-testbench-instructions: return-503-after-256K`.
+Set request headers with `x-goog-emulator-instructions: return-503-after-256K`.
 Emulator will return a `HTTP 503` after sending 256KiB bytes.
 
 ### return-503-after-256K/retry-N
 
-Set request headers with `x-goog-testbench-instructions: return-503-after-256K/retry-1` up to `x-goog-testbench-instructions: return-503-after-256K/retry-N`.
+Set request headers with `x-goog-emulator-instructions: return-503-after-256K/retry-1` up to `x-goog-emulator-instructions: return-503-after-256K/retry-N`.
 
 For N==1 and N==2 behave like `return-305-after-256K`, for `N>=3` ignore the
 failure instruction and return successfully. This is used to test failures during

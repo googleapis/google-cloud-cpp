@@ -660,7 +660,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "stall-always"));
+      CustomHeader("x-goog-emulator-instructions", "stall-always"));
 
   std::vector<char> buffer(kObjectSize);
   stream.read(buffer.data(), kObjectSize);
@@ -694,7 +694,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "stall-at-256KiB"));
+      CustomHeader("x-goog-emulator-instructions", "stall-at-256KiB"));
 
   std::vector<char> buffer(kObjectSize);
   stream.read(buffer.data(), kObjectSize);
@@ -727,7 +727,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "return-503-after-256K"));
+      CustomHeader("x-goog-emulator-instructions", "return-503-after-256K"));
   std::vector<char> actual(64 * 1024);
   for (std::size_t offset = 0;
        offset < contents.size() && !stream.bad() && !stream.eof();

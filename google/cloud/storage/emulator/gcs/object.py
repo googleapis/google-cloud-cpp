@@ -90,7 +90,7 @@ class Object:
         cls, request, metadata, media, bucket, is_destination, context, rest_only=None
     ):
         if context is None:
-            instruction = request.headers.get("x-goog-testbench-instructions")
+            instruction = request.headers.get("x-goog-emulator-instructions")
             if instruction == "inject-upload-data-error":
                 media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
@@ -417,7 +417,7 @@ class Object:
         streamer, length, headers = None, len(response_payload), {}
         content_range = "bytes %d-%d/%d" % (begin, end - 1, length)
 
-        instructions = request.headers.get("x-goog-testbench-instructions")
+        instructions = request.headers.get("x-goog-emulator-instructions")
         if instructions == "return-broken-stream":
             headers["Content-Length"] = length
 

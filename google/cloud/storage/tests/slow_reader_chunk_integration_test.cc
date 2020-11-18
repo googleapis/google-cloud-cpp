@@ -62,7 +62,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
     if (UsingEmulator()) {
       return client->ReadObject(
           bucket_name_, object_name,
-          CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
+          CustomHeader("x-goog-emulator-instructions", "return-broken-stream"),
           ReadFromOffset(offset));
     }
     return client->ReadObject(bucket_name_, object_name,

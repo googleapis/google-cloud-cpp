@@ -63,7 +63,7 @@ TEST_F(SlowReaderStreamIntegrationTest, LongPauses) {
   if (UsingEmulator()) {
     stream = client->ReadObject(
         bucket_name_, object_name,
-        CustomHeader("x-goog-testbench-instructions", "return-broken-stream"));
+        CustomHeader("x-goog-emulator-instructions", "return-broken-stream"));
   } else {
     stream = client->ReadObject(bucket_name_, object_name);
   }
