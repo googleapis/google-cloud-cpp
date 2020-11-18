@@ -79,7 +79,7 @@ done
 # are missing too.
 EMULATOR_SHA=$(git ls-files google/cloud/storage/emulator | sort | cat | sha256sum)
 testbench_args=(
-  "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
+  "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
   "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"

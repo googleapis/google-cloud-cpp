@@ -160,7 +160,7 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
 }
 
 bool StorageIntegrationTest::UsingEmulator() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
       .has_value();
 }
 

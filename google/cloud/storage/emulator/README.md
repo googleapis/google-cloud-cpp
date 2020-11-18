@@ -32,7 +32,7 @@ curl "http://localhost:9000/start_grpc?port=8000"
 For `google-cloud-cpp`, please set the following enviroment variable
 
 ```bash
-CLOUD_STORAGE_TESTBENCH_ENDPOINT=http://localhost:9000 # For JSON and XML API
+CLOUD_STORAGE_EMULATOR_ENDPOINT=http://localhost:9000 # For JSON and XML API
 CLOUD_STORAGE_GRPC_ENDPOINT=localhost:8000 # For gRPC API
 ```
 

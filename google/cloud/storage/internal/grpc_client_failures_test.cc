@@ -42,8 +42,7 @@ class GrpcClientFailuresTest
  protected:
   GrpcClientFailuresTest()
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}),
-        rest_endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                       "http://localhost:1"),
+        rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:1"),
         grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", "localhost:1") {}
 
   void SetUp() override {

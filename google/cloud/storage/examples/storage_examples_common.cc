@@ -24,7 +24,7 @@ namespace storage {
 namespace examples {
 
 bool UsingEmulator() {
-  return !google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+  return !google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
               .value_or("")
               .empty();
 }

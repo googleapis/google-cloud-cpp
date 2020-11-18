@@ -31,7 +31,7 @@ class ClientOptionsTest : public ::testing::Test {
  public:
   ClientOptionsTest()
       : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
-        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
+        endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
         generator_(std::random_device{}()) {}
 
   std::string CreateRandomFileName() {
@@ -124,7 +124,7 @@ TEST_F(ClientOptionsTest, EnableHttp) {
 }
 
 TEST_F(ClientOptionsTest, EndpointsDefault) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
@@ -137,7 +137,7 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
 }
 
 TEST_F(ClientOptionsTest, EndpointsOverride) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_endpoint("http://127.0.0.1.nip.io:1234");
@@ -152,7 +152,7 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
 }
 
 TEST_F(ClientOptionsTest, EndpointsTestBench) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("http://localhost:1234", options.endpoint());

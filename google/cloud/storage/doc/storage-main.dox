@@ -58,7 +58,7 @@ which should give you a taste of the Cloud Storage C++ client library API.
 
 - `CLOUD_STORAGE_ENABLE_TRACING=raw-client,http` enables all logging.
 
-- `CLOUD_STORAGE_TESTBENCH_ENDPOINT=...` override the default endpoint used by
+- `CLOUD_STORAGE_EMULATOR_ENDPOINT=...` override the default endpoint used by
   the library, intended for testing only.
 
 ### Experimental

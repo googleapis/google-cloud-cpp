@@ -46,7 +46,7 @@ TEST(StorageExamplesCommon, CreateCommandEntryUsage) {
   // Set the client to use the testbench, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
-      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");
 
   int call_count = 0;
   auto command = [&call_count](google::cloud::storage::Client const&,
@@ -75,7 +75,7 @@ TEST(StorageExamplesCommon, CreateCommandEntryNoArguments) {
   // Set the client to use the testbench, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
-      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");
 
   int call_count = 0;
   auto command = [&call_count](google::cloud::storage::Client const&,
@@ -115,7 +115,7 @@ TEST(StorageExamplesCommon, CreateCommandEntryVarargs) {
   // Set the client to use the testbench, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
-      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:9090");
 
   int call_count = 0;
   auto command = [&call_count](google::cloud::storage::Client const&,

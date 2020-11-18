@@ -152,9 +152,9 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
 StatusOr<Client> CreateNonDefaultClient() {
   auto testbench =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   google::cloud::testing_util::ScopedEnvironment env(
-      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
   if (!testbench) {
     // Use a different spelling of the default endpoint. This disables the

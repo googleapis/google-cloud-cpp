@@ -60,7 +60,7 @@ class ChannelOptions {
  *
  * By default, several environment variables are read to configure the client:
  *
- * - `CLOUD_STORAGE_TESTBENCH_ENDPOINT`: if set, use this http endpoint to
+ * - `CLOUD_STORAGE_EMULATOR_ENDPOINT`: if set, use this http endpoint to
  *   make all http requests instead of the production GCS service. Also,
  *   if set, the `CreateDefaultClientOptions()` function will use an
  *   `AnonymousCredentials` object instead of loading Application Default
@@ -82,7 +82,7 @@ class ClientOptions {
    * Creates a `ClientOptions` with Google Application Default %Credentials.
    *
    * If Application Default %Credentials could not be loaded, this returns a
-   * `Status` with failure details.  If the `CLOUD_STORAGE_TESTBENCH_ENDPOINT`
+   * `Status` with failure details.  If the `CLOUD_STORAGE_EMULATOR_ENDPOINT`
    * environment variable is set, this function instead uses an
    * `AnonymousCredentials` to configure the client.
    */

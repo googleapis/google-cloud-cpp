@@ -44,7 +44,7 @@ kill_testbench() {
 #   TESTBENCH_PORT: the listening port for the test bench, 8000 if not set.
 #   HTTPBIN_ENDPOINT: the httpbin endpoint on the test bench.
 #   TESTBENCH_PID: the process id for the test bench.
-#   CLOUD_STORAGE_TESTBENCH_ENDPOINT: the google cloud storage endpoint for the
+#   CLOUD_STORAGE_EMULATOR_ENDPOINT: the google cloud storage endpoint for the
 #       test bench.
 #   IO_COLOR_*: colorize output messages, defined in lib/io.sh
 # Arguments:
@@ -85,7 +85,7 @@ start_testbench() {
   fi
 
   export HTTPBIN_ENDPOINT="http://localhost:${testbench_port}/httpbin"
-  export CLOUD_STORAGE_TESTBENCH_ENDPOINT="http://localhost:${testbench_port}"
+  export CLOUD_STORAGE_EMULATOR_ENDPOINT="http://localhost:${testbench_port}"
 
   delay=1
   connected=no
