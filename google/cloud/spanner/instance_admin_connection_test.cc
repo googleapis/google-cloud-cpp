@@ -51,7 +51,8 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   return internal::MakeInstanceAdminConnection(
-      std::move(mock), retry.clone(), backoff.clone(), polling.clone());
+      std::move(mock), ConnectionOptions{}, retry.clone(), backoff.clone(),
+      polling.clone());
 }
 
 TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
