@@ -207,9 +207,9 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
     EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
-    ASSERT_TRUE(insert_meta->has_metadata("x_testbench_crc32c"));
+    ASSERT_TRUE(insert_meta->has_metadata("x_emulator_crc32c"));
     auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
-    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_testbench_crc32c"));
+    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_emulator_crc32c"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);

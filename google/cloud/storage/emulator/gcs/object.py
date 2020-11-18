@@ -203,7 +203,7 @@ class Object:
             metadata["metadata"]["x_emulator_md5"] = metadata["md5Hash"]
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
-            metadata["metadata"]["x_testbench_crc32c"] = metadata["crc32c"]
+            metadata["metadata"]["x_emulator_crc32c"] = metadata["crc32c"]
             metadata["crc32c"] = struct.unpack(
                 ">I", base64.b64decode(metadata["crc32c"].encode("utf-8"))
             )[0]
@@ -386,8 +386,8 @@ class Object:
 
     def x_goog_hash_header(self):
         header = ""
-        if "x_testbench_crc32c" in self.metadata.metadata:
-            header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
+        if "x_emulator_crc32c" in self.metadata.metadata:
+            header += "crc32c=" + self.metadata.metadata["x_emulator_crc32c"]
         if "x_emulator_md5" in self.metadata.metadata:
             if header != "":
                 header += ","
