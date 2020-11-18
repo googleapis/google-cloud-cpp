@@ -95,10 +95,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
       backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
-  if (insert_meta->has_metadata("x_testbench_upload")) {
+  if (insert_meta->has_metadata("x_emulator_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
@@ -157,10 +157,10 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
       backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
-  if (insert_meta->has_metadata("x_testbench_upload")) {
+  if (insert_meta->has_metadata("x_emulator_upload")) {
     // When running against the testbench, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 

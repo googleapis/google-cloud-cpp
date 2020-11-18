@@ -67,8 +67,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   EXPECT_EQ(bucket_name_, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
   if (UsingEmulator()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -115,8 +115,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   if (UsingEmulator()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -154,8 +154,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   if (UsingEmulator()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -187,8 +187,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
-  if (meta.has_metadata("x_testbench_upload")) {
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  if (meta.has_metadata("x_emulator_upload")) {
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
   if (meta.has_metadata("x_emulator_transfer_encoding")) {
     EXPECT_THAT(meta.metadata("x_emulator_transfer_encoding"),
@@ -230,8 +230,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
     EXPECT_EQ(object_name, meta.name());
     EXPECT_EQ(bucket_name_, meta.bucket());
     if (UsingEmulator()) {
-      EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-      EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+      EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+      EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
     }
   }
 

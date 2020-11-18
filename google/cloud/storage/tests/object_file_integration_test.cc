@@ -435,8 +435,8 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   ASSERT_EQ(expected_str.size(), meta->size());
 
   if (UsingEmulator()) {
-    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_emulator_upload"));
   }
 
   // Create an iostream to read the object back.
@@ -475,8 +475,8 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   ASSERT_EQ(expected_str.size(), meta->size());
 
   if (UsingEmulator()) {
-    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
+    ASSERT_TRUE(meta->has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_emulator_upload"));
   }
 
   // Create an iostream to read the object back.

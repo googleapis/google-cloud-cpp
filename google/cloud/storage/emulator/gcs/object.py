@@ -172,7 +172,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": object_name,
-            "metadata": {"x_testbench_upload": "simple"},
+            "metadata": {"x_emulator_upload": "simple"},
         }
         return cls.init_dict(request, metadata, media, bucket, False)
 
@@ -198,7 +198,7 @@ class Object:
         metadata["metadata"] = (
             {} if "metadata" not in metadata else metadata["metadata"]
         )
-        metadata["metadata"]["x_testbench_upload"] = "multipart"
+        metadata["metadata"]["x_emulator_upload"] = "multipart"
         if "md5Hash" in metadata:
             metadata["metadata"]["x_testbench_md5"] = metadata["md5Hash"]
             metadata["md5Hash"] = metadata["md5Hash"]
@@ -215,7 +215,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": name,
-            "metadata": {"x_testbench_upload": "xml"},
+            "metadata": {"x_emulator_upload": "xml"},
         }
         if "content-type" in request.headers:
             metadata["contentType"] = request.headers["content-type"]
