@@ -22,6 +22,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
 using google::cloud::internal::Idempotency;
@@ -53,17 +54,20 @@ std::unique_ptr<PollingPolicy> DefaultInstanceAdminPollingPolicy() {
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
   InstanceAdminConnectionImpl(std::shared_ptr<internal::InstanceAdminStub> stub,
+                              ConnectionOptions const& options,
                               std::unique_ptr<RetryPolicy> retry_policy,
                               std::unique_ptr<BackoffPolicy> backoff_policy,
                               std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        polling_policy_prototype_(std::move(polling_policy)) {}
+        polling_policy_prototype_(std::move(polling_policy)),
+        background_threads_(options.background_threads_factory()()) {}
 
   explicit InstanceAdminConnectionImpl(
-      std::shared_ptr<internal::InstanceAdminStub> stub)
-      : InstanceAdminConnectionImpl(std::move(stub),
+      std::shared_ptr<internal::InstanceAdminStub> stub,
+      ConnectionOptions const& options)
+      : InstanceAdminConnectionImpl(std::move(stub), options,
                                     DefaultInstanceAdminRetryPolicy(),
                                     DefaultInstanceAdminBackoffPolicy(),
                                     DefaultInstanceAdminPollingPolicy()) {}
@@ -265,7 +269,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     promise<StatusOr<gcsa::Instance>> pr;
     auto f = pr.get_future();
 
-    // TODO(#4038) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use background_threads_->cq() to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::InstanceAdminStub> stub,
            google::longrunning::Operation operation,
@@ -298,7 +302,14 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+
+  // Implementations of `BackgroundThreads` typically create a pool of
+  // threads that are joined during destruction, so, to avoid ownership
+  // cycles, those threads should never assume ownership of this object
+  // (e.g., via a `std::shared_ptr<>`).
+  std::unique_ptr<BackgroundThreads> background_threads_;
 };
+
 }  // namespace
 
 InstanceAdminConnection::~InstanceAdminConnection() = default;
@@ -314,7 +325,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return internal::MakeInstanceAdminConnection(
-      internal::CreateDefaultInstanceAdminStub(options),
+      internal::CreateDefaultInstanceAdminStub(options), options,
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }
@@ -323,18 +334,19 @@ namespace internal {
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const&) {
-  return std::make_shared<InstanceAdminConnectionImpl>(std::move(base_stub));
+    ConnectionOptions const& options) {
+  return std::make_shared<InstanceAdminConnectionImpl>(std::move(base_stub),
+                                                       options);
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return std::make_shared<InstanceAdminConnectionImpl>(
-      std::move(base_stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy));
+      std::move(base_stub), options, std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
 }
 
 }  // namespace internal
