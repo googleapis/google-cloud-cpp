@@ -138,26 +138,30 @@ option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
 
-set(GOOGLE_CLOUD_CPP_LIBRARIES
-    "bigquery;bigtable;spanner;storage;firestore;pubsub;generator")
-
 # The default list of libraries to build. These can be overridden by the user by
 # passing a comma-separated list, i.e
 # `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
 set(GOOGLE_CLOUD_CPP_ENABLE
-    ${GOOGLE_CLOUD_CPP_LIBRARIES}
+    "bigquery;bigtable;spanner;storage;firestore;pubsub;generator"
     CACHE STRING "The list of libraries to build.")
 
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
 # Remove any library that's been disabled from the list.
-foreach (library ${GOOGLE_CLOUD_CPP_LIBRARIES})
+foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
     string(TOUPPER "${library}" _library)
     set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
     if (NOT ${_library})
+        message(
+            WARNING
+                "Using ${_library} per-library enable flag is discouraged in "
+                "favor of using the unified GOOGLE_CLOUD_CPP_ENABLE flag instead."
+        )
         list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
     endif ()
 endforeach ()
+
+message(STATUS ${GOOGLE_CLOUD_CPP_ENABLE})
 
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
