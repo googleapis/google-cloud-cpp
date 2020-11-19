@@ -138,39 +138,26 @@ option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
 
-# Accepts a comma separated list of libraries to enable, i.e:
-# `-DGOOGLE_CLOUD_CPP_ENABLE=storage,spanner`. Currently, this cannot be
-# combined with the `GOOGLE_CLOUD_CPP_ENABLE_*` options above. This variable
-# takes precedence.
-if (GOOGLE_CLOUD_CPP_ENABLE)
-    list(
-        APPEND
-        GOOGLE_CLOUD_CPP_LIBRARIES
-        bigquery
-        bigtable
-        spanner
-        storage
-        firestore
-        pubsub
-        generator)
-    string(REPLACE "," ";" OPTIONS "${GOOGLE_CLOUD_CPP_ENABLE}")
-    # Enable building any library found in the list.
-    foreach (option ${OPTIONS})
-        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_LIBRARIES "${option}")
-        string(TOUPPER "${option}" _option)
-        set(_option "GOOGLE_CLOUD_CPP_ENABLE_${_option}")
-        set(${_option} ON)
-    endforeach ()
+set(GOOGLE_CLOUD_CPP_LIBRARIES
+    "bigquery;bigtable;spanner;storage;firestore;pubsub;generator")
 
-    # Disable building any library that wasn't explicitly enabled.
-    foreach (library ${GOOGLE_CLOUD_CPP_LIBRARIES})
-        string(TOUPPER "${library}" _library)
-        set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
-        set(${_library}
-            OFF
-            CACHE BOOL "Enable building the ${library} library." FORCE)
-    endforeach ()
-endif ()
+# The default list of libraries to build. These can be overridden by the user by
+# passing a comma-separated list, i.e
+# `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
+set(GOOGLE_CLOUD_CPP_ENABLE
+    ${GOOGLE_CLOUD_CPP_LIBRARIES}
+    CACHE STRING "The list of libraries to build.")
+
+string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
+
+# Remove any library that's been disabled from the list.
+foreach (library ${GOOGLE_CLOUD_CPP_LIBRARIES})
+    string(TOUPPER "${library}" _library)
+    set(_library "GOOGLE_CLOUD_CPP_ENABLE_${_library}")
+    if (NOT ${_library})
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
+    endif ()
+endforeach ()
 
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
@@ -201,27 +188,13 @@ include(CTest)
 add_custom_target(doxygen-docs)
 
 add_subdirectory(google/cloud)
-if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
-    add_subdirectory(google/cloud/storage)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
-    add_subdirectory(google/cloud/bigquery)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
-    add_subdirectory(google/cloud/bigtable)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
-    add_subdirectory(google/cloud/spanner)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
-    add_subdirectory(google/cloud/firestore)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
-    add_subdirectory(google/cloud/pubsub)
-endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
-    add_subdirectory(generator)
-endif ()
+foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
+    if (${library} STREQUAL generator)
+        add_subdirectory(generator)
+    else ()
+        add_subdirectory(google/cloud/${library})
+    endif ()
+endforeach ()
 
 # The examples are more readable if we use exceptions for error handling. We had
 # to tradeoff readability vs. "making them compile everywhere".
