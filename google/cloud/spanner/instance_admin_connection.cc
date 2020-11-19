@@ -302,6 +302,11 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+
+  // Implementations of `BackgroundThreads` typically create a pool of
+  // threads that are joined during destruction, so, to avoid ownership
+  // cycles, those threads should never assume ownership of this object
+  // (e.g., via a `std::shared_ptr<>`).
   std::unique_ptr<BackgroundThreads> background_threads_;
 };
 
