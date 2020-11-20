@@ -154,23 +154,20 @@ foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
     if (NOT ${_library})
         message(
             WARNING
-                "Using ${_library} per-library enable flag is discouraged in "
-                "favor of using the unified GOOGLE_CLOUD_CPP_ENABLE flag instead."
-        )
+                "Using ${_library} is discouraged in favor of using the unified "
+                "GOOGLE_CLOUD_CPP_ENABLE flag instead.")
         list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
     endif ()
 endforeach ()
 
-message(STATUS ${GOOGLE_CLOUD_CPP_ENABLE})
-
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
     CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION
-           "GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY OR "
-           "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE OR "
-           "GOOGLE_CLOUD_CPP_ENABLE_SPANNER OR "
-           "GOOGLE_CLOUD_CPP_ENABLE_PUBSUB OR "
-           "GOOGLE_CLOUD_CPP_ENABLE_GENERATOR")
+           "(bigquery IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
+           "(bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
+           "(spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
+           "(pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
+           "(generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)")
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
@@ -203,7 +200,7 @@ endforeach ()
 # The examples are more readable if we use exceptions for error handling. We had
 # to tradeoff readability vs. "making them compile everywhere".
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
-    AND GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
-    AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_subdirectory(google/cloud/examples)
 endif ()
