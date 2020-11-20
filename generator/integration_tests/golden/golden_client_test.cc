@@ -34,6 +34,32 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
+TEST(GoldenClientTest, CopyMoveEquality) {
+  auto conn1 = std::make_shared<MockDatabaseAdminConnection>();
+  auto conn2 = std::make_shared<MockDatabaseAdminConnection>();
+
+  DatabaseAdminClient c1(conn1);
+  DatabaseAdminClient c2(conn2);
+  EXPECT_NE(c1, c2);
+
+  // Copy construction
+  DatabaseAdminClient c3 = c1;
+  EXPECT_EQ(c3, c1);
+  EXPECT_NE(c3, c2);
+
+  // Copy assignment
+  c3 = c2;
+  EXPECT_EQ(c3, c2);
+
+  // Move construction
+  DatabaseAdminClient c4 = std::move(c3);
+  EXPECT_EQ(c4, c2);
+
+  // Move assignment
+  c1 = std::move(c4);
+  EXPECT_EQ(c1, c2);
+}
+
 TEST(GoldenClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   std::string expected_instance =

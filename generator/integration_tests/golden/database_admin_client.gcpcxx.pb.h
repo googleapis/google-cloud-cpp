@@ -45,6 +45,24 @@ class DatabaseAdminClient {
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection);
   ~DatabaseAdminClient();
 
+  //@{
+  // @name Copy and move support
+  DatabaseAdminClient(DatabaseAdminClient const&) = default;
+  DatabaseAdminClient& operator=(DatabaseAdminClient const&) = default;
+  DatabaseAdminClient(DatabaseAdminClient&&) noexcept = default;
+  DatabaseAdminClient& operator=(DatabaseAdminClient&&) noexcept = default;
+  //@}
+
+  //@{
+  // @name Equality
+  friend bool operator==(DatabaseAdminClient const& a, DatabaseAdminClient const& b) {
+    return a.connection_ == b.connection_;
+  }
+  friend bool operator!=(DatabaseAdminClient const& a, DatabaseAdminClient const& b) {
+    return !(a == b);
+  }
+  //@}
+
   /**
    * Lists Cloud Test databases.
    *
