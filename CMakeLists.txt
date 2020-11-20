@@ -160,6 +160,8 @@ foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
     endif ()
 endforeach ()
 
+message(STATUS "GOOGLE_CLOUD_CPP_ENABLE: ${GOOGLE_CLOUD_CPP_ENABLE}")
+
 # Compute the default value for GOOGLE_CLOUD_CPP_ENABLE_GRPC.
 string(
     CONCAT GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION
@@ -168,11 +170,30 @@ string(
            "(spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
            "(pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR "
            "(generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)")
+message(WARNING "GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION: ${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION}")
+
+if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION})
+    message(WARNING "Variable: GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION is ON")
+else ()
+    message(WARNING "Variable: GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION is OFF")
+endif ()
+
+if ((bigquery IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    OR (bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    OR (spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    OR (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+    message(WARNING "Non-variable: GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION is ON")
+else ()
+    message(WARNING "Non-variable: GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION is OFF")
+endif ()
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
     ON "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION}" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+
+message(WARNING "GOOGLE_CLOUD_CPP_ENABLE_GRPC: ${GOOGLE_CLOUD_CPP_ENABLE_GRPC}")
 
 # Building this target results in all protobufs being compiled.
 add_custom_target(google-cloud-cpp-protos)
