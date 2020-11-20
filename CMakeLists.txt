@@ -162,7 +162,8 @@ endforeach ()
 
 # Enable building the gRPC utilities library if any of its dependents are
 # enabled.
-foreach (_library IN ITEMS bigquery bigtable spanner pubsub generator)
+set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
+foreach (_library bigquery bigtable storage spanner pubsub generator)
     if (_library IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
         break()
