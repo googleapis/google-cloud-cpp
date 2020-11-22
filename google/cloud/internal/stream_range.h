@@ -122,7 +122,7 @@ class StreamRange {
       return *this;
     }
 
-    Iterator& operator++(int) {
+    Iterator operator++(int) {
       auto copy = *this;
       ++*this;
       return copy;
