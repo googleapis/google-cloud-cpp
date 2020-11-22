@@ -57,13 +57,14 @@ std::string IamEndpoint(ClientOptions const& options) {
 }  // namespace internal
 
 namespace {
-StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials() {
+StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials(
+    ChannelOptions const& channel_options) {
   auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator.has_value()) {
     return StatusOr<std::shared_ptr<oauth2::Credentials>>(
         oauth2::CreateAnonymousCredentials());
   }
-  return oauth2::GoogleDefaultCredentials();
+  return oauth2::GoogleDefaultCredentials(channel_options);
 }
 
 std::size_t DefaultConnectionPoolSize() {
@@ -103,7 +104,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
 
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
     ChannelOptions const& channel_options) {
-  auto creds = StorageDefaultCredentials();
+  auto creds = StorageDefaultCredentials(channel_options);
   if (!creds) return creds.status();
   return ClientOptions(*creds, channel_options);
 }
