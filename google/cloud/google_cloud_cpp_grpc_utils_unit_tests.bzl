@@ -28,6 +28,5 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/pagination_range_test.cc",
     "internal/polling_loop_test.cc",
     "internal/retry_loop_test.cc",
-    "internal/stream_range_test.cc",
     "internal/time_utils_test.cc",
 ]
