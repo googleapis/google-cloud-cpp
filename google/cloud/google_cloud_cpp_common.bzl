@@ -51,6 +51,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/random.h",
     "internal/retry_policy.h",
     "internal/setenv.h",
+    "internal/stream_range.h",
     "internal/strerror.h",
     "internal/throw_delegate.h",
     "internal/tuple.h",
