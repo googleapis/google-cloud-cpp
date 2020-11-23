@@ -18,11 +18,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <functional>
 #include <iterator>
-#include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -81,6 +80,14 @@ using StreamReader = std::function<absl::variant<Status, T>()>;
  */
 template <typename T>
 class StreamRange {
+  // Helper that returns true if StreamRange's move constructor and assignment
+  // operator should be declared noexcept.
+  template <typename U>
+  static constexpr bool IsMoveNoexcept() {
+    return noexcept(StatusOr<U>(std::declval<U>()))&& noexcept(
+        StreamReader<U>(std::declval<StreamReader<U>>()));
+  }
+
  public:
   /// An input iterator for a `StreamRange<T>`
   template <typename U>
@@ -152,13 +159,9 @@ class StreamRange {
   StreamRange(StreamRange const&) = delete;
   StreamRange& operator=(StreamRange const&) = delete;
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StreamRange(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
-      // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-      sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
+  StreamRange(StreamRange&&) noexcept(IsMoveNoexcept<T>()) = default;
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StreamRange& operator=(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
-      // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-      sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
+  StreamRange& operator=(StreamRange&&) noexcept(IsMoveNoexcept<T>()) = default;
   //@}
 
   iterator begin() { return iterator(this); }
