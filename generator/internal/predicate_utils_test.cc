@@ -24,7 +24,6 @@ namespace generator_internal {
 namespace {
 
 using ::google::protobuf::DescriptorPool;
-using ::google::protobuf::FieldDescriptorProto;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 
@@ -97,24 +96,29 @@ TEST(PredicateUtilsTest, GenericAny) {
 
 TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Bar");
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Empty");
-
-  auto* empty_method = service_file.mutable_service(0)->add_method();
-  *empty_method->mutable_name() = "Empty";
-  *empty_method->mutable_input_type() = "google.protobuf.Bar";
-  *empty_method->mutable_output_type() = "google.protobuf.Empty";
-
-  auto* non_empty_method = service_file.mutable_service(0)->add_method();
-  *non_empty_method->mutable_name() = "NonEmpty";
-  *non_empty_method->mutable_input_type() = "google.protobuf.Bar";
-  *non_empty_method->mutable_output_type() = "google.protobuf.Bar";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Empty"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+      }
+      method {
+        name: "NonEmpty"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Bar"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
@@ -125,24 +129,29 @@ TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
 
 TEST(PredicateUtilsTest, IsLongrunningOperation) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.longrunning";
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Bar");
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Operation");
-
-  auto* lro_method = service_file.mutable_service(0)->add_method();
-  *lro_method->mutable_name() = "Lro";
-  *lro_method->mutable_input_type() = "google.longrunning.Bar";
-  *lro_method->mutable_output_type() = "google.longrunning.Operation";
-
-  auto* not_lro_method = service_file.mutable_service(0)->add_method();
-  *not_lro_method->mutable_name() = "NonLro";
-  *not_lro_method->mutable_input_type() = "google.longrunning.Bar";
-  *not_lro_method->mutable_output_type() = "google.longrunning.Bar";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.longrunning"
+    message_type { name: "Bar" }
+    message_type { name: "Operation" }
+    service {
+      name: "Service"
+      method {
+        name: "Lro"
+        input_type: "google.longrunning.Bar"
+        output_type: "google.longrunning.Operation"
+      }
+      method {
+        name: "NonLro"
+        input_type: "google.longrunning.Bar"
+        output_type: "google.longrunning.Bar"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
@@ -153,38 +162,43 @@ TEST(PredicateUtilsTest, IsLongrunningOperation) {
 
 TEST(PredicateUtilsTest, IsNonStreaming) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-
-  auto* non_streaming = service_file.mutable_service(0)->add_method();
-  *non_streaming->mutable_name() = "NonStreaming";
-  *non_streaming->mutable_input_type() = "google.protobuf.Input";
-  *non_streaming->mutable_output_type() = "google.protobuf.Output";
-
-  auto* client_streaming = service_file.mutable_service(0)->add_method();
-  *client_streaming->mutable_name() = "ClientStreaming";
-  *client_streaming->mutable_input_type() = "google.protobuf.Input";
-  *client_streaming->mutable_output_type() = "google.protobuf.Output";
-  client_streaming->set_client_streaming(true);
-
-  auto* server_streaming = service_file.mutable_service(0)->add_method();
-  *server_streaming->mutable_name() = "ServerStreaming";
-  *server_streaming->mutable_input_type() = "google.protobuf.Input";
-  *server_streaming->mutable_output_type() = "google.protobuf.Output";
-  server_streaming->set_server_streaming(true);
-
-  auto* bidirectional_streaming = service_file.mutable_service(0)->add_method();
-  *bidirectional_streaming->mutable_name() = "BidirectionalStreaming";
-  *bidirectional_streaming->mutable_input_type() = "google.protobuf.Input";
-  *bidirectional_streaming->mutable_output_type() = "google.protobuf.Output";
-  bidirectional_streaming->set_client_streaming(true);
-  bidirectional_streaming->set_server_streaming(true);
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Input" }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NonStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+      method {
+        name: "ClientStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        client_streaming: true
+      }
+      method {
+        name: "ServerStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        server_streaming: true
+      }
+      method {
+        name: "BidirectionalStreaming"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+        client_streaming: true
+        server_streaming: true
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor_lro =
       pool.BuildFile(service_file);
@@ -323,46 +337,39 @@ TEST(PredicateUtilsTest,
 
 TEST(PredicateUtilsTest, PaginationSuccess) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* page_size_field = input_message->add_field();
-  page_size_field->set_name("page_size");
-  page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  page_size_field->set_number(1);
-
-  auto* page_token_field = input_message->add_field();
-  page_token_field->set_name("page_token");
-  page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  page_token_field->set_number(2);
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-  auto* next_page_token_field = output_message->add_field();
-  next_page_token_field->set_name("next_page_token");
-  next_page_token_field->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  next_page_token_field->set_number(1);
-
-  FieldDescriptorProto* repeated_message_field = output_message->add_field();
-  repeated_message_field->set_name("repeated_field");
-  repeated_message_field->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_MESSAGE);
-  repeated_message_field->set_label(
-      protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
-  repeated_message_field->set_type_name("google.protobuf.Bar");
-  repeated_message_field->set_number(2);
-
-  auto* paginated_method = service_file.mutable_service(0)->add_method();
-  *paginated_method->mutable_name() = "Paginated";
-  *paginated_method->mutable_input_type() = "google.protobuf.Input";
-  *paginated_method->mutable_output_type() = "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "repeated_field"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
@@ -375,23 +382,25 @@ TEST(PredicateUtilsTest, PaginationSuccess) {
 
 TEST(PredicateUtilsTest, PaginationNoPageSize) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-
-  auto* no_page_size_method = service_file.mutable_service(0)->add_method();
-  *no_page_size_method->mutable_name() = "NoPageSize";
-  *no_page_size_method->mutable_input_type() = "google.protobuf.Input";
-  *no_page_size_method->mutable_output_type() = "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Input" }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
@@ -399,27 +408,28 @@ TEST(PredicateUtilsTest, PaginationNoPageSize) {
 
 TEST(PredicateUtilsTest, PaginationNoPageToken) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* page_size_field = input_message->add_field();
-  page_size_field->set_name("page_size");
-  page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  page_size_field->set_number(1);
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-
-  auto* no_page_token_method = service_file.mutable_service(0)->add_method();
-  *no_page_token_method->mutable_name() = "NoPageToken";
-  *no_page_token_method->mutable_input_type() = "google.protobuf.Input";
-  *no_page_token_method->mutable_output_type() = "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+    }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageToken"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
@@ -427,33 +437,29 @@ TEST(PredicateUtilsTest, PaginationNoPageToken) {
 
 TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* page_size_field = input_message->add_field();
-  page_size_field->set_name("page_size");
-  page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  page_size_field->set_number(1);
-
-  auto* page_token_field = input_message->add_field();
-  page_token_field->set_name("page_token");
-  page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  page_token_field->set_number(2);
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-
-  auto* no_next_page_token_method =
-      service_file.mutable_service(0)->add_method();
-  *no_next_page_token_method->mutable_name() = "NoNextPageToken";
-  *no_next_page_token_method->mutable_input_type() = "google.protobuf.Input";
-  *no_next_page_token_method->mutable_output_type() = "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NoNextPageToken"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
@@ -461,46 +467,38 @@ TEST(PredicateUtilsTest, PaginationNoNextPageToken) {
 
 TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* page_size_field = input_message->add_field();
-  page_size_field->set_name("page_size");
-  page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  page_size_field->set_number(1);
-
-  auto* page_token_field = input_message->add_field();
-  page_token_field->set_name("page_token");
-  page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  page_token_field->set_number(2);
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-  auto* next_page_token_field = output_message->add_field();
-  next_page_token_field->set_name("next_page_token");
-  next_page_token_field->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  next_page_token_field->set_number(1);
-
-  FieldDescriptorProto* repeated_int32_field = output_message->add_field();
-  repeated_int32_field->set_name("repeated_field");
-  repeated_int32_field->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  repeated_int32_field->set_label(
-      protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
-  repeated_int32_field->set_number(2);
-
-  auto* no_repeated_message_method =
-      service_file.mutable_service(0)->add_method();
-  *no_repeated_message_method->mutable_name() = "NoRepeatedMessage";
-  *no_repeated_message_method->mutable_input_type() = "google.protobuf.Input";
-  *no_repeated_message_method->mutable_output_type() = "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "repeated_field"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_INT32
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "NoRepeatedMessage"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
@@ -508,63 +506,47 @@ TEST(PredicateUtilsTest, PaginationNoRepeatedMessageField) {
 
 TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
   FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("Service");
-  *service_file.mutable_package() = "google.protobuf";
-  auto* repeated_message = service_file.add_message_type();
-  repeated_message->set_name("Bar");
-  auto* repeated_message2 = service_file.add_message_type();
-  repeated_message2->set_name("Foo");
-
-  auto* input_message = service_file.add_message_type();
-  input_message->set_name("Input");
-  auto* page_size_field = input_message->add_field();
-  page_size_field->set_name("page_size");
-  page_size_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_INT32);
-  page_size_field->set_number(1);
-
-  FieldDescriptorProto* page_token_field;
-  page_token_field = input_message->add_field();
-  page_token_field->set_name("page_token");
-  page_token_field->set_type(protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  page_token_field->set_number(2);
-
-  auto* output_message = service_file.add_message_type();
-  output_message->set_name("Output");
-  auto* next_page_token_field = output_message->add_field();
-  next_page_token_field->set_name("next_page_token");
-  next_page_token_field->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_STRING);
-  next_page_token_field->set_number(1);
-
-  FieldDescriptorProto* repeated_message_field_first =
-      output_message->add_field();
-  repeated_message_field_first->set_name("repeated_message_field_first");
-  repeated_message_field_first->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_MESSAGE);
-  repeated_message_field_first->set_label(
-      protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
-  repeated_message_field_first->set_type_name("google.protobuf.Foo");
-  repeated_message_field_first->set_number(3);
-
-  FieldDescriptorProto* repeated_message_field_second =
-      output_message->add_field();
-  repeated_message_field_second->set_name("repeated_message_field_second");
-  repeated_message_field_second->set_type(
-      protobuf::FieldDescriptorProto_Type_TYPE_MESSAGE);
-  repeated_message_field_second->set_label(
-      protobuf::FieldDescriptorProto_Label_LABEL_REPEATED);
-  repeated_message_field_second->set_type_name("google.protobuf.Bar");
-  repeated_message_field_second->set_number(2);
-
-  auto* repeated_order_mismatch_method =
-      service_file.mutable_service(0)->add_method();
-  *repeated_order_mismatch_method->mutable_name() = "RepeatedOrderMismatch";
-  *repeated_order_mismatch_method->mutable_input_type() =
-      "google.protobuf.Input";
-  *repeated_order_mismatch_method->mutable_output_type() =
-      "google.protobuf.Output";
-
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Foo" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "repeated_message_field_first"
+        number: 3
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Foo"
+      }
+      field {
+        name: "repeated_message_field_second"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "RepeatedOrderMismatch"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_DEATH(IsPaginated(*service_file_descriptor->service(0)->method(0)),
