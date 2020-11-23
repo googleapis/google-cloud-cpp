@@ -45,31 +45,9 @@ TEST(StreamRange, EmptyRange) {
   EXPECT_EQ(end, end);
 }
 
-TEST(StreamRange, Distance) {
-  // Empty range
-  StreamRange<int> sr([] { return StreamEnd{}; });
-  EXPECT_EQ(0, std::distance(sr.begin(), sr.end()));
-
-  // Range of one element
-  auto counter = 0;
-  StreamRange<int> one([&counter]() -> ReaderFunctionResult<int> {
-    if (counter++ < 1) return counter;
-    return StreamEnd{};
-  });
-  EXPECT_EQ(1, std::distance(one.begin(), one.end()));
-
-  // Range of five elements
-  counter = 0;
-  StreamRange<int> five([&counter]() -> ReaderFunctionResult<int> {
-    if (counter++ < 5) return counter;
-    return StreamEnd{};
-  });
-  EXPECT_EQ(5, std::distance(five.begin(), five.end()));
-}
-
 TEST(StreamRange, OneElement) {
   auto counter = 0;
-  auto reader = [&counter]() -> ReaderFunctionResult<int> {
+  auto reader = [&counter]() -> StreamReaderResult<int> {
     if (counter++ < 1) return 42;
     return StreamEnd{};
   };
@@ -83,9 +61,9 @@ TEST(StreamRange, OneElement) {
   EXPECT_EQ(it, sr.end());
 }
 
-TEST(StreamRange, BasicIteration) {
+TEST(StreamRange, FiveElements) {
   auto counter = 0;
-  auto reader = [&counter]() -> ReaderFunctionResult<int> {
+  auto reader = [&counter]() -> StreamReaderResult<int> {
     if (counter++ < 5) return counter;
     return StreamEnd{};
   };
@@ -99,9 +77,31 @@ TEST(StreamRange, BasicIteration) {
   EXPECT_THAT(v, ElementsAre(1, 2, 3, 4, 5));
 }
 
+TEST(StreamRange, Distance) {
+  // Empty range
+  StreamRange<int> sr([] { return StreamEnd{}; });
+  EXPECT_EQ(0, std::distance(sr.begin(), sr.end()));
+
+  // Range of one element
+  auto counter = 0;
+  StreamRange<int> one([&counter]() -> StreamReaderResult<int> {
+    if (counter++ < 1) return counter;
+    return StreamEnd{};
+  });
+  EXPECT_EQ(1, std::distance(one.begin(), one.end()));
+
+  // Range of five elements
+  counter = 0;
+  StreamRange<int> five([&counter]() -> StreamReaderResult<int> {
+    if (counter++ < 5) return counter;
+    return StreamEnd{};
+  });
+  EXPECT_EQ(5, std::distance(five.begin(), five.end()));
+}
+
 TEST(StreamRange, StreamError) {
   auto counter = 0;
-  auto reader = [&counter]() -> ReaderFunctionResult<int> {
+  auto reader = [&counter]() -> StreamReaderResult<int> {
     if (counter++ < 2) return counter;
     return Status(StatusCode::kUnknown, "oops");
   };
@@ -118,13 +118,13 @@ TEST(StreamRange, StreamError) {
   EXPECT_TRUE(*it);
   EXPECT_EQ(**it, 2);
 
-  // Error, but we return the bad Status; NOT END
+  // Error, but we return the Status, not end of stream.
   ++it;
   EXPECT_NE(it, sr.end());
   EXPECT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kUnknown, "oops"));
 
-  // Since the previous result was an error, now we're at end.
+  // Since the previous result was an error, we're at the end.
   ++it;
   EXPECT_EQ(it, sr.end());
 }

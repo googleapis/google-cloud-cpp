@@ -32,7 +32,7 @@ namespace internal {
 using StreamEnd = absl::monostate;
 
 /**
- * The type returned by `ReaderFunction<T>`.
+ * The type returned by `StreamReader<T>`.
  *
  * This variant may contain one of the following types:
  *
@@ -41,57 +41,56 @@ using StreamEnd = absl::monostate;
  * 3. An instance of `T`
  */
 template <typename T>
-using ReaderFunctionResult = absl::variant<StreamEnd, Status, T>;
+using StreamReaderResult = absl::variant<StreamEnd, Status, T>;
 
 /**
- * A function that takes no arguments and returns `ReaderFunctionResult<T>`.
+ * A function that takes no arguments and returns `StreamReaderResult<T>`.
  *
- * Instances of this function type must will be invoked repeatedly, until
- * either `StreamEnd` is returned or until a (non-OK) `Status` is returned. In
- * both cases, this function will not be invoked again.
+ * Instances of this function type will be invoked repeatedly, until either
+ * `StreamEnd` is returned or until a (non-OK) `Status` is returned. In both
+ * cases, this function will not be invoked again.
  *
- * @par Example `ReaderFunction` that returns the integers from 1-10.
+ * @par Example `StreamReader` that returns the integers from 1-10.
  *
- *  @code
- *  int counter = 0;
- *  auto reader = [&counter]() -> ReaderFunctionResult<int> {
- *    if (counter++ < 10) return counter;
- *    return StreamEnd{};
- *  };
- *  @endcode
+ * @code
+ * int counter = 0;
+ * auto reader = [&counter]() -> StreamReaderResult<int> {
+ *   if (counter++ < 10) return counter;
+ *   return StreamEnd{};
+ * };
+ * @endcode
  */
 template <typename T>
-using ReaderFunction = ReaderFunctionResult<T>();
+using StreamReader = StreamReaderResult<T>();
 
 /**
  * A `StreamRange<T>` puts a range-like interface on a stream of `T` objects.
  *
- * The `T` objects are read from the caller-provided `ReaderFunction`, which is
- * invoked repeatedly as the range is iterated. The `ReaderFunction` can return
- * `StreamEnd` to indicate a successful end of stream, or a (non-OK) `Status`
- * to indicate an error, or a `T`. The `ReaderFunction` will not be invoked
- * again after it returns either `StreamEnd` or `Status`.
+ * The `T` objects are read from the caller-provided `StreamReader` functor,
+ * which is invoked repeatedly as the range is iterated. The `StreamReader` can
+ * return `StreamEnd` to indicate a successful end of stream, or a (non-OK)
+ * `Status` to indicate an error, or a `T`. The `StreamReader` will not be
+ * invoked again after it returns either `StreamEnd` or `Status`.
  *
  * Callers can iterate the range using its `begin()` and `end()` members to
- * access iterators that will work with any normal C++ constructors and
- * algorithms that accept [Input Iterators][input-iterator-link].
+ * access iterators that will work with any normal C++ constructs and
+ * algorithms that accept [Input Iterators][input-iter-link].
  *
  * @par Example: Printing integers from 1-10.
  *
- *  @code
- *  int counter = 0;
- *  auto reader = [&counter]() -> ReaderFunctionResult<int> {
- *    if (counter++ < 10) return counter;
- *    return StreamEnd{};
- *  };
- *  StreamReader<int> sr(std::move(reader));
- *  for (int x : sr) {
- *    std::cout << x << "\n";
- *  }
- *  @endcode
+ * @code
+ * int counter = 0;
+ * auto reader = [&counter]() -> StreamReaderResult<int> {
+ *   if (counter++ < 10) return counter;
+ *   return StreamEnd{};
+ * };
+ * StreamRange<int> sr(std::move(reader));
+ * for (int x : sr) {
+ *   std::cout << x << "\n";
+ * }
+ * @endcode
  *
- * [input-iterator-link]:
- * https://en.cppreference.com/w/cpp/named_req/InputIterator
+ * [input-iter-link]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
 template <typename T>
 class StreamRange {
@@ -157,7 +156,7 @@ class StreamRange {
    *
    * @param reader must not be nullptr.
    */
-  explicit StreamRange(std::function<ReaderFunction<T>> reader)
+  explicit StreamRange(std::function<StreamReader<T>> reader)
       : reader_(std::move(reader)) {
     Next();
   }
@@ -166,8 +165,12 @@ class StreamRange {
   // @name Move-only
   StreamRange(StreamRange const&) = delete;
   StreamRange& operator=(StreamRange const&) = delete;
-  StreamRange(StreamRange&&) noexcept = default;
-  StreamRange& operator=(StreamRange&&) noexcept = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StreamRange(StreamRange&& sr) = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
+  StreamRange& operator=(StreamRange&& sr) = default;
+  // Note: the move operations are not noexcept because std::function does not
+  // have noexcept move operations in older compilers (e.g., gcc 5.4).
   //@}
 
   iterator begin() { return iterator(this); }
@@ -191,9 +194,9 @@ class StreamRange {
     absl::visit(UnpackVariant{*this}, std::move(v));
   }
 
+  std::function<StreamReader<T>> reader_;
   StatusOr<T> current_;
   bool is_end_ = true;
-  std::function<ReaderFunction<T>> reader_;
 };
 
 }  // namespace internal
