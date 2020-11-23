@@ -118,7 +118,13 @@ class DataHolder(types.SimpleNamespace):
         cls, request, src_bucket_name, src_object_name, dst_bucket_name, dst_object_name
     ):
         fake_request = utils.common.FakeRequest(
-            args=request.args.to_dict(), headers={}, data=request.data
+            args=request.args.to_dict(),
+            headers={
+                key.lower(): value
+                for key, value in request.headers.items()
+                if key.lower().startswith("x-")
+            },
+            data=request.data,
         )
         max_bytes_rewritten_per_call = min(
             int(fake_request.args.get("maxBytesRewrittenPerCall", 1024 * 1024)),
