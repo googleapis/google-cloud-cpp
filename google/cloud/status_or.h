@@ -87,6 +87,13 @@ template <typename T>
 class StatusOr final {
  public:
   /**
+   * A `value_type` member for use in generic programming.
+   *
+   * This is analogous to that of `std::optional::value_type`.
+   */
+  using value_type = T;
+
+  /**
    * Initializes with an error status (UNKNOWN).
    *
    * TODO(#548) - currently storage::Status does not define the status codes,
