@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
 
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -28,49 +29,35 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-/// A sentinel type to indicate the successful end of stream.
-struct StreamEnd {};
-
 /**
- * The type returned by `StreamReader<T>`.
+ * A function that repeatedly returns `T`s, and ends with a `Status`.
  *
- * This variant may contain one of the following types:
- *
- * 1. A `StreamEnd` instance indicating a successful end of stream.
- * 2. A non-OK `Status` indicating some error.
- * 3. An instance of `T`
- */
-template <typename T>
-using StreamReaderResult = absl::variant<StreamEnd, Status, T>;
-
-/**
- * A function that takes no arguments and returns `StreamReaderResult<T>`.
- *
- * Instances of this function type will be invoked repeatedly, until either
- * `StreamEnd` is returned or until a (non-OK) `Status` is returned. In both
- * cases, this function will not be invoked again.
+ * This function should return instances of `T` from its underlying stream
+ * until there are no more. The end-of-stream is indicated by returning a
+ * `Status` indicating either success or an error. This function will not be
+ * invoked any more after it returns any `Status`.
  *
  * @par Example `StreamReader` that returns the integers from 1-10.
  *
  * @code
  * int counter = 0;
- * auto reader = [&counter]() -> StreamReaderResult<int> {
+ * auto reader = [&counter]() -> StreamReader<int>::result_type {
  *   if (counter++ < 10) return counter;
- *   return StreamEnd{};
+ *   return Status{};  // OK
  * };
  * @endcode
  */
 template <typename T>
-using StreamReader = StreamReaderResult<T>();
+using StreamReader = std::function<absl::variant<Status, T>()>;
 
 /**
  * A `StreamRange<T>` puts a range-like interface on a stream of `T` objects.
  *
  * The `T` objects are read from the caller-provided `StreamReader` functor,
  * which is invoked repeatedly as the range is iterated. The `StreamReader` can
- * return `StreamEnd` to indicate a successful end of stream, or a (non-OK)
+ * return an OK `Status` to indicate a successful end of stream, or a non-OK
  * `Status` to indicate an error, or a `T`. The `StreamReader` will not be
- * invoked again after it returns either `StreamEnd` or `Status`.
+ * invoked again after it returns a `Status`.
  *
  * Callers can iterate the range using its `begin()` and `end()` members to
  * access iterators that will work with any normal C++ constructs and
@@ -80,9 +67,9 @@ using StreamReader = StreamReaderResult<T>();
  *
  * @code
  * int counter = 0;
- * auto reader = [&counter]() -> StreamReaderResult<int> {
+ * auto reader = [&counter]() -> StreamReader<int>::result_type {
  *   if (counter++ < 10) return counter;
- *   return StreamEnd{};
+ *   return Status{};
  * };
  * StreamRange<int> sr(std::move(reader));
  * for (int x : sr) {
@@ -156,8 +143,7 @@ class StreamRange {
    *
    * @param reader must not be nullptr.
    */
-  explicit StreamRange(std::function<StreamReader<T>> reader)
-      : reader_(std::move(reader)) {
+  explicit StreamRange(StreamReader<T> reader) : reader_(std::move(reader)) {
     Next();
   }
 
@@ -165,12 +151,10 @@ class StreamRange {
   // @name Move-only
   StreamRange(StreamRange const&) = delete;
   StreamRange& operator=(StreamRange const&) = delete;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StreamRange(StreamRange&& sr) = default;
-  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
-  StreamRange& operator=(StreamRange&& sr) = default;
-  // Note: the move operations are not noexcept because std::function does not
-  // have noexcept move operations in older compilers (e.g., gcc 5.4).
+  StreamRange(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
+      sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
+  StreamRange& operator=(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
+      sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
   //@}
 
   iterator begin() { return iterator(this); }
@@ -183,18 +167,22 @@ class StreamRange {
       is_end_ = true;
       return;
     }
-    is_end_ = false;
     struct UnpackVariant {
       StreamRange& sr;
-      void operator()(StreamEnd) { sr.is_end_ = true; }
-      void operator()(Status&& status) { sr.current_ = std::move(status); }
-      void operator()(T&& t) { sr.current_ = std::move(t); }
+      void operator()(Status&& status) {
+        sr.is_end_ = status.ok();
+        if (!status.ok()) sr.current_ = std::move(status);
+      }
+      void operator()(T&& t) {
+        sr.is_end_ = false;
+        sr.current_ = std::move(t);
+      }
     };
     auto v = reader_();
     absl::visit(UnpackVariant{*this}, std::move(v));
   }
 
-  std::function<StreamReader<T>> reader_;
+  StreamReader<T> reader_;
   StatusOr<T> current_;
   bool is_end_ = true;
 };
