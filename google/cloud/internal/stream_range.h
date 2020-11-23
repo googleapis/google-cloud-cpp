@@ -151,8 +151,10 @@ class StreamRange {
   // @name Move-only
   StreamRange(StreamRange const&) = delete;
   StreamRange& operator=(StreamRange const&) = delete;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   StreamRange(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
       sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
+  // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   StreamRange& operator=(StreamRange&& sr) noexcept(noexcept(StatusOr<T>(
       sr.current_)) && noexcept(StreamReader<T>(sr.reader_))) = default;
   //@}
