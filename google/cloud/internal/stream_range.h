@@ -29,7 +29,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 /// A sentinel type to indicate the successful end of stream.
-using StreamEnd = absl::monostate;
+struct StreamEnd {};
 
 /**
  * The type returned by `StreamReader<T>`.
