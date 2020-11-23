@@ -30,6 +30,10 @@ TEST(StatusOrTest, ValueType) {
   static_assert(std::is_same<StatusOr<int>::value_type, int>::value, "");
   static_assert(std::is_same<StatusOr<char>::value_type, char>::value, "");
   static_assert(std::is_same<StatusOr<Foo>::value_type, Foo>::value, "");
+
+  static_assert(!std::is_same<StatusOr<int>::value_type, char>::value, "");
+  static_assert(!std::is_same<StatusOr<char>::value_type, Foo>::value, "");
+  static_assert(!std::is_same<StatusOr<Foo>::value_type, int>::value, "");
 }
 
 TEST(StatusOrTest, DefaultConstructor) {
