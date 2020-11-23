@@ -373,6 +373,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
         internal/retry_loop_helpers.h
+        internal/stream_range.h
         internal/time_utils.cc
         internal/time_utils.h)
     target_link_libraries(
@@ -447,6 +448,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/pagination_range_test.cc
             internal/polling_loop_test.cc
             internal/retry_loop_test.cc
+            internal/stream_range_test.cc
             internal/time_utils_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
