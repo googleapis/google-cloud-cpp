@@ -24,9 +24,11 @@ namespace storage {
 namespace examples {
 
 bool UsingEmulator() {
-  return !google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
-              .value_or("")
-              .empty();
+  auto emulator =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return true;
+  return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+      .has_value();
 }
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
