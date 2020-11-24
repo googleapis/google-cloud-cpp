@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <algorithm>
 #include <vector>
 
@@ -48,7 +49,7 @@ std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
  *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
  *   array to a format more suitable for transmission over HTTP.
  */
-std::vector<std::uint8_t> SignStringWithPem(
+StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
     std::string const& str, std::string const& pem_contents,
     storage::oauth2::JwtSigningAlgorithms alg);
 

@@ -365,7 +365,7 @@ def object_list(bucket_name):
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PUT"])
 def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
-    blob.patch(flask.request, None)
+    blob.update(flask.request, None)
     projection = utils.common.extract_projection(
         flask.request, CommonEnums.Projection.FULL, None
     )
@@ -416,7 +416,7 @@ def objects_compose(bucket_name, object_name):
             if source_object.get("objectPreconditions") is not None
             else None
         )
-        fake_request = utils.common.FakeRequest(args=dict())
+        fake_request = utils.common.FakeRequest(args=dict(), headers={})
         if generation is not None:
             fake_request.args["generation"] = generation
         if if_generation_match is not None:
@@ -443,6 +443,9 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
     dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
     src_object = db.get_object(
         flask.request, src_bucket_name, src_object_name, True, None
+    )
+    utils.csek.validation(
+        flask.request, src_object.metadata.customer_encryption.key_sha256, False, None
     )
     dst_metadata = resources_pb2.Object()
     dst_metadata.CopyFrom(src_object.metadata)
@@ -485,6 +488,9 @@ def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_objec
         rewrite = db.get_rewrite(token, None)
     src_object = db.get_object(
         rewrite.request, src_bucket_name, src_object_name, True, None
+    )
+    utils.csek.validation(
+        rewrite.request, src_object.metadata.customer_encryption.key_sha256, True, None
     )
     total_bytes_rewritten = len(rewrite.media)
     total_bytes_rewritten += min(
@@ -611,6 +617,9 @@ def object_get(bucket_name, object_name):
         )
     if media != "media":
         utils.error.invalid("Alt %s")
+    utils.csek.validation(
+        flask.request, blob.metadata.customer_encryption.key_sha256, False, None
+    )
     return blob.rest_media(flask.request)
 
 

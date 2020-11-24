@@ -14,6 +14,7 @@
 
 ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
+ARG NCPU=4
 
 # Install the minimal packages needed to compile libcxx, install Bazel, and
 # then compile our code.

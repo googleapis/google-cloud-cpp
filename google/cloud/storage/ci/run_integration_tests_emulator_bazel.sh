@@ -77,12 +77,14 @@ done
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
+EMULATOR_SHA=$(git ls-files google/cloud/storage/emulator | sort | cat | sha256sum)
 testbench_args=(
   "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
   "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+  "--test_env=EMULATOR_SHA=${EMULATOR_SHA}"
 )
 "${BAZEL_BIN}" run "${bazel_test_args[@]}" "${testbench_args[@]}" \
   "//google/cloud/storage/examples:storage_bucket_samples" \

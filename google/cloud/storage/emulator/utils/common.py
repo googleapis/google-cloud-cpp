@@ -255,7 +255,7 @@ def parse_multipart(request):
             result.append(b"")
         for header in result[:-1]:
             key, value = header.split(b": ")
-            headers[key.decode("utf-8")] = value.decode("utf-8")
+            headers[key.decode("utf-8").lower()] = value.decode("utf-8")
         return headers, result[-1]
 
     boundary = boundary.encode("utf-8")

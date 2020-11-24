@@ -234,19 +234,14 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<PollingPolicy> polling_policy);
 
 namespace internal {
-/**
- * Create an InstanceAdminConnection using an existing base Stub.
- *
- * Returns a new InstanceAdminConnection with all the normal decorators applied
- * to @p base_stub.
- */
+
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
     ConnectionOptions const& options);
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 

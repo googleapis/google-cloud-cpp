@@ -344,12 +344,17 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<PollingPolicy> polling_policy);
 
 namespace internal {
-/// Create a connection with only the retry decorator.
+
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<internal::DatabaseAdminStub> stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options);
+
+std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    std::shared_ptr<internal::DatabaseAdminStub> stub,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
+
 }  // namespace internal
 
 }  // namespace SPANNER_CLIENT_NS

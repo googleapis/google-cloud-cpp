@@ -17,12 +17,24 @@
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/testing_types.h"
 #include <gmock/gmock.h>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 using ::testing::HasSubstr;
+
+TEST(StatusOrTest, ValueType) {
+  struct Foo {};
+  static_assert(std::is_same<StatusOr<int>::value_type, int>::value, "");
+  static_assert(std::is_same<StatusOr<char>::value_type, char>::value, "");
+  static_assert(std::is_same<StatusOr<Foo>::value_type, Foo>::value, "");
+
+  static_assert(!std::is_same<StatusOr<int>::value_type, char>::value, "");
+  static_assert(!std::is_same<StatusOr<char>::value_type, Foo>::value, "");
+  static_assert(!std::is_same<StatusOr<Foo>::value_type, int>::value, "");
+}
 
 TEST(StatusOrTest, DefaultConstructor) {
   StatusOr<int> actual;

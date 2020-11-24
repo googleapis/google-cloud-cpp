@@ -74,11 +74,10 @@ sudo npm install -g cspell
 Install the Python modules used in the integration tests:
 
 ```console
-pip3 install Jinja2==2.11.2 MarkupSafe==1.1.1 Werkzeug==1.0.1 \
-    blinker==1.4 brotlipy==0.7.0 cffi==1.14.3 crc32c==2.1 decorator==4.4.2 \
-    flask==1.1.2 gevent==20.9.0 greenlet==0.4.17 gunicorn==20.0.4 \
-    httpbin==0.7.0 itsdangerous==1.1.0 pycparser==2.20 raven==6.10.0 \
-    zope.event==4.5.0 zope.interface==5.1.0
+pip3 install setuptools wheel
+pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
+pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
+    crc32c==2.1 gunicorn==20.0.4
 ```
 
 Add the pip directory to your PATH:
