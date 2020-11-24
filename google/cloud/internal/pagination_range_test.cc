@@ -30,7 +30,7 @@ using ::testing::HasSubstr;
 using ItemType = ::google::bigtable::admin::v2::AppProfile;
 using Request = ::google::bigtable::admin::v2::ListAppProfilesRequest;
 using Response = ::google::bigtable::admin::v2::ListAppProfilesResponse;
-using TestedRange = StreamRange<ItemType>;
+using TestedRange = PaginationRange<ItemType>;
 
 class MockRpc {
  public:
