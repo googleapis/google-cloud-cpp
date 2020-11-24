@@ -93,7 +93,8 @@ TEST(InstanceAdminClientTest, ListInstanceConfigs) {
       .WillOnce(
           [](InstanceAdminConnection::ListInstanceConfigsParams const& p) {
             EXPECT_EQ("test-project", p.project_id);
-            return ListInstanceConfigsRange(
+            return google::cloud::internal::MakePaginationRange<
+                ListInstanceConfigsRange>(
                 gcsa::ListInstanceConfigsRequest{},
                 [](gcsa::ListInstanceConfigsRequest const&) {
                   return StatusOr<gcsa::ListInstanceConfigsResponse>(
@@ -119,7 +120,7 @@ TEST(InstanceAdminClientTest, ListInstances) {
         EXPECT_EQ("test-project", p.project_id);
         EXPECT_EQ("labels.test-key:test-value", p.filter);
 
-        return ListInstancesRange(
+        return google::cloud::internal::MakePaginationRange<ListInstancesRange>(
             gcsa::ListInstancesRequest{},
             [](gcsa::ListInstancesRequest const&) {
               return StatusOr<gcsa::ListInstancesResponse>(

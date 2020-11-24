@@ -163,7 +163,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListInstanceConfigsRange(
+    return google::cloud::internal::MakePaginationRange<
+        ListInstanceConfigsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListInstanceConfigsRequest const& r) {
@@ -196,7 +197,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListInstancesRange(
+    return google::cloud::internal::MakePaginationRange<ListInstancesRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListInstancesRequest const& r) {

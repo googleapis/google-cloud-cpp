@@ -57,7 +57,7 @@ Status DatabaseAdminConnection::DeleteBackup(DeleteBackupParams) {
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 ListBackupsRange DatabaseAdminConnection::ListBackups(ListBackupsParams) {
-  return ListBackupsRange(
+  return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
       gcsa::ListBackupsRequest{},
       [](gcsa::ListBackupsRequest const&) {
         return StatusOr<gcsa::ListBackupsResponse>(
@@ -77,7 +77,8 @@ DatabaseAdminConnection::UpdateBackup(UpdateBackupParams) {
 ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     ListBackupOperationsParams) {
-  return ListBackupOperationsRange(
+  return google::cloud::internal::MakePaginationRange<
+      ListBackupOperationsRange>(
       gcsa::ListBackupOperationsRequest{},
       [](gcsa::ListBackupOperationsRequest const&) {
         return StatusOr<gcsa::ListBackupOperationsResponse>(
@@ -91,7 +92,8 @@ ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
 ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     ListDatabaseOperationsParams) {
-  return ListDatabaseOperationsRange(
+  return google::cloud::internal::MakePaginationRange<
+      ListDatabaseOperationsRange>(
       gcsa::ListDatabaseOperationsRequest{},
       [](gcsa::ListDatabaseOperationsRequest const&) {
         return StatusOr<gcsa::ListDatabaseOperationsResponse>(
@@ -251,7 +253,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListDatabaseRange(
+    return google::cloud::internal::MakePaginationRange<ListDatabaseRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListDatabasesRequest const& r) {
@@ -406,7 +408,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListBackupsRange(
+    return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListBackupsRequest const& r) {
@@ -452,7 +454,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListBackupOperationsRange(
+    return google::cloud::internal::MakePaginationRange<
+        ListBackupOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListBackupOperationsRequest const& r) {
@@ -487,7 +490,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListDatabaseOperationsRange(
+    return google::cloud::internal::MakePaginationRange<
+        ListDatabaseOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListDatabaseOperationsRequest const& r) {
