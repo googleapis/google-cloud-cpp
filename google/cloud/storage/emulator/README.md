@@ -39,6 +39,9 @@ CLOUD_STORAGE_GRPC_ENDPOINT=localhost:8000 # For gRPC API
 ## Force Failures
 
 You can force the following failures by using the `x-goog-emulator-instructions` header.
+The `x-goog-testbench-instructions` header is deprecated, but supported for
+backwards compatibility and provides the same functionality as
+`x-goog-emulator-instructions`, please change your code to use `x-goog-emulator-instructions` instead.
 
 ### return-broken-stream
 
