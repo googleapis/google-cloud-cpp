@@ -124,7 +124,7 @@ ListBackupsRange DatabaseAdminConnection::ListBackups(
   return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupsRequest const&) {
-      return StatusOr<::google::test::admin::database::v1::ListBackupsResponse>();
+      return StatusOr<::google::test::admin::database::v1::ListBackupsResponse>{};
     },
     [](::google::test::admin::database::v1::ListBackupsResponse const&) {
       return std::vector<::google::test::admin::database::v1::Backup>();
@@ -144,7 +144,7 @@ ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
   return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
-      return StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>();
+      return StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>{};
     },
     [](::google::test::admin::database::v1::ListDatabaseOperationsResponse const&) {
       return std::vector<::google::longrunning::Operation>();
@@ -156,7 +156,7 @@ ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
   return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupOperationsRequest const&) {
-      return StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>();
+      return StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>{};
     },
     [](::google::test::admin::database::v1::ListBackupOperationsResponse const&) {
       return std::vector<::google::longrunning::Operation>();

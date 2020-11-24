@@ -20,7 +20,6 @@
 #include "google/cloud/version.h"
 #include <functional>
 #include <string>
-#include <type_traits>
 #include <utility>
 #include <memory>
 #include <vector>
@@ -44,7 +43,7 @@ namespace internal {
  * @tparam Response the type of the response object for the `List` RPC.
  */
 template <typename T, typename Request, typename Response>
-class Paginator {
+class PagedStreamReader {
  public:
   /**
    * Create a new range to paginate over some elements.
@@ -55,7 +54,7 @@ class Paginator {
    * @param get_items extracts the items from the response using native C++
    *     types (as opposed to the proto types used in `Response`).
    */
-   Paginator(Request request,
+   PagedStreamReader(Request request,
              std::function<StatusOr<Response>(Request const& r)> loader,
              std::function<std::vector<T>(Response r)> get_items)
        : request_(std::move(request)),
@@ -111,11 +110,13 @@ template <typename Range, typename Request, typename Loader, typename Extractor,
           typename Response =
               typename std::result_of<Loader(Request)>::type::value_type>
 Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
-  auto paginator = std::make_shared<Paginator<ValueType, Request, Response>>(
-      std::move(request), std::move(loader), std::move(extractor));
-  return Range(
-      [paginator]() mutable ->
-      typename StreamReader<ValueType>::result_type { return paginator->GetNext(); });
+  auto reader =
+      std::make_shared<PagedStreamReader<ValueType, Request, Response>>(
+          std::move(request), std::move(loader), std::move(extractor));
+  return Range([reader]() mutable ->
+               typename StreamReader<ValueType>::result_type {
+                 return reader->GetNext();
+               });
 }
 
 template <typename Range>

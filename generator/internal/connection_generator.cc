@@ -67,7 +67,8 @@ Status ConnectionGenerator::GenerateHeader() {
             {
                 // clang-format off
    {"using $method_name$Range = "
-    "google::cloud::internal::PaginationRange<$range_output_type$>;\n\n"},
+    "google::cloud::internal::PaginationRange<\n"
+    "    $range_output_type$>;\n\n"},
                 // clang-format on
             },
             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
@@ -220,7 +221,7 @@ Status ConnectionGenerator::GenerateCc() {
     "  return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
     "    std::move(request),\n"
     "    []($request_type$ const&) {\n"
-    "      return StatusOr<$response_type$>();\n"
+    "      return StatusOr<$response_type$>{};\n"
     "    },\n"
     "    []($response_type$ const&) {\n"
     "      return std::vector<$range_output_type$>();\n"
