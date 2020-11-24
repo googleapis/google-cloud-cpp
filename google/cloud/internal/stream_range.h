@@ -146,13 +146,9 @@ class StreamRange {
   using const_pointer = typename iterator::const_pointer;
 
   /**
-   * Constructs a `StreamRange<T>` that will use the given @p reader.
-   *
-   * @param reader must not be nullptr.
+   * Default-constructs an empty range.
    */
-  explicit StreamRange(StreamReader<T> reader) : reader_(std::move(reader)) {
-    Next();
-  }
+  StreamRange() = default;
 
   //@{
   // @name Move-only
@@ -189,10 +185,38 @@ class StreamRange {
     absl::visit(UnpackVariant{*this}, std::move(v));
   }
 
+  template <typename U>
+  friend StreamRange<U> MakeStreamRange(StreamReader<U>);
+
+  /**
+   * Constructs a `StreamRange<T>` that will use the given @p reader.
+   *
+   * @param reader must not be nullptr.
+   */
+  explicit StreamRange(StreamReader<T> reader) : reader_(std::move(reader)) {
+    Next();
+  }
+
   StreamReader<T> reader_;
   StatusOr<T> current_;
   bool is_end_ = true;
 };
+
+/**
+ * Factory to construct a `StreamRange<T>` with the given `StreamReader<T>`.
+ *
+ * Callers should explicitly specify the `T` parameter when calling this
+ * function template so that lambdas will implicitly convert to the underlying
+ * `StreamReader<T>` (i.e., std::function). For example:
+ *
+ * @code
+ * StreamReader<int> empty = MakeStreamReader<int>([] { return Status{}; });
+ * @endcode
+ */
+template <typename T>
+StreamRange<T> MakeStreamRange(StreamReader<T> reader) {
+  return StreamRange<T>{std::move(reader)};
+}
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
