@@ -176,7 +176,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Describes the configuration for a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html" title="The Google Cloud Storage (GCS) Client.">storage::Client</a></code> object. </p>
 <p>By default, several environment variables are read to configure the client:</p>
 <ul>
-<li><code>CLOUD_STORAGE_TESTBENCH_ENDPOINT</code>: if set, use this http endpoint to make all http requests instead of the production GCS service. Also, if set, the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#aea9eac48d406d3fa32faf10f70b955cd" title="Creates a ClientOptions with Google Application Default Credentials.">CreateDefaultClientOptions()</a></code> function will use an <code>AnonymousCredentials</code> object instead of loading Application Default Credentials.</li>
+<li><code>CLOUD_STORAGE_EMULATOR_ENDPOINT</code>: if set, use this http endpoint to make all http requests instead of the production GCS service. Also, if set, the <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#aea9eac48d406d3fa32faf10f70b955cd" title="Creates a ClientOptions with Google Application Default Credentials.">CreateDefaultClientOptions()</a></code> function will use an <code>AnonymousCredentials</code> object instead of loading Application Default Credentials.</li>
 <li><code>CLOUD_STORAGE_ENABLE_CLOG</code>: if set, enable std::clog as a backend for <code>google::cloud::LogSink</code>.</li>
 <li><code>CLOUD_STORAGE_ENABLE_TRACING</code>: if set, this is the list of components that will have logging enabled, the component this is:<ul>
 <li><code>http</code>: trace all http request / responses. </li>
@@ -240,7 +240,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00112">112</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00116">116</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -407,9 +407,9 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html" title="Describes the configuration for a storage::Client object.">ClientOptions</a></code> with Google Application Default Credentials. </p>
-<p>If Application Default Credentials could not be loaded, this returns a <code>Status</code> with failure details. If the <code>CLOUD_STORAGE_TESTBENCH_ENDPOINT</code> environment variable is set, this function instead uses an <code>AnonymousCredentials</code> to configure the client. </p>
+<p>If Application Default Credentials could not be loaded, this returns a <code>Status</code> with failure details. If the <code>CLOUD_STORAGE_EMULATOR_ENDPOINT</code> environment variable is set, this function instead uses an <code>AnonymousCredentials</code> to configure the client. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00101">101</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00105">105</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -437,7 +437,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00105">105</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00109">109</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -1206,7 +1206,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00166">166</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00170">170</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -1226,7 +1226,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00176">176</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00180">180</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>

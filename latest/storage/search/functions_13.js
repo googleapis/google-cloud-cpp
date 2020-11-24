@@ -17,5 +17,5 @@ var searchData=
   ['use_5fshort_5frepeated_5fprimitives_1903',['use_short_repeated_primitives',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html#a501733cf21b9532bfac27781d1097869',1,'google::cloud::v1::TracingOptions']]],
   ['user_5fagent_5fprefix_1904',['user_agent_prefix',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#aca5362e3eacab6433de0157e2a29db33',1,'google::cloud::v1::ConnectionOptions::user_agent_prefix()'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a2e367a4a8a5c1c78292acf1631e5d73d',1,'google::cloud::storage::v1::ClientOptions::user_agent_prefix()']]],
   ['useresumableuploadsession_1905',['UseResumableUploadSession',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1UseResumableUploadSession.html#a4ebc7d26c69b547a7d5492f51859a467',1,'google::cloud::storage::v1::UseResumableUploadSession']]],
-  ['usingtestbench_1906',['UsingTestbench',['../namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a24330fe026300b5086a42a399a8f9d62',1,'google::cloud::storage::examples']]]
+  ['usingemulator_1906',['UsingEmulator',['../namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a0a8d145b0d92f0bb376bdc9adc887376',1,'google::cloud::storage::examples']]]
 ];
