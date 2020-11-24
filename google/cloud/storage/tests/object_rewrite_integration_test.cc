@@ -383,7 +383,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

@@ -31,7 +31,8 @@ class ClientOptionsTest : public ::testing::Test {
  public:
   ClientOptionsTest()
       : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
-        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
+        endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
+        old_endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}),
         generator_(std::random_device{}()) {}
 
   std::string CreateRandomFileName() {
@@ -46,6 +47,7 @@ class ClientOptionsTest : public ::testing::Test {
  protected:
   testing_util::ScopedEnvironment enable_tracing_;
   testing_util::ScopedEnvironment endpoint_;
+  testing_util::ScopedEnvironment old_endpoint_;
   google::cloud::internal::DefaultPRNG generator_;
 };
 
@@ -124,7 +126,7 @@ TEST_F(ClientOptionsTest, EnableHttp) {
 }
 
 TEST_F(ClientOptionsTest, EndpointsDefault) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
@@ -137,7 +139,7 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
 }
 
 TEST_F(ClientOptionsTest, EndpointsOverride) {
-  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_endpoint("http://127.0.0.1.nip.io:1234");
@@ -151,7 +153,21 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
             internal::IamEndpoint(options));
 }
 
-TEST_F(ClientOptionsTest, EndpointsTestBench) {
+TEST_F(ClientOptionsTest, EndpointsEmulator) {
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_EMULATOR_ENDPOINT",
+                                           "http://localhost:1234");
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  EXPECT_EQ("http://localhost:1234", options.endpoint());
+  EXPECT_EQ("http://localhost:1234/storage/v1",
+            internal::JsonEndpoint(options));
+  EXPECT_EQ("http://localhost:1234/upload/storage/v1",
+            internal::JsonUploadEndpoint(options));
+  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
+  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
+}
+
+TEST_F(ClientOptionsTest, OldEndpointsEmulator) {
+  google::cloud::internal::UnsetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());

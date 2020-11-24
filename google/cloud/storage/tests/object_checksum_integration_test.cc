@@ -203,13 +203,13 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
       backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
-  if (insert_meta->has_metadata("x_testbench_upload")) {
-    // When running against the testbench, we have some more information to
+  if (insert_meta->has_metadata("x_emulator_upload")) {
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
-    ASSERT_TRUE(insert_meta->has_metadata("x_testbench_crc32c"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
+    ASSERT_TRUE(insert_meta->has_metadata("x_emulator_crc32c"));
     auto expected_crc32c = ComputeCrc32cChecksum(LoremIpsum());
-    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_testbench_crc32c"));
+    EXPECT_EQ(expected_crc32c, insert_meta->metadata("x_emulator_crc32c"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -296,9 +296,9 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -312,7 +312,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -340,9 +340,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -357,7 +357,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -384,9 +384,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -401,7 +401,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -420,9 +420,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -438,7 +438,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(true),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -457,9 +457,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -468,8 +468,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
   // Create a stream to upload an object.
   ObjectWriteStream stream = client->WriteObject(
       bucket_name_, object_name, DisableMD5Hash(true), IfGenerationMatch(0),
-      CustomHeader("x-goog-testbench-instructions",
-                   "inject-upload-data-error"));
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 

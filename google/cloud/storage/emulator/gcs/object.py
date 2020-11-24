@@ -89,10 +89,9 @@ class Object:
     def init(
         cls, request, metadata, media, bucket, is_destination, context, rest_only=None
     ):
-        if context is None:
-            instruction = request.headers.get("x-goog-testbench-instructions")
-            if instruction == "inject-upload-data-error":
-                media = utils.common.corrupt_media(media)
+        instruction = utils.common.extract_instruction(request, context)
+        if instruction == "inject-upload-data-error":
+            media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
         metadata.bucket = bucket.name
         metadata.generation = random.getrandbits(63)
@@ -172,7 +171,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": object_name,
-            "metadata": {"x_testbench_upload": "simple"},
+            "metadata": {"x_emulator_upload": "simple"},
         }
         return cls.init_dict(request, metadata, media, bucket, False)
 
@@ -198,12 +197,12 @@ class Object:
         metadata["metadata"] = (
             {} if "metadata" not in metadata else metadata["metadata"]
         )
-        metadata["metadata"]["x_testbench_upload"] = "multipart"
+        metadata["metadata"]["x_emulator_upload"] = "multipart"
         if "md5Hash" in metadata:
-            metadata["metadata"]["x_testbench_md5"] = metadata["md5Hash"]
+            metadata["metadata"]["x_emulator_md5"] = metadata["md5Hash"]
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
-            metadata["metadata"]["x_testbench_crc32c"] = metadata["crc32c"]
+            metadata["metadata"]["x_emulator_crc32c"] = metadata["crc32c"]
             metadata["crc32c"] = struct.unpack(
                 ">I", base64.b64decode(metadata["crc32c"].encode("utf-8"))
             )[0]
@@ -215,7 +214,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": name,
-            "metadata": {"x_testbench_upload": "xml"},
+            "metadata": {"x_emulator_upload": "xml"},
         }
         if "content-type" in request.headers:
             metadata["contentType"] = request.headers["content-type"]
@@ -379,6 +378,13 @@ class Object:
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
         response.update(rest_only)
+        old_metadata = {}
+        if "metadata" in response:
+            for key, value in response["metadata"].items():
+                if "emulator" in key:
+                    old_key = key.replace("emulator", "testbench")
+                    old_metadata[old_key] = value
+            response["metadata"].update(old_metadata)
         return response
 
     def rest_metadata(self):
@@ -386,12 +392,12 @@ class Object:
 
     def x_goog_hash_header(self):
         header = ""
-        if "x_testbench_crc32c" in self.metadata.metadata:
-            header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
-        if "x_testbench_md5" in self.metadata.metadata:
+        if "x_emulator_crc32c" in self.metadata.metadata:
+            header += "crc32c=" + self.metadata.metadata["x_emulator_crc32c"]
+        if "x_emulator_md5" in self.metadata.metadata:
             if header != "":
                 header += ","
-            header += "md5=" + self.metadata.metadata["x_testbench_md5"]
+            header += "md5=" + self.metadata.metadata["x_emulator_md5"]
         return header if header != "" else None
 
     def rest_media(self, request):
@@ -417,7 +423,7 @@ class Object:
         streamer, length, headers = None, len(response_payload), {}
         content_range = "bytes %d-%d/%d" % (begin, end - 1, length)
 
-        instructions = request.headers.get("x-goog-testbench-instructions")
+        instructions = utils.common.extract_instruction(request, None)
         if instructions == "return-broken-stream":
             headers["Content-Length"] = length
 

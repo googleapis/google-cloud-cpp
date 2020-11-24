@@ -218,7 +218,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetBilling() example [3]" << std::endl;
   GetBilling(client, {bucket_name, project_id});
 
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

@@ -71,11 +71,11 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   if (handle_result(result)) {
     return result;
   }
-  bool has_testbench_instructions = false;
+  bool has_emulator_instructions = false;
   std::string instructions;
   if (request_.HasOption<CustomHeader>()) {
     auto name = request_.GetOption<CustomHeader>().custom_header_name();
-    has_testbench_instructions = (name == "x-goog-testbench-instructions");
+    has_emulator_instructions = (name == "x-goog-emulator-instructions");
     instructions = request_.GetOption<CustomHeader>().value();
   }
 
@@ -92,9 +92,9 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     // already be exhausted, so we should fail this operation too.
     child_.reset();
 
-    if (has_testbench_instructions) {
+    if (has_emulator_instructions) {
       request_.set_multiple_options(
-          CustomHeader("x-goog-testbench-instructions",
+          CustomHeader("x-goog-emulator-instructions",
                        instructions + "/retry-" + std::to_string(++counter)));
     }
 

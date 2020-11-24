@@ -81,7 +81,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto client = gcs::Client::CreateDefaultClient().value();
 
-  if (examples::UsingTestbench()) {
+  if (examples::UsingEmulator()) {
     std::cout << "Signed URL examples are only runnable against production\n";
     return;
   }

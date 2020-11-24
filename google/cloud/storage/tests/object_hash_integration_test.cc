@@ -95,11 +95,11 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
       backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
-  if (insert_meta->has_metadata("x_testbench_upload")) {
-    // When running against the testbench, we have some more information to
+  if (insert_meta->has_metadata("x_emulator_upload")) {
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -157,11 +157,11 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
       backend->ClearLogLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
-  if (insert_meta->has_metadata("x_testbench_upload")) {
-    // When running against the testbench, we have some more information to
+  if (insert_meta->has_metadata("x_emulator_upload")) {
+    // When running against the emulator, we have some more information to
     // verify the right upload type and contents were sent.
-    EXPECT_EQ("multipart", insert_meta->metadata("x_testbench_upload"));
-    ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
+    EXPECT_EQ("multipart", insert_meta->metadata("x_emulator_upload"));
+    ASSERT_FALSE(insert_meta->has_metadata("x_emulator_md5"));
   }
 
   auto status = client.DeleteObject(bucket_name_, object_name);
@@ -396,9 +396,9 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -412,7 +412,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -438,9 +438,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -455,7 +455,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -481,9 +481,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -498,7 +498,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -516,9 +516,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXMLRead) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -534,7 +534,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfMetagenerationNotMatch(0),
-      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
   std::vector<char> buffer(2 * contents.size());
@@ -552,9 +552,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSONRead) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
-  // This test is disabled when not using the testbench as it relies on the
-  // testbench to inject faults.
-  if (!UsingTestbench()) GTEST_SKIP();
+  // This test is disabled when not using the emulator as it relies on the
+  // emulator to inject faults.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -564,8 +564,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   ObjectWriteStream stream = client->WriteObject(
       bucket_name_, object_name, DisableCrc32cChecksum(true), EnableMD5Hash(),
       IfGenerationMatch(0),
-      CustomHeader("x-goog-testbench-instructions",
-                   "inject-upload-data-error"));
+      CustomHeader("x-goog-emulator-instructions", "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";
   stream << LoremIpsum();
 
