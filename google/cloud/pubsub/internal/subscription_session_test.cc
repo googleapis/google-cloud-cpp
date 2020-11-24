@@ -467,7 +467,6 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
 
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   AsyncSequencer<bool> on_read;
-  AsyncSequencer<void> on_cancel;
   AsyncSequencer<Status> on_finish;
 
   auto async_pull_mock = [&](google::cloud::CompletionQueue& cq,
@@ -497,9 +496,6 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
     auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
-    EXPECT_CALL(*stream, Cancel).WillRepeatedly([&on_cancel] {
-      on_cancel.PushBack();
-    });
     EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
     EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
 
