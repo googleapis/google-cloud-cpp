@@ -30,7 +30,8 @@ using ::testing::HasSubstr;
 using ItemType = ::google::bigtable::admin::v2::AppProfile;
 using Request = ::google::bigtable::admin::v2::ListAppProfilesRequest;
 using Response = ::google::bigtable::admin::v2::ListAppProfilesResponse;
-using TestedRange = PaginationRange<ItemType, Request, Response>;
+/* using TestedRange = PaginationRange<ItemType, Request, Response>; */
+using TestedRange = StreamRange<ItemType>;
 
 class MockRpc {
  public:
@@ -52,7 +53,7 @@ TEST(RangeFromPagination, Empty) {
     return response;
   });
 
-  TestedRange range(
+  auto range = MakePaginationRange<TestedRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   EXPECT_TRUE(range.begin() == range.end());
 }
@@ -68,7 +69,7 @@ TEST(RangeFromPagination, SinglePage) {
     return response;
   });
 
-  TestedRange range(
+  auto range = MakePaginationRange<TestedRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
@@ -89,9 +90,9 @@ TEST(RangeFromPagination, NonProtoRange) {
     return response;
   });
 
-  using NonProtoRange = PaginationRange<std::string, Request, Response>;
+  using NonProtoRange = PaginationRange<std::string>;
 
-  NonProtoRange range(
+  auto range = MakePaginationRange<NonProtoRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); },
       [](Response const& r) {
         std::vector<std::string> items;
@@ -128,7 +129,7 @@ TEST(RangeFromPagination, TwoPages) {
         return response;
       });
 
-  TestedRange range(
+  auto range = MakePaginationRange<TestedRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
@@ -162,7 +163,7 @@ TEST(RangeFromPagination, TwoPagesWithError) {
         return Status(StatusCode::kAborted, "bad-luck");
       });
 
-  TestedRange range(
+  auto range = MakePaginationRange<TestedRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
@@ -191,7 +192,7 @@ TEST(RangeFromPagination, IteratorCoverage) {
         return Status(StatusCode::kAborted, "bad-luck");
       });
 
-  TestedRange range(
+  auto range = MakePaginationRange<TestedRange>(
       Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   auto i0 = range.begin();
   auto i1 = i0;
@@ -199,7 +200,6 @@ TEST(RangeFromPagination, IteratorCoverage) {
   EXPECT_FALSE(i1 == range.end());
   ++i1;
   auto i2 = i1;
-  EXPECT_FALSE(i0 == i1);
   EXPECT_TRUE(i1 == i2);
   ASSERT_FALSE(i1 == range.end());
   auto& item = *i1;
@@ -210,9 +210,8 @@ TEST(RangeFromPagination, IteratorCoverage) {
 }
 
 TEST(RangeFromPagination, Unimplemented) {
-  using NonProtoRange = PaginationRange<std::string, Request, Response>;
-
-  NonProtoRange range = UnimplementedPaginationRange<NonProtoRange>::Create();
+  using NonProtoRange = PaginationRange<std::string>;
+  auto range = MakePaginationRange<NonProtoRange>();
   auto i = range.begin();
   EXPECT_NE(i, range.end());
   EXPECT_THAT(*i, StatusIs(StatusCode::kUnimplemented));

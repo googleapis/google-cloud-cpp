@@ -15,104 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 
+#include "google/cloud/internal/stream_range.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <google/protobuf/util/message_differencer.h>
 #include <functional>
-#include <iterator>
 #include <string>
 #include <type_traits>
 #include <utility>
+#include <memory>
 #include <vector>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-
-inline bool ComparePaginationValues(google::protobuf::Message const& lhs,
-                                    google::protobuf::Message const& rhs) {
-  return google::protobuf::util::MessageDifferencer::Equals(lhs, rhs);
-}
-
-template <typename T, typename std::enable_if<
-                          !std::is_base_of<google::protobuf::Message, T>::value,
-                          int>::type = 0>
-bool ComparePaginationValues(T const& lhs, T const& rhs) {
-  return lhs == rhs;
-}
-
-/**
- * An input iterator for a class with the same interface as `PaginationRange`.
- */
-template <typename T, typename Range>
-class PaginationIterator {
- public:
-  //@{
-  /// @name Iterator traits
-  using iterator_category = std::input_iterator_tag;
-  using value_type = StatusOr<T>;
-  using difference_type = std::ptrdiff_t;
-  using pointer = value_type*;
-  using reference = value_type&;
-  //@}
-
-  PaginationIterator() : owner_(nullptr) {}
-
-  PaginationIterator& operator++() {
-    *this = owner_->GetNext();
-    return *this;
-  }
-
-  PaginationIterator operator++(int) {
-    PaginationIterator tmp(*this);
-    operator++();
-    return tmp;
-  }
-
-  value_type const* operator->() const { return &value_; }
-  value_type* operator->() { return &value_; }
-
-  value_type const& operator*() const& { return value_; }
-  value_type& operator*() & { return value_; }
-  value_type const&& operator*() const&& { return std::move(value_); }
-  value_type&& operator*() && { return std::move(value_); }
-
- private:
-  friend Range;
-
-  friend bool operator==(PaginationIterator const& lhs,
-                         PaginationIterator const& rhs) {
-    // Iterators on different streams are always different.
-    if (lhs.owner_ != rhs.owner_) {
-      return false;
-    }
-    // All end iterators are equal.
-    if (lhs.owner_ == nullptr) {
-      return true;
-    }
-    // Iterators on the same stream are equal if they point to the same object.
-    if (lhs.value_.ok() && rhs.value_.ok()) {
-      return ComparePaginationValues(*lhs.value_, *rhs.value_);
-    }
-    // If one is an error and the other is not then they must be different,
-    // because only one iterator per range can have an error status. For the
-    // same reason, if both have an error they both are pointing to the same
-    // element.
-    return lhs.value_.ok() == rhs.value_.ok();
-  }
-
-  friend bool operator!=(PaginationIterator const& lhs,
-                         PaginationIterator const& rhs) {
-    return !(lhs == rhs);
-  }
-
-  PaginationIterator(Range* owner, value_type value)
-      : owner_(owner), value_(std::move(value)) {}
-
-  Range* owner_;
-  value_type value_;
-};
 
 /**
  * Adapt pagination APIs to look like input ranges.
@@ -128,7 +44,7 @@ class PaginationIterator {
  * @tparam Response the type of the response object for the `List` RPC.
  */
 template <typename T, typename Request, typename Response>
-class PaginationRange {
+class Paginator {
  public:
   /**
    * Create a new range to paginate over some elements.
@@ -139,35 +55,15 @@ class PaginationRange {
    * @param get_items extracts the items from the response using native C++
    *     types (as opposed to the proto types used in `Response`).
    */
-  PaginationRange(Request request,
-                  std::function<StatusOr<Response>(Request const& r)> loader,
-                  std::function<std::vector<T>(Response r)> get_items)
-      : request_(std::move(request)),
-        next_page_loader_(std::move(loader)),
-        get_items_(std::move(get_items)),
-        on_last_page_(false) {
-    current_ = current_page_.begin();
-  }
-
-  /// The iterator type for this Range.
-  using iterator = PaginationIterator<T, PaginationRange>;
-
-  /**
-   * Return an iterator over the range of `T` objects.
-   *
-   * The returned iterator is a single-pass input iterator that reads new `T`
-   * objects from the underlying `PaginationRange` when incremented.
-   *
-   * Creating, and particularly incrementing, multiple iterators on the same
-   * PaginationRange<> is unsupported and can produce incorrect results.
-   */
-  iterator begin() { return GetNext(); }
-
-  /// Return an iterator pointing to the end of the stream.
-  iterator end() { return PaginationIterator<T, PaginationRange>{}; }
-
- protected:
-  friend class PaginationIterator<T, PaginationRange>;
+   Paginator(Request request,
+             std::function<StatusOr<Response>(Request const& r)> loader,
+             std::function<std::vector<T>(Response r)> get_items)
+       : request_(std::move(request)),
+         next_page_loader_(std::move(loader)),
+         get_items_(std::move(get_items)),
+         on_last_page_(false) {
+     current_ = current_page_.begin();
+   }
 
   /**
    * Fetches (or returns if already fetched) the next object from the stream.
@@ -176,13 +72,13 @@ class PaginationRange {
    *   it returns an iterator that is different from `.end()`, but has an error
    *   status. If the stream is exhausted, it returns the `.end()` iterator.
    */
-  iterator GetNext() {
+  typename StreamReader<T>::result_type GetNext() {
     static Status const kPastTheEndError(
         StatusCode::kFailedPrecondition,
         "Cannot iterating past the end of ListObjectReader");
     if (current_page_.end() == current_) {
       if (on_last_page_) {
-        return iterator(nullptr, kPastTheEndError);
+        return kPastTheEndError;
       }
       request_.set_page_token(std::move(next_page_token_));
       auto response = next_page_loader_(request_);
@@ -191,19 +87,20 @@ class PaginationRange {
         current_page_.clear();
         on_last_page_ = true;
         current_ = current_page_.begin();
-        return iterator(this, std::move(response).status());
+        return std::move(response).status();
       }
       next_page_token_ = std::move(*response->mutable_next_page_token());
       current_page_ = get_items_(*std::move(response));
+      if (current_page_.empty()) return Status{};
       current_ = current_page_.begin();
       if (next_page_token_.empty()) {
         on_last_page_ = true;
       }
       if (current_page_.end() == current_) {
-        return iterator(nullptr, kPastTheEndError);
+        return kPastTheEndError;
       }
     }
-    return iterator(this, std::move(*current_++));
+    return std::move(*current_++);
   }
 
  private:
@@ -217,20 +114,27 @@ class PaginationRange {
 };
 
 template <typename T>
-struct UnimplementedPaginationRange {};
+using PaginationRange = StreamRange<T>;
 
-template <typename T, typename Request, typename Response>
-struct UnimplementedPaginationRange<PaginationRange<T, Request, Response>> {
-  static PaginationRange<T, Request, Response> Create() {
-    return PaginationRange<T, Request, Response>(
-        Request{},
-        [](Request const&) {
-          return StatusOr<Response>(
-              Status{StatusCode::kUnimplemented, "needs-override"});
-        },
-        [](Response) { return std::vector<T>{}; });
-  }
-};
+template <typename Range, typename Request, typename Loader, typename Extractor,
+          typename ValueType = typename Range::value_type::value_type,
+          typename Response =
+              typename std::result_of<Loader(Request)>::type::value_type>
+Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
+  auto paginator = std::make_shared<Paginator<ValueType, Request, Response>>(
+      std::move(request), std::move(loader), std::move(extractor));
+  return Range(
+      [paginator]() mutable ->
+      typename StreamReader<ValueType>::result_type { return paginator->GetNext(); });
+}
+
+template <typename Range>
+Range MakePaginationRange() {
+  return Range{[]() -> typename StreamReader<
+                        typename Range::value_type::value_type>::result_type {
+    return Status{StatusCode::kUnimplemented, "needs-override"};
+  }};
+}
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
