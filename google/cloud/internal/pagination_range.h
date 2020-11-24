@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/stream_range.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -139,9 +140,9 @@ class PagedStreamReader {
 template <typename Range, typename Request, typename Loader, typename Extractor>
 Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
   using ValueType = typename Range::value_type::value_type;
-  using LoaderResult = typename std::result_of<Loader(Request)>::type;
+  using LoaderResult = invoke_result_t<Loader, Request>;
   using Response = typename LoaderResult::value_type;
-  using ExtractorResult = typename std::result_of<Extractor(Response)>::type;
+  using ExtractorResult = invoke_result_t<Extractor, Response>;
   // Some static asserts to make compiler errors easier to diagnose.
   static_assert(std::is_same<Range, PaginationRange<ValueType>>::value,
                 "Expected Range is of type PaginationRange<ValueType>");
