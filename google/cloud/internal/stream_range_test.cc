@@ -28,16 +28,25 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
+TEST(StreamRange, DefaultConstructed) {
+  StreamRange<int> sr;
+  auto it = sr.begin();
+  auto end = sr.end();
+  EXPECT_EQ(it, end);
+  EXPECT_EQ(it, it);
+  EXPECT_EQ(end, end);
+}
+
 TEST(StreamRange, MoveOnly) {
   auto const reader = [] { return Status{}; };
-  StreamRange<int> sr(reader);
+  StreamRange<int> sr = MakeStreamRange<int>(reader);
   StreamRange<int> move_construct = std::move(sr);
-  StreamRange<int> move_assign(reader);
+  StreamRange<int> move_assign = MakeStreamRange<int>(reader);
   move_assign = std::move(move_construct);
 }
 
 TEST(StreamRange, EmptyRange) {
-  StreamRange<int> sr([] { return Status{}; });
+  StreamRange<int> sr = MakeStreamRange<int>([] { return Status{}; });
   auto it = sr.begin();
   auto end = sr.end();
   EXPECT_EQ(it, end);
@@ -52,7 +61,7 @@ TEST(StreamRange, OneElement) {
     return Status{};
   };
 
-  StreamRange<int> sr(std::move(reader));
+  StreamRange<int> sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_TRUE(*it);
@@ -66,7 +75,7 @@ TEST(StreamRange, OneError) {
     return Status(StatusCode::kUnknown, "oops");
   };
 
-  StreamRange<int> sr(std::move(reader));
+  StreamRange<int> sr = MakeStreamRange<int>(std::move(reader));
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
   EXPECT_FALSE(*it);
@@ -82,7 +91,7 @@ TEST(StreamRange, FiveElements) {
     return Status{};
   };
 
-  StreamRange<int> sr(std::move(reader));
+  StreamRange<int> sr = MakeStreamRange<int>(std::move(reader));
   std::vector<int> v;
   for (StatusOr<int>& x : sr) {
     EXPECT_TRUE(x);
@@ -98,7 +107,7 @@ TEST(StreamRange, PostFixIteration) {
     return Status{};
   };
 
-  StreamRange<int> sr(std::move(reader));
+  StreamRange<int> sr = MakeStreamRange<int>(std::move(reader));
   std::vector<int> v;
   // NOLINTNEXTLINE(modernize-loop-convert)
   for (auto it = sr.begin(); it != sr.end(); it++) {
@@ -110,23 +119,25 @@ TEST(StreamRange, PostFixIteration) {
 
 TEST(StreamRange, Distance) {
   // Empty range
-  StreamRange<int> sr([] { return Status{}; });
+  StreamRange<int> sr = MakeStreamRange<int>([] { return Status{}; });
   EXPECT_EQ(0, std::distance(sr.begin(), sr.end()));
 
   // Range of one element
   auto counter = 0;
-  StreamRange<int> one([&counter]() -> StreamReader<int>::result_type {
-    if (counter++ < 1) return counter;
-    return Status{};
-  });
+  StreamRange<int> one =
+      MakeStreamRange<int>([&counter]() -> StreamReader<int>::result_type {
+        if (counter++ < 1) return counter;
+        return Status{};
+      });
   EXPECT_EQ(1, std::distance(one.begin(), one.end()));
 
   // Range of five elements
   counter = 0;
-  StreamRange<int> five([&counter]() -> StreamReader<int>::result_type {
-    if (counter++ < 5) return counter;
-    return Status{};
-  });
+  StreamRange<int> five =
+      MakeStreamRange<int>([&counter]() -> StreamReader<int>::result_type {
+        if (counter++ < 5) return counter;
+        return Status{};
+      });
   EXPECT_EQ(5, std::distance(five.begin(), five.end()));
 }
 
@@ -137,7 +148,7 @@ TEST(StreamRange, StreamError) {
     return Status(StatusCode::kUnknown, "oops");
   };
 
-  StreamRange<int> sr(std::move(reader));
+  StreamRange<int> sr = MakeStreamRange<int>(std::move(reader));
 
   auto it = sr.begin();
   EXPECT_NE(it, sr.end());
