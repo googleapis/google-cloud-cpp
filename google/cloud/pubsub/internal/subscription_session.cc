@@ -72,16 +72,30 @@ class SubscriptionSessionImpl
         pipeline_(std::move(pipeline)) {}
 
  private:
+  enum ShutdownState {
+    kNotInShutdown,
+    kShutdownByCompletionQueue,
+    kShutdownByApplication,
+    kShutdownCompleted,
+  };
+
+  void MarkAsShutdown(std::unique_lock<std::mutex> lk, ShutdownState reason,
+                      char const* where) {
+    auto pipeline = pipeline_;
+    auto shutdown_manager = shutdown_manager_;
+    if (reason == kShutdownByCompletionQueue) pipeline_.reset();
+    shutdown_state_ = reason;
+    lk.unlock();
+    shutdown_manager->MarkAsShutdown(where, {});
+    if (pipeline) pipeline->Shutdown();
+  }
+
   void InitiateApplicationShutdown() {
     GCP_LOG(TRACE) << __func__ << "()";
     std::unique_lock<std::mutex> lk(mu_);
-    std::shared_ptr<SubscriptionConcurrencyControl> p = pipeline_;
     switch (shutdown_state_) {
       case kNotInShutdown:
-        shutdown_state_ = kShutdownByApplication;
-        lk.unlock();
-        shutdown_manager_->MarkAsShutdown(__func__, {});
-        if (p) p->Shutdown();
+        MarkAsShutdown(std::move(lk), kShutdownByApplication, __func__);
         break;
       case kShutdownByApplication:
       case kShutdownByCompletionQueue:
@@ -91,8 +105,10 @@ class SubscriptionSessionImpl
   }
 
   void ShutdownCompleted() {
+    ShutdownCompleted(std::unique_lock<std::mutex>(mu_));
+  }
+  void ShutdownCompleted(std::unique_lock<std::mutex>) {
     GCP_LOG(TRACE) << __func__ << "()";
-    std::lock_guard<std::mutex> lk(mu_);
     pipeline_.reset();
     shutdown_state_ = kShutdownCompleted;
     if (timer_.valid()) timer_.cancel();
@@ -119,32 +135,18 @@ class SubscriptionSessionImpl
       return;
     }
     std::unique_lock<std::mutex> lk(mu_);
-    std::shared_ptr<SubscriptionConcurrencyControl> p;
     switch (shutdown_state_) {
       case kNotInShutdown:
-        shutdown_state_ = kShutdownByCompletionQueue;
-        p.swap(pipeline_);
-        shutdown_manager_->MarkAsShutdown(__func__, {});
-        lk.unlock();
-        p->Shutdown();
+        MarkAsShutdown(std::move(lk), kShutdownByCompletionQueue, __func__);
         break;
       case kShutdownByApplication:
-        shutdown_state_ = kShutdownCompleted;
-        p.swap(pipeline_);
-        lk.unlock();
+        ShutdownCompleted(std::move(lk));
         break;
       case kShutdownByCompletionQueue:
       case kShutdownCompleted:
         break;
     }
   }
-
-  enum ShutdownState {
-    kNotInShutdown,
-    kShutdownByCompletionQueue,
-    kShutdownByApplication,
-    kShutdownCompleted,
-  };
 
   CompletionQueue cq_;
   std::shared_ptr<SessionShutdownManager> const shutdown_manager_;
