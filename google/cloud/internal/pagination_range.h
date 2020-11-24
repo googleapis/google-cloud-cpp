@@ -153,7 +153,8 @@ Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
   using ReaderType = PagedStreamReader<ValueType, Request, Response>;
   auto reader = std::make_shared<ReaderType>(
       std::move(request), std::move(loader), std::move(extractor));
-  return Range{[reader]() mutable { return reader->GetNext(); }};
+  return MakeStreamRange<ValueType>(
+      {[reader]() mutable { return reader->GetNext(); }});
 }
 
 /**
@@ -163,9 +164,10 @@ Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
 template <typename Range>
 Range MakeUnimplementedPaginationRange() {
   using ValueType = typename Range::value_type::value_type;
-  return Range{[]() -> typename StreamReader<ValueType>::result_type {
-    return Status{StatusCode::kUnimplemented, "needs-override"};
-  }};
+  return MakeStreamRange<ValueType>(
+      []() -> typename StreamReader<ValueType>::result_type {
+        return Status{StatusCode::kUnimplemented, "needs-override"};
+      });
 }
 
 }  // namespace internal
