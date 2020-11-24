@@ -102,7 +102,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
               },
               request, function_name);
         };
-    return pubsub::ListTopicsRange(
+    return internal::MakePaginationRange<pubsub::ListTopicsRange>(
         std::move(request), list_functor,
         [](google::pubsub::v1::ListTopicsResponse response) {
           std::vector<google::pubsub::v1::Topic> items;
@@ -166,7 +166,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
               },
               request, function_name);
         };
-    return pubsub::ListTopicSubscriptionsRange(
+    return internal::MakePaginationRange<pubsub::ListTopicSubscriptionsRange>(
         std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListTopicSubscriptionsResponse response) {
           std::vector<std::string> items;
@@ -201,7 +201,7 @@ class TopicAdminConnectionImpl : public pubsub::TopicAdminConnection {
               },
               request, function_name);
         };
-    return pubsub::ListTopicSnapshotsRange(
+    return internal::MakePaginationRange<pubsub::ListTopicSnapshotsRange>(
         std::move(request), list_functor,
         [](google::pubsub::v1::ListTopicSnapshotsResponse response) {
           std::vector<std::string> items;
@@ -260,7 +260,7 @@ StatusOr<google::pubsub::v1::Topic> TopicAdminConnection::UpdateTopic(
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 ListTopicsRange TopicAdminConnection::ListTopics(ListTopicsParams) {
-  return internal::UnimplementedPaginationRange<ListTopicsRange>::Create();
+  return internal::MakeUnimplementedPaginationRange<ListTopicsRange>();
 }
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -276,15 +276,12 @@ TopicAdminConnection::DetachSubscription(DetachSubscriptionParams) {
 
 ListTopicSubscriptionsRange TopicAdminConnection::ListTopicSubscriptions(
     ListTopicSubscriptionsParams) {  // NOLINT(performance-unnecessary-value-param)
-  return internal::UnimplementedPaginationRange<
-      ListTopicSubscriptionsRange>::Create();
+  return internal::MakeUnimplementedPaginationRange<ListTopicSubscriptionsRange>();
 }
 
 ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(
     ListTopicSnapshotsParams) {  // NOLINT(performance-unnecessary-value-param)
-
-  return internal::UnimplementedPaginationRange<
-      ListTopicSnapshotsRange>::Create();
+  return internal::MakeUnimplementedPaginationRange<ListTopicSnapshotsRange>();
 }
 
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(

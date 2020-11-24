@@ -73,13 +73,8 @@ class Paginator {
    *   status. If the stream is exhausted, it returns the `.end()` iterator.
    */
   typename StreamReader<T>::result_type GetNext() {
-    static Status const kPastTheEndError(
-        StatusCode::kFailedPrecondition,
-        "Cannot iterating past the end of ListObjectReader");
     if (current_page_.end() == current_) {
-      if (on_last_page_) {
-        return kPastTheEndError;
-      }
+      if (on_last_page_) return Status{};  // End of stream
       request_.set_page_token(std::move(next_page_token_));
       auto response = next_page_loader_(request_);
       if (!response.ok()) {
@@ -91,14 +86,9 @@ class Paginator {
       }
       next_page_token_ = std::move(*response->mutable_next_page_token());
       current_page_ = get_items_(*std::move(response));
-      if (current_page_.empty()) return Status{};
       current_ = current_page_.begin();
-      if (next_page_token_.empty()) {
-        on_last_page_ = true;
-      }
-      if (current_page_.end() == current_) {
-        return kPastTheEndError;
-      }
+      if (next_page_token_.empty()) on_last_page_ = true;
+      if (current_page_.end() == current_) return Status{};  // End of stream
     }
     return std::move(*current_++);
   }
@@ -129,7 +119,7 @@ Range MakePaginationRange(Request request, Loader loader, Extractor extractor) {
 }
 
 template <typename Range>
-Range MakePaginationRange() {
+Range MakeUnimplementedPaginationRange() {
   return Range{[]() -> typename StreamReader<
                         typename Range::value_type::value_type>::result_type {
     return Status{StatusCode::kUnimplemented, "needs-override"};

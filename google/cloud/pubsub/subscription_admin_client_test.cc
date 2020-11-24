@@ -103,7 +103,8 @@ TEST(SubscriptionAdminClient, ListSubscriptions) {
       .WillOnce(
           [&](SubscriptionAdminConnection::ListSubscriptionsParams const& p) {
             EXPECT_EQ("projects/test-project", p.project_id);
-            return pubsub::ListSubscriptionsRange(
+            return internal::MakePaginationRange<
+                pubsub::ListSubscriptionsRange>(
                 google::pubsub::v1::ListSubscriptionsRequest{},
                 [&](google::pubsub::v1::ListSubscriptionsRequest const&) {
                   google::pubsub::v1::ListSubscriptionsResponse response;
@@ -219,7 +220,7 @@ TEST(SubscriptionAdminClient, ListSnapshots) {
   EXPECT_CALL(*mock, ListSnapshots)
       .WillOnce([&](SubscriptionAdminConnection::ListSnapshotsParams const& p) {
         EXPECT_EQ("projects/test-project", p.project_id);
-        return pubsub::ListSnapshotsRange(
+        return internal::MakePaginationRange<pubsub::ListSnapshotsRange>(
             google::pubsub::v1::ListSnapshotsRequest{},
             [&](google::pubsub::v1::ListSnapshotsRequest const&) {
               google::pubsub::v1::ListSnapshotsResponse response;

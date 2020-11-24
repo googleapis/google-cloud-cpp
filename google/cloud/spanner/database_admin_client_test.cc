@@ -139,7 +139,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
                     DatabaseAdminConnection::ListDatabasesParams const& p) {
         EXPECT_EQ(expected_instance, p.instance);
 
-        return ListDatabaseRange(
+        return google::cloud::internal::MakePaginationRange<ListDatabaseRange>(
             gcsa::ListDatabasesRequest{},
             [](gcsa::ListDatabasesRequest const&) {
               return StatusOr<gcsa::ListDatabasesResponse>(
@@ -494,7 +494,7 @@ TEST(DatabaseAdminClientTest, ListBackups) {
         EXPECT_EQ(expected_instance, p.instance);
         EXPECT_EQ(expected_filter, p.filter);
 
-        return ListBackupsRange(
+        return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
             gcsa::ListBackupsRequest{},
             [](gcsa::ListBackupsRequest const&) {
               return StatusOr<gcsa::ListBackupsResponse>(
@@ -585,7 +585,8 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
             EXPECT_EQ(expected_instance, p.instance);
             EXPECT_EQ(expected_filter, p.filter);
 
-            return ListBackupOperationsRange(
+            return google::cloud::internal::MakePaginationRange<
+                ListBackupOperationsRange>(
                 gcsa::ListBackupOperationsRequest{},
                 [](gcsa::ListBackupOperationsRequest const&) {
                   return StatusOr<gcsa::ListBackupOperationsResponse>(
@@ -614,7 +615,8 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
             EXPECT_EQ(expected_instance, p.instance);
             EXPECT_EQ(expected_filter, p.filter);
 
-            return ListDatabaseOperationsRange(
+            return google::cloud::internal::MakePaginationRange<
+                ListDatabaseOperationsRange>(
                 gcsa::ListDatabaseOperationsRequest{},
                 [](gcsa::ListDatabaseOperationsRequest const&) {
                   return StatusOr<gcsa::ListDatabaseOperationsResponse>(

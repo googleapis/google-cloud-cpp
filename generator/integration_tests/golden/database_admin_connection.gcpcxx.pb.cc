@@ -31,10 +31,10 @@ DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 ListDatabasesRange DatabaseAdminConnection::ListDatabases(
     ::google::test::admin::database::v1::ListDatabasesRequest request) {
-  return ListDatabasesRange(
+  return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListDatabasesRequest const&) {
-      return ::google::test::admin::database::v1::ListDatabasesResponse();
+      return StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>{};
     },
     [](::google::test::admin::database::v1::ListDatabasesResponse const&) {
       return std::vector<::google::test::admin::database::v1::Database>();
@@ -121,10 +121,10 @@ DatabaseAdminConnection::DeleteBackup(
 
 ListBackupsRange DatabaseAdminConnection::ListBackups(
     ::google::test::admin::database::v1::ListBackupsRequest request) {
-  return ListBackupsRange(
+  return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupsRequest const&) {
-      return ::google::test::admin::database::v1::ListBackupsResponse();
+      return StatusOr<::google::test::admin::database::v1::ListBackupsResponse>();
     },
     [](::google::test::admin::database::v1::ListBackupsResponse const&) {
       return std::vector<::google::test::admin::database::v1::Backup>();
@@ -141,10 +141,10 @@ DatabaseAdminConnection::RestoreDatabase(
 
 ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
     ::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return ListDatabaseOperationsRange(
+  return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
-      return ::google::test::admin::database::v1::ListDatabaseOperationsResponse();
+      return StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>();
     },
     [](::google::test::admin::database::v1::ListDatabaseOperationsResponse const&) {
       return std::vector<::google::longrunning::Operation>();
@@ -153,10 +153,10 @@ ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
 
 ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
     ::google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return ListBackupOperationsRange(
+  return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupOperationsRequest const&) {
-      return ::google::test::admin::database::v1::ListBackupOperationsResponse();
+      return StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>();
     },
     [](::google::test::admin::database::v1::ListBackupOperationsResponse const&) {
       return std::vector<::google::longrunning::Operation>();
@@ -219,7 +219,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabases(request);
     char const* function_name = __func__;
-    return ListDatabasesRange(
+    return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListDatabasesRequest const& r) {
@@ -423,7 +423,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackups(request);
     char const* function_name = __func__;
-    return ListBackupsRange(
+    return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListBackupsRequest const& r) {
@@ -472,7 +472,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabaseOperations(request);
     char const* function_name = __func__;
-    return ListDatabaseOperationsRange(
+    return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListDatabaseOperationsRequest const& r) {
@@ -502,7 +502,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackupOperations(request);
     char const* function_name = __func__;
-    return ListBackupOperationsRange(
+    return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListBackupOperationsRequest const& r) {

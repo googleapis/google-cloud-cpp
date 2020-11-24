@@ -67,10 +67,7 @@ Status ConnectionGenerator::GenerateHeader() {
             {
                 // clang-format off
    {"using $method_name$Range = "
-    "google::cloud::internal::PaginationRange<\n"
-    "    $range_output_type$,\n"
-    "    $request_type$,\n"
-    "    $response_type$>;\n\n"},
+    "google::cloud::internal::PaginationRange<$range_output_type$>;\n\n"},
                 // clang-format on
             },
             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
@@ -220,10 +217,10 @@ Status ConnectionGenerator::GenerateCc() {
                  // clang-format off
    {"$method_name$Range $connection_class_name$::$method_name$(\n"
     "    $request_type$ request) {\n"
-    "  return $method_name$Range(\n"
+    "  return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
     "    std::move(request),\n"
     "    []($request_type$ const&) {\n"
-    "      return $response_type$();\n"
+    "      return StatusOr<$response_type$>();\n"
     "    },\n"
     "    []($response_type$ const&) {\n"
     "      return std::vector<$range_output_type$>();\n"
@@ -359,7 +356,7 @@ Status ConnectionGenerator::GenerateCc() {
     "        backoff_policy_prototype_->clone());\n"
     "    auto idempotency = idempotency_policy_->$method_name$(request);\n"
     "    char const* function_name = __func__;\n"
-    "    return $method_name$Range(\n"
+    "    return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
     "        std::move(request),\n"
     "        [stub, retry, backoff, idempotency, function_name]\n"
     "          ($request_type$ const& r) {\n"

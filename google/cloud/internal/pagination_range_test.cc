@@ -211,7 +211,7 @@ TEST(RangeFromPagination, IteratorCoverage) {
 
 TEST(RangeFromPagination, Unimplemented) {
   using NonProtoRange = PaginationRange<std::string>;
-  auto range = MakePaginationRange<NonProtoRange>();
+  auto range = MakeUnimplementedPaginationRange<NonProtoRange>();
   auto i = range.begin();
   EXPECT_NE(i, range.end());
   EXPECT_THAT(*i, StatusIs(StatusCode::kUnimplemented));
