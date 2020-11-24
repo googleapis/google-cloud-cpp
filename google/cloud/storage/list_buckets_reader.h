@@ -16,17 +16,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_BUCKETS_READER_H
 
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/pagination_range.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 using ListBucketsReader =
-    internal::PaginationRange<BucketMetadata, internal::ListBucketsRequest,
-                              internal::ListBucketsResponse>;
+    google::cloud::internal::PaginationRange<BucketMetadata>;
 
 using ListBucketsIterator = ListBucketsReader::iterator;
 

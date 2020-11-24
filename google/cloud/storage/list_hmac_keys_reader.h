@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
 
 #include "google/cloud/storage/internal/hmac_key_requests.h"
-#include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <iterator>
 
@@ -26,12 +26,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 /**
  * A range to paginate over the HmacKeys for a project.
  */
 using ListHmacKeysReader =
-    internal::PaginationRange<HmacKeyMetadata, internal::ListHmacKeysRequest,
-                              internal::ListHmacKeysResponse>;
+    google::cloud::internal::PaginationRange<HmacKeyMetadata>;
 
 using ListHmacKeysIterator = ListHmacKeysReader::iterator;
 

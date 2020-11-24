@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_AND_PREFIXES_READER_H
 
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/range_from_pagination.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "absl/types/variant.h"
 #include <iterator>
 #include <string>
@@ -28,9 +28,7 @@ inline namespace STORAGE_CLIENT_NS {
 using ObjectOrPrefix = absl::variant<ObjectMetadata, std::string>;
 
 using ListObjectsAndPrefixesReader =
-    google::cloud::storage::internal::PaginationRange<
-        ObjectOrPrefix, internal::ListObjectsRequest,
-        internal::ListObjectsResponse>;
+    google::cloud::internal::PaginationRange<ObjectOrPrefix>;
 
 using ListObjectsAndPrefixesIterator = ListObjectsAndPrefixesReader::iterator;
 
