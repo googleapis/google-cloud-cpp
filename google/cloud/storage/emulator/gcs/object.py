@@ -378,6 +378,13 @@ class Object:
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
         response.update(rest_only)
+        old_metadata = {}
+        if "metadata" in response:
+            for key, value in response["metadata"].items():
+                if "emulator" in key:
+                    old_key = key.replace("emulator", "testbench")
+                    old_metadata[old_key] = value
+            response["metadata"].update(old_metadata)
         return response
 
     def rest_metadata(self):
