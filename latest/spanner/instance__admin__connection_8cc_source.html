@@ -219,7 +219,7 @@ $(function() {
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        request, __func__);</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  }</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa708396b87e75600830fe0d9dc40ba8b">ListInstanceConfigsRange</a> ListInstanceConfigs(</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1c52c9d74bce1dc711f907a4d78e7a8a">ListInstanceConfigsRange</a> ListInstanceConfigs(</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      ListInstanceConfigsParams params)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    gcsa::ListInstanceConfigsRequest request;</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    request.set_parent(<span class="stringliteral">&quot;projects/&quot;</span> + params.project_id);</div>
@@ -232,208 +232,209 @@ $(function() {
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        std::shared_ptr&lt;BackoffPolicy&gt;(backoff_policy_prototype_-&gt;clone());</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">char</span> <span class="keyword">const</span>* function_name = __func__;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa708396b87e75600830fe0d9dc40ba8b">ListInstanceConfigsRange</a>(</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        std::move(request),</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        [stub, retry, backoff,</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;         function_name](gcsa::ListInstanceConfigsRequest <span class="keyword">const</span>&amp; r) {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;          <span class="keywordflow">return</span> RetryLoop(</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;              retry-&gt;clone(), backoff-&gt;clone(), Idempotency::kIdempotent,</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                     gcsa::ListInstanceConfigsRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                return stub-&gt;ListInstanceConfigs(context, request);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;              },</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;              r, function_name);</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        },</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        [](gcsa::ListInstanceConfigsResponse r) {</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;          std::vector&lt;gcsa::InstanceConfig&gt; result(r.instance_configs().size());</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;          <span class="keyword">auto</span>&amp; configs = *r.mutable_instance_configs();</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;          std::move(configs.begin(), configs.end(), result.begin());</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;          <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        });</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  }</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab1027c7636884faefe381676acd20e30">ListInstancesRange</a> ListInstances(ListInstancesParams params)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    gcsa::ListInstancesRequest request;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    request.set_parent(<span class="stringliteral">&quot;projects/&quot;</span> + params.project_id);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    request.set_filter(std::move(params.filter));</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    request.clear_page_token();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keyword">auto</span> stub = stub_;</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">// Because we do not have C++14 generalized lambda captures we cannot just</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="comment">// use the unique_ptr&lt;&gt; here, so convert to shared_ptr&lt;&gt; instead.</span></div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keyword">auto</span> retry = std::shared_ptr&lt;RetryPolicy&gt;(retry_policy_prototype_-&gt;clone());</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">auto</span> backoff =</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        std::shared_ptr&lt;BackoffPolicy&gt;(backoff_policy_prototype_-&gt;clone());</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordtype">char</span> <span class="keyword">const</span>* function_name = __func__;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab1027c7636884faefe381676acd20e30">ListInstancesRange</a>(</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        std::move(request),</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        [stub, retry, backoff,</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;         function_name](gcsa::ListInstancesRequest <span class="keyword">const</span>&amp; r) {</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;          <span class="keywordflow">return</span> RetryLoop(</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;              retry-&gt;clone(), backoff-&gt;clone(), Idempotency::kIdempotent,</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                     gcsa::ListInstancesRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                return stub-&gt;ListInstances(context, request);</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;              },</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;              r, function_name);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        },</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        [](gcsa::ListInstancesResponse r) {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;          std::vector&lt;gcsa::Instance&gt; result(r.instances().size());</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;          <span class="keyword">auto</span>&amp; instances = *r.mutable_instances();</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;          std::move(instances.begin(), instances.end(), result.begin());</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;          <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        });</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  StatusOr&lt;giam::Policy&gt; GetIamPolicy(GetIamPolicyParams p)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    google::iam::v1::GetIamPolicyRequest request;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        Idempotency::kIdempotent,</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;               giam::GetIamPolicyRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;          return stub_-&gt;GetIamPolicy(context, request);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        },</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        request, __func__);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  StatusOr&lt;giam::Policy&gt; SetIamPolicy(SetIamPolicyParams p)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    google::iam::v1::SetIamPolicyRequest request;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    *request.mutable_policy() = std::move(p.policy);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> idempotency = request.policy().etag().empty()</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                                 ? Idempotency::kNonIdempotent</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                                 : Idempotency::kIdempotent;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        idempotency,</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;               giam::SetIamPolicyRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;          return stub_-&gt;SetIamPolicy(context, request);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        },</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        request, __func__);</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  }</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  StatusOr&lt;google::iam::v1::TestIamPermissionsResponse&gt; TestIamPermissions(</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      TestIamPermissionsParams p)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    google::iam::v1::TestIamPermissionsRequest request;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; permission : p.permissions) {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      request.add_permissions(std::move(permission));</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    }</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        Idempotency::kIdempotent,</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;               giam::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;          return stub_-&gt;TestIamPermissions(context, request);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        },</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        request, __func__);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  future&lt;StatusOr&lt;gcsa::Instance&gt;&gt; AwaitCreateOrUpdateInstance(</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      google::longrunning::Operation operation) {</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    promise&lt;StatusOr&lt;gcsa::Instance&gt;&gt; pr;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keyword">auto</span> f = pr.get_future();</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">// TODO(#4038) - use background_threads_-&gt;cq() to run this loop.</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    std::thread <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>(</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        [](std::shared_ptr&lt;internal::InstanceAdminStub&gt; stub,</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;           google::longrunning::Operation operation,</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;           std::unique_ptr&lt;PollingPolicy&gt; polling_policy,</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;           google::cloud::promise&lt;StatusOr&lt;gcsa::Instance&gt;&gt; promise,</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;           <span class="keywordtype">char</span> <span class="keyword">const</span>* location) <span class="keyword">mutable</span> {</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;          <span class="keyword">auto</span> result = google::cloud::internal::PollingLoop&lt;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;              google::cloud::internal::PollingLoopResponseExtractor&lt;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                  gcsa::Instance&gt;&gt;(</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;              std::move(polling_policy),</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                     google::longrunning::GetOperationRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                <span class="keywordflow">return</span> stub-&gt;GetOperation(context, request);</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;              },</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;              std::move(operation), location);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;          <span class="comment">// Drop our reference to stub; ideally we&#39;d have std::moved into the</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;          <span class="comment">// lambda. Doing this also prevents a false leak from being reported</span></div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;          <span class="comment">// when using googlemock.</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;          stub.reset();</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;          promise.set_value(std::move(result));</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        },</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        stub_, std::move(operation), polling_policy_prototype_-&gt;clone(),</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        std::move(pr), __func__);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>.detach();</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keywordflow">return</span> f;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  }</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  std::shared_ptr&lt;internal::InstanceAdminStub&gt; stub_;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  std::unique_ptr&lt;RetryPolicy const&gt; retry_policy_prototype_;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  std::unique_ptr&lt;BackoffPolicy const&gt; backoff_policy_prototype_;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  std::unique_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="comment">// Implementations of `BackgroundThreads` typically create a pool of</span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="comment">// threads that are joined during destruction, so, to avoid ownership</span></div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="comment">// cycles, those threads should never assume ownership of this object</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="comment">// (e.g., via a `std::shared_ptr&lt;&gt;`).</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  std::unique_ptr&lt;BackgroundThreads&gt; background_threads_;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;};</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}  <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;InstanceAdminConnection::~InstanceAdminConnection() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">  317</a></span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options) {</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keywordflow">return</span> internal::MakeInstanceAdminConnection(</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      internal::CreateDefaultInstanceAdminStub(options), options);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;}</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad5c7a5710f85cd99a0100a9aafff2ebd">  323</a></span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy) {</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordflow">return</span> internal::MakeInstanceAdminConnection(</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      internal::CreateDefaultInstanceAdminStub(options), options,</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      std::move(retry_policy), std::move(backoff_policy),</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      std::move(polling_policy));</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;}</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keyword">namespace </span>internal {</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    std::shared_ptr&lt;internal::InstanceAdminStub&gt; base_stub,</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options) {</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;InstanceAdminConnectionImpl&gt;(std::move(base_stub),</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                                                       options);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    std::shared_ptr&lt;internal::InstanceAdminStub&gt; base_stub,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy) {</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;InstanceAdminConnectionImpl&gt;(</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      std::move(base_stub), options, std::move(retry_policy),</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      std::move(backoff_policy), std::move(polling_policy));</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;}</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}  <span class="comment">// namespace internal</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">return</span> google::cloud::internal::MakePaginationRange&lt;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1c52c9d74bce1dc711f907a4d78e7a8a">ListInstanceConfigsRange</a>&gt;(</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        std::move(request),</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        [stub, retry, backoff,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;         function_name](gcsa::ListInstanceConfigsRequest <span class="keyword">const</span>&amp; r) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;          <span class="keywordflow">return</span> RetryLoop(</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;              retry-&gt;clone(), backoff-&gt;clone(), Idempotency::kIdempotent,</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                     gcsa::ListInstanceConfigsRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                return stub-&gt;ListInstanceConfigs(context, request);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;              },</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;              r, function_name);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        },</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        [](gcsa::ListInstanceConfigsResponse r) {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;          std::vector&lt;gcsa::InstanceConfig&gt; result(r.instance_configs().size());</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;          <span class="keyword">auto</span>&amp; configs = *r.mutable_instance_configs();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;          std::move(configs.begin(), configs.end(), result.begin());</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;          <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        });</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  }</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae93fca2f5409b77f4f905843a044d7c0">ListInstancesRange</a> ListInstances(ListInstancesParams params)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    gcsa::ListInstancesRequest request;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    request.set_parent(<span class="stringliteral">&quot;projects/&quot;</span> + params.project_id);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    request.set_filter(std::move(params.filter));</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    request.clear_page_token();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keyword">auto</span> stub = stub_;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="comment">// Because we do not have C++14 generalized lambda captures we cannot just</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="comment">// use the unique_ptr&lt;&gt; here, so convert to shared_ptr&lt;&gt; instead.</span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">auto</span> retry = std::shared_ptr&lt;RetryPolicy&gt;(retry_policy_prototype_-&gt;clone());</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <span class="keyword">auto</span> backoff =</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        std::shared_ptr&lt;BackoffPolicy&gt;(backoff_policy_prototype_-&gt;clone());</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">char</span> <span class="keyword">const</span>* function_name = __func__;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">return</span> google::cloud::internal::MakePaginationRange&lt;ListInstancesRange&gt;(</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        std::move(request),</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        [stub, retry, backoff,</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;         function_name](gcsa::ListInstancesRequest <span class="keyword">const</span>&amp; r) {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;          <span class="keywordflow">return</span> RetryLoop(</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;              retry-&gt;clone(), backoff-&gt;clone(), Idempotency::kIdempotent,</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                     gcsa::ListInstancesRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                return stub-&gt;ListInstances(context, request);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;              },</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;              r, function_name);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        },</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        [](gcsa::ListInstancesResponse r) {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;          std::vector&lt;gcsa::Instance&gt; result(r.instances().size());</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;          <span class="keyword">auto</span>&amp; instances = *r.mutable_instances();</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;          std::move(instances.begin(), instances.end(), result.begin());</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;          <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        });</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  }</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  StatusOr&lt;giam::Policy&gt; GetIamPolicy(GetIamPolicyParams p)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    google::iam::v1::GetIamPolicyRequest request;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        Idempotency::kIdempotent,</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;               giam::GetIamPolicyRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;          return stub_-&gt;GetIamPolicy(context, request);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        },</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        request, __func__);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  StatusOr&lt;giam::Policy&gt; SetIamPolicy(SetIamPolicyParams p)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    google::iam::v1::SetIamPolicyRequest request;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    *request.mutable_policy() = std::move(p.policy);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> idempotency = request.policy().etag().empty()</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                                 ? Idempotency::kNonIdempotent</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;                                 : Idempotency::kIdempotent;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        idempotency,</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;               giam::SetIamPolicyRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;          return stub_-&gt;SetIamPolicy(context, request);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        },</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        request, __func__);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  StatusOr&lt;google::iam::v1::TestIamPermissionsResponse&gt; TestIamPermissions(</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;      TestIamPermissionsParams p)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    google::iam::v1::TestIamPermissionsRequest request;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    request.set_resource(std::move(p.instance_name));</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; permission : p.permissions) {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      request.add_permissions(std::move(permission));</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordflow">return</span> RetryLoop(</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        retry_policy_prototype_-&gt;clone(), backoff_policy_prototype_-&gt;clone(),</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        Idempotency::kIdempotent,</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        [<span class="keyword">this</span>](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;               giam::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;          return stub_-&gt;TestIamPermissions(context, request);</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        },</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        request, __func__);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  }</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  future&lt;StatusOr&lt;gcsa::Instance&gt;&gt; AwaitCreateOrUpdateInstance(</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      google::longrunning::Operation operation) {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    promise&lt;StatusOr&lt;gcsa::Instance&gt;&gt; pr;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keyword">auto</span> f = pr.get_future();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="comment">// TODO(#4038) - use background_threads_-&gt;cq() to run this loop.</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    std::thread <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>(</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        [](std::shared_ptr&lt;internal::InstanceAdminStub&gt; stub,</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;           google::longrunning::Operation operation,</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;           std::unique_ptr&lt;PollingPolicy&gt; polling_policy,</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;           google::cloud::promise&lt;StatusOr&lt;gcsa::Instance&gt;&gt; promise,</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;           <span class="keywordtype">char</span> <span class="keyword">const</span>* location) <span class="keyword">mutable</span> {</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;          <span class="keyword">auto</span> result = google::cloud::internal::PollingLoop&lt;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;              google::cloud::internal::PollingLoopResponseExtractor&lt;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                  gcsa::Instance&gt;&gt;(</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;              std::move(polling_policy),</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;              [stub](grpc::ClientContext&amp; context,</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                     google::longrunning::GetOperationRequest <span class="keyword">const</span>&amp; request) {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                <span class="keywordflow">return</span> stub-&gt;GetOperation(context, request);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;              },</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;              std::move(operation), location);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;          <span class="comment">// Drop our reference to stub; ideally we&#39;d have std::moved into the</span></div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;          <span class="comment">// lambda. Doing this also prevents a false leak from being reported</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;          <span class="comment">// when using googlemock.</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;          stub.reset();</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;          promise.set_value(std::move(result));</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        },</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        stub_, std::move(operation), polling_policy_prototype_-&gt;clone(),</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        std::move(pr), __func__);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>.detach();</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keywordflow">return</span> f;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  }</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  std::shared_ptr&lt;internal::InstanceAdminStub&gt; stub_;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  std::unique_ptr&lt;RetryPolicy const&gt; retry_policy_prototype_;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  std::unique_ptr&lt;BackoffPolicy const&gt; backoff_policy_prototype_;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  std::unique_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="comment">// Implementations of `BackgroundThreads` typically create a pool of</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="comment">// threads that are joined during destruction, so, to avoid ownership</span></div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="comment">// cycles, those threads should never assume ownership of this object</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="comment">// (e.g., via a `std::shared_ptr&lt;&gt;`).</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  std::unique_ptr&lt;BackgroundThreads&gt; background_threads_;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;};</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;}  <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;InstanceAdminConnection::~InstanceAdminConnection() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">  318</a></span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options) {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">return</span> internal::MakeInstanceAdminConnection(</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      internal::CreateDefaultInstanceAdminStub(options), options);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;}</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
+<div class="line"><a name="l00324"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad5c7a5710f85cd99a0100a9aafff2ebd">  324</a></span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy) {</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keywordflow">return</span> internal::MakeInstanceAdminConnection(</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      internal::CreateDefaultInstanceAdminStub(options), options,</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      std::move(retry_policy), std::move(backoff_policy),</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      std::move(polling_policy));</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;}</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="keyword">namespace </span>internal {</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    std::shared_ptr&lt;internal::InstanceAdminStub&gt; base_stub,</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options) {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;InstanceAdminConnectionImpl&gt;(std::move(base_stub),</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                                                       options);</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;}</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">MakeInstanceAdminConnection</a>(</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    std::shared_ptr&lt;internal::InstanceAdminStub&gt; base_stub,</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy) {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;InstanceAdminConnectionImpl&gt;(</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      std::move(base_stub), options, std::move(retry_policy),</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;      std::move(backoff_policy), std::move(polling_policy));</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;}  <span class="comment">// namespace internal</span></div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ae93fca2f5409b77f4f905843a044d7c0"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae93fca2f5409b77f4f905843a044d7c0">google::cloud::spanner::v1::ListInstancesRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::spanner::admin::instance::v1::Instance &gt; ListInstancesRange</div><div class="ttdoc">An input range to stream all the instances in a Cloud project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00041">instance_admin_connection.h:42</a></div></div>
 <div class="ttc" id="ainstance_8h_html"><div class="ttname"><a href="instance_8h.html">instance.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
 <div class="ttc" id="alog_8cc_html_abc5627fb346314b5f14b10bdb6542da7"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a></div><div class="ttdeci">absl::Time t</div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_afc88c5a7d61b451fac89c920aa5a330c"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#afc88c5a7d61b451fac89c920aa5a330c">google::cloud::spanner::v1::ExponentialBackoffPolicy</a></div><div class="ttdeci">google::cloud::internal::ExponentialBackoffPolicy ExponentialBackoffPolicy</div><div class="ttdoc">A truncated exponential backoff policy with randomized periods.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00030">backoff_policy.h:31</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a1c52c9d74bce1dc711f907a4d78e7a8a"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1c52c9d74bce1dc711f907a4d78e7a8a">google::cloud::spanner::v1::ListInstanceConfigsRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::spanner::admin::instance::v1::InstanceConfig &gt; ListInstanceConfigsRange</div><div class="ttdoc">An input range to stream all the instance configs in a Cloud project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00053">instance_admin_connection.h:54</a></div></div>
 <div class="ttc" id="aversion_8h_html_a313bc0c726caf781fb59a7140610468e"><div class="ttname"><a href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a></div><div class="ttdeci">#define SPANNER_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ab71d44a90f8b6b7546b4d3793b60d57f"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">google::cloud::spanner::v1::LimitedTimeRetryPolicy</a></div><div class="ttdeci">google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeGrpcRetry &gt; LimitedTimeRetryPolicy</div><div class="ttdoc">A retry policy that limits based on time.</div><div class="ttdef"><b>Definition:</b> <a href="retry__policy_8h_source.html#l00078">retry_policy.h:79</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a780db6d7ded7d601844b15fced88b1a4"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">google::cloud::spanner::v1::ConnectionOptions</a></div><div class="ttdeci">google::cloud::ConnectionOptions&lt; ConnectionOptionsTraits &gt; ConnectionOptions</div><div class="ttdoc">The options for Cloud Spanner connections.</div><div class="ttdef"><b>Definition:</b> <a href="connection__options_8h_source.html#l00045">connection_options.h:46</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ab1027c7636884faefe381676acd20e30"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab1027c7636884faefe381676acd20e30">google::cloud::spanner::v1::ListInstancesRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::spanner::admin::instance::v1::Instance, google::spanner::admin::instance::v1::ListInstancesRequest, google::spanner::admin::instance::v1::ListInstancesResponse &gt; ListInstancesRange</div><div class="ttdoc">An input range to stream all the instances in a Cloud project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00041">instance_admin_connection.h:44</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a8348092a49586c1c7d2dba9864c652e2"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">google::cloud::spanner::v1::MakeInstanceAdminConnection</a></div><div class="ttdeci">std::shared_ptr&lt; InstanceAdminConnection &gt; MakeInstanceAdminConnection(ConnectionOptions const &amp;options)</div><div class="ttdoc">Returns an InstanceAdminConnection object that can be used for interacting with Cloud Spanner's admin...</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8cc_source.html#l00317">instance_admin_connection.cc:317</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_aa708396b87e75600830fe0d9dc40ba8b"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aa708396b87e75600830fe0d9dc40ba8b">google::cloud::spanner::v1::ListInstanceConfigsRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::spanner::admin::instance::v1::InstanceConfig, google::spanner::admin::instance::v1::ListInstanceConfigsRequest, google::spanner::admin::instance::v1::ListInstanceConfigsResponse &gt; ListInstanceConfigsRange</div><div class="ttdoc">An input range to stream all the instance configs in a Cloud project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00055">instance_admin_connection.h:58</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a8348092a49586c1c7d2dba9864c652e2"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a8348092a49586c1c7d2dba9864c652e2">google::cloud::spanner::v1::MakeInstanceAdminConnection</a></div><div class="ttdeci">std::shared_ptr&lt; InstanceAdminConnection &gt; MakeInstanceAdminConnection(ConnectionOptions const &amp;options)</div><div class="ttdoc">Returns an InstanceAdminConnection object that can be used for interacting with Cloud Spanner's admin...</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8cc_source.html#l00318">instance_admin_connection.cc:318</a></div></div>
 <div class="ttc" id="ainstance__admin__connection_8h_html"><div class="ttname"><a href="instance__admin__connection_8h.html">instance_admin_connection.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->
