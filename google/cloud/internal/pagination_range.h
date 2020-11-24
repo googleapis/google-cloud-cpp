@@ -19,9 +19,9 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <functional>
+#include <memory>
 #include <string>
 #include <utility>
-#include <memory>
 #include <vector>
 
 namespace google {
@@ -54,15 +54,15 @@ class PagedStreamReader {
    * @param get_items extracts the items from the response using native C++
    *     types (as opposed to the proto types used in `Response`).
    */
-   PagedStreamReader(Request request,
-             std::function<StatusOr<Response>(Request const& r)> loader,
-             std::function<std::vector<T>(Response r)> get_items)
-       : request_(std::move(request)),
-         next_page_loader_(std::move(loader)),
-         get_items_(std::move(get_items)),
-         on_last_page_(false) {
-     current_ = current_page_.begin();
-   }
+  PagedStreamReader(Request request,
+                    std::function<StatusOr<Response>(Request const& r)> loader,
+                    std::function<std::vector<T>(Response r)> get_items)
+      : request_(std::move(request)),
+        next_page_loader_(std::move(loader)),
+        get_items_(std::move(get_items)),
+        on_last_page_(false) {
+    current_ = current_page_.begin();
+  }
 
   /**
    * Fetches (or returns if already fetched) the next object from the stream.

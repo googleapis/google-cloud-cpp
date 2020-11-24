@@ -276,7 +276,8 @@ TopicAdminConnection::DetachSubscription(DetachSubscriptionParams) {
 
 ListTopicSubscriptionsRange TopicAdminConnection::ListTopicSubscriptions(
     ListTopicSubscriptionsParams) {  // NOLINT(performance-unnecessary-value-param)
-  return internal::MakeUnimplementedPaginationRange<ListTopicSubscriptionsRange>();
+  return internal::MakeUnimplementedPaginationRange<
+      ListTopicSubscriptionsRange>();
 }
 
 ListTopicSnapshotsRange TopicAdminConnection::ListTopicSnapshots(

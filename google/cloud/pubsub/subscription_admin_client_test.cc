@@ -100,24 +100,23 @@ TEST(SubscriptionAdminClient, ListSubscriptions) {
   auto const s1 = Subscription("test-project", "s1");
   auto const s2 = Subscription("test-project", "s2");
   EXPECT_CALL(*mock, ListSubscriptions)
-      .WillOnce(
-          [&](SubscriptionAdminConnection::ListSubscriptionsParams const& p) {
-            EXPECT_EQ("projects/test-project", p.project_id);
-            return internal::MakePaginationRange<
-                pubsub::ListSubscriptionsRange>(
-                google::pubsub::v1::ListSubscriptionsRequest{},
-                [&](google::pubsub::v1::ListSubscriptionsRequest const&) {
-                  google::pubsub::v1::ListSubscriptionsResponse response;
-                  response.add_subscriptions()->set_name(s1.FullName());
-                  response.add_subscriptions()->set_name(s2.FullName());
-                  return make_status_or(response);
-                },
-                [](google::pubsub::v1::ListSubscriptionsResponse const& r) {
-                  std::vector<google::pubsub::v1::Subscription> items;
-                  for (auto const& s : r.subscriptions()) items.push_back(s);
-                  return items;
-                });
-          });
+      .WillOnce([&](SubscriptionAdminConnection::ListSubscriptionsParams const&
+                        p) {
+        EXPECT_EQ("projects/test-project", p.project_id);
+        return internal::MakePaginationRange<pubsub::ListSubscriptionsRange>(
+            google::pubsub::v1::ListSubscriptionsRequest{},
+            [&](google::pubsub::v1::ListSubscriptionsRequest const&) {
+              google::pubsub::v1::ListSubscriptionsResponse response;
+              response.add_subscriptions()->set_name(s1.FullName());
+              response.add_subscriptions()->set_name(s2.FullName());
+              return make_status_or(response);
+            },
+            [](google::pubsub::v1::ListSubscriptionsResponse const& r) {
+              std::vector<google::pubsub::v1::Subscription> items;
+              for (auto const& s : r.subscriptions()) items.push_back(s);
+              return items;
+            });
+      });
   SubscriptionAdminClient client(mock);
   std::vector<std::string> names;
   for (auto const& t : client.ListSubscriptions("test-project")) {
