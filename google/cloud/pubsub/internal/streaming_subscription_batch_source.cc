@@ -356,7 +356,8 @@ void StreamingSubscriptionBatchSource::DrainQueues(
     increase_request_capacity(static_cast<int>(leases_.size()));
     for (auto const& kv : leases_) {
       request.add_modify_deadline_ack_ids(kv.first);
-      request.add_modify_deadline_seconds(kMinimumAckDeadline.count());
+      request.add_modify_deadline_seconds(
+          static_cast<std::int32_t>(kMinimumAckDeadline.count()));
     }
   }
   lk.unlock();
