@@ -48,7 +48,8 @@ RUN cmake -GNinja ../llvm \
 	-DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
-	-DLLVM_USE_SANITIZER=MemoryWithOrigins
+	-DLLVM_USE_SANITIZER=MemoryWithOrigins \
+        -DCMAKE_INSTALL_PREFIX=/usr
 # build the libraries
 RUN cmake --build . -- cxx cxxabi
 RUN cmake --build . -- install-cxx install-cxxabi
