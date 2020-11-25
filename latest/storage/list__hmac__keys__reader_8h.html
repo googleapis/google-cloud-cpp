@@ -71,9 +71,9 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;google/cloud/storage/internal/hmac_key_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/range_from_pagination.h&quot;</code><br />
 <code>#include &quot;google/cloud/storage/internal/raw_client.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/storage/version.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/internal/pagination_range.h&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">google/cloud/status_or.h</a>&quot;</code><br />
 <code>#include &lt;iterator&gt;</code><br />
 </div>
@@ -94,9 +94,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a39f3096e5c52b305049e9fc15c9075d4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a39f3096e5c52b305049e9fc15c9075d4">google::cloud::storage::v1::ListHmacKeysReader</a> = internal::PaginationRange&lt; HmacKeyMetadata, internal::ListHmacKeysRequest, internal::ListHmacKeysResponse &gt;</td></tr>
-<tr class="memdesc:a39f3096e5c52b305049e9fc15c9075d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A range to paginate over the HmacKeys for a project.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a39f3096e5c52b305049e9fc15c9075d4">More...</a><br /></td></tr>
-<tr class="separator:a39f3096e5c52b305049e9fc15c9075d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e219e14f89e343cbc6d99657de4f45"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a10e219e14f89e343cbc6d99657de4f45">google::cloud::storage::v1::ListHmacKeysReader</a> = google::cloud::internal::PaginationRange&lt; HmacKeyMetadata &gt;</td></tr>
+<tr class="memdesc:a10e219e14f89e343cbc6d99657de4f45"><td class="mdescLeft">&#160;</td><td class="mdescRight">A range to paginate over the HmacKeys for a project.  <a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a10e219e14f89e343cbc6d99657de4f45">More...</a><br /></td></tr>
+<tr class="separator:a10e219e14f89e343cbc6d99657de4f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6986efb36324b8b5b0c4afe697bad4aa"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a6986efb36324b8b5b0c4afe697bad4aa">google::cloud::storage::v1::ListHmacKeysIterator</a> = ListHmacKeysReader::iterator</td></tr>
 <tr class="separator:a6986efb36324b8b5b0c4afe697bad4aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
