@@ -1313,8 +1313,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
-  // To perform a multipart upload we need to separate the parts using:
-  //   https://cloud.google.com/storage/docs/json_api/v1/how-tos/multipart-upload
+  // To perform a multipart upload we need to separate the parts as described
+  // in:
+  //   https://cloud.google.com/storage/docs/uploading-objects#rest-upload-objects
   // This function is structured as follows:
   // 1. Create a request object, as we often do.
   CurlRequestBuilder builder(
