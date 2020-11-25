@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
 namespace google {
@@ -26,6 +28,8 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
+using ::testing::Contains;
+using ::testing::HasSubstr;
 
 using DataIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
@@ -555,6 +559,45 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   auto actual_ignore_timestamp =
       GetCellsIgnoringTimestamp(result->second.cells());
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+}
+
+TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  std::string const table_id = RandomTableId();
+
+  auto constexpr kTestMaxVersions = 10;
+  auto const test_gc_rule = bigtable::GcRule::MaxNumVersions(kTestMaxVersions);
+  bigtable::TableConfig table_config = bigtable::TableConfig(
+      {
+          {kFamily1, test_gc_rule},
+          {kFamily2, test_gc_rule},
+          {kFamily3, test_gc_rule},
+          {kFamily4, test_gc_rule},
+      },
+      {});
+  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+
+  std::shared_ptr<bigtable::DataClient> data_client =
+      bigtable::CreateDefaultDataClient(project_id(), instance_id(),
+                                        ClientOptions().enable_tracing("rpc"));
+
+  Table table(data_client, table_id);
+
+  std::string const row_key = "row-key-1";
+  std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
+                            {row_key, kFamily4, "c1", 2000, "v2000"}};
+  Apply(table, row_key, created);
+  std::vector<Cell> expected{{row_key, kFamily4, "c0", 1000, "v1000"},
+                             {row_key, kFamily4, "c1", 2000, "v2000"}};
+
+  auto actual = ReadRows(table, Filter::PassAllFilter());
+  CheckEqualUnordered(expected, actual);
+  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("MutateRow")));
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 }  // namespace
