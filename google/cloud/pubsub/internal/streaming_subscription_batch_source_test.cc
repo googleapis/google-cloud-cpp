@@ -804,8 +804,11 @@ TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
   auto mock_cq =
       std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
-      .WillRepeatedly([&](std::chrono::nanoseconds d) {
-        EXPECT_EQ(d, kHz);
+      .WillRepeatedly([&](std::chrono::nanoseconds duration) {
+        EXPECT_EQ(duration, kHz);
+        using std::chrono::system_clock;
+        auto const d =
+            std::chrono::duration_cast<system_clock::duration>(duration);
         auto deadline = mocked_now + d;
         return timer.PushBack().then(
             [deadline](future<void>) { return make_status_or(deadline); });
