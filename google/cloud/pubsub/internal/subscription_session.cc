@@ -118,12 +118,10 @@ class SubscriptionSessionImpl
     GCP_LOG(TRACE) << __func__ << "()";
     using TimerArg = future<StatusOr<std::chrono::system_clock::time_point>>;
 
-    std::unique_lock<std::mutex> lk(mu_);
     auto self = shared_from_this();
-    lk.unlock();
     auto t = cq_.MakeRelativeTimer(shutdown_polling_period_)
                  .then([self](TimerArg f) { self->OnTimer(!f.get().ok()); });
-    lk.lock();
+    std::unique_lock<std::mutex> lk(mu_);
     if (shutdown_state_ == kShutdownByCompletionQueue) return;
     timer_ = std::move(t);
   }
