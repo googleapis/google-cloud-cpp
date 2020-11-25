@@ -82,8 +82,8 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
 
   ListObjectsReader reader = client->ListObjects(bucket_name_, Versions(true));
   std::vector<std::string> actual;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = it->value();
+  for (auto& it : reader) {
+    auto const& meta = it.value();
     EXPECT_EQ(bucket_name_, meta.bucket());
     actual.push_back(meta.name());
   }

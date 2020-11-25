@@ -283,10 +283,12 @@ class Client {
     internal::ListBucketsRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
-    return ListBucketsReader(request,
-                             [client](internal::ListBucketsRequest const& r) {
-                               return client->ListBuckets(r);
-                             });
+    return google::cloud::internal::MakePaginationRange<ListBucketsReader>(
+        request,
+        [client](internal::ListBucketsRequest const& r) {
+          return client->ListBuckets(r);
+        },
+        [](internal::ListBucketsResponse r) { return std::move(r.items); });
   }
 
   /**
@@ -1008,10 +1010,12 @@ class Client {
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
-    return ListObjectsReader(request,
-                             [client](internal::ListObjectsRequest const& r) {
-                               return client->ListObjects(r);
-                             });
+    return google::cloud::internal::MakePaginationRange<ListObjectsReader>(
+        request,
+        [client](internal::ListObjectsRequest const& r) {
+          return client->ListObjects(r);
+        },
+        [](internal::ListObjectsResponse r) { return std::move(r.items); });
   }
 
   /**
@@ -1036,7 +1040,8 @@ class Client {
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
-    return ListObjectsAndPrefixesReader(
+    return google::cloud::internal::MakePaginationRange<
+        ListObjectsAndPrefixesReader>(
         request,
         [client](internal::ListObjectsRequest const& r) {
           return client->ListObjects(r);
@@ -2562,10 +2567,12 @@ class Client {
     internal::ListHmacKeysRequest request(project_id);
     request.set_multiple_options(std::forward<Options>(options)...);
     auto client = raw_client_;
-    return ListHmacKeysReader(request,
-                              [client](internal::ListHmacKeysRequest const& r) {
-                                return client->ListHmacKeys(r);
-                              });
+    return google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
+        request,
+        [client](internal::ListHmacKeysRequest const& r) {
+          return client->ListHmacKeys(r);
+        },
+        [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
   }
 
   /**

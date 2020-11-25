@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_OBJECTS_READER_H
 
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <iterator>
 
@@ -26,9 +26,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 using ListObjectsReader =
-    internal::PaginationRange<ObjectMetadata, internal::ListObjectsRequest,
-                              internal::ListObjectsResponse>;
+    google::cloud::internal::PaginationRange<ObjectMetadata>;
 
 using ListObjectsIterator = ListObjectsReader::iterator;
 

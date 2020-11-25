@@ -82,7 +82,8 @@ TEST(ListObjectsAndPrefixesReaderTest, Basic) {
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
 
-  ListObjectsAndPrefixesReader reader(
+  auto reader = google::cloud::internal::MakePaginationRange<
+      ListObjectsAndPrefixesReader>(
       ListObjectsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
       [mock](ListObjectsRequest const& r) { return mock->ListObjects(r); },
       [](internal::ListObjectsResponse r) {
