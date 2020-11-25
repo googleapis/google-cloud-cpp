@@ -504,15 +504,14 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   EXPECT_CALL(*mock, AsyncStreamingPull).WillRepeatedly(async_pull_mock);
 
   promise<Status> shutdown_completed;
-  auto background =
-      absl::make_unique<internal::AutomaticallyCreatedBackgroundThreads>(1);
+  internal::AutomaticallyCreatedBackgroundThreads background(1);
   {
     auto handler = [&](pubsub::Message const&, pubsub::AckHandler) {};
     (void)CreateSubscriptionSession(
         subscription,
         pubsub::SubscriberOptions{}.set_shutdown_polling_period(
             std::chrono::milliseconds(100)),
-        mock, background->cq(), "fake-client-id", {handler},
+        mock, background.cq(), "fake-client-id", {handler},
         pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy())
         .then([&shutdown_completed](future<Status> f) {
           shutdown_completed.set_value(f.get());
@@ -524,13 +523,12 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   auto finish = on_finish.PopFront();
   // Shutdown the completion queue, this will disable the timers for the second
   // async_pull
-  background->cq().Shutdown();
+  background.cq().Shutdown();
   finish.set_value(Status{});
 
   // At this point the streaming pull cannot restart, so there are no pending
   // operations.  Eventually the session will be finished.
   shutdown_completed.get_future().get();
-  background.reset(nullptr);
 }
 
 }  // namespace
