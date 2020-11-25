@@ -94,18 +94,11 @@ io::log "Fetching dependencies"
   @go_sdk//... \
   @remotejdk11_linux//:jdk
 
-excluded_targets=()
-if [[ "${BUILD_NAME}" == "msan" ]]; then
-  # GoogleTest's `TYPED_TEST` causes msan to complain. Not sure why.
-  excluded_targets+=("-//google/cloud:internal_pagination_range_test")
-fi
-
 echo "================================================================"
 io::log "Compiling and running unit tests"
 echo "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
 "${BAZEL_BIN}" ${BAZEL_VERB} \
-  "${bazel_args[@]}" "--test_tag_filters=-integration-test" \
-  -- ... "${excluded_targets[@]}"
+  "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
 should_run_integration_tests() {
   if [[ "${SOURCE_DIR:-}" == "super" ]]; then
