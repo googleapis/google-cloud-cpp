@@ -12,10 +12,12 @@
 **BREAKING CHANGES:**
 * Some "Range" types used in the Storage, Pub/Sub and Spanner APIs lost a
   constructor that was never intended to be part of their public APIs. Users
-  who were not directly constructing these ranges will not be affected. All
-  uses of these types that was _intended_ to be public will continue to work,
-  i.e., they will all continue to work as ranges in for loops, etc. The
-  affected types are:
+  who were not directly constructing these ranges will not be affected. Also
+  some performance improvements were made to their iterator implementations
+  that could break callers who were relying on unspecified behavior that is not
+  required by the [input
+  range](https://en.cppreference.com/w/cpp/named_req/InputIterator) concept.
+  The affected types are:
   * `google/cloud/storage/list_buckets_reader.h`
     * `using ListBucketsReader = google::cloud::internal::PaginationRange`
   * `google/cloud/storage/list_hmac_keys_reader.h`
