@@ -173,7 +173,6 @@ class DefaultDataClient : public DataClient {
 std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
-// }  // namespace internal
 
 /**
  * Implement a logging DataClient.

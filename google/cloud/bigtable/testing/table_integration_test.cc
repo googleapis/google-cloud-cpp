@@ -280,6 +280,14 @@ std::string TableIntegrationTest::RandomTableId() {
   return TableTestEnvironment::RandomTableId();
 }
 
+std::string TableIntegrationTest::project_id() {
+  return TableTestEnvironment::project_id();
+}
+
+std::string TableIntegrationTest::instance_id() {
+  return TableTestEnvironment::instance_id();
+}
+
 std::string TableIntegrationTest::RandomBackupId() {
   return TableTestEnvironment::RandomBackupId();
 }

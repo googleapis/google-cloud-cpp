@@ -144,6 +144,10 @@ class TableIntegrationTest : public ::testing::Test {
    */
   static std::string RandomBackupId();
 
+  static std::string project_id();
+
+  static std::string instance_id();
+
   /// Some tests cannot run on the emulator.
   static bool UsingCloudBigtableEmulator() {
     return TableTestEnvironment::UsingCloudBigtableEmulator();

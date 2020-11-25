@@ -32,7 +32,6 @@ struct InstanceAdminTraits;
 std::string DefaultDataEndpoint();
 std::string DefaultAdminEndpoint();
 std::string DefaultInstanceAdminEndpoint();
-std::set<std::string> DefaultTracingComponents();
 TracingOptions DefaultTracingOptions();
 }  // namespace internal
 
