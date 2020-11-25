@@ -342,28 +342,31 @@ void StreamingSubscriptionBatchSource::DrainQueues(
   nacks.swap(nack_queue_);
 
   std::vector<std::string> lease_extensions;
-  // We try to avoid work while holding the `lk` lock, but rarely (about once
-  // every 5 seconds) we need to update the leases. That requires a potentially
-  // long loop.
-  auto increase_request_capacity = [&request](int growth) {
-    request.mutable_modify_deadline_ack_ids()->Reserve(
-        request.modify_deadline_ack_ids().Capacity() + growth);
-    request.mutable_modify_deadline_seconds()->Reserve(
-        request.modify_deadline_seconds().Capacity() + growth);
+  // A helper to minimize allocations and copies, because "amortized constant
+  // time" is not the same as "constant time" (and the constant factors do
+  // matter).
+  auto set_request_capacity = [&request](int size) {
+    request.mutable_modify_deadline_ack_ids()->Reserve(size);
+    request.mutable_modify_deadline_seconds()->Reserve(size);
   };
+
   if (now > lease_refresh_deadline_) {
     lease_refresh_deadline_ = now + timer_config_.lease_refresh;
-    increase_request_capacity(static_cast<int>(leases_.size()));
+    set_request_capacity(static_cast<int>(leases_.size() + nacks.size()));
+    // We try to avoid work while holding the `lk` lock, but rarely (about once
+    // every 5 seconds) we need to update the leases. This may increase the time
+    // spent in the critical section, but we see no way around it.
     for (auto const& kv : leases_) {
       request.add_modify_deadline_ack_ids(kv.first);
       request.add_modify_deadline_seconds(
           static_cast<std::int32_t>(kMinimumAckDeadline.count()));
     }
+  } else {
+    set_request_capacity(static_cast<int>(nacks.size()));
   }
   lk.unlock();
 
   for (auto& a : acks) request.add_ack_ids(std::move(a));
-  increase_request_capacity(static_cast<int>(nacks.size()));
   for (auto& n : nacks) {
     request.add_modify_deadline_ack_ids(std::move(n));
     request.add_modify_deadline_seconds(0);

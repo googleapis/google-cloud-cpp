@@ -64,18 +64,21 @@ struct AckBatchingConfig {
 /**
  * Keep a single StreamingPull active.
  *
- * Creates a single StreamingPull request active:
+ * Creates a single StreamingPull RPC, and re-connects it when needed.
  *
  * - Once successfully connected [1], it resumes the request if the streaming
  *   pull is terminated with any failure.
+ * - Before it is connected [1], it uses the retry policy to control how many
+ *   times (or for how long) it tries to connect, and the backoff policy to
+ *   control the time between connection attempts.
  * - Sends at most one `Read()` and at most one `Write()` request to the
  *   underlying gRPC abstraction.
  * - On shutdown, wait for any pending `Read()` and `Write()` requests to
  *   complete before calling `Finish()`.
- * - Invoke a callback when `Read()` receives data.
+ * - Invokes a callback when `Read()` receives data.
  * - To preserve ordering, only once the callback returns is a new `Read()`
  *   request issued.
- * - To minimize I/O buffers nacks and acks into a single `Write()` request.
+ * - To minimize I/O, buffers nacks and acks into a single `Write()` request.
  * - Periodically flush any buffered acks or nacks.
  * - Periodically update the leases for any messages that have not been acked
  *   nor nacked.
@@ -94,7 +97,22 @@ class StreamingSubscriptionBatchSource
  public:
   using Clock = std::function<std::chrono::system_clock::time_point(void)>;
 
+  /**
+   * The minimum ack deadline defined by the Cloud Pub/Sub service.
+   *
+   * Unfortunately this value is only exposed in the service documentation,
+   * there is no constant in the `.proto` that we can use. In any case, it is
+   * unlikely to ever change, as it is part of the defined service behavior.
+   */
   static auto constexpr kMinimumAckDeadline = std::chrono::seconds(10);
+
+  /**
+   * The minimum ack deadline defined by the Cloud Pub/Sub service.
+   *
+   * Unfortunately this value is only exposed in the service documentation,
+   * there is no constant in the `.proto` that we can use. In any case, it is
+   * unlikely to ever change, as it is part of the defined service behavior.
+   */
   static auto constexpr kMaximumAckDeadline = std::chrono::seconds(600);
 
   struct TimerConfig {
@@ -180,7 +198,7 @@ class StreamingSubscriptionBatchSource
   void ShutdownStream(std::unique_lock<std::mutex> lk, char const* reason);
   void OnFinish(Status status);
 
-  void DrainQueues(std::unique_lock<std::mutex> lk, bool force_flush);
+  void DrainQueues(std::unique_lock<std::mutex> size, bool force_flush);
   void OnWrite(bool ok);
 
   void StartTimer();

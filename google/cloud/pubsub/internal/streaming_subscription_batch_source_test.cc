@@ -647,10 +647,10 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
 
   // We will configure StreamingSubscriptionBatchSource's to use this period
   // in its periodic timer.
-  auto constexpr kHz = std::chrono::milliseconds(42);
+  auto constexpr kTimerPeriod = std::chrono::milliseconds(42);
 
   // How often do we flush the buffers.
-  auto constexpr kAckHz = std::chrono::milliseconds(250);
+  auto constexpr kAckPeriod = std::chrono::milliseconds(250);
 
   // We mock the wall clock by changing this variable, we start with an easy
   // to recognize value.
@@ -666,7 +666,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
       std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
       .WillRepeatedly([&](std::chrono::nanoseconds duration) {
-        EXPECT_EQ(duration, kHz);
+        EXPECT_EQ(duration, kTimerPeriod);
         using std::chrono::system_clock;
         auto const d =
             std::chrono::duration_cast<system_clock::duration>(duration);
@@ -735,11 +735,11 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
   StreamingSubscriptionBatchSource::TimerConfig timer_config;
   timer_config.clock = mock_clock.AsStdFunction();
-  timer_config.period = kHz;
+  timer_config.period = kTimerPeriod;
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
       cq, shutdown, mock, subscription.FullName(), client_id,
       TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
-      AckBatchingConfig(kBatchSize, kAckHz), std::move(timer_config));
+      AckBatchingConfig(kBatchSize, kAckPeriod), std::move(timer_config));
 
   auto done = shutdown->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
@@ -769,7 +769,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   periodic.set_value();
   periodic = timer.PopFront();
   // Advance the clock to the pointer where it should trigger a flush
-  mocked_now = start + 2 * kAckHz;
+  mocked_now = start + 2 * kAckPeriod;
   periodic.set_value();
 
   // That should trigger the request
@@ -789,10 +789,10 @@ TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
 
   // We will configure StreamingSubscriptionBatchSource's to use this period
   // in its periodic timer.
-  auto constexpr kHz = std::chrono::milliseconds(42);
+  auto constexpr kTimerPeriod = std::chrono::milliseconds(42);
 
   // We will configure StreamingSubscriptionBatchSource to flush leases every
-  auto constexpr kLeaseHz = std::chrono::seconds(7);
+  auto constexpr kLeaseUpdatePeriod = std::chrono::seconds(7);
 
   // We mock the wall clock by changing this variable, we start with an easy
   // to recognize value.
@@ -808,7 +808,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
       std::make_shared<google::cloud::testing_util::MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
       .WillRepeatedly([&](std::chrono::nanoseconds duration) {
-        EXPECT_EQ(duration, kHz);
+        EXPECT_EQ(duration, kTimerPeriod);
         using std::chrono::system_clock;
         auto const d =
             std::chrono::duration_cast<system_clock::duration>(duration);
@@ -899,8 +899,8 @@ TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
   auto shutdown = std::make_shared<SessionShutdownManager>();
   StreamingSubscriptionBatchSource::TimerConfig timer_config;
   timer_config.clock = mock_clock.AsStdFunction();
-  timer_config.period = kHz;
-  timer_config.lease_refresh = kLeaseHz;
+  timer_config.period = kTimerPeriod;
+  timer_config.lease_refresh = kLeaseUpdatePeriod;
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
       cq, shutdown, mock, subscription.FullName(), client_id,
       TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
@@ -925,7 +925,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckLeaseRefresh) {
   periodic = timer.PopFront();
   // Advance the clock to a point where the leases should be refreshed and fire
   // the timer.
-  mocked_now = start + kLeaseHz + std::chrono::seconds(1);
+  mocked_now = start + kLeaseUpdatePeriod + std::chrono::seconds(1);
   periodic.set_value();
   periodic = timer.PopFront();
   async_pull.PopFront().set_value(0);
