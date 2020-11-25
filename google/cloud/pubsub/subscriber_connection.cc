@@ -124,7 +124,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeSubscriberConnection(
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto default_retry_policy = [] {
-    // Subscribers are special, by default we want to retry essentially forever
+    // Subscribers are special: by default we want to retry essentially forever
     // because (a) the service will disconnect the streaming pull from time to
     // time, but that is not a "failure", (b) applications can change this
     // behavior if they need, and this is easier than some hard-coded
