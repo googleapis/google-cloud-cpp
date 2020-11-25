@@ -33,6 +33,7 @@ namespace {
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::testing::AtLeast;
+using ::testing::AtMost;
 using ::testing::InSequence;
 
 /// @test Verify callbacks are scheduled in the background threads.
@@ -497,6 +498,7 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
+    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
     EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
 
     return stream;
