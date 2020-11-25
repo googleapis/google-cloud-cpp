@@ -44,12 +44,12 @@ RUN git clone --depth=1 --branch llvmorg-11.0.0 https://github.com/llvm/llvm-pro
 WORKDIR llvm-project/build
 # configure cmake
 RUN cmake -GNinja ../llvm \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
-	-DCMAKE_C_COMPILER=clang \
-	-DCMAKE_CXX_COMPILER=clang++ \
-	-DLLVM_USE_SANITIZER=MemoryWithOrigins \
-        -DCMAKE_INSTALL_PREFIX=/usr
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DLLVM_USE_SANITIZER=MemoryWithOrigins \
+    -DCMAKE_INSTALL_PREFIX=/usr
 # build the libraries
 RUN cmake --build . -- cxx cxxabi
 RUN cmake --build . -- install-cxx install-cxxabi
