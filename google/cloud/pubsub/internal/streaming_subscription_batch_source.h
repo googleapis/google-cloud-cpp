@@ -198,7 +198,7 @@ class StreamingSubscriptionBatchSource
   void ShutdownStream(std::unique_lock<std::mutex> lk, char const* reason);
   void OnFinish(Status status);
 
-  void DrainQueues(std::unique_lock<std::mutex> size, bool force_flush);
+  void DrainQueues(std::unique_lock<std::mutex> lk, bool force_flush);
   void OnWrite(bool ok);
 
   void StartTimer();
