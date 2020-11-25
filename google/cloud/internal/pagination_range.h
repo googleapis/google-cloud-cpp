@@ -98,7 +98,7 @@ class PagedStreamReader {
       request_.set_page_token(std::move(token_));
       auto response = loader_(request_);
       if (!response.ok()) return std::move(response).status();
-      token_ = std::move(*response->mutable_next_page_token());
+      token_ = ExtractPageToken(*response);
       if (token_.empty()) last_page_ = true;
       page_ = extractor_(*std::move(response));
       current_ = page_.begin();
@@ -108,6 +108,24 @@ class PagedStreamReader {
   }
 
  private:
+  /**
+   * ExtractPageToken() extracts (i.e., "moves") the page token out of the
+   * given response object. This function is overloaded based on whether the
+   * response object has a `.mutable_next_page_token()` member function (e.g.,
+   * a protobuf), or a `.next_page_token` field (e.g., a regular struct such as
+   * is used in GCS).
+   */
+  template <typename U>
+  static constexpr auto ExtractPageToken(U& u)
+      -> decltype(std::move(*u.mutable_next_page_token())) {
+    return std::move(*u.mutable_next_page_token());
+  }
+  template <typename U>
+  static constexpr auto ExtractPageToken(U& u)
+      -> decltype(std::move(u.next_page_token)) {
+    return std::move(u.next_page_token);
+  }
+
   Request request_;
   std::function<StatusOr<Response>(Request const&)> loader_;
   std::function<std::vector<T>(Response)> extractor_;

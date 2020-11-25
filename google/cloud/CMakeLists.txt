@@ -141,6 +141,7 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
+    internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
     internal/port_platform.h
@@ -245,6 +246,7 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
@@ -370,7 +372,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/default_completion_queue_impl.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
-        internal/pagination_range.h
         internal/polling_loop.h
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
@@ -446,7 +447,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/log_wrapper_test.cc
-            internal/pagination_range_test.cc
             internal/polling_loop_test.cc
             internal/retry_loop_test.cc
             internal/time_utils_test.cc)
