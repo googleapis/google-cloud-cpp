@@ -37,42 +37,22 @@ RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
     crc32c==2.1 gunicorn==20.0.4
 
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxx-10.0.0.src.tar.xz
-RUN tar -xf libcxx-10.0.0.src.tar.xz
-RUN wget -q https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/libcxxabi-10.0.0.src.tar.xz
-RUN tar -xf libcxxabi-10.0.0.src.tar.xz
 
-# To build libc++abi we need to bootstrap libc++ without libc++abi first:
-RUN cmake -Hlibcxx-10.0.0.src -B.boot-libcxx -GNinja -Wno-dev \
-    -DLLVM_USE_SANITIZER=Memory -DLLVM_EXTERNAL_LIT=/usr/bin/lit \
-    -DLLVM_CONFIG_PATH=/usr/bin/llvm-config \
-    -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release  \
-    -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-RUN cmake --build .boot-libcxx --target cxx
-RUN cmake --build .boot-libcxx --target install-cxx
-
-# Compile libc++abi using the bootstrap version
-RUN cmake -Hlibcxxabi-10.0.0.src -B.build-libcxxabi -GNinja -Wno-dev \
-    -DLIBCXXABI_LIBCXX_PATH=/var/tmp/build/libcxx-10.0.0.src \
-    -DLLVM_USE_SANITIZER=Memory -DLLVM_EXTERNAL_LIT=/usr/bin/lit \
-    -DLLVM_CONFIG_PATH=/usr/bin/llvm-config \
-    -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release  \
-    -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-RUN cmake --build .build-libcxxabi --target install-cxxabi
-
-# After libc++abi is installed, compile test and install the libc++ library
-# again.
-RUN cmake -Hlibcxx-10.0.0.src -B.build-libcxx -GNinja -Wno-dev \
-    -DLIBCXX_CXX_ABI=libcxxabi \
-    -DLIBCXX_CXX_ABI_INCLUDE_PATHS=/var/tmp/build/libcxxabi-10.0.0.src/include \
-    -DLLVM_USE_SANITIZER=Memory -DLLVM_EXTERNAL_LIT=/usr/bin/lit \
-    -DLLVM_CONFIG_PATH=/usr/bin/llvm-config \
-    -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release  \
-    -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-# The tests for libcxx do not pass, mostly around the filesystem library, which
-# we do not care about.
-RUN cmake --build .build-libcxx --target cxx
-RUN cmake --build .build-libcxx --target install-cxx
+# Install instructions from:
+# https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
+RUN git clone --depth=1 --branch llvmorg-11.0.0 https://github.com/llvm/llvm-project
+WORKDIR llvm-project/build
+# configure cmake
+RUN cmake -GNinja ../llvm \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DLLVM_USE_SANITIZER=MemoryWithOrigins \
+    -DCMAKE_INSTALL_PREFIX=/usr
+# build the libraries
+RUN cmake --build . -- cxx cxxabi
+RUN cmake --build . -- install-cxx install-cxxabi
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
