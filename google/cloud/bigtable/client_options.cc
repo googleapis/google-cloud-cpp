@@ -27,6 +27,9 @@ std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
   }
   return grpc::GoogleDefaultCredentials();
 }
+// As learned from experiments, idle gRPC connections enter IDLE state after 4m.
+std::chrono::milliseconds constexpr kDefaultRefreshPeriod =
+    std::chrono::minutes(3);
 }  // anonymous namespace
 
 namespace google {
@@ -96,7 +99,10 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       admin_endpoint_("bigtableadmin.googleapis.com"),
       instance_admin_endpoint_("bigtableadmin.googleapis.com"),
       tracing_components_(internal::DefaultTracingComponents()),
-      tracing_options_(internal::DefaultTracingOptions()) {
+      tracing_options_(internal::DefaultTracingOptions()),
+      // Refresh connections before the server has a chance to disconnect them
+      // due to being idle.
+      max_conn_refresh_period_(kDefaultRefreshPeriod) {
   static std::string const kUserAgentPrefix = UserAgentPrefix();
   channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
   channel_arguments_.SetMaxSendMessageSize(

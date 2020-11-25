@@ -17,6 +17,10 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/connection_options.h"
+#include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
+#include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -25,9 +29,40 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-/// Create a pool of `grpc::Channel` objects based on the client options.
-std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
-    std::string const& endpoint, bigtable::ClientOptions const& options);
+/**
+ * Time after which we bail out waiting for a connection to become ready.
+ *
+ * This number was copied from the Java client and there doesn't seem to be a
+ * well-founded reason for it to be exactly this. It should not bee too large
+ * since waiting for a connection to become ready is not cancellable.
+ */
+std::chrono::seconds constexpr kConnectionReadyTimeout(10);
+
+/**
+ * State required by timers scheduled by `CommonClient`.
+ *
+ * The scheduled timers might outlive `CommonClient`. They need some shared,
+ * persistent state. Objects of this class implement it.
+ */
+class ConnectionRefreshState {
+ public:
+  explicit ConnectionRefreshState(
+      std::chrono::milliseconds max_conn_refresh_period);
+  std::chrono::milliseconds RandomizedRefreshDelay();
+
+ private:
+  std::mutex mu_;
+  std::chrono::milliseconds max_conn_refresh_period_;
+  google::cloud::internal::DefaultPRNG rng_;
+};
+
+/**
+ * Schedule a chain of timers to refresh the connection.
+ */
+void ScheduleChannelRefresh(
+    std::shared_ptr<CompletionQueue> const& cq,
+    std::shared_ptr<ConnectionRefreshState> const& state,
+    std::shared_ptr<grpc::Channel> const& channel);
 
 /**
  * Refactor implementation of `bigtable::{Data,Admin,InstanceAdmin}Client`.
@@ -54,7 +89,21 @@ class CommonClient {
   //@}
 
   explicit CommonClient(bigtable::ClientOptions options)
-      : options_(std::move(options)), current_index_(0) {}
+      : options_(std::move(options)),
+        current_index_(0),
+        background_threads_(
+            google::cloud::internal::DefaultBackgroundThreads(1)),
+        cq_(std::make_shared<CompletionQueue>(background_threads_->cq())),
+        refresh_state_(std::make_shared<ConnectionRefreshState>(
+            options_.max_conn_refresh_period())) {}
+
+  ~CommonClient() {
+    // This will stop the refresh of the channels.
+    channels_.clear();
+    // TODO(2567): remove this call when the user will have to provide their own
+    // `CompletionQueues`
+    background_threads_->cq().CancelAll();
+  }
 
   /**
    * Reset the channel and stub.
@@ -103,7 +152,7 @@ class CommonClient {
     // introduce attributes in the implementation of CreateChannelPool() to
     // create one socket per element in the pool.
     lk.unlock();
-    auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
+    auto channels = CreateChannelPool();
     std::vector<StubPtr> tmp;
     std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
                    [](std::shared_ptr<grpc::Channel> ch) {
@@ -125,6 +174,30 @@ class CommonClient {
     }
   }
 
+  ChannelPtr CreateChannel(std::size_t idx) {
+    auto args = options_.channel_arguments();
+    if (!options_.connection_pool_name().empty()) {
+      args.SetString("cbt-c++/connection-pool-name",
+                     options_.connection_pool_name());
+    }
+    args.SetInt("cbt-c++/connection-pool-id", static_cast<int>(idx));
+    auto res = grpc::CreateCustomChannel(Traits::Endpoint(options_),
+                                         options_.credentials(), args);
+    if (options_.max_conn_refresh_period().count() == 0) {
+      return res;
+    }
+    ScheduleChannelRefresh(cq_, refresh_state_, res);
+    return res;
+  }
+
+  std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool() {
+    std::vector<std::shared_ptr<grpc::Channel>> result;
+    for (std::size_t i = 0; i != options_.connection_pool_size(); ++i) {
+      result.emplace_back(CreateChannel(i));
+    }
+    return result;
+  }
+
   /// Get the current index for round-robin over connections.
   std::size_t GetIndex() {
     std::size_t current = current_index_++;
@@ -136,10 +209,20 @@ class CommonClient {
   }
 
   std::mutex mu_;
+  std::size_t num_pending_refreshes_{};
   ClientOptions options_;
   std::vector<ChannelPtr> channels_;
   std::vector<StubPtr> stubs_;
   std::size_t current_index_;
+  std::unique_ptr<BackgroundThreads> background_threads_;
+  // Timers, which we schedule for refreshes, need to reference the completion
+  // queue. We cannot make the completion queue's underlying implementation
+  // become owned solely by the operations scheduled on it (because we risk a
+  // deadlock). We solve both problems by holding only weak pointers to the
+  // completion queue in the operations scheduled on it. In order to do it, we
+  // need to hold one instance by a shared pointer.
+  std::shared_ptr<CompletionQueue> cq_;
+  std::shared_ptr<ConnectionRefreshState> refresh_state_;
 };
 
 }  // namespace internal

@@ -600,6 +600,72 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
+TEST(ConnectionRefresh, Disabled) {
+  auto client_options = bigtable::ClientOptions().set_max_conn_refresh_period(
+      std::chrono::seconds(0));
+  auto data_client = bigtable::CreateDefaultDataClient(
+      testing::TableTestEnvironment::project_id(),
+      testing::TableTestEnvironment::instance_id(), client_options);
+  // In general, it is hard to show that something has *not* happened, at best
+  // we can show that its side-effects have not happened. In this case we want
+  // to show that the channels have not been refreshed. A side-effect of
+  // refreshing a channel is that it enters the `READY` state, so we check that
+  // this has not taken place and take that as evidence that no refresh has
+  // taken place.
+  //
+  // After the `CompletionQueue` argument is removed from the `Bigtable` API, we
+  // will have an option to provide a mock `CompletionQueue` to the `DataClient`
+  // for test purposes and verify that no timers are created, which will be a
+  // superior way to write this test.
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+  for (std::size_t i = 0; i < client_options.connection_pool_size(); ++i) {
+    auto channel = data_client->Channel();
+    EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
+  }
+  // Make sure things still work.
+  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  std::string const row_key = "row-key-1";
+  std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
+                            {row_key, kFamily4, "c1", 2000, "v2000"}};
+  Apply(table, row_key, created);
+  // After performing some operations, some of the channels should be in ready
+  // state.
+  auto check_if_some_channel_is_ready = [&] {
+    for (std::size_t i = 0; i < client_options.connection_pool_size(); ++i) {
+      if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
+        return true;
+      }
+    }
+    return false;
+  };
+  EXPECT_TRUE(check_if_some_channel_is_ready());
+}
+
+TEST(ConnectionRefresh, Frequent) {
+  auto data_client = bigtable::CreateDefaultDataClient(
+      testing::TableTestEnvironment::project_id(),
+      testing::TableTestEnvironment::instance_id(),
+      bigtable::ClientOptions().set_max_conn_refresh_period(
+          std::chrono::milliseconds(100)));
+
+  for (;;) {
+    if (data_client->Channel()->GetState(false) == GRPC_CHANNEL_READY) {
+      // We've found a channel which changed its state from IDLE to READY,
+      // which means that our refreshing mechanism works.
+      break;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
+
+  // Make sure things still work.
+  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  std::string const row_key = "row-key-1";
+  std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
+                            {row_key, kFamily4, "c1", 2000, "v2000"}};
+  Apply(table, row_key, created);
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
