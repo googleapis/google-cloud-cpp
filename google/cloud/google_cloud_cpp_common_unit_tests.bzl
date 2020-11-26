@@ -35,7 +35,6 @@ google_cloud_cpp_common_unit_tests = [
     "internal/parse_rfc3339_test.cc",
     "internal/random_test.cc",
     "internal/retry_policy_test.cc",
-    "internal/stream_range_test.cc",
     "internal/strerror_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/tuple_test.cc",
@@ -45,6 +44,7 @@ google_cloud_cpp_common_unit_tests = [
     "log_test.cc",
     "status_or_test.cc",
     "status_test.cc",
+    "stream_range_test.cc",
     "terminate_handler_test.cc",
     "tracing_options_test.cc",
 ]
