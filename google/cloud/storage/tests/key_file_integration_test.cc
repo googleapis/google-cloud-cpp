@@ -32,8 +32,8 @@ class KeyFileIntegrationTest
       public ::testing::WithParamInterface<std::string> {
  protected:
   void SetUp() override {
-    // The testbench does not implement signed URLs.
-    if (UsingTestbench()) GTEST_SKIP();
+    // The emulator does not implement signed URLs.
+    if (UsingEmulator()) GTEST_SKIP();
 
     std::string const key_file_envvar = GetParam();
 

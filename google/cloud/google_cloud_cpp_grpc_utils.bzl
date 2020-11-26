@@ -35,7 +35,6 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/completion_queue_impl.h",
     "internal/default_completion_queue_impl.h",
     "internal/log_wrapper.h",
-    "internal/pagination_range.h",
     "internal/polling_loop.h",
     "internal/retry_loop.h",
     "internal/retry_loop_helpers.h",

@@ -9,6 +9,39 @@
 
 ## v1.21.0 - TBD
 
+**BREAKING CHANGES:**
+* Some "Range" types used in the Storage, Pub/Sub and Spanner APIs lost a
+  constructor that was never intended to be part of their public APIs. Users
+  who were not directly constructing these ranges will not be affected. Also
+  some performance improvements were made to their iterator implementations
+  that could break callers who were relying on unspecified behavior that is not
+  required by the [input
+  range](https://en.cppreference.com/w/cpp/named_req/InputIterator) concept.
+  The affected types are:
+  * `google/cloud/storage/list_buckets_reader.h`
+    * `using ListBucketsReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_hmac_keys_reader.h`
+    * `using ListHmacKeysReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_objects_and_prefixes_reader.h`
+    * `using ListObjectsAndPrefixesReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_objects_reader.h`
+    * `using ListObjectsReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/pubsub/subscription_admin_connection.h`
+    * `using ListSubscriptionsRange = google::cloud::internal::PaginationRange`
+    * `using ListSnapshotsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/pubsub/topic_admin_connection.h`
+    * `using ListTopicsRange = google::cloud::internal::PaginationRange`
+    * `using ListTopicSubscriptionsRange = google::cloud::internal::PaginationRange`
+    * `using ListTopicSnapshotsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/spanner/database_admin_connection.h`
+    * `using ListDatabaseRange = google::cloud::internal::PaginationRange`
+    * `using ListBackupOperationsRange = google::cloud::internal::PaginationRange`
+    * `using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange`
+    * `using ListBackupsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/spanner/instance_admin_connection.h`
+    * `using ListInstancesRange = google::cloud::internal::PaginationRange`
+    * `using ListInstanceConfigsRange = google::cloud::internal::PaginationRange`
+
 ## v1.20.0 - 2020-11
 
 ### Bigtable

@@ -77,9 +77,10 @@ TEST(ListBucketsReaderTest, Basic) {
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
 
-  ListBucketsReader reader(
+  auto reader = google::cloud::internal::MakePaginationRange<ListBucketsReader>(
       ListBucketsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
-      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); });
+      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
+      [](internal::ListBucketsResponse r) { return std::move(r.items); });
   std::vector<BucketMetadata> actual;
   for (auto&& bucket : reader) {
     ASSERT_STATUS_OK(bucket);
@@ -93,9 +94,10 @@ TEST(ListBucketsReaderTest, Empty) {
   EXPECT_CALL(*mock, ListBuckets(_))
       .WillOnce(Return(make_status_or(ListBucketsResponse())));
 
-  ListBucketsReader reader(
+  auto reader = google::cloud::internal::MakePaginationRange<ListBucketsReader>(
       ListBucketsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
-      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); });
+      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
+      [](internal::ListBucketsResponse r) { return std::move(r.items); });
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(0, count);
 }
@@ -128,9 +130,10 @@ TEST(ListBucketsReaderTest, PermanentFailure) {
         return StatusOr<ListBucketsResponse>(PermanentError());
       });
 
-  ListBucketsReader reader(
+  auto reader = google::cloud::internal::MakePaginationRange<ListBucketsReader>(
       ListBucketsRequest("test-project"),
-      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); });
+      [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); },
+      [](internal::ListBucketsResponse r) { return std::move(r.items); });
   std::vector<BucketMetadata> actual;
   bool has_status_or_error = false;
   for (auto&& object : reader) {
@@ -154,53 +157,6 @@ TEST(ListBucketsReaderTest, PermanentFailure) {
   EXPECT_THAT(actual, ContainerEq(expected));
 }
 
-TEST(ListBucketsReaderTest, IteratorCompare) {
-  // Create a synthetic list of BucketMetadata elements, each request will
-  // return 2 of them.
-  int const page_count = 1;
-  auto create_mock = [](int i, int page_count) {
-    ListBucketsResponse response;
-    if (i < page_count) {
-      if (i != page_count - 1) {
-        response.next_page_token = "page-" + std::to_string(i);
-      }
-      response.items.emplace_back(CreateElement(2 * i));
-      response.items.emplace_back(CreateElement(2 * i + 1));
-    }
-    return [response](ListBucketsRequest const&) {
-      return StatusOr<ListBucketsResponse>(response);
-    };
-  };
-
-  auto mock1 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock1, ListBuckets(_)).WillOnce(create_mock(0, page_count));
-
-  auto mock2 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock2, ListBuckets(_)).WillOnce(create_mock(0, page_count));
-
-  ListBucketsReader reader1(
-      ListBucketsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
-      [mock1](ListBucketsRequest const& r) { return mock1->ListBuckets(r); });
-  ListBucketsIterator a1 = reader1.begin();
-  ListBucketsIterator b1 = a1;
-  ListBucketsIterator e1 = reader1.end();
-  EXPECT_EQ(b1, a1);
-  ++b1;
-  EXPECT_NE(b1, a1);
-  EXPECT_NE(a1, e1);
-  EXPECT_NE(b1, e1);
-  ++b1;
-  EXPECT_EQ(b1, e1);
-
-  ListBucketsReader reader2(
-      ListBucketsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
-      [mock2](ListBucketsRequest const& r) { return mock2->ListBuckets(r); });
-  ListBucketsIterator a2 = reader2.begin();
-
-  // Verify that iterators from different streams, even when pointing to the
-  // same elements are different.
-  EXPECT_NE(a1, a2);
-}
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

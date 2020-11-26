@@ -115,7 +115,6 @@ class StreamingSubscriptionBatchSource
                    std::shared_ptr<pubsub::BackoffPolicy> backoff_policy);
 
   struct RetryLoopState {
-    std::shared_ptr<AsyncPullStream> stream;
     std::shared_ptr<pubsub::RetryPolicy> retry_policy;
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy;
   };

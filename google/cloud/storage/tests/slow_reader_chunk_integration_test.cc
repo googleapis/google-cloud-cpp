@@ -32,7 +32,7 @@ class SlowReaderChunkIntegrationTest
  protected:
   void SetUp() override {
     // Too slow to run against production.
-    if (!UsingTestbench()) GTEST_SKIP();
+    if (!UsingEmulator()) GTEST_SKIP();
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
@@ -56,13 +56,13 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
   ASSERT_STATUS_OK(source_meta);
 
   // Create an iostream to read the object back. When running against the
-  // testbench we can fail quickly by asking the testbench to break the stream
+  // emulator we can fail quickly by asking the emulator to break the stream
   // in the middle.
   auto make_reader = [this, object_name, &client](int64_t offset) {
-    if (UsingTestbench()) {
+    if (UsingEmulator()) {
       return client->ReadObject(
           bucket_name_, object_name,
-          CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
+          CustomHeader("x-goog-emulator-instructions", "return-broken-stream"),
           ReadFromOffset(offset));
     }
     return client->ReadObject(bucket_name_, object_name,
@@ -71,8 +71,8 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
 
   ObjectReadStream stream = make_reader(0);
 
-  auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
-  auto const period_increment = std::chrono::seconds(UsingTestbench() ? 5 : 60);
+  auto slow_reader_period = std::chrono::seconds(UsingEmulator() ? 1 : 400);
+  auto const period_increment = std::chrono::seconds(UsingEmulator() ? 5 : 60);
   auto const max_slow_reader_period = std::chrono::minutes(10);
   std::vector<char> buffer;
   std::size_t const size = 1024 * 1024;

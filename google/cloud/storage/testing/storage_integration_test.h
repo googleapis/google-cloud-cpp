@@ -37,7 +37,7 @@ class StorageIntegrationTest : public ::testing::Test {
   /**
    * Return a client suitable for most integration tests.
    *
-   * Most integration tests, particularly when running against the testbench,
+   * Most integration tests, particularly when running against the emulator,
    * should use short backoff and retry periods. This returns a client so
    * configured.
    */
@@ -85,7 +85,7 @@ class StorageIntegrationTest : public ::testing::Test {
 
   std::string MakeRandomData(std::size_t desired_size);
 
-  static bool UsingTestbench();
+  static bool UsingEmulator();
 
   static bool UsingGrpc();
 

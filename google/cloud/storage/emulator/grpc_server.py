@@ -136,7 +136,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         upload = gcs_type.holder.DataHolder.init_resumable_grpc(
             request, bucket, context
         )
-        upload.metadata.metadata["x_testbench_upload"] = "resumable"
+        upload.metadata.metadata["x_emulator_upload"] = "resumable"
         db.insert_upload(upload)
         return storage_pb2.StartResumableWriteResponse(upload_id=upload.upload_id)
 

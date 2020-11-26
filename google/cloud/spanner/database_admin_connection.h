@@ -43,9 +43,7 @@ inline namespace SPANNER_CLIENT_NS {
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
 using ListDatabaseRange = google::cloud::internal::PaginationRange<
-    google::spanner::admin::database::v1::Database,
-    google::spanner::admin::database::v1::ListDatabasesRequest,
-    google::spanner::admin::database::v1::ListDatabasesResponse>;
+    google::spanner::admin::database::v1::Database>;
 
 /**
  * An input range to stream backup operations in Cloud Spanner instance.
@@ -56,10 +54,8 @@ using ListDatabaseRange = google::cloud::internal::PaginationRange<
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListBackupOperationsRange = google::cloud::internal::PaginationRange<
-    google::longrunning::Operation,
-    google::spanner::admin::database::v1::ListBackupOperationsRequest,
-    google::spanner::admin::database::v1::ListBackupOperationsResponse>;
+using ListBackupOperationsRange =
+    google::cloud::internal::PaginationRange<google::longrunning::Operation>;
 
 /**
  * An input range to stream database operations in Cloud Spanner instance.
@@ -70,10 +66,8 @@ using ListBackupOperationsRange = google::cloud::internal::PaginationRange<
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange<
-    google::longrunning::Operation,
-    google::spanner::admin::database::v1::ListDatabaseOperationsRequest,
-    google::spanner::admin::database::v1::ListDatabaseOperationsResponse>;
+using ListDatabaseOperationsRange =
+    google::cloud::internal::PaginationRange<google::longrunning::Operation>;
 
 /**
  * An input range to stream backups in Cloud Spanner instance.
@@ -85,9 +79,7 @@ using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange<
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
 using ListBackupsRange = google::cloud::internal::PaginationRange<
-    google::spanner::admin::database::v1::Backup,
-    google::spanner::admin::database::v1::ListBackupsRequest,
-    google::spanner::admin::database::v1::ListBackupsResponse>;
+    google::spanner::admin::database::v1::Backup>;
 
 /**
  * A connection to the Cloud Spanner instance administration service.

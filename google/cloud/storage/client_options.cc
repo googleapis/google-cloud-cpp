@@ -32,25 +32,29 @@ using ::google::cloud::internal::GetEnv;
 
 namespace internal {
 
+absl::optional<std::string> GetEmulator() {
+  auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  if (emulator) return emulator;
+  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+}
+
 std::string JsonEndpoint(ClientOptions const& options) {
-  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-             .value_or(options.endpoint_) +
-         "/storage/" + options.version();
+  return GetEmulator().value_or(options.endpoint_) + "/storage/" +
+         options.version();
 }
 
 std::string JsonUploadEndpoint(ClientOptions const& options) {
-  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
-             .value_or(options.endpoint_) +
-         "/upload/storage/" + options.version();
+  return GetEmulator().value_or(options.endpoint_) + "/upload/storage/" +
+         options.version();
 }
 
 std::string XmlEndpoint(ClientOptions const& options) {
-  return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT").value_or(options.endpoint_);
+  return GetEmulator().value_or(options.endpoint_);
 }
 
 std::string IamEndpoint(ClientOptions const& options) {
-  auto testbench = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
-  if (testbench) return *testbench + "/iamapi";
+  auto emulator = GetEmulator();
+  if (emulator) return *emulator + "/iamapi";
   return options.iam_endpoint();
 }
 
@@ -59,7 +63,7 @@ std::string IamEndpoint(ClientOptions const& options) {
 namespace {
 StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials(
     ChannelOptions const& channel_options) {
-  auto emulator = cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  auto emulator = internal::GetEmulator();
   if (emulator.has_value()) {
     return StatusOr<std::shared_ptr<oauth2::Credentials>>(
         oauth2::CreateAnonymousCredentials());
@@ -126,7 +130,7 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
       download_stall_timeout_(
           GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT),
       channel_options_(std::move(channel_options)) {
-  auto emulator = GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
+  auto emulator = internal::GetEmulator();
   if (emulator.has_value()) {
     endpoint_ = *emulator;
     iam_endpoint_ = *emulator + "/iamapi";

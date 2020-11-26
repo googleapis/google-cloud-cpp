@@ -165,13 +165,13 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
     EXPECT_EQ(bucket_name, metadata->name());
 
     // Wait at least 2 seconds before trying to create / delete another bucket.
-    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
 
     auto status = client->DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
 
     // Wait at least 2 seconds before trying to create / delete another bucket.
-    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
   }
 }
 
@@ -199,13 +199,13 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
     EXPECT_EQ(bucket_name, metadata->name());
 
     // Wait at least 2 seconds before trying to create / delete another bucket.
-    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
 
     auto status = client->DeleteBucket(bucket_name);
     ASSERT_STATUS_OK(status);
 
     // Wait at least 2 seconds before trying to create / delete another bucket.
-    if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+    if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
   }
 }
 
@@ -271,7 +271,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   EXPECT_EQ(logging_name, logging_meta->name());
 
   // Wait at least 2 seconds before trying to create / delete another bucket.
-  if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+  if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
   // Create a Bucket, use the default settings for most fields, except the
   // storage class and location. Fetch the full attributes of the bucket.
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
@@ -393,7 +393,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
   // Wait at least 2 seconds before trying to create / delete another bucket.
-  if (!UsingTestbench()) std::this_thread::sleep_for(std::chrono::seconds(2));
+  if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
   status = client->DeleteBucket(logging_name);
   ASSERT_STATUS_OK(status);
 }
@@ -889,7 +889,7 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
   ASSERT_STATUS_OK(client);
 
   // Try to create an invalid bucket (the name should not start with an
-  // uppercase letter), the service (or testbench) will reject the request and
+  // uppercase letter), the service (or emulator) will reject the request and
   // we should report that error correctly. For good measure, make the project
   // id invalid too.
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(

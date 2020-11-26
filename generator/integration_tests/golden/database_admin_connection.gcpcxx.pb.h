@@ -37,24 +37,16 @@ namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
 using ListDatabasesRange = google::cloud::internal::PaginationRange<
-    ::google::test::admin::database::v1::Database,
-    ::google::test::admin::database::v1::ListDatabasesRequest,
-    ::google::test::admin::database::v1::ListDatabasesResponse>;
+    ::google::test::admin::database::v1::Database>;
 
 using ListBackupsRange = google::cloud::internal::PaginationRange<
-    ::google::test::admin::database::v1::Backup,
-    ::google::test::admin::database::v1::ListBackupsRequest,
-    ::google::test::admin::database::v1::ListBackupsResponse>;
+    ::google::test::admin::database::v1::Backup>;
 
 using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange<
-    ::google::longrunning::Operation,
-    ::google::test::admin::database::v1::ListDatabaseOperationsRequest,
-    ::google::test::admin::database::v1::ListDatabaseOperationsResponse>;
+    ::google::longrunning::Operation>;
 
 using ListBackupOperationsRange = google::cloud::internal::PaginationRange<
-    ::google::longrunning::Operation,
-    ::google::test::admin::database::v1::ListBackupOperationsRequest,
-    ::google::test::admin::database::v1::ListBackupOperationsResponse>;
+    ::google::longrunning::Operation>;
 
 class DatabaseAdminConnection {
  public:

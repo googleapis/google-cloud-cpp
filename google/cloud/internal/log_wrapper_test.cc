@@ -15,9 +15,12 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/tracing_options.h"
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
+
+namespace btproto = google::bigtable::v2;
 
 namespace google {
 namespace cloud {
@@ -279,6 +282,75 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
                              HasSubstr(" >> response=" + status_as_string))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+/// @test the overload for functions returning Status
+TEST(LogWrapper, StatusValue) {
+  auto mock = [](grpc::ClientContext*, btproto::MutateRowRequest const&,
+                 btproto::MutateRowResponse*) { return grpc::Status(); };
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  grpc::ClientContext context;
+  btproto::MutateRowRequest request;
+  btproto::MutateRowResponse response;
+  LogWrapper(mock, &context, request, &response, "in-test", {});
+
+  auto const log_lines = backend->ClearLogLines();
+
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+/// @test the overload for functions returning erroneous Status
+TEST(LogWrapper, StatusValueError) {
+  auto status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
+  auto mock = [&status](grpc::ClientContext*, btproto::MutateRowRequest const&,
+                        btproto::MutateRowResponse*) { return status; };
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  grpc::ClientContext context;
+  btproto::MutateRowRequest request;
+  btproto::MutateRowResponse response;
+  LogWrapper(mock, &context, request, &response, "in-test", {});
+
+  std::ostringstream os;
+  os << status.error_message();
+  auto status_as_string = std::move(os).str();
+
+  auto const log_lines = backend->ClearLogLines();
+
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("),
+                             HasSubstr(" >> status=" + status_as_string))));
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
+
+/// @test the overload for functions returning ClientReaderInterface
+TEST(LogWrapper, UniquePointerClientReaderInterface) {
+  auto mock = [](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
+    return std::unique_ptr<
+        grpc::ClientReaderInterface<btproto::ReadRowsResponse>>{};
+  };
+
+  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  grpc::ClientContext context;
+  btproto::ReadRowsRequest request;
+  LogWrapper(mock, &context, request, "in-test", {});
+
+  auto const log_lines = backend->ClearLogLines();
+
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
 
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }

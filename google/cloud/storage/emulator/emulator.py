@@ -686,10 +686,10 @@ def resumable_upload_chunk(bucket_name):
                     False,
                     None,
                 )
-                blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+                blob.metadata.metadata["x_emulator_transfer_encoding"] = ":".join(
                     upload.transfer
                 )
-                blob.metadata.metadata["x_testbench_upload"] = "resumable"
+                blob.metadata.metadata["x_emulator_upload"] = "resumable"
                 db.insert_object(upload.request, bucket_name, blob, None)
                 projection = utils.common.extract_projection(
                     upload.request, CommonEnums.Projection.NO_ACL, None
@@ -734,10 +734,10 @@ def resumable_upload_chunk(bucket_name):
             None,
             upload.rest_only,
         )
-        blob.metadata.metadata["x_testbench_transfer_encoding"] = ":".join(
+        blob.metadata.metadata["x_emulator_transfer_encoding"] = ":".join(
             upload.transfer
         )
-        blob.metadata.metadata["x_testbench_upload"] = "resumable"
+        blob.metadata.metadata["x_emulator_upload"] = "resumable"
         db.insert_object(upload.request, bucket_name, blob, None)
         projection = utils.common.extract_projection(
             upload.request, CommonEnums.Projection.NO_ACL, None

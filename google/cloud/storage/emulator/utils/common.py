@@ -309,3 +309,20 @@ def corrupt_media(media):
     if not media:
         return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), "utf-8")
     return b"B" + media[1:] if media[0:1] == b"A" else b"A" + media[1:]
+
+
+# === HEADERS === #
+
+
+def extract_instruction(request, context):
+    instruction = None
+    if context is not None:
+        if hasattr(context, "invocation_metadata"):
+            for key, value in context.invocation_metadata():
+                if key == "x-goog-emulator-instructions":
+                    instruction = value
+    else:
+        instruction = request.headers.get("x-goog-emulator-instructions")
+        if instruction is None:
+            instruction = request.headers.get("x-goog-testbench-instructions")
+    return instruction

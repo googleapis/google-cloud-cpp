@@ -42,7 +42,7 @@ bool ProductionOnly(ApiName api) {
 }
 
 TEST_P(ThroughputExperimentIntegrationTest, Upload) {
-  if (UsingTestbench() && ProductionOnly(GetParam())) GTEST_SKIP();
+  if (UsingEmulator() && ProductionOnly(GetParam())) GTEST_SKIP();
 
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -71,7 +71,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
 }
 
 TEST_P(ThroughputExperimentIntegrationTest, Download) {
-  if (UsingTestbench() && ProductionOnly(GetParam())) GTEST_SKIP();
+  if (UsingEmulator() && ProductionOnly(GetParam())) GTEST_SKIP();
 
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
