@@ -401,12 +401,12 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
       TableNames(*current_table_list),
       Not(Contains(table_admin->instance_name() + "/tables/" + table_id)));
 
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("ListTables")));
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("CreateTable")));
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("GetTable")));
-  EXPECT_THAT(backend->ClearLogLines(),
-              Contains(HasSubstr("ModifyColumnFamilies")));
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("DeleteTable")));
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListTables")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateTable")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetTable")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ModifyColumnFamilies")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));
   google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 }  // namespace
