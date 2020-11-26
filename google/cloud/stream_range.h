@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -26,6 +26,11 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+// Defined below.
+template <typename T>
+class StreamRange;
+
 namespace internal {
 
 /**
@@ -49,24 +54,31 @@ namespace internal {
 template <typename T>
 using StreamReader = std::function<absl::variant<Status, T>()>;
 
+// Defined below.
+template <typename T>
+StreamRange<T> MakeStreamRange(StreamReader<T>);
+
+}  // namespace internal
+
 /**
  * A `StreamRange<T>` puts a range-like interface on a stream of `T` objects.
- *
- * The `T` objects are read from the caller-provided `StreamReader` functor,
- * which is invoked repeatedly as the range is iterated. The `StreamReader` can
- * return an OK `Status` to indicate a successful end of stream, or a non-OK
- * `Status` to indicate an error, or a `T`. The `StreamReader` will not be
- * invoked again after it returns a `Status`.
  *
  * Callers can iterate the range using its `begin()` and `end()` members to
  * access iterators that will work with any normal C++ constructs and
  * algorithms that accept [Input Iterators][input-iter-link].
  *
+ * The `T` objects are read from the caller-provided `internal::StreamReader`
+ * functor, which is invoked repeatedly as the range is iterated. The
+ * `internal::StreamReader` can return an OK `Status` to indicate a successful
+ * end of stream, or a non-OK `Status` to indicate an error, or a `T`. The
+ * `internal::StreamReader` will not be invoked again after it returns a
+ * `Status`.
+ *
  * @par Example: Printing integers from 1-10.
  *
  * @code
  * int counter = 0;
- * auto reader = [&counter]() -> StreamReader<int>::result_type {
+ * auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
  *   if (counter++ < 10) return counter;
  *   return Status{};
  * };
@@ -85,7 +97,7 @@ class StreamRange {
   template <typename U>
   static constexpr bool IsMoveNoexcept() {
     return noexcept(StatusOr<U>(std::declval<U>()))&& noexcept(
-        StreamReader<U>(std::declval<StreamReader<U>>()));
+        internal::StreamReader<U>(std::declval<internal::StreamReader<U>>()));
   }
 
  public:
@@ -186,21 +198,24 @@ class StreamRange {
   }
 
   template <typename U>
-  friend StreamRange<U> MakeStreamRange(StreamReader<U>);
+  friend StreamRange<U> internal::MakeStreamRange(internal::StreamReader<U>);
 
   /**
    * Constructs a `StreamRange<T>` that will use the given @p reader.
    *
    * @param reader must not be nullptr.
    */
-  explicit StreamRange(StreamReader<T> reader) : reader_(std::move(reader)) {
+  explicit StreamRange(internal::StreamReader<T> reader)
+      : reader_(std::move(reader)) {
     Next();
   }
 
-  StreamReader<T> reader_;
+  internal::StreamReader<T> reader_;
   StatusOr<T> current_;
   bool is_end_ = true;
 };
+
+namespace internal {
 
 /**
  * Factory to construct a `StreamRange<T>` with the given `StreamReader<T>`.
@@ -219,8 +234,9 @@ StreamRange<T> MakeStreamRange(StreamReader<T> reader) {
 }
 
 }  // namespace internal
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H

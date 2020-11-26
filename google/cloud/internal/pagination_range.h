@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PAGINATION_RANGE_H
 
 #include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/internal/stream_range.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <functional>
 #include <memory>

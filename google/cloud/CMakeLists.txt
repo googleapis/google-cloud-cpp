@@ -152,7 +152,6 @@ add_library(
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
-    internal/stream_range.h
     internal/strerror.cc
     internal/strerror.h
     internal/throw_delegate.cc
@@ -171,6 +170,7 @@ add_library(
     status.cc
     status.h
     status_or.h
+    stream_range.h
     terminate_handler.cc
     terminate_handler.h
     tracing_options.cc
@@ -253,7 +253,6 @@ if (BUILD_TESTING)
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
-        internal/stream_range_test.cc
         internal/strerror_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
@@ -263,6 +262,7 @@ if (BUILD_TESTING)
         log_test.cc
         status_or_test.cc
         status_test.cc
+        stream_range_test.cc
         terminate_handler_test.cc
         tracing_options_test.cc)
 
