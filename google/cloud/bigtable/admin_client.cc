@@ -124,6 +124,7 @@ AdminClient::AsyncRestoreTable(
 namespace {
 namespace btadmin = google::bigtable::admin::v2;
 using ::google::cloud::internal::LogWrapper;
+
 /**
  * An AdminClient for single-threaded programs that refreshes credentials on all
  * gRPC errors.

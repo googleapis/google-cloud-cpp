@@ -316,8 +316,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
 
-/// @test Verify that `bigtable::TableAdmin` CRUD operations works with logging
-/// client.
+/// @test Verify rpc logging for `bigtable::TableAdmin`
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   using GC = bigtable::GcRule;
   auto backend =
