@@ -266,227 +266,208 @@ $(function() {
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnInitialFinish(RetryLoopState rs,</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                                                       Status status) {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordflow">if</span> (status.code() == StatusCode::kUnavailable) {</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="comment">// Cloud Pub/Sub terminates a streaming pull trying to get data from an</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment">// empty subscription with this message. This should be treated as-if there</span></div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="comment">// was at least a successful connection established once. The rationale is</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="comment">// that we *know* we were able to connect to the service (so this is not a</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">// kUnavailable for network reasons), and we *know* this is not an error due</span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="comment">// to permissions, or resource naming, or some other kind of non-retryable</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="comment">// error.</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keyword">auto</span> constexpr kProbablyEmptySubscription =</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="stringliteral">&quot;The service was unable to fulfill your request.&quot;</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="stringliteral">&quot; Please try again. [code=8a75]&quot;</span>;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keywordflow">if</span> (status.message() == kProbablyEmptySubscription) {</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      shutdown_manager_-&gt;StartOperation(__func__, <span class="stringliteral">&quot;reconnect&quot;</span>, [&amp;] {</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        StartStream(retry_policy_-&gt;clone(), backoff_policy_-&gt;clone());</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;reconnect&quot;</span>);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="keywordflow">if</span> (!rs.retry_policy-&gt;OnFailure(status)) {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    OnRetryFailure(std::move(status));</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keyword">using</span> F = future&lt;StatusOr&lt;std::chrono::system_clock::time_point&gt;&gt;;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  cq_.MakeRelativeTimer(rs.backoff_policy-&gt;OnCompletion())</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      .then([weak, rs, status](F f) <span class="keyword">mutable</span> {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keyword">auto</span> s = weak.lock();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        <span class="keywordflow">if</span> (f.get().ok()) {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;          s-&gt;OnBackoff(std::move(rs), std::move(status));</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;          s-&gt;shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        }</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      });</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    }</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  }</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="keywordflow">if</span> (!rs.retry_policy-&gt;OnFailure(status)) {</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    OnRetryFailure(std::move(status));</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keyword">using</span> F = future&lt;StatusOr&lt;std::chrono::system_clock::time_point&gt;&gt;;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  cq_.MakeRelativeTimer(rs.backoff_policy-&gt;OnCompletion())</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      .then([weak, rs, status](F f) <span class="keyword">mutable</span> {</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keyword">auto</span> s = weak.lock();</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="keywordflow">if</span> (!s) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordflow">if</span> (f.get().ok()) {</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;          s-&gt;OnBackoff(std::move(rs), std::move(status));</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;          s-&gt;shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      });</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                                                 Status status) {</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  <span class="keywordflow">if</span> (rs.retry_policy-&gt;IsExhausted()) {</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    OnRetryFailure(std::move(status));</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  }</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> scheduled =</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      shutdown_manager_-&gt;StartOperation(__func__, <span class="stringliteral">&quot;retry&quot;</span>, [&amp;] {</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        StartStream(std::move(rs.retry_policy), std::move(rs.backoff_policy));</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;retry&quot;</span>);</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      });</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keywordflow">if</span> (!scheduled) {</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;}</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnRetryFailure(Status status) {</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">if</span> (shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>)) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  shutdown_manager_-&gt;MarkAsShutdown(__func__, status);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  callback_(std::move(status));</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ReadLoop() {</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  pending_read_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  lk.unlock();</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keyword">using</span> ResponseType =</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      absl::optional&lt;google::pubsub::v1::StreamingPullResponse&gt;;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  stream-&gt;Read().then([weak, stream](future&lt;ResponseType&gt; f) {</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnRead(f.get());</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  });</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;}</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnRead(</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    absl::optional&lt;google::pubsub::v1::StreamingPullResponse&gt; response) {</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  pending_read_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keywordflow">if</span> (response &amp;&amp; stream_state_ == StreamState::kActive &amp;&amp; !shutdown_) {</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    lk.unlock();</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    callback_(*std::move(response));</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    cq_.RunAsync([weak] {</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;ReadLoop();</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    });</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  }</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  ShutdownStream(std::move(lk), response ? <span class="stringliteral">&quot;state&quot;</span> : <span class="stringliteral">&quot;read error&quot;</span>);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;}</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ShutdownStream(</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    std::unique_lock&lt;std::mutex&gt; lk, <span class="keywordtype">char</span> <span class="keyword">const</span>* reason) {</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive &amp;&amp;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      stream_state_ != StreamState::kDisconnecting) {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  ChangeState(lk, StreamState::kDisconnecting, __func__, reason);</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keywordflow">if</span> (pending_read_ || pending_write_) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  ChangeState(lk, StreamState::kFinishing, __func__, reason);</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  lk.unlock();</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  <span class="comment">// There are no pending reads or writes, and something (probable a read or</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="comment">// write error) recommends we shutdown the stream</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  stream-&gt;Finish().then([weak, stream](future&lt;Status&gt; f) {</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnFinish(f.get());</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  });</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnFinish(Status status) {</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  status_ = std::move(status);</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  stream_.reset();</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  ChangeState(lk, StreamState::kNull, __func__, <span class="stringliteral">&quot;done&quot;</span>);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <span class="keywordflow">if</span> (shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>)) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  lk.unlock();</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  shutdown_manager_-&gt;StartOperation(__func__, <span class="stringliteral">&quot;stream&quot;</span>, [<span class="keyword">this</span>] {</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    StartStream(retry_policy_-&gt;clone(), backoff_policy_-&gt;clone());</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  });</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;}</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnBackoff(RetryLoopState rs,</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                                                 Status status) {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordflow">if</span> (rs.retry_policy-&gt;IsExhausted()) {</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    OnRetryFailure(std::move(status));</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> scheduled =</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      shutdown_manager_-&gt;StartOperation(__func__, <span class="stringliteral">&quot;retry&quot;</span>, [&amp;] {</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        StartStream(std::move(rs.retry_policy), std::move(rs.backoff_policy));</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;retry&quot;</span>);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      });</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  <span class="keywordflow">if</span> (!scheduled) {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  }</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnRetryFailure(Status status) {</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keywordflow">if</span> (shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>)) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  shutdown_manager_-&gt;MarkAsShutdown(__func__, status);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  callback_(std::move(status));</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ReadLoop() {</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  pending_read_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  lk.unlock();</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  <span class="keyword">using</span> ResponseType =</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      absl::optional&lt;google::pubsub::v1::StreamingPullResponse&gt;;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  stream-&gt;Read().then([weak, stream](future&lt;ResponseType&gt; f) {</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnRead(f.get());</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  });</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnRead(</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    absl::optional&lt;google::pubsub::v1::StreamingPullResponse&gt; response) {</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  pending_read_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  <span class="keywordflow">if</span> (response &amp;&amp; stream_state_ == StreamState::kActive &amp;&amp; !shutdown_) {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    lk.unlock();</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    callback_(*std::move(response));</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    cq_.RunAsync([weak] {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;ReadLoop();</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    });</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  }</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  ShutdownStream(std::move(lk), response ? <span class="stringliteral">&quot;state&quot;</span> : <span class="stringliteral">&quot;read error&quot;</span>);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ShutdownStream(</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    std::unique_lock&lt;std::mutex&gt; lk, <span class="keywordtype">char</span> <span class="keyword">const</span>* reason) {</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive &amp;&amp;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      stream_state_ != StreamState::kDisconnecting) {</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  ChangeState(lk, StreamState::kDisconnecting, __func__, reason);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  <span class="keywordflow">if</span> (pending_read_ || pending_write_) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  ChangeState(lk, StreamState::kFinishing, __func__, reason);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  lk.unlock();</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="comment">// There are no pending reads or writes, and something (probable a read or</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  <span class="comment">// write error) recommends we shutdown the stream</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  stream-&gt;Finish().then([weak, stream](future&lt;Status&gt; f) {</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnFinish(f.get());</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  });</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnFinish(Status status) {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  status_ = std::move(status);</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  stream_.reset();</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  ChangeState(lk, StreamState::kNull, __func__, <span class="stringliteral">&quot;done&quot;</span>);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  <span class="keywordflow">if</span> (shutdown_manager_-&gt;FinishedOperation(<span class="stringliteral">&quot;stream&quot;</span>)) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  lk.unlock();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  shutdown_manager_-&gt;StartOperation(__func__, <span class="stringliteral">&quot;stream&quot;</span>, [<span class="keyword">this</span>] {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    StartStream(retry_policy_-&gt;clone(), backoff_policy_-&gt;clone());</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  });</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::DrainQueues(</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    std::unique_lock&lt;std::mutex&gt; lk, <span class="keywordtype">bool</span> force_flush) {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> threshold = force_flush ? 1 : ack_batching_config_.max_batch_size;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  <span class="keywordflow">if</span> (ack_queue_.size() &lt; threshold &amp;&amp; nack_queue_.size() &lt; threshold &amp;&amp;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      deadlines_queue_.empty()) {</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  }</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive || pending_write_) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  pending_write_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  std::vector&lt;std::string&gt; acks;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  acks.swap(ack_queue_);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  std::vector&lt;std::string&gt; nacks;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  nacks.swap(nack_queue_);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  std::vector&lt;std::pair&lt;std::string, std::chrono::seconds&gt;&gt; deadlines;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  deadlines.swap(deadlines_queue_);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  lk.unlock();</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::DrainQueues(</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    std::unique_lock&lt;std::mutex&gt; lk, <span class="keywordtype">bool</span> force_flush) {</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> threshold = force_flush ? 1 : ack_batching_config_.max_batch_size;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">if</span> (ack_queue_.size() &lt; threshold &amp;&amp; nack_queue_.size() &lt; threshold &amp;&amp;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      deadlines_queue_.empty()) {</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  }</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  <span class="keywordflow">if</span> (stream_state_ != StreamState::kActive || pending_write_) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keyword">auto</span> stream = stream_;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  pending_write_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  std::vector&lt;std::string&gt; acks;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  acks.swap(ack_queue_);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  std::vector&lt;std::string&gt; nacks;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  nacks.swap(nack_queue_);</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  std::vector&lt;std::pair&lt;std::string, std::chrono::seconds&gt;&gt; deadlines;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  deadlines.swap(deadlines_queue_);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  lk.unlock();</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  google::pubsub::v1::StreamingPullRequest request;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; a : acks) request.add_ack_ids(std::move(a));</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; n : nacks) {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    request.add_modify_deadline_ack_ids(std::move(n));</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    request.add_modify_deadline_seconds(0);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  }</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : deadlines) {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    request.add_modify_deadline_ack_ids(std::move(d.first));</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    request.add_modify_deadline_seconds(</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        <span class="keyword">static_cast&lt;</span>std::int32_t<span class="keyword">&gt;</span>(d.second.count()));</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  }</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="comment">// Note that we do not use `AsyncRetryLoop()` here. The ack/nack pipeline is</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="comment">// best-effort anyway, there is no guarantee that the server will act on any</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="comment">// of these.</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  stream-&gt;Write(request, grpc::WriteOptions{}.set_write_through())</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      .then([weak, stream](future&lt;bool&gt; f) {</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnWrite(f.get());</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      });</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnWrite(<span class="keywordtype">bool</span> ok) {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  google::pubsub::v1::StreamingPullRequest request;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; a : acks) request.add_ack_ids(std::move(a));</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; n : nacks) {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    request.add_modify_deadline_ack_ids(std::move(n));</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    request.add_modify_deadline_seconds(0);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  }</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; d : deadlines) {</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    request.add_modify_deadline_ack_ids(std::move(d.first));</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    request.add_modify_deadline_seconds(</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keyword">static_cast&lt;</span>std::int32_t<span class="keyword">&gt;</span>(d.second.count()));</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="comment">// Note that we do not use `AsyncRetryLoop()` here. The ack/nack pipeline is</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  <span class="comment">// best-effort anyway, there is no guarantee that the server will act on any</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="comment">// of these.</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  stream-&gt;Write(request, grpc::WriteOptions{}.set_write_through())</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      .then([weak, stream](future&lt;bool&gt; f) {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnWrite(f.get());</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      });</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;}</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnWrite(<span class="keywordtype">bool</span> ok) {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  pending_write_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="keywordflow">if</span> (ok &amp;&amp; stream_state_ == StreamState::kActive &amp;&amp; !shutdown_) {</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    DrainQueues(std::move(lk), <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  }</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  ShutdownStream(std::move(lk), ok ? <span class="stringliteral">&quot;state&quot;</span> : <span class="stringliteral">&quot;write error&quot;</span>);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::StartWriteTimer() {</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keyword">using</span> F = future&lt;StatusOr&lt;std::chrono::system_clock::time_point&gt;&gt;;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnWriteTimer(f.get().status());</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  });</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;}</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnWriteTimer(Status <span class="keyword">const</span>&amp; s) {</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  <span class="keywordflow">if</span> (!s.ok()) <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  pending_write_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">if</span> (ok &amp;&amp; stream_state_ == StreamState::kActive &amp;&amp; !shutdown_) {</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    DrainQueues(std::move(lk), <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  }</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  ShutdownStream(std::move(lk), ok ? <span class="stringliteral">&quot;state&quot;</span> : <span class="stringliteral">&quot;write error&quot;</span>);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;}</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::StartWriteTimer() {</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  <span class="keyword">auto</span> weak = WeakFromThis();</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keyword">using</span> F = future&lt;StatusOr&lt;std::chrono::system_clock::time_point&gt;&gt;;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordflow">if</span> (<span class="keyword">auto</span> <span class="keyword">self</span> = weak.lock()) self-&gt;OnWriteTimer(f.get().status());</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;  });</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::OnWriteTimer(Status <span class="keyword">const</span>&amp; s) {</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keywordflow">if</span> (!s.ok()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  std::unique_lock&lt;std::mutex&gt; lk(mu_);</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;  DrainQueues(std::move(lk), <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  StartWriteTimer();</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;}</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160; </div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;std::ostream&amp; <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a2c56574239d06296efc1241b92cab11e">operator&lt;&lt;</a>(std::ostream&amp; os,</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                         StreamingSubscriptionBatchSource::StreamState s) {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keyword">using</span> State = StreamingSubscriptionBatchSource::StreamState;</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  <span class="keywordflow">switch</span> (s) {</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="keywordflow">case</span> State::kNull:</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kNull&quot;</span>;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keywordflow">case</span> State::kActive:</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kActive&quot;</span>;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keywordflow">case</span> State::kDisconnecting:</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kDisconnecting&quot;</span>;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordflow">case</span> State::kFinishing:</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kFinishing&quot;</span>;</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  }</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;  <span class="keywordflow">return</span> os;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;}</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160; </div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ChangeState(</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;    std::unique_lock&lt;std::mutex&gt; <span class="keyword">const</span>&amp;, StreamState s, <span class="keywordtype">char</span> <span class="keyword">const</span>* where,</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;    <span class="keywordtype">char</span> <span class="keyword">const</span>* reason) {</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;  <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a>(TRACE) &lt;&lt; where &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; reason &lt;&lt; <span class="stringliteral">&quot;) &quot;</span> &lt;&lt; stream_state_ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; s</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; read=&quot;</span> &lt;&lt; pending_read_ &lt;&lt; <span class="stringliteral">&quot; write=&quot;</span> &lt;&lt; pending_write_</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; shutdown=&quot;</span> &lt;&lt; shutdown_</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; stream=&quot;</span> &lt;&lt; (stream_ ? <span class="stringliteral">&quot;not-null&quot;</span> : <span class="stringliteral">&quot;null&quot;</span>)</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; status=&quot;</span> &lt;&lt; status_;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;  stream_state_ = s;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;}</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  DrainQueues(std::move(lk), <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  StartWriteTimer();</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;std::ostream&amp; <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a2c56574239d06296efc1241b92cab11e">operator&lt;&lt;</a>(std::ostream&amp; os,</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                         StreamingSubscriptionBatchSource::StreamState s) {</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keyword">using</span> State = StreamingSubscriptionBatchSource::StreamState;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">switch</span> (s) {</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    <span class="keywordflow">case</span> State::kNull:</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kNull&quot;</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordflow">case</span> State::kActive:</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kActive&quot;</span>;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keywordflow">case</span> State::kDisconnecting:</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kDisconnecting&quot;</span>;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordflow">case</span> State::kFinishing:</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      os &lt;&lt; <span class="stringliteral">&quot;kFinishing&quot;</span>;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  }</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;}</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="keywordtype">void</span> StreamingSubscriptionBatchSource::ChangeState(</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    std::unique_lock&lt;std::mutex&gt; <span class="keyword">const</span>&amp;, StreamState s, <span class="keywordtype">char</span> <span class="keyword">const</span>* where,</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordtype">char</span> <span class="keyword">const</span>* reason) {</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a>(TRACE) &lt;&lt; where &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; reason &lt;&lt; <span class="stringliteral">&quot;) &quot;</span> &lt;&lt; stream_state_ &lt;&lt; <span class="stringliteral">&quot;:&quot;</span> &lt;&lt; s</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; read=&quot;</span> &lt;&lt; pending_read_ &lt;&lt; <span class="stringliteral">&quot; write=&quot;</span> &lt;&lt; pending_write_</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; shutdown=&quot;</span> &lt;&lt; shutdown_</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; stream=&quot;</span> &lt;&lt; (stream_ ? <span class="stringliteral">&quot;not-null&quot;</span> : <span class="stringliteral">&quot;null&quot;</span>)</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                 &lt;&lt; <span class="stringliteral">&quot; status=&quot;</span> &lt;&lt; status_;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;  stream_state_ = s;</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;}  <span class="comment">// namespace pubsub_internal</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astreaming__subscription__batch__source_8h_html"><div class="ttname"><a href="streaming__subscription__batch__source_8h.html">streaming_subscription_batch_source.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1v1_html_a2c56574239d06296efc1241b92cab11e"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a2c56574239d06296efc1241b92cab11e">operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, IamBindings const &amp;rhs)</div></div>
