@@ -15,7 +15,10 @@
 
 """Unit test for utils"""
 
+import http
+import os
 import unittest
+import urllib
 
 import utils
 
@@ -399,6 +402,28 @@ class TestGeneration(unittest.TestCase):
         self.assertEqual(generation, 1)
         generation = utils.generation.extract_generation(request, True, None)
         self.assertEqual(generation, 2)
+
+
+class TestError(unittest.TestCase):
+    def test_error_propagation(self):
+        emulator = os.getenv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
+        if emulator is None:
+            self.skipTest()
+        conn = http.client.HTTPConnection(emulator[len("http://") :], timeout=10)
+
+        conn.request("GET", "/raise_error")
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("Exception", body)
+
+        params = urllib.parse.urlencode({"etype": "yes", "msg": "custom message"})
+        conn.request("GET", "/raise_error?" + params)
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("TypeError", body)
+        self.assertIn("custom message", body)
 
 
 if __name__ == "__main__":

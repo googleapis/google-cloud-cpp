@@ -30,15 +30,6 @@ BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
-# Run the unittests of the emulator before running integration tests.
-"${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
-  "//google/cloud/storage/emulator:test_gcs"
-exit_status=$?
-
-if [[ "$exit_status" -ne 0 ]]; then
-  exit "${exit_status}"
-fi
-
 # Configure run_emulator_utils.sh to run the GCS emulator.
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 
@@ -62,6 +53,16 @@ pushd "${HOME}" >/dev/null
 # invalidated on each run.
 start_emulator 8585 8000
 popd >/dev/null
+
+# Run the unittests of the emulator before running integration tests.
+"${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
+  "//google/cloud/storage/emulator:test_gcs" \
+  "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
+exit_status=$?
+
+if [[ "$exit_status" -ne 0 ]]; then
+  exit "${exit_status}"
+fi
 
 excluded_targets=(
   # This test does not work with Bazel, because it depends on dynamic loading

@@ -15,16 +15,38 @@
 """Utils to raise error code and abort the server"""
 
 import json
+import traceback
 
 import flask
 import grpc
+from werkzeug.exceptions import HTTPException
+
+
+class RestException(Exception):
+    def __init__(self, msg, code):
+        super().__init__()
+        self.msg = msg
+        self.code = code
+
+    def as_response(self):
+        return flask.make_response(flask.jsonify(self.msg), self.code)
+
+    @staticmethod
+    def handler(ex):
+        if isinstance(ex, RestException):
+            return ex.as_response()
+        elif isinstance(ex, HTTPException):
+            return ex
+        else:
+            msg = traceback.format_exception(type(ex), ex, ex.__traceback__)
+            return RestException("".join(msg), 500).as_response()
 
 
 def generic(msg, rest_code, grpc_code, context):
     if context is not None:
         context.abort(grpc_code, msg)
     else:
-        flask.abort(flask.make_response(flask.jsonify(msg), rest_code))
+        raise RestException(msg, rest_code)
 
 
 def csek(context, rest_code=400, grpc_code=grpc.StatusCode.INVALID_ARGUMENT):
