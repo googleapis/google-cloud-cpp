@@ -245,7 +245,7 @@ def parse_multipart(request):
     if boundary is None:
         utils.error.missing("boundary in content-type header in multipart upload", None)
 
-    def parse_part(part):
+    def parse_metadata(part):
         result = part.split(b"\r\n")
         if result[0] != b"" and result[-1] != b"":
             utils.error.invalid("Multipart %s" % str(part), None)
@@ -256,17 +256,33 @@ def parse_multipart(request):
         for header in result[:-1]:
             key, value = header.split(b": ")
             headers[key.decode("utf-8").lower()] = value.decode("utf-8")
-        return headers, result[-1]
+        return result[-1]
+
+    def parse_body(part):
+        if part[0:2] != b"\r\n" or part[-2:] != b"\r\n":
+            utils.error.invalid("Multipart %s" % str(part), None)
+        part = part[2:-2]
+        part.lstrip(b"\r\n")
+        content_type_index = part.find(b"\r\n")
+        if content_type_index == -1:
+            utils.error.invalid("Multipart %s" % str(part), None)
+        content_type = part[:content_type_index]
+        _, value = content_type.decode("utf-8").split(": ")
+        media = part[content_type_index + 2 :]
+        if media[:2] == b"\r\n":
+            # It is either `\r\n` or `\r\n\r\n`, we should remove at most 4 characters.
+            media = media[2:]
+        return {"content-type": value}, media
 
     boundary = boundary.encode("utf-8")
     body = extract_media(request)
     parts = body.split(b"--" + boundary)
     if parts[-1] != b"--\r\n":
         utils.error.missing("end marker (--%s--) in media body" % boundary, None)
-    _, resource = parse_part(parts[1])
+    resource = parse_metadata(parts[1])
     metadata = json.loads(resource)
-    media_headers, media = parse_part(parts[2])
-    return metadata, media_headers, media
+    content_type, media = parse_body(parts[2])
+    return metadata, content_type, media
 
 
 def extract_media(request):

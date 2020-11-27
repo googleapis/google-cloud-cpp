@@ -15,7 +15,10 @@
 
 """Unit test for utils"""
 
+import http
+import os
 import unittest
+import urllib
 
 import utils
 
@@ -297,6 +300,20 @@ class TestCommonUtils(unittest.TestCase):
         self.assertDictEqual(media_header, {"content-type": "image/jpeg"})
         self.assertEqual(media, b"123456789")
 
+        # In some cases, data media contains "\r\n" which could confuse `parse_multipart`
+        request = utils.common.FakeRequest(
+            headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n--1VvZTD07ltUtqMHg--\r\n',
+            environ={},
+        )
+        metadata, media_header, media = utils.common.parse_multipart(request)
+        self.assertDictEqual(metadata, {"crc32c": "4GEvYA=="})
+        self.assertDictEqual(media_header, {"content-type": "application/octet-stream"})
+        self.assertEqual(
+            media,
+            b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
+        )
+
 
 class TestGeneration(unittest.TestCase):
     def test_extract_precondition(self):
@@ -385,6 +402,28 @@ class TestGeneration(unittest.TestCase):
         self.assertEqual(generation, 1)
         generation = utils.generation.extract_generation(request, True, None)
         self.assertEqual(generation, 2)
+
+
+class TestError(unittest.TestCase):
+    def test_error_propagation(self):
+        emulator = os.getenv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
+        if emulator is None:
+            self.skipTest()
+        conn = http.client.HTTPConnection(emulator[len("http://") :], timeout=10)
+
+        conn.request("GET", "/raise_error")
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("Exception", body)
+
+        params = urllib.parse.urlencode({"etype": "yes", "msg": "custom message"})
+        conn.request("GET", "/raise_error?" + params)
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("TypeError", body)
+        self.assertIn("custom message", body)
 
 
 if __name__ == "__main__":

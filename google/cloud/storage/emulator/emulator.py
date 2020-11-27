@@ -58,6 +58,16 @@ def start_grpc():
     return str(grpc_port)
 
 
+@root.route("/raise_error")
+def raise_error():
+    etype = flask.request.args.get("etype")
+    msg = flask.request.args.get("msg", "")
+    if etype is not None:
+        raise TypeError(msg)
+    else:
+        raise Exception(msg)
+
+
 @root.route("/<path:object_name>", subdomain="<bucket_name>")
 def root_get_object(bucket_name, object_name):
     return xml_get_object(bucket_name, object_name)
@@ -795,6 +805,14 @@ server = DispatcherMiddleware(
         IAM_HANDLER_PATH: iam_app,
     },
 )
+
+root.register_error_handler(Exception, utils.error.RestException.handler)
+httpbin.app.register_error_handler(Exception, utils.error.RestException.handler)
+gcs.register_error_handler(Exception, utils.error.RestException.handler)
+download.register_error_handler(Exception, utils.error.RestException.handler)
+upload.register_error_handler(Exception, utils.error.RestException.handler)
+projects_app.register_error_handler(Exception, utils.error.RestException.handler)
+iam_app.register_error_handler(Exception, utils.error.RestException.handler)
 
 
 def run():
