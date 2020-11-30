@@ -172,25 +172,33 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
-  auto constexpr kCreateTableStatement = R"""(
-                             CREATE TABLE Singers (
-                                SingerId   INT64 NOT NULL,
-                                FirstName  STRING(1024),
-                                LastName   STRING(1024),
-                                SingerInfo BYTES(MAX)
-                             ) PRIMARY KEY (SingerId)
-                            )""";
-
-  auto update_future =
-      client_.UpdateDatabase(database_, {kCreateTableStatement});
+  std::vector<std::string> statements;
+  if (!emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    statements.push_back("ALTER DATABASE `" + database_.database_id() +
+                         "` SET OPTIONS (version_retention_period='7d')");
+  }
+  statements.emplace_back(R"""(
+        CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX)
+        ) PRIMARY KEY (SingerId)
+      )""");
+  auto update_future = client_.UpdateDatabase(database_, statements);
   auto metadata = update_future.get();
   ASSERT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));
-  EXPECT_EQ(1, metadata->statements_size());
-  EXPECT_EQ(1, metadata->commit_timestamps_size());
+  EXPECT_EQ(statements.size(), metadata->statements_size());
+  EXPECT_EQ(statements.size(), metadata->commit_timestamps_size());
   if (metadata->statements_size() >= 1) {
-    EXPECT_THAT(metadata->statements(0), HasSubstr("CREATE TABLE"));
+    EXPECT_THAT(metadata->statements(), Contains(HasSubstr("CREATE TABLE")));
   }
+  if (metadata->statements_size() >= 2) {
+    EXPECT_THAT(metadata->statements(), Contains(HasSubstr("ALTER DATABASE")));
+  }
+  EXPECT_FALSE(metadata->throttled());
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);
