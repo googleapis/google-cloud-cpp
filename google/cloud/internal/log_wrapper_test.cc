@@ -296,7 +296,8 @@ TEST(LogWrapper, StatusValue) {
   grpc::ClientContext context;
   btproto::MutateRowRequest request;
   btproto::MutateRowResponse response;
-  LogWrapper(mock, &context, request, &response, "in-test", {});
+  auto const r = LogWrapper(mock, &context, request, &response, "in-test", {});
+  EXPECT_TRUE(r.ok());
 
   auto const log_lines = backend->ClearLogLines();
 
@@ -317,7 +318,9 @@ TEST(LogWrapper, StatusValueError) {
   grpc::ClientContext context;
   btproto::MutateRowRequest request;
   btproto::MutateRowResponse response;
-  LogWrapper(mock, &context, request, &response, "in-test", {});
+  auto const r = LogWrapper(mock, &context, request, &response, "in-test", {});
+  EXPECT_EQ(r.error_code(), status.error_code());
+  EXPECT_EQ(r.error_message(), status.error_message());
 
   std::ostringstream os;
   os << status.error_message();
