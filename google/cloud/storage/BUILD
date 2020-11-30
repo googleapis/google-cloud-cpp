@@ -27,15 +27,15 @@ load(":storage_client.bzl", "storage_client_hdrs", "storage_client_srcs")
 load(":storage_client_grpc.bzl", "storage_client_grpc_hdrs", "storage_client_grpc_srcs")
 
 proto_library(
-    name = "google_cloud_cpp_storage_internal_grpc_resumable_serssion_url_proto",
+    name = "google_cloud_cpp_storage_internal_grpc_resumable_session_url_proto",
     srcs = [
         "internal/grpc_resumable_upload_session_url.proto",
     ],
 )
 
 cc_proto_library(
-    name = "google_cloud_cpp_storage_internal_grpc_resumable_serssion_url_cc_proto",
-    deps = [":google_cloud_cpp_storage_internal_grpc_resumable_serssion_url_proto"],
+    name = "google_cloud_cpp_storage_internal_grpc_resumable_session_url_cc_proto",
+    deps = [":google_cloud_cpp_storage_internal_grpc_resumable_session_url_proto"],
 )
 
 cc_library(
@@ -48,7 +48,7 @@ cc_library(
     }),
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
-        ":google_cloud_cpp_storage_internal_grpc_resumable_serssion_url_cc_proto",
+        ":google_cloud_cpp_storage_internal_grpc_resumable_session_url_cc_proto",
         ":storage_client",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
