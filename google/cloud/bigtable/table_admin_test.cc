@@ -1053,6 +1053,35 @@ TEST_F(TableAdminTest, TestIamPermissions) {
       .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
+  auto permission_set = tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
+}
+
+TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
+  namespace iamproto = ::google::iam::v1;
+  TableAdmin tested(client_, "the-instance");
+
+  auto mock_permission_set =
+      [](grpc::ClientContext* context,
+         iamproto::TestIamPermissionsRequest const&,
+         iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
+            google::cloud::internal::ApiClientHeader()));
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(mock_permission_set);
+
+  std::string resource = "the-resource";
   auto permission_set = tested.TestIamPermissions(
       "the-cluster", resource, {"reader", "writer", "owner"});
   ASSERT_STATUS_OK(permission_set);
