@@ -896,6 +896,19 @@ TEST_F(TableAdminTest, GetIamPolicy) {
   EXPECT_EQ("random-tag", policy->etag());
 }
 
+/// @test Verify positive scenario for TableAdmin::GetIamPolicy.
+TEST_F(TableAdminTest, GetIamPolicyForBackup) {
+  TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_get_policy_mock();
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetIamPolicy("the-cluster", resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
 /// @test Verify unrecoverable errors for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
@@ -947,6 +960,23 @@ TEST_F(TableAdminTest, SetIamPolicy) {
       IamPolicy({IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
                 "test-tag", 0);
   auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+
+/// @test Verify positive scenario for TableAdmin::SetIamPolicy.
+TEST_F(TableAdminTest, SetIamPolicyForBackup) {
+  TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_policy_with_params();
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
+
+  std::string resource = "test-resource";
+  auto iam_policy =
+      IamPolicy({IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+                "test-tag", 0);
+  auto policy = tested.SetIamPolicy("the-cluster", resource, iam_policy);
   ASSERT_STATUS_OK(policy);
 
   EXPECT_EQ(1, policy->bindings().size());
@@ -1023,8 +1053,8 @@ TEST_F(TableAdminTest, TestIamPermissions) {
       .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
-  auto permission_set =
-      tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  auto permission_set = tested.TestIamPermissions(
+      "the-cluster", resource, {"reader", "writer", "owner"});
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2, permission_set->size());

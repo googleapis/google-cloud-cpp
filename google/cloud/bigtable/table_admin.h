@@ -1408,7 +1408,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc get iam policy
+   * @snippet table_admin_iam_policy_snippets.cc get iam policy backup
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& cluster_id,
                                                  std::string const& backup_id);
@@ -1489,7 +1489,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc set iam policy
+   * @snippet table_admin_iam_policy_snippets.cc set iam policy backup
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& cluster_id, std::string const& backup_id,
@@ -1611,7 +1611,7 @@ class TableAdmin {
     return instance_name() + "/clusters/" + cluster_id;
   }
 
-  /// Return the fully qualified name of a Cluster.
+  /// Return the fully qualified name of a Backup.
   std::string BackupName(std::string const& cluster_id,
                          std::string const& backup_id) const {
     return instance_name() + "/clusters/" + cluster_id + "/backups/" +
