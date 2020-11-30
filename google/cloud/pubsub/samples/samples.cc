@@ -379,11 +379,11 @@ void ReceiveDeadLetterDeliveryAttempt(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           std::cout << "Delivery attempt: " << h.delivery_attempt() << "\n";
+          std::move(h).ack();
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           lk.unlock();
           cv.notify_one();
-          std::move(h).ack();
         });
     // Wait until at least one message has been received.
     std::unique_lock<std::mutex> lk(mu);
@@ -838,11 +838,11 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
     auto session = subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
+          std::move(h).ack();
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           lk.unlock();
           cv.notify_one();
-          std::move(h).ack();
         });
     // Wait until at least one message has been received.
     std::unique_lock<std::mutex> lk(mu);
@@ -877,12 +877,12 @@ void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
         subscriber
             .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
               std::cout << "Received message " << m << "\n";
+              std::move(h).ack();
               std::unique_lock<std::mutex> lk(mu);
               ++message_count;
               done = true;
               lk.unlock();
               cv.notify_one();
-              std::move(h).ack();
             })
             // Setup an error handler for the subscription session
             .then([&](future<google::cloud::Status> f) {
@@ -920,11 +920,11 @@ void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
           for (auto const& kv : m.attributes()) {
             std::cout << "  " << kv.first << ": " << kv.second << "\n";
           }
+          std::move(h).ack();
           std::unique_lock<std::mutex> lk(mu);
           ++message_count;
           lk.unlock();
           cv.notify_one();
-          std::move(h).ack();
         });
     // Most applications would just release the `session` object at this point,
     // but we want to gracefully close down this example.
