@@ -32,6 +32,7 @@
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
+#include <cinttypes>
 
 namespace google {
 namespace cloud {
@@ -1335,8 +1336,8 @@ google::storage::v1::ListBucketsRequest GrpcClient::ToProto(
   if (request.HasOption<MaxResults>()) {
     // The maximum page size is 1,000 anyway, if this cast
     // fails the request was invalid (but it can mask errors)
-    r.set_max_results(static_cast<google::protobuf::int32>(
-        request.GetOption<MaxResults>().value()));
+    r.set_max_results(
+        static_cast<std::int32_t>(request.GetOption<MaxResults>().value()));
   }
   r.set_page_token(request.page_token());
   r.set_project(request.project_id());
