@@ -121,6 +121,35 @@ cat <<"EOF"
 * This project works with or without exceptions enabled
 * This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
 
+### API Breaking Changes
+
+Though it's difficult to guarantee 100%, we promise that we will make every
+effort to provide reasonable API stability from release to release. When we
+think an API-breaking change adds enough value that it's worth potentially
+breaking customers, we will announce it loudly in our release notes. Major API
+breakages will be extremely rare and accompanied by a major version increase.
+
+By "API" we mean the C++ API exposed by public header files in this repo. We
+are not talking about the gRPC or REST APIs exposed by Google Cloud servers. We
+are also talking only about A**P**I stability -- We make NO PROMISES about
+A**B**I stability. That is, compiled, binary artifacts (including shared
+libraries) must be recompiled with each new release.
+
+In order for us to provide this level of API support, we ask that our customers
+understand some basic points.
+
+* The public API for a given library can usually be found in the headers at
+  `google/cloud/${library}/*.h`.
+* There are also some public API "common" headers at `google/cloud/*.h`.
+* The files *included from* our public headers are **not part of our public
+  API**. That is, you may not rely on transitive includes. You should directly
+  include all headers that _your code_ needs.
+* Any file or symbol that lives within a directory or namespace named
+  "internal", "test(s)", "testing", "detail", "benchmark(s)", "sample(s)",
+  "example(s)", are **not part of our public API**.
+* Any file or symbol with "Impl" or "impl" in name is **not part of our
+  public API**.
+
 ## Contact us
 
 If you have questions or comments, or want to file bugs or request feature,
