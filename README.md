@@ -137,8 +137,8 @@ int main(int argc, char* argv[]) {
 
 ### API Breaking Changes
 
-Though it's difficult to guarantee 100%, we promise that we will make every
-effort to provide reasonable API stability from release to release. When we
+Though it's difficult to guarantee 100%, **we promise that we will make every
+effort to provide reasonable API stability from release to release**. When we
 think an API-breaking change adds enough value that it's worth potentially
 breaking customers, we will announce it loudly in our release notes. Major API
 breakages will be extremely rare and accompanied by a major version increase.
