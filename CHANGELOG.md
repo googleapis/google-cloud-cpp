@@ -47,6 +47,7 @@
 
 ### Bigtable
 
+* fix(bigtable): missing functions to change policies (#5565)
 * feat(bigtable): create logging layer for Cloud Bigtable (#5515)
 * docs: document Bigtable thread safety (#5394)
 
