@@ -1351,6 +1351,28 @@ class InstanceAdmin {
       std::vector<std::string> const& permissions);
 
  private:
+  //@{
+  /// @name Helper functions to implement constructors with changed policies.
+  void ChangePolicy(RPCRetryPolicy const& policy) {
+    rpc_retry_policy_prototype_ = policy.clone();
+  }
+
+  void ChangePolicy(RPCBackoffPolicy const& policy) {
+    rpc_backoff_policy_prototype_ = policy.clone();
+  }
+
+  void ChangePolicy(PollingPolicy const& policy) {
+    polling_policy_prototype_ = policy.clone();
+  }
+
+  template <typename Policy, typename... Policies>
+  void ChangePolicies(Policy&& policy, Policies&&... policies) {
+    ChangePolicy(policy);
+    ChangePolicies(std::forward<Policies>(policies)...);
+  }
+  void ChangePolicies() {}
+  //@}
+
   static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
       google::iam::v1::Policy proto);
 
