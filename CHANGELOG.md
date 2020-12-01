@@ -7,9 +7,12 @@
   This attribute represents the pre-GA name for "Uniform Bucket Level Access"
   becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-## v1.21.0 - TBD
+## v1.22.0 - TBD
+
+## v1.21.0 - 2020-12
 
 **BREAKING CHANGES:**
+
 * Some "Range" types used in the Storage, Pub/Sub and Spanner APIs lost a
   constructor that was never intended to be part of their public APIs. Users
   who were not directly constructing these ranges will not be affected. Also
@@ -41,6 +44,59 @@
   * `google/cloud/spanner/instance_admin_connection.h`
     * `using ListInstancesRange = google::cloud::internal::PaginationRange`
     * `using ListInstanceConfigsRange = google::cloud::internal::PaginationRange`
+
+### Bigtable
+
+* feat(bigtable): create logging layer for Cloud Bigtable (#5515)
+* docs: document Bigtable thread safety (#5394)
+
+### Pub/Sub
+
+* feat(pubsub): by default Subscriber::Subscribe retries forever (#5552)
+* fix(pubsub): deadlock during streaming pull shutdown (#5547)
+* fix(pubsub): deadlock during fire & forget shutdown (#5541)
+* refactor!: PaginationRange<T> is now an alias to StreamRange<T> (#5538)
+* fix(pubsub): treat some kUnavailable as success (#5510)
+* doc(pubsub): declare the library GA (#5390)
+* doc(pubsub): how to run throughput benchmark (#5500)
+* feat(pubsub): separate subscribers in benchmark (#5499)
+* feat(pubsub): separate publishers in benchmark (#5496)
+* feat(pubsub): minor optimization in publisher (#5495)
+* fix(pubsub): reduce data copying in publish (#5484)
+* feat(pubsub): more efficient callback dispatch (#5458)
+* feat(pubsub): batch acks and nacks in streams (#5464)
+* feat(pubsub): increase default buffer sizes (#5449)
+* feat(pubsub): pace publisher in throughtput benchmark (#5447)
+* feat(pubsub): improve lease management performance (#5454)
+* feat(pubsub): more details in throughput benchmark (#5451)
+* feat(pubsub): import throughput benchmark reports (#5450)
+* feat(pubsub): show ack throughput in benchmark (#5439)
+* feat(pubsub): handle AsyncPull responses in batches (#5441)
+* feat(pubsub): round robin subscriber channels (#5423)
+* feat(pubsub): more throughput benchmark options (#5419)
+* fix(pubsub): keep corked after ResumePublish (#5415)
+* fix(pubsub): sometimes published oversized batches (#5409)
+* feat(pubsub): round robin publisher connections (#5401)
+* feat(pubsub): reduce default channel count (#5402)
+
+### Spanner
+
+* feat(spanner): Point-In-Time Recovery (lite) throttled DB update (#5562)
+* refactor!: PaginationRange<T> is now an alias to StreamRange<T> (#5538)
+
+### Storage
+
+* refactor!: change gcs to use common PaginationRange<T> (#5545)
+* fix(storage): use channel options for credentials (#5524)
+* fix: validate service account credentials contain a usable key (#5404)
+
+### Common Libraries
+
+* fix: inspect returned grpc::Status (#5558)
+* feat: add value_type to StatusOr<T> (#5535)
+* feat: introduce a generic StreamRange<T> (#5532)
+* refactor(common): move CompletionQueue mock (#5463)
+* feat: a faster CompletionQueue::RunAsync (#5406)
 
 ## v1.20.0 - 2020-11
 
