@@ -56,7 +56,6 @@
 * fix(pubsub): deadlock during streaming pull shutdown (#5547)
 * fix(pubsub): deadlock during fire & forget shutdown (#5541)
 * refactor!: PaginationRange<T> is now an alias to StreamRange<T> (#5538)
-* fix(pubsub): treat some kUnavailable as success (#5510)
 * doc(pubsub): declare the library GA (#5390)
 * doc(pubsub): how to run throughput benchmark (#5500)
 * feat(pubsub): separate subscribers in benchmark (#5499)
@@ -92,7 +91,6 @@
 
 ### Common Libraries
 
-* fix: inspect returned grpc::Status (#5558)
 * feat: add value_type to StatusOr<T> (#5535)
 * feat: introduce a generic StreamRange<T> (#5532)
 * refactor(common): move CompletionQueue mock (#5463)
