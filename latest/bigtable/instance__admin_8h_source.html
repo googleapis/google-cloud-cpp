@@ -283,34 +283,53 @@ $(function() {
 <div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
 <div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160; </div>
 <div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;  <span class="keyword">static</span> StatusOr&lt;google::cloud::IamPolicy&gt; ProtoToWrapper(</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;      google::iam::v1::Policy proto);</div>
-<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160; </div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160;  }</div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160; </div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;  }</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160; </div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;  }</div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160; </div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client_;</div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;  std::string project_name_;</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
-<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;};</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCRetryPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;    rpc_retry_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;  }</div>
+<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160; </div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCBackoffPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;    rpc_backoff_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;  }</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160; </div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(PollingPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;    polling_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;  }</div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Policy, <span class="keyword">typename</span>... Policies&gt;</div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;  <span class="keywordtype">void</span> ChangePolicies(Policy&amp;&amp; policy, Policies&amp;&amp;... policies) {</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;    ChangePolicy(policy);</div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;  }</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;  <span class="keywordtype">void</span> ChangePolicies() {}</div>
 <div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160; </div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
-<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160; </div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H</span></div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;  <span class="keyword">static</span> StatusOr&lt;google::cloud::IamPolicy&gt; ProtoToWrapper(</div>
+<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;      google::iam::v1::Policy proto);</div>
+<div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160; </div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;  }</div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160; </div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;  }</div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160; </div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;  }</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160; </div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client_;</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;  std::string project_name_;</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;};</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160; </div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160; </div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acluster__config_8h_html"><div class="ttname"><a href="cluster__config_8h.html">cluster_config.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">google::cloud::bigtable::v1::InstanceAdmin</a></div><div class="ttdoc">Implements the APIs to administer Cloud Bigtable instances.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00121">instance_admin.h:121</a></div></div>
