@@ -1053,7 +1053,8 @@ TEST_F(TableAdminTest, TestIamPermissions) {
       .WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
-  auto permission_set = tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  auto permission_set =
+      tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2, permission_set->size());
