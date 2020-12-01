@@ -41,7 +41,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  */
 class DatabaseAdminClient {
  public:
-  explicit DatabaseAdminClient(ConnectionOptions const& options = ConnectionOptions());
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection);
   ~DatabaseAdminClient();
 

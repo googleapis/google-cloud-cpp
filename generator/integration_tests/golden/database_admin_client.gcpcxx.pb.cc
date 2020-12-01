@@ -24,8 +24,6 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
- : connection_(MakeDatabaseAdminConnection(options)) {}
 DatabaseAdminClient::DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection) : connection_(std::move(connection)) {}
 DatabaseAdminClient::~DatabaseAdminClient() = default;
 
