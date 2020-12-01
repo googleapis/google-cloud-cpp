@@ -61,7 +61,6 @@ Status ClientGenerator::GenerateHeader() {
     "$class_comment_block$\n"
     "class $client_class_name$ {\n"
     " public:\n"
-    "  explicit $client_class_name$(ConnectionOptions const& options = ConnectionOptions());\n"
     "  explicit $client_class_name$(std::shared_ptr<$connection_class_name$> connection);\n"
     "  ~$client_class_name$();\n"
     "\n"
@@ -202,11 +201,6 @@ Status ClientGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
-
-  CcPrint(  // clang-format off
-    "$client_class_name$::$client_class_name$(ConnectionOptions const& options)\n"
-    " : connection_(Make$connection_class_name$(options)) {}\n");
-  // clang-format on
 
   CcPrint(  // clang-format off
     "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection)"
