@@ -123,11 +123,15 @@ cat <<"EOF"
 
 ### API Breaking Changes
 
-Though it's difficult to guarantee 100%, **we promise that we will make every
-effort to provide reasonable API stability from release to release**. When we
-think an API-breaking change adds enough value that it's worth potentially
-breaking customers, we will announce it loudly in our release notes. Major API
-breakages will be extremely rare and accompanied by a major version increase.
+In general, we avoid making backwards incompatible changes to our C++ APIs (see
+below for the definition of "API"). Sometimes such changes yield benefits to
+our customers, in the form of better performance, easier-to-understand APIs,
+and/or more consistent APIs across services. When these benefits warrant it, we
+will announce these changes prominently in our `CHANGELOG.md` file and in the
+affected release's notes. Nevertheless, though we take commercially reasonable
+efforts to prevent this, it is possible that backwards incompatible changes go
+undetected and, therefore, undocumented. We apologize if this is the case and
+welcome feedback or bug reports to rectify the problem.
 
 By "API" we mean the C++ API exposed by public header files in this repo. We
 are not talking about the gRPC or REST APIs exposed by Google Cloud servers. We
@@ -149,6 +153,9 @@ understand some basic points.
   "example(s)", are **not part of our public API**.
 * Any file or symbol with "Impl" or "impl" in name is **not part of our
   public API**.
+
+Note that this document has no bearing on the Google Cloud Platform deprecation
+policy described at https://cloud.google.com/terms.
 
 ## Contact us
 
