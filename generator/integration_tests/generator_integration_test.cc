@@ -92,6 +92,7 @@ class GeneratorIntegrationTest
                           "Codegen C++ Generator");
 
     product_path_ = "generator/integration_tests/golden/";
+    googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -101,6 +102,8 @@ class GeneratorIntegrationTest
     args.emplace_back("--proto_path=" + code_path);
     args.emplace_back("--cpp_codegen_out=" + output_path_);
     args.emplace_back("--cpp_codegen_opt=product_path=" + product_path_);
+    args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
+                      googleapis_commit_hash_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -119,6 +122,7 @@ class GeneratorIntegrationTest
   std::string product_path_;
   std::string output_path_;
   std::string golden_path_;
+  std::string googleapis_commit_hash_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
