@@ -16,6 +16,7 @@ var searchData=
   ['async_5foperation_2eh_13',['async_operation.h',['https://googleapis.dev/cpp/google-cloud-common/latest/async__operation_8h.html',1,'']]],
   ['asyncoperation_14',['AsyncOperation',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html',1,'google::cloud::v1']]],
   ['asynctimerresult_15',['AsyncTimerResult',['https://googleapis.dev/cpp/google-cloud-common/latest/structgoogle_1_1cloud_1_1v1_1_1AsyncTimerResult.html',1,'google::cloud::v1']]],
-  ['at_16',['at',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4',1,'google::cloud::v1::IamBindings']]],
-  ['attributes_17',['attributes',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a2f4d6160561b2f6b30d82f9ed2e4bb37',1,'google::cloud::pubsub::v1::Message']]]
+  ['asyncwaitconnectionready_16',['AsyncWaitConnectionReady',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a83932dd80ca9c98e7b77b12d2f8e3ce6',1,'google::cloud::v1::CompletionQueue']]],
+  ['at_17',['at',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4',1,'google::cloud::v1::IamBindings']]],
+  ['attributes_18',['attributes',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a2f4d6160561b2f6b30d82f9ed2e4bb37',1,'google::cloud::pubsub::v1::Message']]]
 ];

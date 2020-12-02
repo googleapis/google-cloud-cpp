@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_5ftype_431',['value_type',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a660d48acaf8bbe7de3b1c7dbe34c45e2',1,'google::cloud::v1::StatusOr']]]
+  ['value_5ftype_433',['value_type',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a660d48acaf8bbe7de3b1c7dbe34c45e2',1,'google::cloud::v1::StatusOr']]]
 ];

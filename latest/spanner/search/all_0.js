@@ -15,5 +15,6 @@ var searchData=
   ['async_5foperation_2eh_12',['async_operation.h',['https://googleapis.dev/cpp/google-cloud-common/latest/async__operation_8h.html',1,'']]],
   ['asyncoperation_13',['AsyncOperation',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1AsyncOperation.html',1,'google::cloud::v1']]],
   ['asynctimerresult_14',['AsyncTimerResult',['https://googleapis.dev/cpp/google-cloud-common/latest/structgoogle_1_1cloud_1_1v1_1_1AsyncTimerResult.html',1,'google::cloud::v1']]],
-  ['at_15',['at',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4',1,'google::cloud::v1::IamBindings']]]
+  ['asyncwaitconnectionready_15',['AsyncWaitConnectionReady',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a83932dd80ca9c98e7b77b12d2f8e3ce6',1,'google::cloud::v1::CompletionQueue']]],
+  ['at_16',['at',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4',1,'google::cloud::v1::IamBindings']]]
 ];
