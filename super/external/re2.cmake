@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,47 +14,36 @@
 # limitations under the License.
 # ~~~
 
-include(ExternalProjectHelper)
-include(external/abseil)
-include(external/c-ares)
-include(external/re2)
-include(external/ssl)
-include(external/protobuf)
-
-if (NOT TARGET grpc-project)
+if (NOT TARGET re2-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
-    set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/v1.34.0.tar.gz")
-    set(GOOGLE_CLOUD_CPP_GRPC_SHA256
-        "7372a881122cd85a7224435a1d58bc5e11c88d4fb98a64b83f36f3d1c2f16d39")
+    set(GOOGLE_CLOUD_CPP_RE2_URL
+        "https://github.com/google/re2/archive/2020-11-01.tar.gz")
+    set(GOOGLE_CLOUD_CPP_RE2_SHA256
+        "8903cc66c9d34c72e2bc91722288ebc7e3ec37787ecfef44d204b2d6281954d7")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
 
     include(ExternalProject)
     ExternalProject_Add(
-        grpc-project
-        DEPENDS c-ares-project protobuf-project re2-project ssl-project
-                abseil-cpp-project
+        re2-project
         EXCLUDE_FROM_ALL ON
-        PREFIX "${CMAKE_BINARY_DIR}/external/grpc"
+        PREFIX "${CMAKE_BINARY_DIR}/external/re2"
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
-        URL ${GOOGLE_CLOUD_CPP_GRPC_URL}
-        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
+        URL ${GOOGLE_CLOUD_CPP_RE2_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_RE2_SHA256}
         LIST_SEPARATOR |
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CMAKE_FLAGS}
+                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                   -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                   -DRE2_BUILD_TESTING=OFF
                    -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                   -DgRPC_BUILD_TESTS=OFF
-                   -DgRPC_BUILD_CSHARP_EXT=OFF
-                   -DgRPC_ABSL_PROVIDER=package
-                   -DgRPC_CARES_PROVIDER=package
-                   -DgRPC_PROTOBUF_PROVIDER=package
-                   -DgRPC_RE2_PROVIDER=package
-                   -DgRPC_SSL_PROVIDER=package
-                   -DgRPC_ZLIB_PROVIDER=package
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON

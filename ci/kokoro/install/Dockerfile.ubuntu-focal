@@ -25,8 +25,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 # ```
 
 # #### Abseil
@@ -77,9 +77,9 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
-    tar -xf v1.29.1.tar.gz && \
-    cd grpc-1.29.1 && \
+RUN wget -q https://github.com/grpc/grpc/archive/v1.34.0.tar.gz && \
+    tar -xf v1.34.0.tar.gz && \
+    cd grpc-1.34.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -87,6 +87,7 @@ RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -H. -Bcmake-out && \
