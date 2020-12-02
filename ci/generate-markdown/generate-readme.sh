@@ -135,24 +135,36 @@ welcome feedback or bug reports to rectify the problem.
 
 By "API" we mean the C++ API exposed by public header files in this repo. We
 are not talking about the gRPC or REST APIs exposed by Google Cloud servers. We
-are also talking only about A**P**I stability -- We make NO PROMISES about
-A**B**I stability. That is, compiled, binary artifacts (including shared
-libraries) must be recompiled with each new release.
+are also talking only about A**P**I stability -- the ABI is subject to change
+without notice. You should not assume that binary artifacts (e.g. static
+libraries, shared objects, dynamically loaded libraries, object files) created
+with one version of the library are usable with newer/older versions of the
+library. The ABI may, and does, change on "minor revisions", and even patch
+releases.
 
-In order for us to provide this level of API support, we ask that our customers
-understand some basic points.
+We request that our customers adhere to the following guidelines to avoid
+accidentally depending on parts of the library we do not consider to be part of
+the public API and therefore may change (including removal) without notice:
 
-* The public API for a given library can usually be found in the headers at
-  `google/cloud/${library}/*.h`.
-* There are also some public API "common" headers at `google/cloud/*.h`.
+* You should only include headers matching the `google/cloud/${library}/*.h`,
+  `google/cloud/${library}/mock/*.h` or `google/cloud/*.h` patterns.
+* You should **NOT** directly include headers in any subdirectories, such as
+  `google/cloud/${library}/internal`.
 * The files *included from* our public headers are **not part of our public
-  API**. That is, you may not rely on transitive includes. You should directly
-  include all headers that _your code_ needs.
-* Any file or symbol that lives within a directory or namespace named
-  "internal", "test(s)", "testing", "detail", "benchmark(s)", "sample(s)",
-  "example(s)", are **not part of our public API**.
-* Any file or symbol with "Impl" or "impl" in name is **not part of our
+  API**. Depending on indirect includes may break your build in the future, as
+  we may change a header "foo.h" to stop including "bar.h" if "foo.h" no longer
+  needs the symbols in "bar.h". To avoid having your code broken, you should
+  directly include the public headers that define all the symbols you use (this
+  is sometimes known as
+  [include-what-you-use](https://include-what-you-use.org/)).
+* Any file or symbol that lives within a directory or namespace containing
+  "internal", "impl", "test", "detail", "benchmark", "sample", or "example", is
+  explicitly **not part of our public API**.
+* Any file or symbol with "Impl" or "impl" in its name is **not part of our
   public API**.
+
+Previous versions of the library will remain available on the [GitHub Releases
+page](https://github.com/googleapis/google-cloud-cpp/releases).
 
 Note that this document has no bearing on the Google Cloud Platform deprecation
 policy described at https://cloud.google.com/terms.
