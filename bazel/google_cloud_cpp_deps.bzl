@@ -86,11 +86,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.11.3",
+            strip_prefix = "protobuf-3.14.0",
             urls = [
-                "https://github.com/google/protobuf/archive/v3.11.3.tar.gz",
+                "https://github.com/google/protobuf/archive/v3.14.0.tar.gz",
             ],
-            sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
+            sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
         )
 
     # Load opencensus.
@@ -108,11 +108,11 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.29.1",
+            strip_prefix = "grpc-1.34.0",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.29.1.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.34.0.tar.gz",
             ],
-            sha256 = "0343e6dbde66e9a31c691f2f61e98d79f3584e03a11511fad3f10e3667832a45",
+            sha256 = "7372a881122cd85a7224435a1d58bc5e11c88d4fb98a64b83f36f3d1c2f16d39",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
