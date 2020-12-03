@@ -29,9 +29,11 @@ set MSVC_VERSION=2019
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 dir "c:\Program Files (x86)\Microsoft Visual Studio\"
+call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\"
+call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\"
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 
-REM Configure the environment to use MSVC 2019 and then switch to PowerShell.
+REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 REM The remaining of the build script is implemented in PowerShell.
