@@ -23,8 +23,8 @@ bazel version
 @REM shutdown afterwards otherwise the server locks files
 bazel shutdown
 
-REM Configure the environment to use MSVC 2019 and then switch to PowerShell.
-call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
+call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 REM The remaining of the build script is implemented in PowerShell.
 echo %date% %time%

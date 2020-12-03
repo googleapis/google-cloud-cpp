@@ -96,7 +96,7 @@ if ($BuildName -eq "bazel-release") {
     $build_flags += ("-c", "opt")
 }
 
-$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
+$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
@@ -128,6 +128,7 @@ if ($LastExitCode) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
+Write-Host -ForegroundColor Yellow bazel $common_flags build $build_flags ...
 bazel $common_flags build $build_flags ...
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "bazel test failed with exit code ${LastExitCode}."
