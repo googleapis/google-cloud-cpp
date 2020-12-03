@@ -29,8 +29,8 @@ set MSVC_VERSION=2017
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 dir "c:\Program Files (x86)\Microsoft Visual Studio\"
-call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\"
-call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\"
+dir "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\"
+dir "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\"
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.

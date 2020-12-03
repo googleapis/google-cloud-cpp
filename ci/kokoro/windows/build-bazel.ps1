@@ -96,7 +96,7 @@ if ($BuildName -eq "bazel-release") {
     $build_flags += ("-c", "opt")
 }
 
-$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:BAZEL_VC}\Community\VC"
+$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
 
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
