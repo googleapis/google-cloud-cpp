@@ -381,20 +381,23 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     ConstBufferSequence payload)
+                     CustomHeader custom_header, ConstBufferSequence payload)
       : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)) {}
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     ConstBufferSequence payload, std::uint64_t source_size)
+                     CustomHeader custom_header, ConstBufferSequence payload,
+                     std::uint64_t source_size)
       : upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
+        custom_header_(custom_header),
         source_size_(source_size),
         last_chunk_(true),
         payload_(std::move(payload)) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t range_begin() const { return range_begin_; }
+  CustomHeader const& custom_header() const { return custom_header_; }
   std::uint64_t range_end() const { return range_begin_ + payload_size() - 1; }
   std::uint64_t source_size() const { return source_size_; }
   std::size_t payload_size() const { return TotalBytes(payload_); }
@@ -419,6 +422,7 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  private:
   std::string upload_session_url_;
   std::uint64_t range_begin_ = 0;
+  CustomHeader custom_header_;
   std::uint64_t source_size_ = 0;
   bool last_chunk_ = false;
   ConstBufferSequence payload_;
