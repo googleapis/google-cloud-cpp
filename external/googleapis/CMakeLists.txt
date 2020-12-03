@@ -65,7 +65,6 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/cloud/bigquery/v2/model.proto"
     "google/cloud/bigquery/v2/model_reference.proto"
     "google/cloud/bigquery/v2/standard_sql.proto"
-    "google/cloud/bigquery/v2/table_reference.proto"
     "google/pubsub/v1/pubsub.proto"
     "google/spanner/admin/database/v1/backup.proto"
     "google/spanner/admin/database/v1/common.proto"
@@ -227,7 +226,6 @@ google_cloud_cpp_grpcpp_library(
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/standard_sql.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/table_reference.proto"
     PROTO_PATH_DIRECTORIES
     "${GOOGLEAPIS_CPP_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
