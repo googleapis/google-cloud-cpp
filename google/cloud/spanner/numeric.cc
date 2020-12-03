@@ -16,6 +16,7 @@
 #include "google/cloud/status.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
+#include <cctype>
 #include <cerrno>
 #include <cmath>
 #include <cstddef>
