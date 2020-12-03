@@ -277,7 +277,7 @@ def parse_multipart(request):
     boundary = boundary.encode("utf-8")
     body = extract_media(request)
     parts = body.split(b"--" + boundary)
-    if parts[-1] != b"--\r\n":
+    if parts[-1] != b"--\r\n" and parts[-1] != b"--":
         utils.error.missing("end marker (--%s--) in media body" % boundary, None)
     resource = parse_metadata(parts[1])
     metadata = json.loads(resource)
