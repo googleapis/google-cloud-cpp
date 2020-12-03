@@ -337,6 +337,7 @@ class TestCommonUtils(unittest.TestCase):
         with self.assertRaises(utils.error.RestException):
             utils.common.parse_multipart(request)
 
+
 class TestGeneration(unittest.TestCase):
     def test_extract_precondition(self):
         request = storage_pb2.CopyObjectRequest(
