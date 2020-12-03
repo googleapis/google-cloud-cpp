@@ -24,7 +24,7 @@ bazel version
 bazel shutdown
 
 @REM TODO(#5575) - remove this and use the Kokoro configuration
-set MSVC_VERSION=2019
+set MSVC_VERSION=2017
 
 REM DEBUG DEBUG DEBUG Show available MSVC versions
 REM DEBUG DEBUG DEBUG Show available MSVC versions
