@@ -85,6 +85,12 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
 } elseif ($BuildName -eq "bazel-release") {
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-bazel.ps1"
+} elseif ($BuildName -eq "bazel-debug-2017") {
+    $DependencyScript = "build-bazel-dependencies.ps1"
+    $BuildScript = "build-bazel.ps1"
+} elseif ($BuildName -eq "bazel-release-2017") {
+    $DependencyScript = "build-bazel-dependencies.ps1"
+    $BuildScript = "build-bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
     $DependencyScript = "build-bazel-dependencies.ps1"
     $BuildScript = "build-quickstart-bazel.ps1"

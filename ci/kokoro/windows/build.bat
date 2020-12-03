@@ -23,16 +23,6 @@ bazel version
 @REM shutdown afterwards otherwise the server locks files
 bazel shutdown
 
-@REM TODO(#5575) - remove this and use the Kokoro configuration
-set MSVC_VERSION=2017
-
-REM DEBUG DEBUG DEBUG Show available MSVC versions
-REM DEBUG DEBUG DEBUG Show available MSVC versions
-dir "c:\Program Files (x86)\Microsoft Visual Studio\"
-dir "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\"
-dir "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\"
-REM DEBUG DEBUG DEBUG Show available MSVC versions
-
 REM Configure the environment to use MSVC %MSVC_VERSION% and then switch to PowerShell.
 call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 
