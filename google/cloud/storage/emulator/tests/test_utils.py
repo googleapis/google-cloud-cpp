@@ -314,6 +314,28 @@ class TestCommonUtils(unittest.TestCase):
             b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
         )
 
+        # Test line ending without "\r\n"
+        request = utils.common.FakeRequest(
+            headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n--1VvZTD07ltUtqMHg--',
+            environ={},
+        )
+        metadata, media_header, media = utils.common.parse_multipart(request)
+        self.assertDictEqual(metadata, {"crc32c": "4GEvYA=="})
+        self.assertDictEqual(media_header, {"content-type": "application/octet-stream"})
+        self.assertEqual(
+            media,
+            b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
+        )
+
+        # Test incorrect ending
+        request = utils.common.FakeRequest(
+            headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n',
+            environ={},
+        )
+        with self.assertRaises(utils.error.RestException):
+            utils.common.parse_multipart(request)
 
 class TestGeneration(unittest.TestCase):
     def test_extract_precondition(self):
