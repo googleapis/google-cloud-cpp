@@ -13,11 +13,15 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
+#include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "generator/testing/printer_mocks.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
+#include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/descriptor_database.h>
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -142,6 +146,215 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
+const char* const kHttpProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "option cc_enable_arenas = true;\n"
+    "message Http {\n"
+    "  repeated HttpRule rules = 1;\n"
+    "  bool fully_decode_reserved_expansion = 2;\n"
+    "}\n"
+    "message HttpRule {\n"
+    "  string selector = 1;\n"
+    "  oneof pattern {\n"
+    "    string get = 2;\n"
+    "    string put = 3;\n"
+    "    string post = 4;\n"
+    "    string delete = 5;\n"
+    "    string patch = 6;\n"
+    "    CustomHttpPattern custom = 8;\n"
+    "  }\n"
+    "  string body = 7;\n"
+    "  string response_body = 12;\n"
+    "  repeated HttpRule additional_bindings = 11;\n"
+    "}\n"
+    "message CustomHttpPattern {\n"
+    "  string kind = 1;\n"
+    "  string path = 2;\n"
+    "}\n";
+
+const char* const kAnnotationsProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "import \"google/api/http.proto\";\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  // See `HttpRule`.\n"
+    "  HttpRule http = 72295728;\n"
+    "}\n";
+
+const char* const kClientProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  repeated string method_signature = 1051;\n"
+    "}\n"
+    "extend google.protobuf.ServiceOptions {\n"
+    "  string default_host = 1049;\n"
+    "  string oauth_scopes = 1050;\n"
+    "}\n";
+
+const char* const kLongrunningOperationsProto =
+    "syntax = \"proto3\";\n"
+    "package google.longrunning;\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  google.longrunning.OperationInfo operation_info = 1049;\n"
+    "}\n"
+    "message Operation {\n"
+    "  string blah = 1;\n"
+    "}\n"
+    "message OperationInfo {\n"
+    "  string response_type = 1;\n"
+    "  string metadata_type = 2;\n"
+    "}\n";
+
+const char* const kSourceLocationTestInput =
+    "syntax = \"proto3\";\n"
+    "import \"google/api/annotations.proto\";\n"
+    "message A {\n"
+    "  int32 a = 1;\n"
+    "}\n"
+    "message B {\n"
+    "  int32 b = 1;\n"
+    "}\n"
+    "service S {\n"
+    "  rpc Method(A) returns (B) {\n"
+    "    option (google.api.http) = {\n"
+    "      get: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "    };\n"
+    "  }\n"
+    "  rpc OtherMethod(A) returns (A) {\n"
+    "    option (google.api.http) = {\n"
+    "      get: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "    };\n"
+    "  }\n"
+    "}\n";
+
+const char* const kServiceProto =
+    "syntax = \"proto3\";\n"
+    "package google.protobuf;\n"
+    "import \"google/api/annotations.proto\";\n"
+    "import \"google/api/client.proto\";\n"
+    "import \"google/api/http.proto\";\n"
+    "import \"google/longrunning/operation.proto\";\n"
+    "// Leading comments about message Foo.\n"
+    "message Foo {\n"
+    "  string baz = 1;\n"
+    "}\n"
+    "// Leading comments about message Bar.\n"
+    "message Bar {\n"
+    "  int32 number = 1;\n"
+    "  string name = 2;\n"
+    "  Foo widget = 3;\n"
+    "  bool toggle = 4;\n"
+    "  string title = 5;\n"
+    "}\n"
+    "// Leading comments about message Empty.\n"
+    "message Empty {}\n"
+    "// Leading comments about message PaginatedInput.\n"
+    "message PaginatedInput {\n"
+    "  int32 page_size = 1;\n"
+    "  string page_token = 2;\n"
+    "}\n"
+    "// Leading comments about message PaginatedOutput.\n"
+    "message PaginatedOutput {\n"
+    "  string next_page_token = 1;\n"
+    "  repeated Bar repeated_field = 2;\n"
+    "}\n"
+    "// Leading comments about service Service.\n"
+    "service Service {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Bar) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       delete: \"/v1/{name=projects/*/instances/*/backups/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method1.\n"
+    "  rpc Method1(Bar) returns (Bar) {\n"
+    "    option (google.api.http) = {\n"
+    "       delete: \"/v1/{name=projects/*/instances/*/backups/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method2.\n"
+    "  rpc Method2(Bar) returns (google.longrunning.Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "       patch: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "    option (google.longrunning.operation_info) = {\n"
+    "      response_type: \"google.protobuf.Bar\"\n"
+    "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method3.\n"
+    "  rpc Method3(Bar) returns (google.longrunning.Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "       put: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "    };\n"
+    "    option (google.longrunning.operation_info) = {\n"
+    "      response_type: \"google.protobuf.Empty\"\n"
+    "      metadata_type: \"google.protobuf.Bar\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method4.\n"
+    "  rpc Method4(PaginatedInput) returns (PaginatedOutput) {\n"
+    "    option (google.api.http) = {\n"
+    "       delete: \"/v1/{name=projects/*/instances/*/backups/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method5.\n"
+    "  rpc Method5(Bar) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \"number,widget\";\n"
+    "    option (google.api.method_signature) = \"toggle\";\n"
+    "    option (google.api.method_signature) = \"name,title\";\n"
+    "  }\n"
+    "  // Leading comments about rpc Method6.\n"
+    "  rpc Method6(Bar) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "}\n";
+
+class StringSourceTree : public google::protobuf::compiler::SourceTree {
+ public:
+  explicit StringSourceTree(std::map<std::string, std::string> files)
+      : files_(std::move(files)) {}
+
+  google::protobuf::io::ZeroCopyInputStream* Open(
+      const std::string& filename) override {
+    return files_.count(filename) == 1
+               ? new google::protobuf::io::ArrayInputStream(
+                     files_[filename].data(),
+                     static_cast<int>(files_[filename].size()))
+               : nullptr;
+  }
+
+ private:
+  std::map<std::string, std::string> files_;
+};
+
+class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
+ public:
+  AbortingErrorCollector() = default;
+  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
+  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
+
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
+    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
+                   << element_name << "]: " << error_message;
+  }
+};
+
 struct MethodVarsTestValues {
   MethodVarsTestValues(std::string m, std::string k, std::string v)
       : method(std::move(m)),
@@ -154,158 +367,54 @@ struct MethodVarsTestValues {
 
 class CreateMethodVarsTest
     : public testing::TestWithParam<MethodVarsTestValues> {
- protected:
-  static void SetUpTestSuite() {
-    FileDescriptorProto longrunning_file;
-    auto constexpr kLongrunningText = R"pb(
-      name: "google/longrunning/operation.proto"
-      package: "google.longrunning"
-      message_type { name: "Operation" }
-    )pb";
-    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-        kLongrunningText, &longrunning_file));
-
-    google::protobuf::FileDescriptorProto service_file;
-    /// @cond
-    auto constexpr kServiceText = R"pb(
-      name: "google/foo/v1/service.proto"
-      package: "google.protobuf"
-      dependency: "google/longrunning/operation.proto"
-      message_type {
-        name: "Bar"
-        field { name: "number" number: 1 type: TYPE_INT32 }
-        field { name: "name" number: 2 type: TYPE_STRING }
-        field {
-          name: "widget"
-          number: 3
-          type: TYPE_MESSAGE
-          type_name: "google.protobuf.Bar"
-        }
-        field { name: "toggle" number: 4 type: TYPE_BOOL }
-        field { name: "title" number: 5 type: TYPE_STRING }
-      }
-      message_type { name: "Empty" }
-      message_type {
-        name: "PaginatedInput"
-        field { name: "page_size" number: 1 type: TYPE_INT32 }
-        field { name: "page_token" number: 2 type: TYPE_STRING }
-      }
-      message_type {
-        name: "PaginatedOutput"
-        field { name: "next_page_token" number: 1 type: TYPE_STRING }
-        field {
-          name: "repeated_field"
-          number: 2
-          label: LABEL_REPEATED
-          type: TYPE_MESSAGE
-          type_name: "google.protobuf.Bar"
-        }
-      }
-      service {
-        name: "Service"
-        method {
-          name: "Method0"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.protobuf.Empty"
-          options {
-            [google.api.http] {
-              delete: "/v1/{name=projects/*/instances/*/backups/*}"
-            }
-          }
-        }
-        method {
-          name: "Method1"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.protobuf.Bar"
-          options {
-            [google.api.http] {
-              delete: "/v1/{name=projects/*/instances/*/backups/*}"
-            }
-          }
-        }
-        method {
-          name: "Method2"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.longrunning.Operation"
-          options {
-            [google.longrunning.operation_info] {
-              response_type: "google.protobuf.Method2Response"
-              metadata_type: "google.protobuf.Method2Metadata"
-            }
-            [google.api.http] {
-              patch: "/v1/{parent=projects/*/instances/*}/databases"
-            }
-          }
-        }
-        method {
-          name: "Method3"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.longrunning.Operation"
-          options {
-            [google.longrunning.operation_info] {
-              response_type: "google.protobuf.Empty"
-              metadata_type: "google.protobuf.Method2Metadata"
-            }
-            [google.api.http] {
-              put: "/v1/{parent=projects/*/instances/*}/databases"
-            }
-          }
-        }
-        method {
-          name: "Method4"
-          input_type: "google.protobuf.PaginatedInput"
-          output_type: "google.protobuf.PaginatedOutput"
-          options {
-            [google.api.http] {
-              delete: "/v1/{name=projects/*/instances/*/backups/*}"
-            }
-          }
-        }
-        method {
-          name: "Method5"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.protobuf.Empty"
-          options {
-            [google.api.method_signature]: "name"
-            [google.api.method_signature]: "number,widget"
-            [google.api.method_signature]: "toggle"
-            [google.api.method_signature]: "name,title"
-            [google.api.http] {
-              post: "/v1/{parent=projects/*/instances/*}/databases"
-              body: "*"
-            }
-          }
-        }
-        method {
-          name: "Method6"
-          input_type: "google.protobuf.Bar"
-          output_type: "google.protobuf.Empty"
-          options {
-            [google.api.http] {
-              get: "/v1/{name=projects/*/instances/*/databases/*}"
-            }
-          }
-        }
-
-      }
-    )pb";
-    /// @endcond
-    ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
-                                                              &service_file));
-
-    DescriptorPool pool;
-    pool.BuildFile(longrunning_file);
-    const FileDescriptor* service_file_descriptor =
-        pool.BuildFile(service_file);
-    vars_ = CreateMethodVars(*service_file_descriptor->service(0));
+ public:
+  CreateMethodVarsTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/api/client.proto"), kClientProto},
+            {std::string("google/api/http.proto"), kHttpProto},
+            {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/longrunning/operation.proto"),
+             kLongrunningOperationsProto},
+            {std::string("test/test.proto"), kSourceLocationTestInput},
+            {std::string("google/foo/v1/service.proto"), kServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+    service_vars_ = {{"googleapis_commit_hash", "foo"}};
   }
 
-  static std::map<std::string, VarsDictionary> vars_;
+ private:
+  FileDescriptorProto file_proto_;
+  AbortingErrorCollector collector_;
+  StringSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
+ protected:
+  DescriptorPool pool_;
+  std::map<std::string, VarsDictionary> vars_;
+  VarsDictionary service_vars_;
 };
 
-std::map<std::string, VarsDictionary> CreateMethodVarsTest::vars_;
+TEST_F(CreateMethodVarsTest, FilesParseSuccessfully) {
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/client.proto"));
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  EXPECT_NE(nullptr,
+            pool_.FindFileByName("google/longrunning/operation.proto"));
+  EXPECT_NE(nullptr, pool_.FindFileByName("test/test.proto"));
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/foo/v1/service.proto"));
+}
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
   EXPECT_TRUE(method_iter != vars_.end());
   auto iter = method_iter->second.find(GetParam().vars_key);
@@ -315,16 +424,24 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     MethodVars, CreateMethodVarsTest,
     testing::Values(
+        // Method0
         MethodVarsTestValues("google.protobuf.Service.Method0", "method_name",
                              "Method0"),
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_name_snake", "method0"),
         MethodVarsTestValues("google.protobuf.Service.Method0", "request_type",
                              "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "response_message_type", "google.protobuf.Empty"),
         MethodVarsTestValues("google.protobuf.Service.Method0", "response_type",
                              "::google::protobuf::Empty"),
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method0", "method_return_doxygen_link",
+            "[::google::protobuf::Empty](https://github.com/googleapis/"
+            "googleapis/blob/foo/google/foo/v1/service.proto#L20)"),
+        // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
         MethodVarsTestValues("google.protobuf.Service.Method1",
@@ -333,15 +450,23 @@ INSTANTIATE_TEST_SUITE_P(
                              "::google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method1", "response_type",
                              "::google::protobuf::Bar"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method1", "method_return_doxygen_link",
+            "[::google::protobuf::Bar](https://github.com/googleapis/"
+            "googleapis/blob/foo/google/foo/v1/service.proto#L12)"),
+        // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
                              "::google::protobuf::Method2Metadata"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_response_type",
-                             "::google::protobuf::Method2Response"),
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "longrunning_deduced_response_message_type",
+                             "google.protobuf.Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_deduced_response_type",
-                             "::google::protobuf::Method2Response"),
+                             "::google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_request_param_key", "parent"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
@@ -354,15 +479,21 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method2",
+            "method_longrunning_deduced_return_doxygen_link",
+            "[::google::protobuf::Bar](https://github.com/googleapis/"
+            "googleapis/blob/foo/google/foo/v1/service.proto#L12)"),
+        // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
-                             "::google::protobuf::Method2Metadata"),
+                             "::google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_response_type",
                              "::google::protobuf::Empty"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_deduced_response_type",
-                             "::google::protobuf::Method2Metadata"),
+                             "::google::protobuf::Bar"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "method_request_param_key", "parent"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
@@ -375,6 +506,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "default_idempotency", "kIdempotent"),
+        // Method4
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "range_output_field_name", "repeated_field"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
@@ -391,12 +523,13 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*/backups/*"),
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "default_idempotency", "kNonIdempotent"),
+        // Method5
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature0", "std::string const& name"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature1",
                              "std::int32_t number, "
-                             "::google::protobuf::Bar const& widget"),
+                             "::google::protobuf::Foo const& widget"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature2", "bool toggle"),
         MethodVarsTestValues(
@@ -423,6 +556,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "default_idempotency", "kNonIdempotent"),
+        // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
