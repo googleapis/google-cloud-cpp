@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/ebdbe9ab534486cf900700add1e129dff780b481.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/830887bae22f690647a0fd8b5c9eccd8d6858d74.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "f6061447efa0811e45b4de925f70093180f7cb47c22cb02900b8d91cd1d01493")
+    "2194daccb2263c9306fe690a72f0780e5087f63318618424e5ed9f5c6219210f")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -67,6 +67,7 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/cloud/bigquery/v2/model.proto"
     "google/cloud/bigquery/v2/model_reference.proto"
     "google/cloud/bigquery/v2/standard_sql.proto"
+    "google/cloud/bigquery/v2/table_reference.proto"
     "google/pubsub/v1/pubsub.proto"
     "google/spanner/admin/database/v1/backup.proto"
     "google/spanner/admin/database/v1/common.proto"
@@ -229,6 +230,7 @@ google_cloud_cpp_grpcpp_library(
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/standard_sql.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/table_reference.proto"
     PROTO_PATH_DIRECTORIES
     "${GOOGLEAPIS_CPP_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
