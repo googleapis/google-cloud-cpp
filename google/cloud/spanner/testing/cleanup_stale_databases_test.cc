@@ -42,7 +42,8 @@ TEST(CleanupStaleDatabases, Empty) {
               spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
             EXPECT_EQ(expected_instance, p.instance);
 
-            return google::cloud::spanner::ListDatabaseRange(
+            return google::cloud::internal::MakePaginationRange<
+                google::cloud::spanner::ListDatabaseRange>(
                 gcsa::ListDatabasesRequest{},
                 [](gcsa::ListDatabasesRequest const&) {
                   gcsa::ListDatabasesResponse response;
@@ -68,7 +69,8 @@ TEST(CleanupStaleDatabases, ListError) {
               spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
             EXPECT_EQ(expected_instance, p.instance);
 
-            return google::cloud::spanner::ListDatabaseRange(
+            return google::cloud::internal::MakePaginationRange<
+                google::cloud::spanner::ListDatabaseRange>(
                 gcsa::ListDatabasesRequest{},
                 [](gcsa::ListDatabasesRequest const&) {
                   return StatusOr<gcsa::ListDatabasesResponse>(
@@ -111,7 +113,8 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
           [&](spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
             EXPECT_EQ(expected_instance, p.instance);
 
-            return google::cloud::spanner::ListDatabaseRange(
+            return google::cloud::internal::MakePaginationRange<
+                google::cloud::spanner::ListDatabaseRange>(
                 gcsa::ListDatabasesRequest{},
                 [&](gcsa::ListDatabasesRequest const&) {
                   gcsa::ListDatabasesResponse response;

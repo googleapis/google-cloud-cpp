@@ -42,7 +42,7 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
 
   // This test requires the bucket to be configured with versioning. The buckets
   // used by the CI build are already configured with versioning enabled. The
-  // bucket created in the testbench also has versioning. Regardless, set the
+  // bucket created in the emulator also has versioning. Regardless, set the
   // bucket to the desired state, which will produce a better error message if
   // there is a configuration problem.
   auto bucket_meta = client->GetBucketMetadata(bucket_name_);
@@ -82,8 +82,8 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
 
   ListObjectsReader reader = client->ListObjects(bucket_name_, Versions(true));
   std::vector<std::string> actual;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = it->value();
+  for (auto& it : reader) {
+    auto const& meta = it.value();
     EXPECT_EQ(bucket_name_, meta.bucket());
     actual.push_back(meta.name());
   }

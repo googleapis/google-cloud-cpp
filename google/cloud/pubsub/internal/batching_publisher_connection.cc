@@ -184,12 +184,15 @@ void BatchingPublisherConnection::FlushImpl(std::unique_lock<std::mutex> lk) {
   batch.waiters.swap(waiters_);
   google::pubsub::v1::PublishRequest request;
   request.Swap(&pending_);
+  // Reserve enough capacity for the next batch.
+  pending_.mutable_messages()->Reserve(
+      static_cast<int>(options_.maximum_batch_message_count()));
   current_bytes_ = 0;
   lk.unlock();
 
   batch.weak = shared_from_this();
   request.set_topic(topic_full_name_);
-  sink_->AsyncPublish(request).then(std::move(batch));
+  sink_->AsyncPublish(std::move(request)).then(std::move(batch));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

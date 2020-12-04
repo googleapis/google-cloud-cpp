@@ -84,7 +84,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -125,7 +125,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -165,7 +165,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
 
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -206,7 +206,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
 
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -246,7 +246,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
 
 /// @test Read a relatively large object using chunks of different sizes.
 TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
-  // The testbench always requires multiple iterations to copy this object.
+  // The emulator always requires multiple iterations to copy this object.
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -531,7 +531,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
-  ScopedEnvironment disable_testbench("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment disable_emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -552,7 +552,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -569,7 +569,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -588,7 +588,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -605,7 +605,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
   google::cloud::testing_util::ScopedEnvironment endpoint(
-      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:1");
+      "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -619,7 +619,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
-  ScopedEnvironment testbench("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -639,7 +639,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
@@ -660,7 +660,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "stall-always"));
+      CustomHeader("x-goog-emulator-instructions", "stall-always"));
 
   std::vector<char> buffer(kObjectSize);
   stream.read(buffer.data(), kObjectSize);
@@ -672,7 +672,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
@@ -694,7 +694,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "stall-at-256KiB"));
+      CustomHeader("x-goog-emulator-instructions", "stall-at-256KiB"));
 
   std::vector<char> buffer(kObjectSize);
   stream.read(buffer.data(), kObjectSize);
@@ -711,7 +711,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
-  if (!UsingTestbench()) GTEST_SKIP();
+  if (!UsingEmulator()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
@@ -727,7 +727,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 
   auto stream = client.ReadObject(
       bucket_name_, object_name,
-      CustomHeader("x-goog-testbench-instructions", "return-503-after-256K"));
+      CustomHeader("x-goog-emulator-instructions", "return-503-after-256K"));
   std::vector<char> actual(64 * 1024);
   for (std::size_t offset = 0;
        offset < contents.size() && !stream.bad() && !stream.eof();

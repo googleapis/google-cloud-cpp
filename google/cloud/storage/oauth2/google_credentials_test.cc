@@ -176,6 +176,19 @@ std::string const kServiceAccountCredContents = R"""({
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
 
+std::string const kServiceAccountCredInvalidPrivateKey = R"""({
+    "type": "service_account",
+    "project_id": "foo-project",
+    "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
+    "private_key": "an-invalid-private-key",
+    "client_email": "foo-email@foo-project.iam.gserviceaccount.com",
+    "client_id": "100000000000000000001",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://accounts.google.com/o/oauth2/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
+})""";
+
 void SetupServiceAccountCredentialsFileForTest(std::string const& filename) {
   std::ofstream os(filename);
   os << kServiceAccountCredContents;
@@ -358,6 +371,14 @@ TEST_F(GoogleCredentialsTest,
       "not-a-valid-jason-object",
       {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
+  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadInvalidServiceAccountCredentialsWithInvalidKey) {
+  // Test that providing invalid private_key returns a failure status.
+  auto creds = CreateServiceAccountCredentialsFromJsonContents(
+      kServiceAccountCredInvalidPrivateKey);
   EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
 }
 

@@ -78,9 +78,13 @@ TEST(ListHmacKeysReaderTest, Basic) {
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
 
-  ListHmacKeysReader reader(
-      ListHmacKeysRequest("test-project-id"),
-      [mock](ListHmacKeysRequest const& r) { return mock->ListHmacKeys(r); });
+  auto reader =
+      google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
+          ListHmacKeysRequest("test-project-id"),
+          [mock](ListHmacKeysRequest const& r) {
+            return mock->ListHmacKeys(r);
+          },
+          [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
   std::vector<HmacKeyMetadata> actual;
   for (auto&& bucket : reader) {
     ASSERT_STATUS_OK(bucket);
@@ -94,9 +98,13 @@ TEST(ListHmacKeysReaderTest, Empty) {
   EXPECT_CALL(*mock, ListHmacKeys(_))
       .WillOnce(Return(make_status_or(ListHmacKeysResponse())));
 
-  ListHmacKeysReader reader(
-      ListHmacKeysRequest("test-project-id"),
-      [mock](ListHmacKeysRequest const& r) { return mock->ListHmacKeys(r); });
+  auto reader =
+      google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
+          ListHmacKeysRequest("test-project-id"),
+          [mock](ListHmacKeysRequest const& r) {
+            return mock->ListHmacKeys(r);
+          },
+          [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
   auto count = std::distance(reader.begin(), reader.end());
   EXPECT_EQ(0, count);
 }
@@ -129,9 +137,13 @@ TEST(ListHmacKeysReaderTest, PermanentFailure) {
         return StatusOr<ListHmacKeysResponse>(PermanentError());
       });
 
-  ListHmacKeysReader reader(
-      ListHmacKeysRequest("test-project"),
-      [mock](ListHmacKeysRequest const& r) { return mock->ListHmacKeys(r); });
+  auto reader =
+      google::cloud::internal::MakePaginationRange<ListHmacKeysReader>(
+          ListHmacKeysRequest("test-project"),
+          [mock](ListHmacKeysRequest const& r) {
+            return mock->ListHmacKeys(r);
+          },
+          [](internal::ListHmacKeysResponse r) { return std::move(r.items); });
   std::vector<HmacKeyMetadata> actual;
   bool has_status_or_error = false;
   for (auto&& object : reader) {
@@ -155,53 +167,6 @@ TEST(ListHmacKeysReaderTest, PermanentFailure) {
   EXPECT_THAT(actual, ContainerEq(expected));
 }
 
-TEST(ListHmacKeysReaderTest, IteratorCompare) {
-  // Create a synthetic list of HmacKeyMetadata elements, each request will
-  // return 2 of them.
-  int const page_count = 1;
-  auto create_mock = [](int i, int page_count) {
-    ListHmacKeysResponse response;
-    if (i < page_count) {
-      if (i != page_count - 1) {
-        response.next_page_token = "page-" + std::to_string(i);
-      }
-      response.items.emplace_back(CreateElement(2 * i));
-      response.items.emplace_back(CreateElement(2 * i + 1));
-    }
-    return [response](ListHmacKeysRequest const&) {
-      return StatusOr<ListHmacKeysResponse>(response);
-    };
-  };
-
-  auto mock1 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock1, ListHmacKeys(_)).WillOnce(create_mock(0, page_count));
-
-  auto mock2 = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock2, ListHmacKeys(_)).WillOnce(create_mock(0, page_count));
-
-  ListHmacKeysReader reader1(
-      ListHmacKeysRequest("test-project-id"),
-      [mock1](ListHmacKeysRequest const& r) { return mock1->ListHmacKeys(r); });
-  ListHmacKeysIterator a1 = reader1.begin();
-  ListHmacKeysIterator b1 = a1;
-  ListHmacKeysIterator e1 = reader1.end();
-  EXPECT_EQ(b1, a1);
-  ++b1;
-  EXPECT_NE(b1, a1);
-  EXPECT_NE(a1, e1);
-  EXPECT_NE(b1, e1);
-  ++b1;
-  EXPECT_EQ(b1, e1);
-
-  ListHmacKeysReader reader2(
-      ListHmacKeysRequest("test-project-id"),
-      [mock2](ListHmacKeysRequest const& r) { return mock2->ListHmacKeys(r); });
-  ListHmacKeysIterator a2 = reader2.begin();
-
-  // Verify that iterators from different streams, even when pointing to the
-  // same elements are different.
-  EXPECT_NE(a1, a2);
-}
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

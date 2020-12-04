@@ -151,7 +151,7 @@ void RunAll(std::vector<std::string> const& argv) {
   GetBucketLifecycleManagement(client, {bucket_name});
 
   std::cout << "\nCleaning up" << std::endl;
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

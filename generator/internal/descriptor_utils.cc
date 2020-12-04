@@ -24,6 +24,7 @@
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
+#include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_policy_generator.h"
 #include "generator/internal/stub_factory_generator.h"
@@ -54,6 +55,8 @@ std::string CppTypeToString(FieldDescriptor const* field) {
     case FieldDescriptor::CPPTYPE_FLOAT:
     case FieldDescriptor::CPPTYPE_BOOL:
     case FieldDescriptor::CPPTYPE_ENUM:
+      return std::string(field->cpp_type_name());
+
     case FieldDescriptor::CPPTYPE_STRING:
       return std::string("std::") + std::string(field->cpp_type_name());
 
@@ -121,7 +124,16 @@ void SetMethodSignatureMethodVars(
         method_request_setters += absl::StrFormat("  request.set_%s(%s);\n",
                                                   parameters[j], parameters[j]);
       }
-      method_signature += absl::StrFormat(" const& %s", parameters[j]);
+
+      switch (parameter_descriptor->cpp_type()) {
+        case FieldDescriptor::CPPTYPE_STRING:
+        case FieldDescriptor::CPPTYPE_MESSAGE:
+          method_signature += absl::StrFormat(" const& %s", parameters[j]);
+          break;
+        default:
+          method_signature += absl::StrFormat(" %s", parameters[j]);
+      }
+
       if (j < parameters.size() - 1) {
         method_signature += ", ";
       }
@@ -337,6 +349,12 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()),
                    "_metadata_decorator", GeneratedFileSuffix(), ".h");
+  vars["mock_connection_class_name"] =
+      absl::StrCat("Mock", descriptor.name(), "Connection");
+  vars["mock_connection_header_path"] =
+      absl::StrCat(vars["product_path"], "mocks/mock_",
+                   ServiceNameToFilePath(descriptor.name()), "_connection",
+                   GeneratedFileSuffix(), ".h");
   vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["product_internal_namespace"] =
       BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
@@ -422,6 +440,9 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
       service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
       context));
   code_generators.push_back(absl::make_unique<RetryPolicyGenerator>(

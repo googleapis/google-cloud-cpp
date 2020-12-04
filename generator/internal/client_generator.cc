@@ -64,6 +64,24 @@ Status ClientGenerator::GenerateHeader() {
     "  explicit $client_class_name$(ConnectionOptions const& options = ConnectionOptions());\n"
     "  explicit $client_class_name$(std::shared_ptr<$connection_class_name$> connection);\n"
     "  ~$client_class_name$();\n"
+    "\n"
+    "  //@{\n"
+    "  // @name Copy and move support\n"
+    "  $client_class_name$($client_class_name$ const&) = default;\n"
+    "  $client_class_name$& operator=($client_class_name$ const&) = default;\n"
+    "  $client_class_name$($client_class_name$&&) noexcept = default;\n"
+    "  $client_class_name$& operator=($client_class_name$&&) noexcept = default;\n"
+    "  //@}\n"
+    "\n"
+    "  //@{\n"
+    "  // @name Equality\n"
+    "  friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {\n"
+    "    return a.connection_ == b.connection_;\n"
+    "  }\n"
+    "  friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {\n"
+    "    return !(a == b);\n"
+    "  }\n"
+    "  //@}\n"
     "\n");
   // clang-format on
 
@@ -187,7 +205,7 @@ Status ClientGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "$client_class_name$::$client_class_name$(ConnectionOptions const& options)\n"
-    " : connection_(MakeDatabaseAdminConnection(options)) {}\n");
+    " : connection_(Make$connection_class_name$(options)) {}\n");
   // clang-format on
 
   CcPrint(  // clang-format off

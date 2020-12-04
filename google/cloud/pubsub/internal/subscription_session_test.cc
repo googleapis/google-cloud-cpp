@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <gmock/gmock.h>
 #include <atomic>
@@ -30,7 +31,9 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
+using ::google::cloud::testing_util::AsyncSequencer;
 using ::testing::AtLeast;
+using ::testing::AtMost;
 using ::testing::InSequence;
 
 /// @test Verify callbacks are scheduled in the background threads.
@@ -457,6 +460,77 @@ TEST(SubscriptionSessionTest, FireAndForget) {
     std::unique_lock<std::mutex> lk(mu);
     EXPECT_STATUS_OK(status);
   }
+}
+
+/// @test Verify sessions shutdown properly even if future is released.
+TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
+  pubsub::Subscription const subscription("test-project", "test-subscription");
+
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  AsyncSequencer<bool> on_read;
+  AsyncSequencer<Status> on_finish;
+
+  auto async_pull_mock = [&](google::cloud::CompletionQueue& cq,
+                             std::unique_ptr<grpc::ClientContext>,
+                             google::pubsub::v1::StreamingPullRequest const&) {
+    using us = std::chrono::microseconds;
+    using F = future<StatusOr<std::chrono::system_clock::time_point>>;
+    using Response = google::pubsub::v1::StreamingPullResponse;
+    auto start_response = [cq]() mutable {
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto write_response = [cq](google::pubsub::v1::StreamingPullRequest const&,
+                               grpc::WriteOptions const&) mutable {
+      return cq.MakeRelativeTimer(us(10)).then([](F) { return true; });
+    };
+    auto read_response = [&] {
+      return on_read.PushBack("Read").then([](future<bool> f) {
+        if (f.get()) return absl::make_optional(Response{});
+        return absl::optional<Response>{};
+      });
+    };
+    auto finish_response = [&] {
+      return on_finish.PushBack("Finish").then(
+          [](future<Status> f) { return f.get(); });
+    };
+
+    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    EXPECT_CALL(*stream, Start).WillOnce(start_response);
+    EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
+    EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
+    EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
+    EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
+
+    return stream;
+  };
+  EXPECT_CALL(*mock, AsyncStreamingPull).WillRepeatedly(async_pull_mock);
+
+  promise<Status> shutdown_completed;
+  internal::AutomaticallyCreatedBackgroundThreads background(1);
+  {
+    auto handler = [&](pubsub::Message const&, pubsub::AckHandler) {};
+    (void)CreateSubscriptionSession(
+        subscription,
+        pubsub::SubscriberOptions{}.set_shutdown_polling_period(
+            std::chrono::milliseconds(100)),
+        mock, background.cq(), "fake-client-id", {handler},
+        pubsub_testing::TestRetryPolicy(), pubsub_testing::TestBackoffPolicy())
+        .then([&shutdown_completed](future<Status> f) {
+          shutdown_completed.set_value(f.get());
+        });
+  }
+  // Make the first Read() call fail and then wait before returning from
+  // Finish()
+  on_read.PopFront().set_value(false);
+  auto finish = on_finish.PopFront();
+  // Shutdown the completion queue, this will disable the timers for the second
+  // async_pull
+  background.cq().Shutdown();
+  finish.set_value(Status{});
+
+  // At this point the streaming pull cannot restart, so there are no pending
+  // operations.  Eventually the session will be finished.
+  shutdown_completed.get_future().get();
 }
 
 }  // namespace

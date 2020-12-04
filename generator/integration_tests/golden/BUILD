@@ -31,6 +31,11 @@ filegroup(
     srcs = glob(["internal/*gcpcxx*"]),
 )
 
+filegroup(
+    name = "golden_mocks_filegroup",
+    srcs = glob(["mocks/*gcpcxx.pb.h"]),
+)
+
 cc_library(
     name = "google_cloud_cpp_generator_golden",
     srcs = [
@@ -57,7 +62,10 @@ load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
+    srcs = [
+        test,
+        ":golden_mocks_filegroup",
+    ],
     copts = [
         "-I$(BINDIR)/generator/integration_tests/golden",
         "-I$(BINDIR)/generator/integration_tests/golden/internal",

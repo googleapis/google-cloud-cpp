@@ -59,3 +59,15 @@ def check(algorithm, key_b64, key_sha256_b64, context):
     if expected_sha256 != actual_sha256:
         utils.error.csek(context)
     return actual_sha256
+
+
+def validation(request, expected_sha256_b64, is_source, context):
+    algorithm, key_b64, key_sha256_b64 = extract(request, is_source, context)
+    if expected_sha256_b64 == "":
+        if key_sha256_b64 != "":
+            utils.error.csek(context)
+        else:
+            return
+    check(algorithm, key_b64, key_sha256_b64, context)
+    if expected_sha256_b64 != key_sha256_b64:
+        utils.error.csek(context)

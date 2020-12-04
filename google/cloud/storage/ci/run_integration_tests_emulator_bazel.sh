@@ -30,8 +30,8 @@ BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
 
-# Configure run_testbench_utils.sh to run the GCS testbench.
-source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
+# Configure run_emulator_utils.sh to run the GCS emulator.
+source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 
 # These can only run against production
 production_only_targets=(
@@ -45,14 +45,24 @@ production_only_targets=(
   --test_tag_filters="integration-test" -- \
   "${production_only_targets[@]}"
 
-# `start_testbench` creates unsightly *.log files in the current directory
+# `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
 # environment variables that it sets.
 pushd "${HOME}" >/dev/null
-# Start the testbench on a fixed port, otherwise the Bazel cache gets
+# Start the emulator on a fixed port, otherwise the Bazel cache gets
 # invalidated on each run.
-start_testbench 8585 8000
+start_emulator 8585 8000
 popd >/dev/null
+
+# Run the unittests of the emulator before running integration tests.
+"${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
+  "//google/cloud/storage/emulator:test_gcs" \
+  "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
+exit_status=$?
+
+if [[ "$exit_status" -ne 0 ]]; then
+  exit "${exit_status}"
+fi
 
 excluded_targets=(
   # This test does not work with Bazel, because it depends on dynamic loading
@@ -68,23 +78,25 @@ done
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
-testbench_args=(
-  "--test_env=CLOUD_STORAGE_TESTBENCH_ENDPOINT=${CLOUD_STORAGE_TESTBENCH_ENDPOINT}"
+EMULATOR_SHA=$(git ls-files google/cloud/storage/emulator | sort | cat | sha256sum)
+emulator_args=(
+  "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
   "--test_env=CLOUD_STORAGE_GRPC_ENDPOINT=${CLOUD_STORAGE_GRPC_ENDPOINT}"
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+  "--test_env=EMULATOR_SHA=${EMULATOR_SHA}"
 )
-"${BAZEL_BIN}" run "${bazel_test_args[@]}" "${testbench_args[@]}" \
+"${BAZEL_BIN}" run "${bazel_test_args[@]}" "${emulator_args[@]}" \
   "//google/cloud/storage/examples:storage_bucket_samples" \
   -- create-bucket-for-project \
   "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
   "${GOOGLE_CLOUD_PROJECT}" >/dev/null
 
 # We need to forward some environment variables suitable for running against
-# the testbench. Note that the HMAC service account is completely invalid and
+# the emulator. Note that the HMAC service account is completely invalid and
 # it is not unique to each test, neither is a problem when using the emulator.
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${testbench_args[@]}" \
+"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/storage/...:all" \
   "${excluded_targets[@]}"
@@ -92,7 +104,7 @@ exit_status=$?
 
 if [[ "$exit_status" -ne 0 ]]; then
   source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-  dump_log "${HOME}/testbench.log"
+  dump_log "${HOME}/gcs_emulator.log"
 fi
 
 exit "${exit_status}"

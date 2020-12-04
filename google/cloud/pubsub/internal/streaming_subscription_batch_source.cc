@@ -37,8 +37,7 @@ void StreamingSubscriptionBatchSource::Shutdown() {
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_ || !stream_) return;
   shutdown_ = true;
-  if (stream_state_ != StreamState::kActive) return;
-  stream_->Cancel();
+  if (stream_) stream_->Cancel();
 }
 
 void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
@@ -93,12 +92,11 @@ void StreamingSubscriptionBatchSource::StartStream(
     OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
     return;
   }
-
   shutdown_manager_->StartOperation(__func__, "InitialStart", [&] {
-    RetryLoopState rs{std::move(stream), std::move(retry_policy),
-                      std::move(backoff_policy)};
+    stream_ = std::move(stream);
+    RetryLoopState rs{std::move(retry_policy), std::move(backoff_policy)};
     auto weak = WeakFromThis();
-    rs.stream->Start().then([weak, rs, request](future<bool> f) {
+    stream_->Start().then([weak, rs, request](future<bool> f) {
       if (auto s = weak.lock()) s->OnStart(rs, request, f.get());
     });
   });
@@ -129,7 +127,7 @@ void StreamingSubscriptionBatchSource::OnStart(
   }
   shutdown_manager_->StartOperation(__func__, "InitialWrite", [&] {
     auto weak = WeakFromThis();
-    rs.stream->Write(request, grpc::WriteOptions{}.set_write_through())
+    stream_->Write(request, grpc::WriteOptions{}.set_write_through())
         .then([weak, rs](future<bool> f) mutable {
           if (auto s = weak.lock()) s->OnInitialWrite(std::move(rs), f.get());
         });
@@ -145,7 +143,7 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
   }
   shutdown_manager_->StartOperation(__func__, "InitialRead", [&] {
     auto weak = WeakFromThis();
-    rs.stream->Read().then(
+    stream_->Read().then(
         [weak,
          rs](future<absl::optional<google::pubsub::v1::StreamingPullResponse>>
                  f) {
@@ -166,7 +164,6 @@ void StreamingSubscriptionBatchSource::OnInitialRead(
   std::unique_lock<std::mutex> lk(mu_);
   ChangeState(lk, StreamState::kActive, __func__, "success");
   status_ = Status{};
-  stream_ = std::move(rs.stream);
   lk.unlock();
   auto const scheduled =
       shutdown_manager_->StartOperation(__func__, "read", [&] {
@@ -184,7 +181,7 @@ void StreamingSubscriptionBatchSource::OnInitialError(RetryLoopState rs) {
   auto weak = WeakFromThis();
   auto const scheduled =
       shutdown_manager_->StartOperation(__func__, "finish", [&] {
-        rs.stream->Finish().then([weak, rs](future<Status> f) {
+        stream_->Finish().then([weak, rs](future<Status> f) {
           if (auto s = weak.lock()) s->OnInitialFinish(std::move(rs), f.get());
         });
         shutdown_manager_->FinishedOperation("finish");

@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <condition_variable>
 #include <ctime>
@@ -34,6 +35,12 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
+                                              std::string const& payload,
+                                              std::string const& pem_contents);
+}  // namespace internal
+
 namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
 struct ServiceAccountCredentialsInfo {

@@ -50,11 +50,21 @@ class Object:
         "customer_encryption",
     ]
 
+    rest_only_fields = ["customTime"]
+
     def __init__(self, metadata, media, bucket, rest_only=None):
         self.metadata = metadata
         self.media = media
         self.bucket = bucket
         self.rest_only = rest_only
+
+    @classmethod
+    def __extract_rest_only(cls, data):
+        rest_only = {}
+        for field in Object.rest_only_fields:
+            if field in data:
+                rest_only[field] = data.pop(field)
+        return rest_only
 
     @classmethod
     def __insert_predefined_acl(cls, metadata, bucket, predefined_acl, context):
@@ -79,10 +89,9 @@ class Object:
     def init(
         cls, request, metadata, media, bucket, is_destination, context, rest_only=None
     ):
-        if context is None:
-            instruction = request.headers.get("x-goog-testbench-instructions")
-            if instruction == "inject-upload-data-error":
-                media = utils.common.corrupt_media(media)
+        instruction = utils.common.extract_instruction(request, context)
+        if instruction == "inject-upload-data-error":
+            media = utils.common.corrupt_media(media)
         timestamp = datetime.datetime.now(datetime.timezone.utc)
         metadata.bucket = bucket.name
         metadata.generation = random.getrandbits(63)
@@ -147,9 +156,7 @@ class Object:
 
     @classmethod
     def init_dict(cls, request, metadata, media, bucket, is_destination):
-        rest_only = {}
-        if "customTime" in metadata:
-            rest_only["customTime"] = metadata.pop("customTime")
+        rest_only = cls.__extract_rest_only(metadata)
         metadata = json_format.ParseDict(metadata, resources_pb2.Object())
         return cls.init(
             request, metadata, media, bucket, is_destination, None, rest_only
@@ -164,7 +171,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": object_name,
-            "metadata": {"x_testbench_upload": "simple"},
+            "metadata": {"x_emulator_upload": "simple"},
         }
         return cls.init_dict(request, metadata, media, bucket, False)
 
@@ -190,12 +197,12 @@ class Object:
         metadata["metadata"] = (
             {} if "metadata" not in metadata else metadata["metadata"]
         )
-        metadata["metadata"]["x_testbench_upload"] = "multipart"
+        metadata["metadata"]["x_emulator_upload"] = "multipart"
         if "md5Hash" in metadata:
-            metadata["metadata"]["x_testbench_md5"] = metadata["md5Hash"]
+            metadata["metadata"]["x_emulator_md5"] = metadata["md5Hash"]
             metadata["md5Hash"] = metadata["md5Hash"]
         if "crc32c" in metadata:
-            metadata["metadata"]["x_testbench_crc32c"] = metadata["crc32c"]
+            metadata["metadata"]["x_emulator_crc32c"] = metadata["crc32c"]
             metadata["crc32c"] = struct.unpack(
                 ">I", base64.b64decode(metadata["crc32c"].encode("utf-8"))
             )[0]
@@ -207,7 +214,7 @@ class Object:
         metadata = {
             "bucket": bucket.name,
             "name": name,
-            "metadata": {"x_testbench_upload": "xml"},
+            "metadata": {"x_emulator_upload": "xml"},
         }
         if "content-type" in request.headers:
             metadata["contentType"] = request.headers["content-type"]
@@ -241,9 +248,10 @@ class Object:
         if context is not None:
             metadata = request.metadata
         else:
-            metadata = json_format.ParseDict(
-                self.__preprocess_rest(json.loads(request.data)), resources_pb2.Object()
-            )
+            data = json.loads(request.data)
+            rest_only = self.__extract_rest_only(data)
+            self.rest_only.update(rest_only)
+            metadata = json_format.ParseDict(data, resources_pb2.Object())
         self.__update_metadata(metadata, None)
         self.__insert_predefined_acl(
             metadata,
@@ -260,8 +268,8 @@ class Object:
             update_mask = request.update_mask
         else:
             data = json.loads(request.data)
-            if "customTime" in data:
-                self.rest_only["customTime"] = data.pop("customTime")
+            rest_only = self.__extract_rest_only(data)
+            self.rest_only.update(rest_only)
             if "metadata" in data:
                 if data["metadata"] is None:
                     self.metadata.metadata.clear()
@@ -370,6 +378,13 @@ class Object:
             struct.pack(">I", response["crc32c"])
         ).decode("utf-8")
         response.update(rest_only)
+        old_metadata = {}
+        if "metadata" in response:
+            for key, value in response["metadata"].items():
+                if "emulator" in key:
+                    old_key = key.replace("emulator", "testbench")
+                    old_metadata[old_key] = value
+            response["metadata"].update(old_metadata)
         return response
 
     def rest_metadata(self):
@@ -377,12 +392,12 @@ class Object:
 
     def x_goog_hash_header(self):
         header = ""
-        if "x_testbench_crc32c" in self.metadata.metadata:
-            header += "crc32c=" + self.metadata.metadata["x_testbench_crc32c"]
-        if "x_testbench_md5" in self.metadata.metadata:
+        if "x_emulator_crc32c" in self.metadata.metadata:
+            header += "crc32c=" + self.metadata.metadata["x_emulator_crc32c"]
+        if "x_emulator_md5" in self.metadata.metadata:
             if header != "":
                 header += ","
-            header += "md5=" + self.metadata.metadata["x_testbench_md5"]
+            header += "md5=" + self.metadata.metadata["x_emulator_md5"]
         return header if header != "" else None
 
     def rest_media(self, request):
@@ -408,7 +423,7 @@ class Object:
         streamer, length, headers = None, len(response_payload), {}
         content_range = "bytes %d-%d/%d" % (begin, end - 1, length)
 
-        instructions = request.headers.get("x-goog-testbench-instructions")
+        instructions = utils.common.extract_instruction(request, None)
         if instructions == "return-broken-stream":
             headers["Content-Length"] = length
 

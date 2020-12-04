@@ -148,8 +148,8 @@ TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
   ListObjectsReader reader = client->ListObjects(
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"));
   std::vector<std::string> actual;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& meta = it->value();
+  for (auto& it : reader) {
+    auto const& meta = it.value();
     EXPECT_EQ(bucket_name_, meta.bucket());
     actual.push_back(meta.name());
   }
@@ -192,8 +192,8 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
       bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"));
   std::vector<std::string> prefixes;
   std::vector<std::string> objects;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& result = it->value();
+  for (auto& it : reader) {
+    auto const& result = it.value();
     if (absl::holds_alternative<std::string>(result)) {
       prefixes.push_back(absl::get<std::string>(result));
     } else {
@@ -245,8 +245,8 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
       StartOffset(object_prefix + "/foo"), EndOffset(object_prefix + "/qux"));
   std::vector<std::string> prefixes;
   std::vector<std::string> objects;
-  for (auto it = reader.begin(); it != reader.end(); ++it) {
-    auto const& result = it->value();
+  for (auto& it : reader) {
+    auto const& result = it.value();
     if (absl::holds_alternative<std::string>(result)) {
       prefixes.push_back(absl::get<std::string>(result));
     } else {
@@ -266,15 +266,47 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  // TODO(#3301) - fix the testbench to support binary data
-  if (UsingTestbench()) return;
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, expected, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto const expected = [] {
+    std::string result;
+    auto constexpr kPayloadSize = 2 * 1024;
+    auto const min = std::numeric_limits<char>::min();
+    auto const max = std::numeric_limits<char>::max();
+    for (char i = min; i != max; ++i) {
+      result.push_back(i);
+      if (result.size() >= kPayloadSize) return result;
+    }
+    result.append(std::string(kPayloadSize - result.size(), '\0'));
+    return result;
+  }();
 
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta = client->InsertObject(

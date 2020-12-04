@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,133 +15,154 @@
 
 """Unit test for utils"""
 
-import pytest
+import http
+import os
+import unittest
+import urllib
+
 import utils
 
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
+from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
 
-class TestACL:
+class TestACL(unittest.TestCase):
     def test_extract_predefined_default_object_acl(self):
         request = storage_pb2.InsertBucketRequest()
         predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
             request, ""
         )
-        assert predefined_default_object_acl == 0
+        self.assertEqual(
+            predefined_default_object_acl,
+            CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED,
+        )
 
-        request.predefined_default_object_acl = 1
+        request.predefined_default_object_acl = (
+            CommonEnums.PredefinedObjectAcl.OBJECT_ACL_AUTHENTICATED_READ
+        )
         predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
             request, ""
         )
-        assert predefined_default_object_acl == 1
+        self.assertEqual(
+            predefined_default_object_acl,
+            CommonEnums.PredefinedObjectAcl.OBJECT_ACL_AUTHENTICATED_READ,
+        )
 
         request = utils.common.FakeRequest(args={})
         predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
             request, None
         )
-        assert predefined_default_object_acl == ""
+        self.assertEqual(predefined_default_object_acl, "")
 
         request.args["predefinedDefaultObjectAcl"] = "authenticatedRead"
         predefined_default_object_acl = utils.acl.extract_predefined_default_object_acl(
             request, None
         )
-        assert predefined_default_object_acl == "authenticatedRead"
+        self.assertEqual(predefined_default_object_acl, "authenticatedRead")
 
     def test_extract_predefined_acl(self):
         request = storage_pb2.InsertBucketRequest()
         predefined_acl = utils.acl.extract_predefined_acl(request, False, "")
-        assert predefined_acl == 0
+        self.assertEqual(
+            predefined_acl,
+            CommonEnums.PredefinedBucketAcl.PREDEFINED_BUCKET_ACL_UNSPECIFIED,
+        )
 
-        request.predefined_acl = 1
+        request.predefined_acl = (
+            CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ
+        )
         predefined_acl = utils.acl.extract_predefined_acl(request, False, "")
-        assert predefined_acl == 1
+        self.assertEqual(
+            predefined_acl,
+            CommonEnums.PredefinedBucketAcl.BUCKET_ACL_AUTHENTICATED_READ,
+        )
 
-        request = storage_pb2.CopyObjectRequest(destination_predefined_acl=2)
+        request = storage_pb2.CopyObjectRequest(
+            destination_predefined_acl=CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE
+        )
         predefined_acl = utils.acl.extract_predefined_acl(request, True, "")
-        assert predefined_acl == 2
+        self.assertEqual(
+            predefined_acl, CommonEnums.PredefinedBucketAcl.BUCKET_ACL_PRIVATE
+        )
 
         request = utils.common.FakeRequest(args={})
         predefined_acl = utils.acl.extract_predefined_acl(request, False, None)
-        assert predefined_acl == ""
+        self.assertEqual(predefined_acl, "")
 
         request.args["predefinedAcl"] = "authenticatedRead"
         predefined_acl = utils.acl.extract_predefined_acl(request, False, None)
-        assert predefined_acl == "authenticatedRead"
+        self.assertEqual(predefined_acl, "authenticatedRead")
 
         request.args["destinationPredefinedAcl"] = "bucketOwnerFullControl"
         predefined_acl = utils.acl.extract_predefined_acl(request, True, None)
-        assert predefined_acl == "bucketOwnerFullControl"
+        self.assertEqual(predefined_acl, "bucketOwnerFullControl")
 
     def test_compute_predefined_bucket_acl(self):
         acls = utils.acl.compute_predefined_bucket_acl(
             "bucket", "authenticatedRead", None
         )
         entities = [acl.entity for acl in acls]
-        assert entities == [
-            utils.acl.get_project_entity("owners", None),
-            "allAuthenticatedUsers",
-        ]
+        self.assertListEqual(
+            entities,
+            [utils.acl.get_project_entity("owners", None), "allAuthenticatedUsers"],
+        )
 
     def test_compute_predefined_default_object_acl(self):
         acls = utils.acl.compute_predefined_default_object_acl(
             "bucket", "authenticatedRead", None
         )
         entities = [acl.entity for acl in acls]
-        assert entities == [
-            utils.acl.get_object_entity("OWNER", None),
-            "allAuthenticatedUsers",
-        ]
+        self.assertEqual(
+            entities,
+            [utils.acl.get_object_entity("OWNER", None), "allAuthenticatedUsers"],
+        )
 
         object_names = [acl.object for acl in acls]
-        assert object_names == 2 * [""]
+        self.assertEqual(object_names, 2 * [""])
 
     def test_compute_predefined_object_acl(self):
         acls = utils.acl.compute_predefined_object_acl(
             "bucket", "object", 123456789, "authenticatedRead", None
         )
         entities = [acl.entity for acl in acls]
-        assert entities == [
-            utils.acl.get_object_entity("OWNER", None),
-            "allAuthenticatedUsers",
-        ]
+        self.assertEqual(
+            entities,
+            [utils.acl.get_object_entity("OWNER", None), "allAuthenticatedUsers"],
+        )
 
         object_names = [acl.object for acl in acls]
-        assert object_names == 2 * ["object"]
+        self.assertEqual(object_names, 2 * ["object"])
 
         generations = [acl.generation for acl in acls]
-        assert generations == 2 * [123456789]
+        self.assertEqual(generations, 2 * [123456789])
 
 
-class TestCommonUtils:
+class TestCommonUtils(unittest.TestCase):
     def test_snake_case(self):
-        assert utils.common.to_snake_case("authenticatedRead") == "authenticated_read"
-        assert (
-            utils.common.to_snake_case("allAuthenticatedUsers")
-            == "all_authenticated_users"
+        self.assertEqual(
+            utils.common.to_snake_case("authenticatedRead"), "authenticated_read"
+        )
+        self.assertEqual(
+            utils.common.to_snake_case("allAuthenticatedUsers"),
+            "all_authenticated_users",
         )
 
     def test_parse_fields(self):
         fields = "kind, items ( acl( entity, role), name, id)"
-        assert (
-            utils.common.parse_fields(fields).sort()
-            == [
-                "kind",
-                "items.acl.entity",
-                "items.acl.role",
-                "items.name",
-                "items.id",
-            ].sort()
+        self.assertCountEqual(
+            utils.common.parse_fields(fields),
+            ["kind", "items.acl.entity", "items.acl.role", "items.name", "items.id"],
         )
 
         fields = "kind, items(name, labels(number), acl(role))"
-        assert (
-            utils.common.parse_fields(fields).sort()
-            == ["kind", "items.name", "items.labels.number", "items.acl.role"].sort()
+        self.assertCountEqual(
+            utils.common.parse_fields(fields),
+            ["kind", "items.name", "items.labels.number", "items.acl.role"],
         )
 
     def test_remove_index(self):
         key = "items[1].name[0].id[0].acl"
-        assert utils.common.remove_index(key) == "items.name.id.acl"
+        self.assertEqual(utils.common.remove_index(key), "items.name.id.acl")
 
     def test_nested_key(self):
         doc = {
@@ -148,29 +170,40 @@ class TestCommonUtils:
             "acl": [{"id": 1}, {"id": 2}],
             "labels": {"first": 1, "second": [1, 2]},
         }
-        assert utils.common.nested_key(doc) == [
-            "name",
-            "acl[0].id",
-            "acl[1].id",
-            "labels.first",
-            "labels.second[0]",
-            "labels.second[1]",
-        ]
+        self.assertCountEqual(
+            utils.common.nested_key(doc),
+            [
+                "name",
+                "acl[0].id",
+                "acl[1].id",
+                "labels.first",
+                "labels.second[0]",
+                "labels.second[1]",
+            ],
+        )
 
     def test_extract_projection(self):
         request = storage_pb2.CopyObjectRequest()
-        projection = utils.common.extract_projection(request, 1, "")
-        assert projection == 1
-        request.projection = 2
-        projection = utils.common.extract_projection(request, 1, "")
-        assert projection == 2
+        projection = utils.common.extract_projection(
+            request, CommonEnums.Projection.NO_ACL, ""
+        )
+        self.assertEqual(projection, CommonEnums.Projection.NO_ACL)
+        request.projection = CommonEnums.Projection.FULL
+        projection = utils.common.extract_projection(
+            request, CommonEnums.Projection.NO_ACL, ""
+        )
+        self.assertEqual(projection, CommonEnums.Projection.FULL)
 
         request = utils.common.FakeRequest(args={})
-        projection = utils.common.extract_projection(request, 1, None)
-        assert projection == "noAcl"
+        projection = utils.common.extract_projection(
+            request, CommonEnums.Projection.NO_ACL, None
+        )
+        self.assertEqual(projection, "noAcl")
         request.args["projection"] = "full"
-        projection = utils.common.extract_projection(request, 1, None)
-        assert projection == "full"
+        projection = utils.common.extract_projection(
+            request, CommonEnums.Projection.NO_ACL, None
+        )
+        self.assertEqual(projection, "full")
 
     def test_filter_response_rest(self):
         response = {
@@ -196,26 +229,29 @@ class TestCommonUtils:
         response_full = utils.common.filter_response_rest(
             response, "full", "kind, items(name, labels(number), acl(role))"
         )
-        assert response_full == {
-            "kind": "storage#buckets",
-            "items": [
-                {
-                    "name": "bucket1",
-                    "labels": {"number": "1"},
-                    "acl": [{"role": "OWNER"}],
-                },
-                {
-                    "name": "bucket2",
-                    "labels": {"number": "2"},
-                    "acl": [{"role": "OWNER"}],
-                },
-                {
-                    "name": "bucket3",
-                    "labels": {"number": "3"},
-                    "acl": [{"role": "OWNER"}],
-                },
-            ],
-        }
+        self.assertDictEqual(
+            response_full,
+            {
+                "kind": "storage#buckets",
+                "items": [
+                    {
+                        "name": "bucket1",
+                        "labels": {"number": "1"},
+                        "acl": [{"role": "OWNER"}],
+                    },
+                    {
+                        "name": "bucket2",
+                        "labels": {"number": "2"},
+                        "acl": [{"role": "OWNER"}],
+                    },
+                    {
+                        "name": "bucket3",
+                        "labels": {"number": "3"},
+                        "acl": [{"role": "OWNER"}],
+                    },
+                ],
+            },
+        )
 
         response = {
             "kind": "storage#buckets",
@@ -240,13 +276,16 @@ class TestCommonUtils:
         response_noacl = utils.common.filter_response_rest(
             response, "noAcl", "items(name, labels)"
         )
-        assert response_noacl == {
-            "items": [
-                {"name": "bucket1", "labels": {"number": "1", "order": "1"}},
-                {"name": "bucket2", "labels": {"number": "2", "order": "2"}},
-                {"name": "bucket3", "labels": {"number": "3", "order": "3"}},
-            ]
-        }
+        self.assertDictEqual(
+            response_noacl,
+            {
+                "items": [
+                    {"name": "bucket1", "labels": {"number": "1", "order": "1"}},
+                    {"name": "bucket2", "labels": {"number": "2", "order": "2"}},
+                    {"name": "bucket3", "labels": {"number": "3", "order": "3"}},
+                ]
+            },
+        )
 
     def test_parse_multipart(self):
         request = utils.common.FakeRequest(
@@ -255,12 +294,28 @@ class TestCommonUtils:
             environ={},
         )
         metadata, media_header, media = utils.common.parse_multipart(request)
-        assert metadata == {"name": "myObject", "metadata": {"test": "test"}}
-        assert media_header == {"Content-Type": "image/jpeg"}
-        assert media == b"123456789"
+        self.assertDictEqual(
+            metadata, {"name": "myObject", "metadata": {"test": "test"}}
+        )
+        self.assertDictEqual(media_header, {"content-type": "image/jpeg"})
+        self.assertEqual(media, b"123456789")
+
+        # In some cases, data media contains "\r\n" which could confuse `parse_multipart`
+        request = utils.common.FakeRequest(
+            headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n--1VvZTD07ltUtqMHg--\r\n',
+            environ={},
+        )
+        metadata, media_header, media = utils.common.parse_multipart(request)
+        self.assertDictEqual(metadata, {"crc32c": "4GEvYA=="})
+        self.assertDictEqual(media_header, {"content-type": "application/octet-stream"})
+        self.assertEqual(
+            media,
+            b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
+        )
 
 
-class TestGeneration:
+class TestGeneration(unittest.TestCase):
     def test_extract_precondition(self):
         request = storage_pb2.CopyObjectRequest(
             if_generation_not_match={"value": 1},
@@ -274,23 +329,23 @@ class TestGeneration:
         match, not_match = utils.generation.extract_precondition(
             request, False, False, ""
         )
-        assert match is None
-        assert not_match == 1
+        self.assertIsNone(match)
+        self.assertEqual(not_match, 1)
         match, not_match = utils.generation.extract_precondition(
             request, True, False, ""
         )
-        assert match == 2
-        assert not_match == 3
+        self.assertEqual(match, 2)
+        self.assertEqual(not_match, 3)
         match, not_match = utils.generation.extract_precondition(
             request, False, True, ""
         )
-        assert match == 4
-        assert not_match == 5
+        self.assertEqual(match, 4)
+        self.assertEqual(not_match, 5)
         match, not_match = utils.generation.extract_precondition(
             request, True, True, ""
         )
-        assert match == 6
-        assert not_match == 7
+        self.assertEqual(match, 6)
+        self.assertEqual(not_match, 7)
 
         request = utils.common.FakeRequest(
             args={
@@ -306,48 +361,70 @@ class TestGeneration:
         match, not_match = utils.generation.extract_precondition(
             request, False, False, None
         )
-        assert match is None
-        assert not_match == 1
+        self.assertIsNone(match)
+        self.assertEqual(not_match, 1)
         match, not_match = utils.generation.extract_precondition(
             request, True, False, None
         )
-        assert match == 2
-        assert not_match == 3
+        self.assertEqual(match, 2)
+        self.assertEqual(not_match, 3)
         match, not_match = utils.generation.extract_precondition(
             request, False, True, None
         )
-        assert match == 4
-        assert not_match == 5
+        self.assertEqual(match, 4)
+        self.assertEqual(not_match, 5)
         match, not_match = utils.generation.extract_precondition(
             request, True, True, None
         )
-        assert match == 6
-        assert not_match == 7
+        self.assertEqual(match, 6)
+        self.assertEqual(not_match, 7)
 
     def test_extract_generation(self):
         request = storage_pb2.GetObjectRequest()
         generation = utils.generation.extract_generation(request, False, "")
-        assert generation == 0
+        self.assertEqual(generation, 0)
 
         request.generation = 1
         generation = utils.generation.extract_generation(request, False, "")
-        assert generation == 1
+        self.assertEqual(generation, 1)
 
         request = storage_pb2.CopyObjectRequest(source_generation=2)
         generation = utils.generation.extract_generation(request, True, "")
-        assert generation == 2
+        self.assertEqual(generation, 2)
 
         request = utils.common.FakeRequest(args={})
         generation = utils.generation.extract_generation(request, False, None)
-        assert generation == 0
+        self.assertEqual(generation, 0)
 
         request.args["generation"] = 1
         request.args["sourceGeneration"] = 2
         generation = utils.generation.extract_generation(request, False, None)
-        assert generation == 1
+        self.assertEqual(generation, 1)
         generation = utils.generation.extract_generation(request, True, None)
-        assert generation == 2
+        self.assertEqual(generation, 2)
 
 
-def run():
-    pytest.main(["-v"])
+class TestError(unittest.TestCase):
+    def test_error_propagation(self):
+        emulator = os.getenv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
+        if emulator is None:
+            self.skipTest()
+        conn = http.client.HTTPConnection(emulator[len("http://") :], timeout=10)
+
+        conn.request("GET", "/raise_error")
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("Exception", body)
+
+        params = urllib.parse.urlencode({"etype": "yes", "msg": "custom message"})
+        conn.request("GET", "/raise_error?" + params)
+        response = conn.getresponse()
+        body = response.read().decode("utf-8")
+        self.assertIn("Traceback (most recent call last):", body)
+        self.assertIn("TypeError", body)
+        self.assertIn("custom message", body)
+
+
+if __name__ == "__main__":
+    unittest.main()

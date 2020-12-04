@@ -214,8 +214,6 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
-  // The testbench does not support binary payloads.
-  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -436,9 +434,9 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  if (UsingTestbench()) {
-    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
+  if (UsingEmulator()) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_emulator_upload"));
   }
 
   // Create an iostream to read the object back.
@@ -476,9 +474,9 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  if (UsingTestbench()) {
-    ASSERT_TRUE(meta->has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta->metadata("x_testbench_upload"));
+  if (UsingEmulator()) {
+    ASSERT_TRUE(meta->has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta->metadata("x_emulator_upload"));
   }
 
   // Create an iostream to read the object back.

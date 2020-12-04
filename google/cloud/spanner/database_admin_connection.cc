@@ -22,6 +22,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 using google::cloud::internal::Idempotency;
@@ -56,7 +57,7 @@ Status DatabaseAdminConnection::DeleteBackup(DeleteBackupParams) {
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 ListBackupsRange DatabaseAdminConnection::ListBackups(ListBackupsParams) {
-  return ListBackupsRange(
+  return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
       gcsa::ListBackupsRequest{},
       [](gcsa::ListBackupsRequest const&) {
         return StatusOr<gcsa::ListBackupsResponse>(
@@ -76,7 +77,8 @@ DatabaseAdminConnection::UpdateBackup(UpdateBackupParams) {
 ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     ListBackupOperationsParams) {
-  return ListBackupOperationsRange(
+  return google::cloud::internal::MakePaginationRange<
+      ListBackupOperationsRange>(
       gcsa::ListBackupOperationsRequest{},
       [](gcsa::ListBackupOperationsRequest const&) {
         return StatusOr<gcsa::ListBackupOperationsResponse>(
@@ -90,7 +92,8 @@ ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
 ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     ListDatabaseOperationsParams) {
-  return ListDatabaseOperationsRange(
+  return google::cloud::internal::MakePaginationRange<
+      ListDatabaseOperationsRange>(
       gcsa::ListDatabaseOperationsRequest{},
       [](gcsa::ListDatabaseOperationsRequest const&) {
         return StatusOr<gcsa::ListDatabaseOperationsResponse>(
@@ -127,19 +130,22 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
  public:
   explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<internal::DatabaseAdminStub> stub,
+      ConnectionOptions const& options,
       std::unique_ptr<RetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        polling_policy_prototype_(std::move(polling_policy)) {}
+        polling_policy_prototype_(std::move(polling_policy)),
+        background_threads_(options.background_threads_factory()()) {}
 
   explicit DatabaseAdminConnectionImpl(
-      std::shared_ptr<internal::DatabaseAdminStub> stub)
-      : DatabaseAdminConnectionImpl(std::move(stub), DefaultAdminRetryPolicy(),
-                                    DefaultAdminBackoffPolicy(),
-                                    DefaultAdminPollingPolicy()) {}
+      std::shared_ptr<internal::DatabaseAdminStub> stub,
+      ConnectionOptions const& options)
+      : DatabaseAdminConnectionImpl(
+            std::move(stub), options, DefaultAdminRetryPolicy(),
+            DefaultAdminBackoffPolicy(), DefaultAdminPollingPolicy()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
 
@@ -247,7 +253,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListDatabaseRange(
+    return google::cloud::internal::MakePaginationRange<ListDatabaseRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListDatabasesRequest const& r) {
@@ -402,7 +408,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListBackupsRange(
+    return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListBackupsRequest const& r) {
@@ -448,7 +454,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListBackupOperationsRange(
+    return google::cloud::internal::MakePaginationRange<
+        ListBackupOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListBackupOperationsRequest const& r) {
@@ -483,7 +490,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
-    return ListDatabaseOperationsRange(
+    return google::cloud::internal::MakePaginationRange<
+        ListDatabaseOperationsRange>(
         std::move(request),
         [stub, retry, backoff,
          function_name](gcsa::ListDatabaseOperationsRequest const& r) {
@@ -510,7 +518,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     promise<StatusOr<gcsa::Database>> pr;
     auto f = pr.get_future();
 
-    // TODO(#4038) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use background_threads_->cq() to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
@@ -545,7 +553,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> pr;
     auto f = pr.get_future();
 
-    // TODO(#4038) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use background_threads_->cq() to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
@@ -588,7 +596,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     });
     auto f = pr.get_future();
 
-    // TODO(#4038) - use the (implicit) completion queue to run this loop.
+    // TODO(#4038) - use background_threads_->cq() to run this loop.
     std::thread t(
         [](std::shared_ptr<internal::DatabaseAdminStub> stub,
            google::longrunning::Operation operation,
@@ -620,23 +628,30 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
+
+  // Implementations of `BackgroundThreads` typically create a pool of
+  // threads that are joined during destruction, so, to avoid ownership
+  // cycles, those threads should never assume ownership of this object
+  // (e.g., via a `std::shared_ptr<>`).
+  std::unique_ptr<BackgroundThreads> background_threads_;
 };
+
 }  // namespace
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options) {
-  return std::make_shared<DatabaseAdminConnectionImpl>(
-      internal::CreateDefaultDatabaseAdminStub(options));
+  return internal::MakeDatabaseAdminConnection(
+      internal::CreateDefaultDatabaseAdminStub(options), options);
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
-  return std::make_shared<DatabaseAdminConnectionImpl>(
-      internal::CreateDefaultDatabaseAdminStub(options),
+  return internal::MakeDatabaseAdminConnection(
+      internal::CreateDefaultDatabaseAdminStub(options), options,
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }
@@ -645,12 +660,19 @@ namespace internal {
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<internal::DatabaseAdminStub> stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options) {
+  return std::make_shared<DatabaseAdminConnectionImpl>(std::move(stub),
+                                                       options);
+}
+
+std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    std::shared_ptr<internal::DatabaseAdminStub> stub,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return std::make_shared<DatabaseAdminConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy));
+      std::move(stub), options, std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
 }
 
 }  // namespace internal

@@ -104,7 +104,7 @@ class SubscriptionAdminConnectionImpl
               request, function_name);
         };
 
-    return pubsub::ListSubscriptionsRange(
+    return internal::MakePaginationRange<pubsub::ListSubscriptionsRange>(
         std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListSubscriptionsResponse response) {
           std::vector<google::pubsub::v1::Subscription> items;
@@ -191,7 +191,7 @@ class SubscriptionAdminConnectionImpl
               request, function_name);
         };
 
-    return pubsub::ListSnapshotsRange(
+    return internal::MakePaginationRange<pubsub::ListSnapshotsRange>(
         std::move(request), std::move(list_functor),
         [](google::pubsub::v1::ListSnapshotsResponse response) {
           std::vector<google::pubsub::v1::Snapshot> items;
@@ -303,8 +303,7 @@ SubscriptionAdminConnection::UpdateSubscription(UpdateSubscriptionParams) {
 
 ListSubscriptionsRange SubscriptionAdminConnection::ListSubscriptions(
     ListSubscriptionsParams) {  // NOLINT(performance-unnecessary-value-param)
-  return internal::UnimplementedPaginationRange<
-      ListSubscriptionsRange>::Create();
+  return internal::MakeUnimplementedPaginationRange<ListSubscriptionsRange>();
 }
 
 Status SubscriptionAdminConnection::DeleteSubscription(
@@ -336,7 +335,7 @@ SubscriptionAdminConnection::UpdateSnapshot(UpdateSnapshotParams) {
 
 ListSnapshotsRange SubscriptionAdminConnection::ListSnapshots(
     ListSnapshotsParams) {  // NOLINT(performance-unnecessary-value-param)
-  return internal::UnimplementedPaginationRange<ListSnapshotsRange>::Create();
+  return internal::MakeUnimplementedPaginationRange<ListSnapshotsRange>();
 }
 
 // NOLINTNEXTLINE(performance-unnecessary-value-param)

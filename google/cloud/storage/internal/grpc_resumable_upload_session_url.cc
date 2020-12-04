@@ -24,6 +24,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+using ::google::storage::v1::internal::GrpcResumableUploadSessionUrl;
+
 auto constexpr kUriScheme = "grpc://";
 
 std::string EncodeGrpcResumableUploadSessionUrl(

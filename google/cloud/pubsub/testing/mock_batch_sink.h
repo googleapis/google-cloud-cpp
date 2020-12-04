@@ -32,8 +32,7 @@ class MockBatchSink : public pubsub_internal::BatchSink {
   ~MockBatchSink() override = default;
 
   MOCK_METHOD(future<StatusOr<google::pubsub::v1::PublishResponse>>,
-              AsyncPublish, (google::pubsub::v1::PublishRequest const&),
-              (override));
+              AsyncPublish, (google::pubsub::v1::PublishRequest), (override));
   MOCK_METHOD(void, ResumePublish, (std::string const&), (override));
 };
 

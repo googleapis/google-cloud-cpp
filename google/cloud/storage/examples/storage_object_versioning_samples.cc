@@ -220,7 +220,7 @@ void RunAll(std::vector<std::string> const& argv) {
   GetObjectVersioning(client, {bucket_name});
 
   (void)client.DeleteObject(bucket_name, dst_object_name);
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

@@ -41,10 +41,8 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListSubscriptionsRange = google::cloud::internal::PaginationRange<
-    google::pubsub::v1::Subscription,
-    google::pubsub::v1::ListSubscriptionsRequest,
-    google::pubsub::v1::ListSubscriptionsResponse>;
+using ListSubscriptionsRange =
+    google::cloud::internal::PaginationRange<google::pubsub::v1::Subscription>;
 
 /**
  * An input range to stream Cloud Pub/Sub snapshots.
@@ -55,9 +53,8 @@ using ListSubscriptionsRange = google::cloud::internal::PaginationRange<
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListSnapshotsRange = google::cloud::internal::PaginationRange<
-    google::pubsub::v1::Snapshot, google::pubsub::v1::ListSnapshotsRequest,
-    google::pubsub::v1::ListSnapshotsResponse>;
+using ListSnapshotsRange =
+    google::cloud::internal::PaginationRange<google::pubsub::v1::Snapshot>;
 
 /**
  * A connection to Cloud Pub/Sub for subscription-related administrative

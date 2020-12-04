@@ -7,7 +7,95 @@
   This attribute represents the pre-GA name for "Uniform Bucket Level Access"
   becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-## v1.21.0 - TBD
+## v1.22.0 - TBD
+
+## v1.21.0 - 2020-12
+
+**BREAKING CHANGES:**
+
+* Some "Range" types used in the Storage, Pub/Sub and Spanner APIs lost a
+  constructor that was never intended to be part of their public APIs. Users
+  who were not directly constructing these ranges will not be affected. Also
+  some performance improvements were made to their iterator implementations
+  that could break callers who were relying on unspecified behavior that is not
+  required by the [input
+  range](https://en.cppreference.com/w/cpp/named_req/InputIterator) concept.
+  The affected types are:
+  * `google/cloud/storage/list_buckets_reader.h`
+    * `using ListBucketsReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_hmac_keys_reader.h`
+    * `using ListHmacKeysReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_objects_and_prefixes_reader.h`
+    * `using ListObjectsAndPrefixesReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/storage/list_objects_reader.h`
+    * `using ListObjectsReader = google::cloud::internal::PaginationRange`
+  * `google/cloud/pubsub/subscription_admin_connection.h`
+    * `using ListSubscriptionsRange = google::cloud::internal::PaginationRange`
+    * `using ListSnapshotsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/pubsub/topic_admin_connection.h`
+    * `using ListTopicsRange = google::cloud::internal::PaginationRange`
+    * `using ListTopicSubscriptionsRange = google::cloud::internal::PaginationRange`
+    * `using ListTopicSnapshotsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/spanner/database_admin_connection.h`
+    * `using ListDatabaseRange = google::cloud::internal::PaginationRange`
+    * `using ListBackupOperationsRange = google::cloud::internal::PaginationRange`
+    * `using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange`
+    * `using ListBackupsRange = google::cloud::internal::PaginationRange`
+  * `google/cloud/spanner/instance_admin_connection.h`
+    * `using ListInstancesRange = google::cloud::internal::PaginationRange`
+    * `using ListInstanceConfigsRange = google::cloud::internal::PaginationRange`
+
+### Bigtable
+
+* fix(bigtable): missing functions to change policies (#5565)
+* feat(bigtable): create logging layer for Cloud Bigtable (#5515)
+* docs: document Bigtable thread safety (#5394)
+
+### Pub/Sub
+
+* feat(pubsub): by default Subscriber::Subscribe retries forever (#5552)
+* fix(pubsub): deadlock during streaming pull shutdown (#5547)
+* fix(pubsub): deadlock during fire & forget shutdown (#5541)
+* refactor!: PaginationRange<T> is now an alias to StreamRange<T> (#5538)
+* doc(pubsub): declare the library GA (#5390)
+* doc(pubsub): how to run throughput benchmark (#5500)
+* feat(pubsub): separate subscribers in benchmark (#5499)
+* feat(pubsub): separate publishers in benchmark (#5496)
+* feat(pubsub): minor optimization in publisher (#5495)
+* fix(pubsub): reduce data copying in publish (#5484)
+* feat(pubsub): more efficient callback dispatch (#5458)
+* feat(pubsub): batch acks and nacks in streams (#5464)
+* feat(pubsub): increase default buffer sizes (#5449)
+* feat(pubsub): pace publisher in throughtput benchmark (#5447)
+* feat(pubsub): improve lease management performance (#5454)
+* feat(pubsub): more details in throughput benchmark (#5451)
+* feat(pubsub): import throughput benchmark reports (#5450)
+* feat(pubsub): show ack throughput in benchmark (#5439)
+* feat(pubsub): handle AsyncPull responses in batches (#5441)
+* feat(pubsub): round robin subscriber channels (#5423)
+* feat(pubsub): more throughput benchmark options (#5419)
+* fix(pubsub): keep corked after ResumePublish (#5415)
+* fix(pubsub): sometimes published oversized batches (#5409)
+* feat(pubsub): round robin publisher connections (#5401)
+* feat(pubsub): reduce default channel count (#5402)
+
+### Spanner
+
+* feat(spanner): Point-In-Time Recovery (lite) throttled DB update (#5562)
+* refactor!: PaginationRange<T> is now an alias to StreamRange<T> (#5538)
+
+### Storage
+
+* refactor!: change gcs to use common PaginationRange<T> (#5545)
+* fix(storage): use channel options for credentials (#5524)
+* fix: validate service account credentials contain a usable key (#5404)
+
+### Common Libraries
+
+* feat: add value_type to StatusOr<T> (#5535)
+* feat: introduce a generic StreamRange<T> (#5532)
+* refactor(common): move CompletionQueue mock (#5463)
+* feat: a faster CompletionQueue::RunAsync (#5406)
 
 ## v1.20.0 - 2020-11
 
@@ -19,8 +107,8 @@ No user-facing changes.
 
 **BREAKING CHANGES:**
 
-While the Pub/Sub library is not GA, and breaking changes are to be expected, we
-are close enough to a GA release that we think highlighting them is important.
+This is the first GA release of the Pub/Sub library. While breaking changes
+before GA should be expected, we think highlighting them here is important.
 
 * Simplify the concurrency control configuration in `pubsub::SubscriberOptions`.
   Applications only need to set the maximum number of messages that will be

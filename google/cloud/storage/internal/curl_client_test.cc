@@ -52,7 +52,7 @@ class FailingCredentials : public Credentials {
 class CurlClientTest : public ::testing::Test,
                        public ::testing::WithParamInterface<std::string> {
  protected:
-  CurlClientTest() : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}) {}
+  CurlClientTest() : endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}) {}
 
   void SetUp() override {
     std::string const error_type = GetParam();
@@ -65,7 +65,7 @@ class CurlClientTest : public ::testing::Test,
         EXPECT_THAT(actual.message(), HasSubstr(kStatusErrorMsg));
       };
     } else if (error_type == "libcurl-failure") {
-      google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+      google::cloud::internal::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                       "http://localhost:1");
       client_ =
           CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())

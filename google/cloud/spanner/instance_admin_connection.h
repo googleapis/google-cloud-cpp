@@ -39,9 +39,7 @@ inline namespace SPANNER_CLIENT_NS {
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
 using ListInstancesRange = google::cloud::internal::PaginationRange<
-    google::spanner::admin::instance::v1::Instance,
-    google::spanner::admin::instance::v1::ListInstancesRequest,
-    google::spanner::admin::instance::v1::ListInstancesResponse>;
+    google::spanner::admin::instance::v1::Instance>;
 
 /**
  * An input range to stream all the instance configs in a Cloud project.
@@ -53,9 +51,7 @@ using ListInstancesRange = google::cloud::internal::PaginationRange<
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
 using ListInstanceConfigsRange = google::cloud::internal::PaginationRange<
-    google::spanner::admin::instance::v1::InstanceConfig,
-    google::spanner::admin::instance::v1::ListInstanceConfigsRequest,
-    google::spanner::admin::instance::v1::ListInstanceConfigsResponse>;
+    google::spanner::admin::instance::v1::InstanceConfig>;
 
 /**
  * A connection to the Cloud Spanner instance administration service.
@@ -234,19 +230,14 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<PollingPolicy> polling_policy);
 
 namespace internal {
-/**
- * Create an InstanceAdminConnection using an existing base Stub.
- *
- * Returns a new InstanceAdminConnection with all the normal decorators applied
- * to @p base_stub.
- */
+
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
     ConnectionOptions const& options);
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 

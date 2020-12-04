@@ -68,9 +68,7 @@ Status ConnectionGenerator::GenerateHeader() {
                 // clang-format off
    {"using $method_name$Range = "
     "google::cloud::internal::PaginationRange<\n"
-    "    $range_output_type$,\n"
-    "    $request_type$,\n"
-    "    $response_type$>;\n\n"},
+    "    $range_output_type$>;\n\n"},
                 // clang-format on
             },
             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
@@ -138,7 +136,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);\n\n");
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
   // clang-format on
 
   HeaderPrint(  // clang-format off
@@ -147,7 +145,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);\n\n");
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -220,10 +218,10 @@ Status ConnectionGenerator::GenerateCc() {
                  // clang-format off
    {"$method_name$Range $connection_class_name$::$method_name$(\n"
     "    $request_type$ request) {\n"
-    "  return $method_name$Range(\n"
+    "  return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
     "    std::move(request),\n"
     "    []($request_type$ const&) {\n"
-    "      return $response_type$();\n"
+    "      return StatusOr<$response_type$>{};\n"
     "    },\n"
     "    []($response_type$ const&) {\n"
     "      return std::vector<$range_output_type$>();\n"
@@ -273,7 +271,7 @@ Status ConnectionGenerator::GenerateCc() {
       "      std::unique_ptr<RetryPolicy> retry_policy,\n"
       "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"
       "      std::unique_ptr<PollingPolicy> polling_policy,\n"
-      "      std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> "
+      "      std::unique_ptr<$idempotency_class_name$> "
       "idempotency_policy)\n"
       "      : stub_(std::move(stub)),\n"
       "        retry_policy_prototype_(std::move(retry_policy)),\n"
@@ -289,7 +287,7 @@ Status ConnectionGenerator::GenerateCc() {
       "          DefaultRetryPolicy(),\n"
       "          DefaultBackoffPolicy(),\n"
       "          DefaultPollingPolicy(),\n"
-      "          MakeDefaultDatabaseAdminConnectionIdempotencyPolicy()) {}\n"
+      "          MakeDefault$idempotency_class_name$()) {}\n"
       "\n"
       "  ~$connection_class_name$Impl() override = default;\n\n");
   //  clang-format on
@@ -359,7 +357,7 @@ Status ConnectionGenerator::GenerateCc() {
     "        backoff_policy_prototype_->clone());\n"
     "    auto idempotency = idempotency_policy_->$method_name$(request);\n"
     "    char const* function_name = __func__;\n"
-    "    return $method_name$Range(\n"
+    "    return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
     "        std::move(request),\n"
     "        [stub, retry, backoff, idempotency, function_name]\n"
     "          ($request_type$ const& r) {\n"
@@ -463,7 +461,7 @@ Status ConnectionGenerator::GenerateCc() {
     "  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;\n"
     "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"
     "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n"
-    "  std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy_;\n"
+    "  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
     "};\n");
   // clang-format on
 
@@ -483,7 +481,7 @@ Status ConnectionGenerator::GenerateCc() {
     "retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {\n"
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options),\n"
     "      std::move(retry_policy), std::move(backoff_policy),\n"
@@ -497,7 +495,7 @@ Status ConnectionGenerator::GenerateCc() {
     "    std::unique_ptr<RetryPolicy> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {\n"
+    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      std::move(stub), std::move(retry_policy), std::move(backoff_policy),\n"
     "      std::move(polling_policy), std::move(idempotency_policy));\n"

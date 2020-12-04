@@ -26,8 +26,29 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace oauth2 {
 
+namespace internal {
+StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
+                                              std::string const& payload,
+                                              std::string const& pem_contents) {
+  std::string encoded_header = UrlsafeBase64Encode(header);
+  std::string encoded_payload = UrlsafeBase64Encode(payload);
+  auto pem_signature = internal::SignStringWithPem(
+      encoded_header + '.' + encoded_payload, pem_contents,
+      storage::oauth2::JwtSigningAlgorithms::RS256);
+  if (!pem_signature) {
+    return pem_signature.status();
+  }
+  std::string encoded_signature = UrlsafeBase64Encode(
+      internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
+                                  pem_contents,
+                                  storage::oauth2::JwtSigningAlgorithms::RS256)
+          .value());
+  return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
+}
+}  // namespace internal
+
+namespace oauth2 {
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
@@ -228,12 +249,8 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
 std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
                              std::string const& pem_contents) {
-  std::string encoded_header = internal::UrlsafeBase64Encode(header);
-  std::string encoded_payload = internal::UrlsafeBase64Encode(payload);
-  std::string encoded_signature = internal::UrlsafeBase64Encode(
-      internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
-                                  pem_contents, JwtSigningAlgorithms::RS256));
-  return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
+  return internal::MakeJWTAssertionNoThrow(header, payload, pem_contents)
+      .value();
 }
 
 std::string CreateServiceAccountRefreshPayload(

@@ -177,7 +177,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteNotification() example [2]" << std::endl;
   DeleteNotification(client, {bucket_name, n2.id()});
 
-  if (!examples::UsingTestbench()) std::this_thread::sleep_until(pause);
+  if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

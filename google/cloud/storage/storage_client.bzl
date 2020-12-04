@@ -72,7 +72,6 @@ storage_client_hdrs = [
     "internal/parameter_pack_validation.h",
     "internal/patch_builder.h",
     "internal/policy_document_request.h",
-    "internal/range_from_pagination.h",
     "internal/raw_client.h",
     "internal/raw_client_wrapper_utils.h",
     "internal/resumable_upload_session.h",

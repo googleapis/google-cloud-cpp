@@ -66,6 +66,14 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 - `BIGTABLE_EMULATOR_HOST=host:port` tells the library to connect to the
   specified emulator rather than the default endpoint.
 
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls, the library injects an additional Stub decorator that prints each gRPC
+  request and response.
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
 ## Next Steps
 
 - @ref bigtable-hello-world "Hello World Example"

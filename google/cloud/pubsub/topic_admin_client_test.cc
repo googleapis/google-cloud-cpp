@@ -88,7 +88,7 @@ TEST(TopicAdminClient, ListTopics) {
   EXPECT_CALL(*mock, ListTopics)
       .WillOnce([&](TopicAdminConnection::ListTopicsParams const& p) {
         EXPECT_EQ("projects/test-project", p.project_id);
-        return pubsub::ListTopicsRange(
+        return internal::MakePaginationRange<pubsub::ListTopicsRange>(
             google::pubsub::v1::ListTopicsRequest{},
             [&](google::pubsub::v1::ListTopicsRequest const&) {
               google::pubsub::v1::ListTopicsResponse response;
@@ -146,7 +146,8 @@ TEST(TopicAdminClient, ListTopicSubscriptions) {
       .WillOnce([&](TopicAdminConnection::ListTopicSubscriptionsParams const&
                         p) {
         EXPECT_EQ(topic.FullName(), p.topic_full_name);
-        return pubsub::ListTopicSubscriptionsRange(
+        return internal::MakePaginationRange<
+            pubsub::ListTopicSubscriptionsRange>(
             google::pubsub::v1::ListTopicSubscriptionsRequest{},
             [&](google::pubsub::v1::ListTopicSubscriptionsRequest const&) {
               google::pubsub::v1::ListTopicSubscriptionsResponse response;
@@ -177,7 +178,7 @@ TEST(TopicAdminClient, ListTopicSnapshots) {
   EXPECT_CALL(*mock, ListTopicSnapshots)
       .WillOnce([&](TopicAdminConnection::ListTopicSnapshotsParams const& p) {
         EXPECT_EQ(topic.FullName(), p.topic_full_name);
-        return pubsub::ListTopicSnapshotsRange(
+        return internal::MakePaginationRange<pubsub::ListTopicSnapshotsRange>(
             google::pubsub::v1::ListTopicSnapshotsRequest{},
             [&](google::pubsub::v1::ListTopicSnapshotsRequest const&) {
               google::pubsub::v1::ListTopicSnapshotsResponse response;

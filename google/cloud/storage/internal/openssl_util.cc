@@ -173,25 +173,16 @@ std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
   return Base64Encode(bytes.data(), bytes.size());
 }
 
-std::vector<std::uint8_t> SignStringWithPem(
+StatusOr<std::vector<std::uint8_t>> SignStringWithPem(
     std::string const& str, std::string const& pem_contents,
     storage::oauth2::JwtSigningAlgorithms alg) {
   using ::google::cloud::storage::oauth2::JwtSigningAlgorithms;
 
-  // We check for failures several times, so we shorten this into a lambda
-  // to avoid bloating the code with alloc/init checks.
-  const char* func_name = __func__;  // Avoid using the lambda name instead.
-  auto handle_openssl_failure = [&func_name](const char* error_msg) -> void {
-    std::ostringstream err_builder;
-    err_builder << "Permanent error in " << func_name
-                << " (failed to sign string with PEM key):\n"
-                << error_msg;
-    google::cloud::internal::ThrowRuntimeError(err_builder.str());
-  };
-
   auto digest_ctx = GetDigestCtx();
   if (!digest_ctx) {
-    handle_openssl_failure("Could not create context for OpenSSL digest.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not create context for OpenSSL digest. ");
   }
 
   EVP_MD const* digest_type = nullptr;
@@ -201,7 +192,9 @@ std::vector<std::uint8_t> SignStringWithPem(
       break;
   }
   if (digest_type == nullptr) {
-    handle_openssl_failure("Could not find specified digest in OpenSSL.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not find specified digest in OpenSSL. ");
   }
 
   auto pem_buffer = std::unique_ptr<BIO, decltype(&BIO_free)>(
@@ -209,7 +202,9 @@ std::vector<std::uint8_t> SignStringWithPem(
                       static_cast<int>(pem_contents.length())),
       &BIO_free);
   if (!pem_buffer) {
-    handle_openssl_failure("Could not create PEM buffer.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not create PEM buffer. ");
   }
 
   auto private_key = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
@@ -223,7 +218,9 @@ std::vector<std::uint8_t> SignStringWithPem(
           nullptr),
       &EVP_PKEY_free);
   if (!private_key) {
-    handle_openssl_failure("Could not parse PEM to get private key.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not parse PEM to get private key ");
   }
 
   int const digest_sign_success_code = 1;
@@ -233,12 +230,16 @@ std::vector<std::uint8_t> SignStringWithPem(
                          digest_type,
                          nullptr,  // `ENGINE *e`
                          private_key.get())) {
-    handle_openssl_failure("Could not initialize PEM digest.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not initialize PEM digest. ");
   }
 
   if (digest_sign_success_code !=
       EVP_DigestSignUpdate(digest_ctx.get(), str.data(), str.length())) {
-    handle_openssl_failure("Could not update PEM digest.");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not update PEM digest. ");
   }
 
   std::size_t signed_str_size = 0;
@@ -249,17 +250,22 @@ std::vector<std::uint8_t> SignStringWithPem(
       EVP_DigestSignFinal(digest_ctx.get(),
                           nullptr,  // unsigned char *sig
                           &signed_str_size)) {
-    handle_openssl_failure("Could not finalize PEM digest (1/2).");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not finalize PEM digest (1/2). ");
   }
 
   std::vector<unsigned char> signed_str(signed_str_size);
   if (digest_sign_success_code != EVP_DigestSignFinal(digest_ctx.get(),
                                                       signed_str.data(),
                                                       &signed_str_size)) {
-    handle_openssl_failure("Could not finalize PEM digest (2/2).");
+    return Status(StatusCode::kInvalidArgument,
+                  "Invalid ServiceAccountCredentials: "
+                  "could not finalize PEM digest (2/2). ");
   }
 
-  return {signed_str.begin(), signed_str.end()};
+  return StatusOr<std::vector<unsigned char>>(
+      {signed_str.begin(), signed_str.end()});
 }
 
 std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {

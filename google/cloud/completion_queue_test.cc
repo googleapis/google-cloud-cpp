@@ -16,6 +16,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -489,36 +490,7 @@ TEST(CompletionQueueTest, RunAsyncThread) {
   for (auto& t : runners) t.join();
 }
 
-class RunAsyncBlocker {
- public:
-  RunAsyncBlocker() = default;
-
-  std::size_t MaxSize() const { return max_size_; }
-
-  future<void> AddPromise() {
-    std::unique_lock<std::mutex> lk(mu_);
-    waiting_.emplace_back();
-    auto f = waiting_.back().get_future();
-    max_size_ = (std::max)(max_size_, waiting_.size());
-    lk.unlock();
-    cv_.notify_one();
-    return f;
-  }
-
-  promise<void> WaitForPromise() {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_.wait(lk, [&] { return !waiting_.empty(); });
-    auto p = std::move(waiting_.front());
-    waiting_.pop_front();
-    return p;
-  }
-
- private:
-  std::mutex mu_;
-  std::condition_variable cv_;
-  std::deque<promise<void>> waiting_;
-  std::size_t max_size_ = 0;
-};
+using RunAsyncBlocker = google::cloud::testing_util::AsyncSequencer<void>;
 
 TEST(CompletionQueueTest, RunAsyncParallel) {
   auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
@@ -529,8 +501,8 @@ TEST(CompletionQueueTest, RunAsyncParallel) {
                 [&cq] { return std::thread{[&cq] { cq.Run(); }}; });
 
   RunAsyncBlocker blocker;
-  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
-  auto wait = [&blocker] { return blocker.WaitForPromise(); };
+  auto on_run_async = [&blocker] { blocker.PushBack().get(); };
+  auto wait = [&blocker] { return blocker.PopFront(); };
 
   // Start an async function and block it... this will help us verify that
   // different functions get called in different threads. Start with just one:
@@ -562,8 +534,8 @@ TEST(CompletionQueueTest, RunAsyncSingleThreaded) {
 
   // Make each function in RunAsync() block under control of this thread.
   RunAsyncBlocker blocker;
-  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
-  auto wait = [&blocker] { return blocker.WaitForPromise(); };
+  auto on_run_async = [&blocker] { blocker.PushBack().get(); };
+  auto wait = [&blocker] { return blocker.PopFront(); };
 
   // Verify that scheduling multiple async functions works.
   auto constexpr kIterations = 100;
@@ -580,8 +552,8 @@ TEST(CompletionQueueTest, RunAsyncSingleThread) {
   std::thread runner{[](CompletionQueue cq) { cq.Run(); }, cq};
 
   RunAsyncBlocker blocker;
-  auto on_run_async = [&blocker] { blocker.AddPromise().get(); };
-  auto wait = [&blocker] { return blocker.WaitForPromise(); };
+  auto on_run_async = [&blocker] { blocker.PushBack().get(); };
+  auto wait = [&blocker] { return blocker.PopFront(); };
 
   // Verify we can schedule multiple calls and they eventually all finish.
   for (int i = 0; i != 32; ++i) {
@@ -663,9 +635,17 @@ TEST_P(RunAsyncTest, Torture) {
 
   // This test is largely here to trigger (now fixed) race conditions under TSAN
   // and/or deadlocks under load. Just getting here is enough to declare
-  // success, but we should verify that at least some interesting stuff happened
+  // success, but we should verify that at least some interesting stuff
+  // happened.
   EXPECT_GE(impl->thread_pool_hwm(), GetParam() / 2);
-  EXPECT_GE(impl->run_async_pool_hwm(), GetParam() / 2);
+  // We would like to assert "RunAsync() used a good portion of the available
+  // threads". That is flaky when the "available" threads is small. With one
+  // thread obviously just 1 gets used. Even with 4 threads, by design it will
+  // be at most 3, and at least 1, but it does not always hit 2. It seems all we
+  // can do reliably is test for the entire range.
+  auto const max_run_async_pool_hwm = GetParam() > 1 ? GetParam() - 1 : 1;
+  EXPECT_GE(impl->run_async_pool_hwm(), 1);
+  EXPECT_LE(impl->run_async_pool_hwm(), max_run_async_pool_hwm);
   // We expect at least one notify per timer.
   EXPECT_GE(impl->notify_counter(), kThreads * iterations);
   // We expect at most one notify per RunAsync(), because this test sequences

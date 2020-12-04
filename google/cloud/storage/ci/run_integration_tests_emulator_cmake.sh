@@ -32,7 +32,7 @@ shift
 ctest_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
-source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
+source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
@@ -43,7 +43,7 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/clo
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 
 cd "${BINARY_DIR}"
-start_testbench
+start_emulator
 
 # GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is automatically created, but we
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
@@ -59,12 +59,12 @@ fi
 ctest -R "^storage_" "${ctest_args[@]}"
 exit_status=$?
 
-kill_testbench
+kill_emulator
 trap '' EXIT
 
 if [[ "$exit_status" -ne 0 ]]; then
   source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-  dump_log "${HOME}/testbench.log"
+  dump_log "${HOME}/emulator.log"
 fi
 
 exit "${exit_status}"

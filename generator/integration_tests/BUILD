@@ -69,6 +69,7 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     data = [
         "//generator/integration_tests/golden:golden_filegroup",
         "//generator/integration_tests/golden:golden_internal_filegroup",
+        "//generator/integration_tests/golden:golden_mocks_filegroup",
     ],
     tags = [
         "integration-test",

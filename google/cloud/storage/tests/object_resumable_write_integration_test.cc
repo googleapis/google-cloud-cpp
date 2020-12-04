@@ -66,9 +66,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
   EXPECT_EQ("text/plain", meta.content_type());
-  if (UsingTestbench()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  if (UsingEmulator()) {
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -114,9 +114,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
-  if (UsingTestbench()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  if (UsingEmulator()) {
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -153,9 +153,9 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name_, meta.bucket());
-  if (UsingTestbench()) {
-    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  if (UsingEmulator()) {
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
@@ -187,11 +187,11 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   os.Close();
   ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
-  if (meta.has_metadata("x_testbench_upload")) {
-    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  if (meta.has_metadata("x_emulator_upload")) {
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
-  if (meta.has_metadata("x_testbench_transfer_encoding")) {
-    EXPECT_THAT(meta.metadata("x_testbench_transfer_encoding"),
+  if (meta.has_metadata("x_emulator_transfer_encoding")) {
+    EXPECT_THAT(meta.metadata("x_emulator_transfer_encoding"),
                 Not(HasSubstr("chunked")));
   }
 
@@ -199,8 +199,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   EXPECT_STATUS_OK(status);
 }
 
-TEST_F(ObjectResumableWriteIntegrationTest,
-       DISABLED_WriteResumeFinalizedUpload) {
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
+  // TODO(#5460) remove this when the underlying issue is resolved.
+  if (UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -227,9 +229,9 @@ TEST_F(ObjectResumableWriteIntegrationTest,
     ObjectMetadata meta = os.metadata().value();
     EXPECT_EQ(object_name, meta.name());
     EXPECT_EQ(bucket_name_, meta.bucket());
-    if (UsingTestbench()) {
-      EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
-      EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+    if (UsingEmulator()) {
+      EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+      EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
     }
   }
 
@@ -304,7 +306,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
-  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
+  if (UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   auto constexpr kMiB = 1024 * 1024L;
   auto constexpr kChunkSize = 2 * kMiB;
 
@@ -378,7 +380,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
-  if (UsingTestbench() || UsingGrpc()) GTEST_SKIP();
+  if (UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

@@ -1,0 +1,4 @@
+# We use START/END tags in our Dockerfiles, and the snippet bot thinks these
+# are region tags.
+ignoreFiles:
+  - "ci/**"

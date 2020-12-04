@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/database_admin_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_database_admin_connection.gcpcxx.pb.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -30,90 +31,34 @@ namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
-// using ::protobuf::util::FieldMaskUtil::IsPathInFieldMask;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
-class MockDatabaseAdminConnection : public DatabaseAdminConnection {
-public:
-  ~MockDatabaseAdminConnection() = default;
+TEST(GoldenClientTest, CopyMoveEquality) {
+  auto conn1 = std::make_shared<MockDatabaseAdminConnection>();
+  auto conn2 = std::make_shared<MockDatabaseAdminConnection>();
 
-  MOCK_METHOD(
-      ListDatabasesRange, ListDatabases,
-      (::google::test::admin::database::v1::ListDatabasesRequest request),
-      (override));
-  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Database>>,
-              CreateDatabase,
-              (::google::test::admin::database::v1::CreateDatabaseRequest const
-                   &request),
-              (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
-      (::google::test::admin::database::v1::GetDatabaseRequest const &request),
-      (override));
-  MOCK_METHOD(
-      future<StatusOr<
-          ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>,
-      UpdateDatabaseDdl,
-      (::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-           &request),
-      (override));
-  MOCK_METHOD(
-      Status, DropDatabase,
-      (::google::test::admin::database::v1::DropDatabaseRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
-      GetDatabaseDdl,
-      (::google::test::admin::database::v1::GetDatabaseDdlRequest const
-           &request),
-      (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
-              (::google::iam::v1::SetIamPolicyRequest const &request),
-              (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
-              (::google::iam::v1::GetIamPolicyRequest const &request),
-              (override));
-  MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (::google::iam::v1::TestIamPermissionsRequest const &request),
-              (override));
-  MOCK_METHOD(
-      future<StatusOr<::google::test::admin::database::v1::Backup>>,
-      CreateBackup,
-      (::google::test::admin::database::v1::CreateBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
-      (::google::test::admin::database::v1::GetBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
-      (::google::test::admin::database::v1::UpdateBackupRequest const &request),
-      (override));
-  MOCK_METHOD(
-      Status, DeleteBackup,
-      (::google::test::admin::database::v1::DeleteBackupRequest const &request),
-      (override));
-  MOCK_METHOD(ListBackupsRange, ListBackups,
-              (::google::test::admin::database::v1::ListBackupsRequest request),
-              (override));
+  DatabaseAdminClient c1(conn1);
+  DatabaseAdminClient c2(conn2);
+  EXPECT_NE(c1, c2);
 
-  MOCK_METHOD(future<StatusOr<::google::test::admin::database::v1::Database>>,
-              RestoreDatabase,
-              (::google::test::admin::database::v1::RestoreDatabaseRequest const
-                   &request),
-              (override));
-  MOCK_METHOD(
-      ListDatabaseOperationsRange, ListDatabaseOperations,
-      (::google::test::admin::database::v1::ListDatabaseOperationsRequest
-           request),
-      (override));
-  MOCK_METHOD(ListBackupOperationsRange, ListBackupOperations,
-              (::google::test::admin::database::v1::ListBackupOperationsRequest
-                   request),
-              (override));
-};
+  // Copy construction
+  DatabaseAdminClient c3 = c1;
+  EXPECT_EQ(c3, c1);
+  EXPECT_NE(c3, c2);
+
+  // Copy assignment
+  c3 = c2;
+  EXPECT_EQ(c3, c2);
+
+  // Move construction
+  DatabaseAdminClient c4 = std::move(c3);
+  EXPECT_EQ(c4, c2);
+
+  // Move assignment
+  c1 = std::move(c4);
+  EXPECT_EQ(c1, c2);
+}
 
 TEST(GoldenClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
@@ -125,7 +70,7 @@ TEST(GoldenClientTest, ListDatabases) {
                                               ListDatabasesRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
 
-        return ListDatabasesRange(
+        return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
             ::google::test::admin::database::v1::ListDatabasesRequest{},
             [](::google::test::admin::database::v1::ListDatabasesRequest const
                    &) {
@@ -552,7 +497,7 @@ TEST(GoldenClientTest, ListBackups) {
       .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
                                               ListBackupsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
-        return ListBackupsRange(
+        return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
             ::google::test::admin::database::v1::ListBackupsRequest{},
             [](::google::test::admin::database::v1::ListBackupsRequest const
                    &) {
@@ -632,7 +577,7 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
           [expected_instance](::google::test::admin::database::v1::
                                   ListDatabaseOperationsRequest const &r) {
             EXPECT_EQ(expected_instance, r.parent());
-            return ListDatabaseOperationsRange(
+            return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
                 ::google::test::admin::database::v1::
                     ListDatabaseOperationsRequest{},
                 [](::google::test::admin::database::v1::
@@ -669,7 +614,7 @@ TEST(GoldenClientTest, ListBackupOperations) {
                           ::google::test::admin::database::v1::
                               ListBackupOperationsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
-        return ListBackupOperationsRange(
+        return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
             ::google::test::admin::database::v1::ListBackupOperationsRequest{},
             [](::google::test::admin::database::v1::
                    ListBackupOperationsRequest const &) {

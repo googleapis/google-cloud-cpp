@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-package google.cloud.storage.v1.internal;
+package google.storage.v1.internal;
 
 message GrpcResumableUploadSessionUrl {
   string bucket_name = 1;
