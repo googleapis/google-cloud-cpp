@@ -912,7 +912,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 TEST_F(TableAdminTest, GetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_get_policy_mock();
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetIamPolicy(resource);
@@ -925,7 +925,7 @@ TEST_F(TableAdminTest, GetIamPolicy) {
 TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_get_policy_mock_for_backup("the-backup");
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetIamPolicy("the-cluster", resource);
@@ -978,7 +978,7 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 TEST_F(TableAdminTest, SetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_policy_with_params();
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy =
@@ -995,7 +995,7 @@ TEST_F(TableAdminTest, SetIamPolicy) {
 TEST_F(TableAdminTest, SetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_policy_with_params_for_backup("the-backup");
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy =
@@ -1074,8 +1074,7 @@ TEST_F(TableAdminTest, TestIamPermissions) {
         return grpc::Status::OK;
       };
 
-  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(mock_permission_set);
+  EXPECT_CALL(*client_, TestIamPermissions).WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
@@ -1105,8 +1104,7 @@ TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
         return grpc::Status::OK;
       };
 
-  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(mock_permission_set);
+  EXPECT_CALL(*client_, TestIamPermissions).WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set = tested.TestIamPermissions(

@@ -1389,12 +1389,12 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc get iam policy
    */
-
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
+
   /**
    * Gets the policy for @p backup_id.
    *
-   * @param clusterid_id the associated cluster that contains backup.
+   * @param cluster_id the associated cluster that contains backup.
    *
    * @param backup_id the backup to query.
    * @return google::iam::v1::Policy the full IAM policy for the backup.
@@ -1549,7 +1549,7 @@ class TableAdmin {
       std::string const& table_id, std::vector<std::string> const& permissions);
 
   /**
-   * Returns a permission set that the caller has on the specified table.
+   * Returns a permission set that the caller has on the specified backup.
    *
    * @param cluster_id the ID of the cluster that contains the backup.
    * @param backup_id the ID of the backup to query.
