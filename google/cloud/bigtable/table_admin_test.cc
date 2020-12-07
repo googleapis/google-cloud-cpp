@@ -921,8 +921,11 @@ TEST_F(TableAdminTest, GetIamPolicy) {
   EXPECT_EQ("random-tag", policy->etag());
 }
 
+<<<<<<< HEAD
 <<<<<<< 9ef790a3b0c7b6a9e088ea3d392df06071884028
 =======
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
@@ -936,7 +939,10 @@ TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   EXPECT_EQ("random-tag", policy->etag());
 }
 
+<<<<<<< HEAD
 >>>>>>> added code to handle additional_bindings and also unit test code for Get,Set and Test IAM policy
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 /// @test Verify unrecoverable errors for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
@@ -994,8 +1000,11 @@ TEST_F(TableAdminTest, SetIamPolicy) {
   EXPECT_EQ("test-tag", policy->etag());
 }
 
+<<<<<<< HEAD
 <<<<<<< 9ef790a3b0c7b6a9e088ea3d392df06071884028
 =======
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 /// @test Verify positive scenario for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
@@ -1013,7 +1022,10 @@ TEST_F(TableAdminTest, SetIamPolicyForBackup) {
   EXPECT_EQ("test-tag", policy->etag());
 }
 
+<<<<<<< HEAD
 >>>>>>> added code to handle additional_bindings and also unit test code for Get,Set and Test IAM policy
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 /// @test Verify unrecoverable errors for TableAdmin::SetIamPolicy.
 TEST_F(TableAdminTest, SetIamPolicyUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
@@ -1090,8 +1102,11 @@ TEST_F(TableAdminTest, TestIamPermissions) {
   EXPECT_EQ(2, permission_set->size());
 }
 
+<<<<<<< HEAD
 <<<<<<< 9ef790a3b0c7b6a9e088ea3d392df06071884028
 =======
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
@@ -1122,7 +1137,10 @@ TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
   EXPECT_EQ(2, permission_set->size());
 }
 
+<<<<<<< HEAD
 >>>>>>> added code to handle additional_bindings and also unit test code for Get,Set and Test IAM policy
+=======
+>>>>>>> 4cd5a37b6748d9e99297830cb2c33281d4cd4ca5
 /// @test Test for unrecoverable errors for TableAdmin::TestIamPermissions.
 TEST_F(TableAdminTest, TestIamPermissionsUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
