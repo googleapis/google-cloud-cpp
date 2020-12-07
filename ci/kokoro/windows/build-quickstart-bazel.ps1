@@ -67,7 +67,7 @@ if ((Test-Path env:KOKORO_GFILE_DIR) -and
     $build_flags += @("--experimental_guard_against_concurrent_changes")
 }
 
-$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
+$env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\${env:MSVC_VERSION}\Community\VC"
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
 # If at all possible, load the configuration for the integration tests and

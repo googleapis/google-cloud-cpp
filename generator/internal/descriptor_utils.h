@@ -41,7 +41,8 @@ VarsDictionary CreateServiceVars(
  * Extracts method specific substitution data for each method in the service.
  */
 std::map<std::string, VarsDictionary> CreateMethodVars(
-    google::protobuf::ServiceDescriptor const& service);
+    google::protobuf::ServiceDescriptor const& service,
+    VarsDictionary const& service_vars);
 
 /**
  * Creates and initializes the collection of ClassGenerators necessary to
@@ -68,6 +69,15 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
                    Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
+
+enum class MethodParameterStyle { kApiMethodSignature, kProtobufReqeust };
+/**
+ * Formats comments from the source .proto file into Doxygen compatible
+ * function headers, including param and return lines as necessary.
+ */
+std::string FormatMethodCommentsFromRpcComments(
+    google::protobuf::MethodDescriptor const& method,
+    MethodParameterStyle parameter_style);
 
 }  // namespace generator_internal
 }  // namespace cloud

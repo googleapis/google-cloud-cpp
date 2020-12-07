@@ -76,8 +76,10 @@ StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
 
     // The google.storage.v1.Storage documentation says this field can be empty.
     if (response.has_checksummed_data()) {
-      spill_ = update_buf(
-          std::move(*response.mutable_checksummed_data()->mutable_content()));
+      spill_ =
+          update_buf(std::string(  // Sometimes protobuf bytes are not strings
+              std::move(
+                  *response.mutable_checksummed_data()->mutable_content())));
     }
     if (response.has_object_checksums()) {
       auto const& checksums = response.object_checksums();

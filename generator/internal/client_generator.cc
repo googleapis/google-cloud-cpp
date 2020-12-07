@@ -61,7 +61,6 @@ Status ClientGenerator::GenerateHeader() {
     "$class_comment_block$\n"
     "class $client_class_name$ {\n"
     " public:\n"
-    "  explicit $client_class_name$(ConnectionOptions const& options = ConnectionOptions());\n"
     "  explicit $client_class_name$(std::shared_ptr<$connection_class_name$> connection);\n"
     "  ~$client_class_name$();\n"
     "\n"
@@ -95,7 +94,8 @@ Status ClientGenerator::GenerateHeader() {
           method,
           {MethodPattern(
                {
-                   {"  $method_signature_comment_block$\n"},
+                   {FormatMethodCommentsFromRpcComments(
+                       method, MethodParameterStyle::kApiMethodSignature)},
                    {IsResponseTypeEmpty,
                     // clang-format off
                    "  Status\n",
@@ -107,7 +107,8 @@ Status ClientGenerator::GenerateHeader() {
                    Not(IsPaginated))),
            MethodPattern(
                {
-                   {"  $method_signature_comment_block$\n"},
+                   {FormatMethodCommentsFromRpcComments(
+                       method, MethodParameterStyle::kApiMethodSignature)},
                    {IsResponseTypeEmpty,
                     // clang-format off
                     "  future<Status>\n",
@@ -119,8 +120,9 @@ Status ClientGenerator::GenerateHeader() {
            MethodPattern(
                {
                    // clang-format off
-                   {"  $method_signature_comment_block$\n"
-                    "  $method_name$Range\n"},
+                   {FormatMethodCommentsFromRpcComments(
+                     method, MethodParameterStyle::kApiMethodSignature)},
+                   {"  $method_name$Range\n"},
                    {method_string},
                    // clang-format on
                },
@@ -134,7 +136,8 @@ Status ClientGenerator::GenerateHeader() {
         method,
         {MethodPattern(
              {
-                 {"  $request_comment_block$\n"},
+                 {FormatMethodCommentsFromRpcComments(
+                     method, MethodParameterStyle::kProtobufReqeust)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -147,7 +150,8 @@ Status ClientGenerator::GenerateHeader() {
                  Not(IsPaginated))),
          MethodPattern(
              {
-                 {"  $request_comment_block$\n"},
+                 {FormatMethodCommentsFromRpcComments(
+                     method, MethodParameterStyle::kProtobufReqeust)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -160,7 +164,8 @@ Status ClientGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-                  {"  $request_comment_block$\n"},
+                 {FormatMethodCommentsFromRpcComments(
+        method, MethodParameterStyle::kProtobufReqeust)},
    {"  $method_name$Range\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
@@ -202,11 +207,6 @@ Status ClientGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
-
-  CcPrint(  // clang-format off
-    "$client_class_name$::$client_class_name$(ConnectionOptions const& options)\n"
-    " : connection_(Make$connection_class_name$(options)) {}\n");
-  // clang-format on
 
   CcPrint(  // clang-format off
     "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection)"

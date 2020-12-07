@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPLETION_QUEUE_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/internal/async_read_stream_impl.h"
 #include "google/cloud/internal/async_rpc_details.h"
 #include "google/cloud/internal/completion_queue_impl.h"
@@ -229,6 +230,27 @@ class CompletionQueue {
       absl::decay_t<Functor> fun_;
     };
     impl_->RunAsync(absl::make_unique<Wrapper>(std::forward<Functor>(functor)));
+  }
+
+  /**
+   * Asynchronously wait for a connection to become ready.
+   *
+   * @param channel the channel on which to wait for state changes
+   * @param deadline give up waiting for the state change if this deadline
+   *     passes
+   * @return `future<>` which will be satisfied when either of these events
+   *     happen: (a) the connection is ready, (b) the connection permanently
+   *     failed, (c) deadline passes before (a) or (b) happen; the future will
+   *     be satisfied with `StatusCode::kOk` for (a), `StatusCode::kCancelled`
+   *     for (b) and `StatusCode::kDeadlineExceeded` for (c)
+   */
+  future<Status> AsyncWaitConnectionReady(
+      std::shared_ptr<grpc::Channel> channel,
+      std::chrono::system_clock::time_point deadline) {
+    auto op = std::make_shared<internal::AsyncConnectionReadyFuture>(
+        std::move(channel), deadline);
+    impl_->StartOperation(op, [&](void* tag) { op->Start(impl_->cq(), tag); });
+    return op->GetFuture();
   }
 
  private:

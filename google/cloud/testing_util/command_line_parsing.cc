@@ -16,6 +16,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/strings/match.h"
 #include "absl/time/time.h"
+#include <cctype>
 #include <iomanip>
 #include <sstream>
 

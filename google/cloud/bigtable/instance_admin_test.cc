@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -37,9 +38,12 @@ namespace btadmin = ::google::bigtable::admin::v2;
 using MockAdminClient =
     ::google::cloud::bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
+using ::testing::AtLeast;
+using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -310,6 +314,24 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.ListInstances());
+}
+
+/**
+ * @test Verify that `bigtable::InstanceAdmin::ListInstances` handles
+ * too many transient failures.
+ */
+TEST_F(InstanceAdminTest, ListInstancesTooManyTransients) {
+  using ms = std::chrono::milliseconds;
+  InstanceAdmin tested(client_, LimitedErrorCountRetryPolicy(3),
+                       ExponentialBackoffPolicy(ms(1), ms(2)));
+  EXPECT_CALL(*client_, ListInstances)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  // After all the setup, make the actual call we want to test.
+  EXPECT_THAT(tested.ListInstances(),
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
 /// @test Verify that `bigtable::DeleteInstance` works in the positive case.

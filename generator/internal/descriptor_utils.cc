@@ -43,6 +43,9 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+const char* const kGoogleapisProtoFileLinkPrefix =
+    "https://github.com/googleapis/googleapis/blob/";
+
 std::string CppTypeToString(FieldDescriptor const* field) {
   switch (field->cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
@@ -68,9 +71,20 @@ std::string CppTypeToString(FieldDescriptor const* field) {
   std::exit(1);
 }
 
+std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
+                              std::string const& googleapis_commit_hash) {
+  google::protobuf::SourceLocation loc;
+  message_type.GetSourceLocation(&loc);
+  std::string output_type_proto_file_name = message_type.file()->name();
+  return absl::StrCat("[", ProtoNameToCppName(message_type.full_name()), "](",
+                      kGoogleapisProtoFileLinkPrefix, googleapis_commit_hash,
+                      "/", output_type_proto_file_name, "#L",
+                      loc.start_line + 1, ")");
+}
+
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
+    VarsDictionary& method_vars, std::string const& googleapis_commit_hash) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
@@ -78,19 +92,24 @@ void SetLongrunningOperationMethodVars(
         ProtoNameToCppName(operation_info.metadata_type());
     method_vars["longrunning_response_type"] =
         ProtoNameToCppName(operation_info.response_type());
-    if (method_vars["longrunning_response_type"] == "::Backup") {
-      method_vars["longrunning_response_type"] =
-          "::google::spanner::admin::database::v1::Backup";
-    }
-
-    method_vars["longrunning_deduced_response_type"] =
+    method_vars["longrunning_deduced_response_message_type"] =
         operation_info.response_type() == "google.protobuf.Empty"
-            ? ProtoNameToCppName(operation_info.metadata_type())
-            : ProtoNameToCppName(operation_info.response_type());
-    if (method_vars["longrunning_deduced_response_type"] == "::Backup") {
-      method_vars["longrunning_deduced_response_type"] =
-          "::google::spanner::admin::database::v1::Backup";
+            ? operation_info.metadata_type()
+            : operation_info.response_type();
+    method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
+        method_vars["longrunning_deduced_response_message_type"]);
+    google::protobuf::Descriptor const* output_type =
+        method.file()->pool()->FindMessageTypeByName(
+            method_vars["longrunning_deduced_response_message_type"]);
+    if (output_type == nullptr) {
+      GCP_LOG(FATAL)
+          << __FILE__ << ":" << __LINE__
+          << ": unable to find longrunning_deduced_response_message_type: "
+          << method_vars["longrunning_deduced_response_message_type"]
+          << " for method: " << method.full_name() << std::endl;
     }
+    method_vars["method_longrunning_deduced_return_doxygen_link"] =
+        FormatDoxygenLink(*output_type, googleapis_commit_hash);
   }
 }
 
@@ -247,7 +266,58 @@ std::string FormatClassCommentsFromServiceComments(
   return {};
 }
 
-enum class MethodParameterStyle { kApiMethodSignature, kProtobufReqeust };
+std::string FormatApiMethodSignatureParameters(
+    google::protobuf::MethodDescriptor const& method) {
+  std::vector<std::pair<std::string, std::string>> parameter_comments;
+  auto method_signature_extension =
+      method.options().GetRepeatedExtension(google::api::method_signature);
+  for (auto const& signature : method_signature_extension) {
+    google::protobuf::Descriptor const* input_type = method.input_type();
+    std::vector<std::string> parameters = absl::StrSplit(signature, ",");
+    for (auto const& parameter : parameters) {
+      google::protobuf::FieldDescriptor const* parameter_descriptor =
+          input_type->FindFieldByName(parameter);
+      google::protobuf::SourceLocation loc;
+      parameter_descriptor->GetSourceLocation(&loc);
+      std::string chomped_parameter = ChompByValue(loc.leading_comments);
+      parameter_comments.emplace_back(
+          parameter,
+          absl::StrReplaceAll(chomped_parameter,
+                              {{"\n\n", "\n   * "}, {"\n", "\n   * "}}));
+    }
+  }
+  std::string parameter_comment_string;
+  for (auto const& param : parameter_comments) {
+    parameter_comment_string +=
+        absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+  }
+
+  return parameter_comment_string;
+}
+
+std::string FormatProtobufRequestParameters(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& googleapis_commit_hash) {
+  std::vector<std::pair<std::string, std::string>> parameter_comments;
+  google::protobuf::Descriptor const* input_type = method.input_type();
+  google::protobuf::SourceLocation loc;
+  input_type->GetSourceLocation(&loc);
+  std::string input_type_proto_file_name = input_type->file()->name();
+  parameter_comments.emplace_back(
+      "request",
+      absl::StrCat("[", ProtoNameToCppName(input_type->full_name()), "](",
+                   kGoogleapisProtoFileLinkPrefix, googleapis_commit_hash, "/",
+                   input_type_proto_file_name, "#L", loc.start_line + 1, ")"));
+  std::string parameter_comment_string;
+  for (auto const& param : parameter_comments) {
+    parameter_comment_string +=
+        absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+  }
+
+  return parameter_comment_string;
+}
+
+}  // namespace
 
 std::string FormatMethodCommentsFromRpcComments(
     google::protobuf::MethodDescriptor const& method,
@@ -255,48 +325,33 @@ std::string FormatMethodCommentsFromRpcComments(
   google::protobuf::SourceLocation method_source_location;
   if (method.GetSourceLocation(&method_source_location) &&
       !method_source_location.leading_comments.empty()) {
-    std::vector<std::pair<std::string, std::string>> parameter_comments;
+    std::string parameter_comment_string;
     if (parameter_style == MethodParameterStyle::kApiMethodSignature) {
-      auto method_signature_extension =
-          method.options().GetRepeatedExtension(google::api::method_signature);
-      for (auto const& signature : method_signature_extension) {
-        google::protobuf::Descriptor const* input_type = method.input_type();
-        std::vector<std::string> parameters = absl::StrSplit(signature, ",");
-        for (auto const& parameter : parameters) {
-          google::protobuf::FieldDescriptor const* parameter_descriptor =
-              input_type->FindFieldByName(parameter);
-          google::protobuf::SourceLocation loc;
-          parameter_descriptor->GetSourceLocation(&loc);
-          std::string chomped_parameter = ChompByValue(loc.leading_comments);
-          parameter_comments.emplace_back(
-              parameter,
-              absl::StrReplaceAll(chomped_parameter, {{"\n\n", "\n   *\n   * "},
-                                                      {"\n", "\n   * "}}));
-        }
-      }
+      parameter_comment_string = FormatApiMethodSignatureParameters(method);
     } else {
-      google::protobuf::Descriptor const* input_type = method.input_type();
-      parameter_comments.emplace_back(
-          "request",
-          absl::StrCat("`", ProtoNameToCppName(input_type->full_name()), "`"));
+      parameter_comment_string =
+          FormatProtobufRequestParameters(method, "$googleapis_commit_hash$");
     }
 
     std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
         method_source_location.leading_comments, {{"\n", "\n   *"}});
 
-    std::string parameter_comment_string;
-    for (auto const& param : parameter_comments) {
-      parameter_comment_string +=
-          absl::StrFormat("   * @param %s %s\n", param.first, param.second);
+    std::string return_comment_string;
+    if (IsLongrunningOperation(method)) {
+      return_comment_string =
+          "   * @return $method_longrunning_deduced_return_doxygen_link$\n";
+    } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
+      return_comment_string = "   * @return $method_return_doxygen_link$\n";
     }
-    return absl::StrCat("/**\n   *", doxygen_formatted_function_comments, "\n",
-                        parameter_comment_string, "   */");
+
+    return absl::StrCat("  /**\n   *", doxygen_formatted_function_comments,
+                        "\n", parameter_comment_string, return_comment_string,
+                        "   */\n");
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                  << " no leading_comments to format.\n";
   return {};
 }
-}  // namespace
 
 VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
@@ -387,25 +442,25 @@ VarsDictionary CreateServiceVars(
 }
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
-    google::protobuf::ServiceDescriptor const& service) {
+    google::protobuf::ServiceDescriptor const& service,
+    VarsDictionary const& service_vars) {
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
-    method_vars["method_signature_comment_block"] =
-        FormatMethodCommentsFromRpcComments(
-            method, MethodParameterStyle::kApiMethodSignature);
-    method_vars["request_comment_block"] = FormatMethodCommentsFromRpcComments(
-        method, MethodParameterStyle::kProtobufReqeust);
+    method_vars["method_return_doxygen_link"] = FormatDoxygenLink(
+        *method.output_type(), service_vars.at("googleapis_commit_hash"));
     method_vars["default_idempotency"] =
         DefaultIdempotencyFromHttpOperation(method);
     method_vars["method_name"] = method.name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
     method_vars["request_type"] =
         ProtoNameToCppName(method.input_type()->full_name());
+    method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
-    SetLongrunningOperationMethodVars(method, method_vars);
+    SetLongrunningOperationMethodVars(
+        method, method_vars, service_vars.at("googleapis_commit_hash"));
     if (IsPaginated(method)) {
       auto pagination_info = DeterminePagination(method);
       method_vars["range_output_field_name"] = pagination_info->first;
@@ -424,35 +479,36 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::compiler::GeneratorContext* context,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
+  VarsDictionary service_vars = CreateServiceVars(*service, vars);
   code_generators.push_back(absl::make_unique<ClientGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<ConnectionGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<RetryPolicyGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
-      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   return code_generators;
 }
