@@ -43,6 +43,8 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/type/expr.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
+    "google/iam/credentials/v1/common.proto"
+    "google/iam/credentials/v1/iamcredentials.proto"
     "google/iam/v1/options.proto"
     "google/iam/v1/policy.proto"
     "google/iam/v1/iam_policy.proto"
@@ -274,6 +276,22 @@ target_link_libraries(
     PRIVATE googleapis_cpp_common_flags)
 
 google_cloud_cpp_grpcpp_library(
+    googleapis_cpp_iam_protos
+    "${GOOGLEAPIS_CPP_SOURCE}/google/iam/credentials/v1/iamcredentials.proto"
+    "${GOOGLEAPIS_CPP_SOURCE}/google/iam/credentials/v1/common.proto"
+    PROTO_PATH_DIRECTORIES
+    "${GOOGLEAPIS_CPP_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
+googleapis_cpp_set_version_and_alias(iam_protos)
+target_link_libraries(
+    googleapis_cpp_iam_protos
+    PUBLIC googleapis-c++::api_annotations_protos
+           googleapis-c++::api_client_protos
+           googleapis-c++::api_field_behavior_protos
+           googleapis-c++::api_resource_protos
+    PRIVATE googleapis_cpp_common_flags)
+
+google_cloud_cpp_grpcpp_library(
     googleapis_cpp_pubsub_protos
     "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/pubsub.proto"
     PROTO_PATH_DIRECTORIES "${GOOGLEAPIS_CPP_SOURCE}" "${PROTO_INCLUDE_DIR}")
@@ -339,6 +357,7 @@ include(GNUInstallDirs)
 set(googleapis_cpp_installed_libraries_list
     googleapis_cpp_bigtable_protos
     googleapis_cpp_cloud_bigquery_protos
+    googleapis_cpp_iam_protos
     googleapis_cpp_pubsub_protos
     googleapis_cpp_spanner_protos
     googleapis_cpp_storage_protos
@@ -426,6 +445,7 @@ string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "googleapis_cpp_bigtable_protos"
            " googleapis_cpp_cloud_bigquery_protos"
+           " googleapis_iam_protos"
            " googleapis_pubsub_protos"
            " googleapis_cpp_storage_protos"
            " googleapis_cpp_iam_v1_iam_policy_protos"

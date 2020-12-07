@@ -404,6 +404,9 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       echo /var/tmp/staging/include/google/cloud/bigtable/internal
       echo /var/tmp/staging/include/google/cloud/firestore
       echo /var/tmp/staging/include/google/cloud/grpc_utils
+      echo /var/tmp/staging/include/google/cloud/iam
+      echo /var/tmp/staging/include/google/cloud/iam/internal
+      echo /var/tmp/staging/include/google/cloud/iam/mocks
       echo /var/tmp/staging/include/google/cloud/internal
       echo /var/tmp/staging/include/google/cloud/pubsub
       echo /var/tmp/staging/include/google/cloud/pubsub/internal
@@ -447,6 +450,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       "bigtable_client"
       "google_cloud_cpp_common"
       "google_cloud_cpp_grpc_utils"
+      "iam_client"
       "spanner_client"
       "storage_client"
       "pubsub_client"

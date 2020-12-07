@@ -136,13 +136,14 @@ option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
 option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_IAM "Enable building the IAM library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
 
 # The default list of libraries to build. These can be overridden by the user by
 # passing a comma-separated list, i.e
 # `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
 set(GOOGLE_CLOUD_CPP_ENABLE
-    "bigquery;bigtable;spanner;storage;firestore;pubsub;generator"
+    "bigquery;bigtable;iam;firestore;pubsub;spanner;storage;generator"
     CACHE STRING "The list of libraries to build.")
 
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
@@ -163,7 +164,7 @@ endforeach ()
 # Enable building the gRPC utilities library if any of its dependents are
 # enabled.
 set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
-foreach (_library bigquery bigtable spanner pubsub generator)
+foreach (_library bigquery bigtable iam spanner pubsub generator)
     if (_library IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
         break()
