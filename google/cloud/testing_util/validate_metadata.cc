@@ -157,7 +157,8 @@ bool ValueMatchesPattern(std::string const& val, std::string const& pattern) {
  * containing `"foo"->"bar", "baz"->"rab"` is returned.
  */
 StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
-    std::string const& method) {
+    std::string const& method,
+    absl::optional<std::string> const& resource_name) {
   auto const* method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
           method);
@@ -180,6 +181,10 @@ StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
   }
   if (!http.post().empty()) {
     pattern = http.post();
+  }
+  if ((http.additional_bindings_size() > 0) && resource_name &&
+      !(http.additional_bindings(0).post().empty())) {
+    pattern = http.additional_bindings(0).post();
   }
   if (!http.delete_().empty()) {
     pattern = http.delete_();
@@ -217,9 +222,11 @@ StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
  * `x-goog-request-params` header in `context` set all the parameters listed in
  * the curly braces.
  */
-Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        std::string const& api_client_header,
-                        absl::optional<std::string> resource_prefix_header) {
+Status IsContextMDValid(
+    grpc::ClientContext& context, std::string const& method,
+    std::string const& api_client_header,
+    absl::optional<std::string> const& resource_name,
+    absl::optional<std::string> const& resource_prefix_header) {
   auto headers = GetMetadata(context);
 
   // Extract the metadata from `x-goog-request-params` header in context.
@@ -230,7 +237,7 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
 
   // Extract expectations on `x-goog-request-params` from the `google.api.http`
   // annotation on the specified method.
-  auto params = ExtractParamsFromMethod(method);
+  auto params = ExtractParamsFromMethod(method, resource_name);
   if (!params) {
     return params.status();
   }
@@ -263,7 +270,6 @@ Status IsContextMDValid(grpc::ClientContext& context, std::string const& method,
                   "Expected x-goog-api-client to be " + api_client_header +
                       ", was " + found_api_client_header->second);
   }
-
   if (resource_prefix_header) {
     std::string const header = "google-cloud-resource-prefix";
     auto it = headers.find(header);
