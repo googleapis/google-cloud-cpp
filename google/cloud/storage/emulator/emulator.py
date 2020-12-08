@@ -749,7 +749,7 @@ def resumable_upload_chunk(bucket_name):
             upload.transfer
         )
         blob.metadata.metadata["x_emulator_upload"] = "resumable"
-        blob.metadata.metadata["x_emulator_debug_custom_header"] = str(custom_header_value)
+        blob.metadata.metadata["x-goog-emulator-custom-header"] = str(custom_header_value)
         db.insert_object(upload.request, bucket_name, blob, None)
         projection = utils.common.extract_projection(
             upload.request, CommonEnums.Projection.NO_ACL, None

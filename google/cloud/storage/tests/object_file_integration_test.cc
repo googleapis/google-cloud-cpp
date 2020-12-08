@@ -655,8 +655,8 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
  
-  ASSERT_TRUE(meta->has_metadata("x_emulator_debug_custom_header"));
-  EXPECT_EQ("custom_header_value", meta->metadata("x_emulator_debug_custom_header"));
+  ASSERT_TRUE(meta->has_metadata("x-goog-emulator-custom-header"));
+  EXPECT_EQ("custom_header_value", meta->metadata("x-goog-emulator-custom-header"));
  
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
