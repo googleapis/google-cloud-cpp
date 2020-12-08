@@ -1091,8 +1091,8 @@ TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
 
   auto mock_permission_set =
       [backup_id](grpc::ClientContext* context,
-                   iamproto::TestIamPermissionsRequest const&,
-                   iamproto::TestIamPermissionsResponse* response) {
+                  iamproto::TestIamPermissionsRequest const&,
+                  iamproto::TestIamPermissionsResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
             *context,
             "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
