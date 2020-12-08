@@ -110,6 +110,19 @@ auto create_get_policy_mock = []() {
   };
 };
 
+auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
+  return [backup_id](grpc::ClientContext* context,
+                     ::google::iam::v1::GetIamPolicyRequest const&,
+                     ::google::iam::v1::Policy* response) {
+    EXPECT_STATUS_OK(IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
+        google::cloud::internal::ApiClientHeader(), backup_id));
+    EXPECT_NE(nullptr, response);
+    response->set_version(3);
+    response->set_etag("random-tag");
+    return grpc::Status::OK;
+  };
+};
 auto create_policy_with_params = []() {
   return [](grpc::ClientContext* context,
             ::google::iam::v1::SetIamPolicyRequest const& request,
@@ -123,6 +136,18 @@ auto create_policy_with_params = []() {
   };
 };
 
+auto create_policy_with_params_for_backup = [](std::string const& backup_id) {
+  return [backup_id](grpc::ClientContext* context,
+                     ::google::iam::v1::SetIamPolicyRequest const& request,
+                     ::google::iam::v1::Policy* response) {
+    EXPECT_STATUS_OK(IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
+        google::cloud::internal::ApiClientHeader(), backup_id));
+    EXPECT_NE(nullptr, response);
+    *response = request.policy();
+    return grpc::Status::OK;
+  };
+};
 auto create_list_backups_lambda =
     [](std::string const& expected_token, std::string const& returned_token,
        std::vector<std::string> const& backup_names) {
@@ -887,10 +912,23 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 TEST_F(TableAdminTest, GetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_get_policy_mock();
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto policy = tested.GetIamPolicy(resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
+/// @test Verify positive scenario for TableAdmin::GetIamPolicy.
+TEST_F(TableAdminTest, GetIamPolicyForBackup) {
+  TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_get_policy_mock_for_backup("the-backup");
+  EXPECT_CALL(*client_, GetIamPolicy).WillOnce(mock_policy);
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetIamPolicy("the-cluster", resource);
   ASSERT_STATUS_OK(policy);
   EXPECT_EQ(3, policy->version());
   EXPECT_EQ("random-tag", policy->etag());
@@ -940,13 +978,30 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
 TEST_F(TableAdminTest, SetIamPolicy) {
   TableAdmin tested(client_, "the-instance");
   auto mock_policy = create_policy_with_params();
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(mock_policy);
+  EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
 
   std::string resource = "test-resource";
   auto iam_policy =
       IamPolicy({IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
                 "test-tag", 0);
   auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+
+/// @test Verify positive scenario for TableAdmin::SetIamPolicy.
+TEST_F(TableAdminTest, SetIamPolicyForBackup) {
+  TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_policy_with_params_for_backup("the-backup");
+  EXPECT_CALL(*client_, SetIamPolicy).WillOnce(mock_policy);
+
+  std::string resource = "test-resource";
+  auto iam_policy =
+      IamPolicy({IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+                "test-tag", 0);
+  auto policy = tested.SetIamPolicy("the-cluster", resource, iam_policy);
   ASSERT_STATUS_OK(policy);
 
   EXPECT_EQ(1, policy->bindings().size());
@@ -1019,12 +1074,41 @@ TEST_F(TableAdminTest, TestIamPermissions) {
         return grpc::Status::OK;
       };
 
-  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillOnce(mock_permission_set);
+  EXPECT_CALL(*client_, TestIamPermissions).WillOnce(mock_permission_set);
 
   std::string resource = "the-resource";
   auto permission_set =
       tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
+}
+
+TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
+  namespace iamproto = ::google::iam::v1;
+  TableAdmin tested(client_, "the-instance");
+  std::string const& backup_id = "the-backup";
+
+  auto mock_permission_set =
+      [backup_id](grpc::ClientContext* context,
+                  iamproto::TestIamPermissionsRequest const&,
+                  iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions",
+            google::cloud::internal::ApiClientHeader(), backup_id));
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+
+  EXPECT_CALL(*client_, TestIamPermissions).WillOnce(mock_permission_set);
+
+  std::string resource = "the-resource";
+  auto permission_set = tested.TestIamPermissions(
+      "the-cluster", resource, {"reader", "writer", "owner"});
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2, permission_set->size());

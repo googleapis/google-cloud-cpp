@@ -1392,6 +1392,28 @@ class TableAdmin {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
 
   /**
+   * Gets the policy for @p backup_id.
+   *
+   * @param cluster_id the associated cluster that contains backup.
+   *
+   * @param backup_id the backup to query.
+   * @return google::iam::v1::Policy the full IAM policy for the backup.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet table_admin_iam_policy_snippets.cc get iam policy backup
+   */
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& cluster_id,
+                                                 std::string const& backup_id);
+
+  /**
    * Asynchronously gets the IAM policy for @p table_id.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
@@ -1442,6 +1464,36 @@ class TableAdmin {
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& table_id, google::iam::v1::Policy const& iam_policy);
+
+  /**
+   * Sets the IAM policy for a backup.
+   *
+   * This is the preferred way to the overload for `IamBindings`. This is more
+   * closely coupled to the underlying protocol, enable more actions and is more
+   * likely to tolerate future protocol changes.
+   *
+   * @param cluster_id which is the cluster containing the backup.
+   * @param backup_id which backup to set the IAM policy for.
+   * @param iam_policy google::iam::v1::Policy object containing role and
+   * members.
+   * @return google::iam::v1::Policy the current IAM policy for the table.
+   *
+   * @warning ETags are currently not used by Cloud Bigtable.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet table_admin_iam_policy_snippets.cc set iam policy backup
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& cluster_id, std::string const& backup_id,
+      google::iam::v1::Policy const& iam_policy);
 
   /**
    * Asynchronously sets the IAM policy for a table.
@@ -1497,6 +1549,31 @@ class TableAdmin {
       std::string const& table_id, std::vector<std::string> const& permissions);
 
   /**
+   * Returns a permission set that the caller has on the specified backup.
+   *
+   * @param cluster_id the ID of the cluster that contains the backup.
+   * @param backup_id the ID of the backup to query.
+   * @param permissions set of permissions to check for the resource.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet table_admin_iam_policy_snippets.cc test iam permissions
+   *
+   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
+   *     valid permissions on Google Cloud Bigtable.
+   */
+  StatusOr<std::vector<std::string>> TestIamPermissions(
+      std::string const& cluster_id, std::string const& backup_id,
+      std::vector<std::string> const& permissions);
+
+  /**
    * Asynchronously obtains a permission set that the caller has on the
    * specified table.
    *
@@ -1532,6 +1609,13 @@ class TableAdmin {
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(std::string const& cluster_id) const {
     return instance_name() + "/clusters/" + cluster_id;
+  }
+
+  /// Return the fully qualified name of a Backup.
+  std::string BackupName(std::string const& cluster_id,
+                         std::string const& backup_id) const {
+    return instance_name() + "/clusters/" + cluster_id + "/backups/" +
+           backup_id;
   }
 
  private:
