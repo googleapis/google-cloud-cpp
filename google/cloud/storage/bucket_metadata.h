@@ -205,18 +205,23 @@ std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
  */
 struct BucketIamConfiguration {
   absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
+  absl::optional<std::string> public_access_prevention;
 };
 
 //@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
-  return lhs.uniform_bucket_level_access == rhs.uniform_bucket_level_access;
+  return lhs.uniform_bucket_level_access == rhs.uniform_bucket_level_access &&
+         lhs.public_access_prevention == rhs.public_access_prevention;
 }
 
 inline bool operator<(BucketIamConfiguration const& lhs,
                       BucketIamConfiguration const& rhs) {
-  return lhs.uniform_bucket_level_access < rhs.uniform_bucket_level_access;
+  return std::tie(lhs.uniform_bucket_level_access,
+                  lhs.public_access_prevention) <
+         std::tie(rhs.uniform_bucket_level_access,
+                  rhs.public_access_prevention);
 }
 
 inline bool operator!=(BucketIamConfiguration const& lhs,

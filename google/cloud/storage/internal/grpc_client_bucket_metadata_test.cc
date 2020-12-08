@@ -359,8 +359,9 @@ TEST(GrpcClientBucketMetadata, BucketIamConfigurationRoundtrip) {
   auto tp = std::chrono::system_clock::time_point{} +
             std::chrono::duration_cast<std::chrono::system_clock::duration>(
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
-  auto const expected =
-      BucketIamConfiguration{UniformBucketLevelAccess{true, tp}};
+  auto const expected = BucketIamConfiguration{
+      /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{true, tp},
+      /*.public_access_prevention=*/{}};
   auto const middle = GrpcClient::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcClient::ToProto(middle);
