@@ -900,7 +900,6 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
 StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
     std::string const& table_id) {
   grpc::Status status;
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::GetIamPolicyRequest request;
@@ -911,9 +910,9 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::GetIamPolicy, request, "GetIamPolicy", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::GetIamPolicy, request,
+      "GetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -925,7 +924,6 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
 StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
     std::string const& cluster_id, std::string const& backup_id) {
   grpc::Status status;
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::GetIamPolicyRequest request;
@@ -936,9 +934,9 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::GetIamPolicy, request, "GetIamPolicy", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::GetIamPolicy, request,
+      "GetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -970,7 +968,6 @@ future<StatusOr<google::iam::v1::Policy>> TableAdmin::AsyncGetIamPolicy(
 StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
     std::string const& table_id, google::iam::v1::Policy const& iam_policy) {
   grpc::Status status;
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::SetIamPolicyRequest request;
@@ -982,9 +979,9 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::SetIamPolicy, request, "SetIamPolicy", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::SetIamPolicy, request,
+      "SetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -997,7 +994,6 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
     std::string const& cluster_id, std::string const& backup_id,
     google::iam::v1::Policy const& iam_policy) {
   grpc::Status status;
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   ::google::iam::v1::SetIamPolicyRequest request;
@@ -1009,9 +1005,9 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
                                               MetadataParamTypes::RESOURCE);
 
   auto proto = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::SetIamPolicy, request, "SetIamPolicy", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::SetIamPolicy, request,
+      "SetIamPolicy", status, Idempotency::kIdempotent);
 
   if (!status.ok()) {
     return MakeStatusFromRpcError(status);
@@ -1050,7 +1046,6 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
   request.set_resource(resource);
 
   // Copy the policies in effect for the operation.
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   for (auto const& permission : permissions) {
@@ -1061,9 +1056,9 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
                                               MetadataParamTypes::RESOURCE);
 
   auto response = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::TestIamPermissions, request, "TestIamPermissions", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::TestIamPermissions, request,
+      "TestIamPermissions", status, Idempotency::kIdempotent);
 
   std::vector<std::string> resource_permissions;
 
@@ -1087,7 +1082,6 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
   request.set_resource(resource);
 
   // Copy the policies in effect for the operation.
-  auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
 
   for (auto const& permission : permissions) {
@@ -1098,9 +1092,9 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
                                               MetadataParamTypes::RESOURCE);
 
   auto response = ClientUtils::MakeCall(
-      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
-      &AdminClient::TestIamPermissions, request, "TestIamPermissions", status,
-      Idempotency::kIdempotent);
+      *client_, *clone_rpc_retry_policy(), *backoff_policy,
+      metadata_update_policy, &AdminClient::TestIamPermissions, request,
+      "TestIamPermissions", status, Idempotency::kIdempotent);
 
   std::vector<std::string> resource_permissions;
 

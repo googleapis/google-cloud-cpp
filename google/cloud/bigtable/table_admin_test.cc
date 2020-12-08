@@ -111,9 +111,9 @@ auto create_get_policy_mock = []() {
 };
 
 auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
-  return [&backup_id](grpc::ClientContext* context,
-                      ::google::iam::v1::GetIamPolicyRequest const&,
-                      ::google::iam::v1::Policy* response) {
+  return [backup_id](grpc::ClientContext* context,
+                     ::google::iam::v1::GetIamPolicyRequest const&,
+                     ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy",
         google::cloud::internal::ApiClientHeader(), backup_id));
@@ -137,9 +137,9 @@ auto create_policy_with_params = []() {
 };
 
 auto create_policy_with_params_for_backup = [](std::string const& backup_id) {
-  return [&backup_id](grpc::ClientContext* context,
-                      ::google::iam::v1::SetIamPolicyRequest const& request,
-                      ::google::iam::v1::Policy* response) {
+  return [backup_id](grpc::ClientContext* context,
+                     ::google::iam::v1::SetIamPolicyRequest const& request,
+                     ::google::iam::v1::Policy* response) {
     EXPECT_STATUS_OK(IsContextMDValid(
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy",
         google::cloud::internal::ApiClientHeader(), backup_id));
