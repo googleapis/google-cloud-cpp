@@ -1090,7 +1090,7 @@ TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
   std::string const& backup_id = "the-backup";
 
   auto mock_permission_set =
-      [&backup_id](grpc::ClientContext* context,
+      [backup_id](grpc::ClientContext* context,
                    iamproto::TestIamPermissionsRequest const&,
                    iamproto::TestIamPermissionsResponse* response) {
         EXPECT_STATUS_OK(IsContextMDValid(
