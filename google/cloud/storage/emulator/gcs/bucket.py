@@ -47,7 +47,7 @@ class Bucket:
         "location_type",
         "iam_configuration",
     ]
-    rest_only_fields = []
+    rest_only_fields = ["iamConfiguration.publicAccessPrevention"]
 
     def __init__(self, metadata, notifications, iam_policy, rest_only):
         self.metadata = metadata

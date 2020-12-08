@@ -353,6 +353,83 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
+void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
+                                       std::vector<std::string> const& argv) {
+  // [START storage_set_public_access_prevention_enforced]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    gcs::BucketIamConfiguration configuration;
+    configuration.public_access_prevention =
+        gcs::PublicAccessPreventionEnforced();
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
+                         std::move(configuration)));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    std::cout << "Public Access Prevention is set to 'enforced' for "
+              << updated_metadata->name() << "\n";
+  }
+  // [END storage_set_public_access_prevention_enforced]
+  (std::move(client), argv.at(0));
+}
+
+void SetPublicAccessPreventionUnspecified(
+    google::cloud::storage::Client client,
+    std::vector<std::string> const& argv) {
+  // [START storage_set_public_access_prevention_unspecified]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    gcs::BucketIamConfiguration configuration;
+    configuration.public_access_prevention =
+        gcs::PublicAccessPreventionUnspecified();
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
+                         std::move(configuration)));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    std::cout << "Public Access Prevention is set to 'unspecified' for "
+              << updated_metadata->name() << "\n";
+  }
+  // [END storage_set_public_access_prevention_unspecified]
+  (std::move(client), argv.at(0));
+}
+
+void GetPublicAccessPrevention(google::cloud::storage::Client client,
+                               std::vector<std::string> const& argv) {
+  // [START storage_get_public_access_prevention]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.GetBucketMetadata(bucket_name);
+    if (!bucket_metadata) {
+      throw std::runtime_error(bucket_metadata.status().message());
+    }
+
+    if (bucket_metadata->has_iam_configuration() &&
+        bucket_metadata->iam_configuration()
+            .public_access_prevention.has_value()) {
+      std::cout
+          << "Public Access Prevention is "
+          << *bucket_metadata->iam_configuration().public_access_prevention
+          << " for bucket " << bucket_metadata->name() << "\n";
+    } else {
+      std::cout << "Public Access Prevention is not set for "
+                << bucket_metadata->name() << "\n";
+    }
+  }
+  // [END storage_get_public_access_prevention]
+  (std::move(client), argv.at(0));
+}
+
 void AddBucketLabel(google::cloud::storage::Client client,
                     std::vector<std::string> const& argv) {
   //! [add bucket label] [START storage_add_bucket_label]
@@ -494,6 +571,17 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning GetUniformBucketLevelAccess() example" << std::endl;
   GetUniformBucketLevelAccess(client, {bucket_name});
 
+  std::cout << "\nRunning SetPublicAccessPreventionEnforced() example"
+            << std::endl;
+  SetPublicAccessPreventionEnforced(client, {bucket_name});
+
+  std::cout << "\nRunning SetPublicAccessPreventionUnspecified() example"
+            << std::endl;
+  SetPublicAccessPreventionUnspecified(client, {bucket_name});
+
+  std::cout << "\nRunning GetPublicAccessPrevention() example" << std::endl;
+  GetPublicAccessPrevention(client, {bucket_name});
+
   std::cout << "\nRunning AddBucketLabel() example" << std::endl;
   AddBucketLabel(client, {bucket_name, "test-label", "test-label-value"});
 
@@ -566,6 +654,11 @@ int main(int argc, char* argv[]) {
                  DisableUniformBucketLevelAccess),
       make_entry("get-uniform-bucket-level-access", {},
                  GetUniformBucketLevelAccess),
+      make_entry("set-public-access-prevention-unspecified", {},
+                 SetPublicAccessPreventionUnspecified),
+      make_entry("set-public-access-prevention-enforced", {},
+                 SetPublicAccessPreventionEnforced),
+      make_entry("get-public-access-prevention", {}, GetPublicAccessPrevention),
       make_entry("add-bucket-label", {"<label-key>", "<label-value>"},
                  AddBucketLabel),
       make_entry("get-bucket-labels", {}, GetBucketLabels),
