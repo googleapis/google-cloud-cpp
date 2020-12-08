@@ -704,7 +704,8 @@ TEST_P(RunAsyncTest, TortureBursts) {
   EXPECT_GE(impl->thread_pool_hwm(), kThreads / 2);
   EXPECT_GE(impl->run_async_pool_hwm(), kThreads / 2);
   EXPECT_GE(impl->notify_counter(), kBurstCount);
-  EXPECT_LE(impl->notify_counter(), kBurstCount * burst_size / 2);
+  // At least one of the notifications should be avoided (thus _LT and not _LE):
+  EXPECT_LT(impl->notify_counter(), kBurstCount * burst_size);
 }
 
 INSTANTIATE_TEST_SUITE_P(RunAsyncTest, RunAsyncTest,
