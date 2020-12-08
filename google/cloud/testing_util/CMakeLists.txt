@@ -89,6 +89,10 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 
+    if (NOT GOOGLE_CLOUD_CPP_ENABLE_GRPC)
+        return()
+    endif ()
+
     find_package(ProtobufWithTargets REQUIRED)
     add_library(
         google_cloud_cpp_testing_grpc # cmake-format: sort
@@ -132,79 +136,4 @@ if (BUILD_TESTING)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
-
-    # Export the CMake targets to make it easy to create configuration files.
-    install(
-        EXPORT google_cloud_cpp_testing-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_testing")
-
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(
-        TARGETS google_cloud_cpp_testing google_cloud_cpp_testing_grpc
-        EXPORT google_cloud_cpp_testing-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                COMPONENT google_cloud_cpp_runtime
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
-    # With CMake-3.12 and higher we could avoid this separate command (and the
-    # duplication).
-    install(
-        TARGETS google_cloud_cpp_testing google_cloud_cpp_testing_grpc
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development
-                NAMELINK_ONLY
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
-
-    google_cloud_cpp_install_headers(google_cloud_cpp_testing
-                                     include/google/cloud/testing_util)
-    google_cloud_cpp_install_headers(google_cloud_cpp_testing_grpc
-                                     include/google/cloud/testing_util)
-
-    # Setup global variables used in the following *.in files.
-    set(GOOGLE_CLOUD_CPP_PC_NAME
-        "Google Cloud C++ Client Library Testing Utilities")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-        "Testing Utilities used by the Google Cloud C++ Client Libraries.")
-
-    # Create and install the pkg-config files. First for testing_util:
-    google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_testing)
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing"
-                  ${absl_pkg_config})
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-                   "google_cloud_cpp_testing.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-    # Then for testing_grpc:
-    google_cloud_cpp_absl_pkg_config(absl_pkg_config
-                                     google_cloud_cpp_testing_grpc)
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing_grpc"
-                  ${absl_pkg_config})
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-        "google_cloud_cpp_testing google_cloud_cpp_common")
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-                   "google_cloud_cpp_testing_grpc.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing_grpc.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-
-    # Create and install the CMake configuration files.
-    include(CMakePackageConfigHelpers)
-    configure_file("config.cmake.in" "google_cloud_cpp_testing-config.cmake"
-                   @ONLY)
-    write_basic_package_version_file(
-        "google_cloud_cpp_testing-config-version.cmake"
-        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
-        COMPATIBILITY ExactVersion)
-
-    install(
-        FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing-config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing-config-version.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/FindGMockWithTargets.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_testing")
 endif ()
