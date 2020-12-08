@@ -105,7 +105,8 @@ BucketMetadata CreateBucketMetadataForTest() {
         "uniformBucketLevelAccess": {
           "enabled": true,
           "lockedTime": "2020-01-02T03:04:05Z"
-        }
+        },
+        "publicAccessPrevention": "unspecified"
       },
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -196,6 +197,8 @@ TEST(BucketMetadataTest, Parse) {
       "2020-01-02T03:04:05Z",
       google::cloud::internal::FormatRfc3339(
           actual.iam_configuration().uniform_bucket_level_access->locked_time));
+  EXPECT_EQ(actual.iam_configuration().public_access_prevention.value_or(""),
+            "unspecified");
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
   EXPECT_EQ(2, actual.labels().size());
@@ -309,6 +312,7 @@ TEST(BucketMetadataTest, IOStream) {
   // iam_policy()
   EXPECT_THAT(actual, HasSubstr("BucketIamConfiguration={"));
   EXPECT_THAT(actual, HasSubstr("locked_time=2020-01-02T03:04:05Z"));
+  EXPECT_THAT(actual, HasSubstr("public_access_prevention=unspecified"));
 
   // lifecycle()
   EXPECT_THAT(actual, HasSubstr("age=30"));
@@ -387,7 +391,8 @@ TEST(BucketMetadataTest, ToJsonString) {
   // iam_configuration()
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
   nlohmann::json expected_iam_configuration{
-      {"uniformBucketLevelAccess", nlohmann::json{{"enabled", true}}}};
+      {"uniformBucketLevelAccess", nlohmann::json{{"enabled", true}}},
+      {"publicAccessPrevention", "unspecified"}};
   EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()
@@ -472,7 +477,7 @@ TEST(BucketMetadataTest, DeleteLabels) {
 }
 
 /// @test Verify we can change metadata existing label fields.
-TEST(BuucketMetadataTest, ChangeLabels) {
+TEST(BucketMetadataTest, ChangeLabels) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   EXPECT_TRUE(copy.has_label("label-key-1"));
@@ -482,7 +487,7 @@ TEST(BuucketMetadataTest, ChangeLabels) {
 }
 
 /// @test Verify we can change insert new label fields.
-TEST(BUcketMetadataTest, InsertLabels) {
+TEST(BucketMetadataTest, InsertLabels) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   EXPECT_FALSE(copy.has_label("not-there"));
@@ -612,7 +617,21 @@ TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
   EXPECT_EQ(new_configuration, copy.iam_configuration());
   EXPECT_NE(expected, copy)
       << "expected = " << expected.iam_configuration()
-      << "\n  actual=" << copy.iam_configuration() << "\n";
+      << "\n  actual = " << copy.iam_configuration() << "\n";
+}
+
+/// @test Verify we can change the IAM Configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetIamConfigurationPAP) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  BucketIamConfiguration new_configuration;
+  new_configuration.public_access_prevention = "enforced";
+  copy.set_iam_configuration(new_configuration);
+  ASSERT_TRUE(copy.has_iam_configuration());
+  EXPECT_EQ(new_configuration, copy.iam_configuration());
+  EXPECT_NE(expected, copy)
+      << "expected = " << expected.iam_configuration()
+      << "\n  actual = " << copy.iam_configuration() << "\n";
 }
 
 /// @test Verify we can reset the IAM Configuration in BucketMetadata.
@@ -932,27 +951,30 @@ TEST(BucketMetadataPatchBuilder, ResetDefaultAcl) {
 
 TEST(BucketMetadataPatchBuilder, SetIamConfiguration) {
   BucketMetadataPatchBuilder builder;
-  std::string expected =
-      "projects/test-project-name/locations/us-central1/keyRings/"
-      "test-keyring-name/cryptoKeys/test-key-name";
-  builder.SetEncryption(BucketEncryption{expected});
+  BucketIamConfiguration config;
+  config.public_access_prevention = "enforced";
+  config.uniform_bucket_level_access = UniformBucketLevelAccess{true, {}};
+  builder.SetIamConfiguration(config);
 
   auto actual = builder.BuildPatch();
   auto json = nlohmann::json::parse(actual);
-  ASSERT_EQ(1U, json.count("encryption")) << json;
-  ASSERT_TRUE(json["encryption"].is_object()) << json;
-  EXPECT_EQ(expected, json["encryption"].value("defaultKmsKeyName", ""))
-      << json;
+  ASSERT_EQ(1U, json.count("iamConfiguration")) << json;
+  ASSERT_TRUE(json["iamConfiguration"].is_object()) << json;
+  auto const expected = nlohmann::json{
+      {"publicAccessPrevention", "enforced"},
+      {"uniformBucketLevelAccess", {{"enabled", true}}},
+  };
+  EXPECT_EQ(json["iamConfiguration"], expected);
 }
 
 TEST(BucketMetadataPatchBuilder, ResetIamConfiguration) {
   BucketMetadataPatchBuilder builder;
-  builder.ResetEncryption();
+  builder.ResetIamConfiguration();
 
   auto actual = builder.BuildPatch();
   auto json = nlohmann::json::parse(actual);
-  ASSERT_EQ(1U, json.count("encryption")) << json;
-  ASSERT_TRUE(json["encryption"].is_null()) << json;
+  ASSERT_EQ(1U, json.count("iamConfiguration")) << json;
+  ASSERT_TRUE(json["iamConfiguration"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetEncryption) {
