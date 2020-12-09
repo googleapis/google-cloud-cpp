@@ -243,18 +243,27 @@ Convenience shorthands for the schema views.</h2></td></tr>
 <tr class="memitem:aae444d46b9af25ca4b6799bdd3e14045"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aae444d46b9af25ca4b6799bdd3e14045">GetIamPolicy</a> (std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:aae444d46b9af25ca4b6799bdd3e14045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the policy for <code>table_id</code>.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aae444d46b9af25ca4b6799bdd3e14045">More...</a><br /></td></tr>
 <tr class="separator:aae444d46b9af25ca4b6799bdd3e14045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b682090c6d7a70ac1d8ebea707cb18"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ad1b682090c6d7a70ac1d8ebea707cb18">GetIamPolicy</a> (std::string const &amp;cluster_id, std::string const &amp;backup_id)</td></tr>
+<tr class="memdesc:ad1b682090c6d7a70ac1d8ebea707cb18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the policy for <code>backup_id</code>.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ad1b682090c6d7a70ac1d8ebea707cb18">More...</a><br /></td></tr>
+<tr class="separator:ad1b682090c6d7a70ac1d8ebea707cb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae082d61868bb04568e90c06f8399488a"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">AsyncGetIamPolicy</a> (CompletionQueue &amp;cq, std::string const &amp;table_id)</td></tr>
 <tr class="memdesc:ae082d61868bb04568e90c06f8399488a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously gets the IAM policy for <code>table_id</code>.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">More...</a><br /></td></tr>
 <tr class="separator:ae082d61868bb04568e90c06f8399488a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0efb068aee5c1c84b63e05fdb6b0bc2"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2">SetIamPolicy</a> (std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</td></tr>
 <tr class="memdesc:ab0efb068aee5c1c84b63e05fdb6b0bc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for a table.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2">More...</a><br /></td></tr>
 <tr class="separator:ab0efb068aee5c1c84b63e05fdb6b0bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fe5569eb82f90cea492686ba8b94187"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2fe5569eb82f90cea492686ba8b94187">SetIamPolicy</a> (std::string const &amp;cluster_id, std::string const &amp;backup_id, google::iam::v1::Policy const &amp;iam_policy)</td></tr>
+<tr class="memdesc:a2fe5569eb82f90cea492686ba8b94187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for a backup.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2fe5569eb82f90cea492686ba8b94187">More...</a><br /></td></tr>
+<tr class="separator:a2fe5569eb82f90cea492686ba8b94187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaaef6e37df0b6df0b35fcee23a902ad"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">AsyncSetIamPolicy</a> (CompletionQueue &amp;cq, std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</td></tr>
 <tr class="memdesc:abaaef6e37df0b6df0b35fcee23a902ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously sets the IAM policy for a table.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">More...</a><br /></td></tr>
 <tr class="separator:abaaef6e37df0b6df0b35fcee23a902ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa87b6d5dcffbb897e96657ed55671c95"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">TestIamPermissions</a> (std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
 <tr class="memdesc:aa87b6d5dcffbb897e96657ed55671c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified table.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">More...</a><br /></td></tr>
 <tr class="separator:aa87b6d5dcffbb897e96657ed55671c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96b6e968d6d0209363f705f22aae7c7c"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a96b6e968d6d0209363f705f22aae7c7c">TestIamPermissions</a> (std::string const &amp;cluster_id, std::string const &amp;backup_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
+<tr class="memdesc:a96b6e968d6d0209363f705f22aae7c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a permission set that the caller has on the specified backup.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a96b6e968d6d0209363f705f22aae7c7c">More...</a><br /></td></tr>
+<tr class="separator:a96b6e968d6d0209363f705f22aae7c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5fcf9c71cf25054efa82c7b633582e7"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">AsyncTestIamPermissions</a> (CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
 <tr class="memdesc:af5fcf9c71cf25054efa82c7b633582e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously obtains a permission set that the caller has on the specified table.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">More...</a><br /></td></tr>
 <tr class="separator:af5fcf9c71cf25054efa82c7b633582e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,6 +273,9 @@ Convenience shorthands for the schema views.</h2></td></tr>
 <tr class="memitem:ae75740491f211b8e4ea061021fe92176"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">ClusterName</a> (std::string const &amp;cluster_id) const</td></tr>
 <tr class="memdesc:ae75740491f211b8e4ea061021fe92176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the fully qualified name of a Cluster.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">More...</a><br /></td></tr>
 <tr class="separator:ae75740491f211b8e4ea061021fe92176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9468309a09a2a54c445dfd7bd71db800"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">BackupName</a> (std::string const &amp;cluster_id, std::string const &amp;backup_id) const</td></tr>
+<tr class="memdesc:a9468309a09a2a54c445dfd7bd71db800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the fully qualified name of a Backup.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">More...</a><br /></td></tr>
+<tr class="separator:a9468309a09a2a54c445dfd7bd71db800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the API to administer tables in a Cloud Bigtable instance. </p>
@@ -1182,7 +1194,7 @@ template&lt;typename... Policies&gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00925">925</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00946">946</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1644,7 +1656,7 @@ template&lt;typename... Policies&gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00971">971</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01015">1015</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1712,7 +1724,7 @@ template&lt;typename... Policies&gt; </div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01029">1029</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01102">1102</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -1861,6 +1873,46 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<a id="a9468309a09a2a54c445dfd7bd71db800"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9468309a09a2a54c445dfd7bd71db800">&#9670;&nbsp;</a></span>BackupName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::bigtable::v1::TableAdmin::BackupName </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>backup_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the fully qualified name of a Backup. </p>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01615">1615</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+
+</div>
+</div>
 <a id="a03d7643fe920303003181a57d0e7faf5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a03d7643fe920303003181a57d0e7faf5">&#9670;&nbsp;</a></span>CheckConsistency()</h2>
 
@@ -1946,7 +1998,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01533">1533</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01610">1610</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -2359,8 +2411,51 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<a id="ad1b682090c6d7a70ac1d8ebea707cb18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1b682090c6d7a70ac1d8ebea707cb18">&#9670;&nbsp;</a></span>GetIamPolicy() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; google::iam::v1::Policy &gt; google::cloud::bigtable::v1::TableAdmin::GetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>backup_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the policy for <code>backup_id</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the associated cluster that contains backup.</td></tr>
+    <tr><td class="paramname">backup_id</td><td>the backup to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the full IAM policy for the backup.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00923">923</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+
+</div>
+</div>
 <a id="aae444d46b9af25ca4b6799bdd3e14045"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae444d46b9af25ca4b6799bdd3e14045">&#9670;&nbsp;</a></span>GetIamPolicy()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aae444d46b9af25ca4b6799bdd3e14045">&#9670;&nbsp;</a></span>GetIamPolicy() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2765,8 +2860,60 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<a id="a2fe5569eb82f90cea492686ba8b94187"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fe5569eb82f90cea492686ba8b94187">&#9670;&nbsp;</a></span>SetIamPolicy() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; google::iam::v1::Policy &gt; google::cloud::bigtable::v1::TableAdmin::SetIamPolicy </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>backup_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::iam::v1::Policy const &amp;&#160;</td>
+          <td class="paramname"><em>iam_policy</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the IAM policy for a backup. </p>
+<p>This is the preferred way to the overload for <code>IamBindings</code>. This is more closely coupled to the underlying protocol, enable more actions and is more likely to tolerate future protocol changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>which is the cluster containing the backup. </td></tr>
+    <tr><td class="paramname">backup_id</td><td>which backup to set the IAM policy for. </td></tr>
+    <tr><td class="paramname">iam_policy</td><td>google::iam::v1::Policy object containing role and members. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the current IAM policy for the table.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"></div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00990">990</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+
+</div>
+</div>
 <a id="ab0efb068aee5c1c84b63e05fdb6b0bc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0efb068aee5c1c84b63e05fdb6b0bc2">&#9670;&nbsp;</a></span>SetIamPolicy()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0efb068aee5c1c84b63e05fdb6b0bc2">&#9670;&nbsp;</a></span>SetIamPolicy() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2831,7 +2978,7 @@ template&lt;typename... Policies&gt; </div>
 <div class="line">  }</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00945">945</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00966">966</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -2861,12 +3008,75 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01528">1528</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01605">1605</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+
+</div>
+</div>
+<a id="a96b6e968d6d0209363f705f22aae7c7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96b6e968d6d0209363f705f22aae7c7c">&#9670;&nbsp;</a></span>TestIamPermissions() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; std::vector&lt; std::string &gt; &gt; google::cloud::bigtable::v1::TableAdmin::TestIamPermissions </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>cluster_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>backup_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>permissions</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a permission set that the caller has on the specified backup. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cluster_id</td><td>the ID of the cluster that contains the backup. </td></tr>
+    <tr><td class="paramname">backup_id</td><td>the ID of the backup to query. </td></tr>
+    <tr><td class="paramname">permissions</td><td>set of permissions to check for the resource.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"> </div>
+<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
+<div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"> </div>
+<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; resource,</div>
+<div class="line">     std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions) {</div>
+<div class="line">    StatusOr&lt;std::vector&lt;std::string&gt;&gt; result =</div>
+<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">TestIamPermissions</a>(resource, permissions);</div>
+<div class="line">    <span class="keywordflow">if</span> (!result) <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The current user has the following permissions [&quot;</span>;</div>
+<div class="line">    std::cout &lt;&lt; absl::StrJoin(*result, <span class="stringliteral">&quot;, &quot;</span>);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
+<div class="line">  }</div>
+</div><!-- fragment --> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01069">1069</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
 <a id="aa87b6d5dcffbb897e96657ed55671c95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa87b6d5dcffbb897e96657ed55671c95">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa87b6d5dcffbb897e96657ed55671c95">&#9670;&nbsp;</a></span>TestIamPermissions() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2917,7 +3127,7 @@ template&lt;typename... Policies&gt; </div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00993">993</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01037">1037</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -3187,15 +3397,15 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aa87b6d5dcffbb897e96657ed55671c95"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">google::cloud::bigtable::v1::TableAdmin::TestIamPermissions</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt; std::string &gt; &gt; TestIamPermissions(std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Returns a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00993">table_admin.cc:993</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_af5fcf9c71cf25054efa82c7b633582e7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">google::cloud::bigtable::v1::TableAdmin::AsyncTestIamPermissions</a></div><div class="ttdeci">future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt; AsyncTestIamPermissions(CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Asynchronously obtains a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01029">table_admin.cc:1029</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aa87b6d5dcffbb897e96657ed55671c95"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">google::cloud::bigtable::v1::TableAdmin::TestIamPermissions</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt; std::string &gt; &gt; TestIamPermissions(std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Returns a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01037">table_admin.cc:1037</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_af5fcf9c71cf25054efa82c7b633582e7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">google::cloud::bigtable::v1::TableAdmin::AsyncTestIamPermissions</a></div><div class="ttdeci">future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt; AsyncTestIamPermissions(CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Asynchronously obtains a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01102">table_admin.cc:1102</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a18c7e2dca7f878d239746d44acc347c5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a18c7e2dca7f878d239746d44acc347c5">google::cloud::bigtable::v1::TableAdmin::WaitForConsistency</a></div><div class="ttdeci">google::cloud::future&lt; StatusOr&lt; Consistency &gt; &gt; WaitForConsistency(std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Checks consistency of a table with multiple calls using a separate thread.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00674">table_admin.cc:674</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a23ee88d786cbeafec6ba92145c83fe6c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a23ee88d786cbeafec6ba92145c83fe6c">google::cloud::bigtable::v1::TableAdmin::DropAllRows</a></div><div class="ttdeci">Status DropAllRows(std::string const &amp;table_id)</div><div class="ttdoc">Delete all the rows in a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00759">table_admin.cc:759</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ad84bb58b6e962b53023b3ba20b72029a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ad84bb58b6e962b53023b3ba20b72029a">google::cloud::bigtable::v1::TableAdmin::AsyncListBackups</a></div><div class="ttdeci">future&lt; StatusOr&lt; std::vector&lt; google::bigtable::admin::v2::Backup &gt; &gt; &gt; AsyncListBackups(CompletionQueue &amp;cq, ListBackupsParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to retrieve a list of backups.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00522">table_admin.cc:522</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a03d7643fe920303003181a57d0e7faf5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a03d7643fe920303003181a57d0e7faf5">google::cloud::bigtable::v1::TableAdmin::CheckConsistency</a></div><div class="ttdeci">StatusOr&lt; Consistency &gt; CheckConsistency(std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Checks consistency of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00846">table_admin.cc:846</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a1ba7b4053adeab78b1ea3f3b098d9dd6"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a1ba7b4053adeab78b1ea3f3b098d9dd6">google::cloud::bigtable::v1::TableAdmin::AsyncDeleteTable</a></div><div class="ttdeci">future&lt; Status &gt; AsyncDeleteTable(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Start a request to asynchronously delete a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00215">table_admin.cc:215</a></div></div>
 <div class="ttc" id="alog_8cc_html_abc5627fb346314b5f14b10bdb6542da7"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a></div><div class="ttdeci">absl::Time t</div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab0efb068aee5c1c84b63e05fdb6b0bc2"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2">google::cloud::bigtable::v1::TableAdmin::SetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; SetIamPolicy(std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00945">table_admin.cc:945</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab0efb068aee5c1c84b63e05fdb6b0bc2"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2">google::cloud::bigtable::v1::TableAdmin::SetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; SetIamPolicy(std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00966">table_admin.cc:966</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a4af107eddac704be27ced9cb30634031"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4af107eddac704be27ced9cb30634031">google::cloud::bigtable::v1::TableAdmin::AsyncCheckConsistency</a></div><div class="ttdeci">future&lt; StatusOr&lt; Consistency &gt; &gt; AsyncCheckConsistency(CompletionQueue &amp;cq, std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Make an asynchronous request to check consistency of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00868">table_admin.cc:868</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a4bb89cf1781427195936947dfea09e25"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4bb89cf1781427195936947dfea09e25">google::cloud::bigtable::v1::TableAdmin::AsyncWaitForConsistency</a></div><div class="ttdeci">google::cloud::future&lt; StatusOr&lt; Consistency &gt; &gt; AsyncWaitForConsistency(CompletionQueue &amp;cq, std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Asynchronously wait until a table is consistent with the given token.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00687">table_admin.cc:687</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_afa5f8ec06a168768ed965edc8d6539a0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#afa5f8ec06a168768ed965edc8d6539a0">google::cloud::bigtable::v1::TableAdmin::GenerateConsistencyToken</a></div><div class="ttdeci">StatusOr&lt; std::string &gt; GenerateConsistencyToken(std::string const &amp;table_id)</div><div class="ttdoc">Generates consistency token for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00797">table_admin.cc:797</a></div></div>
@@ -3216,14 +3426,14 @@ template&lt;typename... Policies&gt; </div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">google::cloud::bigtable::v1::TableConfig</a></div><div class="ttdoc">Specify the initial schema for a new table.</div><div class="ttdef"><b>Definition:</b> <a href="table__config_8h_source.html#l00029">table_config.h:29</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a0977844ed0903f37edfaa07210a76714"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">google::cloud::bigtable::v1::TableAdmin::CreateTable</a></div><div class="ttdeci">StatusOr&lt;::google::bigtable::admin::v2::Table &gt; CreateTable(std::string table_id, TableConfig config)</div><div class="ttdoc">Create a new table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00053">table_admin.cc:53</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a91690b5c14f4749f1ba2c6612984d778"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a91690b5c14f4749f1ba2c6612984d778">google::cloud::bigtable::v1::TableAdmin::AsyncCreateBackup</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::Backup &gt; &gt; AsyncCreateBackup(CompletionQueue &amp;cq, CreateBackupParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to create a new backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00267">table_admin.cc:267</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae082d61868bb04568e90c06f8399488a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">google::cloud::bigtable::v1::TableAdmin::AsyncGetIamPolicy</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncGetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Asynchronously gets the IAM policy for table_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00925">table_admin.cc:925</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae082d61868bb04568e90c06f8399488a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">google::cloud::bigtable::v1::TableAdmin::AsyncGetIamPolicy</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncGetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Asynchronously gets the IAM policy for table_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00946">table_admin.cc:946</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a2c20901567b80750bbf82067ac434e9a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2c20901567b80750bbf82067ac434e9a">google::cloud::bigtable::v1::TableAdmin::AsyncDeleteBackup</a></div><div class="ttdeci">future&lt; Status &gt; AsyncDeleteBackup(CompletionQueue &amp;cq, std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Sends an asynchronous request to delete a backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00448">table_admin.cc:448</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a7ee348ae8014d0e1a3543649db2d61fd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a7ee348ae8014d0e1a3543649db2d61fd">google::cloud::bigtable::v1::TableAdmin::AsyncGetTable</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt; AsyncGetTable(CompletionQueue &amp;cq, std::string const &amp;table_id, google::bigtable::admin::v2::Table::View view)</div><div class="ttdoc">Sends an asynchronous request to get information about an existing table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00094">table_admin.cc:94</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::v1::TableAdmin</a></div><div class="ttdoc">Implements the API to administer tables in a Cloud Bigtable instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00130">table_admin.h:130</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a13f91e9a9a05f50d07cbde195003733c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a13f91e9a9a05f50d07cbde195003733c">google::cloud::bigtable::v1::TableAdmin::DeleteBackup</a></div><div class="ttdeci">Status DeleteBackup(std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Delete a backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00427">table_admin.cc:427</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a8d8b7d69108d10c7250409a43e5ef8cd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8d8b7d69108d10c7250409a43e5ef8cd">google::cloud::bigtable::v1::TableAdmin::AsyncUpdateBackup</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::Backup &gt; &gt; AsyncUpdateBackup(CompletionQueue &amp;cq, UpdateBackupParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to update a backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00364">table_admin.cc:364</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aae444d46b9af25ca4b6799bdd3e14045"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aae444d46b9af25ca4b6799bdd3e14045">google::cloud::bigtable::v1::TableAdmin::GetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; GetIamPolicy(std::string const &amp;table_id)</div><div class="ttdoc">Gets the policy for table_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00900">table_admin.cc:900</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_abaaef6e37df0b6df0b35fcee23a902ad"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">google::cloud::bigtable::v1::TableAdmin::AsyncSetIamPolicy</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncSetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Asynchronously sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00971">table_admin.cc:971</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_abaaef6e37df0b6df0b35fcee23a902ad"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">google::cloud::bigtable::v1::TableAdmin::AsyncSetIamPolicy</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncSetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Asynchronously sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01015">table_admin.cc:1015</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a5c4dee69e6b1aadedb26ee25731e5776"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a5c4dee69e6b1aadedb26ee25731e5776">google::cloud::bigtable::v1::TableAdmin::UpdateBackup</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Backup &gt; UpdateBackup(UpdateBackupParams const &amp;params)</div><div class="ttdoc">Updates a backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00344">table_admin.cc:344</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a055df7139a5ca93c885796116b4a99c7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a055df7139a5ca93c885796116b4a99c7">google::cloud::bigtable::v1::TableAdmin::AsyncModifyColumnFamilies</a></div><div class="ttdeci">future&lt; StatusOr&lt;::google::bigtable::admin::v2::Table &gt; &gt; AsyncModifyColumnFamilies(CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; ColumnFamilyModification &gt; modifications)</div><div class="ttdoc">Make an asynchronous request to modify the column families of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00611">table_admin.cc:611</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab3f58ccb8fbf620d4a796557d858a8c3"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab3f58ccb8fbf620d4a796557d858a8c3">google::cloud::bigtable::v1::TableAdmin::AsyncListTables</a></div><div class="ttdeci">future&lt; StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Table &gt; &gt; &gt; AsyncListTables(CompletionQueue &amp;cq, google::bigtable::admin::v2::Table::View view)</div><div class="ttdoc">Sends an asynchronous request to get all the tables in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00152">table_admin.cc:152</a></div></div>
