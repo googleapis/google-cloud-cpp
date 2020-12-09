@@ -161,6 +161,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11f3ba2fd33b60661e1ebc743c852a5f"><td class="memItemLeft" align="right" valign="top">TracingOptions const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a11f3ba2fd33b60661e1ebc743c852a5f">tracing_options</a> () const</td></tr>
 <tr class="memdesc:a11f3ba2fd33b60661e1ebc743c852a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the options for use when tracing RPCs.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a11f3ba2fd33b60661e1ebc743c852a5f">More...</a><br /></td></tr>
 <tr class="separator:a11f3ba2fd33b60661e1ebc743c852a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc6fdaebab98fa94c9bc953bee442f7"><td class="memItemLeft" align="right" valign="top">std::chrono::milliseconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#addc6fdaebab98fa94c9bc953bee442f7">max_conn_refresh_period</a> ()</td></tr>
+<tr class="memdesc:addc6fdaebab98fa94c9bc953bee442f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum connection refresh period, as set via <code>set_max_conn_refresh_period</code>  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#addc6fdaebab98fa94c9bc953bee442f7">More...</a><br /></td></tr>
+<tr class="separator:addc6fdaebab98fa94c9bc953bee442f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72bdc4cfb773a9a0a8bc6bab2794da79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">ClientOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a72bdc4cfb773a9a0a8bc6bab2794da79">set_max_conn_refresh_period</a> (std::chrono::milliseconds <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#addc6fdaebab98fa94c9bc953bee442f7">max_conn_refresh_period</a>)</td></tr>
+<tr class="memdesc:a72bdc4cfb773a9a0a8bc6bab2794da79"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to a positive number, the client will refresh connections at random moments not more apart from each other than this duration.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a72bdc4cfb773a9a0a8bc6bab2794da79">More...</a><br /></td></tr>
+<tr class="separator:a72bdc4cfb773a9a0a8bc6bab2794da79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -209,7 +215,7 @@ Friends</h2></td></tr>
 <dd>
 The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> for the Cloud Bigtable Emulator. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00108">108</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00114">114</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -240,7 +246,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 <p>Connect to the production instance of Cloud Bigtable using <code>creds</code>. </p>
 <p>This constructor always connects to the production instance of Cloud Bigtable, and can be used when the application default credentials are not configured in the environment where the application is running. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00092">92</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00095">95</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -477,6 +483,35 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 
 </div>
 </div>
+<a id="addc6fdaebab98fa94c9bc953bee442f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addc6fdaebab98fa94c9bc953bee442f7">&#9670;&nbsp;</a></span>max_conn_refresh_period()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::milliseconds google::cloud::bigtable::v1::ClientOptions::max_conn_refresh_period </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum connection refresh period, as set via <code>set_max_conn_refresh_period</code> </p>
+
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00332">332</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+
+</div>
+</div>
 <a id="a1ed85d65ac0bc4c7260af2930be8623d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ed85d65ac0bc4c7260af2930be8623d">&#9670;&nbsp;</a></span>set_admin_endpoint()</h2>
 
@@ -582,7 +617,7 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00126">126</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00132">132</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -611,6 +646,37 @@ The <a href="https://cloud.google.com/bigtable/docs/emulator">documentation</a> 
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00086">86</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a72bdc4cfb773a9a0a8bc6bab2794da79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72bdc4cfb773a9a0a8bc6bab2794da79">&#9670;&nbsp;</a></span>set_max_conn_refresh_period()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">ClientOptions</a>&amp; google::cloud::bigtable::v1::ClientOptions::set_max_conn_refresh_period </td>
+          <td>(</td>
+          <td class="paramtype">std::chrono::milliseconds&#160;</td>
+          <td class="paramname"><em>max_conn_refresh_period</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>If set to a positive number, the client will refresh connections at random moments not more apart from each other than this duration. </p>
+<p>This is necessary to avoid all connections simultaneously expiring and causing latency spikes. </p>
+
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00342">342</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +1089,7 @@ template&lt;typename Rep , typename Period &gt; </div>
 
 <p>Return the user agent prefix used by the library. </p>
 
-<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00135">135</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00141">141</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>
@@ -1048,12 +1114,12 @@ template&lt;typename Rep , typename Period &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00331">331</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client__options_8h_source.html#l00350">350</a> of file <a class="el" href="client__options_8h_source.html">client_options.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions_html_a9d1afc231da01644a71d54dede7c35d0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a9d1afc231da01644a71d54dede7c35d0">google::cloud::bigtable::v1::ClientOptions::ClientOptions</a></div><div class="ttdeci">ClientOptions()</div><div class="ttdoc">Initialize the client options with the default credentials.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8cc_source.html#l00108">client_options.cc:108</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions_html_a9d1afc231da01644a71d54dede7c35d0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a9d1afc231da01644a71d54dede7c35d0">google::cloud::bigtable::v1::ClientOptions::ClientOptions</a></div><div class="ttdeci">ClientOptions()</div><div class="ttdoc">Initialize the client options with the default credentials.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8cc_source.html#l00114">client_options.cc:114</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions_html_aefbb6b5345699f37540d049032402ba9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#aefbb6b5345699f37540d049032402ba9">google::cloud::bigtable::v1::ClientOptions::SetCredentials</a></div><div class="ttdeci">ClientOptions &amp; SetCredentials(std::shared_ptr&lt; grpc::ChannelCredentials &gt; credentials)</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00134">client_options.h:134</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions_html_a1102e63af67758bc599959c155e93494"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#a1102e63af67758bc599959c155e93494">google::cloud::bigtable::v1::ClientOptions::SetGrpclbFallbackTimeout</a></div><div class="ttdeci">google::cloud::Status SetGrpclbFallbackTimeout(std::chrono::duration&lt; Rep, Period &gt; fallback_timeout)</div><div class="ttdoc">Set the grpclb fallback timeout with the timestamp fallback_timeout for the channel.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00199">client_options.h:199</a></div></div>
 <!-- start footer part -->
