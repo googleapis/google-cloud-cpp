@@ -19,10 +19,8 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/c8bfd324b41ad1f6f65fed124572f92fe116517b.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/spanner_request_options.tar.gz"
 )
-set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "712b622bb93aa07051a81ac669f723c17d988568521f69104ee1627e5a4a2823")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -69,7 +67,6 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/cloud/bigquery/v2/model.proto"
     "google/cloud/bigquery/v2/model_reference.proto"
     "google/cloud/bigquery/v2/standard_sql.proto"
-    "google/cloud/bigquery/v2/table_reference.proto"
     "google/cloud/dialogflow/v2beta1/agent.proto"
     "google/cloud/dialogflow/v2beta1/audio_config.proto"
     "google/cloud/dialogflow/v2beta1/context.proto"
@@ -118,7 +115,6 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/monitoring/v3/uptime.proto"
     "google/monitoring/v3/uptime_service.proto"
     "google/pubsub/v1/pubsub.proto"
-    "google/pubsub/v1/schema.proto"
     "google/spanner/admin/database/v1/backup.proto"
     "google/spanner/admin/database/v1/common.proto"
     "google/spanner/admin/database/v1/spanner_database_admin.proto"
@@ -139,12 +135,9 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/type/dayofweek.proto"
     "google/type/expr.proto"
     "google/type/fraction.proto"
-    "google/type/interval.proto"
     "google/type/latlng.proto"
-    "google/type/localized_text.proto"
     "google/type/money.proto"
     "google/type/month.proto"
-    "google/type/phone_number.proto"
     "google/type/postal_address.proto"
     "google/type/quaternion.proto"
     "google/type/timeofday.proto")
@@ -163,7 +156,6 @@ ExternalProject_Add(
     EXCLUDE_FROM_ALL ON
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
-    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -278,12 +270,9 @@ set(googleapis_cpp_installed_libraries_list
     googleapis_cpp_type_dayofweek_protos
     googleapis_cpp_type_expr_protos
     googleapis_cpp_type_fraction_protos
-    googleapis_cpp_type_interval_protos
     googleapis_cpp_type_latlng_protos
-    googleapis_cpp_type_localized_text_protos
     googleapis_cpp_type_money_protos
     googleapis_cpp_type_month_protos
-    googleapis_cpp_type_phone_number_protos
     googleapis_cpp_type_postal_address_protos
     googleapis_cpp_type_quaternion_protos
     googleapis_cpp_type_timeofday_protos)
@@ -309,12 +298,9 @@ googleapis_cpp_add_library("google/type/datetime.proto")
 googleapis_cpp_add_library("google/type/dayofweek.proto")
 googleapis_cpp_add_library("google/type/expr.proto")
 googleapis_cpp_add_library("google/type/fraction.proto")
-googleapis_cpp_add_library("google/type/interval.proto")
 googleapis_cpp_add_library("google/type/latlng.proto")
-googleapis_cpp_add_library("google/type/localized_text.proto")
 googleapis_cpp_add_library("google/type/money.proto")
 googleapis_cpp_add_library("google/type/month.proto")
-googleapis_cpp_add_library("google/type/phone_number.proto")
 googleapis_cpp_add_library("google/type/postal_address.proto")
 googleapis_cpp_add_library("google/type/quaternion.proto")
 googleapis_cpp_add_library("google/type/timeofday.proto")
@@ -362,7 +348,6 @@ google_cloud_cpp_grpcpp_library(
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/model_reference.proto"
     "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/standard_sql.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/bigquery/v2/table_reference.proto"
     PROTO_PATH_DIRECTORIES
     "${GOOGLEAPIS_CPP_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
@@ -589,7 +574,6 @@ target_link_libraries(
 google_cloud_cpp_grpcpp_library(
     googleapis_cpp_pubsub_protos
     "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/pubsub.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/schema.proto"
     PROTO_PATH_DIRECTORIES
     "${GOOGLEAPIS_CPP_SOURCE}"
     "${PROTO_INCLUDE_DIR}")

@@ -75,10 +75,9 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/c8bfd324b41ad1f6f65fed124572f92fe116517b.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/spanner_request_options.tar.gz",
             ],
-            strip_prefix = "googleapis-c8bfd324b41ad1f6f65fed124572f92fe116517b",
-            sha256 = "712b622bb93aa07051a81ac669f723c17d988568521f69104ee1627e5a4a2823",
+            strip_prefix = "googleapis-spanner_request_options",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 

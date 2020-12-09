@@ -110,6 +110,7 @@ auto create_get_policy_mock = []() {
   };
 };
 
+#if 0  // See the comment on TableAdminTest.GetIamPolicyForBackup.
 auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
   return [backup_id](grpc::ClientContext* context,
                      ::google::iam::v1::GetIamPolicyRequest const&,
@@ -123,6 +124,7 @@ auto create_get_policy_mock_for_backup = [](std::string const& backup_id) {
     return grpc::Status::OK;
   };
 };
+#endif
 auto create_policy_with_params = []() {
   return [](grpc::ClientContext* context,
             ::google::iam::v1::SetIamPolicyRequest const& request,
@@ -921,6 +923,13 @@ TEST_F(TableAdminTest, GetIamPolicy) {
   EXPECT_EQ("random-tag", policy->etag());
 }
 
+#if 0
+// TODO(devbww) This test is disabled in this branch because it
+// relies on the additional_bindings google.api.http option added to
+// the // google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy()
+// RPC after the googleapis/googleapis/spanner_request_options branch
+// was forked. Remove this before merging into the main branch.
+
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   TableAdmin tested(client_, "the-instance");
@@ -933,6 +942,7 @@ TEST_F(TableAdminTest, GetIamPolicyForBackup) {
   EXPECT_EQ(3, policy->version());
   EXPECT_EQ("random-tag", policy->etag());
 }
+#endif
 
 /// @test Verify unrecoverable errors for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
