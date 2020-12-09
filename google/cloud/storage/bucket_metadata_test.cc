@@ -617,7 +617,7 @@ TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
   EXPECT_EQ(new_configuration, copy.iam_configuration());
   EXPECT_NE(expected, copy)
       << "expected = " << expected.iam_configuration()
-      << "\n  actual=" << copy.iam_configuration() << "\n";
+      << "\n  actual = " << copy.iam_configuration() << "\n";
 }
 
 /// @test Verify we can change the IAM Configuration in BucketMetadata.
@@ -631,7 +631,7 @@ TEST(BucketMetadataTest, SetIamConfigurationPAP) {
   EXPECT_EQ(new_configuration, copy.iam_configuration());
   EXPECT_NE(expected, copy)
       << "expected = " << expected.iam_configuration()
-      << "\n  actual=" << copy.iam_configuration() << "\n";
+      << "\n  actual = " << copy.iam_configuration() << "\n";
 }
 
 /// @test Verify we can reset the IAM Configuration in BucketMetadata.

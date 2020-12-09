@@ -33,7 +33,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
   os << "CorsEntry={";
   char const* sep = "";
   if (rhs.max_age_seconds.has_value()) {
-    os << "max_age_seconds=" << *rhs.max_age_seconds;
+    os << sep << "max_age_seconds=" << *rhs.max_age_seconds;
     sep = ", ";
   }
   return os << sep << "method=[" << absl::StrJoin(rhs.method, ", ")
@@ -54,7 +54,7 @@ std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
   os << "BucketIamConfiguration={";
   char const* sep = "";
   if (rhs.public_access_prevention.has_value()) {
-    os << "public_access_prevention=" << *rhs.public_access_prevention;
+    os << sep << "public_access_prevention=" << *rhs.public_access_prevention;
     sep = ", ";
   }
   if (rhs.uniform_bucket_level_access.has_value()) {
