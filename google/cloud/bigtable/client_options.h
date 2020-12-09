@@ -326,6 +326,25 @@ class ClientOptions {
   /// Return the options for use when tracing RPCs.
   TracingOptions const& tracing_options() const { return tracing_options_; }
 
+  /**
+   * Maximum connection refresh period, as set via `set_max_conn_refresh_period`
+   */
+  std::chrono::milliseconds max_conn_refresh_period() {
+    return max_conn_refresh_period_;
+  }
+
+  /**
+   * If set to a positive number, the client will refresh connections at random
+   * moments not more apart from each other than this duration. This is
+   * necessary to avoid all connections simultaneously expiring and causing
+   * latency spikes.
+   */
+  ClientOptions& set_max_conn_refresh_period(
+      std::chrono::milliseconds max_conn_refresh_period) {
+    max_conn_refresh_period_ = max_conn_refresh_period;
+    return *this;
+  }
+
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
@@ -348,6 +367,7 @@ class ClientOptions {
   std::string instance_admin_endpoint_;
   std::set<std::string> tracing_components_;
   TracingOptions tracing_options_;
+  std::chrono::milliseconds max_conn_refresh_period_;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
