@@ -73,7 +73,7 @@ The Google Cloud C++ client libraries use the native OpenSSL library. In most
 macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
 this dependency, for example:
 
-export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
+export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
 
 You have not set this environment variable. Most likely, this will result in a
 broken build with fairly obscure error messages. If your environment does not
