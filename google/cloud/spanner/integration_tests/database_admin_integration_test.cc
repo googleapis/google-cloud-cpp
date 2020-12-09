@@ -180,7 +180,6 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   if (metadata->statements_size() >= 1) {
     EXPECT_THAT(metadata->statements(), Contains(HasSubstr("CREATE TABLE")));
   }
-  EXPECT_FALSE(metadata->throttled());
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);
