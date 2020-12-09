@@ -1928,6 +1928,27 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_write_transaction]
 
+//! [START spanner_get_commit_stats]
+void GetCommitStatistics(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+
+  //! [commit-options]
+  auto commit = client.Commit(
+      spanner::Mutations{
+          spanner::UpdateMutationBuilder(
+              "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
+              .EmplaceRow(1, 1, 200000)
+              .EmplaceRow(2, 2, 400000)
+              .Build()},
+      spanner::CommitOptions{}.set_return_stats(true));
+  //! [commit-options]
+
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "Update was successful [spanner_get_commit_stats]\n";
+}
+//! [END spanner_get_commit_stats]
+
 //! [START spanner_dml_standard_insert]
 void DmlStandardInsert(google::cloud::spanner::Client client) {
   //! [execute-dml]
@@ -2959,6 +2980,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-data-with-storing-index",
                          ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", ReadWriteTransaction),
+      make_command_entry("get-commit-stats", GetCommitStatistics),
       make_command_entry("dml-standard-insert", DmlStandardInsert),
       make_command_entry("dml-standard-update", DmlStandardUpdate),
       make_command_entry("dml-standard-update-with-timestamp",
@@ -3368,6 +3390,11 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_read_write_transaction sample" << std::endl;
   ReadWriteTransaction(client);
+
+  if (!emulator) {
+    std::cout << "\nRunning spanner_get_commit_stats sample" << std::endl;
+    GetCommitStatistics(client);
+  }
 
   std::cout << "\nRunning spanner_dml_standard_insert sample" << std::endl;
   DmlStandardInsert(client);

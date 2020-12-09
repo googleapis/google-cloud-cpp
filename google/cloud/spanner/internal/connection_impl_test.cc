@@ -24,6 +24,7 @@
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <array>
 #include <atomic>
@@ -164,11 +165,16 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
   return response;
 }
 
-// Create a `CommitResponse with the given `commit_timestamp`.
-spanner_proto::CommitResponse MakeCommitResponse(Timestamp commit_timestamp) {
+// Create a `CommitResponse` with the given `commit_timestamp` and
+// `commit_stats`.
+spanner_proto::CommitResponse MakeCommitResponse(
+    Timestamp commit_timestamp,
+    absl::optional<CommitStats> commit_stats = absl::nullopt) {
   spanner_proto::CommitResponse response;
   *response.mutable_commit_timestamp() =
       internal::TimestampToProto(commit_timestamp);
+  if (commit_stats.has_value()) {
+  }
   return response;
 }
 
@@ -1610,6 +1616,27 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
 
   auto commit = conn->Commit({txn});
   EXPECT_STATUS_OK(commit);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithStats) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  spanner_proto::Transaction txn = MakeTestTransaction();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(txn));
+  EXPECT_CALL(*mock, Commit(_, HasSession("test-session-name")))
+      .WillOnce(Return(MakeCommitResponse(
+          MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value(),
+          CommitStats{42, std::chrono::nanoseconds(123456789)})));
+
+  auto commit = conn->Commit(
+      {MakeReadWriteTransaction(), {}, CommitOptions{}.set_return_stats(true)});
+  EXPECT_STATUS_OK(commit);
+  ASSERT_FALSE(commit->commit_stats.has_value());
 }
 
 TEST(ConnectionImplTest, RollbackGetSessionFailure) {
