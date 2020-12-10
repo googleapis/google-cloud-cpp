@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/parse_rfc3339.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/strings/ascii.h"
 #include "absl/time/time.h"
