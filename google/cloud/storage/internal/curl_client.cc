@@ -273,11 +273,6 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   // We need to explicitly disable chunked transfer encoding. libcurl uses is by
   // default (at least in this case), and that wastes bandwidth as the content
   // length is known.
-    if (request.custom_header().has_value()){
-    builder.AddHeader(request.custom_header().custom_header_name() + ": " +
-    request.custom_header().value());
-  }
-  // We need to validate if custom header is present before adding in request header
   builder.AddHeader("Transfer-Encoding:");
   auto response = builder.BuildRequest().MakeUploadRequest(request.payload());
   if (!response.ok()) {
