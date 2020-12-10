@@ -42,7 +42,7 @@ TEST(PartitionOptionsTest, Regular) {
 
 TEST(PartitionOptionsTest, Proto) {
   PartitionOptions po{1, 2};
-  auto proto = internal::ToProto(po);
+  auto proto = spanner_internal::ToProto(po);
   EXPECT_EQ(*po.partition_size_bytes, proto.partition_size_bytes());
   EXPECT_EQ(*po.max_partitions, proto.max_partitions());
 }

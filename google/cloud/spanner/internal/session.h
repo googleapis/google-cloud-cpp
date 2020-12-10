@@ -28,7 +28,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * A class that represents a Session.
@@ -37,7 +37,7 @@ namespace internal {
  */
 class Session {
  public:
-  using Clock = ::google::cloud::spanner::internal::SteadyClock;
+  using Clock = ::google::cloud::spanner::spanner_internal::SteadyClock;
   Session(std::string session_name, std::shared_ptr<Channel> channel,
           std::shared_ptr<Clock> clock = std::make_shared<Clock>())
       : session_name_(std::move(session_name)),
@@ -90,7 +90,7 @@ using SessionHolder = std::shared_ptr<Session>;
  */
 SessionHolder MakeDissociatedSessionHolder(std::string session_name);
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

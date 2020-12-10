@@ -22,7 +22,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * A simple `Clock` class that can be overridden for testing.
@@ -46,17 +46,17 @@ class Clock {
  * `SteadyClock` is a monotonic clock where time points cannot decrease as
  * physical time moves forward. It is not related to wall clock time.
  */
-using SteadyClock =
-    ::google::cloud::spanner::internal::Clock<std::chrono::steady_clock>;
+using SteadyClock = ::google::cloud::spanner::spanner_internal::Clock<
+    std::chrono::steady_clock>;
 
 /**
  * `SystemClock` represents the system-wide real time wall clock.
  * It may not be monotonic.
  */
-using SystemClock =
-    ::google::cloud::spanner::internal::Clock<std::chrono::system_clock>;
+using SystemClock = ::google::cloud::spanner::spanner_internal::Clock<
+    std::chrono::system_clock>;
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

@@ -133,10 +133,10 @@ KeyBound MakeKeyBoundOpen(Ts&&... ts) {
 }
 
 class KeySet;
-namespace internal {
+namespace spanner_internal {
 ::google::spanner::v1::KeySet ToProto(KeySet);
 KeySet FromProto(::google::spanner::v1::KeySet);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * The `KeySet` class is a regular type that represents a collection of `Key`s.
@@ -201,8 +201,8 @@ class KeySet {
   ///@}
 
  private:
-  friend ::google::spanner::v1::KeySet internal::ToProto(KeySet);
-  friend KeySet internal::FromProto(::google::spanner::v1::KeySet);
+  friend ::google::spanner::v1::KeySet spanner_internal::ToProto(KeySet);
+  friend KeySet spanner_internal::FromProto(::google::spanner::v1::KeySet);
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 

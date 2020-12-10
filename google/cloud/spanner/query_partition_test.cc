@@ -53,7 +53,7 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  QueryPartitionTester actual_partition(internal::MakeQueryPartition(
+  QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
@@ -69,7 +69,7 @@ TEST(QueryPartitionTest, Constructor) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  QueryPartitionTester actual_partition(internal::MakeQueryPartition(
+  QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
@@ -85,7 +85,7 @@ TEST(QueryPartitionTester, RegularSemantics) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  QueryPartition query_partition(internal::MakeQueryPartition(
+  QueryPartition query_partition(spanner_internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
 
   EXPECT_NE(query_partition, QueryPartition());
@@ -102,7 +102,7 @@ TEST(QueryPartitionTester, RegularSemantics) {
 }
 
 TEST(QueryPartitionTest, SerializeDeserialize) {
-  QueryPartitionTester expected_partition(internal::MakeQueryPartition(
+  QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
       "foo", "session", "token",
       SqlStatement("select * from foo where name = @name",
                    {{"name", Value("Bob")}})));
@@ -130,13 +130,13 @@ TEST(QueryPartitionTest, FailedDeserialize) {
 }
 
 TEST(QueryPartitionTest, MakeSqlParams) {
-  QueryPartitionTester expected_partition(internal::MakeQueryPartition(
+  QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
       "foo", "session", "token",
       SqlStatement("select * from foo where name = @name",
                    {{"name", Value("Bob")}})));
 
   Connection::SqlParams params =
-      internal::MakeSqlParams(expected_partition.Partition());
+      spanner_internal::MakeSqlParams(expected_partition.Partition());
 
   EXPECT_EQ(params.statement,
             SqlStatement("select * from foo where name = @name",

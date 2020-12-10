@@ -105,7 +105,7 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
 
 }  // namespace
 
-namespace internal {
+namespace spanner_internal {
 
 std::string ToString(absl::int128 value) {
   std::ostringstream ss;
@@ -231,7 +231,7 @@ StatusOr<Numeric> MakeNumeric(std::string s, int exponent) {
   return MakeNumeric(std::move(s));
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 
 constexpr std::size_t Numeric::kIntPrec;
 constexpr std::size_t Numeric::kFracPrec;
@@ -239,7 +239,7 @@ constexpr std::size_t Numeric::kFracPrec;
 Numeric::Numeric() : rep_("0") {}
 
 StatusOr<Numeric> MakeNumeric(std::string s) {
-  return internal::MakeNumeric(std::move(s));
+  return spanner_internal::MakeNumeric(std::move(s));
 }
 
 StatusOr<Numeric> MakeNumeric(double d) {
@@ -248,7 +248,7 @@ StatusOr<Numeric> MakeNumeric(double d) {
   ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
   std::string s = std::move(ss).str();
   if (!std::isfinite(d)) return OutOfRange(std::move(s));
-  return internal::MakeNumeric(std::move(s));
+  return spanner_internal::MakeNumeric(std::move(s));
 }
 
 }  // namespace SPANNER_CLIENT_NS

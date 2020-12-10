@@ -25,12 +25,12 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace internal {
+namespace spanner_internal {
 Row MakeRow(std::vector<Value> values,
             std::shared_ptr<const std::vector<std::string>> columns) {
   return Row(std::move(values), std::move(columns));
 }
-}  // namespace internal
+}  // namespace spanner_internal
 
 Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
   auto values = std::vector<Value>{};
@@ -39,7 +39,7 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
     values.emplace_back(std::move(p.second));
     columns->emplace_back(std::move(p.first));
   }
-  return internal::MakeRow(std::move(values), std::move(columns));
+  return spanner_internal::MakeRow(std::move(values), std::move(columns));
 }
 
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}

@@ -67,10 +67,10 @@ StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
 }
 
 std::ostream& operator<<(std::ostream& os, Timestamp ts) {
-  return os << internal::TimestampToRFC3339(ts);
+  return os << spanner_internal::TimestampToRFC3339(ts);
 }
 
-namespace internal {
+namespace spanner_internal {
 
 // Timestamp objects are always formatted in UTC, and we always format them
 // with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
@@ -99,7 +99,7 @@ protobuf::Timestamp TimestampToProto(Timestamp ts) {
   return google::cloud::internal::ToProtoTimestamp(t);
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

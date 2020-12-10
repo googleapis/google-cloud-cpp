@@ -45,9 +45,9 @@ struct ConnectionOptionsTraits {
 using ConnectionOptions =
     google::cloud::ConnectionOptions<ConnectionOptionsTraits>;
 
-namespace internal {
+namespace spanner_internal {
 ConnectionOptions EmulatorOverrides(ConnectionOptions options);
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

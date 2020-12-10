@@ -33,7 +33,7 @@ ReadPartition::ReadPartition(std::string transaction_id, std::string session_id,
   for (auto& column : column_names) {
     *proto_.mutable_columns()->Add() = std::move(column);
   }
-  *proto_.mutable_key_set() = internal::ToProto(std::move(key_set));
+  *proto_.mutable_key_set() = spanner_internal::ToProto(std::move(key_set));
   proto_.set_limit(read_options.limit);
   proto_.set_partition_token(std::move(partition_token));
 }
@@ -67,7 +67,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
   return ReadPartition(std::move(proto));
 }
 
-namespace internal {
+namespace spanner_internal {
 ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::string session_id,
                                 std::string partition_token,
@@ -91,7 +91,7 @@ Connection::ReadParams MakeReadParams(ReadPartition const& read_partition) {
       read_partition.PartitionToken()};
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

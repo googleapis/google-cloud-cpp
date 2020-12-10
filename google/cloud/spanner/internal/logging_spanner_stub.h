@@ -24,7 +24,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * A SpannerStub that logs each request.
@@ -104,7 +104,7 @@ class LoggingSpannerStub : public SpannerStub {
   TracingOptions tracing_options_;
 };
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

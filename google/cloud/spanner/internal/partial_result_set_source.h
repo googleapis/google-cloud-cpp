@@ -32,14 +32,14 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
  * reader and the spanner `ResultSet`, which is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetSource : public internal::ResultSourceInterface {
+class PartialResultSetSource : public spanner_internal::ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
@@ -73,7 +73,7 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   bool finished_ = false;
 };
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

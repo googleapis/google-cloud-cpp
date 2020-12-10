@@ -24,7 +24,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 using ::testing::_;
@@ -209,7 +209,7 @@ TEST_F(InstanceAdminLoggingTest, TestIamPermissions) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

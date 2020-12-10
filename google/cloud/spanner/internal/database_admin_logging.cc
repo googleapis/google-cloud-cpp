@@ -19,7 +19,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 using ::google::cloud::internal::LogWrapper;
@@ -234,7 +234,7 @@ Status DatabaseAdminLogging::CancelOperation(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

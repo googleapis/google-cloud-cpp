@@ -31,14 +31,14 @@ inline namespace SPANNER_CLIENT_NS {
 class Transaction;  // defined below
 
 // Internal forward declarations to befriend.
-namespace internal {
+namespace spanner_internal {
 template <typename T>
 Transaction MakeSingleUseTransaction(T&&);
 template <typename Functor>
 VisitInvokeResult<Functor> Visit(Transaction, Functor&&);
 Transaction MakeTransactionFromIds(std::string session_id,
                                    std::string transaction_id);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * The representation of a Cloud Spanner transaction.
@@ -163,11 +163,11 @@ class Transaction {
  private:
   // Friendship for access by internal helpers.
   template <typename T>
-  friend Transaction internal::MakeSingleUseTransaction(T&&);
+  friend Transaction spanner_internal::MakeSingleUseTransaction(T&&);
   template <typename Functor>
-  friend internal::VisitInvokeResult<Functor> internal::Visit(Transaction,
-                                                              Functor&&);
-  friend Transaction internal::MakeTransactionFromIds(
+  friend spanner_internal::VisitInvokeResult<Functor> spanner_internal::Visit(
+      Transaction, Functor&&);
+  friend Transaction spanner_internal::MakeTransactionFromIds(
       std::string session_id, std::string transaction_id);
 
   // Construction of a single-use transaction.
@@ -175,7 +175,7 @@ class Transaction {
   // Construction of a transaction with existing IDs.
   Transaction(std::string session_id, std::string transaction_id);
 
-  std::shared_ptr<internal::TransactionImpl> impl_;
+  std::shared_ptr<spanner_internal::TransactionImpl> impl_;
 };
 
 /**
@@ -209,7 +209,7 @@ inline Transaction MakeReadWriteTransaction(
   return Transaction(txn, std::move(opts));
 }
 
-namespace internal {
+namespace spanner_internal {
 
 template <typename T>
 Transaction MakeSingleUseTransaction(T&& opts) {
@@ -227,7 +227,7 @@ VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
   return txn.impl_->Visit(std::forward<Functor>(f));
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

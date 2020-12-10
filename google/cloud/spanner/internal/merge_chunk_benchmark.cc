@@ -20,7 +20,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 //
@@ -30,7 +30,7 @@ namespace {
 
 google::protobuf::Value MakeProtoValue(Value v) {
   google::protobuf::Value value;
-  std::tie(std::ignore, value) = internal::ToProto(std::move(v));
+  std::tie(std::ignore, value) = spanner_internal::ToProto(std::move(v));
   return value;
 }
 
@@ -117,7 +117,7 @@ void BM_MergeChunkListsOfListOfString(benchmark::State& state) {
 BENCHMARK(BM_MergeChunkListsOfListOfString);
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

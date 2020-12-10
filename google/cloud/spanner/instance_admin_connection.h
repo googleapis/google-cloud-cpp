@@ -229,19 +229,19 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-namespace internal {
+namespace spanner_internal {
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
+    std::shared_ptr<spanner_internal::InstanceAdminStub> base_stub,
     ConnectionOptions const& options);
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
+    std::shared_ptr<spanner_internal::InstanceAdminStub> base_stub,
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

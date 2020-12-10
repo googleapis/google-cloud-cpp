@@ -19,7 +19,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 bool IsSessionNotFound(google::cloud::Status const& status) {
   // "Session not found" in the status message is an API guarantee.
@@ -27,7 +27,7 @@ bool IsSessionNotFound(google::cloud::Status const& status) {
          status.message().find("Session not found") != std::string::npos;
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

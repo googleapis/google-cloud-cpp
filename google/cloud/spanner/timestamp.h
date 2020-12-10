@@ -181,14 +181,14 @@ struct CommitTimestamp {
   friend bool operator!=(CommitTimestamp, CommitTimestamp) { return false; }
 };
 
-namespace internal {
+namespace spanner_internal {
 
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
 std::string TimestampToRFC3339(Timestamp);
 StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const&);
 protobuf::Timestamp TimestampToProto(Timestamp);
 
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

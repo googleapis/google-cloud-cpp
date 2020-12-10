@@ -23,7 +23,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * `Channel` represents a single gRPC Channel/Stub.
@@ -41,7 +41,7 @@ struct Channel {
   int session_count = 0;
 };
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

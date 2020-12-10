@@ -66,8 +66,8 @@ TEST(Transaction, RegularSemantics) {
   EXPECT_EQ(g, f);
   EXPECT_NE(g, e);
 
-  Transaction h = internal::MakeSingleUseTransaction(strong);
-  Transaction i = internal::MakeSingleUseTransaction(strong);
+  Transaction h = spanner_internal::MakeSingleUseTransaction(strong);
+  Transaction i = spanner_internal::MakeSingleUseTransaction(strong);
   EXPECT_NE(h, i);
 
   Transaction j = i;  // NOLINT(performance-unnecessary-copy-initialization)
@@ -78,8 +78,8 @@ TEST(Transaction, RegularSemantics) {
 TEST(Transaction, Visit) {
   Transaction a = MakeReadOnlyTransaction();
   std::int64_t a_seqno;
-  internal::Visit(
-      a, [&a_seqno](internal::SessionHolder& /*session*/,
+  spanner_internal::Visit(
+      a, [&a_seqno](spanner_internal::SessionHolder& /*session*/,
                     StatusOr<google::spanner::v1::TransactionSelector>& s,
                     std::int64_t seqno) {
         EXPECT_TRUE(s->has_begin());
@@ -88,8 +88,8 @@ TEST(Transaction, Visit) {
         a_seqno = seqno;
         return 0;
       });
-  internal::Visit(
-      a, [a_seqno](internal::SessionHolder& /*session*/,
+  spanner_internal::Visit(
+      a, [a_seqno](spanner_internal::SessionHolder& /*session*/,
                    StatusOr<google::spanner::v1::TransactionSelector>& s,
                    std::int64_t seqno) {
         EXPECT_EQ("test-txn-id", s->id());
@@ -99,10 +99,11 @@ TEST(Transaction, Visit) {
 }
 
 TEST(Transaction, SessionAffinity) {
-  auto a_session = internal::MakeDissociatedSessionHolder("SessionAffinity");
+  auto a_session =
+      spanner_internal::MakeDissociatedSessionHolder("SessionAffinity");
   Transaction a = MakeReadWriteTransaction();
-  internal::Visit(
-      a, [&a_session](internal::SessionHolder& session,
+  spanner_internal::Visit(
+      a, [&a_session](spanner_internal::SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::int64_t) {
         EXPECT_FALSE(session);
@@ -112,8 +113,8 @@ TEST(Transaction, SessionAffinity) {
         return 0;
       });
   Transaction b = MakeReadWriteTransaction(a);
-  internal::Visit(
-      b, [&a_session](internal::SessionHolder& session,
+  spanner_internal::Visit(
+      b, [&a_session](spanner_internal::SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       std::int64_t) {
         EXPECT_EQ(a_session, session);  // session affinity

@@ -27,7 +27,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 /**
  * Wrap `grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>`.
@@ -46,7 +46,7 @@ class PartialResultSetReader {
   virtual Status Finish() = 0;
 };
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

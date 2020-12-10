@@ -23,7 +23,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -287,7 +287,7 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
                                                       ConnectionOptions options,
                                                       int channel_id) {
-  options = internal::EmulatorOverrides(std::move(options));
+  options = spanner_internal::EmulatorOverrides(std::move(options));
 
   grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
@@ -310,7 +310,7 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
   return stub;
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

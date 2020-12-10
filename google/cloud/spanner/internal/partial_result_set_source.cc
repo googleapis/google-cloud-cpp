@@ -20,7 +20,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -77,7 +77,7 @@ StatusOr<Row> PartialResultSetSource::NextRow() {
     ++iter;
   }
   buffer_.erase(buffer_.begin(), iter);
-  return internal::MakeRow(std::move(values), columns_);
+  return spanner_internal::MakeRow(std::move(values), columns_);
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
@@ -180,7 +180,7 @@ Status PartialResultSetSource::ReadFromStream() {
   return {};  // OK
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

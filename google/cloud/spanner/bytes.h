@@ -31,10 +31,10 @@ inline namespace SPANNER_CLIENT_NS {
 class Bytes;  // defined below
 
 // Internal forward declarations to befriend.
-namespace internal {
+namespace spanner_internal {
 StatusOr<Bytes> BytesFromBase64(std::string input);
 std::string BytesToBase64(Bytes b);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * A representation of the Spanner BYTES type: variable-length binary data.
@@ -87,8 +87,8 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend StatusOr<Bytes> internal::BytesFromBase64(std::string input);
-  friend std::string internal::BytesToBase64(Bytes b);
+  friend StatusOr<Bytes> spanner_internal::BytesFromBase64(std::string input);
+  friend std::string spanner_internal::BytesToBase64(Bytes b);
 
   struct Encoder {
     explicit Encoder(std::string& rep) : rep_(rep), len_(0) {}

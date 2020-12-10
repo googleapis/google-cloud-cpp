@@ -19,7 +19,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace internal {
+namespace spanner_internal {
 
 google::spanner::v1::PartitionOptions ToProto(PartitionOptions const& po) {
   google::spanner::v1::PartitionOptions proto;
@@ -30,7 +30,7 @@ google::spanner::v1::PartitionOptions ToProto(PartitionOptions const& po) {
   return proto;
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

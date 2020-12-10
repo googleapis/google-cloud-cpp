@@ -63,9 +63,9 @@ inline bool operator!=(PartitionOptions const& a, PartitionOptions const& b) {
   return !(a == b);
 }
 
-namespace internal {
+namespace spanner_internal {
 google::spanner::v1::PartitionOptions ToProto(PartitionOptions const&);
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

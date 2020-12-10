@@ -31,8 +31,8 @@ inline namespace SPANNER_CLIENT_NS {
  * The `time_point` returned from `Now()` only changes via explicit calls to
  * `SetTime` or `AdvanceTime`.
  *
- * `RealClock` should be an `internal::Clock<TrivialClock>` type that is being
- * faked - see `internal/clock.h` for details.
+ * `RealClock` should be an `spanner_internal::Clock<TrivialClock>` type that is
+ * being faked - see `internal/clock.h` for details.
  */
 template <typename RealClock>
 class FakeClock : public RealClock {
@@ -62,10 +62,10 @@ class FakeClock : public RealClock {
 };
 
 using FakeSteadyClock =
-    FakeClock<google::cloud::spanner::internal::SteadyClock>;
+    FakeClock<google::cloud::spanner::spanner_internal::SteadyClock>;
 
 using FakeSystemClock =
-    FakeClock<google::cloud::spanner::internal::SystemClock>;
+    FakeClock<google::cloud::spanner::spanner_internal::SystemClock>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

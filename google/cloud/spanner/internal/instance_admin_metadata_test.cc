@@ -23,7 +23,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -256,7 +256,7 @@ TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

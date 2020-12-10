@@ -43,10 +43,10 @@ inline namespace SPANNER_CLIENT_NS {
 class Value;  // Defined later in this file.
 
 // Internal implementation details that callers should not use.
-namespace internal {
+namespace spanner_internal {
 Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v);
 std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * The Value class represents a type-safe, nullable Spanner value.
@@ -376,12 +376,13 @@ class Value {
                           google::spanner::v1::Type const& type) {
     bool ok = type.code() == google::spanner::v1::TypeCode::STRUCT;
     ok = ok && type.struct_type().fields().size() == sizeof...(Ts);
-    internal::ForEach(tup, IsStructTypeProto{ok, 0}, type.struct_type());
+    spanner_internal::ForEach(tup, IsStructTypeProto{ok, 0},
+                              type.struct_type());
     return ok;
   }
 
-  // A functor to be used with internal::ForEach to check if a StructType proto
-  // matches the types in a std::tuple.
+  // A functor to be used with spanner_internal::ForEach to check if a
+  // StructType proto matches the types in a std::tuple.
   struct IsStructTypeProto {
     bool& ok;
     int field;
@@ -433,12 +434,12 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::tuple<Ts...> const& tup) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::STRUCT);
-    internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
+    spanner_internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
     return t;
   }
 
-  // A functor to be used with internal::ForEach to add type protos for all the
-  // elements of a tuple.
+  // A functor to be used with spanner_internal::ForEach to add type protos for
+  // all the elements of a tuple.
   struct AddStructTypes {
     template <typename T>
     void operator()(T const& t,
@@ -489,12 +490,12 @@ class Value {
   template <typename... Ts>
   static google::protobuf::Value MakeValueProto(std::tuple<Ts...> tup) {
     google::protobuf::Value v;
-    internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
+    spanner_internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
     return v;
   }
 
-  // A functor to be used with internal::ForEach to add Value protos for all
-  // the elements of a tuple.
+  // A functor to be used with spanner_internal::ForEach to add Value protos for
+  // all the elements of a tuple.
   struct AddStructValues {
     template <typename T>
     void operator()(T& t, google::protobuf::ListValue& list_value) const {
@@ -572,13 +573,13 @@ class Value {
     std::tuple<Ts...> tup;
     Status status;  // OK
     ExtractTupleValues<V> f{status, 0, std::forward<V>(pv), pt};
-    internal::ForEach(tup, f);
+    spanner_internal::ForEach(tup, f);
     if (!status.ok()) return status;
     return tup;
   }
 
-  // A functor to be used with internal::ForEach to extract C++ types from a
-  // ListValue proto and store then in a tuple.
+  // A functor to be used with spanner_internal::ForEach to extract C++ types
+  // from a ListValue proto and store then in a tuple.
   template <typename V>
   struct ExtractTupleValues {
     Status& status;
@@ -639,10 +640,10 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend Value internal::FromProto(google::spanner::v1::Type,
-                                   google::protobuf::Value);
+  friend Value spanner_internal::FromProto(google::spanner::v1::Type,
+                                           google::protobuf::Value);
   friend std::pair<google::spanner::v1::Type, google::protobuf::Value>
-      internal::ToProto(Value);
+      spanner_internal::ToProto(Value);
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;

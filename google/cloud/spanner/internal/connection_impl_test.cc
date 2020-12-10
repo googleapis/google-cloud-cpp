@@ -37,7 +37,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 // We compile with `-Wextra` which enables `-Wmissing-field-initializers`. This
@@ -105,9 +105,9 @@ MATCHER_P(HasDatabase, database, "Request has expected database") {
 
 // Matches a `spanner::Transaction` that is bound to a "bad" session.
 MATCHER(HasBadSession, "bound to a session that's marked bad") {
-  return internal::Visit(
+  return spanner_internal::Visit(
       arg,
-      [&](internal::SessionHolder& session,
+      [&](spanner_internal::SessionHolder& session,
           StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session";
@@ -127,18 +127,18 @@ bool ContainsNoRows(RowStream& rows) { return rows.begin() == rows.end(); }
 
 // Helper to set the Transaction's ID. Requires selector.ok().
 void SetTransactionId(Transaction& txn, std::string tid) {
-  internal::Visit(txn,
-                  [&tid](SessionHolder&,
-                         StatusOr<spanner_proto::TransactionSelector>& selector,
-                         std::int64_t) {
-                    selector->set_id(std::move(tid));
-                    return 0;
-                  });
+  spanner_internal::Visit(
+      txn, [&tid](SessionHolder&,
+                  StatusOr<spanner_proto::TransactionSelector>& selector,
+                  std::int64_t) {
+        selector->set_id(std::move(tid));
+        return 0;
+      });
 }
 
 // Helper to mark the Transaction as invalid.
 void SetTransactionInvalid(Transaction& txn, Status status) {
-  internal::Visit(
+  spanner_internal::Visit(
       txn, [&status](SessionHolder&,
                      StatusOr<spanner_proto::TransactionSelector>& selector,
                      std::int64_t) {
@@ -168,7 +168,7 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 spanner_proto::CommitResponse MakeCommitResponse(Timestamp commit_timestamp) {
   spanner_proto::CommitResponse response;
   *response.mutable_commit_timestamp() =
-      internal::TimestampToProto(commit_timestamp);
+      spanner_internal::TimestampToProto(commit_timestamp);
   return response;
 }
 
@@ -1661,7 +1661,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
 
   auto conn = MakeConnection(
       db, {mock}, ConnectionOptions{grpc::InsecureChannelCredentials()});
-  auto txn = internal::MakeSingleUseTransaction(
+  auto txn = spanner_internal::MakeSingleUseTransaction(
       Transaction::SingleUseOptions{Transaction::ReadOnlyOptions{}});
   auto rollback = conn->Rollback({txn});
   EXPECT_THAT(rollback, StatusIs(StatusCode::kInvalidArgument,
@@ -1793,12 +1793,12 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "CAFEDEAD"));
 
   std::vector<ReadPartition> expected_read_partitions = {
-      internal::MakeReadPartition("CAFEDEAD", "test-session-name", "BADDECAF",
-                                  "table", KeySet::All(),
-                                  {"UserId", "UserName"}),
-      internal::MakeReadPartition("CAFEDEAD", "test-session-name", "DEADBEEF",
-                                  "table", KeySet::All(),
-                                  {"UserId", "UserName"})};
+      spanner_internal::MakeReadPartition("CAFEDEAD", "test-session-name",
+                                          "BADDECAF", "table", KeySet::All(),
+                                          {"UserId", "UserName"}),
+      spanner_internal::MakeReadPartition("CAFEDEAD", "test-session-name",
+                                          "DEADBEEF", "table", KeySet::All(),
+                                          {"UserId", "UserName"})};
 
   EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
                                                    expected_read_partitions));
@@ -1896,10 +1896,10 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   ASSERT_STATUS_OK(result);
 
   std::vector<QueryPartition> expected_query_partitions = {
-      internal::MakeQueryPartition("CAFEDEAD", "test-session-name", "BADDECAF",
-                                   sql_statement),
-      internal::MakeQueryPartition("CAFEDEAD", "test-session-name", "DEADBEEF",
-                                   sql_statement)};
+      spanner_internal::MakeQueryPartition("CAFEDEAD", "test-session-name",
+                                           "BADDECAF", sql_statement),
+      spanner_internal::MakeQueryPartition("CAFEDEAD", "test-session-name",
+                                           "DEADBEEF", sql_statement)};
 
   EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
                                                    expected_query_partitions));
@@ -2418,7 +2418,7 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
 #endif
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

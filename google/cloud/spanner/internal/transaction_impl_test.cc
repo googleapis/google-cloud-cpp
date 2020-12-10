@@ -30,7 +30,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 namespace {
 
 using ::google::spanner::v1::TransactionSelector;
@@ -82,7 +82,7 @@ class Client {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      return internal::Visit(std::move(txn), std::move(read));
+      return spanner_internal::Visit(std::move(txn), std::move(read));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (char const*) {
       return {};
@@ -134,7 +134,8 @@ ResultSet Client::Read(SessionHolder& session,
     if (selector->begin().has_read_only() &&
         selector->begin().read_only().has_read_timestamp()) {
       auto const& proto = selector->begin().read_only().read_timestamp();
-      if (internal::TimestampFromProto(proto).value() == read_timestamp_ &&
+      if (spanner_internal::TimestampFromProto(proto).value() ==
+              read_timestamp_ &&
           seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
@@ -153,7 +154,7 @@ ResultSet Client::Read(SessionHolder& session,
     switch (mode_) {
       case Mode::kReadSucceeds:
         // `begin` -> `id`, calls now parallelized
-        session = internal::MakeDissociatedSessionHolder(session_id_);
+        session = spanner_internal::MakeDissociatedSessionHolder(session_id_);
         selector->set_id(txn_id_);
         break;
       case Mode::kReadFailsAndTxnRemainsBegin:
@@ -251,7 +252,7 @@ TEST(InternalTransaction, ReadFailsAndTxnInvalidated) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

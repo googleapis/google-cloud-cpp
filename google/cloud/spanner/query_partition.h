@@ -72,13 +72,13 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
     std::string const& serialized_query_partition);
 
 // Internal implementation details that callers should not use.
-namespace internal {
+namespace spanner_internal {
 QueryPartition MakeQueryPartition(std::string const& transaction_id,
                                   std::string const& session_id,
                                   std::string const& partition_token,
                                   SqlStatement const& sql_statement);
 Connection::SqlParams MakeSqlParams(QueryPartition const& query_partition);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * The `QueryPartition` class is a regular type that represents a single slice
@@ -119,10 +119,10 @@ class QueryPartition {
 
  private:
   friend class QueryPartitionTester;
-  friend QueryPartition internal::MakeQueryPartition(
+  friend QueryPartition spanner_internal::MakeQueryPartition(
       std::string const& transaction_id, std::string const& session_id,
       std::string const& partition_token, SqlStatement const& sql_statement);
-  friend Connection::SqlParams internal::MakeSqlParams(
+  friend Connection::SqlParams spanner_internal::MakeSqlParams(
       QueryPartition const& query_partition);
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);

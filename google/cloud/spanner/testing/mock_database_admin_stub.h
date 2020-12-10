@@ -25,7 +25,7 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 class MockDatabaseAdminStub
-    : public google::cloud::spanner::internal::DatabaseAdminStub {
+    : public google::cloud::spanner::spanner_internal::DatabaseAdminStub {
  public:
   MOCK_METHOD2(
       CreateDatabase,

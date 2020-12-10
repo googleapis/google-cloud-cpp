@@ -28,7 +28,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 
 using google::cloud::internal::Idempotency;
 
@@ -123,7 +123,7 @@ ConnectionImpl::ConnectionImpl(Database db,
       tracing_options_(options.tracing_options()) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -134,7 +134,7 @@ RowStream ConnectionImpl::Read(ReadParams params) {
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
     PartitionReadParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.read_params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -145,7 +145,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
 }
 
 RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -155,7 +155,7 @@ RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
 }
 
 StatusOr<DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -165,7 +165,7 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
 }
 
 ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -175,7 +175,7 @@ ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
 }
 
 StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDml(SqlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -185,7 +185,7 @@ StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDml(SqlParams params) {
 }
 
 StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -197,7 +197,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
     ExecutePartitionedDmlParams params) {
   auto txn = MakeReadOnlyTransaction();
-  return internal::Visit(
+  return spanner_internal::Visit(
       txn, [this, &params](SessionHolder& session,
                            StatusOr<spanner_proto::TransactionSelector>& s,
                            std::int64_t seqno) {
@@ -207,7 +207,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
     PartitionQueryParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -218,7 +218,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
     ExecuteBatchDmlParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -228,7 +228,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       StatusOr<spanner_proto::TransactionSelector>& s,
@@ -238,14 +238,15 @@ StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams params) {
 }
 
 Status ConnectionImpl::Rollback(RollbackParams params) {
-  return internal::Visit(
+  return spanner_internal::Visit(
       std::move(params.transaction),
       [this](SessionHolder& session,
              StatusOr<spanner_proto::TransactionSelector>& s,
              std::int64_t) { return this->RollbackImpl(session, s); });
 }
 
-class StatusOnlyResultSetSource : public internal::ResultSourceInterface {
+class StatusOnlyResultSetSource
+    : public spanner_internal::ResultSourceInterface {
  public:
   explicit StatusOnlyResultSetSource(google::cloud::Status status)
       : status_(std::move(status)) {}
@@ -270,7 +271,7 @@ ResultType MakeStatusOnlyResult(Status status) {
       absl::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
-class DmlResultSetSource : public internal::ResultSourceInterface {
+class DmlResultSetSource : public spanner_internal::ResultSourceInterface {
  public:
   static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
       spanner_proto::ResultSet result_set) {
@@ -307,7 +308,7 @@ class StreamingPartitionedDmlResult {
  public:
   StreamingPartitionedDmlResult() = default;
   explicit StreamingPartitionedDmlResult(
-      std::unique_ptr<internal::ResultSourceInterface> source)
+      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -332,7 +333,7 @@ class StreamingPartitionedDmlResult {
   }
 
  private:
-  std::unique_ptr<internal::ResultSourceInterface> source_;
+  std::unique_ptr<spanner_internal::ResultSourceInterface> source_;
 };
 
 /**
@@ -377,7 +378,7 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
       begin, func);
   if (!response) {
     auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
+    if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
   return *response;
@@ -403,7 +404,8 @@ RowStream ConnectionImpl::ReadImpl(
   for (auto&& column : params.columns) {
     request.add_columns(std::move(column));
   }
-  *request.mutable_key_set() = internal::ToProto(std::move(params.keys));
+  *request.mutable_key_set() =
+      spanner_internal::ToProto(std::move(params.keys));
   request.set_limit(params.read_options.limit);
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
@@ -453,7 +455,7 @@ RowStream ConnectionImpl::ReadImpl(
 
     if (!reader.ok()) {
       auto status = std::move(reader).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
+      if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
       return MakeStatusOnlyResult<RowStream>(std::move(status));
     }
     return RowStream(*std::move(reader));
@@ -482,8 +484,9 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   for (auto const& column : params.columns) {
     *request.add_columns() = column;
   }
-  *request.mutable_key_set() = internal::ToProto(params.keys);
-  *request.mutable_partition_options() = internal::ToProto(partition_options);
+  *request.mutable_key_set() = spanner_internal::ToProto(params.keys);
+  *request.mutable_partition_options() =
+      spanner_internal::ToProto(partition_options);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -515,13 +518,13 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
     if (!response.ok()) {
       auto status = std::move(response).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
+      if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
       return status;
     }
 
     std::vector<ReadPartition> read_partitions;
     for (auto const& partition : response->partitions()) {
-      read_partitions.push_back(internal::MakeReadPartition(
+      read_partitions.push_back(spanner_internal::MakeReadPartition(
           response->transaction().id(), session->session_name(),
           partition.partition_token(), params.table, params.keys,
           params.columns, params.read_options));
@@ -546,7 +549,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
-  auto sql_statement = internal::ToProto(std::move(params.statement));
+  auto sql_statement = spanner_internal::ToProto(std::move(params.statement));
   request.set_sql(std::move(*sql_statement.mutable_sql()));
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
@@ -638,7 +641,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
                                  query_mode, std::move(retry_resume_fn));
   if (!response) {
     auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
+    if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
     return MakeStatusOnlyResult<ResultType>(std::move(status));
   }
   return std::move(*response);
@@ -693,7 +696,7 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
         request, function_name);
     if (!response) {
       auto status = std::move(response).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
+      if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
       return status;
     }
     return DmlResultSetSource::Create(std::move(*response));
@@ -746,13 +749,13 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   spanner_proto::PartitionQueryRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = *s;
-  auto sql_statement = internal::ToProto(params.statement);
+  auto sql_statement = spanner_internal::ToProto(params.statement);
   request.set_sql(std::move(*sql_statement.mutable_sql()));
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
   *request.mutable_partition_options() =
-      internal::ToProto(std::move(params.partition_options));
+      spanner_internal::ToProto(std::move(params.partition_options));
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -783,13 +786,13 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     }
     if (!response.ok()) {
       auto status = std::move(response).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
+      if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
       return status;
     }
 
     std::vector<QueryPartition> query_partitions;
     for (auto const& partition : response->partitions()) {
-      query_partitions.push_back(internal::MakeQueryPartition(
+      query_partitions.push_back(spanner_internal::MakeQueryPartition(
           response->transaction().id(), session->session_name(),
           partition.partition_token(), params.statement));
     }
@@ -814,7 +817,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   request.set_seqno(seqno);
   *request.mutable_transaction() = *s;
   for (auto& sql : params.statements) {
-    *request.add_statements() = internal::ToProto(std::move(sql));
+    *request.add_statements() = spanner_internal::ToProto(std::move(sql));
   }
 
   auto stub = session_pool_->GetStub(*session);
@@ -846,7 +849,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     }
     if (!response) {
       auto status = std::move(response).status();
-      if (internal::IsSessionNotFound(status)) session->set_bad();
+      if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
       return status;
     }
     BatchDmlResult result;
@@ -877,17 +880,17 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   }
   s->set_id(begin->id());
 
-  SqlParams sql_params(
-      {internal::MakeTransactionFromIds(session->session_name(), begin->id()),
-       std::move(params.statement), /*query_options=*/{},
-       /*partition_token=*/{}});
+  SqlParams sql_params({spanner_internal::MakeTransactionFromIds(
+                            session->session_name(), begin->id()),
+                        std::move(params.statement), /*query_options=*/{},
+                        /*partition_token=*/{}});
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
       session, s, seqno, std::move(sql_params),
       spanner_proto::ExecuteSqlRequest::NORMAL);
   auto rows_modified = dml_result.RowsModifiedLowerBound();
   if (!rows_modified.ok()) {
     auto status = std::move(rows_modified).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
+    if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
   PartitionedDmlResult result{0};
@@ -936,10 +939,11 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
       request, __func__);
   if (!response) {
     auto status = std::move(response).status();
-    if (internal::IsSessionNotFound(status)) session->set_bad();
+    if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
     return status;
   }
-  auto timestamp = internal::TimestampFromProto(response->commit_timestamp());
+  auto timestamp =
+      spanner_internal::TimestampFromProto(response->commit_timestamp());
   if (!timestamp) return std::move(timestamp).status();
   CommitResult r;
   r.commit_timestamp = *std::move(timestamp);
@@ -982,11 +986,11 @@ Status ConnectionImpl::RollbackImpl(
         return stub->Rollback(context, request);
       },
       request, __func__);
-  if (internal::IsSessionNotFound(status)) session->set_bad();
+  if (spanner_internal::IsSessionNotFound(status)) session->set_bad();
   return status;
 }
 
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

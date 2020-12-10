@@ -24,7 +24,8 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
+class MockSpannerStub
+    : public google::cloud::spanner::spanner_internal::SpannerStub {
  public:
   MOCK_METHOD2(CreateSession,
                StatusOr<google::spanner::v1::Session>(

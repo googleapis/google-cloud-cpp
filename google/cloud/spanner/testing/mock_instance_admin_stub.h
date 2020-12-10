@@ -25,7 +25,7 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 class MockInstanceAdminStub
-    : public google::cloud::spanner::internal::InstanceAdminStub {
+    : public google::cloud::spanner::spanner_internal::InstanceAdminStub {
  public:
   MOCK_METHOD2(
       GetInstance,

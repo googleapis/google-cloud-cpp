@@ -468,18 +468,18 @@ class ExperimentImpl {
   }
 
   std::pair<std::vector<spanner::Client>,
-            std::vector<std::shared_ptr<spanner::internal::SpannerStub>>>
+            std::vector<std::shared_ptr<spanner_internal::SpannerStub>>>
   CreateClientsAndStubs(Config const& config,
                         spanner::Database const& database) {
     std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner::internal::SpannerStub>> stubs;
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::cout << "# Creating clients and stubs " << std::flush;
     for (int i = 0; i != config.maximum_clients; ++i) {
       auto options = spanner::ConnectionOptions().set_channel_pool_domain(
           "task:" + std::to_string(i));
       clients.emplace_back(
           spanner::Client(spanner::MakeConnection(database, options)));
-      stubs.emplace_back(spanner::internal::CreateDefaultSpannerStub(
+      stubs.emplace_back(spanner_internal::CreateDefaultSpannerStub(
           database, options, /*channel_id=*/0));
       std::cout << '.' << std::flush;
     }
@@ -591,7 +591,7 @@ class ReadExperiment : public Experiment {
   Status Run(Config const& config, spanner::Database const& database) override {
     // Create enough clients and stubs for the worst case
     std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner::internal::SpannerStub>> stubs;
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
@@ -602,7 +602,7 @@ class ReadExperiment : public Experiment {
       auto const thread_count = impl_.ThreadCount(config);
       auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
-        std::vector<std::shared_ptr<spanner::internal::SpannerStub>>
+        std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
             iteration_stubs(stubs.begin(), stubs.begin() + client_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
@@ -619,7 +619,7 @@ class ReadExperiment : public Experiment {
  private:
   void RunIterationViaStubs(
       Config const& config,
-      std::vector<std::shared_ptr<spanner::internal::SpannerStub>> const& stubs,
+      std::vector<std::shared_ptr<spanner_internal::SpannerStub>> const& stubs,
       int thread_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
     int task_id = 0;
@@ -639,7 +639,7 @@ class ReadExperiment : public Experiment {
   std::vector<RowCpuSample> ReadRowsViaStub(
       Config const& config, int thread_count, int client_count,
       spanner::Database const& database,
-      std::shared_ptr<spanner::internal::SpannerStub> const& stub) {
+      std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     auto session = [&]() -> google::cloud::StatusOr<std::string> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
@@ -686,7 +686,7 @@ class ReadExperiment : public Experiment {
       for (auto const& name : columns) {
         request.add_columns(name);
       }
-      *request.mutable_key_set() = spanner::internal::ToProto(key);
+      *request.mutable_key_set() = spanner_internal::ToProto(key);
 
       int row_count = 0;
       google::spanner::v1::PartialResultSet result;
@@ -812,7 +812,7 @@ class SelectExperiment : public Experiment {
 
   Status Run(Config const& config, spanner::Database const& database) override {
     std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner::internal::SpannerStub>> stubs;
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
@@ -823,7 +823,7 @@ class SelectExperiment : public Experiment {
       auto const thread_count = impl_.ThreadCount(config);
       auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
-        std::vector<std::shared_ptr<spanner::internal::SpannerStub>>
+        std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
             iteration_stubs(stubs.begin(), stubs.begin() + client_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
@@ -840,7 +840,7 @@ class SelectExperiment : public Experiment {
  private:
   void RunIterationViaStubs(
       Config const& config,
-      std::vector<std::shared_ptr<spanner::internal::SpannerStub>> const& stubs,
+      std::vector<std::shared_ptr<spanner_internal::SpannerStub>> const& stubs,
       int thread_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
     int task_id = 0;
@@ -860,7 +860,7 @@ class SelectExperiment : public Experiment {
   std::vector<RowCpuSample> ViaStub(
       Config const& config, int thread_count, int client_count,
       spanner::Database const& database,
-      std::shared_ptr<spanner::internal::SpannerStub> const& stub) {
+      std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     auto session = [&]() -> google::cloud::StatusOr<std::string> {
       Status last_status;
       for (int i = 0; i != ExperimentImpl<Traits>::kColumnCount; ++i) {
@@ -902,13 +902,13 @@ class SelectExperiment : public Experiment {
           ->mutable_read_only()
           ->Clear();
       request.set_sql(statement);
-      auto begin_type_value = spanner::internal::ToProto(spanner::Value(key));
+      auto begin_type_value = spanner_internal::ToProto(spanner::Value(key));
       (*request.mutable_param_types())["begin"] =
           std::move(begin_type_value.first);
       (*request.mutable_params()->mutable_fields())["begin"] =
           std::move(begin_type_value.second);
       auto end_type_value =
-          spanner::internal::ToProto(spanner::Value(key + config.query_size));
+          spanner_internal::ToProto(spanner::Value(key + config.query_size));
       (*request.mutable_param_types())["end"] = std::move(end_type_value.first);
       (*request.mutable_params()->mutable_fields())["end"] =
           std::move(end_type_value.second);
@@ -1051,7 +1051,7 @@ class UpdateExperiment : public Experiment {
 
   Status Run(Config const& config, spanner::Database const& database) override {
     std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner::internal::SpannerStub>> stubs;
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
@@ -1062,7 +1062,7 @@ class UpdateExperiment : public Experiment {
       auto const thread_count = impl_.ThreadCount(config);
       auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
-        std::vector<std::shared_ptr<spanner::internal::SpannerStub>>
+        std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
             iteration_stubs(stubs.begin(), stubs.begin() + client_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
@@ -1079,7 +1079,7 @@ class UpdateExperiment : public Experiment {
  private:
   void RunIterationViaStubs(
       Config const& config,
-      std::vector<std::shared_ptr<spanner::internal::SpannerStub>> const& stubs,
+      std::vector<std::shared_ptr<spanner_internal::SpannerStub>> const& stubs,
       int thread_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
     int task_id = 0;
@@ -1099,7 +1099,7 @@ class UpdateExperiment : public Experiment {
   std::vector<RowCpuSample> UpdateRowsViaStub(
       Config const& config, int thread_count, int client_count,
       spanner::Database const& database,
-      std::shared_ptr<spanner::internal::SpannerStub> const& stub) {
+      std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     std::string const statement = CreateStatement();
 
     auto session = [&]() -> google::cloud::StatusOr<std::string> {
@@ -1151,13 +1151,13 @@ class UpdateExperiment : public Experiment {
           ->mutable_read_write()
           ->Clear();
       request.set_sql(statement);
-      auto key_type_value = spanner::internal::ToProto(spanner::Value(key));
+      auto key_type_value = spanner_internal::ToProto(spanner::Value(key));
       (*request.mutable_param_types())["key"] = std::move(key_type_value.first);
       (*request.mutable_params()->mutable_fields())["key"] =
           std::move(key_type_value.second);
 
       for (int i = 0; i != 10; ++i) {
-        auto tv = spanner::internal::ToProto(spanner::Value(values[i]));
+        auto tv = spanner_internal::ToProto(spanner::Value(values[i]));
         auto name = "v" + std::to_string(i);
         (*request.mutable_param_types())[name] = std::move(tv.first);
         (*request.mutable_params()->mutable_fields())[name] =
@@ -1314,7 +1314,7 @@ class MutationExperiment : public Experiment {
 
   Status Run(Config const& config, spanner::Database const& database) override {
     std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner::internal::SpannerStub>> stubs;
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     random_keys_.resize(config.table_size);
@@ -1330,7 +1330,7 @@ class MutationExperiment : public Experiment {
       auto const thread_count = impl_.ThreadCount(config);
       auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
-        std::vector<std::shared_ptr<spanner::internal::SpannerStub>>
+        std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
             iteration_stubs(stubs.begin(), stubs.begin() + client_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
@@ -1347,7 +1347,7 @@ class MutationExperiment : public Experiment {
  private:
   void RunIterationViaStubs(
       Config const& config,
-      std::vector<std::shared_ptr<spanner::internal::SpannerStub>> const& stubs,
+      std::vector<std::shared_ptr<spanner_internal::SpannerStub>> const& stubs,
       int thread_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
     int task_id = 0;
@@ -1367,7 +1367,7 @@ class MutationExperiment : public Experiment {
   std::vector<RowCpuSample> InsertRowsViaStub(
       Config const& config, int thread_count, int client_count,
       spanner::Database const& database,
-      std::shared_ptr<spanner::internal::SpannerStub> const& stub) {
+      std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     std::vector<std::string> const column_names{
         "Key",   "Data0", "Data1", "Data2", "Data3", "Data4",
         "Data5", "Data6", "Data7", "Data8", "Data9"};
@@ -1438,7 +1438,7 @@ class MutationExperiment : public Experiment {
       row.add_values()->set_string_value(std::to_string(key));
       for (auto v : values) {
         *row.add_values() =
-            spanner::internal::ToProto(spanner::Value(std::move(v))).second;
+            spanner_internal::ToProto(spanner::Value(std::move(v))).second;
       }
       auto response = stub->Commit(context, commit_request);
 

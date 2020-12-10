@@ -21,7 +21,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+namespace spanner_internal {
 struct SessionPoolFriendForTest {
   static future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(std::shared_ptr<SessionPool> const& session_pool,
@@ -110,7 +110,7 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 }
 
 }  // namespace
-}  // namespace internal
+}  // namespace spanner_internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

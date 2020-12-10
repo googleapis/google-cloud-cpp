@@ -73,7 +73,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
     std::string const& serialized_read_partition);
 
 // Internal implementation details that callers should not use.
-namespace internal {
+namespace spanner_internal {
 ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::string session_id,
                                 std::string partition_token,
@@ -81,7 +81,7 @@ ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::vector<std::string> column_names,
                                 ReadOptions read_options = {});
 Connection::ReadParams MakeReadParams(ReadPartition const& read_partition);
-}  // namespace internal
+}  // namespace spanner_internal
 
 /**
  * The `ReadPartition` class is a regular type that represents a single
@@ -127,12 +127,12 @@ class ReadPartition {
 
  private:
   friend class ReadPartitionTester;
-  friend ReadPartition internal::MakeReadPartition(
+  friend ReadPartition spanner_internal::MakeReadPartition(
       std::string transaction_id, std::string session_id,
       std::string partition_token, std::string table_name, KeySet key_set,
       std::vector<std::string> column_names,
       google::cloud::spanner::ReadOptions read_options);
-  friend Connection::ReadParams internal::MakeReadParams(
+  friend Connection::ReadParams spanner_internal::MakeReadParams(
       ReadPartition const& read_partition);
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);
