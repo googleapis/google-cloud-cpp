@@ -25,6 +25,28 @@ namespace {
 
 using ::testing::_;
 
+// Tests {copy,move}x{constructor,assignment} + equality.
+TEST(PublisherTest, ValueSemantics) {
+  auto mock1 = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+  auto mock2 = std::make_shared<pubsub_mocks::MockPublisherConnection>();
+
+  Publisher p1(mock1);
+  Publisher p2(mock2);
+  EXPECT_NE(p1, p2);
+
+  p2 = p1;
+  EXPECT_EQ(p1, p2);
+
+  Publisher p3 = p1;
+  EXPECT_EQ(p3, p1);
+
+  Publisher p4 = std::move(p1);
+  EXPECT_EQ(p4, p3);
+
+  p1 = std::move(p3);
+  EXPECT_EQ(p1, p2);
+}
+
 TEST(PublisherTest, PublishSimple) {
   auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
   EXPECT_CALL(*mock, Publish(_))
