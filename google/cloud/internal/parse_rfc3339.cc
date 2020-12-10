@@ -30,7 +30,8 @@ std::chrono::system_clock::time_point ParseRfc3339(
   // will handle `T` and `Z` in upper or lower case.
   auto const upper = absl::AsciiStrToUpper(timestamp);
   if (!absl::ParseTime(absl::RFC3339_full, upper, &t, &err)) {
-    google::cloud::internal::ThrowInvalidArgument(err);
+    google::cloud::internal::ThrowInvalidArgument(
+        "Error parsing RFC-3339 timestamp: '" + timestamp + "': " + err);
   }
   return absl::ToChronoTime(t);
 }
