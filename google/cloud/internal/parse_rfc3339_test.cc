@@ -170,38 +170,11 @@ TEST(ParseRfc3339Test, DetectInvalidSeparator) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(ParseRfc3339Test, DetectLongYear) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("52018-05-18T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("52018-05-18T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectShortYear) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("218-05-18T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("218-05-18T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
 TEST(ParseRfc3339Test, DetectLongMonth) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseRfc3339("2018-123-18T14:42:03Z"), std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-123-18T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectShortMonth) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-1-18T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-1-18T14:42:03Z"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -220,15 +193,6 @@ TEST(ParseRfc3339Test, DetectLongMDay) {
   EXPECT_THROW(ParseRfc3339("2018-05-181T14:42:03Z"), std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-181T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectShortMDay) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-05-1T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-1T14:42:03Z"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
@@ -278,15 +242,6 @@ TEST(ParseRfc3339Test, DetectLongHour) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(ParseRfc3339Test, DetectShortHour) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-05-18T1:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-18T1:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
 TEST(ParseRfc3339Test, DetectOutOfRangeHour) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseRfc3339("2018-05-18T24:42:03Z"), std::invalid_argument);
@@ -305,15 +260,6 @@ TEST(ParseRfc3339Test, DetectLongMinute) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(ParseRfc3339Test, DetectShortMinute) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-05-18T14:2:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-18T14:2:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
 TEST(ParseRfc3339Test, DetectOutOfRangeMinute) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseRfc3339("2018-05-18T22:60:03Z"), std::invalid_argument);
@@ -328,15 +274,6 @@ TEST(ParseRfc3339Test, DetectLongSecond) {
   EXPECT_THROW(ParseRfc3339("2018-05-18T14:42:003Z"), std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-18T14:42:003Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectShortSecond) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-05-18T14:42:3Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-05-18T14:42:3Z"),
                             "exceptions are disabled");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

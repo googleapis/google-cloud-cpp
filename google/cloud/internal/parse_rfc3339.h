@@ -26,14 +26,14 @@ namespace internal {
 /**
  * Parses @p timestamp assuming it is in RFC-3339 format.
  *
- * Google Cloud Storage uses RFC-3339 for timestamps, this function is used to
- * parse them and convert to `std::chrono::system_clock::time_point`, the C++
- * class used to represent timestamps.  Depending on the underlying C++
- * implementation the timestamp may lose precision. C++ does not specify the
- * precision of the system clock, though most implementations have sub-second
- * precision, and nanoseconds is common.  The RFC-3339 spec allows for arbitrary
- * precision in fractional seconds, though it would be surprising to see
- * femtosecond timestamp for Internet events.
+ * Google Cloud libraries often use RFC-3339 for timestamps. This function is
+ * used to parse them and convert to `std::chrono::system_clock::time_point`,
+ * the C++ class used to represent timestamps. Depending on the underlying
+ * C++ implementation the timestamp may lose precision. C++ does not specify
+ * the precision of the system clock, though most implementations have sub-
+ * second precision, and nanoseconds is common. The RFC-3339 spec allows for
+ * arbitrary precision in fractional seconds, though it would be surprising
+ * to see femtosecond timestamp for Internet events.
  *
  * @see https://tools.ietf.org/html/rfc3339
  */
