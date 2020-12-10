@@ -28,14 +28,13 @@ using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 
 bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service) {
-  bool has_longrunning_method = false;
-  for (int i = 0; !has_longrunning_method && i < service.method_count(); ++i) {
+  for (int i = 0; i < service.method_count(); ++i) {
     if (service.method(i)->output_type()->full_name() ==
         "google.longrunning.Operation") {
-      has_longrunning_method = true;
+      return true;
     }
   }
-  return has_longrunning_method;
+  return false;
 }
 
 // https://google.aip.dev/client-libraries/4233

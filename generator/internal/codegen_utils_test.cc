@@ -30,7 +30,7 @@ TEST(LocalInclude, Success) {
 }
 
 TEST(LocalInclude, Empty) {
-  std::string empty;
+  std::string const empty;
   EXPECT_EQ(empty, LocalInclude(""));
 }
 
@@ -39,7 +39,7 @@ TEST(SystemInclude, Success) {
 }
 
 TEST(SystemInclude, Empty) {
-  std::string empty;
+  std::string const empty;
   EXPECT_EQ(empty, SystemInclude(""));
 }
 

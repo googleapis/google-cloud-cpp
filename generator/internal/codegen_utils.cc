@@ -28,17 +28,13 @@ namespace generator_internal {
 std::string GeneratedFileSuffix() { return ".gcpcxx.pb"; }
 
 std::string LocalInclude(absl::string_view header) {
-  if (header.length() > 0) {
-    return absl::StrCat("#include \"", header, "\"\n");
-  }
-  return {};
+  if (header.empty()) return {};
+  return absl::StrCat("#include \"", header, "\"\n");
 }
 
 std::string SystemInclude(absl::string_view header) {
-  if (header.length() > 0) {
-    return absl::StrCat("#include <", header, ">\n");
-  }
-  return {};
+  if (header.empty()) return {};
+  return absl::StrCat("#include <", header, ">\n");
 }
 
 std::string CamelCaseToSnakeCase(absl::string_view input) {
