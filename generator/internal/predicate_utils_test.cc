@@ -94,6 +94,138 @@ TEST(PredicateUtilsTest, GenericAny) {
       GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(unused));
 }
 
+TEST(PredicateUtilsTest, HasLongRunningMethodNone) {
+  FileDescriptorProto longrunning_file;
+  /// @cond
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operations.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    dependency: "google/longrunning/operations.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "One"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+      }
+      method {
+        name: "Two"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Bar"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(HasLongrunningMethod(*service_file_descriptor->service(0)));
+}
+
+TEST(PredicateUtilsTest, HasLongRunningMethodOne) {
+  FileDescriptorProto longrunning_file;
+  /// @cond
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operations.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    dependency: "google/longrunning/operations.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "One"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.longrunning.Operation"
+      }
+      method {
+        name: "Two"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Bar"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(HasLongrunningMethod(*service_file_descriptor->service(0)));
+}
+
+TEST(PredicateUtilsTest, HasLongRunningMethodMoreThanOne) {
+  FileDescriptorProto longrunning_file;
+  /// @cond
+  auto constexpr kLongrunningText = R"pb(
+    name: "google/longrunning/operations.proto"
+    package: "google.longrunning"
+    message_type { name: "Operation" }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kLongrunningText,
+                                                            &longrunning_file));
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    dependency: "google/longrunning/operations.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "One"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Bar"
+      }
+      method {
+        name: "Two"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.longrunning.Operation"
+      }
+      method {
+        name: "Three"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.longrunning.Operation"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  pool.BuildFile(longrunning_file);
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(HasLongrunningMethod(*service_file_descriptor->service(0)));
+}
+
 TEST(PredicateUtilsTest, IsResponseTypeEmpty) {
   FileDescriptorProto service_file;
   /// @cond

@@ -27,6 +27,17 @@ using ::google::protobuf::Descriptor;
 using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::MethodDescriptor;
 
+bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service) {
+  bool has_longrunning_method = false;
+  for (int i = 0; !has_longrunning_method && i < service.method_count(); ++i) {
+    if (service.method(i)->output_type()->full_name() ==
+        "google.longrunning.Operation") {
+      has_longrunning_method = true;
+    }
+  }
+  return has_longrunning_method;
+}
+
 // https://google.aip.dev/client-libraries/4233
 google::cloud::optional<std::pair<std::string, std::string>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method) {

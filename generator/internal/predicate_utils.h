@@ -24,6 +24,12 @@ namespace cloud {
 namespace generator_internal {
 
 /**
+ * Determines if the service contains at least one method that returns a
+ * google::longrunning::Operation.
+ */
+bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service);
+
+/**
  * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233
@@ -52,6 +58,7 @@ bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const& method);
  */
 bool IsLongrunningMetadataTypeUsedAsResponse(
     google::protobuf::MethodDescriptor const& method);
+
 /**
  * If method meets pagination criteria, provides paginated field type and field
  * name.

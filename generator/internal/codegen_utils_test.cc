@@ -29,8 +29,18 @@ TEST(LocalInclude, Success) {
             LocalInclude("google/cloud/status.h"));
 }
 
+TEST(LocalInclude, Empty) {
+  std::string empty;
+  EXPECT_EQ(empty, LocalInclude(""));
+}
+
 TEST(SystemInclude, Success) {
   EXPECT_EQ("#include <vector>\n", SystemInclude("vector"));
+}
+
+TEST(SystemInclude, Empty) {
+  std::string empty;
+  EXPECT_EQ(empty, SystemInclude(""));
 }
 
 TEST(CamelCaseToSnakeCase, Success) {
