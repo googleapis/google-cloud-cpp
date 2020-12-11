@@ -102,11 +102,11 @@ Status StubFactoryGenerator::GenerateCc() {
     "  std::shared_ptr<$stub_class_name$> stub =\n"
     "      std::make_shared<Default$stub_class_name$>(\n"
     "          std::move(service_grpc_stub)");
-          // clang-format on
+            // clang-format on
   if (HasLongrunningMethod()) {
-  CcPrint(  // clang-format off
+    CcPrint(  // clang-format off
     ", std::move(longrunning_grpc_stub));\n");
-          // clang-format on
+              // clang-format on
   } else {
     CcPrint(  // clang-format off
     ");\n");
