@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S stdbuf -oL -eL bash
+# shellcheck shell=bash disable=SC2096
 #
 # Copyright 2017 Google Inc.
 #
