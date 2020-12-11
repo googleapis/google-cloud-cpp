@@ -31,8 +31,13 @@ cd "${PROJECT_ROOT}"
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
 
+# Use the printf command rather than the shell builtin, which avoids issues
+# with bash sometimes buffering output from its builtins. See
+# https://github.com/googleapis/google-cloud-cpp/issues/4152
+enable -n printf
+
 problems=""
-stdbuf -o0 printf "%-30s" "Running check-include-guards:"
+printf "%-30s" "Running check-include-guards:"
 time {
   if ! git ls-files -z | grep -zE '\.h$' |
     xargs -0 awk -f "ci/check-include-guards.gawk"; then
@@ -58,7 +63,7 @@ replace_original_if_changed() {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-stdbuf -o0 printf "%-30s" "Running cmake-format:"
+printf "%-30s" "Running cmake-format:"
 time {
   git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
     xargs -P "${NCPU}" -n 1 -0 cmake-format -i
@@ -70,7 +75,7 @@ time {
 #   https://github.com/googleapis/google-cloud-cpp/issues/4501
 # This should run before clang-format because it might alter the order of any
 # includes.
-stdbuf -o0 printf "%-30s" "Running Abseil header fixes:"
+printf "%-30s" "Running Abseil header fixes:"
 time {
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
@@ -86,7 +91,7 @@ time {
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
-stdbuf -o0 printf "%-30s" "Running clang-format:"
+printf "%-30s" "Running clang-format:"
 time {
   git ls-files -z | grep -zE '\.(cc|h)$' |
     xargs -P "${NCPU}" -n 50 -0 clang-format -i
@@ -94,7 +99,7 @@ time {
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
-stdbuf -o0 printf "%-30s" "Running buildifier:"
+printf "%-30s" "Running buildifier:"
 time {
   git ls-files -z | grep -zE '\.(BUILD|bzl)$' | xargs -0 buildifier -mode=fix
   git ls-files -z | grep -zE '(^|/)(BUILD|WORKSPACE)$' |
@@ -103,19 +108,19 @@ time {
 
 # Apply psf/black to format Python files.
 #    https://pypi.org/project/black/
-stdbuf -o0 printf "%-30s" "Running black:"
+printf "%-30s" "Running black:"
 time {
   git ls-files -z | grep -z '\.py$' | xargs -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
-stdbuf -o0 printf "%-30s" "Running shfmt:"
+printf "%-30s" "Running shfmt:"
 time {
   git ls-files -z | grep -z '\.sh$' | xargs -0 shfmt -w -i 2
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
-stdbuf -o0 printf "%-30s" "Running shellcheck:"
+printf "%-30s" "Running shellcheck:"
 time {
   if ! git ls-files -z | grep -z '\.sh$' |
     xargs -0 shellcheck \
@@ -128,7 +133,7 @@ time {
   fi
 }
 
-stdbuf -o0 printf "%-30s" "Running cspell:"
+printf "%-30s" "Running cspell:"
 time {
   if ! git ls-files -z | grep -zE '\.(cc|h)$' |
     xargs -P "${NCPU}" -n 50 -0 cspell --no-summary -c ci/cspell.json; then
@@ -141,7 +146,7 @@ time {
 #       are obsoleted by the gRPC team, so we should not use them in our code.
 #     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
 #       `grpc::` namespace do not exist inside google.
-stdbuf -o0 printf "%-30s" "Running include fixes:"
+printf "%-30s" "Running include fixes:"
 time {
   git ls-files -z | grep -zE '\.(cc|h)$' |
     while IFS= read -r -d $'\0' file; do
@@ -161,7 +166,7 @@ time {
 # clang-format(1) above.  For now we simply remove trailing blanks.  Note that
 # we do not expand TABs (they currently only appear in Makefiles and Makefile
 # snippets).
-stdbuf -o0 printf "%-30s" "Running whitespace fixes:"
+printf "%-30s" "Running whitespace fixes:"
 time {
   git ls-files -z | grep -zv '\.gz$' |
     while IFS= read -r -d $'\0' file; do
