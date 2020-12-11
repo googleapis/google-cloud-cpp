@@ -283,10 +283,10 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 
 }  // namespace
 
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
-                                                      ConnectionOptions options,
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(spanner::Database const& db,
+                                                      spanner::ConnectionOptions options,
                                                       int channel_id) {
-  options = internal::EmulatorOverrides(std::move(options));
+  options = EmulatorOverrides(std::move(options));
 
   grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use

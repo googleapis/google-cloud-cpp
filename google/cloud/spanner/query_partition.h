@@ -26,9 +26,25 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+class QueryPartition;  // Defined below
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
 
-class QueryPartition;
+// Internal implementation details that callers should not use.
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+// Internal implementation details that callers should not use.
+spanner::QueryPartition MakeQueryPartition(
+    std::string const& transaction_id, std::string const& session_id,
+    std::string const& partition_token,
+    spanner::SqlStatement const& sql_statement);
+spanner::Connection::SqlParams MakeSqlParams(
+    spanner::QueryPartition const& query_partition);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 /**
  * Serializes an instance of `QueryPartition` to a string of bytes.
  *
@@ -71,15 +87,6 @@ StatusOr<std::string> SerializeQueryPartition(
 StatusOr<QueryPartition> DeserializeQueryPartition(
     std::string const& serialized_query_partition);
 
-// Internal implementation details that callers should not use.
-namespace internal {
-QueryPartition MakeQueryPartition(std::string const& transaction_id,
-                                  std::string const& session_id,
-                                  std::string const& partition_token,
-                                  SqlStatement const& sql_statement);
-Connection::SqlParams MakeSqlParams(QueryPartition const& query_partition);
-}  // namespace internal
-
 /**
  * The `QueryPartition` class is a regular type that represents a single slice
  * of a parallel SQL read.
@@ -119,11 +126,11 @@ class QueryPartition {
 
  private:
   friend class QueryPartitionTester;
-  friend QueryPartition internal::MakeQueryPartition(
+  friend QueryPartition spanner_internal::MakeQueryPartition(
       std::string const& transaction_id, std::string const& session_id,
-      std::string const& partition_token, SqlStatement const& sql_statement);
-  friend Connection::SqlParams internal::MakeSqlParams(
-      QueryPartition const& query_partition);
+      std::string const& partition_token, spanner::SqlStatement const& sql_statement);
+  friend Connection::SqlParams spanner_internal::MakeSqlParams(
+      spanner::QueryPartition const& query_partition);
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);
   friend StatusOr<QueryPartition> DeserializeQueryPartition(

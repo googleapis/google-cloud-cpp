@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/session.h"
@@ -40,10 +41,10 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 /// Return the default retry policy for `ConnectionImpl`
-std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy();
+std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy();
 
 /// Return the default backoff policy for `ConnectionImpl`
-std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
+std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy();
 
 /**
  * Factory method to construct a `ConnectionImpl`.
@@ -52,11 +53,13 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
  */
 class ConnectionImpl;
 std::shared_ptr<ConnectionImpl> MakeConnection(
-    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    ConnectionOptions const& options = ConnectionOptions{},
-    SessionPoolOptions session_pool_options = SessionPoolOptions{},
-    std::unique_ptr<RetryPolicy> retry_policy = DefaultConnectionRetryPolicy(),
-    std::unique_ptr<BackoffPolicy> backoff_policy =
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    spanner::ConnectionOptions const& options = spanner::ConnectionOptions{},
+    spanner::SessionPoolOptions session_pool_options =
+        spanner::SessionPoolOptions{},
+    std::unique_ptr<spanner::RetryPolicy> retry_policy =
+        DefaultConnectionRetryPolicy(),
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy =
         DefaultConnectionBackoffPolicy());
 
 /**
@@ -64,35 +67,37 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
  * Spanner instance. See `MakeConnection()` for a factory function that creates
  * and returns instances of this class.
  */
-class ConnectionImpl : public Connection {
+class ConnectionImpl : public spanner::Connection {
  public:
-  RowStream Read(ReadParams) override;
-  StatusOr<std::vector<ReadPartition>> PartitionRead(
+  spanner::RowStream Read(ReadParams) override;
+  StatusOr<std::vector<spanner::ReadPartition>> PartitionRead(
       PartitionReadParams) override;
-  RowStream ExecuteQuery(SqlParams) override;
-  StatusOr<DmlResult> ExecuteDml(SqlParams) override;
-  ProfileQueryResult ProfileQuery(SqlParams) override;
-  StatusOr<ProfileDmlResult> ProfileDml(SqlParams) override;
-  StatusOr<ExecutionPlan> AnalyzeSql(SqlParams) override;
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+  spanner::RowStream ExecuteQuery(SqlParams) override;
+  StatusOr<spanner::DmlResult> ExecuteDml(SqlParams) override;
+  spanner::ProfileQueryResult ProfileQuery(SqlParams) override;
+  StatusOr<spanner::ProfileDmlResult> ProfileDml(SqlParams) override;
+  StatusOr<spanner::ExecutionPlan> AnalyzeSql(SqlParams) override;
+  StatusOr<spanner::PartitionedDmlResult> ExecutePartitionedDml(
       ExecutePartitionedDmlParams) override;
-  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+  StatusOr<std::vector<spanner::QueryPartition>> PartitionQuery(
       PartitionQueryParams) override;
-  StatusOr<BatchDmlResult> ExecuteBatchDml(ExecuteBatchDmlParams) override;
-  StatusOr<CommitResult> Commit(CommitParams) override;
+  StatusOr<spanner::BatchDmlResult> ExecuteBatchDml(
+      ExecuteBatchDmlParams) override;
+  StatusOr<spanner::CommitResult> Commit(CommitParams) override;
   Status Rollback(RollbackParams) override;
 
  private:
   // Only the factory method can construct instances of this class.
   friend std::shared_ptr<ConnectionImpl> MakeConnection(
-      Database, std::vector<std::shared_ptr<SpannerStub>>,
-      ConnectionOptions const&, SessionPoolOptions,
-      std::unique_ptr<RetryPolicy>, std::unique_ptr<BackoffPolicy>);
-  ConnectionImpl(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-                 ConnectionOptions const& options,
-                 SessionPoolOptions session_pool_options,
-                 std::unique_ptr<RetryPolicy> retry_policy,
-                 std::unique_ptr<BackoffPolicy> backoff_policy);
+      spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
+      spanner::ConnectionOptions const&, spanner::SessionPoolOptions,
+      std::unique_ptr<spanner::RetryPolicy>, std::unique_ptr<BackoffPolicy>);
+  ConnectionImpl(spanner::Database db,
+                 std::vector<std::shared_ptr<SpannerStub>> stubs,
+                 spanner::ConnectionOptions const& options,
+                 spanner::SessionPoolOptions session_pool_options,
+                 std::unique_ptr<spanner::RetryPolicy> retry_policy,
+                 std::unique_ptr<spanner::BackoffPolicy> backoff_policy);
 
   Status PrepareSession(SessionHolder& session,
                         bool dissociate_from_pool = false);
@@ -101,56 +106,57 @@ class ConnectionImpl : public Connection {
       SessionHolder& session, google::spanner::v1::TransactionOptions options,
       char const* func);
 
-  RowStream ReadImpl(SessionHolder& session,
-                     StatusOr<google::spanner::v1::TransactionSelector>& s,
-                     ReadParams params);
+  spanner::RowStream ReadImpl(
+      SessionHolder& session,
+      StatusOr<google::spanner::v1::TransactionSelector>& s, ReadParams params);
 
-  StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
+  StatusOr<std::vector<spanner::ReadPartition>> PartitionReadImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s,
-      ReadParams const& params, PartitionOptions const& partition_options);
+      ReadParams const& params,
+      spanner::PartitionOptions const& partition_options);
 
-  RowStream ExecuteQueryImpl(
+  spanner::RowStream ExecuteQueryImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       SqlParams params);
 
-  StatusOr<DmlResult> ExecuteDmlImpl(
+  StatusOr<spanner::DmlResult> ExecuteDmlImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       SqlParams params);
 
-  ProfileQueryResult ProfileQueryImpl(
+  spanner::ProfileQueryResult ProfileQueryImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       SqlParams params);
 
-  StatusOr<ProfileDmlResult> ProfileDmlImpl(
+  StatusOr<spanner::ProfileDmlResult> ProfileDmlImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       SqlParams params);
 
-  StatusOr<ExecutionPlan> AnalyzeSqlImpl(
+  StatusOr<spanner::ExecutionPlan> AnalyzeSqlImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       SqlParams params);
 
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDmlImpl(
+  StatusOr<spanner::PartitionedDmlResult> ExecutePartitionedDmlImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       ExecutePartitionedDmlParams params);
 
-  StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
+  StatusOr<std::vector<spanner::QueryPartition>> PartitionQueryImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s,
       PartitionQueryParams const& params);
 
-  StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
+  StatusOr<spanner::BatchDmlResult> ExecuteBatchDmlImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t seqno,
       ExecuteBatchDmlParams params);
 
-  StatusOr<CommitResult> CommitImpl(
+  StatusOr<spanner::CommitResult> CommitImpl(
       SessionHolder& session,
       StatusOr<google::spanner::v1::TransactionSelector>& s,
       CommitParams params);
@@ -181,9 +187,9 @@ class ConnectionImpl : public Connection {
       SqlParams params,
       google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode);
 
-  Database db_;
-  std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  spanner::Database db_;
+  std::shared_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<BackgroundThreads> background_threads_;
   std::shared_ptr<SessionPool> session_pool_;
   bool rpc_stream_tracing_enabled_ = false;

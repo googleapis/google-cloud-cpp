@@ -96,7 +96,7 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
     Database const& db, IamUpdater const& updater,
     std::unique_ptr<TransactionRerunPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  using RerunnablePolicy = internal::SafeTransactionRerun;
+  using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
   Status last_status;
   do {

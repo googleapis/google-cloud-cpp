@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
@@ -66,10 +67,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * @warning callers should use the `MakeSessionPool()` factory method rather
    * than calling the constructor and `Initialize()` directly.
    */
-  SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-              SessionPoolOptions options, google::cloud::CompletionQueue cq,
-              std::unique_ptr<RetryPolicy> retry_policy,
-              std::unique_ptr<BackoffPolicy> backoff_policy,
+  SessionPool(spanner::Database db,
+              std::vector<std::shared_ptr<SpannerStub>> stubs,
+              spanner::SessionPoolOptions options,
+              google::cloud::CompletionQueue cq,
+              std::unique_ptr<spanner::RetryPolicy> retry_policy,
+              std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
               std::shared_ptr<Session::Clock> clock);
 
   ~SessionPool();
@@ -154,18 +157,16 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       std::shared_ptr<Channel> const& channel,
       StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response);
 
-  void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
-
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
   void MaintainPoolSize();
   void RefreshExpiringSessions();
 
-  Database const db_;
-  SessionPoolOptions const options_;
+  spanner::Database const db_;
+  spanner::SessionPoolOptions const options_;
   google::cloud::CompletionQueue cq_;
-  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::unique_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;
   std::mt19937 random_generator_;
@@ -199,10 +200,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
  * `stubs` must not be empty.
  */
 std::shared_ptr<SessionPool> MakeSessionPool(
-    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options, google::cloud::CompletionQueue cq,
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    spanner::SessionPoolOptions options, google::cloud::CompletionQueue cq,
+    std::unique_ptr<spanner::RetryPolicy> retry_policy,
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
     std::shared_ptr<Session::Clock> clock = std::make_shared<Session::Clock>());
 
 }  // namespace SPANNER_CLIENT_NS

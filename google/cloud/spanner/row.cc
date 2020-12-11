@@ -22,16 +22,17 @@
 
 namespace google {
 namespace cloud {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+spanner::Row MakeRow(std::vector<spanner::Value> values,
+                     std::shared_ptr<std::vector<std::string> const> columns) {
+  return spanner::Row(std::move(values), std::move(columns));
+}
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-namespace internal {
-Row MakeRow(std::vector<Value> values,
-            std::shared_ptr<const std::vector<std::string>> columns) {
-  return Row(std::move(values), std::move(columns));
-}
-}  // namespace internal
-
 Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
   auto values = std::vector<Value>{};
   auto columns = std::make_shared<std::vector<std::string>>();
@@ -39,7 +40,7 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
     values.emplace_back(std::move(p.second));
     columns->emplace_back(std::move(p.first));
   }
-  return internal::MakeRow(std::move(values), std::move(columns));
+  return spanner_internal::MakeRow(std::move(values), std::move(columns));
 }
 
 Row::Row() : Row({}, std::make_shared<std::vector<std::string>>()) {}

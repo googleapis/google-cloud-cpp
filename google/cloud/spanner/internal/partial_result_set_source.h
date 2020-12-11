@@ -38,7 +38,7 @@ inline namespace SPANNER_CLIENT_NS {
  * reader and the spanner `ResultSet`, which is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetSource : public internal::ResultSourceInterface {
+class PartialResultSetSource : public ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
@@ -46,7 +46,7 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
 
   ~PartialResultSetSource() override;
 
-  StatusOr<Row> NextRow() override;
+  StatusOr<spanner::Row> NextRow() override;
 
   absl::optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return metadata_;

@@ -46,7 +46,7 @@ StatusOr<std::string> SerializeQueryPartition(
 
   for (auto const& param : query_partition.sql_statement_.params()) {
     auto const& param_name = param.first;
-    auto const& type_value = internal::ToProto(param.second);
+    auto const& type_value = spanner_internal::ToProto(param.second);
     (*proto.mutable_params()->mutable_fields())[param_name] = type_value.second;
     (*proto.mutable_param_types())[param_name] = type_value.first;
   }
@@ -76,7 +76,7 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
         auto const& param_type = iter->second;
         sql_parameters.insert(std::make_pair(
             param_name,
-            internal::FromProto(param_type, std::move(param.second))));
+            spanner_internal::FromProto(param_type, std::move(param.second))));
       }
     }
   }
@@ -87,24 +87,28 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
   return query_partition;
 }
 
-namespace internal {
-QueryPartition MakeQueryPartition(std::string const& transaction_id,
-                                  std::string const& session_id,
-                                  std::string const& partition_token,
-                                  SqlStatement const& sql_statement) {
-  return QueryPartition(transaction_id, session_id, partition_token,
-                        sql_statement);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+spanner::QueryPartition MakeQueryPartition(
+    std::string const& transaction_id, std::string const& session_id,
+    std::string const& partition_token,
+    spanner::SqlStatement const& sql_statement) {
+  return spanner::QueryPartition(transaction_id, session_id, partition_token,
+                                 sql_statement);
 }
 
-Connection::SqlParams MakeSqlParams(QueryPartition const& query_partition) {
-  return {internal::MakeTransactionFromIds(query_partition.session_id(),
-                                           query_partition.transaction_id()),
-          query_partition.sql_statement(), QueryOptions{},
+spanner::Connection::SqlParams MakeSqlParams(
+    spanner::QueryPartition const& query_partition) {
+  return {MakeTransactionFromIds(query_partition.session_id(),
+                                 query_partition.transaction_id()),
+          query_partition.sql_statement(), spanner::QueryOptions{},
           query_partition.partition_token()};
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
@@ -339,7 +340,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 }  // namespace spanner
 
 namespace spanner_internal {
-namespace SPANNER_CLIENT_NS {
+inline namespace SPANNER_CLIENT_NS {
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<DatabaseAdminStub> stub,
     spanner::ConnectionOptions const& options);
@@ -348,8 +349,8 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<DatabaseAdminStub> stub,
     spanner::ConnectionOptions const& options,
     std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy);
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
+    std::unique_ptr<spanner::PollingPolicy> polling_policy);
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 

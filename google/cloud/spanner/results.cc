@@ -26,25 +26,25 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 absl::optional<Timestamp> GetReadTimestamp(
-    std::unique_ptr<internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
   auto metadata = source->Metadata();
   absl::optional<Timestamp> timestamp;
   if (metadata.has_value() && metadata->has_transaction() &&
       metadata->transaction().has_read_timestamp()) {
     auto ts =
-        internal::TimestampFromProto(metadata->transaction().read_timestamp());
+        spanner_internal::TimestampFromProto(metadata->transaction().read_timestamp());
     if (ts) timestamp = *std::move(ts);
   }
   return timestamp;
 }
 
 std::int64_t GetRowsModified(
-    std::unique_ptr<internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
   return source->Stats()->row_count_exact();
 }
 
 absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
-    std::unique_ptr<internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_stats()) {
     std::unordered_map<std::string, std::string> execution_stats;
@@ -58,7 +58,7 @@ absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
 }
 
 absl::optional<spanner::ExecutionPlan> GetExecutionPlan(
-    std::unique_ptr<internal::ResultSourceInterface> const& source) {
+    std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
   auto stats = source->Stats();
   if (stats && stats->has_query_plan()) {
     return source->Stats()->query_plan();

@@ -36,7 +36,7 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class Session {
  public:
-  using Clock = ::google::cloud::spanner::internal::SteadyClock;
+  using Clock = ::google::cloud::spanner_internal::SteadyClock;
   Session(std::string session_name, std::shared_ptr<Channel> channel,
           std::shared_ptr<Clock> clock = std::make_shared<Clock>())
       : session_name_(std::move(session_name)),

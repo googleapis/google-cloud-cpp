@@ -46,14 +46,14 @@ class Clock {
  * physical time moves forward. It is not related to wall clock time.
  */
 using SteadyClock =
-    ::google::cloud::spanner::internal::Clock<std::chrono::steady_clock>;
+    ::google::cloud::spanner_internal::Clock<std::chrono::steady_clock>;
 
 /**
  * `SystemClock` represents the system-wide real time wall clock.
  * It may not be monotonic.
  */
 using SystemClock =
-    ::google::cloud::spanner::internal::Clock<std::chrono::system_clock>;
+    ::google::cloud::spanner_internal::Clock<std::chrono::system_clock>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

@@ -33,7 +33,7 @@ ReadPartition::ReadPartition(std::string transaction_id, std::string session_id,
   for (auto& column : column_names) {
     *proto_.mutable_columns()->Add() = std::move(column);
   }
-  *proto_.mutable_key_set() = internal::ToProto(std::move(key_set));
+  *proto_.mutable_key_set() = spanner_internal::ToProto(std::move(key_set));
   proto_.set_limit(read_options.limit);
   proto_.set_partition_token(std::move(partition_token));
 }
@@ -67,21 +67,27 @@ StatusOr<ReadPartition> DeserializeReadPartition(
   return ReadPartition(std::move(proto));
 }
 
-namespace internal {
-ReadPartition MakeReadPartition(std::string transaction_id,
-                                std::string session_id,
-                                std::string partition_token,
-                                std::string table_name, KeySet key_set,
-                                std::vector<std::string> column_names,
-                                ReadOptions read_options) {
-  return ReadPartition(std::move(transaction_id), std::move(session_id),
-                       std::move(partition_token), std::move(table_name),
-                       std::move(key_set), std::move(column_names),
-                       std::move(read_options));
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+spanner::ReadPartition MakeReadPartition(std::string transaction_id,
+                                         std::string session_id,
+                                         std::string partition_token,
+                                         std::string table_name,
+                                         spanner::KeySet key_set,
+                                         std::vector<std::string> column_names,
+                                         spanner::ReadOptions read_options) {
+  return spanner::ReadPartition(
+      std::move(transaction_id), std::move(session_id),
+      std::move(partition_token), std::move(table_name), std::move(key_set),
+      std::move(column_names), std::move(read_options));
 }
 
-Connection::ReadParams MakeReadParams(ReadPartition const& read_partition) {
-  return Connection::ReadParams{
+spanner::Connection::ReadParams MakeReadParams(
+    spanner::ReadPartition const& read_partition) {
+  return spanner::Connection::ReadParams{
       MakeTransactionFromIds(read_partition.SessionId(),
                              read_partition.TransactionId()),
       read_partition.TableName(),
@@ -91,8 +97,7 @@ Connection::ReadParams MakeReadParams(ReadPartition const& read_partition) {
       read_partition.PartitionToken()};
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

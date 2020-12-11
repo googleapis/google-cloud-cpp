@@ -31,13 +31,32 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 class Numeric;  // defined below
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
 
-// Internal forward declarations to befriend.
-namespace internal {
-StatusOr<Numeric> MakeNumeric(std::string s);
-}  // namespace internal
+// Internal implementation details that callers should not use.
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+StatusOr<spanner::Numeric> MakeNumeric(std::string s);
+
+// Like `std::to_string`, but also supports Abseil 128-bit integers.
+template <typename T>
+std::string ToString(T&& value) {
+  return std::to_string(std::forward<T>(value));
+}
+std::string ToString(absl::int128 value);
+std::string ToString(absl::uint128 value);
+
+// Forward declarations.
+Status DataLoss(std::string message);
+StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent);
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A representation of the Spanner NUMERIC type: an exact numeric value with
@@ -113,26 +132,10 @@ class Numeric {
   }
 
  private:
-  friend StatusOr<Numeric> internal::MakeNumeric(std::string s);
+  friend StatusOr<Numeric> spanner_internal::MakeNumeric(std::string s);
   explicit Numeric(std::string rep) : rep_(std::move(rep)) {}
   std::string rep_;  // a valid and canonical NUMERIC representation
 };
-
-namespace internal {
-
-// Like `std::to_string`, but also supports Abseil 128-bit integers.
-template <typename T>
-std::string ToString(T&& value) {
-  return std::to_string(std::forward<T>(value));
-}
-std::string ToString(absl::int128 value);
-std::string ToString(absl::uint128 value);
-
-// Forward declarations.
-Status DataLoss(std::string message);
-StatusOr<Numeric> MakeNumeric(std::string s, int exponent);
-
-}  // namespace internal
 
 /**
  * Construction from a string, in decimal fixed- or floating-point formats.
@@ -168,7 +171,7 @@ StatusOr<Numeric> MakeNumeric(double d);
 template <typename T, typename std::enable_if<
                           std::numeric_limits<T>::is_integer, int>::type = 0>
 StatusOr<Numeric> MakeNumeric(T i, int exponent = 0) {
-  return internal::MakeNumeric(internal::ToString(i), exponent);
+  return spanner_internal::MakeNumeric(spanner_internal::ToString(i), exponent);
 }
 
 /**
@@ -205,7 +208,7 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     Numeric const& n, int exponent = 0) {
   std::string const& rep = n.ToString();
   if (exponent != 0) {
-    auto const en = internal::MakeNumeric(rep, exponent);
+    auto const en = spanner_internal::MakeNumeric(rep, exponent);
     return en ? ToInteger<T>(*en, 0) : en.status();
   }
   T v = 0;
@@ -216,19 +219,19 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     auto const* dp = std::strchr(kDigits, ch);
     if (state == kFracPart) {
       if (dp - kDigits >= 5) {  // dp != nullptr
-        if (v == kMax) return internal::DataLoss(rep);
+        if (v == kMax) return spanner_internal::DataLoss(rep);
         v = static_cast<T>(v + 1);
       }
       break;
     }
     if (dp == nullptr) {
-      if (ch == '-') return internal::DataLoss(rep);
+      if (ch == '-') return spanner_internal::DataLoss(rep);
       state = kFracPart;  // ch == '.'
     } else {
-      if (v > kMax / 10) return internal::DataLoss(rep);
+      if (v > kMax / 10) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v * 10);
       auto d = static_cast<T>(dp - kDigits);
-      if (v > kMax - d) return internal::DataLoss(rep);
+      if (v > kMax - d) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v + d);
     }
   }
@@ -243,7 +246,7 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     Numeric const& n, int exponent = 0) {
   std::string const& rep = n.ToString();
   if (exponent != 0) {
-    auto const en = internal::MakeNumeric(rep, exponent);
+    auto const en = spanner_internal::MakeNumeric(rep, exponent);
     return en ? ToInteger<T>(*en, 0) : en.status();
   }
   T v = 0;
@@ -255,7 +258,7 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
     auto const* dp = std::strchr(kDigits, ch);
     if (state == kFracPart) {
       if (dp - kDigits >= 5) {  // dp != nullptr
-        if (v == kMin) return internal::DataLoss(rep);
+        if (v == kMin) return spanner_internal::DataLoss(rep);
         v = static_cast<T>(v - 1);
       }
       break;
@@ -267,16 +270,16 @@ StatusOr<T> ToInteger(  // NOLINT(misc-no-recursion)
         state = kFracPart;  // ch == '.'
       }
     } else {
-      if (v < kMin / 10) return internal::DataLoss(rep);
+      if (v < kMin / 10) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v * 10);
       auto d = static_cast<T>(dp - kDigits);
-      if (v < kMin + d) return internal::DataLoss(rep);
+      if (v < kMin + d) return spanner_internal::DataLoss(rep);
       v = static_cast<T>(v - d);
     }
   }
   if (!negate) return v;
   constexpr auto kMax = (std::numeric_limits<T>::max)();
-  if (kMin != -kMax && v == kMin) return internal::DataLoss(rep);
+  if (kMin != -kMax && v == kMin) return spanner_internal::DataLoss(rep);
   return static_cast<T>(-v);
 }
 ///@}

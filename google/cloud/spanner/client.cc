@@ -33,26 +33,26 @@ inline namespace SPANNER_CLIENT_NS {
 RowStream Client::Read(std::string table, KeySet keys,
                        std::vector<std::string> columns,
                        ReadOptions read_options) {
-  return conn_->Read(
-      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(table),
-       std::move(keys),
-       std::move(columns),
-       std::move(read_options),
-       {}});
+  return conn_->Read({spanner_internal::MakeSingleUseTransaction(
+                          Transaction::ReadOnlyOptions()),
+                      std::move(table),
+                      std::move(keys),
+                      std::move(columns),
+                      std::move(read_options),
+                      {}});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                        std::string table, KeySet keys,
                        std::vector<std::string> columns,
                        ReadOptions read_options) {
-  return conn_->Read(
-      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(table),
-       std::move(keys),
-       std::move(columns),
-       std::move(read_options),
-       {}});
+  return conn_->Read({spanner_internal::MakeSingleUseTransaction(
+                          std::move(transaction_options)),
+                      std::move(table),
+                      std::move(keys),
+                      std::move(columns),
+                      std::move(read_options),
+                      {}});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
@@ -67,7 +67,7 @@ RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
 }
 
 RowStream Client::Read(ReadPartition const& read_partition) {
-  return conn_->Read(internal::MakeReadParams(read_partition));
+  return conn_->Read(spanner_internal::MakeReadParams(read_partition));
 }
 
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
@@ -85,21 +85,21 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
 
 RowStream Client::ExecuteQuery(SqlStatement statement,
                                QueryOptions const& opts) {
-  return conn_->ExecuteQuery(
-      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(statement),
-       OverlayQueryOptions(opts),
-       {}});
+  return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
+                                  Transaction::ReadOnlyOptions()),
+                              std::move(statement),
+                              OverlayQueryOptions(opts),
+                              {}});
 }
 
 RowStream Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
     QueryOptions const& opts) {
-  return conn_->ExecuteQuery(
-      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(statement),
-       OverlayQueryOptions(opts),
-       {}});
+  return conn_->ExecuteQuery({spanner_internal::MakeSingleUseTransaction(
+                                  std::move(transaction_options)),
+                              std::move(statement),
+                              OverlayQueryOptions(opts),
+                              {}});
 }
 
 RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
@@ -112,28 +112,28 @@ RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
 
 RowStream Client::ExecuteQuery(QueryPartition const& partition,
                                QueryOptions const& opts) {
-  auto params = internal::MakeSqlParams(partition);
+  auto params = spanner_internal::MakeSqlParams(partition);
   params.query_options = OverlayQueryOptions(opts);
   return conn_->ExecuteQuery(std::move(params));
 }
 
 ProfileQueryResult Client::ProfileQuery(SqlStatement statement,
                                         QueryOptions const& opts) {
-  return conn_->ProfileQuery(
-      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(statement),
-       OverlayQueryOptions(opts),
-       {}});
+  return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
+                                  Transaction::ReadOnlyOptions()),
+                              std::move(statement),
+                              OverlayQueryOptions(opts),
+                              {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement,
     QueryOptions const& opts) {
-  return conn_->ProfileQuery(
-      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(statement),
-       OverlayQueryOptions(opts),
-       {}});
+  return conn_->ProfileQuery({spanner_internal::MakeSingleUseTransaction(
+                                  std::move(transaction_options)),
+                              std::move(statement),
+                              OverlayQueryOptions(opts),
+                              {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(Transaction transaction,
@@ -190,7 +190,7 @@ StatusOr<CommitResult> Client::Commit(
     std::unique_ptr<TransactionRerunPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   // The status-code discriminator of TransactionRerunPolicy.
-  using RerunnablePolicy = internal::SafeTransactionRerun;
+  using RerunnablePolicy = spanner_internal::SafeTransactionRerun;
 
   Transaction txn = MakeReadWriteTransaction();
   for (int rerun = 0;; ++rerun) {
@@ -237,10 +237,10 @@ StatusOr<CommitResult> Client::Commit(
     if (!rerun_policy->OnFailure(status)) {
       return status;  // reruns exhausted
     }
-    if (internal::IsSessionNotFound(status)) {
+    if (spanner_internal::IsSessionNotFound(status)) {
       // Marks the session bad and creates a new Transaction for the next loop.
-      internal::Visit(
-          txn, [](internal::SessionHolder& s,
+      spanner_internal::Visit(
+          txn, [](spanner_internal::SessionHolder& s,
                   StatusOr<google::spanner::v1::TransactionSelector> const&,
                   std::int64_t) {
             if (s) s->set_bad();
@@ -322,8 +322,8 @@ std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options) {
   return MakeConnection(db, connection_options, std::move(session_pool_options),
-                        internal::DefaultConnectionRetryPolicy(),
-                        internal::DefaultConnectionBackoffPolicy());
+                        spanner_internal::DefaultConnectionRetryPolicy(),
+                        spanner_internal::DefaultConnectionBackoffPolicy());
 }
 
 std::shared_ptr<Connection> MakeConnection(
@@ -331,14 +331,14 @@ std::shared_ptr<Connection> MakeConnection(
     SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  std::vector<std::shared_ptr<internal::SpannerStub>> stubs;
+  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = std::max(connection_options.num_channels(), 1);
   stubs.reserve(num_channels);
   for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
-    stubs.push_back(
-        internal::CreateDefaultSpannerStub(db, connection_options, channel_id));
+    stubs.push_back(spanner_internal::CreateDefaultSpannerStub(
+        db, connection_options, channel_id));
   }
-  return internal::MakeConnection(
+  return spanner_internal::MakeConnection(
       db, std::move(stubs), connection_options, std::move(session_pool_options),
       std::move(retry_policy), std::move(backoff_policy));
 }

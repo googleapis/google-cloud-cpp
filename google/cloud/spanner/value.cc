@@ -121,10 +121,11 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
       return os << v.bool_value();
 
     case google::spanner::v1::TypeCode::INT64:
-      return os << internal::FromProto(t, v).get<std::int64_t>().value();
+      return os
+             << spanner_internal::FromProto(t, v).get<std::int64_t>().value();
 
     case google::spanner::v1::TypeCode::FLOAT64:
-      return os << internal::FromProto(t, v).get<double>().value();
+      return os << spanner_internal::FromProto(t, v).get<double>().value();
 
     case google::spanner::v1::TypeCode::STRING:
       switch (mode) {
@@ -138,14 +139,15 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
       return os;  // Unreachable, but quiets warning.
 
     case google::spanner::v1::TypeCode::BYTES:
-      return os << internal::BytesFromBase64(v.string_value()).value();
+      return os << spanner_internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::TypeCode::TIMESTAMP:
     case google::spanner::v1::TypeCode::NUMERIC:
       return os << v.string_value();
 
     case google::spanner::v1::TypeCode::DATE:
-      return os << internal::FromProto(t, v).get<absl::CivilDay>().value();
+      return os
+             << spanner_internal::FromProto(t, v).get<absl::CivilDay>().value();
 
     case google::spanner::v1::TypeCode::ARRAY: {
       const char* delimiter = "";
@@ -182,18 +184,6 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
 }
 
 }  // namespace
-
-namespace internal {
-
-Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v) {
-  return Value(std::move(t), std::move(v));
-}
-
-std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v) {
-  return std::make_pair(std::move(v.type_), std::move(v.value_));
-}
-
-}  // namespace internal
 
 bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
@@ -347,7 +337,7 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
 
 google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   google::protobuf::Value v;
-  v.set_string_value(internal::BytesToBase64(std::move(bytes)));
+  v.set_string_value(spanner_internal::BytesToBase64(std::move(bytes)));
   return v;
 }
 
@@ -359,7 +349,7 @@ google::protobuf::Value Value::MakeValueProto(Numeric n) {
 
 google::protobuf::Value Value::MakeValueProto(Timestamp ts) {
   google::protobuf::Value v;
-  v.set_string_value(internal::TimestampToRFC3339(ts));
+  v.set_string_value(spanner_internal::TimestampToRFC3339(ts));
   return v;
 }
 
@@ -463,7 +453,7 @@ StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing BYTES");
   }
-  auto decoded = internal::BytesFromBase64(pv.string_value());
+  auto decoded = spanner_internal::BytesFromBase64(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
 }
@@ -485,7 +475,7 @@ StatusOr<Timestamp> Value::GetValue(Timestamp,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing TIMESTAMP");
   }
-  return internal::TimestampFromRFC3339(pv.string_value());
+  return spanner_internal::TimestampFromRFC3339(pv.string_value());
 }
 
 StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
@@ -513,5 +503,22 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+spanner::Value FromProto(google::spanner::v1::Type t,
+                         google::protobuf::Value v) {
+  return spanner::Value(std::move(t), std::move(v));
+}
+
+std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
+    spanner::Value v) {
+  return std::make_pair(std::move(v.type_), std::move(v.value_));
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google

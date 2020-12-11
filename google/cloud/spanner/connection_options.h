@@ -49,7 +49,7 @@ using ConnectionOptions =
 }  // namespace spanner
 
 namespace spanner_internal {
-namespace SPANNER_CLIENT_NS {
+inline namespace SPANNER_CLIENT_NS {
 spanner::ConnectionOptions EmulatorOverrides(spanner::ConnectionOptions options);
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace internal

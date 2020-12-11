@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 namespace {
@@ -54,8 +54,8 @@ Status OutOfRange(std::string message) {
 bool IsCanonical(absl::string_view sign_part, absl::string_view int_part,
                  absl::string_view frac_part) {
   if (int_part.empty()) return false;
-  if (int_part.size() > Numeric::kIntPrec) return false;
-  if (frac_part.size() > 1 + Numeric::kFracPrec) return false;
+  if (int_part.size() > spanner::Numeric::kIntPrec) return false;
+  if (frac_part.size() > 1 + spanner::Numeric::kFracPrec) return false;
   if (int_part.size() == 1 && int_part.front() == '0') {
     if (frac_part.empty()) {  // Should match "0".
       if (!sign_part.empty()) return false;
@@ -105,8 +105,6 @@ void Round(std::deque<char>& int_rep, std::deque<char>& frac_rep,
 
 }  // namespace
 
-namespace internal {
-
 std::string ToString(absl::int128 value) {
   std::ostringstream ss;
   ss << value;
@@ -136,7 +134,7 @@ Status DataLoss(std::string message) {
 //   -?[1-9][0-9]{0,28}(.[0-9]{0,8}[1-9])?  // abs(value) >= 1
 //
 // where the fractional part has been rounded to `kFracPrec` decimal places.
-StatusOr<Numeric> MakeNumeric(std::string s) {
+StatusOr<spanner::Numeric> MakeNumeric(std::string s) {
   char const* p = s.c_str();
   char const* e = p + s.size();
 
@@ -161,7 +159,7 @@ StatusOr<Numeric> MakeNumeric(std::string s) {
 
   // This is the expected case, and avoids any allocations.
   if (p == e && IsCanonical(sign_part, int_part, frac_part)) {
-    return Numeric(std::move(s));
+    return spanner::Numeric(std::move(s));
   }
 
   // Consume any exponent part.
@@ -204,11 +202,13 @@ StatusOr<Numeric> MakeNumeric(std::string s) {
   }
 
   // Round/canonicalize the fractional part.
-  Round(int_rep, frac_rep, Numeric::kFracPrec);
+  Round(int_rep, frac_rep, spanner::Numeric::kFracPrec);
 
   // Canonicalize and range check the integer part.
   while (!int_rep.empty() && int_rep.front() == '0') int_rep.pop_front();
-  if (int_rep.size() > Numeric::kIntPrec) return OutOfRange(std::move(s));
+  if (int_rep.size() > spanner::Numeric::kIntPrec) {
+    return OutOfRange(std::move(s));
+  }
 
   // Add any sign and decimal point.
   bool empty = int_rep.empty() && frac_rep.empty();
@@ -222,16 +222,20 @@ StatusOr<Numeric> MakeNumeric(std::string s) {
   rep.reserve(int_rep.size() + frac_rep.size());
   rep.append(int_rep.begin(), int_rep.end());
   rep.append(frac_rep.begin(), frac_rep.end());
-  return Numeric(std::move(rep));
+  return spanner::Numeric(std::move(rep));
 }
 
 // Like `MakeNumeric(s)`, but with an out-of-band exponent.
-StatusOr<Numeric> MakeNumeric(std::string s, int exponent) {
+StatusOr<spanner::Numeric> MakeNumeric(std::string s, int exponent) {
   if (exponent != 0) s += 'e' + std::to_string(exponent);
   return MakeNumeric(std::move(s));
 }
 
-}  // namespace internal
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 constexpr std::size_t Numeric::kIntPrec;
 constexpr std::size_t Numeric::kFracPrec;
@@ -239,7 +243,7 @@ constexpr std::size_t Numeric::kFracPrec;
 Numeric::Numeric() : rep_("0") {}
 
 StatusOr<Numeric> MakeNumeric(std::string s) {
-  return internal::MakeNumeric(std::move(s));
+  return spanner_internal::MakeNumeric(std::move(s));
 }
 
 StatusOr<Numeric> MakeNumeric(double d) {
@@ -247,8 +251,8 @@ StatusOr<Numeric> MakeNumeric(double d) {
   ss.imbue(std::locale::classic());
   ss << std::setprecision(std::numeric_limits<double>::digits10 + 1) << d;
   std::string s = std::move(ss).str();
-  if (!std::isfinite(d)) return OutOfRange(std::move(s));
-  return internal::MakeNumeric(std::move(s));
+  if (!std::isfinite(d)) return spanner_internal::OutOfRange(std::move(s));
+  return spanner_internal::MakeNumeric(std::move(s));
 }
 
 }  // namespace SPANNER_CLIENT_NS

@@ -26,18 +26,23 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 class SqlStatement;  // Defined later in this file.
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
 
 // Internal implementation details that callers should not use.
-namespace internal {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
 // Use this proto type because it conveniently wraps all three attributes
 // required to represent a SQL statement.
 using SqlStatementProto =
-    google::spanner::v1::ExecuteBatchDmlRequest::Statement;
-SqlStatementProto ToProto(SqlStatement s);
-}  // namespace internal
+    ::google::spanner::v1::ExecuteBatchDmlRequest::Statement;
+SqlStatementProto ToProto(spanner::SqlStatement s);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 /**
  * Represents a potentially parameterized SQL statement.
  *
@@ -113,7 +118,8 @@ class SqlStatement {
   friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
 
  private:
-  friend internal::SqlStatementProto internal::ToProto(SqlStatement s);
+  friend spanner_internal::SqlStatementProto spanner_internal::ToProto(
+      SqlStatement s);
 
   std::string statement_;
   ParamType params_;

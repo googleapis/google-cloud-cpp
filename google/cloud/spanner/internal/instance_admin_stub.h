@@ -85,7 +85,7 @@ class InstanceAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    ConnectionOptions options);
+    spanner::ConnectionOptions options);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
