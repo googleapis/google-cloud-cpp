@@ -190,25 +190,20 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
 TEST(ConnectionOptionsTest, DefaultTracingComponentsNoEnvironment) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
   auto const actual = internal::DefaultTracingComponents();
-  EXPECT_THAT(actual, ElementsAre());
+  EXPECT_FALSE(actual.has_value());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingComponentsWithValue) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                       "a,b,c");
-  auto const actual = internal::DefaultTracingComponents();
+  auto const actual = *internal::DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre("a", "b", "c"));
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingOptionsNoEnvironment) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", {});
   auto const actual = internal::DefaultTracingOptions();
-  auto const expected = TracingOptions{};
-  EXPECT_EQ(expected.single_line_mode(), actual.single_line_mode());
-  EXPECT_EQ(expected.use_short_repeated_primitives(),
-            actual.use_short_repeated_primitives());
-  EXPECT_EQ(expected.truncate_string_field_longer_than(),
-            actual.truncate_string_field_longer_than());
+  EXPECT_FALSE(actual.has_value());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
@@ -216,7 +211,7 @@ TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
                                       "single_line_mode=on"
                                       ",use_short_repeated_primitives=ON"
                                       ",truncate_string_field_longer_than=42");
-  auto const actual = internal::DefaultTracingOptions();
+  auto const actual = *internal::DefaultTracingOptions();
   EXPECT_TRUE(actual.single_line_mode());
   EXPECT_TRUE(actual.use_short_repeated_primitives());
   EXPECT_EQ(42, actual.truncate_string_field_longer_than());
@@ -231,6 +226,32 @@ TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
       background.get());
   ASSERT_NE(nullptr, tp);
   EXPECT_EQ(kThreadCount, tp->pool_size());
+}
+
+TEST(ConnectionOptionsOverrideTest, NoOverrides) {
+  auto options = ConnectionOptionsOverride(grpc::InsecureChannelCredentials());
+  EXPECT_FALSE(options.has_endpoint());
+  EXPECT_FALSE(options.has_num_channels());
+  EXPECT_FALSE(options.has_tracing_enabled());
+  EXPECT_FALSE(options.has_tracing_options());
+  EXPECT_FALSE(options.has_user_agent_prefix());
+}
+
+TEST(ConnectionOptionsOverrideTest, Convert) {
+  auto expected_credentials = grpc::InsecureChannelCredentials();
+  TestConnectionOptions options(expected_credentials);
+  options.set_endpoint("invalid-endpoint");
+  options.set_num_channels(42);
+  options.enable_tracing("fake-component");
+
+  auto overrides = ConnectionOptionsOverride(options);
+  EXPECT_EQ(expected_credentials, overrides.credentials());
+  EXPECT_TRUE(overrides.has_endpoint());
+  EXPECT_EQ("invalid-endpoint", overrides.endpoint());
+  EXPECT_TRUE(overrides.has_num_channels());
+  EXPECT_EQ(42, overrides.num_channels());
+  EXPECT_TRUE(overrides.has_tracing_enabled());
+  EXPECT_TRUE(overrides.tracing_enabled("fake-component"));
 }
 
 }  // namespace

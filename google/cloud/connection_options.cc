@@ -24,14 +24,14 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
-std::set<std::string> DefaultTracingComponents() {
+absl::optional<std::set<std::string>> DefaultTracingComponents() {
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (!tracing.has_value()) return {};
   return absl::StrSplit(*tracing, ',');
 }
 
-TracingOptions DefaultTracingOptions() {
+absl::optional<TracingOptions> DefaultTracingOptions() {
   auto tracing_options =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
   if (!tracing_options) return {};
