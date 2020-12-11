@@ -31,7 +31,9 @@ cd "${PROJECT_ROOT}"
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
 
-# To use the printf command rather than the shell builtin.
+# Use the printf command rather than the shell builtin, which avoids issues
+# with bash sometimes buffering output from its builtins. See
+# https://github.com/googleapis/google-cloud-cpp/issues/4152
 enable -n printf
 
 problems=""
