@@ -49,8 +49,10 @@ Status StubGenerator::GenerateHeader() {
 
   // includes
   HeaderLocalIncludes({"google/cloud/status_or.h", "google/cloud/version.h"});
-  HeaderSystemIncludes({vars("proto_grpc_header_path"),
-                        "google/longrunning/operations.grpc.pb.h", "memory"});
+  HeaderSystemIncludes(
+      {vars("proto_grpc_header_path"),
+       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
@@ -81,7 +83,8 @@ Status StubGenerator::GenerateHeader() {
   }
 
   // long running operation support methods
-  HeaderPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    HeaderPrint(  // clang-format off
     "  /// Poll a long-running operation.\n"
     "  virtual StatusOr<google::longrunning::Operation> GetOperation(\n"
     "      grpc::ClientContext& client_context,\n"
@@ -92,8 +95,8 @@ Status StubGenerator::GenerateHeader() {
     "      grpc::ClientContext& client_context,\n"
     "      google::longrunning::CancelOperationRequest const& request) = 0;\n"
     "\n");
-  // clang-format on
-
+    // clang-format on
+  }
   // close abstract interface Stub base class
   HeaderPrint(  // clang-format off
     "};\n\n");
@@ -102,14 +105,23 @@ Status StubGenerator::GenerateHeader() {
   // default stub class
   HeaderPrint(  // clang-format off
     "class Default$stub_class_name$ : public $stub_class_name$ {\n"
-    " public:\n"
+    " public:\n");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(  // clang-format off
     "  Default$stub_class_name$(\n"
     "      std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub,\n"
     "      std::unique_ptr<google::longrunning::Operations::StubInterface> "
     "operations)\n"
     "      : grpc_stub_(std::move(grpc_stub)),\n"
     "        operations_(std::move(operations)) {}\n\n");
-                // clang-format on
+    // clang-format on
+  } else {
+    HeaderPrint(  // clang-format off
+    "  explicit Default$stub_class_name$(\n"
+    "      std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub)\n"
+    "      : grpc_stub_(std::move(grpc_stub)) {}\n\n");
+    // clang-format on
+  }
 
   for (auto const& method : methods()) {
     // emit methods
@@ -128,8 +140,9 @@ Status StubGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
-  // long running operation support methods
-  HeaderPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    HeaderPrint(  // clang-format off
     "  /// Poll a long-running operation.\n"
     "  StatusOr<google::longrunning::Operation> GetOperation(\n"
     "      grpc::ClientContext& client_context,\n"
@@ -140,13 +153,20 @@ Status StubGenerator::GenerateHeader() {
     "      grpc::ClientContext& client_context,\n"
     "      google::longrunning::CancelOperationRequest const& request) override;\n"
     "\n");
-  // clang-format on
+    // clang-format on
+  }
 
   // private members and close default stub class defintion
   HeaderPrint(  // clang-format off
     " private:\n"
     "  std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub_;\n"
-    "  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;\n"
+  );
+  if (HasLongrunningMethod()) {
+    HeaderPrint(  // clang-format off
+    "  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;\n");
+    // clang-format on
+  }
+  HeaderPrint(  // clang-format off
     "};\n\n");
   // clang-format on
 
@@ -170,8 +190,10 @@ Status StubGenerator::GenerateCc() {
   CcLocalIncludes({vars("stub_header_path"),
                    "google/cloud/grpc_error_delegate.h",
                    "google/cloud/status_or.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"),
-                    "google/longrunning/operations.grpc.pb.h", "memory"});
+  CcSystemIncludes(
+      {vars("proto_grpc_header_path"),
+       HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -209,8 +231,9 @@ Status StubGenerator::GenerateCc() {
         __FILE__, __LINE__);
   }
 
-  // long running operation support methods
-  CcPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    CcPrint(  // clang-format off
     "/// Poll a long-running operation.\n"
     "StatusOr<google::longrunning::Operation>\n"
     "Default$stub_class_name$::GetOperation(\n"
@@ -236,7 +259,8 @@ Status StubGenerator::GenerateCc() {
     "  }\n"
     "  return google::cloud::Status();\n"
     "}\n");
-  // clang-format on
+    // clang-format on
+  }
 
   CcCloseNamespaces();
   return {};

@@ -51,7 +51,10 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/tracing_options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes({"memory", "string"});
+  HeaderSystemIncludes(
+      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory", "string"});
+  HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -80,7 +83,8 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
-  HeaderPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    HeaderPrint(  // clang-format off
     "  /// Poll a long-running operation.\n"
     "  StatusOr<google::longrunning::Operation> GetOperation(\n"
     "      grpc::ClientContext& context,\n"
@@ -93,7 +97,8 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     "      google::longrunning::CancelOperationRequest const& request) "
     "override;\n"
     "\n");
-  // clang-format on
+    // clang-format on
+  }
 
   HeaderPrint(  // clang-format off
     " private:\n"
@@ -108,7 +113,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderCloseNamespaces();
   // close header guard
   HeaderPrint(  // clang-format off
-      "#endif  // $header_include_guard$\n");
+    "#endif  // $header_include_guard$\n");
   // clang-format on
   return {};
 }
@@ -125,8 +130,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("metadata_header_path"), "google/cloud/grpc_error_delegate.h",
        "google/cloud/internal/compiler_info.h", "google/cloud/status_or.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"),
-                    "google/longrunning/operations.grpc.pb.h", "memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -163,15 +167,15 @@ Status MetadataDecoratorGenerator::GenerateCc() {
             {
                 {IsResponseTypeEmpty,
                  // clang-format off
-              "Status\n",
-              "StatusOr<$response_type$>\n"},
-             {"$metadata_class_name$::$method_name$(\n"
-              "    grpc::ClientContext& context,\n"
-              "    $request_type$ const& request) {\n"
-              "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n"
-              "  return child_->$method_name$(context, request);\n"
-              "}\n"
-              "\n",}
+    "Status\n",
+    "StatusOr<$response_type$>\n"},
+   {"$metadata_class_name$::$method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) {\n"
+    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n"
+    "  return child_->$method_name$(context, request);\n"
+    "}\n"
+    "\n",}
                 // clang-format on
             },
             // clang-format on
@@ -180,22 +184,24 @@ Status MetadataDecoratorGenerator::GenerateCc() {
   }
 
   // long running operation support methods
-  CcPrint(  // clang-format off
-      "StatusOr<google::longrunning::Operation> $metadata_class_name$::GetOperation(\n"
-      "    grpc::ClientContext& context,\n"
-      "    google::longrunning::GetOperationRequest const& request) {\n"
-      "  SetMetadata(context, \"name=\" + request.name());\n"
-      "  return child_->GetOperation(context, request);\n"
-      "}\n"
-      "\n"
-      "Status $metadata_class_name$::CancelOperation(\n"
-      "    grpc::ClientContext& context,\n"
-      "    google::longrunning::CancelOperationRequest const& request) {\n"
-      "  SetMetadata(context, \"name=\" + request.name());\n"
-      "  return child_->CancelOperation(context, request);\n"
-      "}\n\n"
-            // clang-format on
-  );
+  if (HasLongrunningMethod()) {
+    CcPrint(  // clang-format off
+    "StatusOr<google::longrunning::Operation> $metadata_class_name$::GetOperation(\n"
+    "    grpc::ClientContext& context,\n"
+    "    google::longrunning::GetOperationRequest const& request) {\n"
+    "  SetMetadata(context, \"name=\" + request.name());\n"
+    "  return child_->GetOperation(context, request);\n"
+    "}\n"
+    "\n"
+    "Status $metadata_class_name$::CancelOperation(\n"
+    "    grpc::ClientContext& context,\n"
+    "    google::longrunning::CancelOperationRequest const& request) {\n"
+    "  SetMetadata(context, \"name=\" + request.name());\n"
+    "  return child_->CancelOperation(context, request);\n"
+    "}\n\n"
+              // clang-format on
+    );
+  }
 
   CcPrint(  // clang-format off
     "void $metadata_class_name$::SetMetadata(grpc::ClientContext& context,\n"

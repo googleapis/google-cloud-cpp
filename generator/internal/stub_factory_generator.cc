@@ -86,30 +86,44 @@ Status StubFactoryGenerator::GenerateCc() {
   CcPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
     "CreateDefault$stub_class_name$($product_namespace$::ConnectionOptions const& options) {\n"
-      "  auto channel =\n"
-      "      grpc::CreateCustomChannel(options.endpoint(), "
-      "options.credentials(),\n"
-      "                                options.CreateChannelArguments());\n"
-      "  auto service_grpc_stub =\n"
-      "      $grpc_stub_fqn$::NewStub(channel);\n"
-      "  auto longrunning_grpc_stub =\n"
-      "      google::longrunning::Operations::NewStub(channel);\n"
-      "\n"
-      "  std::shared_ptr<$stub_class_name$> stub =\n"
-      "      std::make_shared<Default$stub_class_name$>(\n"
-      "          std::move(service_grpc_stub), "
-      "std::move(longrunning_grpc_stub));\n"
-      "\n"
-      "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
-      "\n"
-      "  if (options.tracing_enabled(\"rpc\")) {\n"
-      "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
-      "    stub = std::make_shared<$logging_class_name$>(std::move(stub),\n"
-      "                                                  "
-      "options.tracing_options());\n"
-      "  }\n"
-      "  return stub;\n"
-      "}\n\n");
+    "  auto channel =\n"
+    "      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),\n"
+    "                                options.CreateChannelArguments());\n"
+    "  auto service_grpc_stub =\n"
+    "      $grpc_stub_fqn$::NewStub(channel);\n");
+  if (HasLongrunningMethod()) {
+    CcPrint(  // clang-format off
+    "  auto longrunning_grpc_stub =\n"
+    "      google::longrunning::Operations::NewStub(channel);\n"
+    "\n");
+            // clang-format on
+  }
+  CcPrint(  // clang-format off
+    "  std::shared_ptr<$stub_class_name$> stub =\n"
+    "      std::make_shared<Default$stub_class_name$>(\n"
+    "          std::move(service_grpc_stub)");
+            // clang-format on
+  if (HasLongrunningMethod()) {
+    CcPrint(  // clang-format off
+    ", std::move(longrunning_grpc_stub));\n");
+              // clang-format on
+  } else {
+    CcPrint(  // clang-format off
+    ");\n");
+    // clang-format on
+  }
+  CcPrint(  // clang-format off
+    "\n"
+    "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
+    "\n"
+    "  if (options.tracing_enabled(\"rpc\")) {\n"
+    "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
+    "    stub = std::make_shared<$logging_class_name$>(std::move(stub),\n"
+    "                                                  "
+    "options.tracing_options());\n"
+    "  }\n"
+    "  return stub;\n"
+    "}\n\n");
   // clang-format on
 
   CcCloseNamespaces();
