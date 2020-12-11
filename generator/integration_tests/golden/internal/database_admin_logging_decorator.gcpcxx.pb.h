@@ -21,8 +21,10 @@
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
+
 namespace google {
 namespace cloud {
 namespace golden_internal {

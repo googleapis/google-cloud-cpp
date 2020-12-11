@@ -91,14 +91,25 @@ Status StubFactoryGenerator::GenerateCc() {
       "options.credentials(),\n"
       "                                options.CreateChannelArguments());\n"
       "  auto service_grpc_stub =\n"
-      "      $grpc_stub_fqn$::NewStub(channel);\n"
+      "      $grpc_stub_fqn$::NewStub(channel);\n");
+  if (HasLongrunningMethod()) {
+    CcPrint(  // clang-format off
       "  auto longrunning_grpc_stub =\n"
       "      google::longrunning::Operations::NewStub(channel);\n"
       "\n"
       "  std::shared_ptr<$stub_class_name$> stub =\n"
       "      std::make_shared<Default$stub_class_name$>(\n"
       "          std::move(service_grpc_stub), "
-      "std::move(longrunning_grpc_stub));\n"
+      "std::move(longrunning_grpc_stub));\n");
+    // clang-format on
+  } else {
+    CcPrint(  // clang-format off
+      "  std::shared_ptr<$stub_class_name$> stub =\n"
+      "      std::make_shared<Default$stub_class_name$>(\n"
+      "          std::move(service_grpc_stub));\n");
+    // clang-format on
+  }
+  CcPrint(  // clang-format off
       "\n"
       "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
       "\n"

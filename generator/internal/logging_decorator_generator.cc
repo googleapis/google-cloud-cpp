@@ -51,7 +51,10 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("stub_header_path"),
                        "google/cloud/tracing_options.h",
                        "google/cloud/version.h"});
-  HeaderSystemIncludes({"string", "memory"});
+  HeaderSystemIncludes(
+      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory", "string"});
+  HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -81,7 +84,8 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
         __FILE__, __LINE__);
   }
 
-  HeaderPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    HeaderPrint(  // clang-format off
     "  /// Poll a long-running operation.\n"
     "  StatusOr<google::longrunning::Operation> GetOperation(\n"
     "      grpc::ClientContext& context,\n"
@@ -94,7 +98,8 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "      google::longrunning::CancelOperationRequest const& request) "
     "override;\n"
     "\n");
-  // clang-format on
+    // clang-format on
+  }
 
   HeaderPrint(  // clang-format off
     " private:\n"
@@ -124,8 +129,7 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("logging_header_path"), "google/cloud/grpc_error_delegate.h",
        "google/cloud/internal/log_wrapper.h", "google/cloud/status_or.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"),
-                    "google/longrunning/operations.grpc.pb.h", "memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -168,7 +172,8 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   }
 
   // long running operation support methods
-  CcPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    CcPrint(  // clang-format off
     "StatusOr<google::longrunning::Operation> $logging_class_name$::GetOperation(\n"
     "    grpc::ClientContext& context,\n"
     "    google::longrunning::GetOperationRequest const& request) {\n"
@@ -190,8 +195,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "      },\n"
     "      context, request, __func__, tracing_options_);\n"
     "}\n"
-            // clang-format on
-  );
+              // clang-format on
+    );
+  }
 
   CcCloseNamespaces();
   return {};
