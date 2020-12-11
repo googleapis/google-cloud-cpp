@@ -92,8 +92,10 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend StatusOr<Bytes> spanner_internal::BytesFromBase64(std::string input);
-  friend std::string spanner_internal::BytesToBase64(Bytes b);
+  friend StatusOr<Bytes> spanner_internal::SPANNER_CLIENT_NS::BytesFromBase64(
+      std::string input);
+  friend std::string spanner_internal::SPANNER_CLIENT_NS::BytesToBase64(
+      Bytes b);
 
   struct Encoder {
     explicit Encoder(std::string& rep) : rep_(rep), len_(0) {}

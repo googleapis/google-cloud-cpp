@@ -118,8 +118,8 @@ class SqlStatement {
   friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
 
  private:
-  friend spanner_internal::SqlStatementProto spanner_internal::ToProto(
-      SqlStatement s);
+  friend spanner_internal::SqlStatementProto
+  spanner_internal::SPANNER_CLIENT_NS::ToProto(SqlStatement s);
 
   std::string statement_;
   ParamType params_;

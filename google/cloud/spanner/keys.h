@@ -209,8 +209,10 @@ class KeySet {
   ///@}
 
  private:
-  friend ::google::spanner::v1::KeySet spanner_internal::ToProto(KeySet);
-  friend KeySet spanner_internal::FromProto(::google::spanner::v1::KeySet);
+  friend ::google::spanner::v1::KeySet
+      spanner_internal::SPANNER_CLIENT_NS::ToProto(KeySet);
+  friend KeySet spanner_internal::SPANNER_CLIENT_NS::FromProto(
+      ::google::spanner::v1::KeySet);
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 

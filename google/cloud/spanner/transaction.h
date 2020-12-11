@@ -162,7 +162,7 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  friend struct spanner_internal::GetTransactionInternals;
+  friend struct spanner_internal::SPANNER_CLIENT_NS::GetTransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);

@@ -133,12 +133,13 @@ class ReadPartition {
 
  private:
   friend class ReadPartitionTester;
-  friend ReadPartition spanner_internal::MakeReadPartition(
+  friend ReadPartition spanner_internal::SPANNER_CLIENT_NS::MakeReadPartition(
       std::string transaction_id, std::string session_id,
       std::string partition_token, std::string table_name,
       spanner::KeySet key_set, std::vector<std::string> column_names,
       spanner::ReadOptions read_options);
-  friend Connection::ReadParams spanner_internal::MakeReadParams(
+  friend Connection::ReadParams
+  spanner_internal::SPANNER_CLIENT_NS::MakeReadParams(
       spanner::ReadPartition const& read_partition);
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);

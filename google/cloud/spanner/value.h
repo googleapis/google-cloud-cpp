@@ -648,10 +648,10 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend Value spanner_internal::FromProto(google::spanner::v1::Type,
-                                           google::protobuf::Value);
+  friend Value spanner_internal::SPANNER_CLIENT_NS::FromProto(
+      google::spanner::v1::Type, google::protobuf::Value);
   friend std::pair<google::spanner::v1::Type, google::protobuf::Value>
-      spanner_internal::ToProto(Value);
+      spanner_internal::SPANNER_CLIENT_NS::ToProto(Value);
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
