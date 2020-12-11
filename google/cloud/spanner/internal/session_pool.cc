@@ -286,7 +286,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // If the pool is at its max size, fail or wait until someone returns a
     // session to the pool then try again.
     if (total_sessions_ >= max_pool_size_) {
-      if (options_.action_on_exhaustion() == spanner::ActionOnExhaustion::kFail) {
+      if (options_.action_on_exhaustion() ==
+          spanner::ActionOnExhaustion::kFail) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
       Wait(lk, [this] {

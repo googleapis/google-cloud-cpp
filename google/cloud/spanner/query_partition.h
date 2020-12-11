@@ -128,7 +128,8 @@ class QueryPartition {
   friend class QueryPartitionTester;
   friend QueryPartition spanner_internal::MakeQueryPartition(
       std::string const& transaction_id, std::string const& session_id,
-      std::string const& partition_token, spanner::SqlStatement const& sql_statement);
+      std::string const& partition_token,
+      spanner::SqlStatement const& sql_statement);
   friend Connection::SqlParams spanner_internal::MakeSqlParams(
       spanner::QueryPartition const& query_partition);
   friend StatusOr<std::string> SerializeQueryPartition(

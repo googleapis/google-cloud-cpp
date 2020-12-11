@@ -70,8 +70,8 @@ class Client {
   }
 
   // User-visible read operation.
-  ResultSet Read(spanner::Transaction txn, std::string const& table, KeySet const& keys,
-                 std::vector<std::string> const& columns) {
+  ResultSet Read(spanner::Transaction txn, std::string const& table,
+                 KeySet const& keys, std::vector<std::string> const& columns) {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
                     StatusOr<TransactionSelector>& selector,
@@ -133,7 +133,8 @@ ResultSet Client::Read(SessionHolder& session,
     if (selector->begin().has_read_only() &&
         selector->begin().read_only().has_read_timestamp()) {
       auto const& proto = selector->begin().read_only().read_timestamp();
-      if (spanner_internal::TimestampFromProto(proto).value() == read_timestamp_ &&
+      if (spanner_internal::TimestampFromProto(proto).value() ==
+              read_timestamp_ &&
           seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
@@ -195,7 +196,8 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
                       std::string const& session_id,
                       std::string const& txn_id) {
   auto read_timestamp =
-      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(read_time)).value();
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(read_time))
+          .value();
   client->Reset(read_timestamp, session_id, txn_id);
 
   spanner::Transaction::ReadOnlyOptions opts(read_timestamp);

@@ -73,7 +73,8 @@ using ExecutionPlan = ::google::spanner::v1::QueryPlan;
 class RowStream {
  public:
   RowStream() = default;
-  explicit RowStream(std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit RowStream(
+      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
@@ -115,7 +116,8 @@ class RowStream {
 class DmlResult {
  public:
   DmlResult() = default;
-  explicit DmlResult(std::unique_ptr<spanner_internal::ResultSourceInterface> source)
+  explicit DmlResult(
+      std::unique_ptr<spanner_internal::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.

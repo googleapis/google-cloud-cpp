@@ -36,7 +36,8 @@ TEST(RetryPolicyTest, PermanentFailure) {
 }
 
 TEST(TransactionRerunPolicyTest, PermanentFailure) {
-  EXPECT_FALSE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(Status()));
+  EXPECT_FALSE(
+      spanner_internal::SafeTransactionRerun::IsPermanentFailure(Status()));
   EXPECT_FALSE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kAborted, "nothing done")));
   EXPECT_TRUE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(

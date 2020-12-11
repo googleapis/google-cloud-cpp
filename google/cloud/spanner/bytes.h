@@ -29,7 +29,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 class Bytes;  // defined below
 }  // namespace SPANNER_CLIENT_NS
-} // namespace spanner
+}  // namespace spanner
 // Internal forward declarations to befriend.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {

@@ -80,7 +80,8 @@ std::shared_ptr<SessionPool> MakeSessionPool(
     std::shared_ptr<SteadyClock> clock = std::make_shared<SteadyClock>()) {
   return MakeSessionPool(
       std::move(db), std::move(stubs), std::move(options), std::move(cq),
-      absl::make_unique<spanner::LimitedTimeRetryPolicy>(std::chrono::minutes(10)),
+      absl::make_unique<spanner::LimitedTimeRetryPolicy>(
+          std::chrono::minutes(10)),
       absl::make_unique<spanner::ExponentialBackoffPolicy>(
           std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0),
       std::move(clock));

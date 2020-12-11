@@ -53,11 +53,12 @@ std::unique_ptr<PollingPolicy> DefaultInstanceAdminPollingPolicy() {
 
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
-  InstanceAdminConnectionImpl(std::shared_ptr<spanner_internal::InstanceAdminStub> stub,
-                              ConnectionOptions const& options,
-                              std::unique_ptr<RetryPolicy> retry_policy,
-                              std::unique_ptr<BackoffPolicy> backoff_policy,
-                              std::unique_ptr<PollingPolicy> polling_policy)
+  InstanceAdminConnectionImpl(
+      std::shared_ptr<spanner_internal::InstanceAdminStub> stub,
+      ConnectionOptions const& options,
+      std::unique_ptr<RetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
@@ -340,13 +341,14 @@ inline namespace SPANNER_CLIENT_NS {
 std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<InstanceAdminStub> base_stub,
     spanner::ConnectionOptions const& options) {
-  return std::make_shared<spanner::InstanceAdminConnectionImpl>(std::move(base_stub),
-                                                       options);
+  return std::make_shared<spanner::InstanceAdminConnectionImpl>(
+      std::move(base_stub), options);
 }
 
 std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<spanner_internal::InstanceAdminStub> base_stub,
-    spanner::ConnectionOptions const& options, std::unique_ptr<spanner::RetryPolicy> retry_policy,
+    spanner::ConnectionOptions const& options,
+    std::unique_ptr<spanner::RetryPolicy> retry_policy,
     std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
     std::unique_ptr<spanner::PollingPolicy> polling_policy) {
   return std::make_shared<spanner::InstanceAdminConnectionImpl>(

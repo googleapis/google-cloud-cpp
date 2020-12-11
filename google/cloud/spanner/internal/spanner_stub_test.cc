@@ -30,8 +30,9 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                                       spanner::ConnectionOptions(), /*channel_id=*/0);
+  auto stub =
+      CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                               spanner::ConnectionOptions(), /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
 

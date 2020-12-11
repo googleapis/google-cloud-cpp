@@ -135,8 +135,8 @@ class ReadPartition {
   friend class ReadPartitionTester;
   friend ReadPartition spanner_internal::MakeReadPartition(
       std::string transaction_id, std::string session_id,
-      std::string partition_token, std::string table_name, spanner::KeySet key_set,
-      std::vector<std::string> column_names,
+      std::string partition_token, std::string table_name,
+      spanner::KeySet key_set, std::vector<std::string> column_names,
       spanner::ReadOptions read_options);
   friend Connection::ReadParams spanner_internal::MakeReadParams(
       spanner::ReadPartition const& read_partition);

@@ -99,7 +99,8 @@ TEST(Transaction, Visit) {
 }
 
 TEST(Transaction, SessionAffinity) {
-  auto a_session = spanner_internal::MakeDissociatedSessionHolder("SessionAffinity");
+  auto a_session =
+      spanner_internal::MakeDissociatedSessionHolder("SessionAffinity");
   Transaction a = MakeReadWriteTransaction();
   spanner_internal::Visit(
       a, [&a_session](spanner_internal::SessionHolder& session,

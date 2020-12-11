@@ -57,9 +57,9 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
 
-  ReadPartitionTester actual_partition(
-      spanner_internal::MakeReadPartition(transaction_id, session_id, partition_token,
-                                  table_name, KeySet::All(), column_names));
+  ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
+      transaction_id, session_id, partition_token, table_name, KeySet::All(),
+      column_names));
 
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());

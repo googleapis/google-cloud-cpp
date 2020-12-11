@@ -702,7 +702,8 @@ TEST(Value, ProtoConversionTimestamp) {
       auto const p = spanner_internal::ToProto(v);
       EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
       EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, p.first.code());
-      EXPECT_EQ(spanner_internal::TimestampToRFC3339(ts), p.second.string_value());
+      EXPECT_EQ(spanner_internal::TimestampToRFC3339(ts),
+                p.second.string_value());
     }
   }
 }

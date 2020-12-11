@@ -283,9 +283,9 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 
 }  // namespace
 
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(spanner::Database const& db,
-                                                      spanner::ConnectionOptions options,
-                                                      int channel_id) {
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
+    spanner::Database const& db, spanner::ConnectionOptions options,
+    int channel_id) {
   options = EmulatorOverrides(std::move(options));
 
   grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
