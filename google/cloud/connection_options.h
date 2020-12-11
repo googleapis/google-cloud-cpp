@@ -200,7 +200,13 @@ template <typename ConnectionTraits>
 class ConnectionOptions : private internal::ConnectionOptionsImpl {
  public:
   /// The default options, using `grpc::GoogleDefaultCredentials()`.
-  ConnectionOptions() : ConnectionOptionsImpl() {}
+  ConnectionOptions()
+      : ConnectionOptionsImpl(grpc::GoogleDefaultCredentials(),
+                              ConnectionTraits::default_endpoint(),
+                              ConnectionTraits::default_num_channels(),
+                              internal::DefaultTracingComponents(),
+                              internal::DefaultTracingOptions(),
+                              ConnectionTraits::user_agent_prefix()) {}
 
   /// The default options, using an explicit credentials object.
   explicit ConnectionOptions(

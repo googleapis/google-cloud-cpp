@@ -37,6 +37,13 @@ struct TestTraits {
 
 using TestConnectionOptions = ConnectionOptions<TestTraits>;
 
+TEST(ConnectionOptionsTest, DefaultConstructor) {
+  TestConnectionOptions options;
+  EXPECT_EQ(TestTraits::default_endpoint(), options.endpoint());
+  EXPECT_EQ(TestTraits::user_agent_prefix(), options.user_agent_prefix());
+  EXPECT_EQ(TestTraits::default_num_channels(), options.num_channels());
+}
+
 TEST(ConnectionOptionsTest, Credentials) {
   // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
   // insecure credentials to initialize the options in any unit test.
