@@ -30,9 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -488,8 +487,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   return Status();
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

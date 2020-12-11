@@ -22,9 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /**
  * Implements the logging Decorator for InstanceAdminStub.
@@ -104,9 +103,8 @@ class InstanceAdminLogging : public InstanceAdminStub {
   TracingOptions tracing_options_;
 };
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

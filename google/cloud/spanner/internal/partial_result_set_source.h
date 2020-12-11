@@ -30,9 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
@@ -73,9 +72,8 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   bool finished_ = false;
 };
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -19,9 +19,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -169,8 +168,7 @@ void MetadataSpannerStub::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("google-cloud-resource-prefix", resource_prefix_header_);
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

@@ -41,9 +41,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 struct SessionPoolFriendForTest;
 
 /**
@@ -206,9 +205,8 @@ std::shared_ptr<SessionPool> MakeSessionPool(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::shared_ptr<Session::Clock> clock = std::make_shared<Session::Clock>());
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

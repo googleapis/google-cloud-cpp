@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -310,8 +309,7 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
   return stub;
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

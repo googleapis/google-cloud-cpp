@@ -26,9 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /// Create a new PartialResultSetReader given a resume token value.
 using PartialResultSetReaderFactory =
@@ -65,9 +64,8 @@ class PartialResultSetResume : public PartialResultSetReader {
   absl::optional<Status> last_status_;
 };
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

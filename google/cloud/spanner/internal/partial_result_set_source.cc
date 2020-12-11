@@ -18,9 +18,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -180,8 +179,7 @@ Status PartialResultSetSource::ReadFromStream() {
   return {};  // OK
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

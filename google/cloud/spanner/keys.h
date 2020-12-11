@@ -24,6 +24,20 @@
 
 namespace google {
 namespace cloud {
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
+class KeySet;
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+::google::spanner::v1::KeySet ToProto(spanner::KeySet);
+spanner::KeySet FromProto(::google::spanner::v1::KeySet);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
@@ -131,12 +145,6 @@ template <typename... Ts>
 KeyBound MakeKeyBoundOpen(Ts&&... ts) {
   return KeyBound(MakeKey(std::forward<Ts>(ts)...), KeyBound::Bound::kOpen);
 }
-
-class KeySet;
-namespace internal {
-::google::spanner::v1::KeySet ToProto(KeySet);
-KeySet FromProto(::google::spanner::v1::KeySet);
-}  // namespace internal
 
 /**
  * The `KeySet` class is a regular type that represents a collection of `Key`s.

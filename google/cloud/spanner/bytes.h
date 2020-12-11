@@ -27,14 +27,19 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 class Bytes;  // defined below
-
+}  // namespace SPANNER_CLIENT_NS
+} // namespace spanner
 // Internal forward declarations to befriend.
-namespace internal {
-StatusOr<Bytes> BytesFromBase64(std::string input);
-std::string BytesToBase64(Bytes b);
-}  // namespace internal
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+StatusOr<spanner::Bytes> BytesFromBase64(std::string input);
+std::string BytesToBase64(spanner::Bytes b);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A representation of the Spanner BYTES type: variable-length binary data.

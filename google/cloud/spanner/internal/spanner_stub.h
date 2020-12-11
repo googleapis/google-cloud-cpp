@@ -28,9 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /**
  * SpannerStub is a thin stub layer over the Cloud Spanner API to avoid
@@ -127,9 +126,8 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(Database const& db,
                                                       ConnectionOptions options,
                                                       int channel_id);
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -229,22 +229,24 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-namespace internal {
-
-std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const& options);
-
-std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy);
-
-}  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+namespace SPANNER_CLIENT_NS {
+std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
+    std::shared_ptr<InstanceAdminStub> base_stub,
+    spanner::ConnectionOptions const& options);
+
+std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
+    std::shared_ptr<InstanceAdminStub> base_stub,
+    spanner::ConnectionOptions const& options,
+    std::unique_ptr<spanner::RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google
 
