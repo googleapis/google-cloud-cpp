@@ -25,22 +25,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class ReadPartition;
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-// Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-spanner::ReadPartition MakeReadPartition(
-    std::string transaction_id, std::string session_id,
-    std::string partition_token, std::string table_name,
-    spanner::KeySet key_set, std::vector<std::string> column_names,
-    spanner::ReadOptions read_options = {});
-spanner::Connection::ReadParams MakeReadParams(
-    spanner::ReadPartition const& read_partition);
+struct ReadPartitionInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -133,14 +120,7 @@ class ReadPartition {
 
  private:
   friend class ReadPartitionTester;
-  friend ReadPartition spanner_internal::SPANNER_CLIENT_NS::MakeReadPartition(
-      std::string transaction_id, std::string session_id,
-      std::string partition_token, std::string table_name,
-      spanner::KeySet key_set, std::vector<std::string> column_names,
-      spanner::ReadOptions read_options);
-  friend Connection::ReadParams
-  spanner_internal::SPANNER_CLIENT_NS::MakeReadParams(
-      spanner::ReadPartition const& read_partition);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::ReadPartitionInternals;
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);
   friend StatusOr<ReadPartition> DeserializeReadPartition(
@@ -165,6 +145,53 @@ class ReadPartition {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+// Internal implementation details that callers should not use.
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct ReadPartitionInternals {
+  static spanner::ReadPartition MakeReadPartition(
+      std::string transaction_id, std::string session_id,
+      std::string partition_token, std::string table_name,
+      spanner::KeySet key_set, std::vector<std::string> column_names,
+      spanner::ReadOptions read_options) {
+    return spanner::ReadPartition(
+        std::move(transaction_id), std::move(session_id),
+        std::move(partition_token), std::move(table_name), std::move(key_set),
+        std::move(column_names), std::move(read_options));
+  }
+
+  static spanner::Connection::ReadParams MakeReadParams(
+      spanner::ReadPartition const& read_partition) {
+    return spanner::Connection::ReadParams{
+        MakeTransactionFromIds(read_partition.SessionId(),
+                               read_partition.TransactionId()),
+        read_partition.TableName(),
+        FromProto(read_partition.KeySet()),
+        read_partition.ColumnNames(),
+        read_partition.ReadOptions(),
+        read_partition.PartitionToken()};
+  }
+};
+
+inline spanner::ReadPartition MakeReadPartition(
+    std::string transaction_id, std::string session_id,
+    std::string partition_token, std::string table_name,
+    spanner::KeySet key_set, std::vector<std::string> column_names,
+    spanner::ReadOptions read_options = {}) {
+  return ReadPartitionInternals::MakeReadPartition(
+      std::move(transaction_id), std::move(session_id),
+      std::move(partition_token), std::move(table_name), std::move(key_set),
+      std::move(column_names), std::move(read_options));
+}
+
+inline spanner::Connection::ReadParams MakeReadParams(
+    spanner::ReadPartition const& read_partition) {
+  return ReadPartitionInternals::MakeReadParams(read_partition);
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

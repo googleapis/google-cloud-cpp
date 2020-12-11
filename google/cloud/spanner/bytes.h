@@ -25,16 +25,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class Bytes;  // defined below
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-// Internal forward declarations to befriend.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-StatusOr<spanner::Bytes> BytesFromBase64(std::string input);
-std::string BytesToBase64(spanner::Bytes b);
+struct BytesInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -92,10 +85,7 @@ class Bytes {
   friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
-  friend StatusOr<Bytes> spanner_internal::SPANNER_CLIENT_NS::BytesFromBase64(
-      std::string input);
-  friend std::string spanner_internal::SPANNER_CLIENT_NS::BytesToBase64(
-      Bytes b);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::BytesInternals;
 
   struct Encoder {
     explicit Encoder(std::string& rep) : rep_(rep), len_(0) {}
@@ -163,6 +153,14 @@ class Bytes {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+StatusOr<spanner::Bytes> BytesFromBase64(std::string input);
+std::string BytesToBase64(spanner::Bytes b);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google
 

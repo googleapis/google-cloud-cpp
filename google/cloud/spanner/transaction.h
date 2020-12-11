@@ -25,16 +25,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class Transaction;  // defined below
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-// Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-struct GetTransactionInternals;
+struct TransactionInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -162,7 +155,7 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  friend struct spanner_internal::SPANNER_CLIENT_NS::GetTransactionInternals;
+  friend struct spanner_internal::SPANNER_CLIENT_NS::TransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
@@ -209,7 +202,7 @@ inline Transaction MakeReadWriteTransaction(
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-struct GetTransactionInternals {
+struct TransactionInternals {
   template <typename T>
   static spanner::Transaction MakeSingleUseTransaction(T&& opts) {
     // Requires that `opts` is implicitly convertible to SingleUseOptions.
@@ -233,7 +226,7 @@ struct GetTransactionInternals {
 
 template <typename T>
 spanner::Transaction MakeSingleUseTransaction(T&& opts) {
-  return GetTransactionInternals::MakeSingleUseTransaction(
+  return TransactionInternals::MakeSingleUseTransaction(
       std::forward<T>(opts));
 }
 
@@ -243,13 +236,13 @@ template <typename Functor>
 // return. Therefore, ...
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
-  return GetTransactionInternals::Visit(std::move(txn),
+  return TransactionInternals::Visit(std::move(txn),
                                         std::forward<Functor>(f));
 }
 
 inline spanner::Transaction MakeTransactionFromIds(std::string session_id,
                                                    std::string transaction_id) {
-  return GetTransactionInternals::MakeTransactionFromIds(
+  return TransactionInternals::MakeTransactionFromIds(
       std::move(session_id), std::move(transaction_id));
 }
 

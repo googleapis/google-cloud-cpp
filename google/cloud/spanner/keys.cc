@@ -19,23 +19,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-
-::google::spanner::v1::KeySet ToProto(spanner::KeySet ks) {
-  return std::move(ks.proto_);
-}
-
-spanner::KeySet FromProto(::google::spanner::v1::KeySet proto) {
-  return spanner::KeySet(std::move(proto));
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
-
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 namespace {
 // Appends the values in the given `key` to the `lv` proto.
 void AppendKey(google::protobuf::ListValue& lv, Key&& key) {

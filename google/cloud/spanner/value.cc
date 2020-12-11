@@ -503,22 +503,5 @@ StatusOr<absl::CivilDay> Value::GetValue(absl::CivilDay,
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-
-spanner::Value FromProto(google::spanner::v1::Type t,
-                         google::protobuf::Value v) {
-  return spanner::Value(std::move(t), std::move(v));
-}
-
-std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
-    spanner::Value v) {
-  return std::make_pair(std::move(v.type_), std::move(v.value_));
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
-
 }  // namespace cloud
 }  // namespace google

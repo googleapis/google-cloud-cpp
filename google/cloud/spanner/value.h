@@ -37,19 +37,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class Value;  // Defined later in this file.
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-// Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-spanner::Value FromProto(google::spanner::v1::Type t,
-                         google::protobuf::Value v);
-std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
-    spanner::Value v);
+struct ValueInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -648,10 +638,7 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend Value spanner_internal::SPANNER_CLIENT_NS::FromProto(
-      google::spanner::v1::Type, google::protobuf::Value);
-  friend std::pair<google::spanner::v1::Type, google::protobuf::Value>
-      spanner_internal::SPANNER_CLIENT_NS::ToProto(Value);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::ValueInternals;
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
@@ -671,6 +658,34 @@ Value MakeNullValue() {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+struct ValueInternals {
+  static spanner::Value FromProto(google::spanner::v1::Type t,
+                                  google::protobuf::Value v) {
+    return spanner::Value(std::move(t), std::move(v));
+  }
+
+  static std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
+      spanner::Value v) {
+    return std::make_pair(std::move(v.type_), std::move(v.value_));
+  }
+};
+
+inline spanner::Value FromProto(google::spanner::v1::Type t,
+                                google::protobuf::Value v) {
+  return ValueInternals::FromProto(std::move(t), std::move(v));
+}
+
+inline std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
+    spanner::Value v) {
+  return ValueInternals::ToProto(std::move(v));
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

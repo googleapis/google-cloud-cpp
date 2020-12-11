@@ -89,26 +89,5 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-spanner::QueryPartition MakeQueryPartition(
-    std::string const& transaction_id, std::string const& session_id,
-    std::string const& partition_token,
-    spanner::SqlStatement const& sql_statement) {
-  return spanner::QueryPartition(transaction_id, session_id, partition_token,
-                                 sql_statement);
-}
-
-spanner::Connection::SqlParams MakeSqlParams(
-    spanner::QueryPartition const& query_partition) {
-  return {MakeTransactionFromIds(query_partition.session_id(),
-                                 query_partition.transaction_id()),
-          query_partition.sql_statement(), spanner::QueryOptions{},
-          query_partition.partition_token()};
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

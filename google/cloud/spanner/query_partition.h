@@ -24,22 +24,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class QueryPartition;  // Defined below
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-// Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-// Internal implementation details that callers should not use.
-spanner::QueryPartition MakeQueryPartition(
-    std::string const& transaction_id, std::string const& session_id,
-    std::string const& partition_token,
-    spanner::SqlStatement const& sql_statement);
-spanner::Connection::SqlParams MakeSqlParams(
-    spanner::QueryPartition const& query_partition);
+struct QueryPartitionInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -126,13 +113,7 @@ class QueryPartition {
 
  private:
   friend class QueryPartitionTester;
-  friend QueryPartition spanner_internal::SPANNER_CLIENT_NS::MakeQueryPartition(
-      std::string const& transaction_id, std::string const& session_id,
-      std::string const& partition_token,
-      spanner::SqlStatement const& sql_statement);
-  friend Connection::SqlParams
-  spanner_internal::SPANNER_CLIENT_NS::MakeSqlParams(
-      spanner::QueryPartition const& query_partition);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::QueryPartitionInternals;
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);
   friend StatusOr<QueryPartition> DeserializeQueryPartition(
@@ -154,6 +135,40 @@ class QueryPartition {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct QueryPartitionInternals {
+  static spanner::QueryPartition MakeQueryPartition(
+      std::string const& transaction_id, std::string const& session_id,
+      std::string const& partition_token,
+      spanner::SqlStatement const& sql_statement) {
+    return spanner::QueryPartition(transaction_id, session_id, partition_token,
+                                   sql_statement);
+  }
+
+  static spanner::Connection::SqlParams MakeSqlParams(
+      spanner::QueryPartition const& query_partition) {
+    return {MakeTransactionFromIds(query_partition.session_id(),
+                                   query_partition.transaction_id()),
+            query_partition.sql_statement(), spanner::QueryOptions{},
+            query_partition.partition_token()};
+  }
+};
+
+inline spanner::QueryPartition MakeQueryPartition(
+    std::string const& transaction_id, std::string const& session_id,
+    std::string const& partition_token,
+    spanner::SqlStatement const& sql_statement) {
+  return QueryPartitionInternals::MakeQueryPartition(
+      transaction_id, session_id, partition_token, sql_statement);
+}
+
+inline spanner::Connection::SqlParams MakeSqlParams(
+    spanner::QueryPartition const& query_partition) {
+  return QueryPartitionInternals::MakeSqlParams(query_partition);
+}
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

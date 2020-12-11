@@ -129,7 +129,7 @@ Transaction::~Transaction() = default;
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-spanner::Transaction GetTransactionInternals::MakeTransactionFromIds(
+spanner::Transaction TransactionInternals::MakeTransactionFromIds(
     std::string session_id, std::string transaction_id) {
   return spanner::Transaction(std::move(session_id), std::move(transaction_id));
 }

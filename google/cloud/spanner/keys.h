@@ -24,17 +24,9 @@
 
 namespace google {
 namespace cloud {
-
-namespace spanner {
-inline namespace SPANNER_CLIENT_NS {
-class KeySet;
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-::google::spanner::v1::KeySet ToProto(spanner::KeySet);
-spanner::KeySet FromProto(::google::spanner::v1::KeySet);
+struct KeySetInternals;
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -209,10 +201,7 @@ class KeySet {
   ///@}
 
  private:
-  friend ::google::spanner::v1::KeySet
-      spanner_internal::SPANNER_CLIENT_NS::ToProto(KeySet);
-  friend KeySet spanner_internal::SPANNER_CLIENT_NS::FromProto(
-      ::google::spanner::v1::KeySet);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::KeySetInternals;
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 
@@ -221,6 +210,29 @@ class KeySet {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct KeySetInternals {
+  static ::google::spanner::v1::KeySet ToProto(spanner::KeySet&& ks) {
+    return std::move(ks.proto_);
+  }
+
+  static spanner::KeySet FromProto(::google::spanner::v1::KeySet&& proto) {
+    return spanner::KeySet(std::move(proto));
+  }
+};
+
+inline ::google::spanner::v1::KeySet ToProto(spanner::KeySet ks) {
+  return KeySetInternals::ToProto(std::move(ks));
+}
+
+inline spanner::KeySet FromProto(::google::spanner::v1::KeySet ks) {
+  return KeySetInternals::FromProto(std::move(ks));
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

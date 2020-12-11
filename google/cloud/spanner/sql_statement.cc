@@ -19,14 +19,14 @@ namespace google {
 namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-SqlStatementProto ToProto(spanner::SqlStatement s) {
-  SqlStatementProto statement_proto;
+SqlStatementProto SqlStatementInternals::ToProto(spanner::SqlStatement s) {
+  ::google::spanner::v1::ExecuteBatchDmlRequest::Statement statement_proto;
   statement_proto.set_sql(std::move(s.statement_));
   if (!s.params_.empty()) {
     auto& values = *statement_proto.mutable_params()->mutable_fields();
     auto& types = *statement_proto.mutable_param_types();
     for (auto& param : s.params_) {
-      auto type_and_value = ToProto(std::move(param.second));
+      auto type_and_value = spanner_internal::ToProto(std::move(param.second));
       values[param.first] = std::move(type_and_value.second);
       types[param.first] = std::move(type_and_value.first);
     }
