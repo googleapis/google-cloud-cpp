@@ -879,7 +879,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
 
   SqlParams sql_params(
       {internal::MakeTransactionFromIds(session->session_name(), begin->id()),
-       std::move(params.statement), /*query_options=*/{},
+       std::move(params.statement), std::move(params.query_options),
        /*partition_token=*/{}});
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
       session, s, seqno, std::move(sql_params),
