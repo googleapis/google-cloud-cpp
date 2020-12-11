@@ -69,7 +69,7 @@ TEST(EmulatorOverrides, EnvironmentWorks) {
   // grpc::InsecureChannelCredentials().
   ScopedEnvironment env("SPANNER_EMULATOR_HOST", "localhost:9010");
   ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
-  options = internal::EmulatorOverrides(options);
+  options = spanner_internal::EmulatorOverrides(options);
   EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
   EXPECT_EQ("localhost:9010", options.endpoint());
 }

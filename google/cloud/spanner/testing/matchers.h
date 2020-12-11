@@ -32,9 +32,9 @@ inline namespace SPANNER_CLIENT_NS {
 MATCHER_P2(
     HasSessionAndTransactionId, session_id, transaction_id,
     "Verifies a Transaction has the expected Session and Transaction IDs") {
-  return google::cloud::spanner::internal::Visit(
+  return google::cloud::spanner_internal::Visit(
       arg,
-      [&](google::cloud::spanner::internal::SessionHolder& session,
+      [&](google::cloud::spanner_internal::SessionHolder& session,
           StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         bool result = true;
         if (!session) {

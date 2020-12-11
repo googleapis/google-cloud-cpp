@@ -50,7 +50,7 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
-  return internal::MakeInstanceAdminConnection(
+  return spanner_internal::MakeInstanceAdminConnection(
       std::move(mock), ConnectionOptions{}, retry.clone(), backoff.clone(),
       polling.clone());
 }

@@ -30,8 +30,8 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub = CreateDefaultSpannerStub(Database("foo", "bar", "baz"),
-                                       ConnectionOptions(), /*channel_id=*/0);
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       spanner::ConnectionOptions(), /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
 
@@ -41,8 +41,8 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
   auto id = google::cloud::LogSink::Instance().AddBackend(backend);
 
   auto stub = CreateDefaultSpannerStub(
-      Database("foo", "bar", "baz"),
-      ConnectionOptions(grpc::InsecureChannelCredentials())
+      spanner::Database("foo", "bar", "baz"),
+      spanner::ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1")
           .enable_tracing("rpc"),
       /*channel_id=*/0);

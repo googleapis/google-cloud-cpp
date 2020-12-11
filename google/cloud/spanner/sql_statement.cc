@@ -34,7 +34,7 @@ SqlStatementProto ToProto(spanner::SqlStatement s) {
   return statement_proto;
 }
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace internal
+}  // namespace spanner_internal
 
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {

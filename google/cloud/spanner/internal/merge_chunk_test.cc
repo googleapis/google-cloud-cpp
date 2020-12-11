@@ -37,9 +37,9 @@ using ::testing::Not;
 // google::protobuf::Value protos from convenient user-supplied arguments.
 //
 
-google::protobuf::Value MakeProtoValue(Value v) {
+google::protobuf::Value MakeProtoValue(spanner::Value v) {
   google::protobuf::Value value;
-  std::tie(std::ignore, value) = internal::ToProto(std::move(v));
+  std::tie(std::ignore, value) = spanner_internal::ToProto(std::move(v));
   return value;
 }
 
@@ -108,6 +108,7 @@ TEST(MergeChunk, ExampleListOfStrings) {
 //
 // ["a", ["b", "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"]
 TEST(MergeChunk, ExampleListsOfListOfString) {
+  using spanner::Value;
   auto a = MakeProtoValue(std::vector<Value>{
       Value("a"), Value(std::vector<std::string>{"b", "c"})});
   auto b = MakeProtoValue(

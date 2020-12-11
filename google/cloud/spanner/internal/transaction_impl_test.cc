@@ -53,7 +53,7 @@ class Client {
 
   // Set the `read_timestamp` we expect to see, and the `session_id` and
   // `txn_id` we want to use during the upcoming `Read()` calls.
-  void Reset(Timestamp read_timestamp, std::string session_id,
+  void Reset(spanner::Timestamp read_timestamp, std::string session_id,
              std::string txn_id) {
     read_timestamp_ = read_timestamp;
     session_id_ = std::move(session_id);
@@ -70,7 +70,7 @@ class Client {
   }
 
   // User-visible read operation.
-  ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
+  ResultSet Read(spanner::Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
@@ -81,7 +81,7 @@ class Client {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      return internal::Visit(std::move(txn), std::move(read));
+      return spanner_internal::Visit(std::move(txn), std::move(read));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (char const*) {
       return {};
@@ -96,7 +96,7 @@ class Client {
                  std::vector<std::string> const& columns);
 
   Mode mode_;
-  Timestamp read_timestamp_;
+  spanner::Timestamp read_timestamp_;
   std::string session_id_;
   std::string txn_id_;
   std::mutex mu_;
@@ -133,7 +133,7 @@ ResultSet Client::Read(SessionHolder& session,
     if (selector->begin().has_read_only() &&
         selector->begin().read_only().has_read_timestamp()) {
       auto const& proto = selector->begin().read_only().read_timestamp();
-      if (internal::TimestampFromProto(proto).value() == read_timestamp_ &&
+      if (spanner_internal::TimestampFromProto(proto).value() == read_timestamp_ &&
           seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
@@ -152,7 +152,7 @@ ResultSet Client::Read(SessionHolder& session,
     switch (mode_) {
       case Mode::kReadSucceeds:
         // `begin` -> `id`, calls now parallelized
-        session = internal::MakeDissociatedSessionHolder(session_id_);
+        session = spanner_internal::MakeDissociatedSessionHolder(session_id_);
         selector->set_id(txn_id_);
         break;
       case Mode::kReadFailsAndTxnRemainsBegin:
@@ -194,12 +194,12 @@ ResultSet Client::Read(SessionHolder& session,
 int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
                       std::string const& session_id,
                       std::string const& txn_id) {
-  Timestamp read_timestamp =
-      MakeTimestamp(std::chrono::system_clock::from_time_t(read_time)).value();
+  auto read_timestamp =
+      spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(read_time)).value();
   client->Reset(read_timestamp, session_id, txn_id);
 
-  Transaction::ReadOnlyOptions opts(read_timestamp);
-  Transaction txn(opts);
+  spanner::Transaction::ReadOnlyOptions opts(read_timestamp);
+  spanner::Transaction txn(opts);
 
   // Unused Read() parameters.
   std::string const table{};

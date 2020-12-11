@@ -50,9 +50,10 @@ using ConnectionOptions =
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-spanner::ConnectionOptions EmulatorOverrides(spanner::ConnectionOptions options);
+spanner::ConnectionOptions EmulatorOverrides(
+    spanner::ConnectionOptions options);
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace internal
+}  // namespace spanner_internal
 
 }  // namespace cloud
 }  // namespace google

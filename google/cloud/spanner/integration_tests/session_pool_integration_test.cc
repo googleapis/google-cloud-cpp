@@ -19,9 +19,9 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+
 struct SessionPoolFriendForTest {
   static future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(std::shared_ptr<SessionPool> const& session_pool,
@@ -45,6 +45,7 @@ struct SessionPoolFriendForTest {
     return session_pool->AsyncRefreshSession(cq, stub, std::move(session_name));
   }
 };
+
 namespace {
 
 class SessionPoolIntegrationTest
@@ -54,21 +55,22 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto const db = GetDatabase();
-  auto stub =
-      CreateDefaultSpannerStub(db, ConnectionOptions{}, /*channel_id=*/0);
-  auto session_pool =
-      MakeSessionPool(db, {stub}, SessionPoolOptions{}, cq,
-                      LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone(),
-                      ExponentialBackoffPolicy(std::chrono::seconds(10),
-                                               std::chrono::minutes(1), 2.0)
-                          .clone());
+  auto stub = CreateDefaultSpannerStub(db, spanner::ConnectionOptions{},
+                                       /*channel_id=*/0);
+  auto session_pool = MakeSessionPool(
+      db, {stub}, spanner::SessionPoolOptions{}, cq,
+      spanner::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone(),
+      spanner::ExponentialBackoffPolicy(std::chrono::seconds(10),
+                                        std::chrono::minutes(1), 2.0)
+          .clone());
 
   // Make an asynchronous request, but immediately block until the response
   // arrives
   auto constexpr kNumTestSession = 4;
-  auto create_response = SessionPoolFriendForTest::AsyncBatchCreateSessions(
-                             session_pool, cq, stub, {}, kNumTestSession)
-                             .get();
+  auto create_response =
+      spanner_internal::SessionPoolFriendForTest::AsyncBatchCreateSessions(
+          session_pool, cq, stub, {}, kNumTestSession)
+          .get();
   ASSERT_STATUS_OK(create_response);
   EXPECT_EQ(kNumTestSession, create_response->session_size());
 
@@ -76,8 +78,8 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   for (auto const& s : create_response->session()) {
     auto const& session_name = s.name();
     async_get.push_back(
-        SessionPoolFriendForTest::AsyncRefreshSession(session_pool, cq, stub,
-                                                      session_name)
+        spanner_internal::SessionPoolFriendForTest::AsyncRefreshSession(
+            session_pool, cq, stub, session_name)
             .then([session_name](
                       future<StatusOr<google::spanner::v1::ResultSet>> f) {
               auto result = f.get();
@@ -110,8 +112,7 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 }
 
 }  // namespace
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

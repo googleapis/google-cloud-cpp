@@ -83,7 +83,7 @@ class MetadataSpannerStubTest : public ::testing::Test {
 
   std::shared_ptr<spanner_testing::MockSpannerStub> mock_;
   std::string expected_api_client_header_;
-  Database db_{"test-project", "test-instance", "test-database"};
+  spanner::Database db_{"test-project", "test-instance", "test-database"};
 };
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {

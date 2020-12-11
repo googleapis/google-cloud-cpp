@@ -16,12 +16,11 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace internal {
-
-google::spanner::v1::PartitionOptions ToProto(PartitionOptions const& po) {
+google::spanner::v1::PartitionOptions ToProto(
+    spanner::PartitionOptions const& po) {
   google::spanner::v1::PartitionOptions proto;
   if (po.max_partitions) proto.set_max_partitions(*po.max_partitions);
   if (po.partition_size_bytes) {
@@ -30,9 +29,7 @@ google::spanner::v1::PartitionOptions ToProto(PartitionOptions const& po) {
   return proto;
 }
 
-}  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

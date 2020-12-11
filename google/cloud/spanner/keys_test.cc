@@ -122,9 +122,9 @@ TEST(KeySetTest, NoKeys) {
   ::google::spanner::v1::KeySet expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString("", &expected));
   KeySet no_keys;
-  ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
+  ::google::spanner::v1::KeySet result = spanner_internal::ToProto(no_keys);
   EXPECT_THAT(result, IsProtoEqual(expected));
-  EXPECT_EQ(internal::FromProto(expected), no_keys);
+  EXPECT_EQ(spanner_internal::FromProto(expected), no_keys);
 }
 
 TEST(KeySetTest, AllKeys) {
@@ -134,9 +134,9 @@ TEST(KeySetTest, AllKeys) {
   ::google::spanner::v1::KeySet expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
   auto all_keys = KeySet::All();
-  ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
+  ::google::spanner::v1::KeySet result = spanner_internal::ToProto(all_keys);
   EXPECT_THAT(result, IsProtoEqual(expected));
-  EXPECT_EQ(internal::FromProto(expected), all_keys);
+  EXPECT_EQ(spanner_internal::FromProto(expected), all_keys);
 }
 
 TEST(KeySetTest, EqualityEmpty) {
@@ -210,7 +210,7 @@ TEST(KeySetTest, RoundTripProtos) {
   };
 
   for (auto const& tc : test_cases) {
-    EXPECT_EQ(tc, internal::FromProto(internal::ToProto(tc)));
+    EXPECT_EQ(tc, spanner_internal::FromProto(spanner_internal::ToProto(tc)));
   }
 }
 

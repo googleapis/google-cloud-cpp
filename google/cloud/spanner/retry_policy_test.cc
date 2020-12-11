@@ -22,30 +22,30 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(RetryPolicyTest, PermanentFailure) {
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(Status()));
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
+  EXPECT_FALSE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(Status()));
+  EXPECT_FALSE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kUnavailable, "try again")));
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
+  EXPECT_FALSE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kResourceExhausted, "slow down please")));
-  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kDeadlineExceeded, "not enough time")));
-  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kAborted, "nothing done")));
-  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "uh oh")));
 }
 
 TEST(TransactionRerunPolicyTest, PermanentFailure) {
-  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(Status()));
-  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_FALSE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(Status()));
+  EXPECT_FALSE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kAborted, "nothing done")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kUnavailable, "try again")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kResourceExhausted, "slow down please")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kDeadlineExceeded, "not enough time")));
-  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+  EXPECT_TRUE(spanner_internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "uh oh")));
 }
 
