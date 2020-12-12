@@ -68,6 +68,7 @@ spanner_client_hdrs = [
     "query_partition.h",
     "read_options.h",
     "read_partition.h",
+    "request_priority.h",
     "results.h",
     "retry_policy.h",
     "row.h",
