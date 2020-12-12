@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/database_admin_connection.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/retry_policy.gcpcxx.pb.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -31,6 +30,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 using ::testing::Mock;
 using ::testing::Return;
 
@@ -147,17 +147,32 @@ public:
 
 std::shared_ptr<golden::DatabaseAdminConnection> CreateTestingConnection(
     std::shared_ptr<golden_internal::DatabaseAdminStub> mock) {
-  golden::LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
+  golden::DatabaseAdminLimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
-  GenericPollingPolicy<golden::LimitedErrorCountRetryPolicy,
+  GenericPollingPolicy<golden::DatabaseAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
   return golden::MakeDatabaseAdminConnection(
       std::move(mock), retry.clone(), backoff.clone(), polling.clone(),
       golden::MakeDefaultDatabaseAdminConnectionIdempotencyPolicy());
+}
+
+TEST(DatabaseAdminConnectionOptionsTest, DefaultEndpoint) {
+  golden::DatabaseAdminConnectionOptions options;
+  EXPECT_EQ("test.googleapis.com", options.endpoint());
+}
+
+TEST(DatabaseAdminConnectionOptionsTest, UserAgentPrefix) {
+  golden::DatabaseAdminConnectionOptions options;
+  EXPECT_THAT(options.user_agent_prefix(), HasSubstr("gcloud-cpp/" + version_string()));
+}
+
+TEST(DatabaseAdminConnectionOptionsTest, DefaultNumChannels) {
+  golden::DatabaseAdminConnectionOptions options;
+  EXPECT_EQ(4, options.num_channels());
 }
 
 /// @test Verify that we can list databases in multiple pages.

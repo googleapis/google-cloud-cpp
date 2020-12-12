@@ -18,7 +18,6 @@
 
 google_cloud_cpp_generator_golden_tests = [
     "golden_client_test.cc",
-    "golden_connection_options_test.cc",
     "golden_connection_test.cc",
     "golden_idempotency_policy_test.cc",
     "golden_logging_decorator_test.cc",

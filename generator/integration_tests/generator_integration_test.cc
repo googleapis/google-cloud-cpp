@@ -140,9 +140,7 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
 
 INSTANTIATE_TEST_SUITE_P(
     Generator, GeneratorIntegrationTest,
-    testing::Values("connection_options.gcpcxx.pb.h",
-                    "connection_options.gcpcxx.pb.cc",
-                    "database_admin_client.gcpcxx.pb.h",
+    testing::Values("database_admin_client.gcpcxx.pb.h",
                     "database_admin_client.gcpcxx.pb.cc",
                     "database_admin_connection.gcpcxx.pb.h",
                     "database_admin_connection.gcpcxx.pb.cc",
@@ -156,8 +154,7 @@ INSTANTIATE_TEST_SUITE_P(
                     "internal/database_admin_stub_factory.gcpcxx.pb.cc",
                     "internal/database_admin_stub.gcpcxx.pb.h",
                     "internal/database_admin_stub.gcpcxx.pb.cc",
-                    "mocks/mock_database_admin_connection.gcpcxx.pb.h",
-                    "retry_policy.gcpcxx.pb.h"),
+                    "mocks/mock_database_admin_connection.gcpcxx.pb.h"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
            info) {
       return absl::StrReplaceAll(std::string(info.param),
