@@ -138,6 +138,10 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 
+    # Enable RPC tracing for integration tests (with default tracing options)
+    "--test_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes"
+    "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc_streams"
+
     # Bigtable
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID}"
