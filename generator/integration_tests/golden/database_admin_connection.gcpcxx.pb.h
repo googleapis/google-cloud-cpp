@@ -18,11 +18,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_DATABASE_ADMIN_CONNECTION_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_DATABASE_ADMIN_CONNECTION_GCPCXX_PB_H
 
-#include "generator/integration_tests/golden/connection_options.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/database_admin_connection_idempotency_policy.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/retry_policy.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/polling_policy.h"
@@ -35,6 +35,25 @@ namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+struct DatabaseAdminConnectionOptionsTraits {
+  static std::string default_endpoint();
+  static std::string user_agent_prefix();
+  static int default_num_channels();
+};
+
+using DatabaseAdminConnectionOptions =
+  google::cloud::ConnectionOptions<DatabaseAdminConnectionOptionsTraits>;
+
+using DatabaseAdminRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
+    golden_internal::DatabaseAdminRetryTraits>;
+
+using DatabaseAdminLimitedTimeRetryPolicy = google::cloud::internal::LimitedTimeRetryPolicy<
+    golden_internal::DatabaseAdminRetryTraits>;
+
+using DatabaseAdminLimitedErrorCountRetryPolicy =
+    google::cloud::internal::LimitedErrorCountRetryPolicy<
+        golden_internal::DatabaseAdminRetryTraits>;
 
 using ListDatabasesRange = google::cloud::internal::PaginationRange<
     ::google::test::admin::database::v1::Database>;
@@ -106,18 +125,18 @@ class DatabaseAdminConnection {
 };
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    DatabaseAdminConnectionOptions const& options = DatabaseAdminConnectionOptions());
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    DatabaseAdminConnectionOptions const& options,
+    std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);

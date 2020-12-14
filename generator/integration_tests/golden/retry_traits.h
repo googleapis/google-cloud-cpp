@@ -23,7 +23,7 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Define the gRPC status code semantics for retrying requests.
-struct RetryTraits {
+struct DatabaseAdminRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kDeadlineExceeded &&

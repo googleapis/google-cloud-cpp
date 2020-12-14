@@ -18,7 +18,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_FACTORY_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_STUB_FACTORY_GCPCXX_PB_H
 
-#include "generator/integration_tests/golden/connection_options.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/database_admin_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -29,7 +29,7 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<DatabaseAdminStub>
-CreateDefaultDatabaseAdminStub(golden::ConnectionOptions const& options);
+CreateDefaultDatabaseAdminStub(golden::DatabaseAdminConnectionOptions const& options);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal

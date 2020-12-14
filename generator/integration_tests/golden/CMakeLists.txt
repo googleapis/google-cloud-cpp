@@ -16,8 +16,6 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
-    connection_options.gcpcxx.pb.cc
-    connection_options.gcpcxx.pb.h
     database_admin_client.gcpcxx.pb.cc
     database_admin_client.gcpcxx.pb.h
     database_admin_connection.gcpcxx.pb.cc
@@ -33,7 +31,6 @@ set(google_cloud_cpp_generator_golden_files
     internal/database_admin_stub_factory.gcpcxx.pb.cc
     internal/database_admin_stub_factory.gcpcxx.pb.h
     mocks/mock_database_admin_connection.gcpcxx.pb.h
-    retry_policy.gcpcxx.pb.h
     retry_traits.h)
 
 # Export the list of golden files to a .bzl file so we do not need to maintain
@@ -44,8 +41,6 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 # Create a library from the where the golden code was copied to.
 add_library(
     google_cloud_cpp_generator_golden_lib # cmake-format: sort
-    connection_options.gcpcxx.pb.cc
-    connection_options.gcpcxx.pb.h
     database_admin_client.gcpcxx.pb.cc
     database_admin_client.gcpcxx.pb.h
     database_admin_connection.gcpcxx.pb.cc
@@ -61,7 +56,6 @@ add_library(
     internal/database_admin_stub_factory.gcpcxx.pb.cc
     internal/database_admin_stub_factory.gcpcxx.pb.h
     mocks/mock_database_admin_connection.gcpcxx.pb.h
-    retry_policy.gcpcxx.pb.h
     retry_traits.h)
 
 target_include_directories(
@@ -91,7 +85,6 @@ function (google_cloud_cpp_generator_define_golden_tests)
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
         golden_client_test.cc
-        golden_connection_options_test.cc
         golden_connection_test.cc
         golden_idempotency_policy_test.cc
         golden_logging_decorator_test.cc

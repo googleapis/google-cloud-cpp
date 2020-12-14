@@ -56,7 +56,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
 }
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
-  golden::ConnectionOptions options;
+  golden::DatabaseAdminConnectionOptions options;
   options.enable_tracing("rpc");
   auto default_stub = CreateDefaultDatabaseAdminStub(options);
   auto const log_lines = ClearLogLines();

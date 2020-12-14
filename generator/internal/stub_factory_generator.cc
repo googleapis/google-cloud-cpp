@@ -43,8 +43,8 @@ Status StubFactoryGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  HeaderLocalIncludes({vars("connection_options_header_path"),
-                       vars("stub_header_path"), "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("connection_header_path"), vars("stub_header_path"),
+                       "google/cloud/version.h"});
   HeaderSystemIncludes({"memory"});
   HeaderPrint("\n");
 
@@ -53,7 +53,7 @@ Status StubFactoryGenerator::GenerateHeader() {
 
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$($product_namespace$::ConnectionOptions const& options);\n\n");
+    "CreateDefault$stub_class_name$($product_namespace$::$connection_options_name$ const& options);\n\n");
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -85,7 +85,7 @@ Status StubFactoryGenerator::GenerateCc() {
   // factory function implementation
   CcPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$($product_namespace$::ConnectionOptions const& options) {\n"
+    "CreateDefault$stub_class_name$($product_namespace$::$connection_options_name$ const& options) {\n"
     "  auto channel =\n"
     "      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),\n"
     "                                options.CreateChannelArguments());\n"
