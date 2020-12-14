@@ -106,6 +106,15 @@ class Publisher {
   Publisher& operator=(Publisher&&) noexcept = default;
   //@}
 
+  //@{
+  friend bool operator==(Publisher const& a, Publisher const& b) {
+    return a.connection_ == b.connection_;
+  }
+  friend bool operator!=(Publisher const& a, Publisher const& b) {
+    return !(a == b);
+  }
+  //@}
+
   /**
    * Publishes a message to this publisher's topic
    *

@@ -3,47 +3,15 @@
   "version": "0.1",
   // language - current active spelling language
   "language": "en",
-  // words - list of words to be always considered correct
-  "words": [
-    "ABSL",
-    "ADCs",
-    "AFAICT",
-    "ASAN",
-    "Bazel",
-    "blegh",
-    "CMEK",
-    "coryan",
-    "CRTP",
-    "CSEK",
-    "DDTHH",
-    "deserializes",
-    "gbps",
-    "gcloud",
-    "GCPCXX",
-    "goog",
-    "grpc",
-    "gtest",
-    "INPROCESS",
-    "i'th",
-    "LCOV",
-    "MSAN",
-    "Nacked",
-    "Nacking",
-    "Nacks",
-    "nlohmann",
-    "noex",
-    "quantile",
-    "quantums",
-    "QUIC",
-    "RDRAND",
-    "recurses",
-    "rerunnable",
-    "symbolizer",
-    "TSAN",
-    "UBLA",
-    "uncommitting",
-    "unsets",
-    "wifi"
+  "dictionaryDefinitions": [
+    {
+      "name": "custom-words",
+      "file": "./custom-words.txt",
+      "description": "Project Words"
+    }
+  ],
+  "dictionaries": [
+    "custom-words"
   ],
   "languageSettings": [
     {

@@ -37,7 +37,7 @@ brew_env=()
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   brew_env+=("HOMEBREW_NO_AUTO_UPDATE=1")
 fi
-env ${brew_env[@]+"${brew_env[@]}"} brew install libressl
+env ${brew_env[@]+"${brew_env[@]}"} brew install openssl
 
 echo "================================================================"
 io::log_yellow "ccache stats"
@@ -46,7 +46,7 @@ ccache --zero-stats
 
 echo "================================================================"
 cd "${PROJECT_ROOT}"
-export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
+export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
 cmake_flags=(
   "-DCMAKE_INSTALL_PREFIX=$HOME/staging"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"

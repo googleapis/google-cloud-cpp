@@ -49,7 +49,8 @@ namespace testing_util {
 Status IsContextMDValid(
     grpc::ClientContext& context, std::string const& method,
     std::string const& api_client_header,
-    absl::optional<std::string> resource_prefix_header = {});
+    absl::optional<std::string> const& resource_name = {},
+    absl::optional<std::string> const& resource_prefix_header = {});
 
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS

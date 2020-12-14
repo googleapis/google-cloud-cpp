@@ -65,6 +65,10 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   }
 }
 
+bool ServiceCodeGenerator::HasLongrunningMethod() const {
+  return generator_internal::HasLongrunningMethod(*service_descriptor_);
+}
+
 VarsDictionary const& ServiceCodeGenerator::vars() const {
   return service_vars_;
 }

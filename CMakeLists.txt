@@ -73,7 +73,7 @@ The Google Cloud C++ client libraries use the native OpenSSL library. In most
 macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
 this dependency, for example:
 
-export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
+export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
 
 You have not set this environment variable. Most likely, this will result in a
 broken build with fairly obscure error messages. If your environment does not
@@ -163,7 +163,7 @@ endforeach ()
 # Enable building the gRPC utilities library if any of its dependents are
 # enabled.
 set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
-foreach (_library bigquery bigtable storage spanner pubsub generator)
+foreach (_library bigquery bigtable spanner pubsub generator)
     if (_library IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
         break()
@@ -172,7 +172,7 @@ endforeach ()
 
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
-    ON "${GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION}" OFF)
+    ON "GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 
 # Building this target results in all protobufs being compiled.

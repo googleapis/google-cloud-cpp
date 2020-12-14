@@ -82,6 +82,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
                        std::vector<MethodPattern> const& patterns,
                        char const* file, int line);
 
+  bool HasLongrunningMethod() const;
+
  private:
   enum class FileType { kHeaderFile, kCcFile };
   static void GenerateLocalIncludes(Printer& p,
