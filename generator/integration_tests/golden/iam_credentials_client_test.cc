@@ -34,8 +34,8 @@ using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
 TEST(IAMCredentialsClientTest, CopyMoveEquality) {
-  auto conn1 = std::make_shared<MockIAMCredentialsConnection>();
-  auto conn2 = std::make_shared<MockIAMCredentialsConnection>();
+  auto conn1 = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
+  auto conn2 = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
 
   IAMCredentialsClient c1(conn1);
   IAMCredentialsClient c2(conn2);
@@ -60,7 +60,7 @@ TEST(IAMCredentialsClientTest, CopyMoveEquality) {
 }
 
 TEST(IAMCredentialsClientTest, GenerateAccessToken) {
-  auto mock = std::make_shared<MockIAMCredentialsConnection>();
+  auto mock = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
   std::vector<std::string> expected_delegates = {"Tom", "Dick", "Harry"};
   std::vector<std::string> expected_scope = {"admin"};
@@ -95,7 +95,7 @@ TEST(IAMCredentialsClientTest, GenerateAccessToken) {
 }
 
 TEST(IAMCredentialsClientTest, GenerateIdToken) {
-  auto mock = std::make_shared<MockIAMCredentialsConnection>();
+  auto mock = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
   std::vector<std::string> expected_delegates = {"Tom", "Dick", "Harry"};
   std::string expected_audience = "Everyone";
