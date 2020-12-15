@@ -50,7 +50,9 @@ Status ClientGenerator::GenerateHeader() {
   HeaderLocalIncludes({vars("connection_header_path"), "google/cloud/future.h",
                        "google/cloud/polling_policy.h",
                        "google/cloud/status_or.h", "google/cloud/version.h"});
-  HeaderSystemIncludes({"google/longrunning/operations.grpc.pb.h", "memory"});
+  HeaderSystemIncludes(
+      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces();
