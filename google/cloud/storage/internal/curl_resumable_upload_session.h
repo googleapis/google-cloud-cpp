@@ -34,7 +34,7 @@ class CurlResumableUploadSession : public ResumableUploadSession {
       CustomHeader custom_header = CustomHeader())
       : client_(std::move(client)),
         session_id_(std::move(session_id)),
-        custom_header_(custom_header) {}
+        custom_header_(std::move(custom_header)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       ConstBufferSequence const& buffers) override;
