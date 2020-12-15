@@ -208,6 +208,10 @@ struct BucketIamConfiguration {
   absl::optional<std::string> public_access_prevention;
 };
 
+inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
+
+inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
+
 //@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
