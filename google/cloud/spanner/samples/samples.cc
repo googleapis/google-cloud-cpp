@@ -2456,6 +2456,7 @@ void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
 }
 //! [END spanner_field_access_on_struct_parameters]
 
+//! [START spanner_field_access_on_nested_struct_parameters]
 //! [START spanner_field_access_on_nested_struct]
 void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -2491,6 +2492,7 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
   std::cout << "Query completed for [spanner_field_access_on_nested_struct]\n";
 }
 //! [END spanner_field_access_on_nested_struct]
+//! [END spanner_field_access_on_nested_struct_parameters]
 
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
