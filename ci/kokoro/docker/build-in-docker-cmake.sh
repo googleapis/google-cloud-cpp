@@ -210,6 +210,14 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
     fi
 
+    if ! force_on_prod "iam"; then
+      echo
+      io::log_yellow "running iam integration tests via CTest+Emulator"
+      echo
+      "${PROJECT_ROOT}/google/cloud/iam/ci/${EMULATOR_SCRIPT}" \
+        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
+    fi
+
     if ! force_on_prod "bigtable"; then
       # TODO(#441) - remove the for loops below.
       # Sometimes the integration tests manage to crash the Bigtable emulator.
@@ -347,6 +355,13 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
         -L integration-test-emulator -R "^pubsub_"
     fi
+    if force_on_prod "iam"; then
+      echo
+      io::log_yellow "running IAM emulator integration tests on production"
+      echo
+      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
+        -L integration-test-emulator -R "^iam_"
+    fi
     if force_on_prod "bigtable"; then
       echo
       io::log_yellow "running Bigtable emulator integration tests on production"
@@ -404,6 +419,9 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       echo /var/tmp/staging/include/google/cloud/bigtable/internal
       echo /var/tmp/staging/include/google/cloud/firestore
       echo /var/tmp/staging/include/google/cloud/grpc_utils
+      echo /var/tmp/staging/include/google/cloud/iam
+      echo /var/tmp/staging/include/google/cloud/iam/internal
+      echo /var/tmp/staging/include/google/cloud/iam/mocks
       echo /var/tmp/staging/include/google/cloud/internal
       echo /var/tmp/staging/include/google/cloud/pubsub
       echo /var/tmp/staging/include/google/cloud/pubsub/internal
@@ -447,6 +465,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       "bigtable_client"
       "google_cloud_cpp_common"
       "google_cloud_cpp_grpc_utils"
+      "iam_client"
       "spanner_client"
       "storage_client"
       "pubsub_client"

@@ -186,6 +186,14 @@ if should_run_integration_tests; then
       "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
   fi
 
+  if ! test_against_production "iam"; then
+    echo "================================================================"
+    excluded_from_production_targets+=("-//google/cloud/iam/...")
+    io::log_yellow "running iam integration tests via Bazel+Emulator"
+    "${PROJECT_ROOT}/google/cloud/iam/ci/${EMULATOR_SCRIPT}" \
+      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
+  fi
+
   echo "================================================================"
   io::log_yellow "running generator integration tests via Bazel"
   "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
