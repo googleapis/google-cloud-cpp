@@ -23,7 +23,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
