@@ -1602,6 +1602,7 @@ void AddNumericColumn(google::cloud::spanner::DatabaseAdminClient client,
 }
 // [END spanner_add_numeric_column]
 
+//! [START spanner_update_data_with_numeric_column]
 //! [START spanner_update_data_with_numeric]
 void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -1625,6 +1626,7 @@ void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
   std::cout << "Insert was successful [spanner_update_data_with_numeric]\n";
 }
 //! [END spanner_update_data_with_numeric]
+//! [END spanner_update_data_with_numeric_column]
 
 // [START spanner_query_with_numeric_parameter]
 void QueryWithNumericParameter(google::cloud::spanner::Client client) {
