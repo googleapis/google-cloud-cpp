@@ -18,7 +18,6 @@
 
 #include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
-#include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
