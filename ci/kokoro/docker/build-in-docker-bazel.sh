@@ -141,8 +141,8 @@ if should_run_integration_tests; then
     # Enable service tracing for integration tests
     "--test_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes"
     "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc_streams"
-    "--test_env=CLOUD_STORAGE_ENABLE_CLOG=yes",
-    "--test_env=CLOUD_STORAGE_ENABLE_TRACING=http,raw-client",
+    "--test_env=CLOUD_STORAGE_ENABLE_CLOG=yes"
+    "--test_env=CLOUD_STORAGE_ENABLE_TRACING=http,raw-client"
 
     # Bigtable
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
