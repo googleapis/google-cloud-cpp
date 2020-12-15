@@ -681,7 +681,7 @@ void CreateBackupCommand(std::vector<std::string> const& argv) {
   CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3]);
 }
 
-//! [restore-database] [START spanner_restore_backup]
+//! [START spanner_restore_backup]
 //! [restore-database] [START spanner_restore_database]
 void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
@@ -701,7 +701,7 @@ void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
             << " backup '" << backup.FullName() << "'.\n";
 }
 //! [restore-database] [END spanner_restore_database]
-//! [restore-database] [END spanner_restore_backup]
+//! [END spanner_restore_backup]
 
 void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
