@@ -200,9 +200,11 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       echo "${FORCE_TEST_IN_PRODUCTION:-}" | grep -qw "$1"
     }
 
-    # Enable RPC tracing for integration tests (with default tracing options)
+    # Enable service tracing for integration tests
     export GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes
     export GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc_streams
+    export CLOUD_STORAGE_ENABLE_CLOG=yes
+    export CLOUD_STORAGE_ENABLE_TRACING=http,raw-client
 
     readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
 
