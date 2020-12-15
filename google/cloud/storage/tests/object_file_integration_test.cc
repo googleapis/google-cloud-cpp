@@ -628,43 +628,44 @@ TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
 TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   // Test relies on emulator for capturing custom header
   if (!UsingEmulator()) GTEST_SKIP();
- 
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
- 
+
   auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
- 
+
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
   std::ofstream os(file_name, std::ios::binary);
   WriteRandomLines(os, expected);
   os.close();
- 
+
   // Create a CustomHeader object to send in request.
-  CustomHeader custom_header("custom_header_key","custom_header_value");
- 
-  StatusOr<ObjectMetadata> meta = client->UploadFile(
-      file_name, bucket_name_, object_name, custom_header,
-      IfGenerationMatch(0), NewResumableUploadSession());
- 
+  CustomHeader custom_header("x-goog-emulator-custom-header",
+                             "custom_header_value");
+
+  StatusOr<ObjectMetadata> meta =
+      client->UploadFile(file_name, bucket_name_, object_name, custom_header,
+                         IfGenerationMatch(0), NewResumableUploadSession());
+
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
- 
-  ASSERT_TRUE(meta->has_metadata("x-goog-emulator-custom-header"));
-  EXPECT_EQ("custom_header_value", meta->metadata("x-goog-emulator-custom-header"));
- 
+
+  ASSERT_TRUE(meta->has_metadata("x_emulator_custom_header"));
+  EXPECT_EQ(custom_header.value(), meta->metadata("x_emulator_custom_header"));
+
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
   EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
   EXPECT_EQ(expected_str, actual);
- 
+
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
