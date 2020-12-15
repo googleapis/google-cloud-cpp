@@ -53,7 +53,9 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/internal/pagination_range.h",
        "google/cloud/polling_policy.h", "google/cloud/status_or.h",
        "google/cloud/version.h"});
-  HeaderSystemIncludes({"google/longrunning/operations.grpc.pb.h", "memory"});
+  HeaderSystemIncludes(
+      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces();
@@ -428,9 +430,10 @@ Status ConnectionGenerator::GenerateCc() {
     " private:\n");
   // clang-format on
 
-  // TODO(#4038) - use the (implicit) completion queue to run this loop, and
-  // once using a completion queue, consider changing to AsyncCancelOperation.
-  CcPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    // TODO(#4038) - use the (implicit) completion queue to run this loop, and
+    // once using a completion queue, consider changing to AsyncCancelOperation.
+    CcPrint(  // clang-format off
     "  template <typename MethodResponse, template<typename> class Extractor,\n"
     "    typename Stub>\n"
     "  future<StatusOr<MethodResponse>>\n"
@@ -470,8 +473,9 @@ Status ConnectionGenerator::GenerateCc() {
     "    t.detach();\n"
     "    return f;\n"
     "  }\n\n"
-      );
-  // clang-format on
+    );
+    // clang-format on
+  }
 
   for (auto const& method : methods()) {
     CcPrintMethod(
