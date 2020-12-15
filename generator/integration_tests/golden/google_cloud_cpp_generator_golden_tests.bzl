@@ -24,4 +24,11 @@ google_cloud_cpp_generator_golden_tests = [
     "golden_metadata_decorator_test.cc",
     "golden_stub_factory_test.cc",
     "golden_stub_test.cc",
+    "iam_credentials_client_test.cc",
+    "iam_credentials_connection_test.cc",
+    "iam_credentials_idempotency_policy_test.cc",
+    "iam_credentials_logging_decorator_test.cc",
+    "iam_credentials_metadata_decorator_test.cc",
+    "iam_credentials_stub_factory_test.cc",
+    "iam_credentials_stub_test.cc",
 ]

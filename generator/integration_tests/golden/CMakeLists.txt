@@ -22,6 +22,12 @@ set(google_cloud_cpp_generator_golden_files
     database_admin_connection.gcpcxx.pb.h
     database_admin_connection_idempotency_policy.gcpcxx.pb.cc
     database_admin_connection_idempotency_policy.gcpcxx.pb.h
+    iam_credentials_client.gcpcxx.pb.cc
+    iam_credentials_client.gcpcxx.pb.h
+    iam_credentials_connection.gcpcxx.pb.cc
+    iam_credentials_connection.gcpcxx.pb.h
+    iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
+    iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
@@ -30,6 +36,14 @@ set(google_cloud_cpp_generator_golden_files
     internal/database_admin_stub.gcpcxx.pb.h
     internal/database_admin_stub_factory.gcpcxx.pb.cc
     internal/database_admin_stub_factory.gcpcxx.pb.h
+    internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
+    internal/iam_credentials_logging_decorator.gcpcxx.pb.h
+    internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
+    internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
+    internal/iam_credentials_stub.gcpcxx.pb.cc
+    internal/iam_credentials_stub.gcpcxx.pb.h
+    internal/iam_credentials_stub_factory.gcpcxx.pb.cc
+    internal/iam_credentials_stub_factory.gcpcxx.pb.h
     mocks/mock_database_admin_connection.gcpcxx.pb.h
     retry_traits.h)
 
@@ -47,6 +61,12 @@ add_library(
     database_admin_connection.gcpcxx.pb.h
     database_admin_connection_idempotency_policy.gcpcxx.pb.cc
     database_admin_connection_idempotency_policy.gcpcxx.pb.h
+    iam_credentials_client.gcpcxx.pb.cc
+    iam_credentials_client.gcpcxx.pb.h
+    iam_credentials_connection.gcpcxx.pb.cc
+    iam_credentials_connection.gcpcxx.pb.h
+    iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
+    iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
     internal/database_admin_logging_decorator.gcpcxx.pb.cc
     internal/database_admin_logging_decorator.gcpcxx.pb.h
     internal/database_admin_metadata_decorator.gcpcxx.pb.cc
@@ -55,6 +75,14 @@ add_library(
     internal/database_admin_stub.gcpcxx.pb.h
     internal/database_admin_stub_factory.gcpcxx.pb.cc
     internal/database_admin_stub_factory.gcpcxx.pb.h
+    internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
+    internal/iam_credentials_logging_decorator.gcpcxx.pb.h
+    internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
+    internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
+    internal/iam_credentials_stub.gcpcxx.pb.cc
+    internal/iam_credentials_stub.gcpcxx.pb.h
+    internal/iam_credentials_stub_factory.gcpcxx.pb.cc
+    internal/iam_credentials_stub_factory.gcpcxx.pb.h
     mocks/mock_database_admin_connection.gcpcxx.pb.h
     retry_traits.h)
 
@@ -90,7 +118,14 @@ function (google_cloud_cpp_generator_define_golden_tests)
         golden_logging_decorator_test.cc
         golden_metadata_decorator_test.cc
         golden_stub_factory_test.cc
-        golden_stub_test.cc)
+        golden_stub_test.cc
+        iam_credentials_client_test.cc
+        iam_credentials_connection_test.cc
+        iam_credentials_idempotency_policy_test.cc
+        iam_credentials_logging_decorator_test.cc
+        iam_credentials_metadata_decorator_test.cc
+        iam_credentials_stub_factory_test.cc
+        iam_credentials_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

@@ -31,6 +31,15 @@ struct DatabaseAdminRetryTraits {
   }
 };
 
+struct IAMCredentialsRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
+
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
 }  // namespace cloud
