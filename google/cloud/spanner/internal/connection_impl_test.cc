@@ -24,7 +24,6 @@
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <array>
 #include <atomic>
@@ -181,9 +180,6 @@ spanner_proto::CommitResponse MakeCommitResponse(
   if (commit_stats.has_value()) {
     auto* proto_stats = response.mutable_commit_stats();
     proto_stats->set_mutation_count(commit_stats->mutation_count);
-    *proto_stats->mutable_overload_delay() =
-        google::protobuf::util::TimeUtil::NanosecondsToDuration(
-            commit_stats->overload_delay.count());
   }
   return response;
 }
@@ -1642,14 +1638,13 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
                                      HasReturnStats(true))))
       .WillOnce(Return(MakeCommitResponse(
           MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value(),
-          CommitStats{42, std::chrono::nanoseconds(123456789)})));
+          CommitStats{42})));
 
   auto commit = conn->Commit(
       {MakeReadWriteTransaction(), {}, CommitOptions{}.set_return_stats(true)});
   EXPECT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
-  EXPECT_EQ(123456789, commit->commit_stats->overload_delay.count());
 }
 
 TEST(ConnectionImplTest, RollbackGetSessionFailure) {

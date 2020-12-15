@@ -863,7 +863,7 @@ TEST(ClientTest, CommitSessionNotFound) {
 TEST(ClientTest, CommitStats) {
   auto timestamp = internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
   ASSERT_STATUS_OK(timestamp);
-  CommitStats stats{42, std::chrono::nanoseconds(123456789)};
+  CommitStats stats{42};
 
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit(_))
@@ -879,7 +879,6 @@ TEST(ClientTest, CommitStats) {
   EXPECT_EQ(*timestamp, result->commit_timestamp);
   ASSERT_TRUE(result->commit_stats.has_value());
   EXPECT_EQ(42, result->commit_stats->mutation_count);
-  EXPECT_EQ(123456789, result->commit_stats->overload_delay.count());
 }
 
 TEST(ClientTest, ProfileQuerySuccess) {

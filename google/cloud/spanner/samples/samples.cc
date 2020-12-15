@@ -1947,10 +1947,6 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
   if (!commit) throw std::runtime_error(commit.status().message());
   std::cout << "Updated data with " << commit->commit_stats->mutation_count
             << " mutations.\n";
-  if (auto nanos = commit->commit_stats->overload_delay.count()) {
-    std::cout << "Commit was delayed by " << nanos
-              << "ns due to overloaded servers.\n";
-  }
   std::cout << "Update was successful [spanner_get_commit_stats]\n";
 }
 //! [END spanner_get_commit_stats]

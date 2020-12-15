@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "absl/types/optional.h"
-#include <chrono>
 #include <cstdint>
 
 namespace google {
@@ -30,8 +29,7 @@ inline namespace SPANNER_CLIENT_NS {
  * Statistics returned for a committed Transaction.
  */
 struct CommitStats {
-  std::int64_t mutation_count;              // total number of mutations
-  std::chrono::nanoseconds overload_delay;  // delay due to overloaded servers
+  std::int64_t mutation_count;  // total number of mutations
 };
 
 /**

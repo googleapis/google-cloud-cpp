@@ -23,7 +23,6 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
-#include <google/protobuf/util/time_util.h>
 
 namespace google {
 namespace cloud {
@@ -947,10 +946,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   r.commit_timestamp = *std::move(timestamp);
   if (response->has_commit_stats()) {
     r.commit_stats.emplace(
-        CommitStats{response->commit_stats().mutation_count(),
-                    std::chrono::nanoseconds(
-                        google::protobuf::util::TimeUtil::DurationToNanoseconds(
-                            response->commit_stats().overload_delay()))});
+        CommitStats{response->commit_stats().mutation_count()});
   }
   return r;
 }
