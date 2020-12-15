@@ -23,10 +23,10 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_mocks {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-class MockIAMCredentialsConnection : public IAMCredentialsConnection {
+class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
  public:
   ~MockIAMCredentialsConnection() = default;
 
@@ -41,7 +41,7 @@ class MockIAMCredentialsConnection : public IAMCredentialsConnection {
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace golden
+}  // namespace golden_mocks
 }  // namespace cloud
 }  // namespace google
 

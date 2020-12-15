@@ -50,12 +50,12 @@ Status MockConnectionGenerator::GenerateHeader() {
   HeaderSystemIncludes({"gmock/gmock.h"});
   HeaderPrint("\n");
 
-  auto result = HeaderOpenNamespaces();
+  auto result = HeaderOpenNamespaces(NamespaceType::kMocks);
   if (!result.ok()) return result;
 
   // Abstract interface Connection base class
   HeaderPrint(  // clang-format off
-    "class $mock_connection_class_name$ : public $connection_class_name$ {\n"
+    "class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {\n"
     " public:\n"
     "  ~$mock_connection_class_name$() = default;\n"
     "\n");
@@ -90,7 +90,7 @@ Status MockConnectionGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-   {"  MOCK_METHOD($method_name$Range,\n"
+   {"  MOCK_METHOD($product_namespace$::$method_name$Range,\n"
     "  $method_name$,\n"
     "  ($request_type$ request), (override));\n\n"},
                  // clang-format on
