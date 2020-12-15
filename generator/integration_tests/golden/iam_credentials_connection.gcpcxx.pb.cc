@@ -125,46 +125,6 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 }
 
  private:
-  template <typename MethodResponse, template<typename> class Extractor,
-    typename Stub>
-  future<StatusOr<MethodResponse>>
-  AwaitLongrunningOperation(google::longrunning::Operation operation) {  // NOLINT
-    using ResponseExtractor = Extractor<MethodResponse>;
-    std::weak_ptr<Stub> cancel_stub(stub_);
-    promise<typename ResponseExtractor::ReturnType> pr(
-        [cancel_stub, operation]() {
-          grpc::ClientContext context;
-          context.set_deadline(std::chrono::system_clock::now() +
-            std::chrono::seconds(60));
-          google::longrunning::CancelOperationRequest request;
-          request.set_name(operation.name());
-          if (auto ptr = cancel_stub.lock()) {
-            ptr->CancelOperation(context, request);
-          }
-    });
-    auto f = pr.get_future();
-    std::thread t(
-        [](std::shared_ptr<Stub> stub,
-           google::longrunning::Operation operation,
-           std::unique_ptr<PollingPolicy> polling_policy,
-           google::cloud::promise<typename ResponseExtractor::ReturnType> promise,
-           char const* location) mutable {
-          auto result = google::cloud::internal::PollingLoop<ResponseExtractor>(
-              std::move(polling_policy),
-              [stub](grpc::ClientContext& context,
-                     google::longrunning::GetOperationRequest const& request) {
-                return stub->GetOperation(context, request);
-              },
-              std::move(operation), location);
-          stub.reset();
-          promise.set_value(std::move(result));
-        },
-        stub_, std::move(operation), polling_policy_prototype_->clone(),
-        std::move(pr), __func__);
-    t.detach();
-    return f;
-  }
-
   std::shared_ptr<golden_internal::IAMCredentialsStub> stub_;
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
