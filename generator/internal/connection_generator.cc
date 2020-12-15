@@ -194,11 +194,11 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes({vars("connection_header_path"),
-                   vars("stub_factory_header_path"),
-                   "google/cloud/internal/polling_loop.h",
-                   "google/cloud/internal/retry_loop.h",
-                   "google/cloud/internal/user_agent_prefix.h"});
+  CcLocalIncludes(
+      {vars("connection_header_path"), vars("stub_factory_header_path"),
+       HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
+       "google/cloud/internal/retry_loop.h",
+       "google/cloud/internal/user_agent_prefix.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
