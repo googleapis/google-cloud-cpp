@@ -23,6 +23,7 @@ import "google/api/resource.proto";
 import "google/iam/v1/iam_policy.proto";
 import "google/iam/v1/policy.proto";
 import "google/longrunning/operations.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "generator/integration_tests/backup.proto";
@@ -724,4 +725,120 @@ enum RestoreSourceType {
 
   // A backup was used as the source of the restore.
   BACKUP = 1;
+}
+
+// A service account is a special type of Google account that belongs to your
+// application or a virtual machine (VM), instead of to an individual end user.
+// Your application assumes the identity of the service account to call Google
+// APIs, so that the users aren't directly involved.
+//
+// Service account credentials are used to temporarily assume the identity
+// of the service account. Supported credential types include OAuth 2.0 access
+// tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
+// more.
+service IAMCredentials {
+  option (google.api.default_host) = "iamcredentials.googleapis.com";
+  option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
+
+  // Generates an OAuth 2.0 access token for a service account.
+  rpc GenerateAccessToken(GenerateAccessTokenRequest) returns (GenerateAccessTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=projects/*/serviceAccounts/*}:generateAccessToken"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name,delegates,scope,lifetime";
+  }
+
+  // Generates an OpenID Connect ID token for a service account.
+  rpc GenerateIdToken(GenerateIdTokenRequest) returns (GenerateIdTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/{name=projects/*/serviceAccounts/*}:generateIdToken"
+      body: "*"
+    };
+    option (google.api.method_signature) = "name,delegates,audience,include_email";
+  }
+}
+
+message GenerateAccessTokenRequest {
+  // Required. The resource name of the service account for which the credentials
+  // are requested, in the following format:
+  // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  // character is required; replacing it with a project ID is invalid.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "iam.googleapis.com/ServiceAccount"
+    }
+  ];
+
+  // The sequence of service accounts in a delegation chain. Each service
+  // account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  // on its next service account in the chain. The last service account in the
+  // chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  // on the service account that is specified in the `name` field of the
+  // request.
+  //
+  // The delegates must have the following format:
+  // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  // character is required; replacing it with a project ID is invalid.
+  repeated string delegates = 2;
+
+  // Required. Code to identify the scopes to be included in the OAuth 2.0 access token.
+  // See https://developers.google.com/identity/protocols/googlescopes for more
+  // information.
+  // At least one value required.
+  repeated string scope = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The desired lifetime duration of the access token in seconds.
+  // Must be set to a value less than or equal to 3600 (1 hour). If a value is
+  // not specified, the token's lifetime will be set to a default value of one
+  // hour.
+  google.protobuf.Duration lifetime = 7;
+}
+
+message GenerateAccessTokenResponse {
+  // The OAuth 2.0 access token.
+  string access_token = 1;
+
+  // Token expiration time.
+  // The expiration time is always set.
+  google.protobuf.Timestamp expire_time = 3;
+}
+
+message GenerateIdTokenRequest {
+  // Required. The resource name of the service account for which the credentials
+  // are requested, in the following format:
+  // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  // character is required; replacing it with a project ID is invalid.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = {
+      type: "iam.googleapis.com/ServiceAccount"
+    }
+  ];
+
+  // The sequence of service accounts in a delegation chain. Each service
+  // account must be granted the `roles/iam.serviceAccountTokenCreator` role
+  // on its next service account in the chain. The last service account in the
+  // chain must be granted the `roles/iam.serviceAccountTokenCreator` role
+  // on the service account that is specified in the `name` field of the
+  // request.
+  //
+  // The delegates must have the following format:
+  // `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  // character is required; replacing it with a project ID is invalid.
+  repeated string delegates = 2;
+
+  // Required. The audience for the token, such as the API or account that this token
+  // grants access to.
+  string audience = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Include the service account email in the token. If set to `true`, the
+  // token will contain `email` and `email_verified` claims.
+  bool include_email = 4;
+}
+
+message GenerateIdTokenResponse {
+  // The OpenId Connect ID token.
+  string token = 1;
 }
