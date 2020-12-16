@@ -29,10 +29,14 @@ using ::google::protobuf::MethodDescriptor;
 
 bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service) {
   for (int i = 0; i < service.method_count(); ++i) {
-    if (service.method(i)->output_type()->full_name() ==
-        "google.longrunning.Operation") {
-      return true;
-    }
+    if (IsLongrunningOperation(*service.method(i))) return true;
+  }
+  return false;
+}
+
+bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service) {
+  for (int i = 0; i < service.method_count(); ++i) {
+    if (IsPaginated(*service.method(i))) return true;
   }
   return false;
 }

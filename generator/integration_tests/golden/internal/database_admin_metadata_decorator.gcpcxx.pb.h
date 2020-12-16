@@ -19,7 +19,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_DATABASE_ADMIN_METADATA_DECORATOR_GCPCXX_PB_H
 
 #include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
-#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>

@@ -49,10 +49,11 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderLocalIncludes(
       {vars("idempotency_policy_header_path"), vars("stub_header_path"),
        vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
-       "google/cloud/connection_options.h", "google/cloud/future.h",
-       "google/cloud/internal/pagination_range.h",
-       "google/cloud/polling_policy.h", "google/cloud/status_or.h",
-       "google/cloud/version.h"});
+       "google/cloud/connection_options.h",
+       HasLongrunningMethod() ? "google/cloud/future.h" : "",
+       HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
+       HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
+       "google/cloud/status_or.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
@@ -159,22 +160,25 @@ Status ConnectionGenerator::GenerateHeader() {
     "    $connection_options_name$ const& options = $connection_options_name$());\n\n");
   // clang-format on
 
-  HeaderPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+  HeaderPrint({// clang-format off
+   {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    $connection_options_name$ const& options,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
-    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
-    "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
+    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
+    {generator_internal::HasLongrunningMethod,
+    "    std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
+   {"    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n"}});
   // clang-format on
 
-  HeaderPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+  HeaderPrint(
+      {// clang-format off
+   {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
-    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
-    "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
+    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
+    {generator_internal::HasLongrunningMethod,
+    "    std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
+   {"    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n"}});
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -281,8 +285,9 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint("namespace {\n");
 
   // default policies
-  CcPrint(  // clang-format off
-    "std::unique_ptr<$retry_policy_name$> DefaultRetryPolicy() {\n"
+  CcPrint(
+      {// clang-format off
+   {"std::unique_ptr<$retry_policy_name$> DefaultRetryPolicy() {\n"
     "  return $limited_time_retry_policy_name$(std::chrono::minutes(30)).clone();\n"
     "}\n"
     "\n"
@@ -292,7 +297,8 @@ Status ConnectionGenerator::GenerateCc() {
     "                                  std::chrono::minutes(5), kBackoffScaling)\n"
     "      .clone();\n"
     "}\n"
-    "\n"
+    "\n"},
+    {generator_internal::HasLongrunningMethod,
     "std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {\n"
     "  auto constexpr kBackoffScaling = 2.0;\n"
     "  return GenericPollingPolicy<$limited_time_retry_policy_name$, ExponentialBackoffPolicy>(\n"
@@ -300,39 +306,44 @@ Status ConnectionGenerator::GenerateCc() {
     "             ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
     "                                      std::chrono::minutes(5), kBackoffScaling))\n"
     "      .clone();\n"
-    "}\n\n"
-            // clang-format on
-  );
+    "}\n\n", ""}});
+       // clang-format on
 
   // default connection implementation class
-  CcPrint(  //clang-format off
-      "class $connection_class_name$Impl : public $connection_class_name$ {\n"
-      " public:\n"
-      "  explicit $connection_class_name$Impl(\n"
-      "      std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
-      "stub,\n"
-      "      std::unique_ptr<$retry_policy_name$> retry_policy,\n"
-      "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"
-      "      std::unique_ptr<PollingPolicy> polling_policy,\n"
-      "      std::unique_ptr<$idempotency_class_name$> "
-      "idempotency_policy)\n"
-      "      : stub_(std::move(stub)),\n"
-      "        retry_policy_prototype_(std::move(retry_policy)),\n"
-      "        backoff_policy_prototype_(std::move(backoff_policy)),\n"
-      "        polling_policy_prototype_(std::move(polling_policy)),\n"
-      "        idempotency_policy_(std::move(idempotency_policy)) {}\n"
-      "\n"
-      "  explicit $connection_class_name$Impl(\n"
-      "      std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
-      "stub)\n"
-      "      : $connection_class_name$Impl(\n"
-      "          std::move(stub),\n"
-      "          DefaultRetryPolicy(),\n"
-      "          DefaultBackoffPolicy(),\n"
-      "          DefaultPollingPolicy(),\n"
-      "          MakeDefault$idempotency_class_name$()) {}\n"
-      "\n"
-      "  ~$connection_class_name$Impl() override = default;\n\n");
+  CcPrint(
+      {//clang-format off
+       {"class $connection_class_name$Impl : public $connection_class_name$ {\n"
+        " public:\n"
+        "  explicit $connection_class_name$Impl(\n"
+        "      "
+        "std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
+        "stub,\n"
+        "      std::unique_ptr<$retry_policy_name$> retry_policy,\n"
+        "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
+       {generator_internal::HasLongrunningMethod,
+        "      std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
+       {"      std::unique_ptr<$idempotency_class_name$> "
+        "idempotency_policy)\n"
+        "      : stub_(std::move(stub)),\n"
+        "        retry_policy_prototype_(std::move(retry_policy)),\n"
+        "        backoff_policy_prototype_(std::move(backoff_policy)),\n"},
+       {generator_internal::HasLongrunningMethod,
+        "        polling_policy_prototype_(std::move(polling_policy)),\n", ""},
+       {"        idempotency_policy_(std::move(idempotency_policy)) {}\n"
+        "\n"
+        "  explicit $connection_class_name$Impl(\n"
+        "      "
+        "std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
+        "stub)\n"
+        "      : $connection_class_name$Impl(\n"
+        "          std::move(stub),\n"
+        "          DefaultRetryPolicy(),\n"
+        "          DefaultBackoffPolicy(),\n"},
+       {generator_internal::HasLongrunningMethod,
+        "          DefaultPollingPolicy(),\n", ""},
+       {"          MakeDefault$idempotency_class_name$()) {}\n"
+        "\n"
+        "  ~$connection_class_name$Impl() override = default;\n\n"}});
   //  clang-format on
 
   for (auto const& method : methods()) {
@@ -501,13 +512,15 @@ Status ConnectionGenerator::GenerateCc() {
         __FILE__, __LINE__);
   }
 
-  CcPrint(  // clang-format off
-    "  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
+  CcPrint(
+      {// clang-format off
+   {"  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
     "  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;\n"
-    "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"
-    "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n"
-    "  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
-    "};\n");
+    "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"},
+   {generator_internal::HasLongrunningMethod,
+    "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n", ""},
+   {"  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
+    "};\n"}});
   // clang-format on
 
   CcPrint("}  // namespace\n\n");
@@ -520,31 +533,37 @@ Status ConnectionGenerator::GenerateCc() {
     "}\n\n");
   // clang-format on
 
-  CcPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+  CcPrint(
+      {// clang-format off
+   {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    $connection_options_name$ const& options,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
-    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
-    "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
+    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
+   {generator_internal::HasLongrunningMethod,
+    "    std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
+   {"    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options),\n"
-    "      std::move(retry_policy), std::move(backoff_policy),\n"
-    "      std::move(polling_policy), std::move(idempotency_policy));\n"
-    "}\n\n");
+    "      std::move(retry_policy), std::move(backoff_policy),\n"},
+   {generator_internal::HasLongrunningMethod,
+    "      std::move(polling_policy), std::move(idempotency_policy));\n}\n\n",
+    "      std::move(idempotency_policy));\n}\n\n"}});
   // clang-format on
 
-  CcPrint(  // clang-format off
-    "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+  CcPrint(
+      {// clang-format off
+   {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
-    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
-    "    std::unique_ptr<PollingPolicy> polling_policy,\n"
-    "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
+    "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
+   {generator_internal::HasLongrunningMethod,
+    "    std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
+   {"    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
-    "      std::move(stub), std::move(retry_policy), std::move(backoff_policy),\n"
-    "      std::move(polling_policy), std::move(idempotency_policy));\n"
-    "}\n\n");
+    "      std::move(stub), std::move(retry_policy), std::move(backoff_policy),\n"},
+   {generator_internal::HasLongrunningMethod,
+    "      std::move(polling_policy), std::move(idempotency_policy));\n}\n\n",
+    "      std::move(idempotency_policy));\n}\n\n"}});
   // clang-format on
 
   CcCloseNamespaces();

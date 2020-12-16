@@ -30,6 +30,12 @@ namespace generator_internal {
 bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service);
 
 /**
+ * Determines if the service contains at least one method that is paginated
+ * per https://google.aip.dev/client-libraries/4233.
+ */
+bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service);
+
+/**
  * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233

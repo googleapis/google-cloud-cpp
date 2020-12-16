@@ -69,6 +69,10 @@ bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return generator_internal::HasLongrunningMethod(*service_descriptor_);
 }
 
+bool ServiceCodeGenerator::HasPaginatedMethod() const {
+  return generator_internal::HasPaginatedMethod(*service_descriptor_);
+}
+
 VarsDictionary const& ServiceCodeGenerator::vars() const {
   return service_vars_;
 }
@@ -131,6 +135,14 @@ void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
 }
 
+void ServiceCodeGenerator::HeaderPrint(
+    std::vector<PredicatedFragment<google::protobuf::ServiceDescriptor>> const&
+        text) {
+  for (auto const& fragment : text) {
+    header_.Print(service_vars_, fragment(*service_descriptor_));
+  }
+}
+
 Status ServiceCodeGenerator::HeaderPrintMethod(
     google::protobuf::MethodDescriptor const& method,
     std::vector<MethodPattern> const& patterns, char const* file, int line) {
@@ -140,6 +152,14 @@ Status ServiceCodeGenerator::HeaderPrintMethod(
 
 void ServiceCodeGenerator::CcPrint(std::string const& text) {
   cc_.Print(service_vars_, text);
+}
+
+void ServiceCodeGenerator::CcPrint(
+    std::vector<PredicatedFragment<google::protobuf::ServiceDescriptor>> const&
+        text) {
+  for (auto const& fragment : text) {
+    cc_.Print(service_vars_, fragment(*service_descriptor_));
+  }
 }
 
 Status ServiceCodeGenerator::CcPrintMethod(

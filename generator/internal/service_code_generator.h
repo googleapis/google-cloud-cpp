@@ -74,15 +74,22 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void CcCloseNamespaces();
 
   void HeaderPrint(std::string const& text);
+  void HeaderPrint(
+      std::vector<
+          PredicatedFragment<google::protobuf::ServiceDescriptor>> const& text);
   Status HeaderPrintMethod(google::protobuf::MethodDescriptor const& method,
                            std::vector<MethodPattern> const& patterns,
                            char const* file, int line);
   void CcPrint(std::string const& text);
+  void CcPrint(
+      std::vector<
+          PredicatedFragment<google::protobuf::ServiceDescriptor>> const& text);
   Status CcPrintMethod(google::protobuf::MethodDescriptor const& method,
                        std::vector<MethodPattern> const& patterns,
                        char const* file, int line);
 
   bool HasLongrunningMethod() const;
+  bool HasPaginatedMethod() const;
 
  private:
   enum class FileType { kHeaderFile, kCcFile };
