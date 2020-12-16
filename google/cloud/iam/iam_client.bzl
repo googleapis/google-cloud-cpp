@@ -17,7 +17,6 @@
 """Automatically generated source lists for iam_client - DO NOT EDIT."""
 
 iam_client_hdrs = [
-    "connection_options.gcpcxx.pb.h",
     "iam_credentials_client.gcpcxx.pb.h",
     "iam_credentials_connection.gcpcxx.pb.h",
     "iam_credentials_connection_idempotency_policy.gcpcxx.pb.h",
@@ -25,12 +24,10 @@ iam_client_hdrs = [
     "internal/iam_credentials_metadata_decorator.gcpcxx.pb.h",
     "internal/iam_credentials_stub_factory.gcpcxx.pb.h",
     "internal/iam_credentials_stub.gcpcxx.pb.h",
-    "retry_policy.gcpcxx.pb.h",
     "retry_traits.h",
 ]
 
 iam_client_srcs = [
-    "connection_options.gcpcxx.pb.cc",
     "iam_credentials_client.gcpcxx.pb.cc",
     "iam_credentials_connection.gcpcxx.pb.cc",
     "iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc",
