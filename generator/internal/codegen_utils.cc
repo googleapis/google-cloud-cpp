@@ -117,6 +117,19 @@ ProcessCommandLineArgs(std::string const& parameters) {
   if (path.back() != '/') {
     path += '/';
   }
+
+  auto googleapis_commit_hash =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "googleapis_commit_hash";
+                   });
+  if (googleapis_commit_hash == command_line_args.end() ||
+      googleapis_commit_hash->second.empty()) {
+    return Status(
+        StatusCode::kInvalidArgument,
+        "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+  }
+
   return command_line_args;
 }
 
