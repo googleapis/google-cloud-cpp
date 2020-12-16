@@ -56,9 +56,7 @@ Status MockConnectionGenerator::GenerateHeader() {
   // Abstract interface Connection base class
   HeaderPrint(  // clang-format off
     "class $mock_connection_class_name$ : public $product_namespace$::$connection_class_name$ {\n"
-    " public:\n"
-    "  ~$mock_connection_class_name$() = default;\n"
-    "\n");
+    " public:\n");
   // clang-format on
 
   for (auto const& method : methods()) {

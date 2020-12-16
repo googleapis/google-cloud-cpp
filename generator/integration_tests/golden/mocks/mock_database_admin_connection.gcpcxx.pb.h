@@ -28,8 +28,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockDatabaseAdminConnection : public golden::DatabaseAdminConnection {
  public:
-  ~MockDatabaseAdminConnection() = default;
-
   MOCK_METHOD(golden::ListDatabasesRange,
   ListDatabases,
   (::google::test::admin::database::v1::ListDatabasesRequest request), (override));
