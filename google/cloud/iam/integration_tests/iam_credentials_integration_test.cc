@@ -175,7 +175,7 @@ TEST(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
   request.set_name(
       "projects/-/serviceAccounts/"
       "kokoro-run@cloud-cpp-testing-resources.iam.gserviceaccount.com");
-  request.set_payload(R"({"some": "json"}"));
+  request.set_payload(R"({"some": "json"})");
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
   auto response = client.SignJwt(request);
   EXPECT_STATUS_OK(response);
