@@ -210,14 +210,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
     fi
 
-    if ! force_on_prod "iam"; then
-      echo
-      io::log_yellow "running iam integration tests via CTest+Emulator"
-      echo
-      "${PROJECT_ROOT}/google/cloud/iam/ci/${EMULATOR_SCRIPT}" \
-        "${BINARY_DIR}" "${ctest_args[@]}" -L integration-test-emulator
-    fi
-
     if ! force_on_prod "bigtable"; then
       # TODO(#441) - remove the for loops below.
       # Sometimes the integration tests manage to crash the Bigtable emulator.
@@ -354,13 +346,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       echo
       env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
         -L integration-test-emulator -R "^pubsub_"
-    fi
-    if force_on_prod "iam"; then
-      echo
-      io::log_yellow "running IAM emulator integration tests on production"
-      echo
-      env -C "${BINARY_DIR}" ctest "${ctest_args[@]}" \
-        -L integration-test-emulator -R "^iam_"
     fi
     if force_on_prod "bigtable"; then
       echo

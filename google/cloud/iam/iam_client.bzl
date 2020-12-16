@@ -22,8 +22,8 @@ iam_client_hdrs = [
     "iam_credentials_connection_idempotency_policy.gcpcxx.pb.h",
     "internal/iam_credentials_logging_decorator.gcpcxx.pb.h",
     "internal/iam_credentials_metadata_decorator.gcpcxx.pb.h",
-    "internal/iam_credentials_stub_factory.gcpcxx.pb.h",
     "internal/iam_credentials_stub.gcpcxx.pb.h",
+    "internal/iam_credentials_stub_factory.gcpcxx.pb.h",
     "retry_traits.h",
 ]
 
@@ -33,6 +33,6 @@ iam_client_srcs = [
     "iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc",
     "internal/iam_credentials_logging_decorator.gcpcxx.pb.cc",
     "internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc",
-    "internal/iam_credentials_stub_factory.gcpcxx.pb.cc",
     "internal/iam_credentials_stub.gcpcxx.pb.cc",
+    "internal/iam_credentials_stub_factory.gcpcxx.pb.cc",
 ]

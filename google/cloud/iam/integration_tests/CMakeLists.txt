@@ -32,9 +32,9 @@ function (google_cloud_cpp_iam_define_integration_tests)
     # Create a custom target so we can say "build all the tests"
     add_custom_target(iam-client-integration-tests)
 
-    # Generate a target for each unit test.
+    # Generate a target for each integration test.
     foreach (fname ${iam_client_integration_tests})
-        google_cloud_cpp_add_executable(target "iam" ${fname})
+        google_cloud_cpp_add_executable(target "iam" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE googleapis-c++::iam_client google_cloud_cpp_testing_grpc
@@ -49,7 +49,8 @@ function (google_cloud_cpp_iam_define_integration_tests)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
         add_test(NAME ${target} COMMAND ${target})
-        set_tests_properties(${target} PROPERTIES LABELS "integration-test")
+        set_tests_properties(${target} PROPERTIES LABELS
+                                                  "integration-test-production")
         add_dependencies(iam-client-integration-tests ${target})
     endforeach ()
 
