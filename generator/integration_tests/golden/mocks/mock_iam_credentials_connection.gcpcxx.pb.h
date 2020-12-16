@@ -28,8 +28,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
  public:
-  ~MockIAMCredentialsConnection() = default;
-
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>,
   GenerateAccessToken,
   (::google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
