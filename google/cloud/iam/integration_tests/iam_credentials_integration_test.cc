@@ -88,7 +88,7 @@ TEST(IamCredentialsIntegrationTest, SignBlobFailure) {
 }
 
 TEST(IamCredentialsIntegrationTest, SignJwtSuccess) {
-  std::string payload = "{\"some\": \"json\"}";
+  std::string payload = R"({"some": "json"})";
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/"
@@ -100,7 +100,7 @@ TEST(IamCredentialsIntegrationTest, SignJwtSuccess) {
 }
 
 TEST(IamCredentialsIntegrationTest, SignJwtFailure) {
-  std::string payload = "{\"some\": \"json\"}";
+  std::string payload = R"({"some": "json"})";
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/"
@@ -175,7 +175,7 @@ TEST(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
   request.set_name(
       "projects/-/serviceAccounts/"
       "kokoro-run@cloud-cpp-testing-resources.iam.gserviceaccount.com");
-  request.set_payload("{\"some\": \"json\"}");
+  request.set_payload(R"({"some": "json"}"));
   auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
   auto response = client.SignJwt(request);
   EXPECT_STATUS_OK(response);
