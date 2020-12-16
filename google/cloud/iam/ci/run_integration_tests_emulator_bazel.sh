@@ -32,8 +32,7 @@ bazel_test_args=("$@")
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
   --test_tag_filters="integration-test" -- \
-  "//google/cloud/iam/...:all" \
-  "${excluded_targets[@]}"
+  "//google/cloud/iam/...:all"
 exit_status=$?
 
 exit "${exit_status}"
