@@ -96,6 +96,21 @@ spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
   return options;
 }
 
+spanner_proto::RequestOptions_Priority ProtoRequestPriority(
+    absl::optional<RequestPriority> const& request_priority) {
+  if (request_priority) {
+    switch (*request_priority) {
+      case RequestPriority::kLow:
+        return spanner_proto::RequestOptions_Priority_PRIORITY_LOW;
+      case RequestPriority::kMedium:
+        return spanner_proto::RequestOptions_Priority_PRIORITY_MEDIUM;
+      case RequestPriority::kHigh:
+        return spanner_proto::RequestOptions_Priority_PRIORITY_HIGH;
+    }
+  }
+  return spanner_proto::RequestOptions_Priority_PRIORITY_UNSPECIFIED;
+}
+
 // Operations that set `TransactionSelector::begin` in the request and receive
 // a malformed response that does not contain a `Transaction` should invalidate
 // the transaction with and also return this status.
@@ -365,6 +380,9 @@ StatusOr<spanner_proto::Transaction> ConnectionImpl::BeginTransaction(
   spanner_proto::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
+  // `begin.request_options.priority` is ignored. To set the priority
+  // for a transaction, set it on the reads and writes that are part of
+  // the transaction instead.
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
@@ -408,6 +426,8 @@ RowStream ConnectionImpl::ReadImpl(
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
   }
+  request.mutable_request_options()->set_priority(
+      ProtoRequestPriority(params.read_options.request_priority));
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
@@ -560,6 +580,8 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     request.mutable_query_options()->set_optimizer_version(
         *params.query_options.optimizer_version());
   }
+  request.mutable_request_options()->set_priority(
+      ProtoRequestPriority(params.query_options.request_priority()));
 
   for (;;) {
     auto reader = retry_resume_fn(request);
@@ -816,6 +838,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   for (auto& sql : params.statements) {
     *request.add_statements() = internal::ToProto(std::move(sql));
   }
+  request.mutable_request_options()->set_priority(
+      ProtoRequestPriority(params.query_options.request_priority()));
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -913,6 +937,8 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   for (auto&& m : params.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
+  request.mutable_request_options()->set_priority(
+      ProtoRequestPriority(params.options.request_priority()));
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
     auto begin = BeginTransaction(
