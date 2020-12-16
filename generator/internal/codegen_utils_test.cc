@@ -171,15 +171,34 @@ TEST(ProcessCommandLineArgs, EmptyProductPath) {
 }
 
 TEST(ProcessCommandLineArgs, ProductPathNeedsFormatting) {
-  auto result = ProcessCommandLineArgs("product_path=/google/cloud/pubsub");
+  auto result = ProcessCommandLineArgs(
+      "product_path=/google/cloud/pubsub,googleapis_commit_hash=foo");
   EXPECT_TRUE(result.ok());
   EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
 }
 
 TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
-  auto result = ProcessCommandLineArgs("product_path=google/cloud/pubsub/");
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
   EXPECT_TRUE(result.ok());
   EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
+}
+
+TEST(ProcessCommandLineArgs, NoCommitHash) {
+  auto result = ProcessCommandLineArgs("product_path=/google/cloud/bar");
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(
+      result.status().message(),
+      "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+}
+
+TEST(ProcessCommandLineArgs, EmptyCommitHash) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=/google/cloud/bar,googleapis_commit_hash=");
+  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(
+      result.status().message(),
+      "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
 }
 
 }  // namespace
