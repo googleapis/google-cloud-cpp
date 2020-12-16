@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
+#include "google/cloud/bigtable/internal/logging_admin_client.h"
+#include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
@@ -114,12 +116,6 @@ AdminClient::AsyncRestoreTable(
   return {};
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
-}  // namespace cloud
-}  // namespace google
-
-namespace {
 namespace btadmin = google::bigtable::admin::v2;
 
 /**
@@ -444,16 +440,18 @@ class DefaultAdminClient : public google::cloud::bigtable::AdminClient {
   std::string project_;
   Impl impl_;
 };
-}  // anonymous namespace
 
-namespace google {
-namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
-std::shared_ptr<AdminClient> CreateDefaultAdminClient(std::string project,
-                                                      ClientOptions options) {
-  return std::make_shared<DefaultAdminClient>(std::move(project),
-                                              std::move(options));
+std::shared_ptr<AdminClient> CreateDefaultAdminClient(
+    std::string project,
+    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
+  std::shared_ptr<AdminClient> client =
+      std::make_shared<DefaultAdminClient>(std::move(project), options);
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    client = std::make_shared<internal::LoggingAdminClient>(
+        std::move(client), options.tracing_options());
+  }
+  return client;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

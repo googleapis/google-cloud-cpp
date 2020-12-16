@@ -17,6 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "absl/memory/memory.h"
@@ -32,7 +33,9 @@ namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Not;
+
 namespace btadmin = google::bigtable::admin::v2;
 
 class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
@@ -313,6 +316,99 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   EXPECT_STATUS_OK(instance_admin.DeleteInstance(id));
 }
 
+/// @test Verify rpc logging for `bigtable::TableAdmin`
+TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
+  using GC = bigtable::GcRule;
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  std::string const table_id = RandomTableId();
+
+  std::shared_ptr<bigtable::AdminClient> admin_client =
+      bigtable::CreateDefaultAdminClient(
+          bigtable::testing::TableTestEnvironment::project_id(),
+          bigtable::ClientOptions().enable_tracing("rpc"));
+  auto table_admin = absl::make_unique<bigtable::TableAdmin>(
+      admin_client, bigtable::testing::TableTestEnvironment::instance_id());
+
+  // verify new table id in current table list
+  auto previous_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(previous_table_list);
+  ASSERT_THAT(
+      TableNames(*previous_table_list),
+      Not(Contains(table_admin->instance_name() + "/tables/" + table_id)))
+      << "Table (" << table_id << ") already exists."
+      << " This is unexpected, as the table ids are generated at random.";
+
+  // create table config
+  bigtable::TableConfig table_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  // create table
+  ASSERT_STATUS_OK(table_admin->CreateTable(table_id, table_config));
+  bigtable::Table table(data_client_, table_id);
+
+  // verify new table was created
+  auto table_result = table_admin->GetTable(table_id);
+  ASSERT_STATUS_OK(table_result);
+  EXPECT_EQ(table.table_name(), table_result->name())
+      << "Mismatched names for GetTable(" << table_id
+      << "): " << table.table_name() << " != " << table_result->name();
+
+  // get table
+  auto table_detailed = table_admin->GetTable(table_id, btadmin::Table::FULL);
+  ASSERT_STATUS_OK(table_detailed);
+  auto count_matching_families = [](btadmin::Table const& table,
+                                    std::string const& name) {
+    int count = 0;
+    for (auto const& kv : table.column_families()) {
+      if (kv.first == name) {
+        ++count;
+      }
+    }
+    return count;
+  };
+  EXPECT_EQ(1, count_matching_families(*table_detailed, "fam"));
+  EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
+
+  // update table
+  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
+      bigtable::ColumnFamilyModification::Create(
+          "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
+                                     GC::MaxNumVersions(1))),
+      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
+      bigtable::ColumnFamilyModification::Drop("foo")};
+
+  auto table_modified =
+      table_admin->ModifyColumnFamilies(table_id, column_modification_list);
+  ASSERT_STATUS_OK(table_modified);
+  EXPECT_EQ(1, count_matching_families(*table_modified, "fam"));
+  EXPECT_EQ(0, count_matching_families(*table_modified, "foo"));
+  EXPECT_EQ(1, count_matching_families(*table_modified, "newfam"));
+  auto const& gc = table_modified->column_families().at("newfam").gc_rule();
+  EXPECT_TRUE(gc.has_intersection());
+  EXPECT_EQ(2, gc.intersection().rules_size());
+
+  // delete table
+  EXPECT_STATUS_OK(table_admin->DeleteTable(table_id));
+  // List to verify it is no longer there
+  auto current_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(current_table_list);
+  EXPECT_THAT(
+      TableNames(*current_table_list),
+      Not(Contains(table_admin->instance_name() + "/tables/" + table_id)));
+
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListTables")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateTable")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetTable")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ModifyColumnFamilies")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
