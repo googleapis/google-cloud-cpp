@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "generator/integration_tests/golden/internal/database_admin_stub_factory.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/internal/database_admin_logging_decorator.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/internal/database_admin_metadata_decorator.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/internal/database_admin_stub.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_logging_decorator.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_metadata_decorator.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_stub.gcpcxx.pb.h"
 #include "google/cloud/log.h"
 #include <memory>
 
@@ -28,25 +28,22 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-std::shared_ptr<DatabaseAdminStub>
-CreateDefaultDatabaseAdminStub(golden::DatabaseAdminConnectionOptions const& options) {
+std::shared_ptr<IAMCredentialsStub>
+CreateDefaultIAMCredentialsStub(golden::IAMCredentialsConnectionOptions const& options) {
   auto channel =
       grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
                                 options.CreateChannelArguments());
   auto service_grpc_stub =
-      ::google::test::admin::database::v1::DatabaseAdmin::NewStub(channel);
-  auto longrunning_grpc_stub =
-      google::longrunning::Operations::NewStub(channel);
+      ::google::test::admin::database::v1::IAMCredentials::NewStub(channel);
+  std::shared_ptr<IAMCredentialsStub> stub =
+      std::make_shared<DefaultIAMCredentialsStub>(
+          std::move(service_grpc_stub));
 
-  std::shared_ptr<DatabaseAdminStub> stub =
-      std::make_shared<DefaultDatabaseAdminStub>(
-          std::move(service_grpc_stub), std::move(longrunning_grpc_stub));
-
-  stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
+  stub = std::make_shared<IAMCredentialsMetadata>(std::move(stub));
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<DatabaseAdminLogging>(std::move(stub),
+    stub = std::make_shared<IAMCredentialsLogging>(std::move(stub),
                                                   options.tracing_options());
   }
   return stub;

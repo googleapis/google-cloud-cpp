@@ -373,10 +373,10 @@ VarsDictionary CreateServiceVars(
   vars["connection_header_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()),
       "_connection", GeneratedFileSuffix(), ".h");
-  vars["connection_options_header_path"] = absl::StrCat(
-      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".h");
-  vars["connection_options_cc_path"] = absl::StrCat(
-      vars["product_path"], "connection_options", GeneratedFileSuffix(), ".cc");
+  vars["connection_options_name"] =
+      absl::StrCat(descriptor.name(), "ConnectionOptions");
+  vars["connection_options_traits_name"] =
+      absl::StrCat(descriptor.name(), "ConnectionOptionsTraits");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
   vars["idempotency_class_name"] =
       absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");
@@ -386,6 +386,10 @@ VarsDictionary CreateServiceVars(
   vars["idempotency_policy_header_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()),
       "_connection_idempotency_policy", GeneratedFileSuffix(), ".h");
+  vars["limited_error_count_retry_policy_name"] =
+      absl::StrCat(descriptor.name(), "LimitedErrorCountRetryPolicy");
+  vars["limited_time_retry_policy_name"] =
+      absl::StrCat(descriptor.name(), "LimitedTimeRetryPolicy");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] =
       absl::StrCat(vars["product_path"], "internal/",
@@ -416,8 +420,8 @@ VarsDictionary CreateServiceVars(
   vars["proto_file_name"] = descriptor.file()->name();
   vars["proto_grpc_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
-  vars["retry_policy_header_path"] = absl::StrCat(
-      vars["product_path"], "retry_policy", GeneratedFileSuffix(), ".h");
+  vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
+  vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
       absl::StrCat(vars["product_path"], "retry_traits", ".h");
   vars["service_endpoint"] =
@@ -486,9 +490,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   code_generators.push_back(absl::make_unique<ConnectionGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
-  code_generators.push_back(absl::make_unique<ConnectionOptionsGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
   code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
@@ -499,9 +500,6 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
-      service, service_vars, CreateMethodVars(*service, service_vars),
-      context));
-  code_generators.push_back(absl::make_unique<RetryPolicyGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubGenerator>(

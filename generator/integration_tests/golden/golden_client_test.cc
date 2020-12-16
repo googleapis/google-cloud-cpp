@@ -35,8 +35,8 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 TEST(GoldenClientTest, CopyMoveEquality) {
-  auto conn1 = std::make_shared<MockDatabaseAdminConnection>();
-  auto conn2 = std::make_shared<MockDatabaseAdminConnection>();
+  auto conn1 = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
+  auto conn2 = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
 
   DatabaseAdminClient c1(conn1);
   DatabaseAdminClient c2(conn2);
@@ -61,7 +61,7 @@ TEST(GoldenClientTest, CopyMoveEquality) {
 }
 
 TEST(GoldenClientTest, ListDatabases) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabases)
@@ -99,7 +99,7 @@ TEST(GoldenClientTest, ListDatabases) {
 }
 
 TEST(GoldenClientTest, CreateDatabase) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -141,7 +141,7 @@ TEST(GoldenClientTest, CreateDatabase) {
 }
 
 TEST(GoldenClientTest, GetDatabase) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabase)
@@ -167,7 +167,7 @@ TEST(GoldenClientTest, GetDatabase) {
 }
 
 TEST(GoldenClientTest, UpdateDatabase) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
@@ -199,7 +199,7 @@ TEST(GoldenClientTest, UpdateDatabase) {
 }
 
 TEST(GoldenClientTest, DropDatabase) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, DropDatabase)
@@ -221,7 +221,7 @@ TEST(GoldenClientTest, DropDatabase) {
 }
 
 TEST(GoldenClientTest, GetDatabaseDdl) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabaseDdl)
@@ -247,7 +247,7 @@ TEST(GoldenClientTest, GetDatabaseDdl) {
 }
 
 TEST(GoldenClientTest, SetIamPolicy) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, SetIamPolicy)
@@ -269,7 +269,7 @@ TEST(GoldenClientTest, SetIamPolicy) {
 }
 
 TEST(GoldenClientTest, GetIamPolicy) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string const expected_role = "roles/spanner.databaseReader";
@@ -303,7 +303,7 @@ TEST(GoldenClientTest, GetIamPolicy) {
 }
 
 TEST(GoldenClientTest, TestIamPermissions) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string expected_permission = "spanner.databases.read";
@@ -335,7 +335,7 @@ TEST(GoldenClientTest, TestIamPermissions) {
 }
 
 TEST(GoldenClientTest, CreateBackup) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -386,7 +386,7 @@ TEST(GoldenClientTest, CreateBackup) {
 }
 
 TEST(GoldenClientTest, GetBackup) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, GetBackup)
@@ -417,7 +417,7 @@ TEST(GoldenClientTest, GetBackup) {
 }
 
 TEST(GoldenClientTest, UpdateBackupExpireTime) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   std::chrono::system_clock::time_point expire_time =
@@ -467,7 +467,7 @@ TEST(GoldenClientTest, UpdateBackupExpireTime) {
 }
 
 TEST(GoldenClientTest, DeleteBackup) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, DeleteBackup)
@@ -489,7 +489,7 @@ TEST(GoldenClientTest, DeleteBackup) {
 }
 
 TEST(GoldenClientTest, ListBackups) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackups)
@@ -524,7 +524,7 @@ TEST(GoldenClientTest, ListBackups) {
 }
 
 TEST(GoldenClientTest, RestoreDatabase) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -568,7 +568,7 @@ TEST(GoldenClientTest, RestoreDatabase) {
 }
 
 TEST(GoldenClientTest, ListDatabaseOperations) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabaseOperations)
@@ -605,7 +605,7 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
 }
 
 TEST(GoldenClientTest, ListBackupOperations) {
-  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  auto mock = std::make_shared<golden_mocks::MockDatabaseAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackupOperations)

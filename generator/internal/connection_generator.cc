@@ -47,17 +47,46 @@ Status ConnectionGenerator::GenerateHeader() {
 
   // includes
   HeaderLocalIncludes(
-      {vars("connection_options_header_path"),
-       vars("idempotency_policy_header_path"), vars("stub_header_path"),
-       vars("retry_policy_header_path"), "google/cloud/backoff_policy.h",
-       "google/cloud/future.h", "google/cloud/internal/pagination_range.h",
+      {vars("idempotency_policy_header_path"), vars("stub_header_path"),
+       vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
+       "google/cloud/connection_options.h", "google/cloud/future.h",
+       "google/cloud/internal/pagination_range.h",
        "google/cloud/polling_policy.h", "google/cloud/status_or.h",
        "google/cloud/version.h"});
-  HeaderSystemIncludes({"google/longrunning/operations.grpc.pb.h", "memory"});
+  HeaderSystemIncludes(
+      {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
+       "memory"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
+
+  // connection options
+  HeaderPrint(  // clang-format off
+    "struct $connection_options_traits_name$ {\n"
+    "  static std::string default_endpoint();\n"
+    "  static std::string user_agent_prefix();\n"
+    "  static int default_num_channels();\n"
+    "};\n\n");
+  // clang-format on
+
+  HeaderPrint(  // clang-format off
+    "using $connection_options_name$ =\n"
+    "  google::cloud::ConnectionOptions<$connection_options_traits_name$>;\n\n");
+  // clang-format on
+
+  HeaderPrint(  // clang-format off
+    "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
+    "    $product_internal_namespace$::$retry_traits_name$>;\n"
+    "\n"
+    "using $limited_time_retry_policy_name$ = google::cloud::internal::LimitedTimeRetryPolicy<\n"
+    "    $product_internal_namespace$::$retry_traits_name$>;\n"
+    "\n"
+    "using $limited_error_count_retry_policy_name$ =\n"
+    "    google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
+    "        $product_internal_namespace$::$retry_traits_name$>;\n\n"
+    //  clang-format on
+  );
 
   // List*Range types
   for (auto const& method : methods()) {
@@ -127,13 +156,13 @@ Status ConnectionGenerator::GenerateHeader() {
 
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    ConnectionOptions const& options = ConnectionOptions());\n\n");
+    "    $connection_options_name$ const& options = $connection_options_name$());\n\n");
   // clang-format on
 
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    ConnectionOptions const& options,\n"
-    "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+    "    $connection_options_name$ const& options,\n"
+    "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
     "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
@@ -142,7 +171,7 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
-    "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+    "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
     "    std::unique_ptr<$idempotency_class_name$> idempotency_policy);\n\n");
@@ -165,15 +194,29 @@ Status ConnectionGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes({vars("connection_header_path"),
-                   vars("stub_factory_header_path"),
-                   "google/cloud/internal/polling_loop.h",
-                   "google/cloud/internal/retry_loop.h"});
+  CcLocalIncludes(
+      {vars("connection_header_path"), vars("stub_factory_header_path"),
+       HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
+       "google/cloud/internal/retry_loop.h",
+       "google/cloud/internal/user_agent_prefix.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
+
+  CcPrint(  // clang-format off
+    "std::string $connection_options_traits_name$::default_endpoint() {\n"
+    "  return \"$service_endpoint$\";\n"
+    "}\n\n");
+  // clang-format on
+
+  CcPrint(  // clang-format off
+    "std::string $connection_options_traits_name$::user_agent_prefix() {\n"
+    "  return google::cloud::internal::UserAgentPrefix();\n"
+    "}\n\n"
+    "int $connection_options_traits_name$::default_num_channels() { return 4; }\n\n");
+  // clang-format on
 
   CcPrint(  // clang-format off
     "$connection_class_name$::~$connection_class_name$() = default;\n\n");
@@ -239,8 +282,8 @@ Status ConnectionGenerator::GenerateCc() {
 
   // default policies
   CcPrint(  // clang-format off
-    "std::unique_ptr<RetryPolicy> DefaultRetryPolicy() {\n"
-    "  return LimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();\n"
+    "std::unique_ptr<$retry_policy_name$> DefaultRetryPolicy() {\n"
+    "  return $limited_time_retry_policy_name$(std::chrono::minutes(30)).clone();\n"
     "}\n"
     "\n"
     "std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {\n"
@@ -252,8 +295,8 @@ Status ConnectionGenerator::GenerateCc() {
     "\n"
     "std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {\n"
     "  auto constexpr kBackoffScaling = 2.0;\n"
-    "  return GenericPollingPolicy<LimitedTimeRetryPolicy, ExponentialBackoffPolicy>(\n"
-    "             LimitedTimeRetryPolicy(std::chrono::minutes(30)),\n"
+    "  return GenericPollingPolicy<$limited_time_retry_policy_name$, ExponentialBackoffPolicy>(\n"
+    "             $limited_time_retry_policy_name$(std::chrono::minutes(30)),\n"
     "             ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
     "                                      std::chrono::minutes(5), kBackoffScaling))\n"
     "      .clone();\n"
@@ -268,7 +311,7 @@ Status ConnectionGenerator::GenerateCc() {
       "  explicit $connection_class_name$Impl(\n"
       "      std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
       "stub,\n"
-      "      std::unique_ptr<RetryPolicy> retry_policy,\n"
+      "      std::unique_ptr<$retry_policy_name$> retry_policy,\n"
       "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"
       "      std::unique_ptr<PollingPolicy> polling_policy,\n"
       "      std::unique_ptr<$idempotency_class_name$> "
@@ -352,7 +395,7 @@ Status ConnectionGenerator::GenerateCc() {
     "    request.clear_page_token();\n"
     "    auto stub = stub_;\n"
     "    auto retry =\n"
-    "        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());\n"
+    "        std::shared_ptr<$retry_policy_name$ const>(retry_policy_prototype_->clone());\n"
     "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
     "        backoff_policy_prototype_->clone());\n"
     "    auto idempotency = idempotency_policy_->$method_name$(request);\n"
@@ -387,9 +430,10 @@ Status ConnectionGenerator::GenerateCc() {
     " private:\n");
   // clang-format on
 
-  // TODO(#4038) - use the (implicit) completion queue to run this loop, and
-  // once using a completion queue, consider changing to AsyncCancelOperation.
-  CcPrint(  // clang-format off
+  if (HasLongrunningMethod()) {
+    // TODO(#4038) - use the (implicit) completion queue to run this loop, and
+    // once using a completion queue, consider changing to AsyncCancelOperation.
+    CcPrint(  // clang-format off
     "  template <typename MethodResponse, template<typename> class Extractor,\n"
     "    typename Stub>\n"
     "  future<StatusOr<MethodResponse>>\n"
@@ -429,8 +473,9 @@ Status ConnectionGenerator::GenerateCc() {
     "    t.detach();\n"
     "    return f;\n"
     "  }\n\n"
-      );
-  // clang-format on
+    );
+    // clang-format on
+  }
 
   for (auto const& method : methods()) {
     CcPrintMethod(
@@ -458,7 +503,7 @@ Status ConnectionGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
-    "  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;\n"
+    "  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;\n"
     "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"
     "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n"
     "  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
@@ -469,7 +514,7 @@ Status ConnectionGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    ConnectionOptions const& options) {\n"
+    "    $connection_options_name$ const& options) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options));\n"
     "}\n\n");
@@ -477,8 +522,8 @@ Status ConnectionGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> "
-    "retry_policy,\n"
+    "    $connection_options_name$ const& options,\n"
+    "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
     "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"
@@ -492,7 +537,7 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
-    "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+    "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
     "    std::unique_ptr<PollingPolicy> polling_policy,\n"
     "    std::unique_ptr<$idempotency_class_name$> idempotency_policy) {\n"

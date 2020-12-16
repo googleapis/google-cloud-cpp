@@ -32,6 +32,7 @@ class AsyncAwaitConsistency;
 class AsyncCheckConsistency;
 template <typename Client, typename Response>
 class AsyncLongrunningOperation;
+class LoggingAdminClient;
 }  // namespace internal
 
 /**
@@ -87,6 +88,8 @@ class AdminClient {
   friend class internal::AsyncCheckConsistency;
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
+  friend class internal::LoggingAdminClient;
+
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` operations.
   virtual grpc::Status CreateTable(

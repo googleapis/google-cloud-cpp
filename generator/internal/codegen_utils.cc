@@ -86,6 +86,9 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
   if (ns_type == NamespaceType::kInternal) {
     absl::StrAppend(&name, "_internal");
   }
+  if (ns_type == NamespaceType::kMocks) {
+    absl::StrAppend(&name, "_mocks");
+  }
 
   return std::vector<std::string>{"google", "cloud", name,
                                   "GOOGLE_CLOUD_CPP_NS"};

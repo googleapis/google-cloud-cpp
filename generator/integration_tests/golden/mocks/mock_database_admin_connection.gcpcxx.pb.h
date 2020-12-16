@@ -23,14 +23,14 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_mocks {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
-class MockDatabaseAdminConnection : public DatabaseAdminConnection {
+class MockDatabaseAdminConnection : public golden::DatabaseAdminConnection {
  public:
   ~MockDatabaseAdminConnection() = default;
 
-  MOCK_METHOD(ListDatabasesRange,
+  MOCK_METHOD(golden::ListDatabasesRange,
   ListDatabases,
   (::google::test::admin::database::v1::ListDatabasesRequest request), (override));
 
@@ -82,7 +82,7 @@ class MockDatabaseAdminConnection : public DatabaseAdminConnection {
   DeleteBackup,
   (::google::test::admin::database::v1::DeleteBackupRequest const& request), (override));
 
-  MOCK_METHOD(ListBackupsRange,
+  MOCK_METHOD(golden::ListBackupsRange,
   ListBackups,
   (::google::test::admin::database::v1::ListBackupsRequest request), (override));
 
@@ -90,18 +90,18 @@ class MockDatabaseAdminConnection : public DatabaseAdminConnection {
   RestoreDatabase,
   (::google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
 
-  MOCK_METHOD(ListDatabaseOperationsRange,
+  MOCK_METHOD(golden::ListDatabaseOperationsRange,
   ListDatabaseOperations,
   (::google::test::admin::database::v1::ListDatabaseOperationsRequest request), (override));
 
-  MOCK_METHOD(ListBackupOperationsRange,
+  MOCK_METHOD(golden::ListBackupOperationsRange,
   ListBackupOperations,
   (::google::test::admin::database::v1::ListBackupOperationsRequest request), (override));
 
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace golden
+}  // namespace golden_mocks
 }  // namespace cloud
 }  // namespace google
 

@@ -237,7 +237,8 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   }
   return std::unique_ptr<ResumableUploadSession>(
       absl::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), std::move(response->upload_session_url)));
+          shared_from_this(), std::move(response->upload_session_url),
+          std::move(request.template GetOption<CustomHeader>())));
 }
 
 CurlClient::CurlClient(ClientOptions options)

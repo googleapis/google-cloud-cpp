@@ -20,12 +20,23 @@
 #include "generator/integration_tests/golden/internal/database_admin_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+std::string DatabaseAdminConnectionOptionsTraits::default_endpoint() {
+  return "test.googleapis.com";
+}
+
+std::string DatabaseAdminConnectionOptionsTraits::user_agent_prefix() {
+  return google::cloud::internal::UserAgentPrefix();
+}
+
+int DatabaseAdminConnectionOptionsTraits::default_num_channels() { return 4; }
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
@@ -164,8 +175,8 @@ ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
 }
 
 namespace {
-std::unique_ptr<RetryPolicy> DefaultRetryPolicy() {
-  return LimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
+std::unique_ptr<DatabaseAdminRetryPolicy> DefaultRetryPolicy() {
+  return DatabaseAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
 }
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
@@ -177,8 +188,8 @@ std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
 
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return GenericPollingPolicy<LimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
-             LimitedTimeRetryPolicy(std::chrono::minutes(30)),
+  return GenericPollingPolicy<DatabaseAdminLimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
+             DatabaseAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)),
              ExponentialBackoffPolicy(std::chrono::seconds(10),
                                       std::chrono::minutes(5), kBackoffScaling))
       .clone();
@@ -188,7 +199,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
  public:
   explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
-      std::unique_ptr<RetryPolicy> retry_policy,
+      std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::unique_ptr<PollingPolicy> polling_policy,
       std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy)
@@ -214,7 +225,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabases(request);
@@ -418,7 +429,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackups(request);
@@ -467,7 +478,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabaseOperations(request);
@@ -497,7 +508,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<DatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackupOperations(request);
@@ -600,7 +611,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   }
 
   std::shared_ptr<golden_internal::DatabaseAdminStub> stub_;
-  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<DatabaseAdminRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
   std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy_;
@@ -608,13 +619,14 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 }  // namespace
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options) {
+    DatabaseAdminConnectionOptions const& options) {
   return std::make_shared<DatabaseAdminConnectionImpl>(
       golden_internal::CreateDefaultDatabaseAdminStub(options));
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    DatabaseAdminConnectionOptions const& options,
+    std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {
@@ -626,7 +638,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {
