@@ -335,7 +335,7 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
   google::protobuf::io::ZeroCopyInputStream* Open(
       const std::string& filename) override {
     return files_.count(filename) == 1
-               ? new ::google::protobuf::io::ArrayInputStream(
+               ? new google::protobuf::io::ArrayInputStream(
                      files_[filename].data(),
                      static_cast<int>(files_[filename].size()))
                : nullptr;

@@ -109,6 +109,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
     return Status(StatusCode::kInvalidArgument,
                   "--cpp_codegen_opt=product_path=<path> must be specified.");
   }
+
   auto& path = product_path->second;
   if (path.front() == '/') {
     path = path.substr(1);
