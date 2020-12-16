@@ -42,6 +42,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    constexpr int kMaxInstanceIdLength = 33;
+    constexpr int kMinInstanceIdLength = 6;
+    if (((request->instance_id()).size() > kMaxInstanceIdLength) &&
+        ((request->instance_id()).size() < kMinInstanceIdLength)) {
+      throw std::invalid_argument(
+          "instance_id length should be between [6,33] ");
+    }
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
@@ -195,6 +202,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    constexpr int kMaxClusterIdLength = 30;
+    constexpr int kMinClusterIdLength = 6;
+    if (((request->cluster_id()).size() > kMaxClusterIdLength) &&
+        ((request->cluster_id()).size() < kMinClusterIdLength)) {
+      throw std::invalid_argument(
+          "cluster_id length should be between [6,30] ");
+    }
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
     if (ins.second) {
@@ -315,6 +329,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    constexpr int kMaxAppProfileIdLength = 50;
+    constexpr int kMinAppProfileIdLength = 1;
+    if (((request->app_profile_id()).size() > kMaxAppProfileIdLength) &&
+        ((request->app_profile_id()).size() < kMinAppProfileIdLength)) {
+      throw std::invalid_argument(
+          "app_profile_id length should be between [1,50] ");
+    }
     auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
     auto ins = app_profiles_.emplace(name, request->app_profile());
     if (ins.second) {
