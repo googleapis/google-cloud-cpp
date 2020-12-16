@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['exponentialbackoffpolicy_1403',['ExponentialBackoffPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5',1,'google::cloud::v1']]]
+  ['cellvaluetype_1405',['CellValueType',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a9ae51ee90d5921cb806c7d464dec37bf',1,'google::cloud::bigtable::CellValueType()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a9ae51ee90d5921cb806c7d464dec37bf',1,'google::cloud::bigtable::v1::CellValueType()']]],
+  ['clientutils_1406',['ClientUtils',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4232a27fbff13a40a0ad98fd95eb4a9d',1,'google::cloud::bigtable::ClientUtils()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4232a27fbff13a40a0ad98fd95eb4a9d',1,'google::cloud::bigtable::v1::ClientUtils()']]],
+  ['columnqualifiertype_1407',['ColumnQualifierType',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac6215a28fc3b8853f6cd8d9288ce7e31',1,'google::cloud::bigtable::ColumnQualifierType()'],['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac6215a28fc3b8853f6cd8d9288ce7e31',1,'google::cloud::bigtable::v1::ColumnQualifierType()']]]
 ];
