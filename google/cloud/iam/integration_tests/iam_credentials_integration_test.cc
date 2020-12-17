@@ -37,9 +37,10 @@ class IamCredentialsIntegrationTest : public ::testing::Test {
     logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
     rpc_tracing_options_.enable_tracing("rpc");
 
-    iam_service_account_ = google::cloud::internal::GetEnv(
-                               "GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT")
-                               .value_or("");
+//    iam_service_account_ = google::cloud::internal::GetEnv(
+//                               "GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT")
+//                               .value_or("");
+    iam_service_account_ = "kokoro-run@cloud-cpp-testing-resources.iam.gserviceaccount.com";
     invalid_iam_service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT")
