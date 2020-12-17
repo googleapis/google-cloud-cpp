@@ -685,6 +685,72 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
                "");
 }
 
+TEST(PredicateUtilsTest, HasPaginatedMethodTrue) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "repeated_field"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_MESSAGE
+        type_name: "google.protobuf.Bar"
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(HasPaginatedMethod(*service_file_descriptor->service(0)));
+}
+
+TEST(PredicateUtilsTest, HasPaginatedMethodFalse) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Input" }
+    message_type { name: "Output" }
+    service {
+      name: "Service"
+      method {
+        name: "NoPageSize"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(HasPaginatedMethod(*service_file_descriptor->service(0)));
+}
+
 TEST(PredicateUtilsTest, PredicatedFragmentTrueString) {
   int const unused = 0;
   PredicatedFragment<int> f = {PredicateTrue, "True", "False"};
