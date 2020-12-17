@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 DatabaseAdminLogging::DatabaseAdminLogging(
     std::shared_ptr<DatabaseAdminStub> child,
@@ -256,8 +256,8 @@ Status DatabaseAdminLogging::CancelOperation(
       },
       context, request, __func__, tracing_options_);
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

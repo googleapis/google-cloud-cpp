@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace iam_internal {
 
 class IAMCredentialsLogging : public IAMCredentialsStub {
  public:
@@ -59,8 +59,8 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
   TracingOptions tracing_options_;
 };  // IAMCredentialsLogging
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

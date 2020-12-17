@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -565,7 +565,7 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

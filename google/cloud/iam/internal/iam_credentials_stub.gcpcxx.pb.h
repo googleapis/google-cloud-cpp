@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace iam_internal {
 
 class IAMCredentialsStub {
  public:
@@ -84,8 +84,8 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
       grpc_stub_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

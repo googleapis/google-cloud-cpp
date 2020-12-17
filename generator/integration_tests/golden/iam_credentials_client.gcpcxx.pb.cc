@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 IAMCredentialsClient::IAMCredentialsClient(std::shared_ptr<IAMCredentialsConnection> connection) : connection_(std::move(connection)) {}
 IAMCredentialsClient::~IAMCredentialsClient() = default;
@@ -57,8 +57,8 @@ IAMCredentialsClient::GenerateIdToken(::google::test::admin::database::v1::Gener
   return connection_->GenerateIdToken(request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

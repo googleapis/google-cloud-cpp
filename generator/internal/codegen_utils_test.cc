@@ -20,6 +20,8 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::testing::ElementsAre;
+
 TEST(GeneratedFileSuffix, Success) {
   EXPECT_EQ(".gcpcxx.pb", GeneratedFileSuffix());
 }
@@ -85,75 +87,66 @@ TEST(ProtoNameToCppName, Success) {
 TEST(BuildNamespaces, NoDirectoryPathInternal) {
   auto result = BuildNamespaces("/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("_internal", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "_internal"));
 }
 
 TEST(BuildNamespaces, OneDirectoryPathInternal) {
   auto result = BuildNamespaces("one/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("one_internal", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "one_internal"));
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathInternal) {
   auto result = BuildNamespaces("unusual/product/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("unusual_product_internal", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "unusual_product_internal"));
 }
 
 TEST(BuildNamespaces, TwoDirectoryPathNotInternal) {
   auto result = BuildNamespaces("unusual/product/");
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("unusual_product", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "unusual_product"));
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathInternal) {
   auto result =
       BuildNamespaces("google/cloud/spanner/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("spanner_internal", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "spanner_internal"));
+}
+
+TEST(BuildNamespaces, ThreeDirectoryPathMocks) {
+  auto result = BuildNamespaces("google/cloud/spanner/", NamespaceType::kMocks);
+  ASSERT_EQ(result.size(), 4);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "spanner_mocks"));
 }
 
 TEST(BuildNamespaces, ThreeDirectoryPathNotInternal) {
   auto result = BuildNamespaces("google/cloud/translation/");
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("translation", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "translation"));
 }
 
 TEST(BuildNamespaces, FourDirectoryPathInternal) {
   auto result =
       BuildNamespaces("google/cloud/foo/bar/baz/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("foo_bar_baz_internal", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "foo_bar_baz_internal"));
 }
 
 TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
   auto result = BuildNamespaces("google/cloud/foo/bar/baz/");
   ASSERT_EQ(result.size(), 4);
-  EXPECT_EQ("google", result[0]);
-  EXPECT_EQ("cloud", result[1]);
-  EXPECT_EQ("foo_bar_baz", result[2]);
-  EXPECT_EQ("GOOGLE_CLOUD_CPP_NS", result[3]);
+  EXPECT_THAT(result, ElementsAre("google", "cloud", "GOOGLE_CLOUD_CPP_NS",
+                                  "foo_bar_baz"));
 }
 
 TEST(ProcessCommandLineArgs, NoProductPath) {

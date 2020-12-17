@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 class DatabaseAdminMetadata : public DatabaseAdminStub {
  public:
@@ -119,8 +119,8 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   std::string api_client_header_;
 };  // DatabaseAdminMetadata
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

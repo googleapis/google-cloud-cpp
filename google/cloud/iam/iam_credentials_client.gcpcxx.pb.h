@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace iam {
 
 /**
  * A service account is a special type of Google account that belongs to your
@@ -229,8 +229,8 @@ class IAMCredentialsClient {
   std::shared_ptr<IAMCredentialsConnection> connection_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

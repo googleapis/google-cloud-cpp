@@ -18,8 +18,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 namespace {
 
 using google::cloud::internal::Idempotency;
@@ -120,7 +120,7 @@ TEST_F(GoldenIdempotencyPolicyTest, ListBackupOperations) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

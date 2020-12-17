@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace iam_internal {
 
 class IAMCredentialsMetadata : public IAMCredentialsStub {
  public:
@@ -59,8 +59,8 @@ class IAMCredentialsMetadata : public IAMCredentialsStub {
   std::string api_client_header_;
 };  // IAMCredentialsMetadata
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace iam_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

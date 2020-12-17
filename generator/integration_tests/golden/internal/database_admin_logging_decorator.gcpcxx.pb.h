@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 class DatabaseAdminLogging : public DatabaseAdminStub {
  public:
@@ -119,8 +119,8 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
   TracingOptions tracing_options_;
 };  // DatabaseAdminLogging
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

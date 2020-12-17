@@ -21,8 +21,8 @@ using ::testing::Return;
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 namespace {
 class MockGrpcIAMCredentialsStub : public ::google::test::admin::database::v1::
                                        IAMCredentials::StubInterface {
@@ -127,7 +127,7 @@ TEST_F(IAMCredentialsStubTest, GenerateIdToken) {
 }
 
 } // namespace
-} // namespace GOOGLE_CLOUD_CPP_NS
 } // namespace golden_internal
+} // namespace GOOGLE_CLOUD_CPP_NS
 } // namespace cloud
 } // namespace google
