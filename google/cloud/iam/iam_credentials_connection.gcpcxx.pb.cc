@@ -75,36 +75,23 @@ std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
       .clone();
 }
 
-std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return GenericPollingPolicy<IAMCredentialsLimitedTimeRetryPolicy,
-                              ExponentialBackoffPolicy>(
-             IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30)),
-             ExponentialBackoffPolicy(std::chrono::seconds(10),
-                                      std::chrono::minutes(5), kBackoffScaling))
-      .clone();
-}
-
 class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
  public:
   explicit IAMCredentialsConnectionImpl(
       std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
       std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<PollingPolicy> polling_policy,
       std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
           idempotency_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        polling_policy_prototype_(std::move(polling_policy)),
         idempotency_policy_(std::move(idempotency_policy)) {}
 
   explicit IAMCredentialsConnectionImpl(
       std::shared_ptr<iam_internal::IAMCredentialsStub> stub)
       : IAMCredentialsConnectionImpl(
             std::move(stub), DefaultRetryPolicy(), DefaultBackoffPolicy(),
-            DefaultPollingPolicy(),
             MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()) {}
 
   ~IAMCredentialsConnectionImpl() override = default;
@@ -166,7 +153,6 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   std::shared_ptr<iam_internal::IAMCredentialsStub> stub_;
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
   std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
       idempotency_policy_;
 };
@@ -182,25 +168,23 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     IAMCredentialsConnectionOptions const& options,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
         idempotency_policy) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
       iam_internal::CreateDefaultIAMCredentialsStub(options),
       std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy));
+      std::move(idempotency_policy));
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
         idempotency_policy) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy));
+      std::move(idempotency_policy));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

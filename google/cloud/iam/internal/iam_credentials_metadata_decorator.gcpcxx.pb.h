@@ -19,7 +19,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CREDENTIALS_METADATA_DECORATOR_GCPCXX_PB_H
 
 #include "google/cloud/iam/internal/iam_credentials_stub.gcpcxx.pb.h"
-#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>

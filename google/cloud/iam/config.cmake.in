@@ -20,7 +20,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/iam-targets.cmake")
-
-add_library(googleapis-c++::iam_client IMPORTED INTERFACE)
-set_target_properties(googleapis-c++::iam_client PROPERTIES
-    INTERFACE_LINK_LIBRARIES "iam_client")

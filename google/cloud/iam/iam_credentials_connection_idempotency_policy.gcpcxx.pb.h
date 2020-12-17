@@ -18,7 +18,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_CONNECTION_IDEMPOTENCY_POLICY_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_CONNECTION_IDEMPOTENCY_POLICY_GCPCXX_PB_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"

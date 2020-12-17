@@ -164,6 +164,10 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
+
+    # IAM
+    "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
   )
 
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
@@ -183,14 +187,6 @@ if should_run_integration_tests; then
     excluded_from_production_targets+=("-//google/cloud/pubsub/...")
     io::log_yellow "running pubsub integration tests via Bazel+Emulator"
     "${PROJECT_ROOT}/google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-      "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
-  fi
-
-  if ! test_against_production "iam"; then
-    echo "================================================================"
-    excluded_from_production_targets+=("-//google/cloud/iam/...")
-    io::log_yellow "running iam integration tests via Bazel+Emulator"
-    "${PROJECT_ROOT}/google/cloud/iam/ci/${EMULATOR_SCRIPT}" \
       "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_args[@]}" --test_timeout=600
   fi
 

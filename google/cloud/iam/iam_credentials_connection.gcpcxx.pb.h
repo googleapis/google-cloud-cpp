@@ -23,9 +23,6 @@
 #include "google/cloud/iam/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
-#include "google/cloud/future.h"
-#include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -84,7 +81,6 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     IAMCredentialsConnectionOptions const& options,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
         idempotency_policy);
 
@@ -92,7 +88,6 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
         idempotency_policy);
 
