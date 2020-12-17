@@ -187,6 +187,10 @@ if (Integration-Tests-Enabled) {
         # Spanner
         "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
         "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
+
+        # IAM
+        "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}"
+        "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
     )
     bazel $common_flags test $test_flags $integration_flags `
         "--test_tag_filters=integration-test" `
