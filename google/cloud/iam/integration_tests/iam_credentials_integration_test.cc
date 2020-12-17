@@ -45,8 +45,8 @@ class IamCredentialsIntegrationTest : public ::testing::Test {
             "GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT")
             .value_or("");
 
-    EXPECT_FALSE(iam_service_account_.empty());
-    EXPECT_FALSE(invalid_iam_service_account_.empty());
+    ASSERT_FALSE(iam_service_account_.empty());
+    ASSERT_FALSE(invalid_iam_service_account_.empty());
   }
   void TearDown() override {
     google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
