@@ -91,7 +91,7 @@ PooledCurlHandleFactory::~PooledCurlHandleFactory() {
 CurlPtr PooledCurlHandleFactory::CreateHandle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!handles_.empty()) {
-    CURL* handle = handles_.back();
+    auto* handle = handles_.back();
     // Clear all the options in the handle so we do not leak its previous state.
     (void)curl_easy_reset(handle);
     handles_.pop_back();
@@ -112,7 +112,7 @@ void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
     last_client_ip_address_ = ip;
   }
   if (handles_.size() >= maximum_size_) {
-    CURL* tmp = handles_.front();
+    auto* tmp = handles_.front();
     handles_.erase(handles_.begin());
     curl_easy_cleanup(tmp);
   }
@@ -124,7 +124,7 @@ void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!multi_handles_.empty()) {
-    CURL* m = multi_handles_.back();
+    auto* m = multi_handles_.back();
     multi_handles_.pop_back();
     return CurlMulti(m, &curl_multi_cleanup);
   }
@@ -134,7 +134,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
   std::unique_lock<std::mutex> lk(mu_);
   if (multi_handles_.size() >= maximum_size_) {
-    CURLM* tmp = multi_handles_.front();
+    auto* tmp = multi_handles_.front();
     multi_handles_.erase(multi_handles_.begin());
     curl_multi_cleanup(tmp);
   }
