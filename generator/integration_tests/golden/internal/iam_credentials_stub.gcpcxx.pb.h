@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 class IAMCredentialsStub {
  public:
@@ -62,8 +62,8 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
   std::unique_ptr<::google::test::admin::database::v1::IAMCredentials::StubInterface> grpc_stub_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

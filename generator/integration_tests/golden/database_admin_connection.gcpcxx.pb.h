@@ -33,8 +33,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 struct DatabaseAdminConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -141,8 +141,8 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 DatabaseAdminClient::DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection) : connection_(std::move(connection)) {}
 DatabaseAdminClient::~DatabaseAdminClient() = default;
@@ -240,8 +240,8 @@ DatabaseAdminClient::ListBackupOperations(::google::test::admin::database::v1::L
   return connection_->ListBackupOperations(request);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 using google::cloud::internal::Idempotency;
 
@@ -56,8 +56,8 @@ std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
   return absl::make_unique<DefaultIAMCredentialsConnectionIdempotencyPolicy>();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

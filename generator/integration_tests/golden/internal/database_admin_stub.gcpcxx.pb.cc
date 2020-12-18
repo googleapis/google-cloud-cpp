@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
@@ -276,8 +276,8 @@ Status DefaultDatabaseAdminStub::CancelOperation(
   }
   return google::cloud::Status();
 }
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

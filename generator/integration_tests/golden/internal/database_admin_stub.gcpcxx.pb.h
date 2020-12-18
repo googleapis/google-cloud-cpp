@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 class DatabaseAdminStub {
  public:
@@ -221,8 +221,8 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

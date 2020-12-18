@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 std::string IAMCredentialsConnectionOptionsTraits::default_endpoint() {
   return "iamcredentials.googleapis.com";
@@ -146,8 +146,8 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
       std::move(idempotency_policy));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

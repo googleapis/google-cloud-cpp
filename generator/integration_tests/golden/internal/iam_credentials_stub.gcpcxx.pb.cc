@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 IAMCredentialsStub::~IAMCredentialsStub() = default;
 
@@ -55,8 +55,8 @@ DefaultIAMCredentialsStub::GenerateIdToken(
     return response;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

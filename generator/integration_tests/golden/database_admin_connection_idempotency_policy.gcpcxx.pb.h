@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden {
 
 class DatabaseAdminConnectionIdempotencyPolicy {
  public:
@@ -93,8 +93,8 @@ class DatabaseAdminConnectionIdempotencyPolicy {
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
     MakeDefaultDatabaseAdminConnectionIdempotencyPolicy();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

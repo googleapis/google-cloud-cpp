@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 std::shared_ptr<IAMCredentialsStub>
 CreateDefaultIAMCredentialsStub(golden::IAMCredentialsConnectionOptions const& options) {
@@ -49,8 +49,8 @@ CreateDefaultIAMCredentialsStub(golden::IAMCredentialsConnectionOptions const& o
   return stub;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

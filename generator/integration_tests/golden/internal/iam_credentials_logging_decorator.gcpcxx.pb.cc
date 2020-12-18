@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 IAMCredentialsLogging::IAMCredentialsLogging(
     std::shared_ptr<IAMCredentialsStub> child,
@@ -55,8 +55,8 @@ IAMCredentialsLogging::GenerateIdToken(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace golden_internal {
 
 DatabaseAdminMetadata::DatabaseAdminMetadata(
     std::shared_ptr<DatabaseAdminStub> child)
@@ -187,8 +187,8 @@ void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
