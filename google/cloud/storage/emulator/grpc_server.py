@@ -49,6 +49,12 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         bucket = db.get_bucket(request, bucket_name, context)
         return bucket.metadata
 
+    def UpdateBucket(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        bucket.update(request, context)
+        return bucket.metadata
+
     def DeleteBucket(self, request, context):
         bucket_name = request.bucket
         db.delete_bucket(request, bucket_name, context)

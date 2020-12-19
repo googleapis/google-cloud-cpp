@@ -159,6 +159,64 @@ TEST(GrpcClientBucketRequest, GetBucketRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, UpdateBucketRequestSimple) {
+  storage_proto::UpdateBucketRequest expected;
+  auto constexpr kText = R"pb(
+    bucket: "test-bucket-name"
+    metadata: {
+      name: "test-bucket-name"
+      time_created {}
+      updated {}
+    }
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
+
+  auto metadata = BucketMetadataParser::FromString(R"""({
+    "name": "test-bucket-name"
+})""");
+  EXPECT_STATUS_OK(metadata);
+  UpdateBucketRequest request(*std::move(metadata));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, UpdateBucketRequestAllFields) {
+  storage_proto::UpdateBucketRequest expected;
+  auto constexpr kText = R"pb(
+    bucket: "test-bucket-name"
+    if_metageneration_match: { value: 42 }
+    if_metageneration_not_match: { value: 7 }
+    predefined_acl: BUCKET_ACL_PRIVATE
+    predefined_default_object_acl: OBJECT_ACL_PRIVATE
+    metadata: {
+      name: "test-bucket-name"
+      time_created {}
+      updated {}
+    }
+    projection: FULL
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+  )pb";
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &expected));
+
+  auto metadata = BucketMetadataParser::FromString(R"""({
+    "name": "test-bucket-name"
+})""");
+  EXPECT_STATUS_OK(metadata);
+  UpdateBucketRequest request(*std::move(metadata));
+  request.set_multiple_options(
+      IfMetagenerationMatch(42), IfMetagenerationNotMatch(7),
+      PredefinedAcl::Private(), PredefinedDefaultObjectAcl::Private(),
+      Projection::Full(), UserProject("test-user-project"),
+      QuotaUser("test-quota-user"), UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcClientBucketRequest, DeleteBucketRequestSimple) {
   storage_proto::DeleteBucketRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(

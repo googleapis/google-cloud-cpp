@@ -162,8 +162,15 @@ StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
   return EmptyResponse{};
 }
 
-StatusOr<BucketMetadata> GrpcClient::UpdateBucket(UpdateBucketRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
+    UpdateBucketRequest const& request) {
+  grpc::ClientContext context;
+  google::storage::v1::Bucket response;
+  auto proto_request = ToProto(request);
+  auto status = stub_->UpdateBucket(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(PatchBucketRequest const&) {
@@ -1357,6 +1364,19 @@ google::storage::v1::GetBucketRequest GrpcClient::ToProto(
   SetProjection(r, request);
   SetCommonParameters(r, request);
 
+  return r;
+}
+
+google::storage::v1::UpdateBucketRequest GrpcClient::ToProto(
+    UpdateBucketRequest const& request) {
+  google::storage::v1::UpdateBucketRequest r;
+  r.set_bucket(request.metadata().name());
+  *r.mutable_metadata() = ToProto(request.metadata());
+  SetMetagenerationConditions(r, request);
+  SetPredefinedAcl(r, request);
+  SetPredefinedDefaultObjectAcl(r, request);
+  SetProjection(r, request);
+  SetCommonParameters(r, request);
   return r;
 }
 
