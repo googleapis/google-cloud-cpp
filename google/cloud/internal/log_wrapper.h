@@ -242,6 +242,21 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
   return response;
 }
 
+template <
+    typename Functor, typename Request,
+    typename Result = google::cloud::internal::invoke_result_t<
+        Functor, grpc::ClientContext*, Request const&, grpc::CompletionQueue*>,
+    typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
+Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
+                  Request const& request, grpc::CompletionQueue* cq,
+                  char const* where, TracingOptions const& options) {
+  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
+  auto response = functor(context, request, cq);
+  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
+                 << " async response reader";
+  return response;
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
