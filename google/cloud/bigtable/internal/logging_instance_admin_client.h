@@ -96,7 +96,7 @@ class LoggingInstanceAdminClient
   grpc::Status ListClusters(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ListClustersRequest const& request,
-      google::bigtable::admin::v2::ListClustersResponse* response);
+      google::bigtable::admin::v2::ListClustersResponse* response) override;
 
   grpc::Status GetCluster(
       grpc::ClientContext* context,
@@ -174,7 +174,7 @@ class LoggingInstanceAdminClient
       google::bigtable::admin::v2::Cluster>>
   AsyncGetCluster(grpc::ClientContext* context,
                   google::bigtable::admin::v2::GetClusterRequest const& request,
-                  grpc::CompletionQueue* cq);
+                  grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
