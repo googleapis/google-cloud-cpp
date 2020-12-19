@@ -25,8 +25,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-namespace btadmin = google::bigtable::admin::v2;
-
 /**
  * Implements a logging InstanceAdminClient.
  *
