@@ -246,6 +246,8 @@ class GrpcClient : public RawClient,
       ListBucketsRequest const& request);
   static google::storage::v1::GetBucketRequest ToProto(
       GetBucketMetadataRequest const& request);
+  static google::storage::v1::UpdateBucketRequest ToProto(
+      UpdateBucketRequest const& request);
   static google::storage::v1::DeleteBucketRequest ToProto(
       DeleteBucketRequest const& request);
 

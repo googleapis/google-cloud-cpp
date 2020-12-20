@@ -93,6 +93,20 @@ TEST_P(GrpcIntegrationTest, BucketCRUD) {
   EXPECT_EQ(bucket_name, get->id());
   EXPECT_EQ(bucket_name, get->name());
 
+  // Create a request to update the metadata, change the storage class because
+  // it is easy. And use either COLDLINE or NEARLINE depending on the existing
+  // value.
+  std::string desired_storage_class = storage_class::Coldline();
+  if (get->storage_class() == storage_class::Coldline()) {
+    desired_storage_class = storage_class::Nearline();
+  }
+  BucketMetadata update = *get;
+  update.set_storage_class(desired_storage_class);
+  StatusOr<BucketMetadata> updated_meta =
+      client->UpdateBucket(bucket_name, update);
+  ASSERT_STATUS_OK(updated_meta);
+  EXPECT_EQ(desired_storage_class, updated_meta->storage_class());
+
   auto delete_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_status);
   EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
