@@ -17,6 +17,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -425,6 +426,79 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
+/// @test Verify that Instance CRUD operations with logging work as expected.
+TEST_F(InstanceAdminIntegrationTest,
+       CreateListGetDeleteInstanceTestWithLogging) {
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id_, bigtable::ClientOptions().enable_tracing("rpc"));
+  auto instance_admin =
+      absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+
+  // verify new instance id in list of instances
+  auto instances_before = instance_admin->ListInstances();
+  ASSERT_STATUS_OK(instances_before);
+  ASSERT_TRUE(instances_before->failed_locations.empty());
+  ASSERT_FALSE(IsInstancePresent(instances_before->instances, instance_id))
+      << "Instance (" << instance_id << ") already exists."
+      << " This is unexpected, as the instance ids are"
+      << " generated at random.";
+
+  // create instance
+  auto config = IntegrationTestConfig(instance_id, zone_a_);
+  auto instance = instance_admin->CreateInstance(config).get();
+  ASSERT_STATUS_OK(instance);
+
+  auto instances_current = instance_admin->ListInstances();
+  ASSERT_STATUS_OK(instances_current);
+  ASSERT_TRUE(instances_current->failed_locations.empty());
+  EXPECT_TRUE(
+      IsInstancePresent(instances_current->instances, instance->name()));
+
+  // Get instance
+  auto instance_check = instance_admin->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance_check);
+  auto const npos = std::string::npos;
+  EXPECT_NE(npos, instance_check->name().find(instance_admin->project_name()));
+  EXPECT_NE(npos, instance_check->name().find(instance_id));
+
+  // update instance
+  google::cloud::StatusOr<btadmin::Instance> instance_copy;
+  instance_copy = *instance;
+  bigtable::InstanceUpdateConfig instance_update_config(std::move(*instance));
+  auto const updated_display_name = instance_id + " updated";
+  instance_update_config.set_display_name(updated_display_name);
+  auto instance_after =
+      instance_admin->UpdateInstance(std::move(instance_update_config)).get();
+  auto instance_after_update = instance_admin->GetInstance(instance_id);
+  ASSERT_STATUS_OK(instance_after_update);
+  EXPECT_EQ(updated_display_name, instance_after_update->display_name());
+
+  // Delete instance
+  ASSERT_STATUS_OK(instance_admin->DeleteInstance(instance_id));
+  auto instances_after_delete = instance_admin->ListInstances();
+  ASSERT_STATUS_OK(instances_after_delete);
+  ASSERT_TRUE(instances_after_delete->failed_locations.empty());
+  EXPECT_TRUE(
+      IsInstancePresent(instances_current->instances, instance_copy->name()));
+  EXPECT_FALSE(
+      IsInstancePresent(instances_after_delete->instances, instance->name()));
+
+  auto const log_lines = backend->ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstances")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncCreateInstance")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstance")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncUpdateInstance")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteInstance")));
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

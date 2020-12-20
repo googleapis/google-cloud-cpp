@@ -38,6 +38,7 @@ class AsyncRetryAndPollUnaryRpc;
 class AsyncListClusters;
 class AsyncListInstances;
 class AsyncListAppProfiles;
+class LoggingInstanceAdminClient;
 }  // namespace internal
 
 /**
@@ -96,6 +97,7 @@ class InstanceAdminClient {
   friend class internal::AsyncListClusters;
   friend class internal::AsyncListInstances;
   friend class internal::AsyncListAppProfiles;
+  friend class internal::LoggingInstanceAdminClient;
   //@{
   /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
   virtual grpc::Status ListInstances(
