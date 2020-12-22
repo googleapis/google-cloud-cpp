@@ -38,6 +38,7 @@ template <typename ReadRowCallback,
                   ReadRowCallback, CompletionQueue&, Row, grpc::Status&>::value,
               int>::type>
 class AsyncRowReader;
+class LoggingDataClient;
 }  // namespace internal
 
 /**
@@ -101,6 +102,8 @@ class DataClient {
                                         grpc::Status&>::value,
                                     int>::type>
   friend class internal::AsyncRowReader;
+  friend class internal::LoggingDataClient;
+
   //@{
   /// @name the `google.bigtable.v2.Bigtable` wrappers.
   virtual grpc::Status MutateRow(

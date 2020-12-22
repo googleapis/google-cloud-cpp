@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/internal/common_client.h"
+#include "google/cloud/bigtable/internal/logging_data_client.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/log.h"
 
@@ -23,10 +24,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
-
-using ::google::cloud::internal::LogWrapper;
-
 /**
  * Implement a simple DataClient.
  *
@@ -174,207 +171,17 @@ std::string const& DefaultDataClient::project_id() const { return project_; }
 
 std::string const& DefaultDataClient::instance_id() const { return instance_; }
 
-/**
- * Implement a logging DataClient.
- *
- * This implementation does not support multiple threads, or refresh
- * authorization tokens.  In other words, it is extremely bare bones.
- */
-class DefaultLoggingDataClient : public DataClient {
- private:
-  // Introduce an early `private:` section because this type is used to define
-  // the public interface, it should not be part of the public interface.
-  struct DataTraits {
-    static std::string const& Endpoint(bigtable::ClientOptions& options) {
-      return options.data_endpoint();
-    }
-  };
-
-  using Impl = bigtable::internal::CommonClient<DataTraits, btproto::Bigtable>;
-
- public:
-  DefaultLoggingDataClient(std::string project, std::string instance,
-                           ClientOptions options)
-      : project_(std::move(project)),
-        instance_(std::move(instance)),
-        impl_(std::move(options)) {}
-
-  DefaultLoggingDataClient(std::string project, std::string instance)
-      : DefaultLoggingDataClient(std::move(project), std::move(instance),
-                                 ClientOptions()) {}
-
-  std::string const& project_id() const override;
-  std::string const& instance_id() const override;
-
-  std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
-  void reset() override { impl_.reset(); }
-
-  grpc::Status MutateRow(grpc::ClientContext* context,
-                         btproto::MutateRowRequest const& request,
-                         btproto::MutateRowResponse* response) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::MutateRowRequest const& request,
-               btproto::MutateRowResponse* response) {
-          return impl_.Stub()->MutateRow(context, request, response);
-        },
-        context, request, response, __func__,
-        impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btproto::MutateRowResponse>>
-  AsyncMutateRow(grpc::ClientContext* context,
-                 btproto::MutateRowRequest const& request,
-                 grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncMutateRow(context, request, cq);
-  }
-
-  grpc::Status CheckAndMutateRow(
-      grpc::ClientContext* context,
-      btproto::CheckAndMutateRowRequest const& request,
-      btproto::CheckAndMutateRowResponse* response) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::CheckAndMutateRowRequest const& request,
-               btproto::CheckAndMutateRowResponse* response) {
-          return impl_.Stub()->CheckAndMutateRow(context, request, response);
-        },
-        context, request, response, __func__,
-        impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::v2::CheckAndMutateRowResponse>>
-  AsyncCheckAndMutateRow(
-      grpc::ClientContext* context,
-      const google::bigtable::v2::CheckAndMutateRowRequest& request,
-      grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
-  }
-
-  grpc::Status ReadModifyWriteRow(
-      grpc::ClientContext* context,
-      btproto::ReadModifyWriteRowRequest const& request,
-      btproto::ReadModifyWriteRowResponse* response) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::ReadModifyWriteRowRequest const& request,
-               btproto::ReadModifyWriteRowResponse* response) {
-          return impl_.Stub()->ReadModifyWriteRow(context, request, response);
-        },
-        context, request, response, __func__,
-        impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-      google::bigtable::v2::ReadModifyWriteRowResponse>>
-  AsyncReadModifyWriteRow(
-      grpc::ClientContext* context,
-      google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-      grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->AsyncReadModifyWriteRow(context, request, cq);
-  }
-
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
-  ReadRows(grpc::ClientContext* context,
-           btproto::ReadRowsRequest const& request) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::ReadRowsRequest const& request) {
-          return impl_.Stub()->ReadRows(context, request);
-        },
-        context, request, __func__, impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
-  AsyncReadRows(grpc::ClientContext* context,
-                const google::bigtable::v2::ReadRowsRequest& request,
-                grpc::CompletionQueue* cq, void* tag) override {
-    return impl_.Stub()->AsyncReadRows(context, request, cq, tag);
-  }
-
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::ReadRowsResponse>>
-  PrepareAsyncReadRows(::grpc::ClientContext* context,
-                       const ::google::bigtable::v2::ReadRowsRequest& request,
-                       ::grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->PrepareAsyncReadRows(context, request, cq);
-  }
-
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
-  SampleRowKeys(grpc::ClientContext* context,
-                btproto::SampleRowKeysRequest const& request) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::SampleRowKeysRequest const& request) {
-          return impl_.Stub()->SampleRowKeys(context, request);
-        },
-        context, request, __func__, impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::SampleRowKeysResponse>>
-  AsyncSampleRowKeys(
-      ::grpc::ClientContext* context,
-      const ::google::bigtable::v2::SampleRowKeysRequest& request,
-      ::grpc::CompletionQueue* cq, void* tag) override {
-    return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
-  }
-
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
-  MutateRows(grpc::ClientContext* context,
-             btproto::MutateRowsRequest const& request) override {
-    return LogWrapper(
-        [this](grpc::ClientContext* context,
-               btproto::MutateRowsRequest const& request) {
-          return impl_.Stub()->MutateRows(context, request);
-        },
-        context, request, __func__, impl_.Options().tracing_options());
-  }
-
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::MutateRowsResponse>>
-  AsyncMutateRows(::grpc::ClientContext* context,
-                  const ::google::bigtable::v2::MutateRowsRequest& request,
-                  ::grpc::CompletionQueue* cq, void* tag) override {
-    return impl_.Stub()->AsyncMutateRows(context, request, cq, tag);
-  }
-
-  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-      ::google::bigtable::v2::MutateRowsResponse>>
-  PrepareAsyncMutateRows(
-      ::grpc::ClientContext* context,
-      const ::google::bigtable::v2::MutateRowsRequest& request,
-      ::grpc::CompletionQueue* cq) override {
-    return impl_.Stub()->PrepareAsyncMutateRows(context, request, cq);
-  }
-
- private:
-  std::string project_;
-  std::string instance_;
-  Impl impl_;
-};
-
-std::string const& DefaultLoggingDataClient::project_id() const {
-  return project_;
-}
-
-std::string const& DefaultLoggingDataClient::instance_id() const {
-  return instance_;
-}
-}  // namespace internal
-
-std::shared_ptr<DataClient> CreateDefaultDataClient(std::string project_id,
-                                                    std::string instance_id,
-                                                    ClientOptions options) {
+std::shared_ptr<DataClient> CreateDefaultDataClient(
+    std::string project_id, std::string instance_id,
+    ClientOptions options) {  // NOLINT(performance-unnecessary-value-param)
+  std::shared_ptr<DataClient> client = std::make_shared<DefaultDataClient>(
+      std::move(project_id), std::move(instance_id), options);
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    return std::make_shared<internal::DefaultLoggingDataClient>(
-        std::move(project_id), std::move(instance_id), std::move(options));
+    client = std::make_shared<internal::LoggingDataClient>(
+        std::move(client), options.tracing_options());
   }
-  return std::make_shared<internal::DefaultDataClient>(
-      std::move(project_id), std::move(instance_id), std::move(options));
+  return client;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
