@@ -385,45 +385,54 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   # directories installed.
   echo
   io::log_yellow "Verify installed headers created only expected directories."
+  EXPECTED_DIRS=(
+    "/var/tmp/staging/include/google/cloud"
+    "/var/tmp/staging/include/google/cloud/bigquery"
+    "/var/tmp/staging/include/google/cloud/bigquery/connection"
+    "/var/tmp/staging/include/google/cloud/bigquery/connection/v1beta1"
+    "/var/tmp/staging/include/google/cloud/bigquery/datatransfer"
+    "/var/tmp/staging/include/google/cloud/bigquery/datatransfer/v1"
+    "/var/tmp/staging/include/google/cloud/bigquery/internal"
+    "/var/tmp/staging/include/google/cloud/bigquery/logging"
+    "/var/tmp/staging/include/google/cloud/bigquery/logging/v1"
+    "/var/tmp/staging/include/google/cloud/bigquery/storage"
+    "/var/tmp/staging/include/google/cloud/bigquery/storage/v1beta1"
+    "/var/tmp/staging/include/google/cloud/bigquery/v2"
+    "/var/tmp/staging/include/google/cloud/bigtable"
+    "/var/tmp/staging/include/google/cloud/bigtable/internal"
+    "/var/tmp/staging/include/google/cloud/dialogflow"
+    "/var/tmp/staging/include/google/cloud/dialogflow/v2"
+    "/var/tmp/staging/include/google/cloud/dialogflow/v2beta1"
+    "/var/tmp/staging/include/google/cloud/firestore"
+    "/var/tmp/staging/include/google/cloud/grpc_utils"
+    "/var/tmp/staging/include/google/cloud/iam"
+    "/var/tmp/staging/include/google/cloud/iam/internal"
+    "/var/tmp/staging/include/google/cloud/iam/mocks"
+    "/var/tmp/staging/include/google/cloud/internal"
+    "/var/tmp/staging/include/google/cloud/pubsub"
+    "/var/tmp/staging/include/google/cloud/pubsub/internal"
+    "/var/tmp/staging/include/google/cloud/pubsub/mocks"
+    "/var/tmp/staging/include/google/cloud/spanner"
+    "/var/tmp/staging/include/google/cloud/spanner/internal"
+    "/var/tmp/staging/include/google/cloud/spanner/mocks"
+    "/var/tmp/staging/include/google/cloud/speech"
+    "/var/tmp/staging/include/google/cloud/speech/v1"
+    "/var/tmp/staging/include/google/cloud/storage"
+    "/var/tmp/staging/include/google/cloud/storage/internal"
+    "/var/tmp/staging/include/google/cloud/storage/oauth2"
+    "/var/tmp/staging/include/google/cloud/storage/testing"
+    "/var/tmp/staging/include/google/cloud/testing_util"
+    "/var/tmp/staging/include/google/cloud/texttospeech"
+    "/var/tmp/staging/include/google/cloud/texttospeech/v1")
+  printf "%s\n" "${EXPECTED_DIRS[@]}" | sort | readarray -t EXPECTED_DIRS
+  readonly EXPECTED_DIRS
   if comm -23 \
     <(find /var/tmp/staging/include/google/cloud -type d | sort) \
-    <(
-      echo /var/tmp/staging/include/google/cloud
-      echo /var/tmp/staging/include/google/cloud/bigquery
-      echo /var/tmp/staging/include/google/cloud/bigquery/connection
-      echo /var/tmp/staging/include/google/cloud/bigquery/connection/v1beta1
-      echo /var/tmp/staging/include/google/cloud/bigquery/datatransfer
-      echo /var/tmp/staging/include/google/cloud/bigquery/datatransfer/v1
-      echo /var/tmp/staging/include/google/cloud/bigquery/internal
-      echo /var/tmp/staging/include/google/cloud/bigquery/logging
-      echo /var/tmp/staging/include/google/cloud/bigquery/logging/v1
-      echo /var/tmp/staging/include/google/cloud/bigquery/storage
-      echo /var/tmp/staging/include/google/cloud/bigquery/storage/v1beta1
-      echo /var/tmp/staging/include/google/cloud/bigquery/v2
-      echo /var/tmp/staging/include/google/cloud/bigtable
-      echo /var/tmp/staging/include/google/cloud/bigtable/internal
-      echo /var/tmp/staging/include/google/cloud/firestore
-      echo /var/tmp/staging/include/google/cloud/grpc_utils
-      echo /var/tmp/staging/include/google/cloud/iam
-      echo /var/tmp/staging/include/google/cloud/iam/internal
-      echo /var/tmp/staging/include/google/cloud/iam/mocks
-      echo /var/tmp/staging/include/google/cloud/internal
-      echo /var/tmp/staging/include/google/cloud/pubsub
-      echo /var/tmp/staging/include/google/cloud/pubsub/internal
-      echo /var/tmp/staging/include/google/cloud/pubsub/mocks
-      echo /var/tmp/staging/include/google/cloud/spanner
-      echo /var/tmp/staging/include/google/cloud/spanner/internal
-      echo /var/tmp/staging/include/google/cloud/spanner/mocks
-      echo /var/tmp/staging/include/google/cloud/storage
-      echo /var/tmp/staging/include/google/cloud/storage/internal
-      echo /var/tmp/staging/include/google/cloud/storage/oauth2
-      echo /var/tmp/staging/include/google/cloud/storage/testing
-      echo /var/tmp/staging/include/google/cloud/testing_util
-      /bin/true
-    ) | grep -q /var/tmp; then
-    io::log_red "Installed directories do not match expectation."
-    echo "Found:"
-    find /var/tmp/staging/include/google/cloud -type d | sort
+    <(/usr/bin/printf "%s\n" "${EXPECTED_DIRS[@]}") | grep -q /var/tmp; then
+    io::log_red "Installed directories do not match expectation:"
+    diff -u \
+      <(printf "%s\n" "${EXPECTED_DIRS[@]}") \
+      <(find /var/tmp/staging/include/google/cloud -type d | sort)
     /bin/false
   fi
 
