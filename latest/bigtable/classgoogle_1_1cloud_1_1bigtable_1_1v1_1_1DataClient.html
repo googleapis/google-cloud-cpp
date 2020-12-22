@@ -143,7 +143,7 @@ Friends</h2></td></tr>
 <p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html" title="The main interface to interact with data in a Cloud Bigtable table.">bigtable::Table</a></code> objects may share a connection via a single <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> object. The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests.</p>
 <dl class="section user"><dt>Cost</dt><dd>Applications should avoid unnecessarily creating new objects of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code>. Creating a new object of this type typically requires connecting to the Cloud Bigtable servers, and performing the authentication workflows with Google Cloud Platform. These operations can take many milliseconds, therefore applications should try to reuse the same <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> instances when possible. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00061">61</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00062">62</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9a230382e44f5b3c8e685ab07db5045a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a230382e44f5b3c8e685ab07db5045a">&#9670;&nbsp;</a></span>~DataClient()</h2>
@@ -210,6 +210,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a6d1fc004e4986e57ad594ff46f86629c">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
 </div>
@@ -301,6 +303,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a8df10dfdf8afea7ac03c7ed8197cd396">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="a21cf5bbb7c60ca2e05f2ab648879a93d"></a>
@@ -342,6 +346,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#acd3286e12265734a096e2df5a87cd919">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
 </div>
@@ -391,6 +397,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a23fbcc04bf065d0c36307b01f43843f7">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"></a>
@@ -439,6 +447,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a717d5bab8a6dab25408d60cebd82f15c">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="a2115696f7d074d1046b9bd83be1e30d2"></a>
@@ -466,6 +476,8 @@ Friends</h2></td></tr>
 
 <p>Return a new channel to handle admin operations. </p>
 <p>Intended to access rarely used services in the same endpoints as the Bigtable admin interfaces, for example, the google.longrunning.Operations. </p>
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#acec11fd8cff458e14dd0429828b59d91">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
 </div>
@@ -533,6 +545,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#aefc3a5c7fca3dd242736cb726740ca7e">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
 </div>
@@ -654,6 +668,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#ad4a1d630d1dfedc3989813f4d62cefda">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="ae68fe945a012392ad4ac95ad72ec1120"></a>
@@ -696,6 +712,8 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#af76a9e4fe5d31815bd9008ecb4dab0f4">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="a61a02a1e0c149e7c46cb77cb39ba27e8"></a>
@@ -720,6 +738,8 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#ab321df08ad798b753b2136c37e58892a">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
 </div>
@@ -827,6 +847,8 @@ Friends</h2></td></tr>
 <p>Reset and create new Channels. </p>
 <p>Currently this is only used in testing. In the future, we expect this, or a similar member function, will be needed to handle errors that require a new connection, or an explicit refresh of the credentials. </p>
 
+<p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#aaa155cbc4afef1baec4a418292d07a5a">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
 </div>
 </div>
 <a id="a0b6d807f45d26912ceef3ce774d86007"></a>
@@ -888,7 +910,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00097">97</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00098">98</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -912,7 +934,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00095">95</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00096">96</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -936,7 +958,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00090">90</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00091">91</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
