@@ -399,6 +399,8 @@ target_link_libraries(
     PUBLIC googleapis-c++::api_annotations_protos
            googleapis-c++::api_client_protos
            googleapis-c++::api_field_behavior_protos
+           googleapis-c++::longrunning_operations_protos
+           googleapis-c++::rpc_status_protos
     PRIVATE googleapis_cpp_common_flags)
 
 google_cloud_cpp_grpcpp_library(
