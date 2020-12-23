@@ -539,8 +539,12 @@ target_link_libraries(
     googleapis_cpp_logging_protos
     PUBLIC googleapis-c++::api_annotations_protos
            googleapis-c++::api_client_protos
+        googleapis-c++::api_distribution_protos
            googleapis-c++::api_field_behavior_protos
-           googleapis-c++::logging_type_protos
+        googleapis-c++::api_metric_protos
+        googleapis-c++::api_monitored_resource_protos
+        googleapis-c++::api_resource_protos
+        googleapis-c++::logging_type_protos
            googleapis-c++::rpc_status_protos
     PRIVATE googleapis_cpp_common_flags)
 
