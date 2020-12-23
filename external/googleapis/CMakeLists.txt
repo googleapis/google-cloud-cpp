@@ -432,7 +432,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                googleapis-c++::api_resource_protos
                googleapis-c++::longrunning_operations_protos
                googleapis-c++::rpc_status_protos
-               googleapis-c++::api_auth_protos
+               googleapis-c++::type_latlng_protos
         PRIVATE googleapis_cpp_common_flags)
 
     google_cloud_cpp_grpcpp_library(
@@ -462,7 +462,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                googleapis-c++::api_resource_protos
                googleapis-c++::longrunning_operations_protos
                googleapis-c++::rpc_status_protos
-               googleapis-c++::api_auth_protos
+               googleapis-c++::type_latlng_protos
         PRIVATE googleapis_cpp_common_flags)
 
     list(APPEND googleapis_cpp_installed_libraries_list
