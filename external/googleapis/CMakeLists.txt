@@ -216,6 +216,46 @@ function (googleapis_cpp_set_version_and_alias short_name)
                 "googleapis_cpp_${short_name}")
 endfunction ()
 
+set(googleapis_cpp_installed_libraries_list
+    googleapis_cpp_bigtable_protos
+    googleapis_cpp_cloud_bigquery_protos
+    googleapis_cpp_cloud_speech_protos
+    googleapis_cpp_cloud_texttospeech_protos
+    googleapis_cpp_iam_protos
+    googleapis_cpp_pubsub_protos
+    googleapis_cpp_spanner_protos
+    googleapis_cpp_storage_protos
+    googleapis_cpp_longrunning_operations_protos
+    googleapis_cpp_api_http_protos
+    googleapis_cpp_api_annotations_protos
+    googleapis_cpp_api_auth_protos
+    googleapis_cpp_api_client_protos
+    googleapis_cpp_api_field_behavior_protos
+    googleapis_cpp_api_resource_protos
+    googleapis_cpp_devtools_cloudtrace_v2_trace_protos
+    googleapis_cpp_devtools_cloudtrace_v2_tracing_protos
+    googleapis_cpp_iam_v1_options_protos
+    googleapis_cpp_iam_v1_policy_protos
+    googleapis_cpp_iam_v1_iam_policy_protos
+    googleapis_cpp_rpc_error_details_protos
+    googleapis_cpp_rpc_status_protos
+    googleapis_cpp_type_calendar_period_protos
+    googleapis_cpp_type_color_protos
+    googleapis_cpp_type_date_protos
+    googleapis_cpp_type_datetime_protos
+    googleapis_cpp_type_dayofweek_protos
+    googleapis_cpp_type_expr_protos
+    googleapis_cpp_type_fraction_protos
+    googleapis_cpp_type_interval_protos
+    googleapis_cpp_type_latlng_protos
+    googleapis_cpp_type_localized_text_protos
+    googleapis_cpp_type_money_protos
+    googleapis_cpp_type_month_protos
+    googleapis_cpp_type_phone_number_protos
+    googleapis_cpp_type_postal_address_protos
+    googleapis_cpp_type_quaternion_protos
+    googleapis_cpp_type_timeofday_protos)
+
 googleapis_cpp_add_library("google/api/http.proto")
 googleapis_cpp_add_library("google/api/metric.proto" api_launch_stage_protos
                            api_label_protos)
@@ -332,62 +372,71 @@ target_link_libraries(
            googleapis-c++::api_auth_protos
     PRIVATE googleapis_cpp_common_flags)
 
-google_cloud_cpp_grpcpp_library(
-    googleapis_cpp_cloud_dialogflow_v2_protos
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/agent.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/audio_config.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/context.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/entity_type.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/environment.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/intent.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/session.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/session_entity_type.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/validation_result.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/webhook.proto"
-    PROTO_PATH_DIRECTORIES
-    "${GOOGLEAPIS_CPP_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-googleapis_cpp_set_version_and_alias(cloud_dialogflow_v2_protos)
-target_link_libraries(
-    googleapis_cpp_cloud_dialogflow_v2_protos
-    PUBLIC googleapis-c++::api_annotations_protos
-           googleapis-c++::api_client_protos
-           googleapis-c++::api_field_behavior_protos
-           googleapis-c++::api_resource_protos
-           googleapis-c++::longrunning_operations_protos
-           googleapis-c++::rpc_status_protos
-           googleapis-c++::api_auth_protos
-    PRIVATE googleapis_cpp_common_flags)
+# TODO(#5660) - protobuf + gcc<6 + deprecated enums do not compile
+if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+         AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)))
 
-google_cloud_cpp_grpcpp_library(
-    googleapis_cpp_cloud_dialogflow_v2beta1_protos
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/agent.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/audio_config.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/context.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/document.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/entity_type.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/environment.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/gcs.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/intent.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/knowledge_base.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/session.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/session_entity_type.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/validation_result.proto"
-    "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/webhook.proto"
-    PROTO_PATH_DIRECTORIES
-    "${GOOGLEAPIS_CPP_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-googleapis_cpp_set_version_and_alias(cloud_dialogflow_v2beta1_protos)
-target_link_libraries(
-    googleapis_cpp_cloud_dialogflow_v2beta1_protos
-    PUBLIC googleapis-c++::api_annotations_protos
-           googleapis-c++::api_client_protos
-           googleapis-c++::api_field_behavior_protos
-           googleapis-c++::api_resource_protos
-           googleapis-c++::longrunning_operations_protos
-           googleapis-c++::rpc_status_protos
-           googleapis-c++::api_auth_protos
-    PRIVATE googleapis_cpp_common_flags)
+    google_cloud_cpp_grpcpp_library(
+        googleapis_cpp_cloud_dialogflow_v2_protos
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/agent.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/audio_config.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/context.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/entity_type.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/environment.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/intent.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/session.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/session_entity_type.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/validation_result.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2/webhook.proto"
+        PROTO_PATH_DIRECTORIES
+        "${GOOGLEAPIS_CPP_SOURCE}"
+        "${PROTO_INCLUDE_DIR}")
+    googleapis_cpp_set_version_and_alias(cloud_dialogflow_v2_protos)
+    target_link_libraries(
+        googleapis_cpp_cloud_dialogflow_v2_protos
+        PUBLIC googleapis-c++::api_annotations_protos
+               googleapis-c++::api_client_protos
+               googleapis-c++::api_field_behavior_protos
+               googleapis-c++::api_resource_protos
+               googleapis-c++::longrunning_operations_protos
+               googleapis-c++::rpc_status_protos
+               googleapis-c++::api_auth_protos
+        PRIVATE googleapis_cpp_common_flags)
+
+    google_cloud_cpp_grpcpp_library(
+        googleapis_cpp_cloud_dialogflow_v2beta1_protos
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/agent.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/audio_config.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/context.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/document.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/entity_type.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/environment.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/gcs.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/intent.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/knowledge_base.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/session.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/session_entity_type.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/validation_result.proto"
+        "${GOOGLEAPIS_CPP_SOURCE}/google/cloud/dialogflow/v2beta1/webhook.proto"
+        PROTO_PATH_DIRECTORIES
+        "${GOOGLEAPIS_CPP_SOURCE}"
+        "${PROTO_INCLUDE_DIR}")
+    googleapis_cpp_set_version_and_alias(cloud_dialogflow_v2beta1_protos)
+    target_link_libraries(
+        googleapis_cpp_cloud_dialogflow_v2beta1_protos
+        PUBLIC googleapis-c++::api_annotations_protos
+               googleapis-c++::api_client_protos
+               googleapis-c++::api_field_behavior_protos
+               googleapis-c++::api_resource_protos
+               googleapis-c++::longrunning_operations_protos
+               googleapis-c++::rpc_status_protos
+               googleapis-c++::api_auth_protos
+        PRIVATE googleapis_cpp_common_flags)
+
+    list(APPEND googleapis_cpp_installed_libraries_list
+         googleapis_cpp_cloud_dialogflow_v2_protos
+         googleapis_cpp_cloud_dialogflow_v2beta1_protos)
+endif ()
 
 google_cloud_cpp_grpcpp_library(
     googleapis_cpp_cloud_speech_protos
@@ -493,48 +542,6 @@ target_link_libraries(
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 include(GNUInstallDirs)
-
-set(googleapis_cpp_installed_libraries_list
-    googleapis_cpp_bigtable_protos
-    googleapis_cpp_cloud_bigquery_protos
-    googleapis_cpp_cloud_dialogflow_v2_protos
-    googleapis_cpp_cloud_dialogflow_v2beta1_protos
-    googleapis_cpp_cloud_speech_protos
-    googleapis_cpp_cloud_texttospeech_protos
-    googleapis_cpp_iam_protos
-    googleapis_cpp_pubsub_protos
-    googleapis_cpp_spanner_protos
-    googleapis_cpp_storage_protos
-    googleapis_cpp_longrunning_operations_protos
-    googleapis_cpp_api_http_protos
-    googleapis_cpp_api_annotations_protos
-    googleapis_cpp_api_auth_protos
-    googleapis_cpp_api_client_protos
-    googleapis_cpp_api_field_behavior_protos
-    googleapis_cpp_api_resource_protos
-    googleapis_cpp_devtools_cloudtrace_v2_trace_protos
-    googleapis_cpp_devtools_cloudtrace_v2_tracing_protos
-    googleapis_cpp_iam_v1_options_protos
-    googleapis_cpp_iam_v1_policy_protos
-    googleapis_cpp_iam_v1_iam_policy_protos
-    googleapis_cpp_rpc_error_details_protos
-    googleapis_cpp_rpc_status_protos
-    googleapis_cpp_type_calendar_period_protos
-    googleapis_cpp_type_color_protos
-    googleapis_cpp_type_date_protos
-    googleapis_cpp_type_datetime_protos
-    googleapis_cpp_type_dayofweek_protos
-    googleapis_cpp_type_expr_protos
-    googleapis_cpp_type_fraction_protos
-    googleapis_cpp_type_interval_protos
-    googleapis_cpp_type_latlng_protos
-    googleapis_cpp_type_localized_text_protos
-    googleapis_cpp_type_money_protos
-    googleapis_cpp_type_month_protos
-    googleapis_cpp_type_phone_number_protos
-    googleapis_cpp_type_postal_address_protos
-    googleapis_cpp_type_quaternion_protos
-    googleapis_cpp_type_timeofday_protos)
 
 install(
     TARGETS ${googleapis_cpp_installed_libraries_list}
