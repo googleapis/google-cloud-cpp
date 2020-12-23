@@ -84,6 +84,22 @@ std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
 }
 
 absl::variant<std::string, google::protobuf::Descriptor const*>
+FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
+                        std::string message_type) {
+  google::protobuf::Descriptor const* output_type =
+      method.file()->pool()->FindMessageTypeByName(message_type);
+  if (output_type != nullptr) {
+    return output_type;
+  }
+  output_type = method.file()->pool()->FindMessageTypeByName(
+      absl::StrCat(method.file()->package(), ".", message_type));
+  if (output_type != nullptr) {
+    return output_type;
+  }
+  return message_type;
+}
+
+absl::variant<std::string, google::protobuf::Descriptor const*>
 DeduceLongrunningOperationResponseType(
     google::protobuf::MethodDescriptor const& method,
     google::longrunning::OperationInfo const& operation_info) {
@@ -91,20 +107,10 @@ DeduceLongrunningOperationResponseType(
       operation_info.response_type() == "google.protobuf.Empty"
           ? operation_info.metadata_type()
           : operation_info.response_type();
-  google::protobuf::Descriptor const* output_type =
-      method.file()->pool()->FindMessageTypeByName(deduced_response_type);
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  output_type = method.file()->pool()->FindMessageTypeByName(
-      absl::StrCat(method.file()->package(), deduced_response_type));
-  if (output_type != nullptr) {
-    return output_type;
-  }
-  return deduced_response_type;
+  return FullyQualifyMessageType(method, deduced_response_type);
 }
 
-struct DeducedResponseVisitor {
+struct FullyQualifiedMessageTypeVisitor {
   std::string operator()(std::string const& s) const { return s; }
   std::string operator()(google::protobuf::Descriptor const* d) const {
     return d->full_name();
@@ -129,14 +135,16 @@ void SetLongrunningOperationMethodVars(
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
-    method_vars["longrunning_metadata_type"] =
-        ProtoNameToCppName(operation_info.metadata_type());
-    method_vars["longrunning_response_type"] =
-        ProtoNameToCppName(operation_info.response_type());
+    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
+        FullyQualifiedMessageTypeVisitor(),
+        FullyQualifyMessageType(method, operation_info.metadata_type())));
+    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
+        FullyQualifiedMessageTypeVisitor(),
+        FullyQualifyMessageType(method, operation_info.response_type())));
     auto deduced_response_type =
         DeduceLongrunningOperationResponseType(method, operation_info);
     method_vars["longrunning_deduced_response_message_type"] =
-        absl::visit(DeducedResponseVisitor(), deduced_response_type);
+        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
     method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
         method_vars["longrunning_deduced_response_message_type"]);
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
