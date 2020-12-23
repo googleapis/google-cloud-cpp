@@ -19,34 +19,3 @@ find_package(ProtobufWithTargets)
 find_package(gRPC)
 
 include("${CMAKE_CURRENT_LIST_DIR}/googleapis-targets.cmake")
-
-foreach (_target
-         api_annotations
-         api_auth
-         api_client
-         api_field_behavior
-         api_http
-         api_resource
-         bigtable
-         cloud_bigquery
-         devtools_cloudtrace_v2_trace
-         devtools_cloudtrace_v2_tracing
-         iam_v1_iam_policy
-         iam_v1_options
-         iam_v1_policy
-         longrunning_operations
-         pubsub
-         rpc_error_details
-         rpc_status
-         spanner
-         storage
-         type_expr)
-    set(scoped_name "googleapis-c++::${_target}_protos")
-    set(imported_name "googleapis_cpp_${_target}_protos")
-    if (NOT TARGET ${scoped_name})
-        add_library(${scoped_name} IMPORTED INTERFACE)
-        set_target_properties(${scoped_name}
-                              PROPERTIES INTERFACE_LINK_LIBRARIES
-                              ${imported_name})
-    endif ()
-endforeach ()
