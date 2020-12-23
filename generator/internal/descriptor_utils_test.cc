@@ -299,7 +299,7 @@ const char* const kServiceProto =
     "    };\n"
     "    option (google.longrunning.operation_info) = {\n"
     "      response_type: \"google.protobuf.Empty\"\n"
-    "      metadata_type: \"google.protobuf.Bar\"\n"
+    "      metadata_type: \"google.protobuf.Struct\"\n"
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc Method4.\n"
@@ -323,6 +323,17 @@ const char* const kServiceProto =
     "  rpc Method6(Bar) returns (Empty) {\n"
     "    option (google.api.http) = {\n"
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method7.\n"
+    "  rpc Method7(Bar) returns (google.longrunning.Operation) {\n"
+    "    option (google.api.http) = {\n"
+    "       patch: \"/v1/{parent=projects/*/instances/*}/databases\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "    option (google.longrunning.operation_info) = {\n"
+    "      response_type: \"Bar\"\n"
+    "      metadata_type: \"google.protobuf.Method2Metadata\"\n"
     "    };\n"
     "  }\n"
     "}\n";
@@ -491,13 +502,13 @@ INSTANTIATE_TEST_SUITE_P(
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
-                             "::google::protobuf::Bar"),
+                             "::google::protobuf::Struct"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_response_type",
                              "::google::protobuf::Empty"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_deduced_response_type",
-                             "::google::protobuf::Bar"),
+                             "::google::protobuf::Struct"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "method_request_param_key", "parent"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
@@ -510,6 +521,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*"),
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "default_idempotency", "kIdempotent"),
+        MethodVarsTestValues("google.protobuf.Service.Method3",
+                             "method_longrunning_deduced_return_doxygen_link",
+                             "::google::protobuf::Struct"),
         // Method4
         MethodVarsTestValues("google.protobuf.Service.Method4",
                              "range_output_field_name", "repeated_field"),
@@ -572,7 +586,25 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_url_substitution",
                              "projects/*/instances/*/databases/*"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
-                             "default_idempotency", "kIdempotent")),
+                             "default_idempotency", "kIdempotent"),
+        // Method7
+        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "longrunning_metadata_type",
+                             "::google::protobuf::Method2Metadata"),
+        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "longrunning_response_type",
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "longrunning_deduced_response_message_type",
+                             "google.protobuf.Bar"),
+        MethodVarsTestValues("google.protobuf.Service.Method7",
+                             "longrunning_deduced_response_type",
+                             "::google::protobuf::Bar"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method7",
+            "method_longrunning_deduced_return_doxygen_link",
+            "[::google::protobuf::Bar](https://github.com/googleapis/"
+            "googleapis/blob/foo/google/foo/v1/service.proto#L12)")),
     [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

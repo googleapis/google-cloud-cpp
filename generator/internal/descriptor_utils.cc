@@ -17,6 +17,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
+#include "absl/types/variant.h"
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
@@ -82,34 +83,73 @@ std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type,
                       loc.start_line + 1, ")");
 }
 
+absl::variant<std::string, google::protobuf::Descriptor const*>
+FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
+                        std::string message_type) {
+  google::protobuf::Descriptor const* output_type =
+      method.file()->pool()->FindMessageTypeByName(message_type);
+  if (output_type != nullptr) {
+    return output_type;
+  }
+  output_type = method.file()->pool()->FindMessageTypeByName(
+      absl::StrCat(method.file()->package(), ".", message_type));
+  if (output_type != nullptr) {
+    return output_type;
+  }
+  return message_type;
+}
+
+absl::variant<std::string, google::protobuf::Descriptor const*>
+DeduceLongrunningOperationResponseType(
+    google::protobuf::MethodDescriptor const& method,
+    google::longrunning::OperationInfo const& operation_info) {
+  std::string deduced_response_type =
+      operation_info.response_type() == "google.protobuf.Empty"
+          ? operation_info.metadata_type()
+          : operation_info.response_type();
+  return FullyQualifyMessageType(method, deduced_response_type);
+}
+
+struct FullyQualifiedMessageTypeVisitor {
+  std::string operator()(std::string const& s) const { return s; }
+  std::string operator()(google::protobuf::Descriptor const* d) const {
+    return d->full_name();
+  }
+};
+
+struct FormatDoxygenLinkVisitor {
+  explicit FormatDoxygenLinkVisitor(std::string s)
+      : googleapis_commit_hash(std::move(s)) {}
+  std::string operator()(std::string const& s) const {
+    return ProtoNameToCppName(s);
+  }
+  std::string operator()(google::protobuf::Descriptor const* d) const {
+    return FormatDoxygenLink(*d, googleapis_commit_hash);
+  }
+  std::string googleapis_commit_hash;
+};
+
 void SetLongrunningOperationMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars, std::string const& googleapis_commit_hash) {
   if (method.output_type()->full_name() == "google.longrunning.Operation") {
     auto operation_info =
         method.options().GetExtension(google::longrunning::operation_info);
-    method_vars["longrunning_metadata_type"] =
-        ProtoNameToCppName(operation_info.metadata_type());
-    method_vars["longrunning_response_type"] =
-        ProtoNameToCppName(operation_info.response_type());
+    method_vars["longrunning_metadata_type"] = ProtoNameToCppName(absl::visit(
+        FullyQualifiedMessageTypeVisitor(),
+        FullyQualifyMessageType(method, operation_info.metadata_type())));
+    method_vars["longrunning_response_type"] = ProtoNameToCppName(absl::visit(
+        FullyQualifiedMessageTypeVisitor(),
+        FullyQualifyMessageType(method, operation_info.response_type())));
+    auto deduced_response_type =
+        DeduceLongrunningOperationResponseType(method, operation_info);
     method_vars["longrunning_deduced_response_message_type"] =
-        operation_info.response_type() == "google.protobuf.Empty"
-            ? operation_info.metadata_type()
-            : operation_info.response_type();
+        absl::visit(FullyQualifiedMessageTypeVisitor(), deduced_response_type);
     method_vars["longrunning_deduced_response_type"] = ProtoNameToCppName(
         method_vars["longrunning_deduced_response_message_type"]);
-    google::protobuf::Descriptor const* output_type =
-        method.file()->pool()->FindMessageTypeByName(
-            method_vars["longrunning_deduced_response_message_type"]);
-    if (output_type == nullptr) {
-      GCP_LOG(FATAL)
-          << __FILE__ << ":" << __LINE__
-          << ": unable to find longrunning_deduced_response_message_type: "
-          << method_vars["longrunning_deduced_response_message_type"]
-          << " for method: " << method.full_name() << std::endl;
-    }
     method_vars["method_longrunning_deduced_return_doxygen_link"] =
-        FormatDoxygenLink(*output_type, googleapis_commit_hash);
+        absl::visit(FormatDoxygenLinkVisitor(googleapis_commit_hash),
+                    deduced_response_type);
   }
 }
 
