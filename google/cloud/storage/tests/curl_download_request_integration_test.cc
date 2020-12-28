@@ -18,7 +18,9 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <chrono>
 #include <cstdlib>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -37,32 +39,36 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   // httpbin can generate up to 100 lines, do not try to download more than
   // that.
   constexpr int kDownloadedLines = 100;
-  storage::internal::CurlRequestBuilder request(
+  CurlRequestBuilder request(
       HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
       storage::internal::GetDefaultCurlHandleFactory());
 
-  auto download = request.BuildDownloadRequest(std::string{});
+  std::size_t count = 0;
+  auto download = [&] {
+    count = 0;
+    auto download = request.BuildDownloadRequest(std::string{});
+    char buffer[128 * 1024];
+    do {
+      auto n = sizeof(buffer);
+      auto result = download.Read(buffer, n);
+      if (!result) return std::move(result).status();
+      if (result->bytes_received > sizeof(buffer)) {
+        return Status{StatusCode::kUnknown, "invalid byte count"};
+      }
+      count += static_cast<std::size_t>(
+          std::count(buffer, buffer + result->bytes_received, '\n'));
+      if (result->response.status_code != 100) break;
+    } while (true);
+    return Status{};
+  };
 
-  StatusOr<ReadSourceResult> result;
-  char buffer[128 * 1024];
-  // The type for std::count() is hard to guess, most likely it is
-  // std::ptrdiff_t, but could be something else, just use the aliases defined
-  // for that purpose.
-  std::iterator_traits<std::string::iterator>::difference_type count = 0;
-  do {
-    auto n = sizeof(buffer);
-    result = download.Read(buffer, n);
-    ASSERT_STATUS_OK(result);
-    ASSERT_LE(result->bytes_received, sizeof(buffer));
-    count += std::count(buffer, buffer + result->bytes_received, '\n');
-  } while (result->response.status_code == 100);
-
-  EXPECT_EQ(200, result->response.status_code)
-      << ", status_code=" << result->response.status_code
-      << ", payload=" << result->response.payload << ", headers={"
-      << absl::StrJoin(result->response.headers, ", ", absl::PairFormatter("="))
-      << "}";
-
+  auto delay = std::chrono::seconds(1);
+  for (int i = 0; i != 3; ++i) {
+    auto result = download();
+    if (result.ok()) break;
+    std::this_thread::sleep_for(delay);
+    delay *= 2;
+  }
   EXPECT_EQ(kDownloadedLines, count);
 }
 

@@ -18,8 +18,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
-#include <fstream>
+#include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -57,6 +57,17 @@ class KeyFileIntegrationTest
   std::string service_account_;
 };
 
+StatusOr<internal::HttpResponse> RetryHttpRequest(
+    internal::CurlRequest request) {
+  StatusOr<internal::HttpResponse> response;
+  for (int i = 0; i != 3; ++i) {
+    response = request.MakeRequest({});
+    if (response) return response;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+  }
+  return response;
+};
+
 TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   auto credentials =
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
@@ -80,7 +91,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   internal::CurlRequestBuilder builder(
       *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
@@ -113,7 +124,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   internal::CurlRequestBuilder builder(
       *signed_url, storage::internal::GetDefaultCurlHandleFactory());
 
-  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  auto response = RetryHttpRequest(builder.BuildRequest());
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
 
