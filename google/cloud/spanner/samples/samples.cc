@@ -681,8 +681,7 @@ void CreateBackupCommand(std::vector<std::string> const& argv) {
   CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3]);
 }
 
-//! [START spanner_restore_backup]
-//! [restore-database] [START spanner_restore_database]
+//! [restore-database] [START spanner_restore_backup]
 void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
                      std::string const& instance_id,
@@ -700,8 +699,7 @@ void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
   std::cout << "Database '" << restored_db->name() << "' was restored from "
             << " backup '" << backup.FullName() << "'.\n";
 }
-//! [restore-database] [END spanner_restore_database]
-//! [END spanner_restore_backup]
+//! [restore-database] [END spanner_restore_backup]
 
 void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
@@ -1605,7 +1603,6 @@ void AddNumericColumn(google::cloud::spanner::DatabaseAdminClient client,
 // [END spanner_add_numeric_column]
 
 //! [START spanner_update_data_with_numeric_column]
-//! [START spanner_update_data_with_numeric]
 void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto insert_venues =
@@ -1627,7 +1624,6 @@ void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
   }
   std::cout << "Insert was successful [spanner_update_data_with_numeric]\n";
 }
-//! [END spanner_update_data_with_numeric]
 //! [END spanner_update_data_with_numeric_column]
 
 // [START spanner_query_with_numeric_parameter]
@@ -2461,7 +2457,6 @@ void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
 //! [END spanner_field_access_on_struct_parameters]
 
 //! [START spanner_field_access_on_nested_struct_parameters]
-//! [START spanner_field_access_on_nested_struct]
 void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
@@ -2495,7 +2490,6 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
   }
   std::cout << "Query completed for [spanner_field_access_on_nested_struct]\n";
 }
-//! [END spanner_field_access_on_nested_struct]
 //! [END spanner_field_access_on_nested_struct_parameters]
 
 void ExampleStatusOr(google::cloud::spanner::Client client) {
