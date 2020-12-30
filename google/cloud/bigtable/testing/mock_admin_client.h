@@ -26,6 +26,9 @@ namespace testing {
 
 class MockAdminClient : public bigtable::AdminClient {
  public:
+  explicit MockAdminClient(ClientOptions options = {})
+      : options_(std::move(options)) {}
+
   MOCK_METHOD(std::string const&, project, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));
   MOCK_METHOD(void, reset, (), (override));
@@ -252,6 +255,13 @@ class MockAdminClient : public bigtable::AdminClient {
                const google::longrunning::GetOperationRequest&,
                grpc::CompletionQueue*),
               (override));
+
+ private:
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return options_.background_threads_factory();
+  }
+
+  ClientOptions options_;
 };
 
 }  // namespace testing

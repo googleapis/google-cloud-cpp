@@ -255,16 +255,8 @@ TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
 
 StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::CreateBackup(
     CreateBackupParams const& params) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-  return AsyncCreateBackup(cq, params)
-      .then(
-          [cq](
-              future<StatusOr<google::bigtable::admin::v2::Backup>> f) mutable {
-            cq.Shutdown();
-            return f.get();
-          })
-      .get();
+  auto cq = background_threads_->cq();
+  return AsyncCreateBackup(cq, params).get();
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
@@ -558,15 +550,8 @@ TableAdmin::RestoreTableParams::AsProto(
 
 StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
     RestoreTableParams const& params) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-  return AsyncRestoreTable(cq, params)
-      .then(
-          [cq](future<StatusOr<google::bigtable::admin::v2::Table>> f) mutable {
-            cq.Shutdown();
-            return f.get();
-          })
-      .get();
+  auto cq = background_threads_->cq();
+  return AsyncRestoreTable(cq, params).get();
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
@@ -590,15 +575,8 @@ google::bigtable::admin::v2::RestoreTableRequest AsProto(
 
 StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
     RestoreTableFromInstanceParams params) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-  return AsyncRestoreTable(cq, std::move(params))
-      .then(
-          [cq](future<StatusOr<google::bigtable::admin::v2::Table>> f) mutable {
-            cq.Shutdown();
-            return f.get();
-          })
-      .get();
+  auto cq = background_threads_->cq();
+  return AsyncRestoreTable(cq, std::move(params)).get();
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
@@ -709,14 +687,8 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
 
 google::cloud::future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
     std::string const& table_id, std::string const& consistency_token) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
-  return AsyncWaitForConsistency(cq, table_id, consistency_token)
-      .then([cq](future<StatusOr<Consistency>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+  auto cq = background_threads_->cq();
+  return AsyncWaitForConsistency(cq, table_id, consistency_token);
 }
 
 google::cloud::future<StatusOr<Consistency>>

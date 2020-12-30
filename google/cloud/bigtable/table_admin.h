@@ -150,7 +150,8 @@ class TableAdmin {
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
         polling_policy_prototype_(
-            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
+            DefaultPollingPolicy(internal::kBigtableTableAdminLimits)),
+        background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
    * Create a new TableAdmin using explicit policies to handle RPC errors.
@@ -1756,6 +1757,7 @@ class TableAdmin {
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
