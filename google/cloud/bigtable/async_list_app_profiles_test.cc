@@ -52,7 +52,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
   AsyncListAppProfilesTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new testing::MockInstanceAdminClient(cq_)),
         profiles_reader_1_(new MockAsyncListAppProfilesReader),
         profiles_reader_2_(new MockAsyncListAppProfilesReader),
         profiles_reader_3_(new MockAsyncListAppProfilesReader) {
@@ -62,7 +62,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
  protected:
   void Start() {
     InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncListAppProfiles(cq_, "my_instance");
+    user_future_ = instance_admin.AsyncListAppProfiles("my_instance");
   }
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;

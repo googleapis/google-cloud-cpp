@@ -282,6 +282,8 @@ class LoggingInstanceAdminClient
                     const google::longrunning::GetOperationRequest& request,
                     grpc::CompletionQueue* cq) override;
 
+  CompletionQueue cq() override { return child_->cq(); }
+
  private:
   std::shared_ptr<google::cloud::bigtable::InstanceAdminClient> child_;
   google::cloud::TracingOptions tracing_options_;

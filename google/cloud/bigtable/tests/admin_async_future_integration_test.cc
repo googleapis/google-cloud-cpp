@@ -301,7 +301,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
   std::thread pool([&cq] { cq.Run(); });
 
   future<Status> chain =
-      instance_admin.AsyncCreateInstance(cq, config)
+      instance_admin.AsyncCreateInstance(config)
           .then([&](future<StatusOr<btadmin::Instance>> fut) {
             StatusOr<btadmin::Instance> result = fut.get();
             EXPECT_STATUS_OK(result);
@@ -343,7 +343,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
-            return instance_admin.AsyncDeleteInstance(id, cq);
+            return instance_admin.AsyncDeleteInstance(id);
           });
 
   auto status = chain.get();

@@ -62,9 +62,9 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         metadata_update_policy(
             "projects/" + k_project_id + "/instances/" + k_instance_id,
             MetadataParamTypes::PARENT),
-        client(std::make_shared<testing::MockInstanceAdminClient>()),
         cq_impl(std::make_shared<testing_util::FakeCompletionQueueImpl>()),
         cq(cq_impl),
+        client(std::make_shared<testing::MockInstanceAdminClient>(cq)),
         create_cluster_reader(
             absl::make_unique<MockAsyncLongrunningOpReader>()),
         get_operation_reader(
@@ -171,9 +171,9 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy;
   MetadataUpdatePolicy metadata_update_policy;
-  std::shared_ptr<testing::MockInstanceAdminClient> client;
   std::shared_ptr<testing_util::FakeCompletionQueueImpl> cq_impl;
   bigtable::CompletionQueue cq;
+  std::shared_ptr<testing::MockInstanceAdminClient> client;
   std::unique_ptr<MockAsyncLongrunningOpReader> create_cluster_reader;
   std::unique_ptr<MockAsyncLongrunningOpReader> get_operation_reader;
 };

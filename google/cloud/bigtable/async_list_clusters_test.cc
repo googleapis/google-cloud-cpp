@@ -52,7 +52,7 @@ class AsyncListClustersTest : public ::testing::Test {
   AsyncListClustersTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new testing::MockInstanceAdminClient(cq_)),
         metadata_update_policy_("my_instance", MetadataParamTypes::NAME),
         clusters_reader_1_(new MockAsyncListClustersReader),
         clusters_reader_2_(new MockAsyncListClustersReader),
@@ -63,7 +63,7 @@ class AsyncListClustersTest : public ::testing::Test {
  protected:
   void Start() {
     InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncListClusters(cq_, "my_instance");
+    user_future_ = instance_admin.AsyncListClusters("my_instance");
   }
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;

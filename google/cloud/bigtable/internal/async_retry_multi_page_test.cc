@@ -102,7 +102,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
             absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new testing::MockInstanceAdminClient(cq_)),
         metadata_update_policy_("my_instance", MetadataParamTypes::NAME) {}
 
   // Description of a single expected RPC exchange.

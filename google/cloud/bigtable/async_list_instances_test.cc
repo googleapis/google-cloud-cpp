@@ -51,7 +51,7 @@ class AsyncListInstancesTest : public ::testing::Test {
   AsyncListInstancesTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new testing::MockInstanceAdminClient(cq_)),
         instances_reader_1_(new MockAsyncListInstancesReader),
         instances_reader_2_(new MockAsyncListInstancesReader),
         instances_reader_3_(new MockAsyncListInstancesReader) {
@@ -61,7 +61,7 @@ class AsyncListInstancesTest : public ::testing::Test {
  protected:
   void Start() {
     InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncListInstances(cq_);
+    user_future_ = instance_admin.AsyncListInstances();
   }
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;

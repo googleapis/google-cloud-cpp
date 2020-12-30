@@ -235,7 +235,7 @@ TEST(BigtableExamplesCommon, CleanupOldInstances) {
 
   std::string const project_id = "test-project-id";
 
-  auto mock = std::make_shared<MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>(CompletionQueue{});
   EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
 
   EXPECT_CALL(*mock, ListInstances(_, _, _))

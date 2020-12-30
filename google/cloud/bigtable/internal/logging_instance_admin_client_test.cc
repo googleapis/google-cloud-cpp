@@ -60,7 +60,8 @@ class LoggingInstanceAdminClientTest : public ::testing::Test {
 };
 
 TEST_F(LoggingInstanceAdminClientTest, ListInstances) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, ListInstances).WillOnce(Return(grpc::Status()));
 
@@ -78,7 +79,8 @@ TEST_F(LoggingInstanceAdminClientTest, ListInstances) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateInstance) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, CreateInstance).WillOnce(Return(grpc::Status()));
 
@@ -96,7 +98,8 @@ TEST_F(LoggingInstanceAdminClientTest, CreateInstance) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateInstance) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, UpdateInstance).WillOnce(Return(grpc::Status()));
 
@@ -114,7 +117,8 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateInstance) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetOperation) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, GetOperation).WillOnce(Return(grpc::Status()));
 
@@ -132,7 +136,8 @@ TEST_F(LoggingInstanceAdminClientTest, GetOperation) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetInstance) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, GetInstance).WillOnce(Return(grpc::Status()));
 
@@ -150,7 +155,8 @@ TEST_F(LoggingInstanceAdminClientTest, GetInstance) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteInstance) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, DeleteInstance).WillOnce(Return(grpc::Status()));
 
@@ -168,7 +174,8 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteInstance) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, ListClusters) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, ListClusters).WillOnce(Return(grpc::Status()));
 
@@ -186,7 +193,8 @@ TEST_F(LoggingInstanceAdminClientTest, ListClusters) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetCluster) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, GetCluster).WillOnce(Return(grpc::Status()));
 
@@ -204,7 +212,8 @@ TEST_F(LoggingInstanceAdminClientTest, GetCluster) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteCluster) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, DeleteCluster).WillOnce(Return(grpc::Status()));
 
@@ -222,7 +231,8 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteCluster) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateCluster) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, CreateCluster).WillOnce(Return(grpc::Status()));
 
@@ -240,7 +250,8 @@ TEST_F(LoggingInstanceAdminClientTest, CreateCluster) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateCluster) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, UpdateCluster).WillOnce(Return(grpc::Status()));
 
@@ -258,7 +269,8 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateCluster) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateAppProfile) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, CreateAppProfile).WillOnce(Return(grpc::Status()));
 
@@ -277,7 +289,8 @@ TEST_F(LoggingInstanceAdminClientTest, CreateAppProfile) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetAppProfile) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, GetAppProfile).WillOnce(Return(grpc::Status()));
 
@@ -295,7 +308,8 @@ TEST_F(LoggingInstanceAdminClientTest, GetAppProfile) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, ListAppProfiles) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, ListAppProfiles).WillOnce(Return(grpc::Status()));
 
@@ -314,7 +328,8 @@ TEST_F(LoggingInstanceAdminClientTest, ListAppProfiles) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateAppProfile) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, UpdateAppProfile).WillOnce(Return(grpc::Status()));
 
@@ -333,7 +348,8 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateAppProfile) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteAppProfile) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, DeleteAppProfile).WillOnce(Return(grpc::Status()));
 
@@ -352,7 +368,8 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteAppProfile) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetIamPolicy) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, GetIamPolicy).WillOnce(Return(grpc::Status()));
 
@@ -370,7 +387,8 @@ TEST_F(LoggingInstanceAdminClientTest, GetIamPolicy) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, SetIamPolicy) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, SetIamPolicy).WillOnce(Return(grpc::Status()));
 
@@ -388,7 +406,8 @@ TEST_F(LoggingInstanceAdminClientTest, SetIamPolicy) {
 }
 
 TEST_F(LoggingInstanceAdminClientTest, TestIamPermissions) {
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, TestIamPermissions).WillOnce(Return(grpc::Status()));
 
@@ -408,7 +427,8 @@ TEST_F(LoggingInstanceAdminClientTest, TestIamPermissions) {
 
 TEST_F(LoggingInstanceAdminClientTest, AsyncCreateInstance) {
   auto reader = absl::make_unique<MockAsyncLongrunningOpReader>();
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, AsyncCreateInstance)
       .WillOnce([&reader](grpc::ClientContext*,
@@ -433,7 +453,8 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncCreateInstance) {
 
 TEST_F(LoggingInstanceAdminClientTest, AsyncUpdateInstance) {
   auto reader = absl::make_unique<MockAsyncLongrunningOpReader>();
-  auto mock = std::make_shared<testing::MockInstanceAdminClient>();
+  auto mock =
+      std::make_shared<testing::MockInstanceAdminClient>(CompletionQueue{});
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
       .WillOnce([&reader](grpc::ClientContext*,
