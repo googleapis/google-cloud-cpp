@@ -549,6 +549,36 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamNativeAPIsTest) {
   pool.join();
 }
 
+TEST_F(InstanceAdminAsyncFutureIntegrationTest, CustomWorkers) {
+  CompletionQueue cq;
+  auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+      project_id_, bigtable::ClientOptions().DisableBackgroundThreads(cq));
+  instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
+      instance_admin_client,
+      *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),
+                              std::chrono::seconds(1)}));
+
+  // CompletionQueue `cq` is not being `Run()`, so this should never finish.
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto instance_details_fut =
+      instance_admin_->CreateInstance(IntegrationTestConfig(
+          instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3));
+
+  EXPECT_EQ(std::future_status::timeout,
+            instance_details_fut.wait_for(std::chrono::milliseconds(100)));
+
+  std::thread t([cq]() mutable { cq.Run(); });
+  auto instance_details = instance_details_fut.get();
+  ASSERT_STATUS_OK(instance_details);
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+
+  cq.CancelAll();
+  cq.Shutdown();
+  t.join();
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

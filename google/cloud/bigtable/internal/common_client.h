@@ -126,9 +126,10 @@ class CommonClient {
         current_index_(0),
         background_threads_(
             google::cloud::internal::DefaultBackgroundThreads(1)),
-        cq_(std::make_shared<CompletionQueue>(background_threads_->cq())),
+        refresh_cq_(
+            std::make_shared<CompletionQueue>(background_threads_->cq())),
         refresh_state_(std::make_shared<ConnectionRefreshState>(
-            cq_, options_.min_conn_refresh_period(),
+            refresh_cq_, options_.min_conn_refresh_period(),
             options_.max_conn_refresh_period())) {}
 
   ~CommonClient() {
@@ -219,7 +220,7 @@ class CommonClient {
     if (options_.max_conn_refresh_period().count() == 0) {
       return res;
     }
-    ScheduleChannelRefresh(cq_, refresh_state_, res);
+    ScheduleChannelRefresh(refresh_cq_, refresh_state_, res);
     return res;
   }
 
@@ -254,7 +255,7 @@ class CommonClient {
   // deadlock). We solve both problems by holding only weak pointers to the
   // completion queue in the operations scheduled on it. In order to do it, we
   // need to hold one instance by a shared pointer.
-  std::shared_ptr<CompletionQueue> cq_;
+  std::shared_ptr<CompletionQueue> refresh_cq_;
   std::shared_ptr<ConnectionRefreshState> refresh_state_;
 };
 

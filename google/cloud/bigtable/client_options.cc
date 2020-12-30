@@ -13,6 +13,7 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/strings/str_split.h"
@@ -157,6 +158,25 @@ std::string ClientOptions::UserAgentPrefix() {
   std::string agent = "gcloud-cpp/" + version_string() + " " +
                       google::cloud::internal::compiler();
   return agent;
+}
+
+ClientOptions& ClientOptions::DisableBackgroundThreads(
+    google::cloud::CompletionQueue const& cq) {
+  background_threads_factory_ = [cq] {
+    return absl::make_unique<
+        ::google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
+  };
+  return *this;
+}
+
+ClientOptions::BackgroundThreadsFactory
+ClientOptions::background_threads_factory() const {
+  if (background_threads_factory_) return background_threads_factory_;
+  auto const s = background_thread_pool_size_;
+  return [s] {
+    return absl::make_unique<
+        ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads>(s);
+  };
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

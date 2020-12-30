@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CLIENT_OPTIONS_H
 
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status.h"
 #include "google/cloud/tracing_options.h"
 #include <grpcpp/grpcpp.h>
@@ -375,6 +377,36 @@ class ClientOptions {
     return *this;
   }
 
+  /**
+   * Set the number of background threads.
+   *
+   * @note this value is not used if `DisableBackgroundThreads()` is called.
+   */
+  ClientOptions& set_background_thread_pool_size(std::size_t s) {
+    background_thread_pool_size_ = s;
+    return *this;
+  }
+  std::size_t background_thread_pool_size() const {
+    return background_thread_pool_size_;
+  }
+
+  /**
+   * Configure the connection to use @p cq for all background work.
+   *
+   * Connections need to perform background work on behalf of the application.
+   * Normally they just create a background thread and a `CompletionQueue` for
+   * this work, but the application may need more fine-grained control of their
+   * threads. In this case the application can provide the `CompletionQueue` and
+   * it assumes responsibility for creating one or more threads blocked on
+   * `CompletionQueue::Run()`.
+   */
+  ClientOptions& DisableBackgroundThreads(
+      google::cloud::CompletionQueue const& cq);
+
+  using BackgroundThreadsFactory =
+      std::function<std::unique_ptr<BackgroundThreads>()>;
+  BackgroundThreadsFactory background_threads_factory() const;
+
  private:
   friend struct internal::InstanceAdminTraits;
   friend struct ClientOptionsTestTraits;
@@ -399,6 +431,8 @@ class ClientOptions {
   TracingOptions tracing_options_;
   std::chrono::milliseconds max_conn_refresh_period_;
   std::chrono::milliseconds min_conn_refresh_period_;
+  std::size_t background_thread_pool_size_ = 0;
+  BackgroundThreadsFactory background_threads_factory_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

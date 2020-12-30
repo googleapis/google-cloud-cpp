@@ -134,14 +134,8 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
 
 future<StatusOr<btadmin::Instance>> InstanceAdmin::CreateInstance(
     InstanceConfig instance_config) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
-  return AsyncCreateInstance(cq, std::move(instance_config))
-      .then([cq](future<StatusOr<btadmin::Instance>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+  auto cq = background_threads_->cq();
+  return AsyncCreateInstance(cq, std::move(instance_config));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -172,15 +166,9 @@ InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
 future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
     ClusterConfig cluster_config, std::string const& instance_id,
     std::string const& cluster_id) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
+  auto cq = background_threads_->cq();
   return AsyncCreateCluster(cq, std::move(cluster_config), instance_id,
-                            cluster_id)
-      .then([cq](future<StatusOr<btadmin::Cluster>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+                            cluster_id);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -213,14 +201,8 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 InstanceAdmin::UpdateInstance(InstanceUpdateConfig instance_update_config) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
-  return AsyncUpdateInstance(cq, std::move(instance_update_config))
-      .then([cq](future<StatusOr<btadmin::Instance>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+  auto cq = background_threads_->cq();
+  return AsyncUpdateInstance(cq, std::move(instance_update_config));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -501,14 +483,8 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 InstanceAdmin::UpdateCluster(ClusterConfig cluster_config) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
-  return AsyncUpdateCluster(cq, std::move(cluster_config))
-      .then([cq](future<StatusOr<btadmin::Cluster>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+  auto cq = background_threads_->cq();
+  return AsyncUpdateCluster(cq, std::move(cluster_config));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -636,14 +612,8 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
 future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
     std::string const& instance_id, std::string const& profile_id,
     AppProfileUpdateConfig config) {
-  CompletionQueue cq;
-  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-
-  return AsyncUpdateAppProfile(cq, instance_id, profile_id, std::move(config))
-      .then([cq](future<StatusOr<btadmin::AppProfile>> f) mutable {
-        cq.Shutdown();
-        return f.get();
-      });
+  auto cq = background_threads_->cq();
+  return AsyncUpdateAppProfile(cq, instance_id, profile_id, std::move(config));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
