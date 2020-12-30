@@ -34,7 +34,7 @@ class DefaultCompletionQueueImpl
     : public CompletionQueueImpl,
       public std::enable_shared_from_this<DefaultCompletionQueueImpl> {
  public:
-  DefaultCompletionQueueImpl() = default;
+  DefaultCompletionQueueImpl();
   ~DefaultCompletionQueueImpl() override = default;
 
   /// Run the event loop until Shutdown() is called.
@@ -107,6 +107,9 @@ class DefaultCompletionQueueImpl
   bool shutdown_{false};  // GUARDED_BY(mu_)
   std::unordered_map<void*, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;  // GUARDED_BY(mu_)
+  // This member acts as a ref counter. When it drops to 0, it calls
+  // `cq_.Shutdown()`. Look into `StartOperation` for why it is necessary.
+  std::shared_ptr<void> shutdown_guard_;
 
   // These are metrics used in testing.
   std::atomic<std::int64_t> notify_counter_{0};
