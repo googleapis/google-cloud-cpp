@@ -18,10 +18,12 @@
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/connection_options.h"
+#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
+#include <list>
 
 namespace google {
 namespace cloud {
@@ -38,6 +40,30 @@ namespace internal {
  */
 std::chrono::seconds constexpr kConnectionReadyTimeout(10);
 
+class OutstandingTimers
+    : public std::enable_shared_from_this<OutstandingTimers> {
+ public:
+  explicit OutstandingTimers(std::shared_ptr<CompletionQueue> const& cq)
+      : weak_cq_(cq) {}
+  // Register a timer. It will automatically deregister on completion.
+  void RegisterTimer(future<void> fut);
+  // Cancel all currently registered timers and all which will be registered in
+  // the future.
+  void CancelAll();
+
+ private:
+  void DeregisterTimer(std::uint64_t id);
+  std::mutex mu_;
+  bool shutdown_ = false;           // GUARDED_BY(mu_)
+  std::uint64_t id_generator_ = 0;  // GUARDED_BY(mu_)
+  absl::flat_hash_map<std::uint64_t,
+                      future<void>> timers_;  // GUARDED_BY(mu_)
+  // Object of this class is owned by timers continuations, which means it
+  // cannot have an owning reference to the `CompletionQueue` because  it would
+  // otherwise create a risk of a deadlock on the completion queue destruction.
+  std::weak_ptr<CompletionQueue> weak_cq_;  // GUARDED_BY(mu_)
+};
+
 /**
  * State required by timers scheduled by `CommonClient`.
  *
@@ -47,13 +73,16 @@ std::chrono::seconds constexpr kConnectionReadyTimeout(10);
 class ConnectionRefreshState {
  public:
   explicit ConnectionRefreshState(
+      std::shared_ptr<CompletionQueue> const& cq,
       std::chrono::milliseconds max_conn_refresh_period);
   std::chrono::milliseconds RandomizedRefreshDelay();
+  OutstandingTimers& timers() { return *timers_; }
 
  private:
   std::mutex mu_;
   std::chrono::milliseconds max_conn_refresh_period_;
   google::cloud::internal::DefaultPRNG rng_;
+  std::shared_ptr<OutstandingTimers> timers_;
 };
 
 /**
@@ -95,14 +124,13 @@ class CommonClient {
             google::cloud::internal::DefaultBackgroundThreads(1)),
         cq_(std::make_shared<CompletionQueue>(background_threads_->cq())),
         refresh_state_(std::make_shared<ConnectionRefreshState>(
-            options_.max_conn_refresh_period())) {}
+            cq_, options_.max_conn_refresh_period())) {}
 
   ~CommonClient() {
     // This will stop the refresh of the channels.
     channels_.clear();
-    // TODO(2567): remove this call when the user will have to provide their own
-    // `CompletionQueues`
-    background_threads_->cq().CancelAll();
+    // This will cancel all pending timers.
+    refresh_state_->timers().CancelAll();
   }
 
   /**
