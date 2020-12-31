@@ -826,6 +826,29 @@ TEST(CompletionQueueTest, ImplStartOperationDuplicate) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
+class DummyOperation : public internal::AsyncGrpcOperation {
+ public:
+  void Cancel() override {}
+  bool Notify(bool) override { return true; }
+};
+
+/// @test Verify if operation starter doesn't deadlock on CompletionQueue
+TEST(CompletionQueueTest, StartOperationMayOperateOnCq) {
+  auto impl = std::make_shared<internal::DefaultCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t([&] { cq.Run(); });
+  promise<void> run_async_promise;
+  impl->StartOperation(std::make_shared<DummyOperation>(), [&](void*) {
+    cq.MakeRelativeTimer(std::chrono::seconds(0))
+        .then([&](future<StatusOr<std::chrono::system_clock::time_point>>) {
+          run_async_promise.set_value();
+        });
+  });
+  run_async_promise.get_future().get();
+  cq.Shutdown();
+  t.join();
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
