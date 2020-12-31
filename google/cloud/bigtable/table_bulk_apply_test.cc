@@ -33,7 +33,10 @@ using ::testing::Return;
 
 /// Define types and functions used in the tests.
 class TableBulkApplyTest
-    : public ::google::cloud::bigtable::testing::TableTestFixture {};
+    : public ::google::cloud::bigtable::testing::TableTestFixture {
+ public:
+  TableBulkApplyTest() : TableTestFixture(CompletionQueue{}) {}
+};
 using google::cloud::bigtable::testing::MockMutateRowsReader;
 
 /// @test Verify that Table::BulkApply() works in the easy case.

@@ -134,8 +134,8 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
 class MutationBatcherTest : public bigtable::testing::TableTestFixture {
  protected:
   MutationBatcherTest()
-      : cq_impl_(std::make_shared<FakeCompletionQueueImpl>()),
-        cq_(cq_impl_),
+      : TableTestFixture(
+            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
         batcher_(new MutationBatcher(table_)) {}
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
@@ -248,8 +248,6 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
   std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
   std::unique_ptr<MutationBatcher> batcher_;
 };
 
@@ -681,8 +679,8 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
 
    protected:
     future<std::vector<FailedMutation>> AsyncBulkApplyImpl(
-        Table& table, BulkMutation&& mut, CompletionQueue& cq) override {
-      auto res = MutationBatcher::AsyncBulkApplyImpl(table, std::move(mut), cq);
+        Table& table, BulkMutation&& mut) override {
+      auto res = MutationBatcher::AsyncBulkApplyImpl(table, std::move(mut));
       on_bulk_apply_();
       return res;
     }

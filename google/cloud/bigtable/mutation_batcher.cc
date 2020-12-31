@@ -136,8 +136,8 @@ bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {
 }
 
 future<std::vector<FailedMutation>> MutationBatcher::AsyncBulkApplyImpl(
-    Table& table, BulkMutation&& mut, CompletionQueue& cq) {
-  return table.AsyncBulkApply(std::move(mut), cq);
+    Table& table, BulkMutation&& mut) {
+  return table.AsyncBulkApply(std::move(mut));
 }
 
 bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
@@ -147,7 +147,7 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
 
     auto batch = std::make_shared<Batch>();
     cur_batch_.swap(batch);
-    AsyncBulkApplyImpl(table_, std::move(batch->requests), cq)
+    AsyncBulkApplyImpl(table_, std::move(batch->requests))
         .then([this, cq,
                batch](future<std::vector<FailedMutation>> failed) mutable {
           // Calling OnBulkApplyDone here might lead to a deadlock if the

@@ -40,6 +40,7 @@ foreach (fname ${bigtable_client_integration_tests})
         ${target}
         PRIVATE bigtable_client_testing
                 google_cloud_cpp_testing
+                google_cloud_cpp_testing_grpc
                 google-cloud-cpp::bigtable
                 google-cloud-cpp::bigtable_protos
                 google-cloud-cpp::common

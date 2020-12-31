@@ -176,6 +176,12 @@ class DataClient {
       const ::google::bigtable::v2::MutateRowsRequest& request,
       ::grpc::CompletionQueue* cq) = 0;
   //@}
+
+ private:
+  /// The thread factory from `ClientOptions` this client was created with.
+  virtual ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() {
+    return {};
+  }
 };
 
 /// Create the default implementation of ClientInterface.

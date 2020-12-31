@@ -24,13 +24,12 @@
 namespace {
 
 void AsyncApply(google::cloud::bigtable::Table table,
-                google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> const& argv) {
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string const& row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
@@ -41,22 +40,21 @@ void AsyncApply(google::cloud::bigtable::Table table,
         cbt::SetCell("fam", "column1", timestamp, "value for column1"));
 
     future<google::cloud::Status> status_future =
-        table.AsyncApply(std::move(mutation), cq);
+        table.AsyncApply(std::move(mutation));
     auto status = status_future.get();
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
-  (std::move(table), std::move(cq), argv.at(0));
+  (std::move(table), argv.at(0));
 }
 
 void AsyncBulkApply(google::cloud::bigtable::Table table,
-                    google::cloud::bigtable::CompletionQueue cq,
                     std::vector<std::string> const&) {
   //! [bulk async-bulk-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
-  [](cbt::Table table, cbt::CompletionQueue cq) {
+  [](cbt::Table table) {
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
     for (int i = 0; i != 5000; ++i) {
@@ -83,7 +81,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
       bulk.emplace_back(std::move(mutation));
     }
 
-    table.AsyncBulkApply(std::move(bulk), cq)
+    table.AsyncBulkApply(std::move(bulk))
         .then([](future<std::vector<cbt::FailedMutation>> ft) {
           auto failures = ft.get();
           if (failures.empty()) {
@@ -103,18 +101,17 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example
   }
   //! [bulk async-bulk-apply]
-  (std::move(table), std::move(cq));
+  (std::move(table));
 }
 
 void AsyncReadRows(google::cloud::bigtable::Table table,
-                   google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> const&) {
   //! [async read rows]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::make_ready_future;
   using google::cloud::promise;
   using google::cloud::Status;
-  [](cbt::CompletionQueue cq, cbt::Table table) {
+  [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
@@ -125,7 +122,6 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
     promise<Status> stream_status_promise;
     // Read and print the rows.
     table.AsyncReadRows(
-        cq,
         [](cbt::Row const& row) {
           if (row.cells().size() != 1) {
             std::cout << "Unexpected number of cells in " << row.row_key()
@@ -144,18 +140,17 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
     if (!stream_status.ok()) throw std::runtime_error(stream_status.message());
   }
   //! [async read rows]
-  (std::move(cq), std::move(table));
+  (std::move(table));
 }
 
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
-                            google::cloud::bigtable::CompletionQueue cq,
                             std::vector<std::string> const&) {
   //! [async read rows with limit]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::make_ready_future;
   using google::cloud::promise;
   using google::cloud::Status;
-  [](cbt::CompletionQueue cq, cbt::Table table) {
+  [](cbt::Table table) {
     // Create the range of rows to read.
     auto range = cbt::RowRange::Range("key-000010", "key-000020");
     // Filter the results, only include values from the "col0" column in the
@@ -166,7 +161,6 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
     promise<Status> stream_status_promise;
     // Read and print the rows.
     table.AsyncReadRows(
-        cq,
         [](cbt::Row const& row) {
           if (row.cells().size() != 1) {
             std::cout << "Unexpected number of cells in " << row.row_key()
@@ -185,21 +179,19 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
     if (!stream_status.ok()) throw std::runtime_error(stream_status.message());
   }
   //! [async read rows with limit]
-  (std::move(cq), std::move(table));
+  (std::move(table));
 }
 
 void AsyncReadRow(google::cloud::bigtable::Table table,
-                  google::cloud::bigtable::CompletionQueue cq,
                   std::vector<std::string> const& argv) {
   //! [async read row]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::CompletionQueue cq, google::cloud::bigtable::Table table,
-     std::string const& row_key) {
+  [](google::cloud::bigtable::Table table, std::string const& row_key) {
     // Filter the results, only include the latest value on each cell.
     cbt::Filter filter = cbt::Filter::Latest(1);
-    table.AsyncReadRow(cq, row_key, std::move(filter))
+    table.AsyncReadRow(row_key, std::move(filter))
         .then(
             [row_key](future<StatusOr<std::pair<bool, cbt::Row>>> row_future) {
               // Read a row, this returns a tuple (bool, row)
@@ -227,17 +219,16 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example
   }
   //! [async read row]
-  (std::move(cq), std::move(table), argv.at(0));
+  (std::move(table), argv.at(0));
 }
 
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
-                         google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> const& argv) {
   //! [async check and mutate]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string const& row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
@@ -247,8 +238,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                                      {cbt::SetCell("fam", "flip-flop", "off"),
                                       cbt::SetCell("fam", "flop-flip", "on")},
                                      {cbt::SetCell("fam", "flip-flop", "on"),
-                                      cbt::SetCell("fam", "flop-flip", "off")},
-                                     cq);
+                                      cbt::SetCell("fam", "flop-flip", "off")});
 
     branch_future
         .then([](future<StatusOr<cbt::MutationBranch>> f) {
@@ -263,19 +253,18 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example.
   }
   //! [async check and mutate]
-  (std::move(table), std::move(cq), argv.at(0));
+  (std::move(table), argv.at(0));
 }
 
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
-                          google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> const& argv) {
   //! [async read modify write]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string const& row_key) {
+  [](cbt::Table table, std::string const& row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
-        std::move(row_key), cq,
+        std::move(row_key),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     row_future
@@ -294,7 +283,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
         .get();  // block to simplify example.
   }
   //! [async read modify write]
-  (std::move(table), std::move(cq), argv.at(0));
+  (std::move(table), argv.at(0));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -339,39 +328,35 @@ void RunAll(std::vector<std::string> const& argv) {
           google::cloud::bigtable::ClientOptions()),
       table_id, cbt::AlwaysRetryMutationPolicy());
 
-  google::cloud::CompletionQueue cq;
-  std::thread th([&cq] { cq.Run(); });
-  examples::AutoShutdownCQ shutdown(cq, std::move(th));
-
   std::cout << "\nRunning the AsyncApply() example" << std::endl;
-  AsyncApply(table, cq, {"row-0001"});
+  AsyncApply(table, {"row-0001"});
 
   std::cout << "\nRunning the AsyncBulkApply() example" << std::endl;
-  AsyncBulkApply(table, cq, {});
+  AsyncBulkApply(table, {});
 
   std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
-  AsyncReadRows(table, cq, {});
+  AsyncReadRows(table, {});
 
   std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
-  AsyncReadRowsWithLimit(table, cq, {});
+  AsyncReadRowsWithLimit(table, {});
 
   std::cout << "\nRunning the AsyncReadRow() example [1]" << std::endl;
-  AsyncReadRow(table, cq, {"row-0001"});
+  AsyncReadRow(table, {"row-0001"});
 
   std::cout << "\nRunning the AsyncReadRow() example [2]" << std::endl;
-  AsyncReadRow(table, cq, {"row-not-found-key"});
+  AsyncReadRow(table, {"row-not-found-key"});
 
   std::cout << "\nRunning the AsyncApply() example [2]" << std::endl;
-  AsyncApply(table, cq, {"check-and-mutate-row-key"});
+  AsyncApply(table, {"check-and-mutate-row-key"});
 
   std::cout << "\nRunning the AsyncCheckAndMutate() example" << std::endl;
-  AsyncCheckAndMutate(table, cq, {"check-and-mutate-row-key"});
+  AsyncCheckAndMutate(table, {"check-and-mutate-row-key"});
 
   std::cout << "\nRunning the AsyncApply() example [3]" << std::endl;
-  AsyncApply(table, cq, {"read-modify-write-row-key"});
+  AsyncApply(table, {"read-modify-write-row-key"});
 
   std::cout << "\nRunning the AsyncReadModifyWrite() example" << std::endl;
-  AsyncReadModifyWrite(table, cq, {"read-modify-write-row-key"});
+  AsyncReadModifyWrite(table, {"read-modify-write-row-key"});
 
   (void)admin.DeleteTable(table_id);
 }

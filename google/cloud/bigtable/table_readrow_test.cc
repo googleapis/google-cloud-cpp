@@ -29,7 +29,10 @@ using ::google::cloud::bigtable::testing::MockReadRowsReader;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::Return;
 
-class TableReadRowTest : public bigtable::testing::TableTestFixture {};
+class TableReadRowTest : public bigtable::testing::TableTestFixture {
+ public:
+  TableReadRowTest() : TableTestFixture(CompletionQueue{}) {}
+};
 
 TEST_F(TableReadRowTest, ReadRowSimple) {
   auto const response = bigtable::testing::ReadRowsResponseFromString(R"(

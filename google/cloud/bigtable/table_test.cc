@@ -29,6 +29,8 @@ using google::cloud::testing_util::FakeCompletionQueueImpl;
 /// Define types and functions used in the tests.
 namespace {
 class TableTest : public ::google::cloud::bigtable::testing::TableTestFixture {
+ public:
+  TableTest() : TableTestFixture(CompletionQueue{}) {}
 };
 }  // anonymous namespace
 
@@ -117,7 +119,8 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   ValidContextMdAsyncTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new ::google::cloud::bigtable::testing::MockDataClient) {
+        client_(new ::google::cloud::bigtable::testing::MockDataClient(
+            ClientOptions().DisableBackgroundThreads(cq_))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())
@@ -165,8 +168,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncApply) {
               mutations: { delete_from_row { } }
           )""",
           "google.bigtable.v2.Bigtable.MutateRow"));
-  FinishTest(
-      table_->AsyncApply(SingleRowMutation("row_key", DeleteFromRow()), cq_));
+  FinishTest(table_->AsyncApply(SingleRowMutation("row_key", DeleteFromRow())));
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
@@ -184,7 +186,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
           )""",
           "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
   FinishTest(table_->AsyncCheckAndMutateRow("row_key", Filter::PassAllFilter(),
-                                            {DeleteFromRow()}, {}, cq_));
+                                            {DeleteFromRow()}, {}));
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
@@ -210,7 +212,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
           )""",
           "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
   FinishTest(table_->AsyncReadModifyWriteRow(
-      "row_key", cq_, ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
+      "row_key", ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
       ReadModifyWriteRule::AppendValue("fam", "list", ";element")));
 }
 

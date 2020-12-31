@@ -99,13 +99,16 @@ google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
 class AsyncBenchmark {
  public:
   AsyncBenchmark(bigtable::benchmarks::Benchmark& benchmark,
+                 google::cloud::CompletionQueue cq,
                  std::string const& app_profile_id, std::string const& table_id)
-      : benchmark_(benchmark),
+      : cq_(std::move(cq)),
+        benchmark_(benchmark),
         table_(benchmark_.MakeDataClient(), app_profile_id, table_id),
         generator_(std::random_device{}()) {}
 
   ~AsyncBenchmark() {
     cq_.Shutdown();
+    cq_.CancelAll();
     for (auto& t : cq_threads_) {
       t.join();
     }
@@ -147,6 +150,8 @@ int main(int argc, char* argv[]) {
   }
 
   Benchmark benchmark(*setup);
+  google::cloud::CompletionQueue cq;
+  benchmark.ClientOptionsRef().DisableBackgroundThreads(cq);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -159,15 +164,11 @@ int main(int argc, char* argv[]) {
   Benchmark::PrintThroughputResult(std::cout, "perf", "Upload",
                                    *populate_results);
 
-  google::cloud::CompletionQueue cq;
-  std::vector<std::thread> cq_threads;
-
-  auto data_client = benchmark.MakeDataClient();
   // Start the threads running the latency test.
   std::cout << "# Running ReadRow/AsyncReadRow Throughput Benchmark "
             << std::flush;
 
-  AsyncBenchmark async_benchmark(benchmark, setup->app_profile_id(),
+  AsyncBenchmark async_benchmark(benchmark, cq, setup->app_profile_id(),
                                  setup->table_id());
   // Start the benchmark threads.
   auto test_start = std::chrono::steady_clock::now();
@@ -226,10 +227,6 @@ int main(int argc, char* argv[]) {
                            sync_results);
 
   benchmark.DeleteTable();
-  cq.Shutdown();
-  for (auto& t : cq_threads) {
-    t.join();
-  }
 
   return 0;
 }
@@ -265,9 +262,8 @@ void AsyncBenchmark::RunOneAsyncReadRow() {
 
   auto request_start = std::chrono::steady_clock::now();
   table_
-      .AsyncReadRow(cq_, row_key,
-                    bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0",
-                                                        "field9"))
+      .AsyncReadRow(row_key, bigtable::Filter::ColumnRangeClosed(
+                                 kColumnFamily, "field0", "field9"))
       .then([this, request_start](
                 future<StatusOr<std::pair<bool, bigtable::Row>>> f) {
         OnReadRow(request_start, f.get());

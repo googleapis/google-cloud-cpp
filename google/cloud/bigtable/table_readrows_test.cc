@@ -30,7 +30,10 @@ using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::WithoutArgs;
 
-class TableReadRowsTest : public bigtable::testing::TableTestFixture {};
+class TableReadRowsTest : public bigtable::testing::TableTestFixture {
+ public:
+  TableReadRowsTest() : TableTestFixture(CompletionQueue{}) {}
+};
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   auto response = bigtable::testing::ReadRowsResponseFromString(R"(

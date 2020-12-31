@@ -38,24 +38,20 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
  protected:
   AsyncBulkApplyTest()
-      : rpc_retry_policy_(
+      : TableTestFixture(
+            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
+        rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_(bigtable::DefaultRPCBackoffPolicy(
             internal::kBigtableTableAdminLimits)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()),
-        metadata_update_policy_("my_tqble", MetadataParamTypes::NAME),
-        cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new testing::MockDataClient) {}
+        metadata_update_policy_("my_tqble", MetadataParamTypes::NAME) {}
 
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
-  std::shared_ptr<testing::MockDataClient> client_;
 };
 
 TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {

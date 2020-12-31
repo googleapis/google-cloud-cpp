@@ -221,7 +221,8 @@ class Table {
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
-            bigtable::DefaultIdempotentMutationPolicy()) {}
+            bigtable::DefaultIdempotentMutationPolicy()),
+        background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
    * Constructor with explicit policies.
@@ -403,8 +404,30 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async-apply
    */
-
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED
   future<Status> AsyncApply(SingleRowMutation mut, CompletionQueue& cq);
+
+  /**
+   * Makes asynchronous attempts to apply the mutation to a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param mut the mutation. Note that this function takes ownership
+   * (and then discards) the data in the mutation.  In general, a
+   *     `SingleRowMutation` can be used to modify and/or delete
+   * multiple cells, across different columns and column families.
+   *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async-apply
+   */
+  future<Status> AsyncApply(SingleRowMutation mut);
 
   /**
    * Attempts to apply mutations to multiple rows.
@@ -459,8 +482,37 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED
   future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut,
                                                      CompletionQueue& cq);
+
+  /**
+   * Makes asynchronous attempts to apply mutations to multiple rows.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param mut the mutations, note that this function takes
+   *     ownership (and then discards) the data in the mutation. In general, a
+   *     `BulkMutation` can modify multiple rows, and the modifications for each
+   *     row can change (or create) multiple cells, across different columns and
+   *     column families.
+   *
+   * @par Idempotency
+   * This operation is idempotent if the provided mutations are idempotent. Note
+   * that `google::cloud::bigtable::SetCell()` without an explicit timestamp is
+   * **not** an idempotent operation.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc bulk async-bulk-apply
+   */
+  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut);
 
   /**
    * Reads a set of rows from the table.
@@ -593,9 +645,41 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async check and mutate
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED
   future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
       std::vector<Mutation> false_mutations, CompletionQueue& cq);
+
+  /**
+   * Make an asynchronous request to conditionally mutate a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param row_key the row key on which the conditional mutation will be
+   *     performed
+   * @param filter the condition, depending on which the mutation will be
+   *     performed
+   * @param true_mutations the mutations which will be performed if @p filter is
+   *     true
+   * @param false_mutations the mutations which will be performed if @p filter
+   *     is false
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async check and mutate
+   */
+  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
 
   /**
    * Sample of the row keys in the table, including approximate data sizes.
@@ -699,15 +783,49 @@ class Table {
    * @snippet data_async_snippets.cc async read modify write
    */
   template <typename... Args>
-  future<StatusOr<Row>> AsyncReadModifyWriteRow(
-      std::string row_key, CompletionQueue& cq,
-      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
-    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
-    request.set_row_key(std::move(row_key));
-    *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED future<StatusOr<Row>>
+  AsyncReadModifyWriteRow(std::string row_key, CompletionQueue& cq,
+                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    return AsyncReadModifyWriteRowImpl(std::move(row_key), cq, std::move(rule),
+                                       std::forward<Args>(rules)...);
+  }
 
-    return AsyncReadModifyWriteRowImpl(cq, std::move(request));
+  /**
+   * Make an asynchronous request to atomically read and modify a row.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param row_key the row key on which modification will be performed
+   *
+   * @param rule to modify the row. Two types of rules are applied here
+   *     AppendValue which will read the existing value and append the
+   *     text provided to the value.
+   *     IncrementAmount which will read the existing uint64 big-endian-int
+   *     and add the value provided.
+   *     Both rules accept the family and column identifier to modify.
+   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @returns A future, that becomes satisfied when the operation completes,
+   *     at that point the future has the contents of all modified cells.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read modify write
+   */
+  template <typename... Args>
+  future<StatusOr<Row>> AsyncReadModifyWriteRow(
+      std::string row_key, bigtable::ReadModifyWriteRule rule,
+      Args&&... rules) {
+    auto cq = background_threads_->cq();
+    return AsyncReadModifyWriteRowImpl(std::move(row_key), cq, std::move(rule),
+                                       std::forward<Args>(rules)...);
   }
 
   /**
@@ -744,15 +862,49 @@ class Table {
    * @snippet data_async_snippets.cc async read rows
    */
   template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRows(CompletionQueue& cq, RowFunctor on_row,
-                     FinishFunctor on_finish, RowSet row_set, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        cq, client_, app_profile_id_, table_name_, std::move(on_row),
-        std::move(on_finish), std::move(row_set),
-        AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED void AsyncReadRows(
+      CompletionQueue& cq, RowFunctor on_row, FinishFunctor on_finish,
+      RowSet row_set, Filter filter) {
+    return AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                             std::move(row_set), std::move(filter));
+  }
+
+  /**
+   * Asynchronously reads a set of rows from the table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param on_row the callback to be invoked on each successfully read row; it
+   *     should be invocable with `Row` and return a future<bool>; the returned
+   *     `future<bool>` should be satisfied with `true` when the user is ready
+   *     to receive the next callback and with `false` when the user doesn't
+   *     want any more rows; if `on_row` throws, the results are undefined
+   * @param on_finish the callback to be invoked when the stream is closed; it
+   *     should be invocable with `Status` and not return anything; it will
+   *     always be called as the last callback; if `on_finish` throws, the
+   *     results are undefined
+   * @param row_set the rows to read from.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @tparam RowFunctor the type of the @p on_row callback.
+   * @tparam FinishFunctor the type of the @p on_finish callback.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read rows
+   */
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
+                     Filter filter) {
+    auto cq = background_threads_->cq();
+    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                      std::move(row_set), std::move(filter));
   }
 
   /**
@@ -794,15 +946,54 @@ class Table {
    * @snippet data_async_snippets.cc async read rows with limit
    */
   template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRows(CompletionQueue& cq, RowFunctor on_row,
-                     FinishFunctor on_finish, RowSet row_set,
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED void AsyncReadRows(
+      CompletionQueue& cq, RowFunctor on_row, FinishFunctor on_finish,
+      RowSet row_set, std::int64_t rows_limit, Filter filter) {
+    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                      std::move(row_set), rows_limit, std::move(filter));
+  }
+
+  /**
+   * Asynchronously reads a set of rows from the table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param on_row the callback to be invoked on each successfully read row; it
+   *     should be invocable with `Row` and return a future<bool>; the returned
+   *     `future<bool>` should be satisfied with `true` when the user is ready
+   *     to receive the next callback and with `false` when the user doesn't
+   *     want any more rows; if `on_row` throws, the results are undefined
+   * @param on_finish the callback to be invoked when the stream is closed; it
+   *     should be invocable with `Status` and not return anything; it will
+   *     always be called as the last callback; if `on_finish` throws, the
+   *     results are undefined
+   * @param row_set the rows to read from.
+   * @param rows_limit the maximum number of rows to read. Cannot be a negative
+   *     number or zero. Use `AsyncReadRows(RowSet, Filter)` to
+   *     read all matching rows.
+   * @param filter is applied on the server-side to data in the rows.
+   *
+   * @tparam RowFunctor the type of the @p on_row callback.
+   * @tparam FinishFunctor the type of the @p on_finish callback.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread. The callbacks passed to this
+   * function may be executed on any thread running the provided completion
+   * queue.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read rows with limit
+   */
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
                      std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        cq, client_, app_profile_id_, table_name_, std::move(on_row),
-        std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
-        clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+    auto cq = background_threads_->cq();
+    AsyncReadRowsImpl(cq, std::move(on_row), std::move(on_finish),
+                      std::move(row_set), rows_limit, std::move(filter));
   }
 
   /**
@@ -837,11 +1028,91 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async read row
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED
   future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(CompletionQueue& cq,
                                                       std::string row_key,
                                                       Filter filter);
 
+  /**
+   * Asynchronously read and return a single row from the table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param row_key the row to read.
+   * @param filter a filter expression, can be used to select a subset of the
+   *     column families and columns in the row.
+   * @returns a future satisfied when the operation completes, fails
+   *     permanently or keeps failing transiently, but the retry policy has been
+   *     exhausted. The future will return a tuple. The first element is a
+   *     boolean, with value `false` if the row does not exist.  If the first
+   *     element is `true` the second element has the contents of the Row.  Note
+   *     that the contents may be empty if the filter expression removes all
+   *     column families and columns.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read row
+   */
+  future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(std::string row_key,
+                                                      Filter filter);
+
  private:
+  future<Status> AsyncApplyImpl(SingleRowMutation mut, CompletionQueue& cq);
+
+  future<std::vector<FailedMutation>> AsyncBulkApplyImpl(BulkMutation mut,
+                                                         CompletionQueue& cq);
+  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRowImpl(
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations, CompletionQueue& cq);
+
+  template <typename... Args>
+  future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
+      std::string row_key, CompletionQueue& cq,
+      bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+    ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+    request.set_row_key(std::move(row_key));
+    *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(rules)...);
+
+    return AsyncReadModifyWriteRowImpl(cq, std::move(request));
+  }
+
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
+                         FinishFunctor on_finish, RowSet row_set,
+                         Filter filter) {
+    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+        cq, client_, app_profile_id_, table_name_, std::move(on_row),
+        std::move(on_finish), std::move(row_set),
+        AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
+        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy_,
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+  }
+  template <typename RowFunctor, typename FinishFunctor>
+  void AsyncReadRowsImpl(CompletionQueue& cq, RowFunctor on_row,
+                         FinishFunctor on_finish, RowSet row_set,
+                         std::int64_t rows_limit, Filter filter) {
+    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
+        cq, client_, app_profile_id_, table_name_, std::move(on_row),
+        std::move(on_finish), std::move(row_set), rows_limit, std::move(filter),
+        clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+        metadata_update_policy_,
+        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+  }
+
+  future<StatusOr<std::pair<bool, Row>>> AsyncReadRowImpl(CompletionQueue& cq,
+                                                          std::string row_key,
+                                                          Filter filter);
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
@@ -910,6 +1181,7 @@ class Table {
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

@@ -129,9 +129,14 @@ class InProcessDataClient : public bigtable::DataClient {
   //@}
 
  private:
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return options_.background_threads_factory();
+  }
+
   std::string project_;
   std::string instance_;
   std::shared_ptr<grpc::Channel> channel_;
+  ClientOptions options_;
 };
 
 }  // namespace testing

@@ -166,7 +166,7 @@ class MutationBatcher {
  protected:
   // Wrap calling underlying operation in a virtual function to ease testing.
   virtual future<std::vector<FailedMutation>> AsyncBulkApplyImpl(
-      Table& table, BulkMutation&& mut, CompletionQueue& cq);
+      Table& table, BulkMutation&& mut);
 
  private:
   using CompletionPromise = promise<Status>;

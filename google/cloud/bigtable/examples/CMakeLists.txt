@@ -21,6 +21,7 @@ if (BUILD_TESTING)
         bigtable_examples_common
         bigtable_client_testing
         google_cloud_cpp_testing
+        google_cloud_cpp_testing_grpc
         google-cloud-cpp::bigtable
         google-cloud-cpp::bigtable_protos
         google-cloud-cpp::common
@@ -61,6 +62,7 @@ if (BUILD_TESTING)
             ${target}
             PRIVATE bigtable_examples_common
                     google_cloud_cpp_testing
+                    google_cloud_cpp_testing_grpc
                     google-cloud-cpp::bigtable
                     google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::common

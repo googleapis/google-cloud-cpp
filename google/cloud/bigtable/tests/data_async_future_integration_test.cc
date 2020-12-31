@@ -40,10 +40,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
         c.value()));
   }
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
-  auto fut = table.AsyncApply(std::move(mut), cq);
+  auto fut = table.AsyncApply(std::move(mut));
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -58,9 +55,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncApply) {
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
-  // Cleanup the thread running the completion queue event loop.
-  cq.Shutdown();
-  pool.join();
   CheckEqualUnordered(expected, actual);
 }
 
@@ -91,10 +85,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
     mut.push_back(row_mut);
   }
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
-  auto fut_void = table.AsyncBulkApply(std::move(mut), cq);
+  auto fut_void = table.AsyncBulkApply(std::move(mut));
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -112,9 +103,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncBulkApply) {
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
-  // Cleanup the thread running the completion queue event loop.
-  cq.Shutdown();
-  pool.join();
   CheckEqualUnordered(expected, actual);
 }
 
@@ -126,13 +114,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
   std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
   auto fut = table.AsyncCheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("v1000"),
       {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")}, cq);
+      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -145,9 +130,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowPass) {
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
-  // Cleanup the thread running the completion queue event loop.
-  cq.Shutdown();
-  pool.join();
   CheckEqualUnordered(expected, actual);
 }
 
@@ -159,13 +141,10 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
   std::vector<bigtable::Cell> created{{key, kFamily, "c1", 0, "v1000"}};
   CreateCells(table, created);
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
   auto fut = table.AsyncCheckAndMutateRow(
       key, bigtable::Filter::ValueRegex("not-there"),
       {bigtable::SetCell(kFamily, "c2", 0_ms, "v2000")},
-      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")}, cq);
+      {bigtable::SetCell(kFamily, "c3", 0_ms, "v3000")});
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
@@ -178,9 +157,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableAsyncCheckAndMutateRowFail) {
 
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
 
-  // Cleanup the thread running the completion queue event loop.
-  cq.Shutdown();
-  pool.join();
   CheckEqualUnordered(expected, actual);
 }
 
@@ -217,11 +193,8 @@ TEST_F(DataAsyncFutureIntegrationTest,
   CreateCells(table, created);
   using R = bigtable::ReadModifyWriteRule;
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
   auto fut = table.AsyncReadModifyWriteRow(
-      row_key1, cq, R::AppendValue(family1, "column-id1", add_suffix1),
+      row_key1, R::AppendValue(family1, "column-id1", add_suffix1),
       R::AppendValue(family2, "column-id2", add_suffix2),
       R::AppendValue(family3, "column-id3", add_suffix3));
 
@@ -240,9 +213,6 @@ TEST_F(DataAsyncFutureIntegrationTest,
   // with the ones in the expected cells.
   auto actual_cells_ignore_timestamp = GetCellsIgnoringTimestamp(actual);
 
-  // Cleanup the thread running the completion queue event loop.
-  cq.Shutdown();
-  pool.join();
   CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_read),
                       actual_cells_ignore_timestamp);
 }
@@ -263,15 +233,12 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
 
   CreateCells(table, created);
 
-  CompletionQueue cq;
   std::promise<void> done;
-  std::thread pool([&cq] { cq.Run(); });
 
   std::vector<bigtable::Cell> actual;
 
   promise<Status> stream_status_promise;
   table.AsyncReadRows(
-      cq,
       [&actual](Row const& row) {
         auto const& cells = row.cells();
         actual.insert(actual.end(), cells.begin(), cells.end());
@@ -285,9 +252,6 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
 
   auto stream_status = stream_status_promise.get_future().get();
   ASSERT_STATUS_OK(stream_status);
-
-  cq.Shutdown();
-  pool.join();
 
   CheckEqualUnordered(created, actual);
 }
@@ -305,17 +269,11 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
 
   CreateCells(table, created);
 
-  CompletionQueue cq;
-  std::thread pool([&cq] { cq.Run(); });
-
   auto row_cell =
-      table.AsyncReadRow(cq, row_key1, bigtable::Filter::PassAllFilter()).get();
+      table.AsyncReadRow(row_key1, bigtable::Filter::PassAllFilter()).get();
   ASSERT_STATUS_OK(row_cell);
   std::vector<bigtable::Cell> actual;
   actual.emplace_back(row_cell->second.cells().at(0));
-
-  cq.Shutdown();
-  pool.join();
 
   CheckEqualUnordered(expected, actual);
 }

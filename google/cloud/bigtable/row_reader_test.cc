@@ -150,7 +150,8 @@ Matcher<const ReadRowsRequest&> RequestWithRowsLimit(std::int64_t n) {
 class RowReaderTest : public bigtable::testing::TableTestFixture {
  public:
   RowReaderTest()
-      : retry_policy_(new RetryPolicyMock),
+      : TableTestFixture(CompletionQueue{}),
+        retry_policy_(new RetryPolicyMock),
         backoff_policy_(new BackoffPolicyMock),
         metadata_update_policy_(kTableName,
                                 bigtable::MetadataParamTypes::TABLE_NAME),
