@@ -18,6 +18,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <grpcpp/grpcpp.h>
+#include <sstream>
 
 namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
@@ -44,10 +45,13 @@ class InstanceAdminEmulator final
 
     auto constexpr kMaxInstanceIdLength = 33;
     auto constexpr kMinInstanceIdLength = 6;
-    if (((request->instance_id()).size() > kMaxInstanceIdLength) ||
-        ((request->instance_id()).size() < kMinInstanceIdLength)) {
+    if (request->instance_id().size() > kMaxInstanceIdLength ||
+        request->instance_id().size() < kMinInstanceIdLength) {
+      std::ostringstream os;
+      os << "instance_id length should be in the [" << kMinInstanceIdLength
+         << "," << kMaxInstanceIdLength << "] range";
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                          "instance_id length should be between [6,33]");
+                          std::move(os).str());
     }
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
@@ -204,10 +208,13 @@ class InstanceAdminEmulator final
 
     auto constexpr kMaxClusterIdLength = 30;
     auto constexpr kMinClusterIdLength = 6;
-    if (((request->cluster_id()).size() > kMaxClusterIdLength) ||
-        ((request->cluster_id()).size() < kMinClusterIdLength)) {
+    if (request->cluster_id().size() > kMaxClusterIdLength ||
+        request->cluster_id().size() < kMinClusterIdLength) {
+      std::ostringstream os;
+      os << "cluster_id length should be in the [" << kMinClusterIdLength << ","
+         << kMaxClusterIdLength << "] range";
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                          "cluster_id length should be between [6,30]");
+                          std::move(os).str());
     }
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
@@ -331,10 +338,13 @@ class InstanceAdminEmulator final
 
     auto constexpr kMaxAppProfileIdLength = 50;
     auto constexpr kMinAppProfileIdLength = 1;
-    if (((request->app_profile_id()).size() > kMaxAppProfileIdLength) ||
-        ((request->app_profile_id()).size() < kMinAppProfileIdLength)) {
+    if (request->app_profile_id().size() > kMaxAppProfileIdLength ||
+        request->app_profile_id().size() < kMinAppProfileIdLength) {
+      std::ostringstream os;
+      os << "app_profile_id length should be in the [" << kMinAppProfileIdLength
+         << "," << kMaxAppProfileIdLength << "] range";
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                          "app_profile_id length should be between [1,50]");
+                          std::move(os).str());
     }
     auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
     auto ins = app_profiles_.emplace(name, request->app_profile());
