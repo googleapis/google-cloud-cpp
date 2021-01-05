@@ -42,6 +42,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    auto constexpr kMaxInstanceIdLength = 33;
+    auto constexpr kMinInstanceIdLength = 6;
+    if (((request->instance_id()).size() > kMaxInstanceIdLength) ||
+        ((request->instance_id()).size() < kMinInstanceIdLength)) {
+      return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
+                          "instance_id length should be between [6,33]");
+    }
     std::string name =
         request->parent() + "/instances/" + request->instance_id();
     auto ins = instances_.emplace(name, request->instance());
@@ -195,6 +202,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    auto constexpr kMaxClusterIdLength = 30;
+    auto constexpr kMinClusterIdLength = 6;
+    if (((request->cluster_id()).size() > kMaxClusterIdLength) ||
+        ((request->cluster_id()).size() < kMinClusterIdLength)) {
+      return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
+                          "cluster_id length should be between [6,30]");
+    }
     std::string name = request->parent() + "/clusters/" + request->cluster_id();
     auto ins = clusters_.emplace(name, request->cluster());
     if (ins.second) {
@@ -315,6 +329,13 @@ class InstanceAdminEmulator final
     google::protobuf::TextFormat::PrintToString(*request, &request_text);
     std::cout << __func__ << "() request=" << request_text << "\n";
 
+    auto constexpr kMaxAppProfileIdLength = 50;
+    auto constexpr kMinAppProfileIdLength = 1;
+    if (((request->app_profile_id()).size() > kMaxAppProfileIdLength) ||
+        ((request->app_profile_id()).size() < kMinAppProfileIdLength)) {
+      return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
+                          "app_profile_id length should be between [1,50]");
+    }
     auto name = request->parent() + "/appProfiles/" + request->app_profile_id();
     auto ins = app_profiles_.emplace(name, request->app_profile());
     if (ins.second) {
