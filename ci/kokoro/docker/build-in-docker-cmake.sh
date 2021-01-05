@@ -88,7 +88,7 @@ fi
 
 if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
   cmake_extra_flags+=(
-    "-DGOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD}")
+    "-DCMAKE_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD}")
 fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then

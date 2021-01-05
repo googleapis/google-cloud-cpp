@@ -432,7 +432,7 @@ docker_flags=(
   "--env" "BUILD_NAME=${BUILD_NAME}"
   "--env" "BRANCH=${BRANCH}"
 
-  # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
+  # If set, pass -DCMAKE_CXX_STANDARD=<value> to CMake.
   "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
 
   # The type of the build for CMake.
