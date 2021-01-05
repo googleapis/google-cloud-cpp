@@ -354,23 +354,55 @@ StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
-    ListBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListBucketAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ListBucketAccessControlsResponse response;
+  auto status =
+      stub_->ListBucketAccessControls(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  ListBucketAclResponse res;
+  for (auto& item : *response.mutable_items()) {
+    res.items.emplace_back(FromProto(std::move(item)));
+  }
+
+  return res;
 }
 
 StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
-    GetBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::BucketAccessControl response;
+  auto status =
+      stub_->GetBucketAccessControl(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
-    CreateBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateBucketAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::BucketAccessControl response;
+  auto status =
+      stub_->InsertBucketAccessControl(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return FromProto(std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
-    DeleteBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteBucketAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::protobuf::Empty response;
+  auto status =
+      stub_->DeleteBucketAccessControl(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return EmptyResponse{};
 }
 
 StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
@@ -379,8 +411,15 @@ StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
 }
 
 StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
-    UpdateBucketAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateBucketAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::BucketAccessControl response;
+  auto status =
+      stub_->UpdateBucketAccessControl(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
@@ -578,7 +617,7 @@ void SetPredefinedAcl(GrpcRequest& request, StorageRequest const& req) {
 template <typename GrpcRequest, typename StorageRequest>
 void SetPredefinedDefaultObjectAcl(GrpcRequest& request,
                                    StorageRequest const& req) {
-  if (req.template HasOption<PredefinedAcl>()) {
+  if (req.template HasOption<PredefinedDefaultObjectAcl>()) {
     request.set_predefined_default_object_acl(GrpcClient::ToProto(
         req.template GetOption<PredefinedDefaultObjectAcl>()));
   }
@@ -1385,6 +1424,52 @@ google::storage::v1::DeleteBucketRequest GrpcClient::ToProto(
   google::storage::v1::DeleteBucketRequest r;
   r.set_bucket(request.bucket_name());
   SetMetagenerationConditions(r, request);
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::InsertBucketAccessControlRequest GrpcClient::ToProto(
+    CreateBucketAclRequest const& request) {
+  google::storage::v1::InsertBucketAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.mutable_bucket_access_control()->set_role(request.role());
+  r.mutable_bucket_access_control()->set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::ListBucketAccessControlsRequest GrpcClient::ToProto(
+    ListBucketAclRequest const& request) {
+  google::storage::v1::ListBucketAccessControlsRequest r;
+  r.set_bucket(request.bucket_name());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::GetBucketAccessControlRequest GrpcClient::ToProto(
+    GetBucketAclRequest const& request) {
+  google::storage::v1::GetBucketAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::UpdateBucketAccessControlRequest GrpcClient::ToProto(
+    UpdateBucketAclRequest const& request) {
+  google::storage::v1::UpdateBucketAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
+  r.mutable_bucket_access_control()->set_role(request.role());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::DeleteBucketAccessControlRequest GrpcClient::ToProto(
+    DeleteBucketAclRequest const& request) {
+  google::storage::v1::DeleteBucketAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
   SetCommonParameters(r, request);
   return r;
 }
