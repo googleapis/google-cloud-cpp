@@ -248,8 +248,8 @@ class CompletionQueue {
       std::shared_ptr<grpc::Channel> channel,
       std::chrono::system_clock::time_point deadline) {
     auto op = std::make_shared<internal::AsyncConnectionReadyFuture>(
-        std::move(channel), deadline);
-    impl_->StartOperation(op, [&](void* tag) { op->Start(impl_->cq(), tag); });
+        std::move(channel), deadline, impl_);
+    impl_->StartOperation(op, [&](void* tag) { op->Start(tag, impl_->cq()); });
     return op->GetFuture();
   }
 

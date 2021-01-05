@@ -17,6 +17,7 @@
 
 #include "google/cloud/async_operation.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/channel.h>
@@ -33,6 +34,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+class CompletionQueueTest;
+
 /**
  * Underlies `DefaultCompletionQueueImpl::AsyncWaitForConnectionStateChange`.
  *
@@ -42,10 +45,12 @@ namespace internal {
  */
 class AsyncConnectionReadyFuture : public internal::AsyncGrpcOperation {
  public:
-  AsyncConnectionReadyFuture(std::shared_ptr<grpc::Channel> channel,
-                             std::chrono::system_clock::time_point deadline);
+  AsyncConnectionReadyFuture(
+      std::shared_ptr<grpc::Channel> channel,
+      std::chrono::system_clock::time_point deadline,
+      std::shared_ptr<CompletionQueueImpl> const& cq_impl);
 
-  void Start(grpc::CompletionQueue& cq, void* tag);
+  void Start(void* tag, grpc::CompletionQueue& cq);
   // There doesn't seem to be a way to cancel this operation:
   // https://github.com/grpc/grpc/issues/3064
   void Cancel() override {}
@@ -54,16 +59,15 @@ class AsyncConnectionReadyFuture : public internal::AsyncGrpcOperation {
 
  private:
   bool Notify(bool ok) override;
-  // Returns whether to register for state change.
-  bool HandleSingleStateChange();
+  bool SatisfyPromiseIfFinished(grpc_connectivity_state state);
 
   std::shared_ptr<grpc::Channel> channel_;
   std::chrono::system_clock::time_point deadline_;
   promise<Status> promise_;
-  // CompletionQueue and tag are memorized on start of the operation so that it
-  // can be re-registered in the completion queue for another state change.
-  grpc::CompletionQueue* cq_;
+  std::weak_ptr<internal::CompletionQueueImpl> weak_cq_impl_;
   void* tag_;
+
+  friend class CompletionQueueTest;
 };
 
 }  // namespace internal

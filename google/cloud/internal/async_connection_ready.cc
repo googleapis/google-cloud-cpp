@@ -21,13 +21,25 @@ namespace internal {
 
 AsyncConnectionReadyFuture::AsyncConnectionReadyFuture(
     std::shared_ptr<grpc::Channel> channel,
-    std::chrono::system_clock::time_point deadline)
-    : channel_(std::move(channel)), deadline_(deadline) {}
+    std::chrono::system_clock::time_point deadline,
+    std::shared_ptr<CompletionQueueImpl> const& cq_impl)
+    : channel_(std::move(channel)),
+      deadline_(deadline),
+      weak_cq_impl_(cq_impl) {}
 
-void AsyncConnectionReadyFuture::Start(grpc::CompletionQueue& cq, void* tag) {
+void AsyncConnectionReadyFuture::Start(void* tag, grpc::CompletionQueue& cq) {
   tag_ = tag;
-  cq_ = &cq;
-  HandleSingleStateChange();
+  auto state = channel_->GetState(true);
+  if (SatisfyPromiseIfFinished(state)) return;
+  // If connection was idle, GetState(true) triggered an attempt to connect.
+  // If we didn't satisfy the promise yet, the connection is either in state
+  // CONNECTING or TRANSIENT_FAILURE, so let's register for a state change.
+  //
+  // This function is supposed to be called by the completion queue inside
+  // `StartOperation()`, which delays any `grpc::CompletionQueue::Shutdown`
+  // calls until after this function completes, so it is safe to make the
+  // following call.
+  channel_->NotifyOnStateChange(state, deadline_, &cq, tag_);
 }
 
 bool AsyncConnectionReadyFuture::Notify(bool ok) {
@@ -37,11 +49,30 @@ bool AsyncConnectionReadyFuture::Notify(bool ok) {
                "Connection couldn't connect before requested deadline"));
     return true;
   }
-  return HandleSingleStateChange();
+  if (SatisfyPromiseIfFinished(channel_->GetState(true))) return true;
+  // If we call channel_->NotifyOnStateChange() on a shut down
+  // `CompletionQueue`, we'll trigger an assertion in gRPC. In order to make
+  // sure that the `CompletionQueue` is not shut down, we need to use
+  // `StartOperation()`. We cannot use it directly here, because it will try to
+  // register this operation for the second time. In order to circumvent it,
+  // we'll allocate a new operation and let it continue the waiting process.
+  auto cq_impl = weak_cq_impl_.lock();
+  if (!cq_impl) {
+    promise_.set_value(Status(StatusCode::kCancelled,
+                              "Connection will never succeed because the "
+                              "completion queue is being destroyed."));
+    return true;
+  }
+  auto continuation =
+      std::make_shared<AsyncConnectionReadyFuture>(std::move(*this));
+  cq_impl->StartOperation(continuation, [&](void* tag) {
+    continuation->Start(tag, cq_impl->cq());
+  });
+  return true;
 }
 
-bool AsyncConnectionReadyFuture::HandleSingleStateChange() {
-  auto state = channel_->GetState(true);
+bool AsyncConnectionReadyFuture::SatisfyPromiseIfFinished(
+    grpc_connectivity_state state) {
   if (state == GRPC_CHANNEL_READY) {
     promise_.set_value(Status{});
     return true;
@@ -52,10 +83,6 @@ bool AsyncConnectionReadyFuture::HandleSingleStateChange() {
                "Connection will never succeed because it's shut down."));
     return true;
   }
-  // If connection was idle, GetState(true) triggered an attempt to connect.
-  // Otherwise it is either in state CONNECTING or TRANSIENT_FAILURE, so let's
-  // register for a state change.
-  channel_->NotifyOnStateChange(state, deadline_, cq_, tag_);
   return false;
 }
 
