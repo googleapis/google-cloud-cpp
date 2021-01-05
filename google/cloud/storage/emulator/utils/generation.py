@@ -44,12 +44,12 @@ def extract_precondition(request, is_meta, is_source, context):
         not_match_field = utils.common.to_snake_case(not_match_field)
         match = (
             getattr(request, match_field, None).value
-            if request.HasField(match_field)
+            if hasattr(request, match_field) and request.HasField(match_field)
             else None
         )
         not_match = (
             getattr(request, not_match_field, None).value
-            if request.HasField(not_match_field)
+            if hasattr(request, not_match_field) and request.HasField(not_match_field)
             else None
         )
     else:

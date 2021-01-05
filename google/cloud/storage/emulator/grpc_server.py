@@ -60,6 +60,35 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         db.delete_bucket(request, bucket_name, context)
         return Empty()
 
+    def ListBucketAccessControls(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        result = resources_pb2.ListBucketAccessControlsResponse(
+            items=bucket.metadata.acl
+        )
+        return result
+
+    def InsertBucketAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.insert_acl(request, context)
+
+    def GetBucketAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.get_acl(request.entity, context)
+
+    def UpdateBucketAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.update_acl(request, request.entity, context)
+
+    def DeleteBucketAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        bucket.delete_acl(request.entity, context)
+        return Empty()
+
     # === OBJECT === #
 
     def InsertObject(self, request_iterator, context):

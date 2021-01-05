@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
@@ -39,6 +40,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::storage::testing::AclEntityNames;
+using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
 using ::testing::Not;
 
@@ -60,6 +63,11 @@ class GrpcIntegrationTest
     ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
   }
   std::string project_id() const { return project_id_; }
+
+  std::string MakeEntityName() {
+    // We always use the viewers for the project because it is known to exist.
+    return "project-viewers-" + project_id_;
+  }
 
  private:
   std::string project_id_;
@@ -110,6 +118,70 @@ TEST_P(GrpcIntegrationTest, BucketCRUD) {
   auto delete_status = client->DeleteBucket(bucket_name);
   EXPECT_STATUS_OK(delete_status);
   EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
+}
+
+TEST_P(GrpcIntegrationTest, BucketAccessControlCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test, with the "private" PredefinedAcl so
+  // we know what the contents of the ACL will be.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(), PredefinedAcl("private"),
+      Projection("full"));
+  ASSERT_STATUS_OK(meta);
+
+  auto entity_name = MakeEntityName();
+
+  ASSERT_FALSE(meta->acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_THAT(AclEntityNames(meta->acl()), Not(Contains(entity_name)))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
+
+  StatusOr<BucketAccessControl> result =
+      client->CreateBucketAcl(bucket_name, entity_name, "OWNER");
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ("OWNER", result->role());
+
+  StatusOr<std::vector<BucketAccessControl>> current_acl =
+      client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_FALSE(current_acl->empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_THAT(AclEntityNames(*current_acl), ContainsOnce(result->entity()));
+
+  StatusOr<BucketAccessControl> get_result =
+      client->GetBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *result);
+
+  BucketAccessControl new_acl = *get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client->UpdateBucketAcl(bucket_name, new_acl);
+  ASSERT_STATUS_OK(updated_result);
+  EXPECT_EQ("READER", updated_result->role());
+
+  get_result = client->GetBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *updated_result);
+
+  auto status = client->DeleteBucketAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(status);
+
+  current_acl = client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(*current_acl), Not(Contains(result->entity())));
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
