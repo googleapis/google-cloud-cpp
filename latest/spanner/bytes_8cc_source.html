@@ -210,60 +210,82 @@ $(function() {
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  }</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keyword">namespace </span>internal {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">// Construction from a base64-encoded US-ASCII `std::string`.</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;StatusOr&lt;Bytes&gt; BytesFromBase64(std::string input) {</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span>* p = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> const*<span class="keyword">&gt;</span>(input.data());</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span>* ep = p + input.size();</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordflow">while</span> (ep - p &gt;= 4) {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">auto</span> i0 = kCharToIndexExcessOne[p[0]];</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">auto</span> i1 = kCharToIndexExcessOne[p[1]];</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">if</span> (--i0 &gt;= 64 || --i1 &gt;= 64) <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">if</span> (p[3] == kPadding) {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">if</span> (p[2] == kPadding) {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordflow">if</span> ((i1 &amp; 0xf) != 0) <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keyword">auto</span> i2 = kCharToIndexExcessOne[p[2]];</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        <span class="keywordflow">if</span> (--i2 &gt;= 64 || (i2 &amp; 0x3) != 0) <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      }</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      p += 4;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keyword">auto</span> i2 = kCharToIndexExcessOne[p[2]];</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keyword">auto</span> i3 = kCharToIndexExcessOne[p[3]];</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordflow">if</span> (--i2 &gt;= 64 || --i3 &gt;= 64) <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    p += 4;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">if</span> (p != ep) {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> offset = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span> const*<span class="keyword">&gt;</span>(p) - input.data();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> bad_chunk = input.substr(offset, 4);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keyword">auto</span> message = <span class="stringliteral">&quot;Invalid base64 chunk \&quot;&quot;</span> + bad_chunk + <span class="stringliteral">&quot;\&quot;&quot;</span> +</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                   <span class="stringliteral">&quot; at offset &quot;</span> + std::to_string(offset);</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordflow">return</span> Status(StatusCode::kInvalidArgument, std::move(message));</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  Bytes bytes;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  bytes.base64_rep_ = std::move(input);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">return</span> bytes;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment">// Conversion to a base64-encoded US-ASCII `std::string`.</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;std::string BytesToBase64(Bytes b) { <span class="keywordflow">return</span> std::move(b.base64_rep_); }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}  <span class="comment">// namespace internal</span></div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1spanner__internal.html">  147</a></span>&#160;<span class="keyword">namespace </span>spanner_internal {</div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1spanner__internal_1_1v1.html">  148</a></span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a> {</div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html">  149</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html">BytesInternals</a> {</div>
+<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a8baa291839932d8b23876661ffbd5f3d">  150</a></span>&#160;  <span class="keyword">static</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">spanner::Bytes</a> <a class="code" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a8baa291839932d8b23876661ffbd5f3d">Create</a>(std::string rep) {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">spanner::Bytes</a> bytes;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    bytes.base64_rep_ = std::move(rep);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">return</span> bytes;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a104d063a49bd796c092e20a9af26d4af">  156</a></span>&#160;  <span class="keyword">static</span> std::string <a class="code" href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a104d063a49bd796c092e20a9af26d4af">GetRep</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">spanner::Bytes</a>&amp;&amp; bytes) {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">return</span> std::move(bytes.base64_rep_);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;};</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">// Construction from a base64-encoded US-ASCII `std::string`.</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1spanner__internal_1_1v1.html#a3cc3d5217aa57655564bec2342141aee">  162</a></span>&#160;StatusOr&lt;spanner::Bytes&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a01c05fc57d7432ccb0261b957e77ea87">BytesFromBase64</a>(std::string input) {</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  <span class="keyword">using</span> spanner::kCharToIndexExcessOne;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="keyword">using</span> spanner::kPadding;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span>* p = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> const*<span class="keyword">&gt;</span>(input.data());</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span>* ep = p + input.size();</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keywordflow">while</span> (ep - p &gt;= 4) {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keyword">auto</span> i0 = kCharToIndexExcessOne[p[0]];</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">auto</span> i1 = kCharToIndexExcessOne[p[1]];</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordflow">if</span> (--i0 &gt;= 64 || --i1 &gt;= 64) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordflow">if</span> (p[3] == kPadding) {</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">if</span> (p[2] == kPadding) {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordflow">if</span> ((i1 &amp; 0xf) != 0) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keyword">auto</span> i2 = kCharToIndexExcessOne[p[2]];</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">if</span> (--i2 &gt;= 64 || (i2 &amp; 0x3) != 0) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      p += 4;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keyword">auto</span> i2 = kCharToIndexExcessOne[p[2]];</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keyword">auto</span> i3 = kCharToIndexExcessOne[p[3]];</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordflow">if</span> (--i2 &gt;= 64 || --i3 &gt;= 64) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    p += 4;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="keywordflow">if</span> (p != ep) {</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> offset = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span> const*<span class="keyword">&gt;</span>(p) - input.data();</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> bad_chunk = input.substr(offset, 4);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keyword">auto</span> message = <span class="stringliteral">&quot;Invalid base64 chunk \&quot;&quot;</span> + bad_chunk + <span class="stringliteral">&quot;\&quot;&quot;</span> +</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                   <span class="stringliteral">&quot; at offset &quot;</span> + std::to_string(offset);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">return</span> Status(StatusCode::kInvalidArgument, std::move(message));</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  }</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordflow">return</span> BytesInternals::Create(std::move(input));</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;}</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="comment">// Conversion to a base64-encoded US-ASCII `std::string`.</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1spanner__internal_1_1v1.html#aa89ce945c99f2d5e5da45e244e4e20a6">  198</a></span>&#160;std::string <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a1ee931aab1db437400c7067d619297f1">BytesToBase64</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">spanner::Bytes</a> b) {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <span class="keywordflow">return</span> BytesInternals::GetRep(std::move(b));</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;}</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;}  <span class="comment">// namespace spanner_internal</span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astatus_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status_8h.html">status.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">google::cloud::spanner::v1::Bytes</a></div><div class="ttdoc">A representation of the Spanner BYTES type: variable-length binary data.</div><div class="ttdef"><b>Definition:</b> <a href="bytes_8h_source.html#l00045">bytes.h:45</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">google::cloud::spanner::v1::Bytes</a></div><div class="ttdoc">A representation of the Spanner BYTES type: variable-length binary data.</div><div class="ttdef"><b>Definition:</b> <a href="bytes_8h_source.html#l00043">bytes.h:43</a></div></div>
 <div class="ttc" id="aversion_8h_html_a313bc0c726caf781fb59a7140610468e"><div class="ttname"><a href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a></div><div class="ttdeci">#define SPANNER_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a1ee931aab1db437400c7067d619297f1"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a1ee931aab1db437400c7067d619297f1">google::cloud::spanner_internal::v1::BytesToBase64</a></div><div class="ttdeci">std::string BytesToBase64(spanner::Bytes b)</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator_html_a75ecfc1384b6718923088bf68d9ff11a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator.html#a75ecfc1384b6718923088bf68d9ff11a">google::cloud::spanner::v1::Bytes::Decoder::Iterator::Fill</a></div><div class="ttdeci">void Fill()</div><div class="ttdef"><b>Definition:</b> <a href="bytes_8cc_source.html#l00118">bytes.cc:118</a></div></div>
+<div class="ttc" id="astructgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals_html"><div class="ttname"><a href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html">google::spanner_internal::v1::BytesInternals</a></div><div class="ttdef"><b>Definition:</b> <a href="bytes_8cc_source.html#l00149">bytes.cc:149</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_acae1dba3b233e2232359d2cb520315e9"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acae1dba3b233e2232359d2cb520315e9">google::cloud::spanner::v1::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, Backup const &amp;bn)</div><div class="ttdef"><b>Definition:</b> <a href="backup_8cc_source.html#l00035">backup.cc:35</a></div></div>
 <div class="ttc" id="abytes_8h_html"><div class="ttname"><a href="bytes_8h.html">bytes.h</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a01c05fc57d7432ccb0261b957e77ea87"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a01c05fc57d7432ccb0261b957e77ea87">google::cloud::spanner_internal::v1::BytesFromBase64</a></div><div class="ttdeci">StatusOr&lt; spanner::Bytes &gt; BytesFromBase64(std::string input)</div></div>
+<div class="ttc" id="astructgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals_html_a8baa291839932d8b23876661ffbd5f3d"><div class="ttname"><a href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a8baa291839932d8b23876661ffbd5f3d">google::spanner_internal::v1::BytesInternals::Create</a></div><div class="ttdeci">static spanner::Bytes Create(std::string rep)</div><div class="ttdef"><b>Definition:</b> <a href="bytes_8cc_source.html#l00150">bytes.cc:150</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
+<div class="ttc" id="astructgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals_html_a104d063a49bd796c092e20a9af26d4af"><div class="ttname"><a href="structgoogle_1_1spanner__internal_1_1v1_1_1BytesInternals.html#a104d063a49bd796c092e20a9af26d4af">google::spanner_internal::v1::BytesInternals::GetRep</a></div><div class="ttdeci">static std::string GetRep(spanner::Bytes &amp;&amp;bytes)</div><div class="ttdef"><b>Definition:</b> <a href="bytes_8cc_source.html#l00156">bytes.cc:156</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

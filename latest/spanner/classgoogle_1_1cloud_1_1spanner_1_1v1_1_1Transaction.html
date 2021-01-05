@@ -70,6 +70,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::spanner::v1::Transaction Class Reference</div>  </div>
@@ -116,6 +117,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:a66b29cb83e85ef2ae3a387fc63cbdb1e"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a66b29cb83e85ef2ae3a387fc63cbdb1e">spanner_internal::v1::TransactionInternals</a></td></tr>
+<tr class="separator:a66b29cb83e85ef2ae3a387fc63cbdb1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Equality operators</div></td></tr>
 <tr class="memitem:a63cb413d35ec922801d73537b824e237"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a63cb413d35ec922801d73537b824e237">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">Transaction</a> const &amp;a, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">Transaction</a> const &amp;b)</td></tr>
 <tr class="separator:a63cb413d35ec922801d73537b824e237"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,7 +135,7 @@ Friends</h2></td></tr>
 <li>SingleUse. A restricted form of a ReadOnly transaction where Spanner chooses the read timestamp. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00063">63</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00056">56</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a709e60513d9cb5e5dc949b8c703e7f2e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a709e60513d9cb5e5dc949b8c703e7f2e">&#9670;&nbsp;</a></span>Transaction() <span class="overload">[1/5]</span></h2>
@@ -190,7 +193,7 @@ Friends</h2></td></tr>
 <p></p>
 <dl class="section note"><dt>Note</dt><dd>This is a lazy evaluated operation. No RPCs are made as part of creating a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html" title="The representation of a Cloud Spanner transaction.">Transaction</a></code> object. Instead, the first request to the server (for example as part of a <code>ExecuteQuery()</code> call) will also create the transaction. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="transaction_8cc_source.html#l00094">94</a> of file <a class="el" href="transaction_8cc_source.html">transaction.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="transaction_8cc_source.html#l00095">95</a> of file <a class="el" href="transaction_8cc_source.html">transaction.cc</a>.</p>
 
 </div>
 </div>
@@ -223,7 +226,7 @@ Friends</h2></td></tr>
 <p></p>
 <dl class="section note"><dt>Note</dt><dd>This is a lazy evaluated operation. No RPCs are made as part of creating a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html" title="The representation of a Cloud Spanner transaction.">Transaction</a></code> object. Instead, the first request to the server (for example as part of a <code>ExecuteQuery()</code> call) will also create the transaction. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="transaction_8cc_source.html#l00100">100</a> of file <a class="el" href="transaction_8cc_source.html">transaction.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="transaction_8cc_source.html#l00102">102</a> of file <a class="el" href="transaction_8cc_source.html">transaction.cc</a>.</p>
 
 </div>
 </div>
@@ -392,7 +395,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00158">158</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00151">151</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +433,31 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00155">155</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00148">148</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
+
+</div>
+</div>
+<a id="a66b29cb83e85ef2ae3a387fc63cbdb1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66b29cb83e85ef2ae3a387fc63cbdb1e">&#9670;&nbsp;</a></span>spanner_internal::v1::TransactionInternals</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1TransactionInternals.html">spanner_internal::v1::TransactionInternals</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="transaction_8h_source.html#l00158">158</a> of file <a class="el" href="transaction_8h_source.html">transaction.h</a>.</p>
 
 </div>
 </div>

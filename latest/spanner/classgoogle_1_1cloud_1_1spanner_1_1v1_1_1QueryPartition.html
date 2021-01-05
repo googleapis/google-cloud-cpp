@@ -103,6 +103,8 @@ Public Member Functions</h2></td></tr>
 Friends</h2></td></tr>
 <tr class="memitem:abf5a2eb09bd85a376eb6142feddcea4a"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html#abf5a2eb09bd85a376eb6142feddcea4a">QueryPartitionTester</a></td></tr>
 <tr class="separator:abf5a2eb09bd85a376eb6142feddcea4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae31ea705406a69ff1153b6d4cc494f06"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html#ae31ea705406a69ff1153b6d4cc494f06">spanner_internal::v1::QueryPartitionInternals</a></td></tr>
+<tr class="separator:ae31ea705406a69ff1153b6d4cc494f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b29d98960416e80bf6b6bb40b8e5c53"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html#a8b29d98960416e80bf6b6bb40b8e5c53">SerializeQueryPartition</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html">QueryPartition</a> const &amp;query_partition)</td></tr>
 <tr class="memdesc:a8b29d98960416e80bf6b6bb40b8e5c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializes an instance of <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code> to a string of bytes.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html#a8b29d98960416e80bf6b6bb40b8e5c53">More...</a><br /></td></tr>
 <tr class="separator:a8b29d98960416e80bf6b6bb40b8e5c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,7 +121,7 @@ Friends</h2></td></tr>
 <div class="textblock"><p>The <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code> class is a regular type that represents a single slice of a parallel SQL read. </p>
 <p>Instances of <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code> are created by <code>Client::PartitionSql</code>. Once created, <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code> objects can be serialized, transmitted to separate process, and used to read data in parallel using <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a596d14f1d9ef6c8dd9e1777322bcd862" title="Executes a SQL query.">Client::ExecuteQuery</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00091">91</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00085">85</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad0c6e4dc2c992b92fc43c90d759904f3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad0c6e4dc2c992b92fc43c90d759904f3">&#9670;&nbsp;</a></span>QueryPartition() <span class="overload">[1/3]</span></h2>
@@ -278,7 +280,7 @@ Friends</h2></td></tr>
 
 <p>Accessor for the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html" title="Represents a potentially parameterized SQL statement.">SqlStatement</a></code> associated with this <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00110">110</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00104">104</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
 
 </div>
 </div>
@@ -362,7 +364,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00115">115</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00109">109</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
 
 </div>
 </div>
@@ -424,7 +426,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00121">121</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00115">115</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
 
 </div>
 </div>
@@ -474,6 +476,30 @@ Friends</h2></td></tr>
 </div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="query__partition_8cc_source.html#l00039">39</a> of file <a class="el" href="query__partition_8cc_source.html">query_partition.cc</a>.</p>
+
+</div>
+</div>
+<a id="ae31ea705406a69ff1153b6d4cc494f06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae31ea705406a69ff1153b6d4cc494f06">&#9670;&nbsp;</a></span>spanner_internal::v1::QueryPartitionInternals</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1QueryPartitionInternals.html">spanner_internal::v1::QueryPartitionInternals</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="query__partition_8h_source.html#l00116">116</a> of file <a class="el" href="query__partition_8h_source.html">query_partition.h</a>.</p>
 
 </div>
 </div>

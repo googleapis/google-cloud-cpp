@@ -71,7 +71,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classgoogle_1_1cloud_1_1spanner__mocks_1_1v1_1_1MockResultSetSource-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">google::cloud::spanner_mocks::v1::MockResultSetSource Class Reference</div>  </div>
+<div class="title">google::cloud::spanner_mocks::v1::MockResultSetSource Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -88,6 +88,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:add2678cabc7f986ff2025530f94fa2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada23a61fa10c03b3930457c1f67a1cb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner__mocks_1_1v1_1_1MockResultSetSource.html#ada23a61fa10c03b3930457c1f67a1cb8">MOCK_CONST_METHOD0</a> (Stats, <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; google::spanner::v1::ResultSetStats &gt;())</td></tr>
 <tr class="separator:ada23a61fa10c03b3930457c1f67a1cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c3852811709ea25ee062202e076fe7"><td class="memItemLeft" align="right" valign="top">virtual StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html">spanner::Row</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ResultSourceInterface.html#a61c3852811709ea25ee062202e076fe7">NextRow</a> ()=0</td></tr>
+<tr class="separator:a61c3852811709ea25ee062202e076fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12f7540251a5d5e62794e86273202a2e"><td class="memItemLeft" align="right" valign="top">virtual <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; google::spanner::v1::ResultSetMetadata &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ResultSourceInterface.html#a12f7540251a5d5e62794e86273202a2e">Metadata</a> ()=0</td></tr>
+<tr class="separator:a12f7540251a5d5e62794e86273202a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc5fe2af3ff1a8076204a317edbaffc1"><td class="memItemLeft" align="right" valign="top">virtual <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; google::spanner::v1::ResultSetStats &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ResultSourceInterface.html#afc5fe2af3ff1a8076204a317edbaffc1">Stats</a> () const =0</td></tr>
+<tr class="separator:afc5fe2af3ff1a8076204a317edbaffc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Mock the results of a ExecuteQuery() or Read() operation. </p>
@@ -95,6 +101,31 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="mock__spanner__connection_8h_source.html#l00067">67</a> of file <a class="el" href="mock__spanner__connection_8h_source.html">mock_spanner_connection.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a12f7540251a5d5e62794e86273202a2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12f7540251a5d5e62794e86273202a2e">&#9670;&nbsp;</a></span>Metadata()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;google::spanner::v1::ResultSetMetadata&gt; google::cloud::spanner_internal::v1::ResultSourceInterface::Metadata </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ada23a61fa10c03b3930457c1f67a1cb8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada23a61fa10c03b3930457c1f67a1cb8">&#9670;&nbsp;</a></span>MOCK_CONST_METHOD0()</h2>
 
@@ -175,6 +206,56 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61c3852811709ea25ee062202e076fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61c3852811709ea25ee062202e076fe7">&#9670;&nbsp;</a></span>NextRow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html">spanner::Row</a>&gt; google::cloud::spanner_internal::v1::ResultSourceInterface::NextRow </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc5fe2af3ff1a8076204a317edbaffc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc5fe2af3ff1a8076204a317edbaffc1">&#9670;&nbsp;</a></span>Stats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;google::spanner::v1::ResultSetStats&gt; google::cloud::spanner_internal::v1::ResultSourceInterface::Stats </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

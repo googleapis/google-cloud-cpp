@@ -146,7 +146,7 @@ $(function() {
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    benchmark::DoNotOptimize(b.get&lt;std::string&gt;());</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  }</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  state.SetBytesProcessed(state.iterations() *</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                          internal::BytesToBase64(b).size());</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                          <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a1ee931aab1db437400c7067d619297f1">spanner_internal::BytesToBase64</a>(b).size());</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;BENCHMARK(BM_BytesGet);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
@@ -158,6 +158,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
 <div class="ttc" id="aversion_8h_html_a313bc0c726caf781fb59a7140610468e"><div class="ttname"><a href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a></div><div class="ttdeci">#define SPANNER_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a1ee931aab1db437400c7067d619297f1"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a1ee931aab1db437400c7067d619297f1">google::cloud::spanner_internal::v1::BytesToBase64</a></div><div class="ttdeci">std::string BytesToBase64(spanner::Bytes b)</div></div>
 <div class="ttc" id="abytes_8h_html"><div class="ttname"><a href="bytes_8h.html">bytes.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->

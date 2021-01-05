@@ -85,6 +85,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html">google::cloud::spanner::v1::QueryPartition</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code> class is a regular type that represents a single slice of a parallel SQL read.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1QueryPartitionInternals.html">google::cloud::spanner_internal::v1::QueryPartitionInternals</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -92,6 +94,10 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal.html">google::cloud::spanner_internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">google::cloud::spanner_internal::v1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1spanner"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1spanner"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the Cloud Spanner C++ client types and functions. <br /></td></tr>
@@ -108,6 +114,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a544e64f659da66bdb0d5483ce8d104f3"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; QueryPartition &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a544e64f659da66bdb0d5483ce8d104f3">google::cloud::spanner::v1::DeserializeQueryPartition</a> (std::string const  &amp;serialized_query_partition)</td></tr>
 <tr class="memdesc:a544e64f659da66bdb0d5483ce8d104f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserializes the provided string into a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html" title="The QueryPartition class is a regular type that represents a single slice of a parallel SQL read.">QueryPartition</a></code>.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a544e64f659da66bdb0d5483ce8d104f3">More...</a><br /></td></tr>
 <tr class="separator:a544e64f659da66bdb0d5483ce8d104f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8bec329542a7ea038ac1131caa1ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html">spanner::QueryPartition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aeb8bec329542a7ea038ac1131caa1ba8">google::cloud::spanner_internal::v1::MakeQueryPartition</a> (std::string const &amp;transaction_id, std::string const &amp;session_id, std::string const &amp;partition_token, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html">spanner::SqlStatement</a> const &amp;sql_statement)</td></tr>
+<tr class="separator:aeb8bec329542a7ea038ac1131caa1ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ba0ebdc68ed98f6e53494a0814bfd96"><td class="memItemLeft" align="right" valign="top">spanner::Connection::SqlParams&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a8ba0ebdc68ed98f6e53494a0814bfd96">google::cloud::spanner_internal::v1::MakeSqlParams</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryPartition.html">spanner::QueryPartition</a> const &amp;query_partition)</td></tr>
+<tr class="separator:a8ba0ebdc68ed98f6e53494a0814bfd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

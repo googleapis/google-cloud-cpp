@@ -102,6 +102,11 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:a9ae2248212ac82aebaaf7be4d54d16a5"><td class="memTemplParams" colspan="2">template&lt;typename Op &gt; </td></tr>
+<tr class="memitem:a9ae2248212ac82aebaaf7be4d54d16a5"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#a9ae2248212ac82aebaaf7be4d54d16a5">spanner_internal::v1::WriteMutationBuilder</a></td></tr>
+<tr class="separator:a9ae2248212ac82aebaaf7be4d54d16a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3881d5c2ad22c71c187f7b0aa26d2f"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#ace3881d5c2ad22c71c187f7b0aa26d2f">spanner_internal::v1::DeleteMutationBuilder</a></td></tr>
+<tr class="separator:ace3881d5c2ad22c71c187f7b0aa26d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae61b957339abfb308be0581712411a74"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#ae61b957339abfb308be0581712411a74">operator==</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html">Mutation</a> const &amp;lhs, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html">Mutation</a> const &amp;rhs)</td></tr>
 <tr class="separator:ae61b957339abfb308be0581712411a74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72d341d715070de2a913681282959f13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#a72d341d715070de2a913681282959f13">operator!=</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html">Mutation</a> const &amp;lhs, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html">Mutation</a> const &amp;rhs)</td></tr>
@@ -116,7 +121,7 @@ Friends</h2></td></tr>
 <p>This class serves as a wrapper for all mutations types. Use the builders, such as <code>InsertMutationBuilder</code> or <code>UpdateMutationBuilder</code> to create objects of this class.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/spanner/docs/modify-mutation-api">https://cloud.google.com/spanner/docs/modify-mutation-api</a> for more information about the Cloud Spanner mutation API. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00049">49</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00051">51</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad36018e30a6c75ab892b5f7f5bb16325"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad36018e30a6c75ab892b5f7f5bb16325">&#9670;&nbsp;</a></span>Mutation() <span class="overload">[1/3]</span></h2>
@@ -224,7 +229,7 @@ Friends</h2></td></tr>
 
 <p>Convert the mutation to the underlying proto. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00069">69</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00071">71</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -251,7 +256,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00070">70</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00072">72</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -342,7 +347,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00064">64</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00066">66</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -422,6 +427,56 @@ Friends</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>This is intended for debugging and human consumption only, not machine consumption as the output format may change without notice. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00029">29</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+
+</div>
+</div>
+<a id="ace3881d5c2ad22c71c187f7b0aa26d2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace3881d5c2ad22c71c187f7b0aa26d2f">&#9670;&nbsp;</a></span>spanner_internal::v1::DeleteMutationBuilder</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1DeleteMutationBuilder.html">spanner_internal::v1::DeleteMutationBuilder</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00088">88</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+
+</div>
+</div>
+<a id="a9ae2248212ac82aebaaf7be4d54d16a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ae2248212ac82aebaaf7be4d54d16a5">&#9670;&nbsp;</a></span>spanner_internal::v1::WriteMutationBuilder</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Op &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1WriteMutationBuilder.html">spanner_internal::v1::WriteMutationBuilder</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00087">87</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>

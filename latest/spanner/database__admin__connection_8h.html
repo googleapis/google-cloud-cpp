@@ -72,7 +72,8 @@ $(function() {
 <div class="title">database_admin_connection.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="backup_8h_source.html">google/cloud/spanner/backup.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="backoff__policy_8h_source.html">google/cloud/spanner/backoff_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="backup_8h_source.html">google/cloud/spanner/backup.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="database_8h_source.html">google/cloud/spanner/database.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="instance_8h_source.html">google/cloud/spanner/instance.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/spanner/internal/database_admin_stub.h&quot;</code><br />
@@ -157,6 +158,10 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1spanner_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html">google::cloud::spanner::v1</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1spanner_1_1v1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Spanner C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal.html">google::cloud::spanner_internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">google::cloud::spanner_internal::v1</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -181,6 +186,10 @@ Functions</h2></td></tr>
 <tr class="memitem:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; DatabaseAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acb6f2ab6c3b387c6dab8c42a8183ddda">google::cloud::spanner::v1::MakeDatabaseAdminConnection</a> (ConnectionOptions const  &amp;options, std::unique_ptr&lt; RetryPolicy &gt; retry_policy, std::unique_ptr&lt; <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae">BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; PollingPolicy &gt; polling_policy)</td></tr>
 <tr class="memdesc:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html" title="A connection to the Cloud Spanner instance administration service.">DatabaseAdminConnection</a> object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acb6f2ab6c3b387c6dab8c42a8183ddda">More...</a><br /></td></tr>
 <tr class="separator:acb6f2ab6c3b387c6dab8c42a8183ddda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad73da7f6972d7399107f12cad772bf66"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad73da7f6972d7399107f12cad772bf66">google::cloud::spanner_internal::v1::MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options)</td></tr>
+<tr class="separator:ad73da7f6972d7399107f12cad772bf66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad63fc6dc1efbe898b964527865bbba70"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad63fc6dc1efbe898b964527865bbba70">google::cloud::spanner_internal::v1::MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">spanner::BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a> &gt; polling_policy)</td></tr>
+<tr class="separator:ad63fc6dc1efbe898b964527865bbba70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

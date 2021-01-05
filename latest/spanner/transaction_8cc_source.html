@@ -94,7 +94,7 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span>{</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;google::protobuf::Duration <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ab4e027dfceeba6b0c7012a00246bf938">ToProto</a>(std::chrono::nanoseconds ns) {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="keyword">auto</span> s = std::chrono::duration_cast&lt;std::chrono::seconds&gt;(ns);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  ns -= std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(s);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  google::protobuf::Duration proto;</div>
@@ -126,13 +126,13 @@ $(function() {
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions.html#aa53ea9aff7b0b6e4f75788b2865e690d">   58</a></span>&#160;Transaction::ReadOnlyOptions::ReadOnlyOptions(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> read_timestamp) {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  *ro_opts_.mutable_read_timestamp() =</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      internal::TimestampToProto(read_timestamp);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a706859c5407e293d64ba418922897bba">spanner_internal::TimestampToProto</a>(read_timestamp);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  ro_opts_.set_return_read_timestamp(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions.html#a2990955282743ccfdc4726be6d902ad4">   64</a></span>&#160;Transaction::ReadOnlyOptions::ReadOnlyOptions(</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::chrono::nanoseconds exact_staleness) {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  *ro_opts_.mutable_exact_staleness() = ToProto(exact_staleness);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  *ro_opts_.mutable_exact_staleness() = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ab4e027dfceeba6b0c7012a00246bf938">ToProto</a>(exact_staleness);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  ro_opts_.set_return_read_timestamp(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
@@ -144,72 +144,80 @@ $(function() {
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1SingleUseOptions.html#aee2b741acd3acf662e2b4d69613813b9">   76</a></span>&#160;Transaction::SingleUseOptions::SingleUseOptions(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> min_read_timestamp) {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  *ro_opts_.mutable_min_read_timestamp() =</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      internal::TimestampToProto(min_read_timestamp);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a706859c5407e293d64ba418922897bba">spanner_internal::TimestampToProto</a>(min_read_timestamp);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  ro_opts_.set_return_read_timestamp(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
 <div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1SingleUseOptions.html#aeebdd8357a7828bf114875cab80de9bd">   82</a></span>&#160;Transaction::SingleUseOptions::SingleUseOptions(</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    std::chrono::nanoseconds max_staleness) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  *ro_opts_.mutable_max_staleness() = ToProto(max_staleness);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  *ro_opts_.mutable_max_staleness() = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ab4e027dfceeba6b0c7012a00246bf938">ToProto</a>(max_staleness);</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  ro_opts_.set_return_read_timestamp(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a709e60513d9cb5e5dc949b8c703e7f2e">   88</a></span>&#160;Transaction::Transaction(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions.html">ReadOnlyOptions</a> opts) {</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  *selector.mutable_begin() = MakeOpts(std::move(opts.ro_opts_));</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  impl_ = std::make_shared&lt;internal::TransactionImpl&gt;(std::move(selector));</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a1dee656611277b6ac47bed594c6f121c">   94</a></span>&#160;Transaction::Transaction(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">ReadWriteOptions</a> opts) {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  impl_ = std::make_shared&lt;internal::TransactionImpl&gt;(std::move(selector));</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a62f8e42084156a15570cdff0995996fd">  100</a></span>&#160;Transaction::Transaction(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">Transaction</a> <span class="keyword">const</span>&amp; txn, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">ReadWriteOptions</a> opts) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  impl_ = std::make_shared&lt;internal::TransactionImpl&gt;(*txn.impl_,</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                                                      std::move(selector));</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;}</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;Transaction::Transaction(SingleUseOptions opts) {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  impl_ = std::make_shared&lt;internal::TransactionImpl&gt;(std::move(selector));</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;Transaction::Transaction(std::string session_id, std::string transaction_id) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  selector.set_id(std::move(transaction_id));</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  impl_ = std::make_shared&lt;internal::TransactionImpl&gt;(</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      internal::MakeDissociatedSessionHolder(std::move(session_id)),</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      std::move(selector));</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;Transaction::~Transaction() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">namespace </span>internal {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;Transaction MakeTransactionFromIds(std::string session_id,</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                                   std::string transaction_id) {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">return</span> Transaction(std::move(session_id), std::move(transaction_id));</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}  <span class="comment">// namespace internal</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  impl_ =</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      std::make_shared&lt;spanner_internal::TransactionImpl&gt;(std::move(selector));</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a1dee656611277b6ac47bed594c6f121c">   95</a></span>&#160;Transaction::Transaction(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">ReadWriteOptions</a> opts) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  impl_ =</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      std::make_shared&lt;spanner_internal::TransactionImpl&gt;(std::move(selector));</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html#a62f8e42084156a15570cdff0995996fd">  102</a></span>&#160;Transaction::Transaction(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">Transaction</a> <span class="keyword">const</span>&amp; txn, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">ReadWriteOptions</a> opts) {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  impl_ = std::make_shared&lt;spanner_internal::TransactionImpl&gt;(</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      *txn.impl_, std::move(selector));</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;Transaction::Transaction(SingleUseOptions opts) {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  impl_ =</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      std::make_shared&lt;spanner_internal::TransactionImpl&gt;(std::move(selector));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;Transaction::Transaction(std::string session_id, std::string transaction_id) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  google::spanner::v1::TransactionSelector selector;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  selector.set_id(std::move(transaction_id));</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  impl_ = std::make_shared&lt;spanner_internal::TransactionImpl&gt;(</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      std::move(selector));</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;Transaction::~Transaction() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">namespace </span>spanner_internal {</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a> {</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1TransactionInternals.html#ae00c2f621051cb8ab7ec45aeb794fde8">  132</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">spanner::Transaction</a> <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aaeb234b080279f254f9162e454be6fb2">TransactionInternals::MakeTransactionFromIds</a>(</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    std::string session_id, std::string transaction_id) {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">spanner::Transaction</a>(std::move(session_id), std::move(transaction_id));</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;}</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}  <span class="comment">// namespace spanner_internal</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_aaeb234b080279f254f9162e454be6fb2"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aaeb234b080279f254f9162e454be6fb2">google::cloud::spanner_internal::v1::MakeTransactionFromIds</a></div><div class="ttdeci">spanner::Transaction MakeTransactionFromIds(std::string session_id, std::string transaction_id)</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00241">transaction.h:241</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
 <div class="ttc" id="atransaction_8h_html"><div class="ttname"><a href="transaction_8h.html">transaction.h</a></div></div>
 <div class="ttc" id="aversion_8h_html_a313bc0c726caf781fb59a7140610468e"><div class="ttname"><a href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a></div><div class="ttdeci">#define SPANNER_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">google::cloud::spanner::v1::Transaction</a></div><div class="ttdoc">The representation of a Cloud Spanner transaction.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00063">transaction.h:63</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions.html">google::cloud::spanner::v1::Transaction::ReadOnlyOptions</a></div><div class="ttdoc">Options for ReadOnly transactions.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00068">transaction.h:68</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">google::cloud::spanner::v1::Transaction::ReadWriteOptions</a></div><div class="ttdoc">Options for ReadWrite transactions.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00089">transaction.h:89</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_ab4e027dfceeba6b0c7012a00246bf938"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ab4e027dfceeba6b0c7012a00246bf938">google::cloud::spanner_internal::v1::ToProto</a></div><div class="ttdeci">inline ::google::spanner::v1::KeySet ToProto(spanner::KeySet ks)</div><div class="ttdef"><b>Definition:</b> <a href="keys_8h_source.html#l00226">keys.h:226</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">google::cloud::spanner::v1::Transaction</a></div><div class="ttdoc">The representation of a Cloud Spanner transaction.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00056">transaction.h:56</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadOnlyOptions.html">google::cloud::spanner::v1::Transaction::ReadOnlyOptions</a></div><div class="ttdoc">Options for ReadOnly transactions.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00061">transaction.h:61</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1ReadWriteOptions.html">google::cloud::spanner::v1::Transaction::ReadWriteOptions</a></div><div class="ttdoc">Options for ReadWrite transactions.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00082">transaction.h:82</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">google::cloud::spanner::v1::Timestamp</a></div><div class="ttdoc">A representation of the Spanner TIMESTAMP type: An instant in time.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00054">timestamp.h:54</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a706859c5407e293d64ba418922897bba"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a706859c5407e293d64ba418922897bba">google::cloud::spanner_internal::v1::TimestampToProto</a></div><div class="ttdeci">protobuf::Timestamp TimestampToProto(spanner::Timestamp ts)</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cc_source.html#l00106">timestamp.cc:106</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

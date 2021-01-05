@@ -64,6 +64,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
@@ -78,12 +79,25 @@ $(function() {
 </div>
 <p><a href="retry__policy_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeGrpcRetry.html">google::cloud::spanner_internal::v1::SafeGrpcRetry</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the gRPC status code semantics for retrying requests.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeGrpcRetry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeTransactionRerun.html">google::cloud::spanner_internal::v1::SafeTransactionRerun</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the gRPC status code semantics for rerunning transactions.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeTransactionRerun.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle.html">google</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal.html">google::cloud::spanner_internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">google::cloud::spanner_internal::v1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1spanner"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1spanner"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the Cloud Spanner C++ client types and functions. <br /></td></tr>
@@ -94,24 +108,24 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">google::cloud::spanner::v1::RetryPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for retry policies.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a96281f521d44f8ddb7feaf70bbaf75b2">More...</a><br /></td></tr>
-<tr class="separator:a96281f521d44f8ddb7feaf70bbaf75b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">google::cloud::spanner::v1::LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits based on time.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab71d44a90f8b6b7546b4d3793b60d57f">More...</a><br /></td></tr>
-<tr class="separator:ab71d44a90f8b6b7546b4d3793b60d57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf44a27becc6172f976da6aa37f3e2ba"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aaf44a27becc6172f976da6aa37f3e2ba">google::cloud::spanner::v1::LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeGrpcRetry &gt;</td></tr>
-<tr class="memdesc:aaf44a27becc6172f976da6aa37f3e2ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits the number of times a request can fail.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aaf44a27becc6172f976da6aa37f3e2ba">More...</a><br /></td></tr>
-<tr class="separator:aaf44a27becc6172f976da6aa37f3e2ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a5f4f65fc512f92165abcbf6171002"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a08a5f4f65fc512f92165abcbf6171002">google::cloud::spanner::v1::TransactionRerunPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:a08a5f4f65fc512f92165abcbf6171002"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for transaction rerun policies.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a08a5f4f65fc512f92165abcbf6171002">More...</a><br /></td></tr>
-<tr class="separator:a08a5f4f65fc512f92165abcbf6171002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade6893a33c3305367040eb1b6c3253b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aade6893a33c3305367040eb1b6c3253b">google::cloud::spanner::v1::LimitedTimeTransactionRerunPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:aade6893a33c3305367040eb1b6c3253b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the duration of the rerun loop.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aade6893a33c3305367040eb1b6c3253b">More...</a><br /></td></tr>
-<tr class="separator:aade6893a33c3305367040eb1b6c3253b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">google::cloud::spanner::v1::LimitedErrorCountTransactionRerunPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; internal::SafeTransactionRerun &gt;</td></tr>
-<tr class="memdesc:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the number of failures.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a4520c8ce79a7b8ff8fe7f8b5ac31cc64">More...</a><br /></td></tr>
-<tr class="separator:a4520c8ce79a7b8ff8fe7f8b5ac31cc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc9b97837a8c11a969be3b6d6d8ae01"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">google::cloud::spanner::v1::RetryPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; spanner_internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:a9bc9b97837a8c11a969be3b6d6d8ae01"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for retry policies.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">More...</a><br /></td></tr>
+<tr class="separator:a9bc9b97837a8c11a969be3b6d6d8ae01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ae076f57f6bd13ebf1969f83e6e563"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a65ae076f57f6bd13ebf1969f83e6e563">google::cloud::spanner::v1::LimitedTimeRetryPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; spanner_internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:a65ae076f57f6bd13ebf1969f83e6e563"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits based on time.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a65ae076f57f6bd13ebf1969f83e6e563">More...</a><br /></td></tr>
+<tr class="separator:a65ae076f57f6bd13ebf1969f83e6e563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc55dfc4a7e0e3ae275a294bfcb4c605"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acc55dfc4a7e0e3ae275a294bfcb4c605">google::cloud::spanner::v1::LimitedErrorCountRetryPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; spanner_internal::SafeGrpcRetry &gt;</td></tr>
+<tr class="memdesc:acc55dfc4a7e0e3ae275a294bfcb4c605"><td class="mdescLeft">&#160;</td><td class="mdescRight">A retry policy that limits the number of times a request can fail.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#acc55dfc4a7e0e3ae275a294bfcb4c605">More...</a><br /></td></tr>
+<tr class="separator:acc55dfc4a7e0e3ae275a294bfcb4c605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a336681b67306fc3f15551719efa47739"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a336681b67306fc3f15551719efa47739">google::cloud::spanner::v1::TransactionRerunPolicy</a> = google::cloud::internal::TraitBasedRetryPolicy&lt; spanner_internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:a336681b67306fc3f15551719efa47739"><td class="mdescLeft">&#160;</td><td class="mdescRight">The base class for transaction rerun policies.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a336681b67306fc3f15551719efa47739">More...</a><br /></td></tr>
+<tr class="separator:a336681b67306fc3f15551719efa47739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d184e2e88fa6a7a204098d9e7f2a468"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9d184e2e88fa6a7a204098d9e7f2a468">google::cloud::spanner::v1::LimitedTimeTransactionRerunPolicy</a> = google::cloud::internal::LimitedTimeRetryPolicy&lt; spanner_internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:a9d184e2e88fa6a7a204098d9e7f2a468"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the duration of the rerun loop.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9d184e2e88fa6a7a204098d9e7f2a468">More...</a><br /></td></tr>
+<tr class="separator:a9d184e2e88fa6a7a204098d9e7f2a468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab35ca0112b7e246d6e4259bc05a7554"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aab35ca0112b7e246d6e4259bc05a7554">google::cloud::spanner::v1::LimitedErrorCountTransactionRerunPolicy</a> = google::cloud::internal::LimitedErrorCountRetryPolicy&lt; spanner_internal::SafeTransactionRerun &gt;</td></tr>
+<tr class="memdesc:aab35ca0112b7e246d6e4259bc05a7554"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transaction rerun policy that limits the number of failures.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aab35ca0112b7e246d6e4259bc05a7554">More...</a><br /></td></tr>
+<tr class="separator:aab35ca0112b7e246d6e4259bc05a7554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

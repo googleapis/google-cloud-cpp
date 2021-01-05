@@ -84,8 +84,8 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6f59029362e2252ee1bc61a535e42208"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a6f59029362e2252ee1bc61a535e42208">RowStream</a> ()=default</td></tr>
 <tr class="separator:a6f59029362e2252ee1bc61a535e42208"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5136d59d29781dbf7b9a80eb4b9e435"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#ad5136d59d29781dbf7b9a80eb4b9e435">RowStream</a> (std::unique_ptr&lt; internal::ResultSourceInterface &gt; source)</td></tr>
-<tr class="separator:ad5136d59d29781dbf7b9a80eb4b9e435"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0572c8b9ed33948802826c3e1325d636"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a0572c8b9ed33948802826c3e1325d636">RowStream</a> (std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ResultSourceInterface.html">spanner_internal::ResultSourceInterface</a> &gt; source)</td></tr>
+<tr class="separator:a0572c8b9ed33948802826c3e1325d636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21f1ededc6e448c812b79befc7751b39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a21f1ededc6e448c812b79befc7751b39">RowStream</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">RowStream</a> &amp;&amp;)=default</td></tr>
 <tr class="separator:a21f1ededc6e448c812b79befc7751b39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fce99f508d4c6e6f012cf539af4b0d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">RowStream</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a6fce99f508d4c6e6f012cf539af4b0d9">operator=</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">RowStream</a> &amp;&amp;)=default</td></tr>
@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 <p>A <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html" title="Represents the stream of Rows returned from spanner::Client::Read() or spanner::Client::ExecuteQuery(...">RowStream</a></code> object is a range defined by the <a href="https://en.cppreference.com/w/cpp/named_req/InputIterator">Input Iterators</a> returned from its <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a5e07ed4e802c12cb3e6d7623c088e8d1" title="Returns a RowStreamIterator defining the beginning of this range.">begin()</a></code> and <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html#a472fb25c1c5e2797abdca4a5ae84c341" title="Returns a RowStreamIterator defining the end of this range.">end()</a></code> members. Callers may directly iterate a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html" title="Represents the stream of Rows returned from spanner::Client::Read() or spanner::Client::ExecuteQuery(...">RowStream</a></code> instance, which will return a sequence of <code>StatusOr&lt;<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html" title="A Row is a sequence of columns each with a name and an associated Value.">Row</a>&gt;</code> objects.</p>
 <p>For convenience, callers may wrap a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html" title="Represents the stream of Rows returned from spanner::Client::Read() or spanner::Client::ExecuteQuery(...">RowStream</a></code> instance in a <code>StreamOf&lt;std::tuple&lt;...&gt;&gt;</code> object, which will automatically parse each <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html" title="A Row is a sequence of columns each with a name and an associated Value.">Row</a></code> into a <code>std::tuple</code> with the specified types. </p>
 
-<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00070">70</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00073">73</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6f59029362e2252ee1bc61a535e42208"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f59029362e2252ee1bc61a535e42208">&#9670;&nbsp;</a></span>RowStream() <span class="overload">[1/3]</span></h2>
@@ -132,8 +132,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad5136d59d29781dbf7b9a80eb4b9e435"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5136d59d29781dbf7b9a80eb4b9e435">&#9670;&nbsp;</a></span>RowStream() <span class="overload">[2/3]</span></h2>
+<a id="a0572c8b9ed33948802826c3e1325d636"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0572c8b9ed33948802826c3e1325d636">&#9670;&nbsp;</a></span>RowStream() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +144,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">google::cloud::spanner::v1::RowStream::RowStream </td>
           <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; internal::ResultSourceInterface &gt;&#160;</td>
+          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ResultSourceInterface.html">spanner_internal::ResultSourceInterface</a> &gt;&#160;</td>
           <td class="paramname"><em>source</em></td><td>)</td>
           <td></td>
         </tr>
@@ -156,7 +156,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00073">73</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00076">76</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
 
 </div>
 </div>
@@ -212,7 +212,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStreamIterator.html" title="A RowStreamIterator is an Input Iterator (see below) that returns a sequence of StatusOr&lt;Row&gt; objects...">RowStreamIterator</a></code> defining the beginning of this range. </p>
 
-<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00081">81</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00085">85</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
 
 </div>
 </div>
@@ -241,7 +241,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStreamIterator.html" title="A RowStreamIterator is an Input Iterator (see below) that returns a sequence of StatusOr&lt;Row&gt; objects...">RowStreamIterator</a></code> defining the end of this range. </p>
 
-<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00087">87</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8h_source.html#l00091">91</a> of file <a class="el" href="results_8h_source.html">results.h</a>.</p>
 
 </div>
 </div>

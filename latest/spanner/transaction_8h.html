@@ -95,6 +95,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1SingleUseOptions.html">google::cloud::spanner::v1::Transaction::SingleUseOptions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options for "single-use", ReadOnly transactions, where Spanner chooses the read timestamp, subject to user-provided bounds.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_1_1SingleUseOptions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1TransactionInternals.html">google::cloud::spanner_internal::v1::TransactionInternals</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -102,6 +104,10 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal.html">google::cloud::spanner_internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">google::cloud::spanner_internal::v1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1spanner"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1spanner"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the Cloud Spanner C++ client types and functions. <br /></td></tr>
@@ -121,6 +127,14 @@ Functions</h2></td></tr>
 <tr class="memitem:aed8d92a507e5ac2612d7e6e2c576182a"><td class="memItemLeft" align="right" valign="top">Transaction&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aed8d92a507e5ac2612d7e6e2c576182a">google::cloud::spanner::v1::MakeReadWriteTransaction</a> (Transaction const &amp;txn, Transaction::ReadWriteOptions opts={})</td></tr>
 <tr class="memdesc:aed8d92a507e5ac2612d7e6e2c576182a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a read-write transaction configured with <code>opts</code>, and sharing lock priority with <code>txn</code>.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#aed8d92a507e5ac2612d7e6e2c576182a">More...</a><br /></td></tr>
 <tr class="separator:aed8d92a507e5ac2612d7e6e2c576182a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdcc891b7aa61f0c99dde2dce0822f30"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:acdcc891b7aa61f0c99dde2dce0822f30"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">spanner::Transaction</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#acdcc891b7aa61f0c99dde2dce0822f30">google::cloud::spanner_internal::v1::MakeSingleUseTransaction</a> (T &amp;&amp;opts)</td></tr>
+<tr class="separator:acdcc891b7aa61f0c99dde2dce0822f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e756c89d4c0b8cb719037c012f9830e"><td class="memTemplParams" colspan="2">template&lt;typename Functor &gt; </td></tr>
+<tr class="memitem:a0e756c89d4c0b8cb719037c012f9830e"><td class="memTemplItemLeft" align="right" valign="top">VisitInvokeResult&lt; Functor &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a0e756c89d4c0b8cb719037c012f9830e">google::cloud::spanner_internal::v1::Visit</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">spanner::Transaction</a> txn, Functor &amp;&amp;f)</td></tr>
+<tr class="separator:a0e756c89d4c0b8cb719037c012f9830e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeb234b080279f254f9162e454be6fb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">spanner::Transaction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aaeb234b080279f254f9162e454be6fb2">google::cloud::spanner_internal::v1::MakeTransactionFromIds</a> (std::string session_id, std::string transaction_id)</td></tr>
+<tr class="separator:aaeb234b080279f254f9162e454be6fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
