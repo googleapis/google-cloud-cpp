@@ -16,11 +16,9 @@
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-)
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1"
-                       "FIRESTORE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
+                       "FIRESTORE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/README.md" "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")
@@ -46,11 +44,8 @@ target_include_directories(
 target_compile_options(firestore_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
-    firestore_client
-    PROPERTIES
-        VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
-        SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    firestore_client PROPERTIES VERSION ${PROJECT_VERSION}
+                                SOVERSION ${PROJECT_VERSION_MAJOR})
 add_library(firestore::client ALIAS firestore_client)
 
 create_bazel_config(firestore_client)
@@ -117,7 +112,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "firestore_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

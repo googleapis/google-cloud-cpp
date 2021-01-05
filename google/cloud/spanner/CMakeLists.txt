@@ -21,13 +21,11 @@ unset(FPHSA_NAME_MISMATCHED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-)
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_testing")
-set(DOXYGEN_PREDEFINED "SPANNER_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "SPANNER_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/spanner/README.md" "*/google/cloud/spanner/internal/*"
     "*/google/cloud/spanner/benchmarks/*" "*/google/cloud/spanner/testing/*"
@@ -157,8 +155,8 @@ target_link_libraries(
            google_cloud_cpp_common
            googleapis-c++::spanner_protos)
 set_target_properties(
-    spanner_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                              SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+    spanner_client PROPERTIES VERSION "${PROJECT_VERSION}"
+                              SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(spanner_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
@@ -430,7 +428,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "spanner_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

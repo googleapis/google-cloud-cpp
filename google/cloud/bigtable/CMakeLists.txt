@@ -21,13 +21,11 @@ unset(FPHSA_NAME_MISMATCHED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-)
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1"
-                       "BIGTABLE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
+                       "BIGTABLE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
 
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/README.md"
@@ -177,11 +175,8 @@ target_include_directories(
 target_compile_options(bigtable_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
-    bigtable_client
-    PROPERTIES
-        VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
-        SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    bigtable_client PROPERTIES VERSION ${PROJECT_VERSION}
+                               SOVERSION ${PROJECT_VERSION_MAJOR})
 add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)
@@ -410,7 +405,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "bigtable_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"

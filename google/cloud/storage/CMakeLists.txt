@@ -25,13 +25,11 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
-set(DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-)
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1"
-                       "STORAGE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
+                       "STORAGE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/README.md"
     "*/google/cloud/storage/ci/*"
@@ -277,11 +275,8 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
 endif ()
 
 set_target_properties(
-    storage_client
-    PROPERTIES
-        VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
-        SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    storage_client PROPERTIES VERSION ${PROJECT_VERSION}
+                              SOVERSION ${PROJECT_VERSION_MAJOR})
 
 create_bazel_config(storage_client)
 
@@ -335,11 +330,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     target_compile_definitions(storage_client_grpc
                                PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
-        storage_client_grpc
-        PROPERTIES
-            VERSION
-            ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
-            SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+        storage_client_grpc PROPERTIES VERSION ${PROJECT_VERSION}
+                                       SOVERSION ${PROJECT_VERSION_MAJOR})
 
     create_bazel_config(storage_client_grpc)
 else ()
@@ -602,7 +594,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "storage_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"

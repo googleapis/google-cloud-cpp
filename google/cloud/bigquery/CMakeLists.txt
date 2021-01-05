@@ -21,7 +21,7 @@ unset(FPHSA_NAME_MISMATCHED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 
 include(GoogleCloudCppCommon)
@@ -59,8 +59,8 @@ target_link_libraries(
            google_cloud_cpp_common googleapis-c++::cloud_bigquery_protos)
 google_cloud_cpp_add_common_options(bigquery_client)
 set_target_properties(
-    bigquery_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                               SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+    bigquery_client PROPERTIES VERSION "${PROJECT_VERSION}"
+                               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(bigquery_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
@@ -172,9 +172,9 @@ google_cloud_cpp_install_headers("bigquery_client"
                                  "include/google/cloud/bigquery")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud BigQuery C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud BigQuery.")
@@ -197,7 +197,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "bigquery_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "bigquery_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
