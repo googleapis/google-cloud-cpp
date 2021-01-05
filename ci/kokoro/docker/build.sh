@@ -248,7 +248,7 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export GOOGLE_CLOUD_CPP_CXX_STANDARD=17
   export TEST_INSTALL=yes
   export DISTRO=fedora-install
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
   export DISTRO=ubuntu
@@ -264,7 +264,7 @@ elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
 elif [[ "${BUILD_NAME}" = "gcs-grpc" ]]; then
   # Test if GCS over gRPC works.
   export DISTRO=fedora
-  export DISTRO_VERSION=31
+  export DISTRO_VERSION=33
   # Integration tests were explicitly requested.
   RUN_INTEGRATION_TESTS="yes"
   GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Test gRPC data plane
