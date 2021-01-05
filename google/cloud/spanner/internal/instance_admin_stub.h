@@ -23,9 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /**
  * Defines the low-level interface for instance administration RPCs.
@@ -86,11 +85,10 @@ class InstanceAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    ConnectionOptions options);
+    spanner::ConnectionOptions options);
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

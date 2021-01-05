@@ -24,10 +24,6 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace {
 
-Status InvalidArgument(std::string message) {
-  return Status(StatusCode::kInvalidArgument, std::move(message));
-}
-
 Status OutOfRange(std::string message) {
   return Status(StatusCode::kOutOfRange, std::move(message));
 }
@@ -67,10 +63,20 @@ StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
 }
 
 std::ostream& operator<<(std::ostream& os, Timestamp ts) {
-  return os << internal::TimestampToRFC3339(ts);
+  return os << spanner_internal::TimestampToRFC3339(ts);
 }
 
-namespace internal {
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+namespace {
+Status InvalidArgument(std::string message) {
+  return Status(StatusCode::kInvalidArgument, std::move(message));
+}
+}  // namespace
 
 // Timestamp objects are always formatted in UTC, and we always format them
 // with a trailing 'Z'. However, we're a bit more liberal in the UTC offsets we
@@ -78,30 +84,31 @@ namespace internal {
 auto constexpr kFormatSpec = "%E4Y-%m-%dT%H:%M:%E*SZ";
 auto constexpr kParseSpec = "%Y-%m-%dT%H:%M:%E*S%Ez";
 
-StatusOr<Timestamp> TimestampFromRFC3339(std::string const& s) {
+StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const& s) {
   absl::Time t;
   std::string err;
-  if (absl::ParseTime(kParseSpec, s, &t, &err)) return MakeTimestamp(t);
+  if (absl::ParseTime(kParseSpec, s, &t, &err)) {
+    return spanner::MakeTimestamp(t);
+  }
   return InvalidArgument(s + ": " + err);
 }
 
-std::string TimestampToRFC3339(Timestamp ts) {
+std::string TimestampToRFC3339(spanner::Timestamp ts) {
   auto const t = ts.get<absl::Time>().value();  // Cannot fail.
   return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
 }
 
-StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const& proto) {
-  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto));
+StatusOr<spanner::Timestamp> TimestampFromProto(
+    protobuf::Timestamp const& proto) {
+  return spanner::MakeTimestamp(google::cloud::internal::ToAbslTime(proto));
 }
 
-protobuf::Timestamp TimestampToProto(Timestamp ts) {
+protobuf::Timestamp TimestampToProto(spanner::Timestamp ts) {
   auto const t = ts.get<absl::Time>().value();  // Cannot fail.
   return google::cloud::internal::ToProtoTimestamp(t);
 }
 
-}  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

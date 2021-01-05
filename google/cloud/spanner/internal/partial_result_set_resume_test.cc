@@ -27,9 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 namespace {
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -55,10 +54,11 @@ std::unique_ptr<PartialResultSetReader> MakeTestResume(
     PartialResultSetReaderFactory factory, Idempotency idempotency) {
   return absl::make_unique<PartialResultSetResume>(
       std::move(factory), idempotency,
-      LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
-      ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
-                               /*maximum_delay=*/std::chrono::microseconds(1),
-                               /*scaling=*/2.0)
+      spanner::LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
+      spanner::ExponentialBackoffPolicy(
+          /*initial_delay=*/std::chrono::microseconds(1),
+          /*maximum_delay=*/std::chrono::microseconds(1),
+          /*scaling=*/2.0)
           .clone());
 }
 
@@ -298,8 +298,7 @@ TEST(PartialResultSetResume, TooManyTransients) {
 }
 
 }  // namespace
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

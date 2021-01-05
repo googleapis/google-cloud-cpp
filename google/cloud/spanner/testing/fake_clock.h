@@ -61,11 +61,9 @@ class FakeClock : public RealClock {
   time_point now_;
 };
 
-using FakeSteadyClock =
-    FakeClock<google::cloud::spanner::internal::SteadyClock>;
+using FakeSteadyClock = FakeClock<google::cloud::spanner_internal::SteadyClock>;
 
-using FakeSystemClock =
-    FakeClock<google::cloud::spanner::internal::SystemClock>;
+using FakeSystemClock = FakeClock<google::cloud::spanner_internal::SystemClock>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

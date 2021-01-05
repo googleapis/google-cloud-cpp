@@ -141,10 +141,28 @@ void Bytes::Decoder::Iterator::Fill() {
   }
 }
 
-namespace internal {
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct BytesInternals {
+  static spanner::Bytes Create(std::string rep) {
+    spanner::Bytes bytes;
+    bytes.base64_rep_ = std::move(rep);
+    return bytes;
+  }
+
+  static std::string GetRep(spanner::Bytes&& bytes) {
+    return std::move(bytes.base64_rep_);
+  }
+};
 
 // Construction from a base64-encoded US-ASCII `std::string`.
-StatusOr<Bytes> BytesFromBase64(std::string input) {
+StatusOr<spanner::Bytes> BytesFromBase64(std::string input) {
+  using spanner::kCharToIndexExcessOne;
+  using spanner::kPadding;
+
   auto const* p = reinterpret_cast<unsigned char const*>(input.data());
   auto const* ep = p + input.size();
   while (ep - p >= 4) {
@@ -173,16 +191,15 @@ StatusOr<Bytes> BytesFromBase64(std::string input) {
                    " at offset " + std::to_string(offset);
     return Status(StatusCode::kInvalidArgument, std::move(message));
   }
-  Bytes bytes;
-  bytes.base64_rep_ = std::move(input);
-  return bytes;
+  return BytesInternals::Create(std::move(input));
 }
 
 // Conversion to a base64-encoded US-ASCII `std::string`.
-std::string BytesToBase64(Bytes b) { return std::move(b.base64_rep_); }
+std::string BytesToBase64(spanner::Bytes b) {
+  return BytesInternals::GetRep(std::move(b));
+}
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

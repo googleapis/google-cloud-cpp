@@ -394,7 +394,8 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {
-  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -598,7 +599,8 @@ TEST(ClientTest, CommitMutatorRuntimeStatusException) {
 #endif
 
 TEST(ClientTest, CommitMutatorRerunTransientFailures) {
-  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -673,7 +675,8 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
 TEST(ClientTest, CommitMutations) {
   auto conn = std::make_shared<MockConnection>();
   auto mutation = MakeDeleteMutation("table", KeySet::All());
-  auto timestamp = internal::TimestampFromRFC3339("2020-02-28T04:49:17.335Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2020-02-28T04:49:17.335Z");
   ASSERT_STATUS_OK(timestamp);
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce([&mutation, &timestamp](Connection::CommitParams const& cp) {
@@ -688,9 +691,9 @@ TEST(ClientTest, CommitMutations) {
 }
 
 MATCHER(DoesNotHaveSession, "not bound to a session") {
-  return internal::Visit(
+  return spanner_internal::Visit(
       arg,
-      [&](internal::SessionHolder& session,
+      [&](spanner_internal::SessionHolder& session,
           StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (session) {
           *result_listener << "has session " << session->session_name();
@@ -701,9 +704,9 @@ MATCHER(DoesNotHaveSession, "not bound to a session") {
 }
 
 MATCHER_P(HasSession, name, "bound to expected session") {
-  return internal::Visit(
+  return spanner_internal::Visit(
       arg,
-      [&](internal::SessionHolder& session,
+      [&](spanner_internal::SessionHolder& session,
           StatusOr<google::spanner::v1::TransactionSelector>&, std::int64_t) {
         if (!session) {
           *result_listener << "has no session but expected " << name;
@@ -719,9 +722,9 @@ MATCHER_P(HasSession, name, "bound to expected session") {
 }
 
 MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
-  return internal::Visit(
+  return spanner_internal::Visit(
       arg,
-      [&](internal::SessionHolder&,
+      [&](spanner_internal::SessionHolder&,
           StatusOr<google::spanner::v1::TransactionSelector>& s, std::int64_t) {
         if (!s) {
           *result_listener << "has status " << s.status();
@@ -740,18 +743,19 @@ MATCHER(HasBegin, "not bound to a transaction-id nor invalidated") {
 }
 
 bool SetSessionName(Transaction const& txn, std::string name) {
-  return internal::Visit(
-      txn, [&name](internal::SessionHolder& session,
+  return spanner_internal::Visit(
+      txn, [&name](spanner_internal::SessionHolder& session,
                    StatusOr<google::spanner::v1::TransactionSelector>&,
                    std::int64_t) {
-        session = internal::MakeDissociatedSessionHolder(std::move(name));
+        session =
+            spanner_internal::MakeDissociatedSessionHolder(std::move(name));
         return true;
       });
 }
 
 bool SetTransactionId(Transaction const& txn, std::string id) {
-  return internal::Visit(
-      txn, [&id](internal::SessionHolder&,
+  return spanner_internal::Visit(
+      txn, [&id](spanner_internal::SessionHolder&,
                  StatusOr<google::spanner::v1::TransactionSelector>& s,
                  std::int64_t) {
         s->set_id(std::move(id));  // only valid when s.ok()
@@ -766,7 +770,8 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
   // should see the same session in a new transaction on every rerun.
   std::string const session_name = "CommitMutatorLockPriority.Session";
 
-  auto timestamp = internal::TimestampFromRFC3339("2019-11-11T20:05:36.345Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2019-11-11T20:05:36.345Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -808,7 +813,8 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
 }
 
 TEST(ClientTest, CommitMutatorSessionNotFound) {
-  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -833,7 +839,8 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
 }
 
 TEST(ClientTest, CommitSessionNotFound) {
-  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();

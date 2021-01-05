@@ -17,9 +17,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 using ::google::cloud::internal::DebugString;
 
@@ -49,8 +48,7 @@ Status LoggingResultSetReader::Finish() {
   return status;
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

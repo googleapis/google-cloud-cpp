@@ -21,27 +21,14 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 namespace {
 // Appends the values in the given `key` to the `lv` proto.
 void AppendKey(google::protobuf::ListValue& lv, Key&& key) {
   for (auto& v : key) {
-    *lv.add_values() = internal::ToProto(std::move(v)).second;
+    *lv.add_values() = spanner_internal::ToProto(std::move(v)).second;
   }
 }
 }  // namespace
-
-namespace internal {
-
-::google::spanner::v1::KeySet ToProto(KeySet ks) {
-  return std::move(ks.proto_);
-}
-
-KeySet FromProto(::google::spanner::v1::KeySet proto) {
-  return KeySet(std::move(proto));
-}
-
-}  // namespace internal
 
 bool operator==(KeyBound const& a, KeyBound const& b) {
   return a.key_ == b.key_ && a.bound_ == b.bound_;

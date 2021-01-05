@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /**
  * Merges @p chunk into @p value, or returns an error.
@@ -48,9 +47,8 @@ namespace internal {
 Status MergeChunk(google::protobuf::Value& value,
                   google::protobuf::Value&& chunk);
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

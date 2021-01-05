@@ -30,19 +30,18 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
 using google::cloud::internal::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
-    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options, google::cloud::CompletionQueue cq,
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    spanner::SessionPoolOptions options, google::cloud::CompletionQueue cq,
+    std::unique_ptr<spanner::RetryPolicy> retry_policy,
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
     std::shared_ptr<Session::Clock> clock) {
   auto pool = std::make_shared<SessionPool>(
       std::move(db), std::move(stubs), std::move(options), std::move(cq),
@@ -51,12 +50,12 @@ std::shared_ptr<SessionPool> MakeSessionPool(
   return pool;
 }
 
-SessionPool::SessionPool(Database db,
+SessionPool::SessionPool(spanner::Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
-                         SessionPoolOptions options,
+                         spanner::SessionPoolOptions options,
                          google::cloud::CompletionQueue cq,
-                         std::unique_ptr<RetryPolicy> retry_policy,
-                         std::unique_ptr<BackoffPolicy> backoff_policy,
+                         std::unique_ptr<spanner::RetryPolicy> retry_policy,
+                         std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
                          std::shared_ptr<Session::Clock> clock)
     : db_(std::move(db)),
       options_(std::move(
@@ -287,7 +286,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // If the pool is at its max size, fail or wait until someone returns a
     // session to the pool then try again.
     if (total_sessions_ >= max_pool_size_) {
-      if (options_.action_on_exhaustion() == ActionOnExhaustion::kFail) {
+      if (options_.action_on_exhaustion() ==
+          spanner::ActionOnExhaustion::kFail) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
       Wait(lk, [this] {
@@ -488,8 +488,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   return Status();
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

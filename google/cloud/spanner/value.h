@@ -37,16 +37,14 @@
 
 namespace google {
 namespace cloud {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct ValueInternals;
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-class Value;  // Defined later in this file.
-
-// Internal implementation details that callers should not use.
-namespace internal {
-Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v);
-std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
-}  // namespace internal
 
 /**
  * The Value class represents a type-safe, nullable Spanner value.
@@ -376,7 +374,8 @@ class Value {
                           google::spanner::v1::Type const& type) {
     bool ok = type.code() == google::spanner::v1::TypeCode::STRUCT;
     ok = ok && type.struct_type().fields().size() == sizeof...(Ts);
-    internal::ForEach(tup, IsStructTypeProto{ok, 0}, type.struct_type());
+    spanner_internal::ForEach(tup, IsStructTypeProto{ok, 0},
+                              type.struct_type());
     return ok;
   }
 
@@ -433,7 +432,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::tuple<Ts...> const& tup) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::STRUCT);
-    internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
+    spanner_internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
     return t;
   }
 
@@ -489,7 +488,7 @@ class Value {
   template <typename... Ts>
   static google::protobuf::Value MakeValueProto(std::tuple<Ts...> tup) {
     google::protobuf::Value v;
-    internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
+    spanner_internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
     return v;
   }
 
@@ -572,7 +571,7 @@ class Value {
     std::tuple<Ts...> tup;
     Status status;  // OK
     ExtractTupleValues<V> f{status, 0, std::forward<V>(pv), pt};
-    internal::ForEach(tup, f);
+    spanner_internal::ForEach(tup, f);
     if (!status.ok()) return status;
     return tup;
   }
@@ -639,10 +638,7 @@ class Value {
   Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
-  friend Value internal::FromProto(google::spanner::v1::Type,
-                                   google::protobuf::Value);
-  friend std::pair<google::spanner::v1::Type, google::protobuf::Value>
-      internal::ToProto(Value);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::ValueInternals;
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
@@ -662,6 +658,34 @@ Value MakeNullValue() {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+struct ValueInternals {
+  static spanner::Value FromProto(google::spanner::v1::Type t,
+                                  google::protobuf::Value v) {
+    return spanner::Value(std::move(t), std::move(v));
+  }
+
+  static std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
+      spanner::Value v) {
+    return std::make_pair(std::move(v.type_), std::move(v.value_));
+  }
+};
+
+inline spanner::Value FromProto(google::spanner::v1::Type t,
+                                google::protobuf::Value v) {
+  return ValueInternals::FromProto(std::move(t), std::move(v));
+}
+
+inline std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(
+    spanner::Value v) {
+  return ValueInternals::ToProto(std::move(v));
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_RESUME_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_RESUME_H
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
@@ -26,9 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 /// Create a new PartialResultSetReader given a resume token value.
 using PartialResultSetReaderFactory =
@@ -41,8 +41,8 @@ class PartialResultSetResume : public PartialResultSetReader {
  public:
   PartialResultSetResume(PartialResultSetReaderFactory factory,
                          google::cloud::internal::Idempotency idempotency,
-                         std::unique_ptr<RetryPolicy> retry_policy,
-                         std::unique_ptr<BackoffPolicy> backoff_policy)
+                         std::unique_ptr<spanner::RetryPolicy> retry_policy,
+                         std::unique_ptr<spanner::BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
         idempotency_(idempotency),
         retry_policy_prototype_(std::move(retry_policy)),
@@ -58,16 +58,15 @@ class PartialResultSetResume : public PartialResultSetReader {
  private:
   PartialResultSetReaderFactory factory_;
   google::cloud::internal::Idempotency idempotency_;
-  std::unique_ptr<RetryPolicy> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  std::unique_ptr<spanner::RetryPolicy> retry_policy_prototype_;
+  std::unique_ptr<spanner::BackoffPolicy> backoff_policy_prototype_;
   std::string last_resume_token_;
   std::unique_ptr<PartialResultSetReader> child_;
   absl::optional<Status> last_status_;
 };
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

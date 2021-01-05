@@ -17,9 +17,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 using ::google::cloud::internal::LogWrapper;
@@ -142,8 +141,7 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

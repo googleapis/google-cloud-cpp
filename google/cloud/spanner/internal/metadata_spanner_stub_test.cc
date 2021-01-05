@@ -22,9 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
@@ -84,7 +83,7 @@ class MetadataSpannerStubTest : public ::testing::Test {
 
   std::shared_ptr<spanner_testing::MockSpannerStub> mock_;
   std::string expected_api_client_header_;
-  Database db_{"test-project", "test-instance", "test-database"};
+  spanner::Database db_{"test-project", "test-instance", "test-database"};
 };
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {
@@ -261,8 +260,7 @@ TEST_F(MetadataSpannerStubTest, PartitionRead) {
 }
 
 }  // namespace
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

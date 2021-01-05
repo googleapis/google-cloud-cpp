@@ -33,12 +33,19 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 class Row;
-namespace internal {
-Row MakeRow(std::vector<Value>,
-            std::shared_ptr<const std::vector<std::string>>);
-}  // namespace internal
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+spanner::Row MakeRow(std::vector<spanner::Value>,
+                     std::shared_ptr<std::vector<std::string> const>);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A `Row` is a sequence of columns each with a name and an associated `Value`.
@@ -134,7 +141,7 @@ class Row {
     Tuple tup;
     auto it = values_.begin();
     Status status;
-    internal::ForEach(tup, ExtractValue{status}, it);
+    spanner_internal::ForEach(tup, ExtractValue{status}, it);
     if (!status.ok()) return status;
     return tup;
   }
@@ -154,7 +161,7 @@ class Row {
     Tuple tup;
     auto it = std::make_move_iterator(values_.begin());
     Status status;
-    internal::ForEach(tup, ExtractValue{status}, it);
+    spanner_internal::ForEach(tup, ExtractValue{status}, it);
     if (!status.ok()) return status;
     return tup;
   }
@@ -166,8 +173,9 @@ class Row {
   ///@}
 
  private:
-  friend Row internal::MakeRow(std::vector<Value>,
-                               std::shared_ptr<const std::vector<std::string>>);
+  friend Row spanner_internal::SPANNER_CLIENT_NS::MakeRow(
+      std::vector<spanner::Value>,
+      std::shared_ptr<std::vector<std::string> const>);
   struct ExtractValue {
     Status& status;
     template <typename T, typename It>
@@ -224,7 +232,7 @@ Row MakeTestRow(Ts&&... ts) {
     columns->emplace_back(std::to_string(i));
   }
   std::vector<Value> v{Value(std::forward<Ts>(ts))...};
-  return internal::MakeRow(std::move(v), std::move(columns));
+  return spanner_internal::MakeRow(std::move(v), std::move(columns));
 }
 
 /**
@@ -402,7 +410,7 @@ template <typename Tuple>
 class TupleStream {
  public:
   using iterator = TupleStreamIterator<Tuple>;
-  static_assert(internal::IsTuple<Tuple>::value,
+  static_assert(spanner_internal::IsTuple<Tuple>::value,
                 "TupleStream<T> requires a std::tuple parameter");
 
   iterator begin() const { return begin_; }

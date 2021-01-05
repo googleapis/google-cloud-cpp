@@ -115,9 +115,10 @@ TEST(SqlStatementTest, Equality) {
 TEST(SqlStatementTest, ToProtoStatementOnly) {
   SqlStatement stmt("select * from foo");
   auto constexpr kText = R"pb(sql: "select * from foo")pb";
-  internal::SqlStatementProto expected;
+  spanner_internal::SqlStatementProto expected;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
-  EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
+  EXPECT_THAT(spanner_internal::ToProto(std::move(stmt)),
+              IsProtoEqual(expected));
 }
 
 TEST(SqlStatementTest, ToProtoWithParams) {
@@ -157,9 +158,10 @@ TEST(SqlStatementTest, ToProtoWithParams) {
       value: { code: STRING }
     }
   )pb";
-  internal::SqlStatementProto expected;
+  spanner_internal::SqlStatementProto expected;
   ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
-  EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
+  EXPECT_THAT(spanner_internal::ToProto(std::move(stmt)),
+              IsProtoEqual(expected));
 }
 
 }  // namespace

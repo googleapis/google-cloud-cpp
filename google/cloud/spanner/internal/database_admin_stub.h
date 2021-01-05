@@ -23,9 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 /**
  * Defines the low-level interface for database administration RPCs.
  */
@@ -148,11 +147,10 @@ class DatabaseAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    ConnectionOptions options);
+    spanner::ConnectionOptions options);
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

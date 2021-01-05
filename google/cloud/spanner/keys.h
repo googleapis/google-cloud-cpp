@@ -24,6 +24,12 @@
 
 namespace google {
 namespace cloud {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct KeySetInternals;
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
@@ -132,12 +138,6 @@ KeyBound MakeKeyBoundOpen(Ts&&... ts) {
   return KeyBound(MakeKey(std::forward<Ts>(ts)...), KeyBound::Bound::kOpen);
 }
 
-class KeySet;
-namespace internal {
-::google::spanner::v1::KeySet ToProto(KeySet);
-KeySet FromProto(::google::spanner::v1::KeySet);
-}  // namespace internal
-
 /**
  * The `KeySet` class is a regular type that represents a collection of `Key`s.
  *
@@ -201,8 +201,7 @@ class KeySet {
   ///@}
 
  private:
-  friend ::google::spanner::v1::KeySet internal::ToProto(KeySet);
-  friend KeySet internal::FromProto(::google::spanner::v1::KeySet);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::KeySetInternals;
   explicit KeySet(google::spanner::v1::KeySet proto)
       : proto_(std::move(proto)) {}
 
@@ -211,6 +210,29 @@ class KeySet {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct KeySetInternals {
+  static ::google::spanner::v1::KeySet ToProto(spanner::KeySet&& ks) {
+    return std::move(ks.proto_);
+  }
+
+  static spanner::KeySet FromProto(::google::spanner::v1::KeySet&& proto) {
+    return spanner::KeySet(std::move(proto));
+  }
+};
+
+inline ::google::spanner::v1::KeySet ToProto(spanner::KeySet ks) {
+  return KeySetInternals::ToProto(std::move(ks));
+}
+
+inline spanner::KeySet FromProto(::google::spanner::v1::KeySet ks) {
+  return KeySetInternals::FromProto(std::move(ks));
+}
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

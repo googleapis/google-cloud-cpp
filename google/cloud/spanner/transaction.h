@@ -25,21 +25,14 @@
 
 namespace google {
 namespace cloud {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+struct TransactionInternals;
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-class Transaction;  // defined below
-
-// Internal forward declarations to befriend.
-namespace internal {
-template <typename T>
-Transaction MakeSingleUseTransaction(T&&);
-template <typename Functor>
-VisitInvokeResult<Functor> Visit(Transaction, Functor&&);
-Transaction MakeTransactionFromIds(std::string session_id,
-                                   std::string transaction_id);
-}  // namespace internal
-
 /**
  * The representation of a Cloud Spanner transaction.
  *
@@ -162,20 +155,14 @@ class Transaction {
 
  private:
   // Friendship for access by internal helpers.
-  template <typename T>
-  friend Transaction internal::MakeSingleUseTransaction(T&&);
-  template <typename Functor>
-  friend internal::VisitInvokeResult<Functor> internal::Visit(Transaction,
-                                                              Functor&&);
-  friend Transaction internal::MakeTransactionFromIds(
-      std::string session_id, std::string transaction_id);
+  friend struct spanner_internal::SPANNER_CLIENT_NS::TransactionInternals;
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
   // Construction of a transaction with existing IDs.
   Transaction(std::string session_id, std::string transaction_id);
 
-  std::shared_ptr<internal::TransactionImpl> impl_;
+  std::shared_ptr<spanner_internal::TransactionImpl> impl_;
 };
 
 /**
@@ -209,13 +196,37 @@ inline Transaction MakeReadWriteTransaction(
   return Transaction(txn, std::move(opts));
 }
 
-namespace internal {
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+struct TransactionInternals {
+  template <typename T>
+  static spanner::Transaction MakeSingleUseTransaction(T&& opts) {
+    // Requires that `opts` is implicitly convertible to SingleUseOptions.
+    spanner::Transaction::SingleUseOptions su_opts = std::forward<T>(opts);
+    return spanner::Transaction(std::move(su_opts));
+  }
+
+  template <typename Functor>
+  // Pass `txn` by value, despite being used only once. This avoids the
+  // possibility of `txn` being destroyed by `f` before `Visit()` can
+  // return. Therefore, ...
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+  static VisitInvokeResult<Functor> Visit(spanner::Transaction txn,
+                                          Functor&& f) {
+    return txn.impl_->Visit(std::forward<Functor>(f));
+  }
+
+  static spanner::Transaction MakeTransactionFromIds(
+      std::string session_id, std::string transaction_id);
+};
 
 template <typename T>
-Transaction MakeSingleUseTransaction(T&& opts) {
-  // Requires that `opts` is implicitly convertible to SingleUseOptions.
-  Transaction::SingleUseOptions su_opts = std::forward<T>(opts);
-  return Transaction(std::move(su_opts));
+spanner::Transaction MakeSingleUseTransaction(T&& opts) {
+  return TransactionInternals::MakeSingleUseTransaction(std::forward<T>(opts));
 }
 
 template <typename Functor>
@@ -223,13 +234,18 @@ template <typename Functor>
 // possibility of `txn` being destroyed by `f` before `Visit()` can
 // return. Therefore, ...
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
-VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
-  return txn.impl_->Visit(std::forward<Functor>(f));
+VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
+  return TransactionInternals::Visit(std::move(txn), std::forward<Functor>(f));
 }
 
-}  // namespace internal
+inline spanner::Transaction MakeTransactionFromIds(std::string session_id,
+                                                   std::string transaction_id) {
+  return TransactionInternals::MakeTransactionFromIds(
+      std::move(session_id), std::move(transaction_id));
+}
+
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

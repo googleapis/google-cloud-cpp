@@ -77,7 +77,7 @@ void BM_BytesGet(benchmark::State& state) {
     benchmark::DoNotOptimize(b.get<std::string>());
   }
   state.SetBytesProcessed(state.iterations() *
-                          internal::BytesToBase64(b).size());
+                          spanner_internal::BytesToBase64(b).size());
 }
 BENCHMARK(BM_BytesGet);
 

@@ -24,9 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -38,9 +37,9 @@ using ::testing::Not;
 // google::protobuf::Value protos from convenient user-supplied arguments.
 //
 
-google::protobuf::Value MakeProtoValue(Value v) {
+google::protobuf::Value MakeProtoValue(spanner::Value v) {
   google::protobuf::Value value;
-  std::tie(std::ignore, value) = internal::ToProto(std::move(v));
+  std::tie(std::ignore, value) = spanner_internal::ToProto(std::move(v));
   return value;
 }
 
@@ -109,6 +108,7 @@ TEST(MergeChunk, ExampleListOfStrings) {
 //
 // ["a", ["b", "c"]], [["d"], "e"] => ["a", ["b", "cd"], "e"]
 TEST(MergeChunk, ExampleListsOfListOfString) {
+  using spanner::Value;
   auto a = MakeProtoValue(std::vector<Value>{
       Value("a"), Value(std::vector<std::string>{"b", "c"})});
   auto b = MakeProtoValue(
@@ -222,8 +222,7 @@ TEST(MergeChunk, CannotMergeStruct) {
 }
 
 }  // namespace
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

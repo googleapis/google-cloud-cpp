@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CONNECTION_H
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -229,22 +230,24 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
 
-namespace internal {
-
-std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const& options);
-
-std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy);
-
-}  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
+    std::shared_ptr<InstanceAdminStub> base_stub,
+    spanner::ConnectionOptions const& options);
+
+std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
+    std::shared_ptr<InstanceAdminStub> base_stub,
+    spanner::ConnectionOptions const& options,
+    std::unique_ptr<spanner::RetryPolicy> retry_policy,
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
+    std::unique_ptr<spanner::PollingPolicy> polling_policy);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google
 

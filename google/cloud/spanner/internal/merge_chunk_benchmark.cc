@@ -18,9 +18,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 namespace {
 
 //
@@ -28,9 +27,9 @@ namespace {
 // google::protobuf::Value protos from convenient user-supplied arguments.
 //
 
-google::protobuf::Value MakeProtoValue(Value v) {
+google::protobuf::Value MakeProtoValue(spanner::Value v) {
   google::protobuf::Value value;
-  std::tie(std::ignore, value) = internal::ToProto(std::move(v));
+  std::tie(std::ignore, value) = ToProto(std::move(v));
   return value;
 }
 
@@ -104,10 +103,10 @@ void BM_MergeChunkListOfStrings(benchmark::State& state) {
 BENCHMARK(BM_MergeChunkListOfStrings);
 
 void BM_MergeChunkListsOfListOfString(benchmark::State& state) {
-  auto const a = MakeProtoValue(std::vector<Value>{
-      Value("a"), Value(std::vector<std::string>{"b", "c"})});
-  auto const b = MakeProtoValue(
-      std::vector<Value>{Value(std::vector<std::string>{"d"}), Value("e")});
+  auto const a = MakeProtoValue(std::vector<spanner::Value>{
+      spanner::Value("a"), spanner::Value(std::vector<std::string>{"b", "c"})});
+  auto const b = MakeProtoValue(std::vector<spanner::Value>{
+      spanner::Value(std::vector<std::string>{"d"}), spanner::Value("e")});
   for (auto _ : state) {
     auto value = a;
     auto chunk = b;
@@ -117,8 +116,7 @@ void BM_MergeChunkListsOfListOfString(benchmark::State& state) {
 BENCHMARK(BM_MergeChunkListsOfListOfString);
 
 }  // namespace
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

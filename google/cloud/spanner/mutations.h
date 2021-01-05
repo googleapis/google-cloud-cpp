@@ -23,14 +23,16 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-
-namespace internal {
 template <typename Op>
 class WriteMutationBuilder;
 class DeleteMutationBuilder;
-}  // namespace internal
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A wrapper for Cloud Spanner mutations.
@@ -82,8 +84,8 @@ class Mutation {
   google::spanner::v1::Mutation& proto() & { return m_; }
 
   template <typename Op>
-  friend class internal::WriteMutationBuilder;
-  friend class internal::DeleteMutationBuilder;
+  friend class spanner_internal::SPANNER_CLIENT_NS::WriteMutationBuilder;
+  friend class spanner_internal::SPANNER_CLIENT_NS::DeleteMutationBuilder;
   explicit Mutation(google::spanner::v1::Mutation m) : m_(std::move(m)) {}
 
   google::spanner::v1::Mutation m_;
@@ -95,9 +97,13 @@ class Mutation {
  */
 using Mutations = std::vector<Mutation>;
 
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
 // This namespace contains implementation details. It is not part of the public
 // API, and subject to change without notice.
-namespace internal {
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
 
 template <typename Op>
 class WriteMutationBuilder {
@@ -112,24 +118,25 @@ class WriteMutationBuilder {
     }
   }
 
-  Mutation Build() const& { return m_; }
-  Mutation&& Build() && { return std::move(m_); }
+  spanner::Mutation Build() const& { return m_; }
+  spanner::Mutation&& Build() && { return std::move(m_); }
 
-  WriteMutationBuilder& AddRow(std::vector<Value> values) & {
+  WriteMutationBuilder& AddRow(std::vector<spanner::Value> values) & {
     auto& lv = *Op::mutable_field(m_.proto()).add_values();
     for (auto& v : values) {
-      std::tie(std::ignore, *lv.add_values()) = internal::ToProto(std::move(v));
+      std::tie(std::ignore, *lv.add_values()) =
+          spanner_internal::ToProto(std::move(v));
     }
     return *this;
   }
 
-  WriteMutationBuilder&& AddRow(std::vector<Value> values) && {
+  WriteMutationBuilder&& AddRow(std::vector<spanner::Value> values) && {
     return std::move(AddRow(std::move(values)));
   }
 
   template <typename... Ts>
   WriteMutationBuilder& EmplaceRow(Ts&&... values) & {
-    return AddRow({Value(std::forward<Ts>(values))...});
+    return AddRow({spanner::Value(std::forward<Ts>(values))...});
   }
 
   template <typename... Ts>
@@ -138,7 +145,7 @@ class WriteMutationBuilder {
   }
 
  private:
-  Mutation m_;
+  spanner::Mutation m_;
 };
 
 struct InsertOp {
@@ -171,20 +178,24 @@ struct ReplaceOp {
 
 class DeleteMutationBuilder {
  public:
-  DeleteMutationBuilder(std::string table_name, KeySet keys) {
+  DeleteMutationBuilder(std::string table_name, spanner::KeySet keys) {
     auto& field = *m_.proto().mutable_delete_();
     field.set_table(std::move(table_name));
-    *field.mutable_key_set() = internal::ToProto(std::move(keys));
+    *field.mutable_key_set() = spanner_internal::ToProto(std::move(keys));
   }
 
-  Mutation Build() const& { return m_; }
-  Mutation&& Build() && { return std::move(m_); }
+  spanner::Mutation Build() const& { return m_; }
+  spanner::Mutation&& Build() && { return std::move(m_); }
 
  private:
-  Mutation m_;
+  spanner::Mutation m_;
 };
 
-}  // namespace internal
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
 
 /**
  * A helper class to construct "insert" mutations.
@@ -199,7 +210,7 @@ class DeleteMutationBuilder {
  *   for more information about the Cloud Spanner mutation API.
  */
 using InsertMutationBuilder =
-    internal::WriteMutationBuilder<internal::InsertOp>;
+    spanner_internal::WriteMutationBuilder<spanner_internal::InsertOp>;
 
 /**
  * Creates a simple insert mutation for the values in @p values.
@@ -234,7 +245,7 @@ Mutation MakeInsertMutation(std::string table_name,
  *   for more information about the Cloud Spanner mutation API.
  */
 using UpdateMutationBuilder =
-    internal::WriteMutationBuilder<internal::UpdateOp>;
+    spanner_internal::WriteMutationBuilder<spanner_internal::UpdateOp>;
 
 /**
  * Creates a simple update mutation for the values in @p values.
@@ -269,7 +280,7 @@ Mutation MakeUpdateMutation(std::string table_name,
  *   for more information about the Cloud Spanner mutation API.
  */
 using InsertOrUpdateMutationBuilder =
-    internal::WriteMutationBuilder<internal::InsertOrUpdateOp>;
+    spanner_internal::WriteMutationBuilder<spanner_internal::InsertOrUpdateOp>;
 
 /**
  * Creates a simple "insert or update" mutation for the values in @p values.
@@ -306,7 +317,7 @@ Mutation MakeInsertOrUpdateMutation(std::string table_name,
  *   for more information about the Cloud Spanner mutation API.
  */
 using ReplaceMutationBuilder =
-    internal::WriteMutationBuilder<internal::ReplaceOp>;
+    spanner_internal::WriteMutationBuilder<spanner_internal::ReplaceOp>;
 
 /**
  * Creates a simple "replace" mutation for the values in @p values.
@@ -340,7 +351,7 @@ Mutation MakeReplaceMutation(std::string table_name,
  * @see https://cloud.google.com/spanner/docs/modify-mutation-api
  *   for more information about the Cloud Spanner mutation API.
  */
-using DeleteMutationBuilder = internal::DeleteMutationBuilder;
+using DeleteMutationBuilder = spanner_internal::DeleteMutationBuilder;
 
 /**
  * Creates a simple "delete" mutation for the values in @p keys.

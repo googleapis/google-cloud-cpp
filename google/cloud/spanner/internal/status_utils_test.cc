@@ -24,15 +24,15 @@ namespace {
 TEST(StatusUtils, SessionNotFound) {
   google::cloud::Status const session_not_found(StatusCode::kNotFound,
                                                 "Session not found");
-  EXPECT_TRUE(internal::IsSessionNotFound(session_not_found));
+  EXPECT_TRUE(spanner_internal::IsSessionNotFound(session_not_found));
 
   google::cloud::Status const other_not_found(StatusCode::kNotFound,
                                               "Other not found");
-  EXPECT_FALSE(internal::IsSessionNotFound(other_not_found));
+  EXPECT_FALSE(spanner_internal::IsSessionNotFound(other_not_found));
 
   google::cloud::Status const not_not_found(StatusCode::kUnavailable,
                                             "Session not found");
-  EXPECT_FALSE(internal::IsSessionNotFound(not_not_found));
+  EXPECT_FALSE(spanner_internal::IsSessionNotFound(not_not_found));
 }
 
 }  // namespace

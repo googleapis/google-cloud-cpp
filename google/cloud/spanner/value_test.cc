@@ -73,11 +73,11 @@ void TestBasicSemantics(T init) {
   EXPECT_EQ(moved_null, null);
 
   // Round-trip from Value -> Proto(s) -> Value
-  auto const protos = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(protos.first, protos.second));
+  auto const protos = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(protos.first, protos.second));
 
   // Ensures that the protos for a NULL T have the same "type" as a non-null T.
-  auto const null_protos = internal::ToProto(null);
+  auto const null_protos = spanner_internal::ToProto(null);
   EXPECT_THAT(null_protos.first, IsProtoEqual(protos.first));
   EXPECT_EQ(null_protos.second.null_value(),
             google::protobuf::NullValue::NULL_VALUE);
@@ -172,7 +172,7 @@ TEST(Value, BasicSemantics) {
     for (auto nanos : {-1, 0, 1}) {
       auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
       SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
-                   internal::TimestampToRFC3339(ts));
+                   spanner_internal::TimestampToRFC3339(ts));
       TestBasicSemantics(ts);
       std::vector<Timestamp> v(5, ts);
       TestBasicSemantics(v);
@@ -349,12 +349,12 @@ TEST(Value, DoubleNaN) {
 
 TEST(Value, BytesDecodingError) {
   Value const v(Bytes("some data"));
-  auto p = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  auto p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
 
   // Now we corrupt the Value proto so that it cannot be decoded.
   p.second.set_string_value("not base64 encoded data");
-  Value bad = internal::FromProto(p.first, p.second);
+  Value bad = spanner_internal::FromProto(p.first, p.second);
   EXPECT_NE(v, bad);
 
   // We know the type is Bytes, but we cannot get a value out of it because the
@@ -576,8 +576,8 @@ TEST(Value, SpannerStructWithNull) {
   auto v1 = Value(std::make_tuple(123, true));
   auto v2 = Value(std::make_tuple(123, absl::optional<bool>{}));
 
-  auto protos1 = internal::ToProto(v1);
-  auto protos2 = internal::ToProto(v2);
+  auto protos1 = spanner_internal::ToProto(v1);
+  auto protos2 = spanner_internal::ToProto(v2);
 
   // The type protos match for both values, but the value protos DO NOT match.
   EXPECT_THAT(protos1.first, IsProtoEqual(protos2.first));
@@ -593,8 +593,8 @@ TEST(Value, SpannerStructWithNull) {
 TEST(Value, ProtoConversionBool) {
   for (auto b : {true, false}) {
     Value const v(b);
-    auto const p = internal::ToProto(Value(b));
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(Value(b));
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::BOOL, p.first.code());
     EXPECT_EQ(b, p.second.bool_value());
   }
@@ -605,8 +605,8 @@ TEST(Value, ProtoConversionInt64) {
   auto const max64 = std::numeric_limits<std::int64_t>::max();
   for (auto x : std::vector<std::int64_t>{min64, -1, 0, 1, 42, max64}) {
     Value const v(x);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::INT64, p.first.code());
     EXPECT_EQ(std::to_string(x), p.second.string_value());
   }
@@ -615,8 +615,8 @@ TEST(Value, ProtoConversionInt64) {
 TEST(Value, ProtoConversionFloat64) {
   for (auto x : {-1.0, -0.5, 0.0, 0.5, 1.0}) {
     Value const v(x);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
     EXPECT_EQ(x, p.second.number_value());
   }
@@ -624,23 +624,23 @@ TEST(Value, ProtoConversionFloat64) {
   // Tests special cases
   auto const inf = std::numeric_limits<double>::infinity();
   Value v(inf);
-  auto p = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  auto p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
   EXPECT_EQ("Infinity", p.second.string_value());
 
   v = Value(-inf);
-  p = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
   EXPECT_EQ("-Infinity", p.second.string_value());
 
   auto const nan = std::nan("NaN");
   v = Value(nan);
-  p = internal::ToProto(v);
+  p = spanner_internal::ToProto(v);
   // Note: NaN is defined to be not equal to everything, including itself, so
   // we instead ensure that it is not equal with EXPECT_NE.
-  EXPECT_NE(v, internal::FromProto(p.first, p.second));
+  EXPECT_NE(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
   EXPECT_EQ("NaN", p.second.string_value());
 }
@@ -649,8 +649,8 @@ TEST(Value, ProtoConversionString) {
   for (auto const& x :
        std::vector<std::string>{"", "f", "foo", "12345678901234567890"}) {
     Value const v(x);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::STRING, p.first.code());
     EXPECT_EQ(x, p.second.string_value());
   }
@@ -660,10 +660,10 @@ TEST(Value, ProtoConversionBytes) {
   for (auto const& x : std::vector<Bytes>{Bytes(""), Bytes("f"), Bytes("foo"),
                                           Bytes("12345678901234567890")}) {
     Value const v(x);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::BYTES, p.first.code());
-    EXPECT_EQ(internal::BytesToBase64(x), p.second.string_value());
+    EXPECT_EQ(spanner_internal::BytesToBase64(x), p.second.string_value());
   }
 }
 
@@ -678,8 +678,8 @@ TEST(Value, ProtoConversionNumeric) {
            MakeNumeric(0.9e29).value(),
        }) {
     Value const v(x);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::NUMERIC, p.first.code());
     EXPECT_EQ(x.ToString(), p.second.string_value());
   }
@@ -699,10 +699,11 @@ TEST(Value, ProtoConversionTimestamp) {
     for (auto nanos : {-1, 0, 1}) {
       auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
       Value const v(ts);
-      auto const p = internal::ToProto(v);
-      EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+      auto const p = spanner_internal::ToProto(v);
+      EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
       EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, p.first.code());
-      EXPECT_EQ(internal::TimestampToRFC3339(ts), p.second.string_value());
+      EXPECT_EQ(spanner_internal::TimestampToRFC3339(ts),
+                p.second.string_value());
     }
   }
 }
@@ -730,8 +731,8 @@ TEST(Value, ProtoConversionDate) {
   for (auto const& tc : test_cases) {
     SCOPED_TRACE("CivilDay: " + absl::FormatCivilTime(tc.day));
     Value const v(tc.day);
-    auto const p = internal::ToProto(v);
-    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::DATE, p.first.code());
     EXPECT_EQ(tc.expected, p.second.string_value());
   }
@@ -740,8 +741,8 @@ TEST(Value, ProtoConversionDate) {
 TEST(Value, ProtoConversionArray) {
   std::vector<std::int64_t> data{1, 2, 3};
   Value const v(data);
-  auto const p = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  auto const p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::ARRAY, p.first.code());
   EXPECT_EQ(google::spanner::v1::TypeCode::INT64,
             p.first.array_element_type().code());
@@ -753,13 +754,13 @@ TEST(Value, ProtoConversionArray) {
 TEST(Value, ProtoConversionStruct) {
   auto data = std::make_tuple(3.14, std::make_pair("foo", 42));
   Value const v(data);
-  auto const p = internal::ToProto(v);
-  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  auto const p = spanner_internal::ToProto(v);
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT, p.first.code());
 
   Value const null_struct_value(
       MakeNullValue<std::tuple<bool, std::int64_t>>());
-  auto const null_struct_proto = internal::ToProto(null_struct_value);
+  auto const null_struct_proto = spanner_internal::ToProto(null_struct_value);
   EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT,
             null_struct_proto.first.code());
 
@@ -775,33 +776,33 @@ TEST(Value, ProtoConversionStruct) {
 }
 
 void SetProtoKind(Value& v, google::protobuf::NullValue x) {
-  auto p = internal::ToProto(v);
+  auto p = spanner_internal::ToProto(v);
   p.second.set_null_value(x);
-  v = internal::FromProto(p.first, p.second);
+  v = spanner_internal::FromProto(p.first, p.second);
 }
 
 void SetProtoKind(Value& v, double x) {
-  auto p = internal::ToProto(v);
+  auto p = spanner_internal::ToProto(v);
   p.second.set_number_value(x);
-  v = internal::FromProto(p.first, p.second);
+  v = spanner_internal::FromProto(p.first, p.second);
 }
 
 void SetProtoKind(Value& v, char const* x) {
-  auto p = internal::ToProto(v);
+  auto p = spanner_internal::ToProto(v);
   p.second.set_string_value(x);
-  v = internal::FromProto(p.first, p.second);
+  v = spanner_internal::FromProto(p.first, p.second);
 }
 
 void SetProtoKind(Value& v, bool x) {
-  auto p = internal::ToProto(v);
+  auto p = spanner_internal::ToProto(v);
   p.second.set_bool_value(x);
-  v = internal::FromProto(p.first, p.second);
+  v = spanner_internal::FromProto(p.first, p.second);
 }
 
 void ClearProtoKind(Value& v) {
-  auto p = internal::ToProto(v);
+  auto p = spanner_internal::ToProto(v);
   p.second.clear_kind();
-  v = internal::FromProto(p.first, p.second);
+  v = spanner_internal::FromProto(p.first, p.second);
 }
 
 TEST(Value, GetBadBool) {
@@ -1016,7 +1017,7 @@ TEST(Value, GetBadStruct) {
 
 TEST(Value, CommitTimestamp) {
   auto const v = Value(CommitTimestamp{});
-  auto tv = internal::ToProto(v);
+  auto tv = spanner_internal::ToProto(v);
   EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, tv.first.code());
 
   auto constexpr kText = R"pb(

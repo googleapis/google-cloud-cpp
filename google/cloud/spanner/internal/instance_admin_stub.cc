@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
@@ -173,8 +172,8 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 };
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    ConnectionOptions options) {
-  options = internal::EmulatorOverrides(std::move(options));
+    spanner::ConnectionOptions options) {
+  options = EmulatorOverrides(std::move(options));
   auto channel =
       grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
                                 options.CreateChannelArguments());
@@ -196,8 +195,7 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
   return stub;
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

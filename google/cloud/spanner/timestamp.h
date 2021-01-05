@@ -181,17 +181,18 @@ struct CommitTimestamp {
   friend bool operator!=(CommitTimestamp, CommitTimestamp) { return false; }
 };
 
-namespace internal {
-
-StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
-std::string TimestampToRFC3339(Timestamp);
-StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const&);
-protobuf::Timestamp TimestampToProto(Timestamp);
-
-}  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const&);
+std::string TimestampToRFC3339(spanner::Timestamp);
+StatusOr<spanner::Timestamp> TimestampFromProto(protobuf::Timestamp const&);
+protobuf::Timestamp TimestampToProto(spanner::Timestamp);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google
 

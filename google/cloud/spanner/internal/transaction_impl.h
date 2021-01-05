@@ -28,9 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
@@ -140,9 +139,8 @@ class TransactionImpl {
   std::int64_t seqno_;
 };
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

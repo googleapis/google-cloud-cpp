@@ -18,9 +18,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
 
 StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader) {
@@ -41,9 +40,9 @@ StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
   return {std::move(source)};
 }
 
-StatusOr<Row> PartialResultSetSource::NextRow() {
+StatusOr<spanner::Row> PartialResultSetSource::NextRow() {
   if (finished_) {
-    return Row();
+    return spanner::Row();
   }
 
   while (buffer_.empty() || buffer_.size() < columns_->size()) {
@@ -59,7 +58,7 @@ StatusOr<Row> PartialResultSetSource::NextRow() {
       if (!buffer_.empty()) {
         return Status(StatusCode::kInternal, "incomplete row at end of stream");
       }
-      return Row();
+      return spanner::Row();
     }
   }
 
@@ -69,7 +68,7 @@ StatusOr<Row> PartialResultSetSource::NextRow() {
                   "response metadata is missing row type information");
   }
 
-  std::vector<Value> values;
+  std::vector<spanner::Value> values;
   values.reserve(fields.size());
   auto iter = buffer_.begin();
   for (auto const& field : fields) {
@@ -77,7 +76,7 @@ StatusOr<Row> PartialResultSetSource::NextRow() {
     ++iter;
   }
   buffer_.erase(buffer_.begin(), iter);
-  return internal::MakeRow(std::move(values), columns_);
+  return MakeRow(std::move(values), columns_);
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
@@ -180,8 +179,7 @@ Status PartialResultSetSource::ReadFromStream() {
   return {};  // OK
 }
 
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
