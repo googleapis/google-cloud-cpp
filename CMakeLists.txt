@@ -25,12 +25,20 @@ project(
 
 # Configure the Compiler options, we use C++11 features by default.
 set(GOOGLE_CLOUD_CPP_CXX_STANDARD
-    11
-    CACHE STRING "Configure CMAKE_CXX_STANDARD")
+    ""
+    CACHE STRING "Unused. Prefer CMAKE_CXX_STANDARD")
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
-set(CMAKE_CXX_STANDARD "${GOOGLE_CLOUD_CPP_CXX_STANDARD}")
+set(CMAKE_CXX_STANDARD
+    11
+    CACHE STRING "Configure the C++ standard version for all targets.")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
+    message(
+        WARNING
+            "GOOGLE_CLOUD_CPP_CXX_STANDARD is retired, use CMAKE_CXX_STANDARD")
+endif ()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
