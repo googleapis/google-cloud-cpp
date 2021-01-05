@@ -121,6 +121,8 @@ TEST_P(GrpcIntegrationTest, BucketCRUD) {
 }
 
 TEST_P(GrpcIntegrationTest, BucketAccessControlCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
