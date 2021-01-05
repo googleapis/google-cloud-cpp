@@ -226,8 +226,7 @@ struct TransactionInternals {
 
 template <typename T>
 spanner::Transaction MakeSingleUseTransaction(T&& opts) {
-  return TransactionInternals::MakeSingleUseTransaction(
-      std::forward<T>(opts));
+  return TransactionInternals::MakeSingleUseTransaction(std::forward<T>(opts));
 }
 
 template <typename Functor>
@@ -236,8 +235,7 @@ template <typename Functor>
 // return. Therefore, ...
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
-  return TransactionInternals::Visit(std::move(txn),
-                                        std::forward<Functor>(f));
+  return TransactionInternals::Visit(std::move(txn), std::forward<Functor>(f));
 }
 
 inline spanner::Transaction MakeTransactionFromIds(std::string session_id,
