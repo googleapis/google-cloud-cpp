@@ -19,28 +19,28 @@
 
 namespace google {
 namespace cloud {
-namespace spanner {
+namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 TEST(TupleUtils, IsTuple) {
   using T0 = std::tuple<>;
-  static_assert(spanner_internal::IsTuple<T0>::value, "");
-  static_assert(spanner_internal::IsTuple<T0 const>::value, "");
-  static_assert(spanner_internal::IsTuple<T0 const&>::value, "");
+  static_assert(IsTuple<T0>::value, "");
+  static_assert(IsTuple<T0 const>::value, "");
+  static_assert(IsTuple<T0 const&>::value, "");
 
   using T1 = std::tuple<int>;
-  static_assert(spanner_internal::IsTuple<T1>::value, "");
-  static_assert(spanner_internal::IsTuple<T1 const>::value, "");
-  static_assert(spanner_internal::IsTuple<T1 const&>::value, "");
+  static_assert(IsTuple<T1>::value, "");
+  static_assert(IsTuple<T1 const>::value, "");
+  static_assert(IsTuple<T1 const&>::value, "");
 
   using TN = std::tuple<int, bool, char>;
-  static_assert(spanner_internal::IsTuple<TN>::value, "");
-  static_assert(spanner_internal::IsTuple<TN const>::value, "");
-  static_assert(spanner_internal::IsTuple<TN const&>::value, "");
+  static_assert(IsTuple<TN>::value, "");
+  static_assert(IsTuple<TN const>::value, "");
+  static_assert(IsTuple<TN const&>::value, "");
 
-  static_assert(!spanner_internal::IsTuple<int>::value, "");
-  static_assert(!spanner_internal::IsTuple<char>::value, "");
-  static_assert(!spanner_internal::IsTuple<std::vector<int>>::value, "");
+  static_assert(!IsTuple<int>::value, "");
+  static_assert(!IsTuple<char>::value, "");
+  static_assert(!IsTuple<std::vector<int>>::value, "");
 }
 
 // Helper functor used to test the `ForEach` function. Uses a templated
@@ -55,18 +55,18 @@ struct Stringify {
 TEST(TupleUtils, ForEachMultipleTypes) {
   auto tup = std::make_tuple(true, 42);
   std::vector<std::string> v;
-  spanner_internal::ForEach(tup, Stringify{}, v);
+  ForEach(tup, Stringify{}, v);
   EXPECT_THAT(v, testing::ElementsAre("1", "42"));
 }
 
 TEST(TupleUtils, ForEachMutate) {
   auto add_one = [](int& x) { x += 1; };
   auto tup = std::make_tuple(1, 2, 3);
-  spanner_internal::ForEach(tup, add_one);
+  ForEach(tup, add_one);
   EXPECT_EQ(tup, std::make_tuple(2, 3, 4));
 }
 
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
