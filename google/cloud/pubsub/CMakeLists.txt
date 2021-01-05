@@ -16,7 +16,7 @@
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Pub/Sub C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Pub/Sub")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
@@ -135,8 +135,8 @@ target_link_libraries(
                          googleapis-c++::pubsub_protos absl::flat_hash_map)
 google_cloud_cpp_add_common_options(pubsub_client)
 set_target_properties(
-    pubsub_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                             SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+    pubsub_client PROPERTIES VERSION "${PROJECT_VERSION}"
+                             SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(pubsub_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_library(googleapis-c++::pubsub_client ALIAS pubsub_client)
@@ -324,9 +324,9 @@ google_cloud_cpp_install_headers("pubsub_client_mocks"
                                  "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
@@ -349,7 +349,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "pubsub_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "pubsub_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

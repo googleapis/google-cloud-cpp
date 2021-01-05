@@ -16,7 +16,7 @@
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud IAM C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud IAM")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION} (Beta)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
@@ -58,8 +58,8 @@ target_link_libraries(
                       googleapis-c++::iam_protos)
 google_cloud_cpp_add_common_options(iam_client)
 set_target_properties(
-    iam_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                          SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+    iam_client PROPERTIES VERSION "${PROJECT_VERSION}"
+                          SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(iam_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 set_target_properties(iam_client PROPERTIES EXPORT_NAME
@@ -129,9 +129,9 @@ google_cloud_cpp_install_headers("iam_client" "include/google/cloud/iam")
 google_cloud_cpp_install_headers("iam_client_mocks" "include/google/cloud/iam")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud IAM C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud IAM.")
 set(GOOGLE_CLOUD_PC_REQUIRES
@@ -153,7 +153,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "iam_client-config.cmake" @ONLY)
 write_basic_package_version_file(
     "iam_client-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

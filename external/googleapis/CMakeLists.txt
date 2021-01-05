@@ -208,8 +208,8 @@ function (googleapis_cpp_set_version_and_alias short_name)
     add_dependencies("googleapis_cpp_${short_name}" googleapis_download)
     set_target_properties(
         "googleapis_cpp_${short_name}"
-        PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
-                   SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+        PROPERTIES VERSION "${PROJECT_VERSION}" SOVERSION
+                                                ${PROJECT_VERSION_MAJOR})
     set_target_properties("googleapis_cpp_${short_name}"
                           PROPERTIES EXPORT_NAME googleapis-c++::${short_name})
     add_library("googleapis-c++::${short_name}" ALIAS
@@ -642,7 +642,7 @@ configure_file("${CMAKE_CURRENT_LIST_DIR}/config.cmake.in"
                "googleapis-config.cmake" @ONLY)
 write_basic_package_version_file(
     "googleapis-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(

@@ -25,8 +25,8 @@ configure_file(internal/version_info.h.in
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
-set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/generator/*"
     "*/google/cloud/README.md"
@@ -194,9 +194,8 @@ target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 set_target_properties(
-    google_cloud_cpp_common
-    PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION}
-               SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    google_cloud_cpp_common PROPERTIES VERSION ${PROJECT_VERSION}
+                                       SOVERSION ${PROJECT_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common YEAR 2018)
@@ -335,7 +334,7 @@ include(CMakePackageConfigHelpers)
 configure_file("config.cmake.in" "google_cloud_cpp_common-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_common-config-version.cmake"
-    VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+    VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
@@ -400,8 +399,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     set_target_properties(
         google_cloud_cpp_grpc_utils
-        PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION}
-                   SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+        PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
 
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
@@ -544,7 +543,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                    "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
     write_basic_package_version_file(
         "google_cloud_cpp_grpc_utils-config-version.cmake"
-        VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+        VERSION ${PROJECT_VERSION}
         COMPATIBILITY ExactVersion)
 
     install(
