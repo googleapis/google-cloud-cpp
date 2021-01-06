@@ -2196,7 +2196,8 @@ class Client {
    *
    * @param bucket_name the name of the bucket.
    * @param options a list of optional query parameters and/or request headers.
-   *     Valid types for this operation include `UserProject`.
+   *     Valid types for this operation include `IfMetagenerationMatch`,
+   *     `IfMetagenerationNotMatch` and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.

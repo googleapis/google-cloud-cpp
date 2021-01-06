@@ -30,12 +30,16 @@ using ::testing::HasSubstr;
 
 TEST(DefaultObjectAclRequestTest, List) {
   ListDefaultObjectAclRequest request("my-bucket");
-  request.set_multiple_options(UserProject("my-project"));
+  request.set_multiple_options(UserProject("my-project"),
+                               IfMetagenerationMatch(42),
+                               IfMetagenerationNotMatch(7));
   EXPECT_EQ("my-bucket", request.bucket_name());
   std::ostringstream os;
   os << request;
   auto str = os.str();
   EXPECT_THAT(str, HasSubstr("userProject=my-project"));
+  EXPECT_THAT(str, HasSubstr("ifMetagenerationMatch=42"));
+  EXPECT_THAT(str, HasSubstr("ifMetagenerationNotMatch=7"));
   EXPECT_THAT(str, HasSubstr("my-bucket"));
 }
 

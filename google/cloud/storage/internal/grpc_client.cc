@@ -1527,7 +1527,7 @@ google::storage::v1::ListDefaultObjectAccessControlsRequest GrpcClient::ToProto(
     ListDefaultObjectAclRequest const& request) {
   google::storage::v1::ListDefaultObjectAccessControlsRequest r;
   r.set_bucket(request.bucket_name());
-  // TODO(#5680): Add `SetMetagenerationConditions`.
+  SetMetagenerationConditions(r, request);
   SetCommonParameters(r, request);
   return r;
 }

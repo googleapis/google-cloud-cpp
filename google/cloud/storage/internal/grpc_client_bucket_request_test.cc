@@ -498,6 +498,8 @@ TEST(GrpcClientBucketRequest, ListDefaultObjectAclRequestAllFields) {
   storage_proto::ListDefaultObjectAccessControlsRequest expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
     bucket: "test-bucket-name"
+    if_metageneration_match: { value: 42 }
+    if_metageneration_not_match: { value: 7 }
     common_request_params: {
       quota_user: "test-quota-user"
       user_project: "test-user-project"
@@ -506,9 +508,10 @@ TEST(GrpcClientBucketRequest, ListDefaultObjectAclRequestAllFields) {
                                                             &expected));
 
   ListDefaultObjectAclRequest request("test-bucket-name");
-  request.set_multiple_options(UserProject("test-user-project"),
-                               QuotaUser("test-quota-user"),
-                               UserIp("test-user-ip"));
+  request.set_multiple_options(
+      IfMetagenerationMatch(42), IfMetagenerationNotMatch(7),
+      UserProject("test-user-project"), QuotaUser("test-quota-user"),
+      UserIp("test-user-ip"));
 
   auto actual = GrpcClient::ToProto(request);
   EXPECT_THAT(actual, IsProtoEqual(expected));
