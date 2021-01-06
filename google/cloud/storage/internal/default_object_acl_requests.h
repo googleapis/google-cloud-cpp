@@ -31,7 +31,8 @@ namespace internal {
 
 /// Represents a request to call the `DefaultObjectAccessControls: list` API.
 class ListDefaultObjectAclRequest
-    : public GenericRequest<ListDefaultObjectAclRequest, UserProject> {
+    : public GenericRequest<ListDefaultObjectAclRequest, IfMetagenerationMatch,
+                            IfMetagenerationNotMatch, UserProject> {
  public:
   ListDefaultObjectAclRequest() = default;
   explicit ListDefaultObjectAclRequest(std::string bucket)
