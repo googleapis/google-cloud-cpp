@@ -438,6 +438,195 @@ TEST(GrpcClientBucketRequest, DeleteBucketAclRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, CreateDefaultObjectAclRequestSimple) {
+  storage_proto::InsertDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    object_access_control: {
+      role: "READER"
+      entity: "user-testuser"
+    }
+)""",
+                                                            &expected));
+
+  CreateDefaultObjectAclRequest request("test-bucket-name", "user-testuser",
+                                        "READER");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, CreateDefaultObjectAclRequestAllFields) {
+  storage_proto::InsertDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    object_access_control: {
+      role: "READER"
+      entity: "user-testuser"
+    }
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  CreateDefaultObjectAclRequest request("test-bucket-name", "user-testuser",
+                                        "READER");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, ListDefaultObjectAclRequestSimple) {
+  storage_proto::ListDefaultObjectAccessControlsRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+)""",
+                                                            &expected));
+
+  ListDefaultObjectAclRequest request("test-bucket-name");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, ListDefaultObjectAclRequestAllFields) {
+  storage_proto::ListDefaultObjectAccessControlsRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  ListDefaultObjectAclRequest request("test-bucket-name");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, GetDefaultObjectAclRequestSimple) {
+  storage_proto::GetDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+)""",
+                                                            &expected));
+
+  GetDefaultObjectAclRequest request("test-bucket-name", "user-testuser");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, GetDefaultObjectAclRequestAllFields) {
+  storage_proto::GetDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  GetDefaultObjectAclRequest request("test-bucket-name", "user-testuser");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, UpdateDefaultObjectAclRequestSimple) {
+  storage_proto::UpdateDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+    object_access_control: {
+      role: "READER"
+    }
+)""",
+                                                            &expected));
+
+  UpdateDefaultObjectAclRequest request("test-bucket-name", "user-testuser",
+                                        "READER");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, UpdateDefaultObjectAclRequestAllFields) {
+  storage_proto::UpdateDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+    object_access_control: {
+      role: "READER"
+    }
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  UpdateDefaultObjectAclRequest request("test-bucket-name", "user-testuser",
+                                        "READER");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, DeleteDefaultObjectAclRequestSimple) {
+  storage_proto::DeleteDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+)""",
+                                                            &expected));
+
+  DeleteDefaultObjectAclRequest request("test-bucket-name", "user-testuser");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, DeleteDefaultObjectAclRequestAllFields) {
+  storage_proto::DeleteDefaultObjectAccessControlRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    entity: "user-testuser"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  DeleteDefaultObjectAclRequest request("test-bucket-name", "user-testuser");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

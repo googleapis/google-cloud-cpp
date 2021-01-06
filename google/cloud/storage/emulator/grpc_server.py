@@ -89,6 +89,35 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         bucket.delete_acl(request.entity, context)
         return Empty()
 
+    def ListDefaultObjectAccessControls(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        result = resources_pb2.ListObjectAccessControlsResponse(
+            items=bucket.metadata.default_object_acl
+        )
+        return result
+
+    def InsertDefaultObjectAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.insert_default_object_acl(request, context)
+
+    def GetDefaultObjectAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.get_default_object_acl(request.entity, context)
+
+    def UpdateDefaultObjectAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.update_default_object_acl(request, request.entity, context)
+
+    def DeleteDefaultObjectAccessControl(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        bucket.delete_default_object_acl(request.entity, context)
+        return Empty()
+
     # === OBJECT === #
 
     def InsertObject(self, request_iterator, context):
