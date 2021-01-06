@@ -37,12 +37,28 @@ AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
 
 AutomaticallyCreatedBackgroundThreads::
     ~AutomaticallyCreatedBackgroundThreads() {
-  Shutdown();
-}
-
-void AutomaticallyCreatedBackgroundThreads::Shutdown() {
   cq_.Shutdown();
-  for (auto& t : pool_) t.join();
+  for (auto& t : pool_) {
+    if (std::this_thread::get_id() == t.get_id()) {
+      // It is possible that this thread is the only which holds the reference
+      // to this object. This means that this dtor was invoked from a
+      // continuation scheduled on the completion queue it holds.
+      //
+      // This is a legal situation, but we need to ensure that by the end of
+      // this dtor:
+      // - any operation scheduled on `cq_` is finished
+      // - no thread will touch `this`
+      //
+      // We achieve the former by running `cq_.Run()` in-line and the former by:
+      // - making sure that this threads main loop doesn't touch any members of
+      //   this object
+      // - joining all other threads
+      cq_.Run();
+      t.detach();
+    } else {
+      t.join();
+    }
+  }
   pool_.clear();
 }
 

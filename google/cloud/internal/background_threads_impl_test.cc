@@ -108,19 +108,36 @@ TEST(AutomaticallyCreatedBackgroundThreads, ManyThreads) {
   EXPECT_THAT(ids, Not(Contains(std::this_thread::get_id())));
 }
 
-/// @test Verify that automatically created completion queues work.
-TEST(AutomaticallyCreatedBackgroundThreads, ManualShutdown) {
-  auto constexpr kThreadCount = 4;
-  AutomaticallyCreatedBackgroundThreads actual(kThreadCount);
-  EXPECT_EQ(kThreadCount, actual.pool_size());
+/// @test Verify that automatically created completion queues can self-destroy.
+TEST(AutomaticallyCreatedBackgroundThreads, SelfDestroy) {
+  auto bg_threads = absl::make_unique<AutomaticallyCreatedBackgroundThreads>(1);
 
-  std::vector<promise<void>> promises(2 * kThreadCount);
-  for (auto& p : promises) {
-    actual.cq().RunAsync([&p] { p.set_value(); });
-  }
-  for (auto& p : promises) p.get_future().get();
+  std::promise<void> timer_promise;
 
-  actual.Shutdown();
+  auto cq = bg_threads->cq();
+  bg_threads->cq()
+      .MakeRelativeTimer(std::chrono::hours(10))
+      .then([&](future<StatusOr<std::chrono::system_clock::time_point>>) {
+        timer_promise.set_value();
+      });
+  class SoleBgThreadsOwnerFunctor {
+   public:
+    explicit SoleBgThreadsOwnerFunctor(
+        std::unique_ptr<AutomaticallyCreatedBackgroundThreads> bg_threads)
+        : bg_threads_(std::move(bg_threads)) {}
+
+    // Don't do anything.
+    void operator()() {}
+
+   private:
+    std::unique_ptr<AutomaticallyCreatedBackgroundThreads> bg_threads_;
+  };
+  // The completion queue will execute `SoleBgThreadsOwnerFunctor` and drop the
+  // only reference to `BackgroundThreads` triggerring its dtor. Test that there
+  // is no problem and that the timer scheduled for the future is properly
+  // cancelled.
+  cq.RunAsync(SoleBgThreadsOwnerFunctor(std::move(bg_threads)));
+  timer_promise.get_future().get();  // CompletionQueue was properly drained.
 }
 
 }  // namespace

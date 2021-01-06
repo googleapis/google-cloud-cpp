@@ -47,7 +47,6 @@ class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
   ~AutomaticallyCreatedBackgroundThreads() override;
 
   CompletionQueue cq() const override { return cq_; }
-  void Shutdown();
   std::size_t pool_size() const { return pool_.size(); }
 
  private:

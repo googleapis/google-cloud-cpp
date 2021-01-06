@@ -290,10 +290,13 @@ void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
 void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
   std::unique_lock<std::mutex> lk(mu_);
   while (!run_async_queue_.empty() && !shutdown_) {
-    auto f = std::move(run_async_queue_.front());
-    run_async_queue_.pop_front();
-    lk.unlock();
-    f->exec();
+    {
+      auto f = std::move(run_async_queue_.front());
+      // Make sure `f`'s dtor is executed without a lock too.
+      run_async_queue_.pop_front();
+      lk.unlock();
+      f->exec();
+    }
     lk.lock();
   }
   --run_async_pool_size_;
@@ -302,10 +305,13 @@ void DefaultCompletionQueueImpl::DrainRunAsyncLoop() {
 void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (run_async_queue_.empty()) return;
-  auto f = std::move(run_async_queue_.front());
-  run_async_queue_.pop_front();
-  lk.unlock();
-  f->exec();
+  {
+    auto f = std::move(run_async_queue_.front());
+    // Make sure `f`'s dtor is executed without a lock too.
+    run_async_queue_.pop_front();
+    lk.unlock();
+    f->exec();
+  }
   lk.lock();
   if (run_async_queue_.empty()) {
     --run_async_pool_size_;
