@@ -262,6 +262,17 @@ class GrpcClient : public RawClient,
   static google::storage::v1::DeleteBucketAccessControlRequest ToProto(
       DeleteBucketAclRequest const& request);
 
+  static google::storage::v1::InsertDefaultObjectAccessControlRequest ToProto(
+      CreateDefaultObjectAclRequest const& request);
+  static google::storage::v1::ListDefaultObjectAccessControlsRequest ToProto(
+      ListDefaultObjectAclRequest const& request);
+  static google::storage::v1::GetDefaultObjectAccessControlRequest ToProto(
+      GetDefaultObjectAclRequest const& request);
+  static google::storage::v1::UpdateDefaultObjectAccessControlRequest ToProto(
+      UpdateDefaultObjectAclRequest const& request);
+  static google::storage::v1::DeleteDefaultObjectAccessControlRequest ToProto(
+      DeleteDefaultObjectAclRequest const& request);
+
   static google::storage::v1::InsertObjectRequest ToProto(
       InsertObjectMediaRequest const& request);
   static google::storage::v1::DeleteObjectRequest ToProto(

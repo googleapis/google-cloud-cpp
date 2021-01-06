@@ -453,28 +453,67 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
 }
 
 StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
-    ListDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListDefaultObjectAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ListObjectAccessControlsResponse response;
+  auto status = stub_->ListDefaultObjectAccessControls(&context, proto_request,
+                                                       &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  ListDefaultObjectAclResponse res;
+  for (auto& item : *response.mutable_items()) {
+    res.items.emplace_back(FromProto(std::move(item)));
+  }
+
+  return res;
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
-    CreateDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateDefaultObjectAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ObjectAccessControl response;
+  auto status = stub_->InsertDefaultObjectAccessControl(&context, proto_request,
+                                                        &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  return FromProto(std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
-    DeleteDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteDefaultObjectAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::protobuf::Empty response;
+  auto status = stub_->DeleteDefaultObjectAccessControl(&context, proto_request,
+                                                        &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return EmptyResponse{};
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
-    GetDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetDefaultObjectAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ObjectAccessControl response;
+  auto status =
+      stub_->GetDefaultObjectAccessControl(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
-    UpdateDefaultObjectAclRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    UpdateDefaultObjectAclRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ObjectAccessControl response;
+  auto status = stub_->UpdateDefaultObjectAccessControl(&context, proto_request,
+                                                        &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
@@ -1468,6 +1507,53 @@ google::storage::v1::UpdateBucketAccessControlRequest GrpcClient::ToProto(
 google::storage::v1::DeleteBucketAccessControlRequest GrpcClient::ToProto(
     DeleteBucketAclRequest const& request) {
   google::storage::v1::DeleteBucketAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::InsertDefaultObjectAccessControlRequest
+GrpcClient::ToProto(CreateDefaultObjectAclRequest const& request) {
+  google::storage::v1::InsertDefaultObjectAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.mutable_object_access_control()->set_role(request.role());
+  r.mutable_object_access_control()->set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::ListDefaultObjectAccessControlsRequest GrpcClient::ToProto(
+    ListDefaultObjectAclRequest const& request) {
+  google::storage::v1::ListDefaultObjectAccessControlsRequest r;
+  r.set_bucket(request.bucket_name());
+  // TODO(#5680): Add `SetMetagenerationConditions`.
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::GetDefaultObjectAccessControlRequest GrpcClient::ToProto(
+    GetDefaultObjectAclRequest const& request) {
+  google::storage::v1::GetDefaultObjectAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::UpdateDefaultObjectAccessControlRequest
+GrpcClient::ToProto(UpdateDefaultObjectAclRequest const& request) {
+  google::storage::v1::UpdateDefaultObjectAccessControlRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_entity(request.entity());
+  r.mutable_object_access_control()->set_role(request.role());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::DeleteDefaultObjectAccessControlRequest
+GrpcClient::ToProto(DeleteDefaultObjectAclRequest const& request) {
+  google::storage::v1::DeleteDefaultObjectAccessControlRequest r;
   r.set_bucket(request.bucket_name());
   r.set_entity(request.entity());
   SetCommonParameters(r, request);

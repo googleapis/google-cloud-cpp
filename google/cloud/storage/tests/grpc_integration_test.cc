@@ -184,6 +184,72 @@ TEST_P(GrpcIntegrationTest, BucketAccessControlCRUD) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_P(GrpcIntegrationTest, DefaultObjectAccessControlCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test, with the "private"
+  // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
+  // ACL.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(
+      bucket_name, project_id(), BucketMetadata(),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_STATUS_OK(meta);
+
+  auto entity_name = MakeEntityName();
+
+  ASSERT_FALSE(meta->default_acl().empty())
+      << "Test aborted. Empty ACL returned from newly created bucket <"
+      << bucket_name << "> even though we requested the <full> projection.";
+  ASSERT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)))
+      << "Test aborted. The bucket <" << bucket_name << "> has <" << entity_name
+      << "> in its ACL.  This is unexpected because the bucket was just"
+      << " created with a predefine ACL which should preclude this result.";
+
+  StatusOr<ObjectAccessControl> result =
+      client->CreateDefaultObjectAcl(bucket_name, entity_name, "OWNER");
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ("OWNER", result->role());
+
+  auto current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_FALSE(current_acl->empty());
+  // Search using the entity name returned by the request, because we use
+  // 'project-editors-<project_id_>' this different than the original entity
+  // name, the server "translates" the project id to a project number.
+  EXPECT_THAT(AclEntityNames(meta->default_acl()),
+              ContainsOnce(result->entity()));
+
+  auto get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(*get_result, *result);
+
+  ObjectAccessControl new_acl = *get_result;
+  new_acl.set_role("READER");
+  auto updated_result = client->UpdateDefaultObjectAcl(bucket_name, new_acl);
+  ASSERT_STATUS_OK(updated_result);
+
+  EXPECT_EQ(updated_result->role(), "READER");
+  get_result = client->GetDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_EQ(*get_result, *updated_result);
+
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(get_result->role(), new_acl.role());
+
+  auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
+  EXPECT_STATUS_OK(status);
+
+  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  ASSERT_STATUS_OK(current_acl);
+  EXPECT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)));
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
