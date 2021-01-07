@@ -553,24 +553,89 @@ StatusOr<SignBlobResponse> GrpcClient::SignBlob(SignBlobRequest const&) {
   return Status(StatusCode::kUnimplemented, __func__);
 }
 
+google::storage::v1::Notification GrpcClient::ToProto(
+    NotificationMetadata const& notification) {
+  google::storage::v1::Notification result;
+  result.set_topic(notification.topic());
+  result.set_etag(notification.etag());
+  result.set_object_name_prefix(notification.object_name_prefix());
+  result.set_payload_format(notification.payload_format());
+  result.set_id(notification.id());
+
+  for (auto const& v : notification.event_types()) {
+    result.add_event_types(v);
+  }
+  for (auto const& kv : notification.custom_attributes()) {
+    (*result.mutable_custom_attributes())[kv.first] = kv.second;
+  }
+
+  return result;
+}
+
+NotificationMetadata GrpcClient::FromProto(
+    google::storage::v1::Notification notification) {
+  NotificationMetadata result{notification.id(), notification.etag()};
+  result.set_topic(notification.topic())
+      .set_object_name_prefix(notification.object_name_prefix())
+      .set_payload_format(notification.payload_format());
+
+  for (auto& v : *notification.mutable_event_types()) {
+    result.append_event_type(std::move(v));
+  }
+  for (auto& kv : *notification.mutable_custom_attributes()) {
+    result.upsert_custom_attributes(std::move(kv.first), std::move(kv.second));
+  }
+
+  return result;
+}
+
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
-    ListNotificationsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    ListNotificationsRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::ListNotificationsResponse response;
+  auto status = stub_->ListNotifications(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  ListNotificationsResponse res;
+  for (auto& item : *response.mutable_items()) {
+    res.items.emplace_back(FromProto(std::move(item)));
+  }
+
+  return res;
 }
 
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
-    CreateNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    CreateNotificationRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::Notification response;
+  auto status = stub_->InsertNotification(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(
-    GetNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetNotificationRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::storage::v1::Notification response;
+  auto status = stub_->GetNotification(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
-    DeleteNotificationRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    DeleteNotificationRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::protobuf::Empty response;
+  auto status = stub_->DeleteNotification(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return EmptyResponse{};
 }
 
 template <typename GrpcRequest, typename StorageRequest>
@@ -1556,6 +1621,41 @@ GrpcClient::ToProto(DeleteDefaultObjectAclRequest const& request) {
   google::storage::v1::DeleteDefaultObjectAccessControlRequest r;
   r.set_bucket(request.bucket_name());
   r.set_entity(request.entity());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::InsertNotificationRequest GrpcClient::ToProto(
+    CreateNotificationRequest const& request) {
+  google::storage::v1::InsertNotificationRequest r;
+  r.set_bucket(request.bucket_name());
+  *r.mutable_notification() = ToProto(request.metadata());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::ListNotificationsRequest GrpcClient::ToProto(
+    ListNotificationsRequest const& request) {
+  google::storage::v1::ListNotificationsRequest r;
+  r.set_bucket(request.bucket_name());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::GetNotificationRequest GrpcClient::ToProto(
+    GetNotificationRequest const& request) {
+  google::storage::v1::GetNotificationRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_notification(request.notification_id());
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::DeleteNotificationRequest GrpcClient::ToProto(
+    DeleteNotificationRequest const& request) {
+  google::storage::v1::DeleteNotificationRequest r;
+  r.set_bucket(request.bucket_name());
+  r.set_notification(request.notification_id());
   SetCommonParameters(r, request);
   return r;
 }

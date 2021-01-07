@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -377,6 +378,70 @@ TEST(GrpcClientToProto, ObjectAccessControlMinimalFields) {
                                                             &expected));
 
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientToProto, NotificationMetadata) {
+  NotificationMetadata notification{"test-notification-id", "XYZ="};
+  notification.set_topic("test-topic")
+      .append_event_type("OBJECT_FINALIZE")
+      .append_event_type("OBJECT_METADATA_UPDATE")
+      .upsert_custom_attributes("test-ca-1", "value1")
+      .upsert_custom_attributes("test-ca-2", "value2")
+      .set_object_name_prefix("test-object-prefix-")
+      .set_payload_format("JSON_API_V1");
+  auto actual = GrpcClient::ToProto(notification);
+
+  google::storage::v1::Notification expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+     topic: "test-topic"
+     event_types: "OBJECT_FINALIZE"
+     event_types: "OBJECT_METADATA_UPDATE"
+     custom_attributes: { key: "test-ca-1" value: "value1" }
+     custom_attributes: { key: "test-ca-2" value: "value2" }
+     etag: "XYZ="
+     object_name_prefix: "test-object-prefix-"
+     payload_format: "JSON_API_V1"
+     id: "test-notification-id"
+     )""",
+                                                            &expected));
+
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientFromProto, NotificationMetadata) {
+  auto constexpr kText = R"pb(
+    topic: "test-topic"
+    event_types: "OBJECT_FINALIZE"
+    event_types: "OBJECT_METADATA_UPDATE"
+    custom_attributes: { key: "test-ca-1" value: "value1" }
+    custom_attributes: { key: "test-ca-2" value: "value2" }
+    etag: "XYZ="
+    object_name_prefix: "test-object-prefix-"
+    payload_format: "JSON_API_V1"
+    id: "test-notification-id"
+  )pb";
+  google::storage::v1::Notification start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected = NotificationMetadataParser::FromString(R"""({
+    "topic": "test-topic",
+    "event_types": [
+      "OBJECT_FINALIZE",
+      "OBJECT_METADATA_UPDATE"
+    ],
+    "custom_attributes": {
+      "test-ca-1": "value1",
+      "test-ca-2": "value2"
+    },
+    "etag": "XYZ=",
+    "object_name_prefix": "test-object-prefix-",
+    "payload_format": "JSON_API_V1",
+    "id": "test-notification-id"
+  })""")
+                            .value();
+  auto const middle = GrpcClient::FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = GrpcClient::ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 }  // namespace

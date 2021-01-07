@@ -155,6 +155,10 @@ class GrpcClient : public RawClient,
   StatusOr<HmacKeyMetadata> UpdateHmacKey(UpdateHmacKeyRequest const&) override;
   StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) override;
 
+  static google::storage::v1::Notification ToProto(
+      NotificationMetadata const& notification);
+  static NotificationMetadata FromProto(
+      google::storage::v1::Notification notification);
   StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) override;
   StatusOr<NotificationMetadata> CreateNotification(
@@ -272,6 +276,15 @@ class GrpcClient : public RawClient,
       UpdateDefaultObjectAclRequest const& request);
   static google::storage::v1::DeleteDefaultObjectAccessControlRequest ToProto(
       DeleteDefaultObjectAclRequest const& request);
+
+  static google::storage::v1::InsertNotificationRequest ToProto(
+      CreateNotificationRequest const& request);
+  static google::storage::v1::ListNotificationsRequest ToProto(
+      ListNotificationsRequest const& request);
+  static google::storage::v1::GetNotificationRequest ToProto(
+      GetNotificationRequest const& request);
+  static google::storage::v1::DeleteNotificationRequest ToProto(
+      DeleteNotificationRequest const& request);
 
   static google::storage::v1::InsertObjectRequest ToProto(
       InsertObjectMediaRequest const& request);

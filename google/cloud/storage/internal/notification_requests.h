@@ -60,17 +60,16 @@ class CreateNotificationRequest
     : public GenericRequest<CreateNotificationRequest, UserProject> {
  public:
   CreateNotificationRequest() = default;
-  CreateNotificationRequest(std::string bucket,
-                            NotificationMetadata const& notification)
-      : bucket_name_(std::move(bucket)),
-        json_payload_(notification.JsonPayloadForInsert()) {}
+  CreateNotificationRequest(std::string bucket, NotificationMetadata metadata)
+      : bucket_name_(std::move(bucket)), metadata_(std::move(metadata)) {}
 
   std::string const& bucket_name() const { return bucket_name_; }
-  std::string const& json_payload() const { return json_payload_; }
+  std::string json_payload() const { return metadata_.JsonPayloadForInsert(); }
+  NotificationMetadata const& metadata() const { return metadata_; }
 
  private:
   std::string bucket_name_;
-  std::string json_payload_;
+  NotificationMetadata metadata_;
 };
 
 std::ostream& operator<<(std::ostream& os, CreateNotificationRequest const& r);
