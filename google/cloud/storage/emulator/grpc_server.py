@@ -118,6 +118,32 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         bucket.delete_default_object_acl(request.entity, context)
         return Empty()
 
+    def InsertNotification(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.insert_notification(request, context)
+
+    def ListNotifications(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        result = resources_pb2.ListNotificationsResponse(
+            items=bucket.notifications.values()
+        )
+        return result
+
+    def GetNotification(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        notification_id = request.notification
+        return bucket.get_notification(notification_id, context)
+
+    def DeleteNotification(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        notification_id = request.notification
+        bucket.delete_notification(notification_id, context)
+        return Empty()
+
     # === OBJECT === #
 
     def InsertObject(self, request_iterator, context):

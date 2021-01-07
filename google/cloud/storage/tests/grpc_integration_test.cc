@@ -43,6 +43,7 @@ namespace {
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
+using ::testing::HasSubstr;
 using ::testing::Not;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
@@ -61,8 +62,15 @@ class GrpcIntegrationTest
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id_.empty()) << "GOOGLE_CLOUD_PROJECT is not set";
+
+    topic_name_ = google::cloud::internal::GetEnv(
+                      "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME")
+                      .value_or("");
+    ASSERT_FALSE(topic_name_.empty())
+        << "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME is not set";
   }
   std::string project_id() const { return project_id_; }
+  std::string topic_name() const { return topic_name_; }
 
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
@@ -71,6 +79,7 @@ class GrpcIntegrationTest
 
  private:
   std::string project_id_;
+  std::string topic_name_;
   testing_util::ScopedEnvironment grpc_config_;
 };
 
@@ -245,6 +254,53 @@ TEST_P(GrpcIntegrationTest, DefaultObjectAccessControlCRUD) {
   current_acl = client->ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(meta->default_acl()), Not(Contains(entity_name)));
+
+  status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_P(GrpcIntegrationTest, NotificationsCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(bucket_name, project_id(),
+                                             BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  auto notification_ids = [&client, bucket_name] {
+    std::vector<std::string> ids;
+    auto list = client->ListNotifications(bucket_name);
+    EXPECT_STATUS_OK(list);
+    for (auto const& notification : *list) ids.push_back(notification.id());
+    return ids;
+  };
+  ASSERT_TRUE(notification_ids().empty())
+      << "Test aborted. Non-empty notification list returned from newly"
+      << " created bucket <" << bucket_name
+      << ">. This is unexpected because the bucket name is chosen at random.";
+
+  auto create = client->CreateNotification(
+      bucket_name, topic_name(), payload_format::JsonApiV1(),
+      NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
+  ASSERT_STATUS_OK(create);
+
+  EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
+  EXPECT_THAT(create->topic(), HasSubstr(topic_name()));
+  EXPECT_THAT(notification_ids(), ContainsOnce(create->id()))
+      << "create=" << *create;
+
+  auto get = client->GetNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(get);
+  EXPECT_EQ(*create, *get);
+
+  auto status = client->DeleteNotification(bucket_name, create->id());
+  ASSERT_STATUS_OK(status);
+  EXPECT_THAT(notification_ids(), Not(Contains(create->id())))
+      << "create=" << *create;
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);

@@ -44,6 +44,9 @@ class NotificationMetadata {
  public:
   NotificationMetadata() = default;
 
+  explicit NotificationMetadata(std::string id, std::string etag)
+      : etag_(std::move(etag)), id_(std::move(id)) {}
+
   /**
    * Returns the payload for a call to `Notifications: insert`.
    */

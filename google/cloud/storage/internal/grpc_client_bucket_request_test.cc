@@ -630,6 +630,176 @@ TEST(GrpcClientBucketRequest, DeleteDefaultObjectAclRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, CreateNotificationRequestSimple) {
+  storage_proto::InsertNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification {
+      topic: "test-topic"
+      event_types: "OBJECT_FINALIZE"
+      event_types: "OBJECT_METADATA_UPDATE"
+      custom_attributes: { key: "test-ca-1" value: "value1" }
+      custom_attributes: { key: "test-ca-2" value: "value2" }
+      object_name_prefix: "test-object-prefix-"
+      payload_format: "JSON_API_V1"
+    }
+)""",
+                                                            &expected));
+
+  auto notification = NotificationMetadata()
+                          .set_topic("test-topic")
+                          .append_event_type("OBJECT_FINALIZE")
+                          .append_event_type("OBJECT_METADATA_UPDATE")
+                          .upsert_custom_attributes("test-ca-1", "value1")
+                          .upsert_custom_attributes("test-ca-2", "value2")
+                          .set_object_name_prefix("test-object-prefix-")
+                          .set_payload_format("JSON_API_V1");
+  CreateNotificationRequest request("test-bucket-name", notification);
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, CreateNotificationRequestAllFields) {
+  storage_proto::InsertNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification {
+      topic: "test-topic"
+      event_types: "OBJECT_FINALIZE"
+      event_types: "OBJECT_METADATA_UPDATE"
+      custom_attributes: { key: "test-ca-1" value: "value1" }
+      custom_attributes: { key: "test-ca-2" value: "value2" }
+      object_name_prefix: "test-object-prefix-"
+      payload_format: "JSON_API_V1"
+    }
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  auto notification = NotificationMetadata()
+                          .set_topic("test-topic")
+                          .append_event_type("OBJECT_FINALIZE")
+                          .append_event_type("OBJECT_METADATA_UPDATE")
+                          .upsert_custom_attributes("test-ca-1", "value1")
+                          .upsert_custom_attributes("test-ca-2", "value2")
+                          .set_object_name_prefix("test-object-prefix-")
+                          .set_payload_format("JSON_API_V1");
+  CreateNotificationRequest request("test-bucket-name", notification);
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, ListNotificationsRequestSimple) {
+  storage_proto::ListNotificationsRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+)""",
+                                                            &expected));
+
+  ListNotificationsRequest request("test-bucket-name");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, ListNotificationsRequestAllFields) {
+  storage_proto::ListNotificationsRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  ListNotificationsRequest request("test-bucket-name");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, GetNotificationRequestSimple) {
+  storage_proto::GetNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification: "test-notification-id"
+)""",
+                                                            &expected));
+
+  GetNotificationRequest request("test-bucket-name", "test-notification-id");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, GetNotificationRequestAllFields) {
+  storage_proto::GetNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification: "test-notification-id"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  GetNotificationRequest request("test-bucket-name", "test-notification-id");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, DeleteNotificationRequestSimple) {
+  storage_proto::DeleteNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification: "test-notification-id"
+)""",
+                                                            &expected));
+
+  DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, DeleteNotificationRequestAllFields) {
+  storage_proto::DeleteNotificationRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    bucket: "test-bucket-name"
+    notification: "test-notification-id"
+    common_request_params: {
+      quota_user: "test-quota-user"
+      user_project: "test-user-project"
+    }
+)""",
+                                                            &expected));
+
+  DeleteNotificationRequest request("test-bucket-name", "test-notification-id");
+  request.set_multiple_options(UserProject("test-user-project"),
+                               QuotaUser("test-quota-user"),
+                               UserIp("test-user-ip"));
+
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
