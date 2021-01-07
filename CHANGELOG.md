@@ -7,7 +7,40 @@
   This attribute represents the pre-GA name for "Uniform Bucket Level Access"
   becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-## v1.22.0 - TBD
+## v1.23.0 - TBD
+
+## v1.22.0 - 2021-01
+
+### Bigtable
+
+* feat(bigtable): enforce id limits in admin emulator (#5679)
+* feat(bigtable): create logging layer for Cloud Bigtable DataClient (#5654)
+* feat(bigtable): create logging layer for Cloud Bigtable InstanceAdminClient (#5653)
+* feat(bigtable): create logging layer for Cloud Bigtable (#5556)
+* feat: implement Bigtable connection refresh (#5550)
+* feat: Implement backup level IAM policy  (#5585)
+
+### Pub/Sub
+
+* feat(pubsub): add equality to Publisher (#5608)
+
+### Storage
+
+* fix(storage): incorrect CURL handle manipulation (#5651)
+* feat(storage): propagate custom header with resumable upload PUT requests (#5632)
+* fix: only build gRPC testing utilities if needed (#5594)
+
+### Spanner
+
+* cleanup: rename spanner::internal to spanner_internal (#5620)
+* fix: get the code to compile with MSVC 2017 (#5574)
+
+### Common Libraries
+
+* fix: only build gRPC testing utilities if needed (#5594)
+* feat: Implement backup level IAM policy  (#5585)
+* fix: get the code to compile with MSVC 2017 (#5574)
+* cleanup: remove custom C++ version variable (#5674)
 
 ## v1.21.0 - 2020-12
 
