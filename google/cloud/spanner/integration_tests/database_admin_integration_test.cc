@@ -20,6 +20,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,6 +30,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
@@ -115,12 +118,15 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
     *binding.add_members() = expected_member;
 
     auto updated_policy = client_.SetIamPolicy(database_, *current_policy);
-    ASSERT_STATUS_OK(updated_policy);
-    EXPECT_EQ(1, updated_policy->bindings_size());
-    ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());
-    ASSERT_EQ(1, updated_policy->bindings().Get(0).members().size());
-    ASSERT_EQ(expected_member,
-              updated_policy->bindings().Get(0).members().Get(0));
+    ASSERT_THAT(updated_policy, AnyOf(StatusIs(StatusCode::kOk),
+                                      StatusIs(StatusCode::kAborted)));
+    if (updated_policy) {
+      EXPECT_EQ(1, updated_policy->bindings_size());
+      ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());
+      ASSERT_EQ(1, updated_policy->bindings().Get(0).members().size());
+      ASSERT_EQ(expected_member,
+                updated_policy->bindings().Get(0).members().Get(0));
+    }
 
     // Perform a different update using the the OCC loop API:
     updated_policy = client_.SetIamPolicy(
