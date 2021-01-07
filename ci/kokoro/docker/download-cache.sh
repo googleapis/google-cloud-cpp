@@ -33,7 +33,7 @@ readonly HOME_DIR="$3"
 
 mkdir -p "${HOME_DIR}/.cache"
 mkdir -p "${HOME_DIR}/.ccache"
-echo "max_size = 4.0G" >"${HOME_DIR}/.ccache/ccache.conf"
+echo "max_size = 5.0G" >"${HOME_DIR}/.ccache/ccache.conf"
 
 if ! cache_download_enabled; then
   exit 0
