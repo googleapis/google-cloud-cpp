@@ -928,9 +928,8 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
 
   auto cancel = wait_and_check_name("Cancel");
   read.set_value(false);
-  wait_and_check_name("Finish").set_value(true);
-
   shutdown->MarkAsShutdown("test", Status{});
+  wait_and_check_name("Finish").set_value(true);
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
 }
 
