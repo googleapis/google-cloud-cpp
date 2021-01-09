@@ -66,6 +66,11 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
     google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the method contains a routing header as specified in AIP-4222.
+ */
+bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
+
+/**
  * If method meets pagination criteria, provides paginated field type and field
  * name.
  *

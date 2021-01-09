@@ -43,7 +43,7 @@ StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  SetMetadata(context, {});
   return child_->GenerateIdToken(context, request);
 }
 

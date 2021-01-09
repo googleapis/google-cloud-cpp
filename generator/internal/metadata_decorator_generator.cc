@@ -155,9 +155,11 @@ Status MetadataDecoratorGenerator::GenerateCc() {
     "StatusOr<$response_type$>\n"},
    {"$metadata_class_name$::$method_name$(\n"
     "    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) {\n"
-    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n"
-    "  return child_->$method_name$(context, request);\n"
+    "    $request_type$ const& request) {\n"},
+   {HasRoutingHeader,
+    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
+    "  SetMetadata(context, {});\n"},
+   {"  return child_->$method_name$(context, request);\n"
     "}\n"
     "\n",}
                 // clang-format on
