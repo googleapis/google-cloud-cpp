@@ -121,19 +121,6 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     if (config.count("uniformBucketLevelAccess") != 0) {
       c.uniform_bucket_level_access =
           ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
-      c.bucket_policy_only =
-          ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
-    }
-    // Applications written before UBLA was introduced may have set only BPO,
-    // only in this case we use the BPO value.  Applications that set UBLA are
-    // assumed to prefer UBLA values, and would rarely have a reason to set
-    // both.
-    if (config.count("uniformBucketLevelAccess") == 0 &&
-        config.count("bucketPolicyOnly") != 0) {
-      c.uniform_bucket_level_access =
-          ParseUniformBucketLevelAccess(config["bucketPolicyOnly"]);
-      c.bucket_policy_only =
-          ParseUniformBucketLevelAccess(config["bucketPolicyOnly"]);
     }
     result.iam_configuration_ = c;
   }
@@ -270,36 +257,13 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
-
-      // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
-      // Only (BPO). UBLA is preferred and recommended over BPO but currently
-      // both fields are supported. At the moment both fields being set is
-      // required but this is a workaround and will be fixed when the feature
-      // GA's in GCS.
-      nlohmann::json bpo;
-      bpo["enabled"] =
-          meta.iam_configuration().uniform_bucket_level_access->enabled;
-      // The lockedTime field is not mutable and should not be set by the client
-      // the server will provide a value.
-      c["bucketPolicyOnly"] = std::move(bpo);
     }
-    // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
-    // Only (BPO). UBLA is preferred and recommended over BPO. The UBLA field
-    // must be populated for bucket metadata JSON object including legacy
-    // applications having  only `bucketPolicyOnly`(legacy). This will ensure
-    // continual support for legacy applications.
-    if (!meta.iam_configuration().uniform_bucket_level_access.has_value() &&
-        meta.iam_configuration().bucket_policy_only.has_value()) {
+    if (!meta.iam_configuration().uniform_bucket_level_access.has_value()) {
       nlohmann::json ubla;
       ubla["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
       // The lockedTime field is not mutable and should not be set by the client
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
-      nlohmann::json bpo;
-      bpo["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
-      // The lockedTime field is not mutable and should not be set by the client
-      // the server will provide a value.
-      c["bucketPolicyOnly"] = std::move(bpo);
     }
     metadata_as_json["iamConfiguration"] = std::move(c);
   }

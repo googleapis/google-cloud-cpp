@@ -75,13 +75,7 @@ class Bucket:
     def __preprocess_rest(cls, data):
         proxy = scalpl.Cut(data)
         keys = utils.common.nested_key(data)
-        if "iamConfiguration.uniformBucketLevelAccess.enabled" not in proxy:
-            if "iamConfiguration.bucketPolicyOnly" in proxy:
-                proxy["iamConfiguration.uniformBucketLevelAccess.enabled"] = proxy[
-                    "iamConfiguration.bucketPolicyOnly"
-                ]
-        else:
-            proxy.pop("iamConfiguration.bucketPolicyOnly", False)
+        proxy.pop("iamConfiguration.bucketPolicyOnly", False)
         for key in keys:
             if key.endswith("createdBefore"):
                 proxy[key] = proxy[key] + "T00:00:00Z"
