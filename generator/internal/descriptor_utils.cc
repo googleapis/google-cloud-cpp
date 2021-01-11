@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -214,17 +215,8 @@ void SetResourceRoutingMethodVars(
     std::string param = result->param_key;
     method_vars["method_request_param_key"] = param;
     std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
-    if (chunks.size() > 1) {
-      std::string value;
-      unsigned int i = 0;
-      for (; i < chunks.size() - 1; ++i) {
-        value += chunks[i] + "().";
-      }
-      value += chunks[i] + "()";
-      method_vars["method_request_param_value"] = value;
-    } else {
-      method_vars["method_request_param_value"] = param + "()";
-    }
+    method_vars["method_request_param_value"] =
+        absl::StrJoin(chunks, "().") + "()";
     method_vars["method_request_body"] = result->body;
   }
 }
@@ -234,6 +226,7 @@ std::string DefaultIdempotencyFromHttpOperation(
   if (!method.options().HasExtension(google::api::http)) {
     GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                    << ": google::api::http extension not found" << std::endl;
+    std::exit(1);
   }
 
   google::api::HttpRule http_rule =
@@ -276,7 +269,7 @@ std::string FormatClassCommentsFromServiceComments(
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
                  << " no leading_comments to format.\n";
-  return {};
+  std::exit(1);
 }
 
 std::string FormatApiMethodSignatureParameters(
@@ -363,10 +356,8 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
 
   static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
   std::smatch match;
-  std::regex_match(url_pattern, match, kUrlPatternRegex);
-  if (match.size() == 3)
-    return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
-  return {};
+  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) return {};
+  return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
 }
 
 std::string FormatMethodCommentsFromRpcComments(
@@ -400,7 +391,7 @@ std::string FormatMethodCommentsFromRpcComments(
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                  << " no leading_comments to format.\n";
-  return {};
+  std::exit(1);
 }
 
 VarsDictionary CreateServiceVars(

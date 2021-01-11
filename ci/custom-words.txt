@@ -10,6 +10,9 @@ CRTP
 CSEK
 DDTHH
 deserializes
+factivity
+fluentd
+frobber
 gbps
 gcloud
 GCPCXX
