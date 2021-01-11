@@ -751,6 +751,92 @@ TEST(PredicateUtilsTest, HasPaginatedMethodFalse) {
   EXPECT_FALSE(HasPaginatedMethod(*service_file_descriptor->service(0)));
 }
 
+TEST(PredicateUtilsTest, HasRoutingHeaderSuccess) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+        options {
+          [google.api.http] {
+            patch: "/v1/{parent=projects/*/instances/*}/databases"
+          }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(
+      HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, HasRoutingHeaderWrongUrlFormat) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+        options {
+          [google.api.http] { post: "/v2/entries:list" body: "*" }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(
+      HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, HasRoutingHeaderAnnotationMissing) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_FALSE(
+      HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
+}
+
 TEST(PredicateUtilsTest, PredicatedFragmentTrueString) {
   int const unused = 0;
   PredicatedFragment<int> f = {PredicateTrue, "True", "False"};

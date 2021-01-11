@@ -37,34 +37,144 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-class CreateServiceVarsTest
-    : public testing::TestWithParam<std::pair<std::string, std::string>> {
- protected:
-  static void SetUpTestSuite() {
-    FileDescriptorProto proto_file;
-    auto constexpr kText = R"pb(
-      name: "google/cloud/frobber/v1/frobber.proto"
-      package: "google.cloud.frobber.v1"
-      service { name: "FrobberService" }
-    )pb";
-    ASSERT_TRUE(
-        google::protobuf::TextFormat::ParseFromString(kText, &proto_file));
+class StringSourceTree : public google::protobuf::compiler::SourceTree {
+ public:
+  explicit StringSourceTree(std::map<std::string, std::string> files)
+      : files_(std::move(files)) {}
 
-    DescriptorPool pool;
-    const FileDescriptor* file_descriptor = pool.BuildFile(proto_file);
-    vars_ = CreateServiceVars(
-        *file_descriptor->service(0),
-        {std::make_pair("product_path", "google/cloud/frobber/")});
+  google::protobuf::io::ZeroCopyInputStream* Open(
+      const std::string& filename) override {
+    auto iter = files_.find(filename);
+    return iter == files_.end() ? nullptr
+                                : new google::protobuf::io::ArrayInputStream(
+                                      iter->second.data(),
+                                      static_cast<int>(iter->second.size()));
   }
 
-  static VarsDictionary vars_;
+ private:
+  std::map<std::string, std::string> files_;
 };
 
-VarsDictionary CreateServiceVarsTest::vars_;
+class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
+ public:
+  AbortingErrorCollector() = default;
+  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
+  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
+
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
+    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
+  }
+};
+
+const char* const kHttpProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "option cc_enable_arenas = true;\n"
+    "message Http {\n"
+    "  repeated HttpRule rules = 1;\n"
+    "  bool fully_decode_reserved_expansion = 2;\n"
+    "}\n"
+    "message HttpRule {\n"
+    "  string selector = 1;\n"
+    "  oneof pattern {\n"
+    "    string get = 2;\n"
+    "    string put = 3;\n"
+    "    string post = 4;\n"
+    "    string delete = 5;\n"
+    "    string patch = 6;\n"
+    "    CustomHttpPattern custom = 8;\n"
+    "  }\n"
+    "  string body = 7;\n"
+    "  string response_body = 12;\n"
+    "  repeated HttpRule additional_bindings = 11;\n"
+    "}\n"
+    "message CustomHttpPattern {\n"
+    "  string kind = 1;\n"
+    "  string path = 2;\n"
+    "}\n";
+
+const char* const kAnnotationsProto =
+    "syntax = \"proto3\";\n"
+    "package google.api;\n"
+    "import \"google/api/http.proto\";\n"
+    "import \"google/protobuf/descriptor.proto\";\n"
+    "extend google.protobuf.MethodOptions {\n"
+    "  // See `HttpRule`.\n"
+    "  HttpRule http = 72295728;\n"
+    "}\n";
+
+const char* const kFrobberServiceProto =
+    "syntax = \"proto3\";\n"
+    "package google.cloud.frobber.v1;\n"
+    "import \"google/api/annotations.proto\";\n"
+    "import \"google/api/http.proto\";\n"
+    "// Leading comments about message Bar.\n"
+    "message Bar {\n"
+    "  int32 number = 1;\n"
+    "}\n"
+    "// Leading comments about message Empty.\n"
+    "message Empty {}\n"
+    "// Leading comments about service FrobberService.\n"
+    "service FrobberService {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Bar) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       delete: \"/v1/{name=projects/*/instances/*/backups/*}\"\n"
+    "    };\n"
+    "  }\n"
+    "}\n";
+
+class CreateServiceVarsTest
+    : public testing::TestWithParam<std::pair<std::string, std::string>> {
+ public:
+  CreateServiceVarsTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/api/http.proto"), kHttpProto},
+            {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/cloud/frobber/v1/frobber.proto"),
+             kFrobberServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+    service_vars_ = {{"googleapis_commit_hash", "foo"}};
+  }
+
+ private:
+  FileDescriptorProto file_proto_;
+  AbortingErrorCollector collector_;
+  StringSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
+ protected:
+  DescriptorPool pool_;
+  VarsDictionary service_vars_;
+};
+
+TEST_F(CreateServiceVarsTest, FilesParseSuccessfully) {
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/http.proto"));
+  EXPECT_NE(nullptr, pool_.FindFileByName("google/api/annotations.proto"));
+  EXPECT_NE(nullptr,
+            pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto"));
+}
 
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
-  auto iter = vars_.find(GetParam().first);
-  EXPECT_TRUE(iter != vars_.end());
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/")});
+  auto iter = service_vars_.find(GetParam().first);
+  EXPECT_TRUE(iter != service_vars_.end());
   EXPECT_EQ(iter->second, GetParam().second);
 }
 
@@ -149,43 +259,6 @@ INSTANTIATE_TEST_SUITE_P(
     [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
       return std::get<0>(info.param);
     });
-
-const char* const kHttpProto =
-    "syntax = \"proto3\";\n"
-    "package google.api;\n"
-    "option cc_enable_arenas = true;\n"
-    "message Http {\n"
-    "  repeated HttpRule rules = 1;\n"
-    "  bool fully_decode_reserved_expansion = 2;\n"
-    "}\n"
-    "message HttpRule {\n"
-    "  string selector = 1;\n"
-    "  oneof pattern {\n"
-    "    string get = 2;\n"
-    "    string put = 3;\n"
-    "    string post = 4;\n"
-    "    string delete = 5;\n"
-    "    string patch = 6;\n"
-    "    CustomHttpPattern custom = 8;\n"
-    "  }\n"
-    "  string body = 7;\n"
-    "  string response_body = 12;\n"
-    "  repeated HttpRule additional_bindings = 11;\n"
-    "}\n"
-    "message CustomHttpPattern {\n"
-    "  string kind = 1;\n"
-    "  string path = 2;\n"
-    "}\n";
-
-const char* const kAnnotationsProto =
-    "syntax = \"proto3\";\n"
-    "package google.api;\n"
-    "import \"google/api/http.proto\";\n"
-    "import \"google/protobuf/descriptor.proto\";\n"
-    "extend google.protobuf.MethodOptions {\n"
-    "  // See `HttpRule`.\n"
-    "  HttpRule http = 72295728;\n"
-    "}\n";
 
 const char* const kClientProto =
     "syntax = \"proto3\";\n"
@@ -337,38 +410,6 @@ const char* const kServiceProto =
     "    };\n"
     "  }\n"
     "}\n";
-
-class StringSourceTree : public google::protobuf::compiler::SourceTree {
- public:
-  explicit StringSourceTree(std::map<std::string, std::string> files)
-      : files_(std::move(files)) {}
-
-  google::protobuf::io::ZeroCopyInputStream* Open(
-      const std::string& filename) override {
-    return files_.count(filename) == 1
-               ? new google::protobuf::io::ArrayInputStream(
-                     files_[filename].data(),
-                     static_cast<int>(files_[filename].size()))
-               : nullptr;
-  }
-
- private:
-  std::map<std::string, std::string> files_;
-};
-
-class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
- public:
-  AbortingErrorCollector() = default;
-  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
-  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
-
-  void AddError(const std::string& filename, const std::string& element_name,
-                const google::protobuf::Message*, ErrorLocation,
-                const std::string& error_message) override {
-    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
-  }
-};
 
 struct MethodVarsTestValues {
   MethodVarsTestValues(std::string m, std::string k, std::string v)

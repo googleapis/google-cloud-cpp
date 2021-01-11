@@ -15,6 +15,7 @@
 #include "generator/internal/predicate_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
+#include "generator/internal/descriptor_utils.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <string>
@@ -117,6 +118,11 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
     return operation_info.response_type() == "google.protobuf.Empty";
   }
   return false;
+}
+
+bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method) {
+  auto result = ParseResourceRoutingHeader(method);
+  return result.has_value();
 }
 
 }  // namespace generator_internal

@@ -752,7 +752,7 @@ service IAMCredentials {
   // Generates an OpenID Connect ID token for a service account.
   rpc GenerateIdToken(GenerateIdTokenRequest) returns (GenerateIdTokenResponse) {
     option (google.api.http) = {
-      post: "/v1/{name=projects/*/serviceAccounts/*}:generateIdToken"
+      post: "/v1/token:generate"
       body: "*"
     };
     option (google.api.method_signature) = "name,delegates,audience,include_email";

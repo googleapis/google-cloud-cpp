@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -207,53 +208,17 @@ void SetMethodSignatureMethodVars(
 void SetResourceRoutingMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
-  if (!method.options().HasExtension(google::api::http)) return;
-  google::api::HttpRule http_rule =
-      method.options().GetExtension(google::api::http);
-
-  std::string url_pattern;
-  switch (http_rule.pattern_case()) {
-    case google::api::HttpRule::kGet:
-      url_pattern = http_rule.get();
-      break;
-    case google::api::HttpRule::kPut:
-      url_pattern = http_rule.put();
-      break;
-    case google::api::HttpRule::kPost:
-      url_pattern = http_rule.post();
-      break;
-    case google::api::HttpRule::kDelete:
-      url_pattern = http_rule.delete_();
-      break;
-    case google::api::HttpRule::kPatch:
-      url_pattern = http_rule.patch();
-      break;
-    default:
-      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                     << ": google::api::HttpRule not handled" << std::endl;
-      std::exit(1);
+  auto result = ParseResourceRoutingHeader(method);
+  if (result.has_value()) {
+    method_vars["method_request_url_path"] = result->url_path;
+    method_vars["method_request_url_substitution"] = result->url_substituion;
+    std::string param = result->param_key;
+    method_vars["method_request_param_key"] = param;
+    std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
+    method_vars["method_request_param_value"] =
+        absl::StrJoin(chunks, "().") + "()";
+    method_vars["method_request_body"] = result->body;
   }
-
-  std::regex url_pattern_regex(R"(.*\{(.*)=(.*)\}.*)");
-  std::smatch match;
-  std::regex_match(url_pattern, match, url_pattern_regex);
-  method_vars["method_request_url_path"] = match[0];
-  method_vars["method_request_url_substitution"] = match[2];
-  std::string param = match[1];
-  method_vars["method_request_param_key"] = param;
-  std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
-  if (chunks.size() > 1) {
-    std::string value;
-    unsigned int i = 0;
-    for (; i < chunks.size() - 1; ++i) {
-      value += chunks[i] + "().";
-    }
-    value += chunks[i] + "()";
-    method_vars["method_request_param_value"] = value;
-  } else {
-    method_vars["method_request_param_value"] = param + "()";
-  }
-  method_vars["method_request_body"] = http_rule.body();
 }
 
 std::string DefaultIdempotencyFromHttpOperation(
@@ -261,6 +226,7 @@ std::string DefaultIdempotencyFromHttpOperation(
   if (!method.options().HasExtension(google::api::http)) {
     GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
                    << ": google::api::http extension not found" << std::endl;
+    std::exit(1);
   }
 
   google::api::HttpRule http_rule =
@@ -303,7 +269,7 @@ std::string FormatClassCommentsFromServiceComments(
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
                  << " no leading_comments to format.\n";
-  return {};
+  std::exit(1);
 }
 
 std::string FormatApiMethodSignatureParameters(
@@ -359,6 +325,41 @@ std::string FormatProtobufRequestParameters(
 
 }  // namespace
 
+absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
+    google::protobuf::MethodDescriptor const& method) {
+  if (!method.options().HasExtension(google::api::http)) return {};
+  google::api::HttpRule http_rule =
+      method.options().GetExtension(google::api::http);
+
+  std::string url_pattern;
+  switch (http_rule.pattern_case()) {
+    case google::api::HttpRule::kGet:
+      url_pattern = http_rule.get();
+      break;
+    case google::api::HttpRule::kPut:
+      url_pattern = http_rule.put();
+      break;
+    case google::api::HttpRule::kPost:
+      url_pattern = http_rule.post();
+      break;
+    case google::api::HttpRule::kDelete:
+      url_pattern = http_rule.delete_();
+      break;
+    case google::api::HttpRule::kPatch:
+      url_pattern = http_rule.patch();
+      break;
+    default:
+      GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
+                     << ": google::api::HttpRule not handled" << std::endl;
+      std::exit(1);
+  }
+
+  static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
+  std::smatch match;
+  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) return {};
+  return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
+}
+
 std::string FormatMethodCommentsFromRpcComments(
     google::protobuf::MethodDescriptor const& method,
     MethodParameterStyle parameter_style) {
@@ -390,7 +391,7 @@ std::string FormatMethodCommentsFromRpcComments(
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
                  << " no leading_comments to format.\n";
-  return {};
+  std::exit(1);
 }
 
 VarsDictionary CreateServiceVars(

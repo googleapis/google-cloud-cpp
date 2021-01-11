@@ -79,6 +79,19 @@ std::string FormatMethodCommentsFromRpcComments(
     google::protobuf::MethodDescriptor const& method,
     MethodParameterStyle parameter_style);
 
+struct ResourceRoutingInfo {
+  std::string url_path;
+  std::string param_key;
+  std::string url_substituion;
+  std::string body;
+};
+/**
+ * Parses the resource routing info, if present, for the provided method
+ * per AIP-4222.
+ */
+absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
+    google::protobuf::MethodDescriptor const& method);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

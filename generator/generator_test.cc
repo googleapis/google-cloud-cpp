@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "generator/generator.h"
+#include "google/cloud/log.h"
 #include "absl/memory/memory.h"
+#include "generator/internal/printer.h"
 #include "generator/testing/printer_mocks.h"
+#include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -31,11 +34,75 @@ using ::google::protobuf::FileDescriptorProto;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
+class StringSourceTree : public google::protobuf::compiler::SourceTree {
+ public:
+  explicit StringSourceTree(std::map<std::string, std::string> files)
+      : files_(std::move(files)) {}
+
+  google::protobuf::io::ZeroCopyInputStream* Open(
+      const std::string& filename) override {
+    auto iter = files_.find(filename);
+    return iter == files_.end() ? nullptr
+                                : new google::protobuf::io::ArrayInputStream(
+                                      iter->second.data(),
+                                      static_cast<int>(iter->second.size()));
+  }
+
+ private:
+  std::map<std::string, std::string> files_;
+};
+
+class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
+ public:
+  AbortingErrorCollector() = default;
+  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
+  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
+
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
+    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
+  }
+};
+
+const char* const kSuccessServiceProto =
+    "syntax = \"proto3\";\n"
+    "package google.foo.v1;\n"
+    "// Leading comments about service SuccessService.\n"
+    "service SuccessService {\n"
+    "}\n";
+
 class GeneratorTest : public ::testing::Test {
+ public:
+  GeneratorTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/foo/v1/service.proto"),
+             kSuccessServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+  }
+
+ private:
+  FileDescriptorProto file_proto_;
+  AbortingErrorCollector collector_;
+  StringSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
  protected:
   void SetUp() override {
     context_ = absl::make_unique<generator_testing::MockGeneratorContext>();
   }
+
+  DescriptorPool pool_;
   std::unique_ptr<generator_testing::MockGeneratorContext> context_;
 };
 
@@ -82,12 +149,8 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
     output = absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
   }
 
-  DescriptorPool pool;
-  FileDescriptorProto service_file;
-  service_file.set_name("google/foo/v1/service.proto");
-  service_file.add_service()->set_name("SuccessService");
-  service_file.mutable_options()->set_cc_generic_services(false);
-  const FileDescriptor* service_file_descriptor = pool.BuildFile(service_file);
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
 
   for (auto& output : mock_outputs) {
     EXPECT_CALL(*output, Next).WillRepeatedly(Return(false));
