@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/830887bae22f690647a0fd8b5c9eccd8d6858d74.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/c8bfd324b41ad1f6f65fed124572f92fe116517b.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "2194daccb2263c9306fe690a72f0780e5087f63318618424e5ed9f5c6219210f")
+    "712b622bb93aa07051a81ac669f723c17d988568521f69104ee1627e5a4a2823")
 
 set(GOOGLEAPIS_CPP_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -118,6 +118,7 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/monitoring/v3/uptime.proto"
     "google/monitoring/v3/uptime_service.proto"
     "google/pubsub/v1/pubsub.proto"
+    "google/pubsub/v1/schema.proto"
     "google/spanner/admin/database/v1/backup.proto"
     "google/spanner/admin/database/v1/common.proto"
     "google/spanner/admin/database/v1/spanner_database_admin.proto"
@@ -588,7 +589,10 @@ target_link_libraries(
 google_cloud_cpp_grpcpp_library(
     googleapis_cpp_pubsub_protos
     "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/pubsub.proto"
-    PROTO_PATH_DIRECTORIES "${GOOGLEAPIS_CPP_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/schema.proto"
+    PROTO_PATH_DIRECTORIES
+    "${GOOGLEAPIS_CPP_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
 googleapis_cpp_set_version_and_alias(pubsub_protos)
 target_link_libraries(
     googleapis_cpp_pubsub_protos
