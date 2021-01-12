@@ -118,6 +118,7 @@ set(GOOGLEAPIS_CPP_PROTO_FILES
     "google/monitoring/v3/uptime.proto"
     "google/monitoring/v3/uptime_service.proto"
     "google/pubsub/v1/pubsub.proto"
+    "google/pubsub/v1/schema.proto"
     "google/spanner/admin/database/v1/backup.proto"
     "google/spanner/admin/database/v1/common.proto"
     "google/spanner/admin/database/v1/spanner_database_admin.proto"
@@ -588,7 +589,10 @@ target_link_libraries(
 google_cloud_cpp_grpcpp_library(
     googleapis_cpp_pubsub_protos
     "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/pubsub.proto"
-    PROTO_PATH_DIRECTORIES "${GOOGLEAPIS_CPP_SOURCE}" "${PROTO_INCLUDE_DIR}")
+    "${GOOGLEAPIS_CPP_SOURCE}/google/pubsub/v1/schema.proto"
+    PROTO_PATH_DIRECTORIES
+    "${GOOGLEAPIS_CPP_SOURCE}"
+    "${PROTO_INCLUDE_DIR}")
 googleapis_cpp_set_version_and_alias(pubsub_protos)
 target_link_libraries(
     googleapis_cpp_pubsub_protos
