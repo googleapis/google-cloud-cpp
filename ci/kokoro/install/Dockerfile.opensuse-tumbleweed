@@ -26,17 +26,6 @@ RUN zypper refresh && \
         git gzip libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
-# The version of Protobuf packaged with openSUSE/Tumbleweed is recent enough to
-# support the Google Cloud Platform proto files. However, the version of gRPC
-# packaged with opensuse/Tumbleweed incorrectly installs partial Abseil binary
-# artifacts, so we cannot use that package and must instead install Abseil and
-# gRPC from source.
-
-# ```bash
-RUN zypper refresh && \
-    zypper install -y protobuf-devel
-# ```
-
 # The following steps will install libraries and tools in `/usr/local`. By
 # default pkg-config does not search in these directories.
 
@@ -60,6 +49,26 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### Protobuf
+
+# We need to install a version of Protobuf that is recent enough to support the
+# Google Cloud Platform proto files:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
