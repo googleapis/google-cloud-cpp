@@ -39,13 +39,18 @@ public:
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const
            &request),
       (override));
-
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::GenerateIdTokenRequest const
            &request),
+      (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
+          WriteLogEntries,
+          (grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request),
       (override));
 };
 
@@ -104,6 +109,27 @@ TEST_F(MetadataDecoratorTest, GenerateIdToken) {
   auto status = stub.GenerateIdToken(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
+
+TEST_F(MetadataDecoratorTest, WriteLogEntries) {
+  EXPECT_CALL(*mock_, WriteLogEntries(_, _))
+      .WillOnce(
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::WriteLogEntriesRequest const
+                     &) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context,
+                "google.test.admin.database.v1.IAMCredentials.WriteLogEntries",
+                expected_api_client_header_));
+            return TransientError();
+          });
+
+  IAMCredentialsMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::WriteLogEntriesRequest request;
+  auto status = stub.WriteLogEntries(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 
 } // namespace
 } // namespace golden_internal

@@ -55,6 +55,19 @@ DefaultIAMCredentialsStub::GenerateIdToken(
     return response;
 }
 
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+DefaultIAMCredentialsStub::WriteLogEntries(
+  grpc::ClientContext& client_context,
+  ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+    ::google::test::admin::database::v1::WriteLogEntriesResponse response;
+    auto status =
+        grpc_stub_->WriteLogEntries(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 }  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

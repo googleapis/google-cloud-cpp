@@ -51,6 +51,12 @@ IAMCredentialsConnection::GenerateIdToken(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+IAMCredentialsConnection::WriteLogEntries(
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 namespace {
 std::unique_ptr<IAMCredentialsRetryPolicy> DefaultRetryPolicy() {
   return IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
@@ -107,6 +113,19 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
         [this](grpc::ClientContext& context,
             ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
           return stub_->GenerateIdToken(context, request);
+        },
+        request, __func__);
+}
+
+  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(
+      ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override {
+    return google::cloud::internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->WriteLogEntries(request),
+        [this](grpc::ClientContext& context,
+            ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+          return stub_->WriteLogEntries(context, request);
         },
         request, __func__);
 }

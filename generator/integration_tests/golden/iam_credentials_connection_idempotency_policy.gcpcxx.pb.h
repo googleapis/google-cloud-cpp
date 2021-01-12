@@ -42,6 +42,9 @@ class IAMCredentialsConnectionIdempotencyPolicy {
   virtual google::cloud::internal::Idempotency
   GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
+  virtual google::cloud::internal::Idempotency
+  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+
 };
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>

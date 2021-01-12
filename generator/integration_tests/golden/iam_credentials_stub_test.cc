@@ -79,6 +79,20 @@ public:
            &request,
        ::grpc::CompletionQueue *cq),
       (override));
+  MOCK_METHOD(
+      ::grpc::Status, WriteLogEntries,
+      (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::google::test::admin::database::v1::WriteLogEntriesResponse* response),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
+          AsyncWriteLogEntriesRaw,
+          (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
+          PrepareAsyncWriteLogEntriesRaw,
+          (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::grpc::CompletionQueue* cq),
+          (override));
 };
 
 class IAMCredentialsStubTest : public ::testing::Test {
@@ -123,6 +137,20 @@ TEST_F(IAMCredentialsStubTest, GenerateIdToken) {
   auto success = stub.GenerateIdToken(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GenerateIdToken(context, request);
+  EXPECT_EQ(failure.status(), TransientError());
+}
+
+TEST_F(IAMCredentialsStubTest, WriteLogEntries) {
+  grpc::Status status;
+  grpc::ClientContext context;
+  google::test::admin::database::v1::WriteLogEntriesRequest request;
+  EXPECT_CALL(*grpc_stub_, WriteLogEntries(&context, _, _))
+      .WillOnce(Return(status))
+      .WillOnce(Return(GrpcTransientError()));
+  DefaultIAMCredentialsStub stub(std::move(grpc_stub_));
+  auto success = stub.WriteLogEntries(context, request);
+  EXPECT_TRUE(success.ok());
+  auto failure = stub.WriteLogEntries(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 

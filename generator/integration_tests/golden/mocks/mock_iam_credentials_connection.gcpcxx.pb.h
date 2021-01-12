@@ -36,6 +36,10 @@ class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
   GenerateIdToken,
   (::google::test::admin::database::v1::GenerateIdTokenRequest const& request), (override));
 
+  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
+  WriteLogEntries,
+  (::google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
+
 };
 
 }  // namespace golden_mocks

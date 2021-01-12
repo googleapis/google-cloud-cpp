@@ -36,6 +36,12 @@ bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service);
 bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service);
 
 /**
+ * Determines if the service contains at least one rpc whose request or response
+ * contains a field of the proto map type.
+ */
+bool HasMessageWithMapField(google::protobuf::ServiceDescriptor const& service);
+
+/**
  * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233
