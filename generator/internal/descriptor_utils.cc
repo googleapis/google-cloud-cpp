@@ -168,7 +168,15 @@ void SetMethodSignatureMethodVars(
     for (unsigned int j = 0; j < parameters.size(); ++j) {
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameters[j]);
-      if (parameter_descriptor->is_repeated()) {
+      if (parameter_descriptor->is_map()) {
+        method_signature += absl::StrFormat(
+            "std::map<%s, %s>",
+            CppTypeToString(parameter_descriptor->message_type()->map_key()),
+            CppTypeToString(parameter_descriptor->message_type()->map_value()));
+        method_request_setters += absl::StrFormat(
+            "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
+            parameters[j], parameters[j], parameters[j]);
+      } else if (parameter_descriptor->is_repeated()) {
         method_signature += absl::StrFormat(
             "std::vector<%s>", CppTypeToString(parameter_descriptor));
         method_request_setters += absl::StrFormat(

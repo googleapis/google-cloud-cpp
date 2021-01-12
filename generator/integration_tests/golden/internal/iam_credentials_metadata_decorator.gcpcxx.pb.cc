@@ -47,6 +47,14 @@ IAMCredentialsMetadata::GenerateIdToken(
   return child_->GenerateIdToken(context, request);
 }
 
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+IAMCredentialsMetadata::WriteLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  SetMetadata(context, {});
+  return child_->WriteLogEntries(context, request);
+}
+
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

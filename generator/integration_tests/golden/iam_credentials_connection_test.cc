@@ -45,13 +45,18 @@ public:
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const
            &request),
       (override));
-
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::GenerateIdTokenRequest const
            &request),
+      (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
+          WriteLogEntries,
+          (grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request),
       (override));
 };
 
@@ -146,6 +151,45 @@ TEST(IAMCredentialsConnectionTest, GenerateIdTokenTooManyTransients) {
   auto response = conn->GenerateIdToken(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
+
+TEST(IAMCredentialsConnectionTest, WriteLogEntriesSuccess) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, WriteLogEntries)
+      .WillOnce([](grpc::ClientContext &,
+                   ::google::test::admin::database::v1::
+                       WriteLogEntriesRequest const &) {
+        ::google::test::admin::database::v1::WriteLogEntriesResponse
+            response;
+        return response;
+      });
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  auto response = conn->WriteLogEntries(request);
+  EXPECT_STATUS_OK(response);
+}
+
+TEST(IAMCredentialsConnectionTest, WriteLogEntriesPermanentError) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, WriteLogEntries)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  auto response = conn->WriteLogEntries(request);
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+// method is NonIdempotent, so one transient is too many
+TEST(IAMCredentialsConnectionTest, WriteLogEntriesTooManyTransients) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, WriteLogEntries)
+      .Times(AtLeast(1))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  auto response = conn->WriteLogEntries(request);
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
 
 
 } // namespace

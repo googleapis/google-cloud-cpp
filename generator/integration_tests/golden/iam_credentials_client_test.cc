@@ -32,6 +32,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::UnorderedElementsAreArray;
 
 TEST(IAMCredentialsClientTest, CopyMoveEquality) {
   auto conn1 = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
@@ -130,6 +131,39 @@ TEST(IAMCredentialsClientTest, GenerateIdToken) {
   response = client.GenerateIdToken(request);
   EXPECT_STATUS_OK(response);
 }
+
+TEST(IAMCredentialsClientTest, WriteLogEntries) {
+  auto mock = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
+  std::string expected_log_name = "projects/my_project/logs/my_log";
+  std::map<std::string, std::string> expected_labels = {
+      {"key1", "Tom"}, {"key2", "Dick"}, {"key3", "Harry"}};
+  EXPECT_CALL(*mock, WriteLogEntries)
+      .Times(2)
+      .WillRepeatedly(
+          [expected_log_name, expected_labels](
+              ::google::test::admin::database::v1::WriteLogEntriesRequest const
+                  &request) {
+            EXPECT_EQ(request.log_name(), expected_log_name);
+            std::map<std::string, std::string> labels = {
+                request.labels().begin(), request.labels().end()};
+            EXPECT_THAT(labels,
+                        testing::UnorderedElementsAreArray(expected_labels));
+            ::google::test::admin::database::v1::WriteLogEntriesResponse
+                response;
+            return response;
+          });
+  IAMCredentialsClient client(std::move(mock));
+  auto response =
+      client.WriteLogEntries(expected_log_name, expected_labels);
+  EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  request.set_log_name(expected_log_name);
+  *request.mutable_labels() = {expected_labels.begin(),
+                                  expected_labels.end()};
+  response = client.WriteLogEntries(request);
+  EXPECT_STATUS_OK(response);
+}
+
 
 } // namespace
 } // namespace golden

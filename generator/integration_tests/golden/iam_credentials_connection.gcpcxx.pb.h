@@ -61,6 +61,9 @@ class IAMCredentialsConnection {
   virtual StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request);
 
+  virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
+
 };
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
