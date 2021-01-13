@@ -109,14 +109,14 @@ std::string PickInstanceLocation(
   std::mt19937_64 generator(std::random_device{}());
   std::string ret{};
   // Exclude the regions where we keep most of our test instances.
-  std::vector<std::string> excluded{"us-central", "us-east"};
+  std::vector<std::string> excluded{"us-central1", "us-east1"};
   int i = 0;
   for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
     if (!instance_config) break;
     if (ret.empty()) ret = instance_config->name();
     auto const& name = instance_config->name();
-    // Skip non-regional configs, they are overkill for tests and too slow.
-    if (name.find("instanceConfigs/regional-") == std::string::npos) continue;
+    // Skip non-US configs, they are overkill for tests and too slow.
+    if (name.find("/regional-us-") == std::string::npos) continue;
     auto const has_excluded_substring = std::any_of(
         excluded.begin(), excluded.end(), [&name](std::string const& e) {
           return name.find(e) != std::string::npos;
