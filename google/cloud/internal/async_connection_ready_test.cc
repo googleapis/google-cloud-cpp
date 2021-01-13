@@ -16,6 +16,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <grpcpp/generic/async_generic_service.h>
 
 namespace google {
 namespace cloud {

@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPLETION_QUEUE_H
 
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/internal/async_read_stream_impl.h"
 #include "google/cloud/internal/async_rpc_details.h"
 #include "google/cloud/internal/completion_queue_impl.h"
@@ -246,12 +245,7 @@ class CompletionQueue {
    */
   future<Status> AsyncWaitConnectionReady(
       std::shared_ptr<grpc::Channel> channel,
-      std::chrono::system_clock::time_point deadline) {
-    auto op = std::make_shared<internal::AsyncConnectionReadyFuture>(
-        std::move(channel), deadline);
-    impl_->StartOperation(op, [&](void* tag) { op->Start(impl_->cq(), tag); });
-    return op->GetFuture();
-  }
+      std::chrono::system_clock::time_point deadline);
 
  private:
   friend std::shared_ptr<internal::CompletionQueueImpl>

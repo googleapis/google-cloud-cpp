@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/internal/default_completion_queue_impl.h"
 
 namespace google {
@@ -21,6 +22,14 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 CompletionQueue::CompletionQueue()
     : impl_(new internal::DefaultCompletionQueueImpl) {}
+
+future<Status> CompletionQueue::AsyncWaitConnectionReady(
+    std::shared_ptr<grpc::Channel> channel,
+    std::chrono::system_clock::time_point deadline) {
+  auto op = std::make_shared<internal::AsyncConnectionReadyFuture>(
+      impl_, std::move(channel), deadline);
+  return op->Start();
+}
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

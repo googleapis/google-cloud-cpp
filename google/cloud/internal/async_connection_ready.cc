@@ -20,43 +20,59 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 AsyncConnectionReadyFuture::AsyncConnectionReadyFuture(
+    std::shared_ptr<google::cloud::internal::CompletionQueueImpl> cq,
     std::shared_ptr<grpc::Channel> channel,
     std::chrono::system_clock::time_point deadline)
-    : channel_(std::move(channel)), deadline_(deadline) {}
+    : cq_(std::move(cq)), channel_(std::move(channel)), deadline_(deadline) {}
 
-void AsyncConnectionReadyFuture::Start(grpc::CompletionQueue& cq, void* tag) {
-  tag_ = tag;
-  cq_ = &cq;
-  HandleSingleStateChange();
+future<Status> AsyncConnectionReadyFuture::Start() {
+  RunIteration(channel_->GetState(true));
+  return promise_.get_future();
 }
 
-bool AsyncConnectionReadyFuture::Notify(bool ok) {
+void AsyncConnectionReadyFuture::Notify(bool ok) {
   if (!ok) {
     promise_.set_value(
         Status(StatusCode::kDeadlineExceeded,
                "Connection couldn't connect before requested deadline"));
-    return true;
+    return;
   }
-  return HandleSingleStateChange();
-}
-
-bool AsyncConnectionReadyFuture::HandleSingleStateChange() {
   auto state = channel_->GetState(true);
   if (state == GRPC_CHANNEL_READY) {
     promise_.set_value(Status{});
-    return true;
+    return;
   }
   if (state == GRPC_CHANNEL_SHUTDOWN) {
     promise_.set_value(
         Status(StatusCode::kCancelled,
                "Connection will never succeed because it's shut down."));
-    return true;
+    return;
   }
   // If connection was idle, GetState(true) triggered an attempt to connect.
   // Otherwise it is either in state CONNECTING or TRANSIENT_FAILURE, so let's
   // register for a state change.
-  channel_->NotifyOnStateChange(state, deadline_, cq_, tag_);
-  return false;
+  RunIteration(state);
+}
+
+void AsyncConnectionReadyFuture::RunIteration(ChannelStateType state) {
+  class OnStateChange : public AsyncGrpcOperation {
+   public:
+    explicit OnStateChange(std::shared_ptr<AsyncConnectionReadyFuture> s)
+        : self_(std::move(s)) {}
+    bool Notify(bool ok) override {
+      self_->Notify(ok);
+      return true;
+    }
+    void Cancel() override {}
+
+   private:
+    std::shared_ptr<AsyncConnectionReadyFuture> const self_;
+  };
+
+  auto op = std::make_shared<OnStateChange>(shared_from_this());
+  cq_->StartOperation(op, [this, state](void* tag) {
+    channel_->NotifyOnStateChange(state, deadline_, &cq_->cq(), tag);
+  });
 }
 
 }  // namespace internal
