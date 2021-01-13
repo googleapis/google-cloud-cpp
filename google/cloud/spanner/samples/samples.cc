@@ -34,7 +34,6 @@
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
 #include <iomanip>
-#include <regex>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -104,27 +103,45 @@ void CreateInstanceCommand(std::vector<std::string> const& argv) {
   CreateInstance(std::move(client), argv[0], argv[1], argv[2], instance_config);
 }
 
+std::string PickInstanceLocation(
+    google::cloud::spanner::InstanceAdminClient client,
+    std::string const& project_id) {
+  std::mt19937_64 generator(std::random_device{}());
+  std::string ret{};
+  // Exclude the regions where we keep most of our test instances.
+  std::vector<std::string> excluded{"us-central", "us-east"};
+  int i = 0;
+  for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
+    if (!instance_config) break;
+    if (ret.empty()) ret = instance_config->name();
+    auto const& name = instance_config->name();
+    // Skip non-regional configs, they are overkill for tests and too slow.
+    if (name.find("instanceConfigs/regional-") == std::string::npos) continue;
+    auto const has_excluded_substring = std::any_of(
+        excluded.begin(), excluded.end(), [&name](std::string const& e) {
+          return name.find(e) != std::string::npos;
+        });
+    if (has_excluded_substring) continue;
+    // Use a reservoir sampler of size k==1 to pick a valid entry at random.
+    auto const select =
+        std::uniform_int_distribution<int>(1, ++i)(generator) == 1;
+    if (select) ret = name;
+    // Log the names because this is useful in troubleshooting. This is just
+    // used in the AutoRun() function, so it should not pollute the output for
+    // users.
+    std::cout << __func__ << " " << select << " " << i << " " << ret << " "
+              << name << "\n";
+  }
+  return ret;
+}
+
 void PickLocationAndCreateInstance(
     google::cloud::spanner::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& display_name) {
   // Pick instance config that matches the regex, if there's no match, pick the
   // first one.
-  std::string instance_config = [client, project_id]() mutable {
-    std::string ret{};
-    std::regex filter = std::regex(".*us-west.*");
-    for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
-      if (!instance_config) break;
-      if (ret.empty()) {
-        // fallback to the first element.
-        ret = instance_config->name();
-      }
-      if (std::regex_match(instance_config->name(), filter)) {
-        return instance_config->name();
-      }
-    }
-    return ret;
-  }();
+  auto const instance_config = PickInstanceLocation(client, project_id);
   if (instance_config.empty()) {
     throw std::runtime_error("could not pick an instance config");
   }
@@ -3120,6 +3137,10 @@ void RunAll(bool emulator) {
           google::cloud::spanner_testing::TestRetryPolicy(),
           google::cloud::spanner_testing::TestBackoffPolicy(),
           google::cloud::spanner_testing::TestPollingPolicy()));
+
+  std::cout << "\nRunning PickInstanceLocation()" << std::endl;
+  PickInstanceLocation(instance_admin_client, project_id);
+  std::cout << "\n==============================" << std::endl;
 
   if (run_slow_instance_tests) {
     std::string crud_instance_id =
