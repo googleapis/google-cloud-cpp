@@ -56,9 +56,9 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+RUN wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
