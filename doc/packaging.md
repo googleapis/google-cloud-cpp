@@ -309,17 +309,6 @@ sudo zypper install --allow-downgrade -y c-ares-devel ccache cmake gcc gcc-c++ \
         git gzip libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
-The version of Protobuf packaged with openSUSE/Tumbleweed is recent enough to
-support the Google Cloud Platform proto files. However, the version of gRPC
-packaged with opensuse/Tumbleweed incorrectly installs partial Abseil binary
-artifacts, so we cannot use that package and must instead install Abseil and
-gRPC from source.
-
-```bash
-sudo zypper refresh && \
-sudo zypper install -y protobuf-devel
-```
-
 The following steps will install libraries and tools in `/usr/local`. By
 default pkg-config does not search in these directories.
 
@@ -343,6 +332,26 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+We need to install a version of Protobuf that is recent enough to support the
+Google Cloud Platform proto files:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -481,9 +490,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -630,9 +639,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -763,9 +772,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -896,9 +905,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1020,15 +1029,6 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         pkg-config tar wget zlib1g-dev
 ```
 
-Debian 10 includes versions of gRPC and Protobuf that support the
-Google Cloud Platform proto files. We simply install these pre-built versions:
-
-```bash
-sudo apt-get update && \
-sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
-    libprotoc-dev libc-ares-dev protobuf-compiler protobuf-compiler-grpc
-```
-
 #### Abseil
 
 We need a recent version of Abseil.
@@ -1045,6 +1045,51 @@ wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
       -DBUILD_SHARED_LIBS=yes \
       -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+We need to install a version of Protobuf that is recent enough to support the
+Google Cloud Platform proto files:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### gRPC
+
+To install gRPC we first need to configure pkg-config to find the version of
+Protobuf we just installed in `/usr/local`:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
+    tar -xf v1.29.1.tar.gz && \
+    cd grpc-1.29.1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1152,9 +1197,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1317,9 +1362,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1474,9 +1519,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
