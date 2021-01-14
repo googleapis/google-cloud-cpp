@@ -3140,7 +3140,6 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning PickInstanceLocation()" << std::endl;
   PickInstanceLocation(instance_admin_client, project_id);
-  std::cout << "\n==============================" << std::endl;
 
   if (run_slow_instance_tests) {
     std::string crud_instance_id =
