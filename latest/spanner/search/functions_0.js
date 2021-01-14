@@ -12,6 +12,6 @@ var searchData=
   ['all_854',['All',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1KeySet.html#ae415d5bfaadfc26dbd1c1b478f5fcf73',1,'google::cloud::spanner::v1::KeySet']]],
   ['analyzesql_855',['AnalyzeSql',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a97ac04a41e0ba9a677306e65b758fb1d',1,'google::cloud::spanner::v1::Client::AnalyzeSql()'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html#a3d9932d252481528d6c48dc6b52e4523',1,'google::cloud::spanner::v1::Connection::AnalyzeSql()']]],
   ['as_5fproto_856',['as_proto',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#ade596975acb9d535c00f9dd6b21908b5',1,'google::cloud::spanner::v1::Mutation::as_proto() &amp;&amp;'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Mutation.html#a043a955406dcd83e025efe48339b5716',1,'google::cloud::spanner::v1::Mutation::as_proto() const &amp;']]],
-  ['asyncwaitconnectionready_857',['AsyncWaitConnectionReady',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#a83932dd80ca9c98e7b77b12d2f8e3ce6',1,'google::cloud::v1::CompletionQueue']]],
+  ['asyncwaitconnectionready_857',['AsyncWaitConnectionReady',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html#acae9b625e67889cce78b4f8d685aca56',1,'google::cloud::v1::CompletionQueue']]],
   ['at_858',['at',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4',1,'google::cloud::v1::IamBindings']]]
 ];
