@@ -69,29 +69,14 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
     ldconfig
 # ```
 
-# #### gRPC
 
-# To install gRPC we first need to configure pkg-config to find the version of
-# Protobuf we just installed in `/usr/local`:
+# Debian 10 includes versions of gRPC that support the
+# Google Cloud Platform proto files. We simply install these pre-built versions:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
-    tar -xf v1.29.1.tar.gz && \
-    cd grpc-1.29.1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libgrpc++-dev \
+    libc-ares-dev protobuf-compiler-grpc
 # ```
 
 # #### crc32c
