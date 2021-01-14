@@ -188,12 +188,14 @@ cc_binary(
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
+| [protobuf][protobuf-gh] | 3.12.4 | C++ Microgenerator support |
 
 [gRPC-gh]: https://github.com/grpc/grpc
 [libcurl-gh]: https://github.com/curl/curl
 [crc32c-gh]: https://github.com/google/crc32c
 [OpenSSL-gh]: https://github.com/openssl/openssl
 [nlohmann-json-gh]: https://github.com/nlohmann/json
+[protobuf-gh]: https://github.com/protocolbuffers/protobuf
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
