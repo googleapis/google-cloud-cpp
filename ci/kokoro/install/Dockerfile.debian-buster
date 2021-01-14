@@ -24,7 +24,7 @@ ARG NCPU=4
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
+        libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
 
@@ -66,6 +66,21 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### c-ares
+
+# Recent versions of gRPC require c-ares >= 1.13, while Debian Stretch
+# distributes c-ares-1.12. Manually install a newer version:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
+    tar -xf cares-1_14_0.tar.gz && \
+    cd c-ares-cares-1_14_0 && \
+    ./buildconf && ./configure && make -j ${NCPU:-4} && \
+    make install && \
     ldconfig
 # ```
 
