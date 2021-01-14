@@ -86,11 +86,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.11.3",
+            strip_prefix = "protobuf-3.12.4",
             urls = [
-                "https://github.com/google/protobuf/archive/v3.11.3.tar.gz",
+                "https://github.com/google/protobuf/archive/v3.12.4.tar.gz",
             ],
-            sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
+            sha256 = "512e5a674bf31f8b7928a64d8adf73ee67b8fe88339ad29adaa3b84dbaa570d8",
         )
 
     # Load opencensus.

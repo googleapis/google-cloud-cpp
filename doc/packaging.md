@@ -167,12 +167,14 @@ cc_binary(
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
+| [protobuf][protobuf-gh] | 3.12.4 | C++ Microgenerator support |
 
 [gRPC-gh]: https://github.com/grpc/grpc
 [libcurl-gh]: https://github.com/curl/curl
 [crc32c-gh]: https://github.com/google/crc32c
 [OpenSSL-gh]: https://github.com/openssl/openssl
 [nlohmann-json-gh]: https://github.com/nlohmann/json
+[protobuf-gh]: https://github.com/protocolbuffers/protobuf
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -481,9 +483,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -630,9 +632,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -763,9 +765,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -896,9 +898,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1099,7 +1101,7 @@ We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
@@ -1152,9 +1154,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1317,9 +1319,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1474,9 +1476,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz && \
-    tar -xf v3.11.3.tar.gz && \
-    cd protobuf-3.11.3/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
+    tar -xf v3.12.4.tar.gz && \
+    cd protobuf-3.12.4/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
