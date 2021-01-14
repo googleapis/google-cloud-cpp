@@ -24,7 +24,7 @@ ARG NCPU=4
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake git gcc g++ \
-        libcurl4-openssl-dev libssl-dev m4 make \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
 
@@ -49,64 +49,13 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
     ldconfig
 # ```
 
-# #### Protobuf
-
-# We need to install a version of Protobuf that is recent enough to support the
-# Google Cloud Platform proto files:
+# Debian 10 includes versions of gRPC and Protobuf that support the
+# Google Cloud Platform proto files. We simply install these pre-built versions:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=yes \
-        -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### c-ares
-
-# Recent versions of gRPC require c-ares >= 1.13, while Debian Stretch
-# distributes c-ares-1.12. Manually install a newer version:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-    make install && \
-    ldconfig
-# ```
-
-# #### gRPC
-
-# To install gRPC we first need to configure pkg-config to find the version of
-# Protobuf we just installed in `/usr/local`:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.16.1.tar.gz && \
-    tar -xf v1.16.1.tar.gz && \
-    cd grpc-1.16.1 && \
-    cmake \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DgRPC_INSTALL=ON \
-        -DgRPC_BUILD_TESTS=OFF \
-        -DgRPC_ABSL_PROVIDER=package \
-        -DgRPC_CARES_PROVIDER=package \
-        -DgRPC_PROTOBUF_PROVIDER=package \
-        -DgRPC_SSL_PROVIDER=package \
-        -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
+    libprotoc-dev libc-ares-dev protobuf-compiler protobuf-compiler-grpc
 # ```
 
 # #### crc32c
@@ -176,7 +125,7 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
-RUN cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
+RUN cmake -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```
