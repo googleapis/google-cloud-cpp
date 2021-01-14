@@ -93,17 +93,6 @@ def google_cloud_cpp_deps():
             sha256 = "512e5a674bf31f8b7928a64d8adf73ee67b8fe88339ad29adaa3b84dbaa570d8",
         )
 
-    # Load opencensus.
-    if "io_opencensus_cpp" not in native.existing_rules():
-        http_archive(
-            name = "io_opencensus_cpp",
-            urls = [
-                "https://github.com/census-instrumentation/opencensus-cpp/archive/c900c4d723ef596f357b0e695e68e2fa725eec90.tar.gz",
-            ],
-            strip_prefix = "opencensus-cpp-c900c4d723ef596f357b0e695e68e2fa725eec90",
-            sha256 = "040753b92d0ea57e2e9ffe7fc51f4c954cfb352204dc967c04ae6100842d6f45",
-        )
-
     # Load gRPC and its dependencies, using a similar pattern to this function.
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
