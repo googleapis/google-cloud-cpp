@@ -9,6 +9,13 @@
 
 ## v1.23.0 - TBD
 
+### Bigtable
+
+* Removed [OpenCensus](https://opencensus.io) example. OpenCensus has merged
+  with OpenTracing into [OpenTelemetry](https://opentelemetry.io). The C++
+  development seems to have stalled, and we not longer believe it will ever
+  be mature enough to recommend for the `google-cloud-cpp` libraries.
+
 ## v1.22.0 - 2021-01
 
 ### Bigtable

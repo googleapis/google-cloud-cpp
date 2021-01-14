@@ -149,7 +149,6 @@ if [[ "${CLANG_TIDY:-}" == "yes" && (\
     local -r file_regex="$1"
     shift
     grep -E "${file_regex}" <<<"${MODIFIED}" |
-      grep -v google/cloud/bigtable/examples/opencensus |
       grep -v generator/integration_tests/golden |
       xargs --verbose -d '\n' -r -n 1 -P "${NCPU}" clang-tidy \
         -p="${BINARY_DIR}" "$@"
