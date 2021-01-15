@@ -40,6 +40,10 @@ class IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
+  virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+
 };
 
 class DefaultIAMCredentialsStub : public IAMCredentialsStub {
@@ -57,6 +61,11 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
   GenerateIdToken(
     grpc::ClientContext& client_context,
     ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+
+  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(
+    grpc::ClientContext& client_context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<::google::test::admin::database::v1::IAMCredentials::StubInterface> grpc_stub_;

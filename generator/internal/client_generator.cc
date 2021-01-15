@@ -52,7 +52,7 @@ Status ClientGenerator::GenerateHeader() {
                        "google/cloud/status_or.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory"});
+       HasMessageWithMapField() ? "map" : "", "memory"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces();

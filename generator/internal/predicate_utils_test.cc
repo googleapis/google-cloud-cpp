@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "generator/internal/predicate_utils.h"
+#include "google/cloud/log.h"
+#include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
+#include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -749,6 +752,112 @@ TEST(PredicateUtilsTest, HasPaginatedMethodFalse) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(HasPaginatedMethod(*service_file_descriptor->service(0)));
+}
+
+class StringSourceTree : public google::protobuf::compiler::SourceTree {
+ public:
+  explicit StringSourceTree(std::map<std::string, std::string> files)
+      : files_(std::move(files)) {}
+
+  google::protobuf::io::ZeroCopyInputStream* Open(
+      const std::string& filename) override {
+    auto iter = files_.find(filename);
+    return iter == files_.end() ? nullptr
+                                : new google::protobuf::io::ArrayInputStream(
+                                      iter->second.data(),
+                                      static_cast<int>(iter->second.size()));
+  }
+
+ private:
+  std::map<std::string, std::string> files_;
+};
+
+class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
+ public:
+  AbortingErrorCollector() = default;
+  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
+  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
+
+  void AddError(const std::string& filename, const std::string& element_name,
+                const google::protobuf::Message*, ErrorLocation,
+                const std::string& error_message) override {
+    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
+                   << element_name << "]: " << error_message << "\n";
+    std::exit(1);
+  }
+};
+
+const char* const kFooServiceProto =
+    "syntax = \"proto3\";\n"
+    "package google.protobuf;\n"
+    "// Leading comments about message Foo.\n"
+    "message Foo {\n"
+    "  string baz = 1;\n"
+    "  map<string, string> labels = 2;\n"
+    "}\n"
+    "// Leading comments about message Empty.\n"
+    "message Empty {}\n"
+    "// Leading comments about service Service0.\n"
+    "service Service0 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Foo) returns (Empty) {\n"
+    "  }\n"
+    "}\n"
+    "// Leading comments about service Service1.\n"
+    "service Service1 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Empty) returns (Empty) {\n"
+    "  }\n"
+    "}\n"
+    "// Leading comments about service Service.\n"
+    "service Service2 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Empty) returns (Foo) {\n"
+    "  }\n"
+    "}\n";
+
+class HasMessageWithMapFieldTest : public testing::Test {
+ public:
+  HasMessageWithMapFieldTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/cloud/foo/service.proto"), kFooServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+  }
+
+ private:
+  FileDescriptorProto file_proto_;
+  AbortingErrorCollector collector_;
+  StringSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
+ protected:
+  DescriptorPool pool_;
+};
+
+TEST_F(HasMessageWithMapFieldTest, HasRequestMessageWithMapField) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/foo/service.proto");
+  EXPECT_TRUE(HasMessageWithMapField(*service_file_descriptor->service(0)));
+}
+
+TEST_F(HasMessageWithMapFieldTest, HasResponseMessageWithMapField) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/foo/service.proto");
+  EXPECT_TRUE(HasMessageWithMapField(*service_file_descriptor->service(2)));
+}
+
+TEST_F(HasMessageWithMapFieldTest, HasNoMessageWithMapField) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/foo/service.proto");
+  EXPECT_FALSE(HasMessageWithMapField(*service_file_descriptor->service(1)));
 }
 
 TEST(PredicateUtilsTest, HasRoutingHeaderSuccess) {

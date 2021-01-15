@@ -319,6 +319,7 @@ const char* const kServiceProto =
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
     "  string baz = 1;\n"
+    "  map<string, string> labels = 2;\n"
     "}\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
@@ -393,10 +394,11 @@ const char* const kServiceProto =
     "    option (google.api.method_signature) = \"name,title\";\n"
     "  }\n"
     "  // Leading comments about rpc Method6.\n"
-    "  rpc Method6(Bar) returns (Empty) {\n"
+    "  rpc Method6(Foo) returns (Empty) {\n"
     "    option (google.api.http) = {\n"
     "       get: \"/v1/{name=projects/*/instances/*/databases/*}\"\n"
     "    };\n"
+    "    option (google.api.method_signature) = \"labels\";\n"
     "  }\n"
     "  // Leading comments about rpc Method7.\n"
     "  rpc Method7(Bar) returns (google.longrunning.Operation) {\n"
@@ -496,7 +498,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method0", "method_return_doxygen_link",
             "[::google::protobuf::Empty](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L20)"),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L21)"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -509,7 +511,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method1", "method_return_doxygen_link",
             "[::google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L12)"),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L13)"),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -539,7 +541,7 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method2",
             "method_longrunning_deduced_return_doxygen_link",
             "[::google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L12)"),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L13)"),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -628,6 +630,12 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*/databases/*"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "default_idempotency", "kIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method6", "method_signature0",
+            "std::map<std::string, std::string> const& labels"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method6", "method_request_setters0",
+            "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
@@ -645,7 +653,7 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method7",
             "method_longrunning_deduced_return_doxygen_link",
             "[::google::protobuf::Bar](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L12)")),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L13)")),
     [](const testing::TestParamInfo<CreateMethodVarsTest::ParamType>& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

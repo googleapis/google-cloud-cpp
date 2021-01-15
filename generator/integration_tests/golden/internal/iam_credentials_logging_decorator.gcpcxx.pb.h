@@ -43,6 +43,10 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
+  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;

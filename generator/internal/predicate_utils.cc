@@ -42,6 +42,25 @@ bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service) {
   return false;
 }
 
+bool HasMessageWithMapField(
+    google::protobuf::ServiceDescriptor const& service) {
+  for (int i = 0; i < service.method_count(); ++i) {
+    const auto* const request = service.method(i)->input_type();
+    const auto* const response = service.method(i)->output_type();
+    for (int j = 0; j < request->field_count(); ++j) {
+      if (request->field(j)->is_map()) {
+        return true;
+      }
+    }
+    for (int k = 0; k < response->field_count(); ++k) {
+      if (response->field(k)->is_map()) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 // https://google.aip.dev/client-libraries/4233
 google::cloud::optional<std::pair<std::string, std::string>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method) {

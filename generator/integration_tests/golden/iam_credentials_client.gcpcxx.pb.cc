@@ -47,6 +47,14 @@ IAMCredentialsClient::GenerateIdToken(std::string const& name, std::vector<std::
   return connection_->GenerateIdToken(request);
 }
 
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+IAMCredentialsClient::WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels) {
+  ::google::test::admin::database::v1::WriteLogEntriesRequest request;
+  request.set_log_name(log_name);
+  *request.mutable_labels() = {labels.begin(), labels.end()};
+  return connection_->WriteLogEntries(request);
+}
+
 StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
 IAMCredentialsClient::GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return connection_->GenerateAccessToken(request);
@@ -55,6 +63,11 @@ IAMCredentialsClient::GenerateAccessToken(::google::test::admin::database::v1::G
 StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
 IAMCredentialsClient::GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return connection_->GenerateIdToken(request);
+}
+
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+IAMCredentialsClient::WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  return connection_->WriteLogEntries(request);
 }
 
 }  // namespace golden

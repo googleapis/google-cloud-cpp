@@ -43,6 +43,11 @@ TEST_F(IAMCredentialsIdempotencyPolicyTest, GenerateIdToken) {
   EXPECT_EQ(policy_->GenerateIdToken(request), Idempotency::kNonIdempotent);
 }
 
+TEST_F(IAMCredentialsIdempotencyPolicyTest, WriteLogEntries) {
+  google::test::admin::database::v1::WriteLogEntriesRequest request;
+  EXPECT_EQ(policy_->WriteLogEntries(request), Idempotency::kNonIdempotent);
+}
+
 } // namespace
 } // namespace golden_internal
 } // namespace GOOGLE_CLOUD_CPP_NS

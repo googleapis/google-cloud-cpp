@@ -73,6 +73,10 @@ bool ServiceCodeGenerator::HasPaginatedMethod() const {
   return generator_internal::HasPaginatedMethod(*service_descriptor_);
 }
 
+bool ServiceCodeGenerator::HasMessageWithMapField() const {
+  return generator_internal::HasMessageWithMapField(*service_descriptor_);
+}
+
 VarsDictionary const& ServiceCodeGenerator::vars() const {
   return service_vars_;
 }

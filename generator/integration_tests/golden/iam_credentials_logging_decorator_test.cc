@@ -41,12 +41,18 @@ public:
        ::google::test::admin::database::v1::GenerateAccessTokenRequest const
            &request),
       (override));
-
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::GenerateIdTokenRequest const
+           &request),
+      (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
+      WriteLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const
            &request),
       (override));
 };
@@ -128,6 +134,32 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
 
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, WriteLogEntries) {
+  ::google::test::admin::database::v1::WriteLogEntriesResponse response;
+  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(response));
+  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  grpc::ClientContext context;
+  auto status = stub.WriteLogEntries(
+      context, google::test::admin::database::v1::WriteLogEntriesRequest());
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
+}
+
+TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
+  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(TransientError()));
+  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  grpc::ClientContext context;
+  auto status = stub.WriteLogEntries(
+      context, google::test::admin::database::v1::WriteLogEntriesRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 

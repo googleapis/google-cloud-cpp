@@ -55,6 +55,18 @@ IAMCredentialsLogging::GenerateIdToken(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+IAMCredentialsLogging::WriteLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+        return child_->WriteLogEntries(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 }  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
