@@ -30,7 +30,6 @@ set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
 unset(FPHSA_NAME_MISMATCHED)
 
-# configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     iam_client # cmake-format: sort
     iam_credentials_client.gcpcxx.pb.cc

@@ -55,9 +55,6 @@ find_package(gRPC)
 # Enable unit tests
 include(CTest)
 
-# Generate the version information from the CMake values.
-configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
-
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
