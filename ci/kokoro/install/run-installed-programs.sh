@@ -20,9 +20,6 @@ source module lib/io.sh
 run_all_installed_quickstart_programs() {
   CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
   readonly CONFIG_DIRECTORY
-  if [[ ! -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" ]]; then
-    return 0
-  fi
 
   local run_args=(
     # Remove the container after running
@@ -36,6 +33,15 @@ run_all_installed_quickstart_programs() {
     "--volume" "${CONFIG_DIRECTORY}:/c"
   )
 
+  echo "TIP: You can run a shell in this image with the following command:"
+  echo "# docker run ${run_args[*]} -it ${INSTALL_RUN_IMAGE} bash"
+  echo
+
+  if [[ ! -r "${CONFIG_DIRECTORY}/kokoro-run-key.json" ]]; then
+    echo "No kokoro-run-key.json found. Skipping quickstart programs."
+    return 0
+  fi
+
   local errors=""
   for library in $(quickstart::libraries); do
     echo
@@ -44,8 +50,16 @@ run_all_installed_quickstart_programs() {
     while IFS="" read -r line; do
       args+=("${line}")
     done < <(quickstart::arguments "${library}")
-    if ! docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-      "/i/${library}/quickstart" "${args[@]}"; then
+    cmd=(
+      docker run
+      "${run_args[@]}"
+      "${INSTALL_RUN_IMAGE}"
+      "/i/${library}/quickstart"
+      "${args[@]}"
+    )
+    echo "# ${cmd[*]}"
+    echo
+    if ! "${cmd[@]}"; then
       io::log_red "Error running the quickstart program"
       errors="${errors} ${library}"
     fi
