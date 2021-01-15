@@ -139,31 +139,26 @@ TEST(IAMCredentialsClientTest, WriteLogEntries) {
       {"key1", "Tom"}, {"key2", "Dick"}, {"key3", "Harry"}};
   EXPECT_CALL(*mock, WriteLogEntries)
       .Times(2)
-      .WillRepeatedly(
-          [expected_log_name, expected_labels](
-              ::google::test::admin::database::v1::WriteLogEntriesRequest const
-                  &request) {
-            EXPECT_EQ(request.log_name(), expected_log_name);
-            std::map<std::string, std::string> labels = {
-                request.labels().begin(), request.labels().end()};
-            EXPECT_THAT(labels,
-                        testing::UnorderedElementsAreArray(expected_labels));
-            ::google::test::admin::database::v1::WriteLogEntriesResponse
-                response;
-            return response;
-          });
+      .WillRepeatedly([expected_log_name, expected_labels](
+                          ::google::test::admin::database::v1::
+                              WriteLogEntriesRequest const &request) {
+        EXPECT_EQ(request.log_name(), expected_log_name);
+        std::map<std::string, std::string> labels = {request.labels().begin(),
+                                                     request.labels().end()};
+        EXPECT_THAT(labels,
+                    testing::UnorderedElementsAreArray(expected_labels));
+        ::google::test::admin::database::v1::WriteLogEntriesResponse response;
+        return response;
+      });
   IAMCredentialsClient client(std::move(mock));
-  auto response =
-      client.WriteLogEntries(expected_log_name, expected_labels);
+  auto response = client.WriteLogEntries(expected_log_name, expected_labels);
   EXPECT_STATUS_OK(response);
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   request.set_log_name(expected_log_name);
-  *request.mutable_labels() = {expected_labels.begin(),
-                                  expected_labels.end()};
+  *request.mutable_labels() = {expected_labels.begin(), expected_labels.end()};
   response = client.WriteLogEntries(request);
   EXPECT_STATUS_OK(response);
 }
-
 
 } // namespace
 } // namespace golden

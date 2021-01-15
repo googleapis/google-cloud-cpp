@@ -48,7 +48,6 @@ TEST_F(IAMCredentialsIdempotencyPolicyTest, WriteLogEntries) {
   EXPECT_EQ(policy_->WriteLogEntries(request), Idempotency::kNonIdempotent);
 }
 
-
 } // namespace
 } // namespace golden_internal
 } // namespace GOOGLE_CLOUD_CPP_NS

@@ -50,9 +50,10 @@ public:
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
-          WriteLogEntries,
-          (grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request),
+      WriteLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const
+           &request),
       (override));
 };
 
@@ -161,7 +162,6 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
 
 } // namespace
 } // namespace golden_internal

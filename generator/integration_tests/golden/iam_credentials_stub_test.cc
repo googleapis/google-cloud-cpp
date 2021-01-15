@@ -81,18 +81,29 @@ public:
       (override));
   MOCK_METHOD(
       ::grpc::Status, WriteLogEntries,
-      (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::google::test::admin::database::v1::WriteLogEntriesResponse* response),
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest
+           &request,
+       ::google::test::admin::database::v1::WriteLogEntriesResponse *response),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
-          AsyncWriteLogEntriesRaw,
-          (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::grpc::CompletionQueue* cq),
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::test::admin::database::v1::WriteLogEntriesResponse> *,
+      AsyncWriteLogEntriesRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest
+           &request,
+       ::grpc::CompletionQueue *cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
-          PrepareAsyncWriteLogEntriesRaw,
-          (::grpc::ClientContext* context, const ::google::test::admin::database::v1::WriteLogEntriesRequest& request, ::grpc::CompletionQueue* cq),
-          (override));
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::test::admin::database::v1::WriteLogEntriesResponse> *,
+      PrepareAsyncWriteLogEntriesRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest
+           &request,
+       ::grpc::CompletionQueue *cq),
+      (override));
 };
 
 class IAMCredentialsStubTest : public ::testing::Test {

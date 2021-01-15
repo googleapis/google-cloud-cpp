@@ -48,9 +48,10 @@ public:
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
-          WriteLogEntries,
-          (grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request),
+      WriteLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const
+           &request),
       (override));
 };
 
@@ -129,7 +130,6 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
   auto status = stub.WriteLogEntries(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
 
 } // namespace
 } // namespace golden_internal

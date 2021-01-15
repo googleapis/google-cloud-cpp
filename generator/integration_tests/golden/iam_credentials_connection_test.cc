@@ -54,9 +54,10 @@ public:
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
-          WriteLogEntries,
-          (grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request),
+      WriteLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const
+           &request),
       (override));
 };
 
@@ -117,11 +118,9 @@ TEST(IAMCredentialsConnectionTest, GenerateAccessTokenTooManyTransients) {
 TEST(IAMCredentialsConnectionTest, GenerateIdTokenSuccess) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, GenerateIdToken)
-      .WillOnce([](grpc::ClientContext &,
-                   ::google::test::admin::database::v1::
-                       GenerateIdTokenRequest const &) {
-        ::google::test::admin::database::v1::GenerateIdTokenResponse
-            response;
+      .WillOnce([](grpc::ClientContext &, ::google::test::admin::database::v1::
+                                              GenerateIdTokenRequest const &) {
+        ::google::test::admin::database::v1::GenerateIdTokenResponse response;
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -155,11 +154,9 @@ TEST(IAMCredentialsConnectionTest, GenerateIdTokenTooManyTransients) {
 TEST(IAMCredentialsConnectionTest, WriteLogEntriesSuccess) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, WriteLogEntries)
-      .WillOnce([](grpc::ClientContext &,
-                   ::google::test::admin::database::v1::
-                       WriteLogEntriesRequest const &) {
-        ::google::test::admin::database::v1::WriteLogEntriesResponse
-            response;
+      .WillOnce([](grpc::ClientContext &, ::google::test::admin::database::v1::
+                                              WriteLogEntriesRequest const &) {
+        ::google::test::admin::database::v1::WriteLogEntriesResponse response;
         return response;
       });
   auto conn = CreateTestingConnection(std::move(mock));
@@ -189,8 +186,6 @@ TEST(IAMCredentialsConnectionTest, WriteLogEntriesTooManyTransients) {
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
-
-
 
 } // namespace
 } // namespace golden_internal
