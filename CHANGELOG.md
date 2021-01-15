@@ -7,7 +7,13 @@
   This attribute represents the pre-GA name for "Uniform Bucket Level Access"
   becoming GA. Applications should use `uniform_bucket_level_access` instead.
 
-## v1.23.0 - TBD
+## v1.24.0 - TBD
+
+## v1.23.0 - 2021-01
+
+### Common Libraries
+
+* fix: crashes during client shutdown (#5701)
 
 ## v1.22.0 - 2021-01
 
