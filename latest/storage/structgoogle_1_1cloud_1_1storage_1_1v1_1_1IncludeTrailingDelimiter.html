@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Storage C++ Client: google::cloud::storage::v1::RequestedPolicyVersion Struct Reference</title>
+<title>Google Cloud Storage C++ Client: google::cloud::storage::v1::IncludeTrailingDelimiter Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,37 +63,36 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacegoogle.html">google</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud.html">cloud</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1storage.html">storage</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html">v1</a></li><li class="navelem"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1RequestedPolicyVersion.html">RequestedPolicyVersion</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacegoogle.html">google</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud.html">cloud</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1storage.html">storage</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html">v1</a></li><li class="navelem"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1IncludeTrailingDelimiter.html">IncludeTrailingDelimiter</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1RequestedPolicyVersion-members.html">List of all members</a>  </div>
+<a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1IncludeTrailingDelimiter-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">google::cloud::storage::v1::RequestedPolicyVersion Struct Reference</div>  </div>
+<div class="title">google::cloud::storage::v1::IncludeTrailingDelimiter Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Controls the IAM policy version returned by IAM queries.  
- <a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1RequestedPolicyVersion.html#details">More...</a></p>
+<p>If <code>true</code>, objects that end in exactly one instance of delimiter have their metadata included in <code>items[]</code> in addition to the relevant part of the object name appearing in <code>prefixes[]</code>.  
+ <a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1IncludeTrailingDelimiter.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="well__known__parameters_8h_source.html">google/cloud/storage/well_known_parameters.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6b9c84220af5f5de26f079778861883f"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1RequestedPolicyVersion.html#a6b9c84220af5f5de26f079778861883f">well_known_parameter_name</a> ()</td></tr>
-<tr class="separator:a6b9c84220af5f5de26f079778861883f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a8239908c7bffec33eff3b2d12678d3"><td class="memItemLeft" align="right" valign="top">static char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1IncludeTrailingDelimiter.html#a8a8239908c7bffec33eff3b2d12678d3">well_known_parameter_name</a> ()</td></tr>
+<tr class="separator:a8a8239908c7bffec33eff3b2d12678d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Controls the IAM policy version returned by IAM queries. </p>
-<p>By default requests version 1 of the IAM policy, set this to 3 (or higher) to get IAM policies with conditions.</p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam/docs/policies#versions">https://cloud.google.com/iam/docs/policies#versions</a> for more information on GCS iam policies and its versioning. </dd></dl>
+<div class="textblock"><p>If <code>true</code>, objects that end in exactly one instance of delimiter have their metadata included in <code>items[]</code> in addition to the relevant part of the object name appearing in <code>prefixes[]</code>. </p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/list">https://cloud.google.com/storage/docs/json_api/v1/objects/list</a> for more information. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="well__known__parameters_8h_source.html#l00601">601</a> of file <a class="el" href="well__known__parameters_8h_source.html">well_known_parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="well__known__parameters_8h_source.html#l00464">464</a> of file <a class="el" href="well__known__parameters_8h_source.html">well_known_parameters.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6b9c84220af5f5de26f079778861883f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b9c84220af5f5de26f079778861883f">&#9670;&nbsp;</a></span>well_known_parameter_name()</h2>
+<a id="a8a8239908c7bffec33eff3b2d12678d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a8239908c7bffec33eff3b2d12678d3">&#9670;&nbsp;</a></span>well_known_parameter_name()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -102,7 +101,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static char const* google::cloud::storage::v1::RequestedPolicyVersion::well_known_parameter_name </td>
+          <td class="memname">static char const* google::cloud::storage::v1::IncludeTrailingDelimiter::well_known_parameter_name </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -115,7 +114,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="well__known__parameters_8h_source.html#l00606">606</a> of file <a class="el" href="well__known__parameters_8h_source.html">well_known_parameters.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="well__known__parameters_8h_source.html#l00467">467</a> of file <a class="el" href="well__known__parameters_8h_source.html">well_known_parameters.h</a>.</p>
 
 </div>
 </div>
