@@ -265,6 +265,67 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
   }
 }
 
+TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_prefix = MakeRandomObjectName();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/foo", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/foo/", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/foo/bar", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/something", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/something/", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name_, object_prefix + "/qux/", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+
+  ListObjectsAndPrefixesReader reader = client->ListObjectsAndPrefixes(
+      bucket_name_, Prefix(object_prefix + "/"), Delimiter("/"),
+      IncludeTrailingDelimiter(true));
+  std::vector<std::string> prefixes;
+  std::vector<std::string> objects;
+  for (auto& it : reader) {
+    auto const& result = it.value();
+    if (absl::holds_alternative<std::string>(result)) {
+      prefixes.push_back(absl::get<std::string>(result));
+    } else {
+      auto const& meta = absl::get<ObjectMetadata>(result);
+      EXPECT_EQ(bucket_name_, meta.bucket());
+      objects.push_back(meta.name());
+    }
+  }
+  EXPECT_THAT(prefixes, UnorderedElementsAre(object_prefix + "/foo/",
+                                             object_prefix + "/something/",
+                                             object_prefix + "/qux/"));
+  EXPECT_THAT(objects, UnorderedElementsAre(object_prefix + "/foo",
+                                            object_prefix + "/foo/",
+                                            object_prefix + "/something",
+                                            object_prefix + "/something/",
+                                            object_prefix + "/qux/"));
+  ListObjectsReader delete_reader =
+      client->ListObjects(bucket_name_, Prefix(object_prefix));
+  for (auto& meta : delete_reader) {
+    ASSERT_STATUS_OK(meta);
+    client->DeleteObject(bucket_name_, meta->name());
+  }
+}
+
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

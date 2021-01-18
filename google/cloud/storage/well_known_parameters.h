@@ -454,6 +454,22 @@ struct Delimiter : public internal::WellKnownParameter<Delimiter, std::string> {
 };
 
 /**
+ * If `true`, objects that end in exactly one instance of delimiter have their
+ * metadata included in `items[]` in addition to the relevant part of the object
+ * name appearing in `prefixes[]`.
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/v1/objects/list for more
+ *   information.
+ */
+struct IncludeTrailingDelimiter
+    : public internal::WellKnownParameter<IncludeTrailingDelimiter, bool> {
+  using WellKnownParameter<IncludeTrailingDelimiter, bool>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "includeTrailingDelimiter";
+  }
+};
+
+/**
  * Filter results to objects whose names are lexicographically equal to or after
  * StartOffset.
  *
