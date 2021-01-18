@@ -995,8 +995,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`, `Prefix`, `Delimiter`, `StartOffset`, `EndOffset`, and
-   *     `Versions`.
+   *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
+   *     `StartOffset`, `EndOffset`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1025,8 +1025,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`, `Prefix`, `Delimiter`, `StartOffset`, `EndOffset`, and
-   *     `Versions`.
+   *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
+   *     `StartOffset`, `EndOffset`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.

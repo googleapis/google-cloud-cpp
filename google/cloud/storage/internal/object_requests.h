@@ -38,8 +38,8 @@ namespace internal {
  */
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
-                            StartOffset, EndOffset, Projection, UserProject,
-                            Versions> {
+                            IncludeTrailingDelimiter, StartOffset, EndOffset,
+                            Projection, UserProject, Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)

@@ -108,17 +108,29 @@ class Database:
     def __extract_list_object_request(cls, request, context):
         delimiter, prefix, versions = "", "", False
         start_offset, end_offset = "", None
+        include_trailing_delimiter = False
         if context is not None:
             delimiter = request.delimiter
             prefix = request.prefix
             versions = request.versions
+            include_trailing_delimiter = request.include_trailing_delimiter
         else:
             delimiter = request.args.get("delimiter", "")
             prefix = request.args.get("prefix", "")
             versions = request.args.get("versions", False, type=bool)
             start_offset = request.args.get("startOffset", "")
             end_offset = request.args.get("endOffset")
-        return delimiter, prefix, versions, start_offset, end_offset
+            include_trailing_delimiter = request.args.get(
+                "includeTrailingDelimiter", False
+            )
+        return (
+            delimiter,
+            prefix,
+            versions,
+            start_offset,
+            end_offset,
+            include_trailing_delimiter,
+        )
 
     def list_object(self, request, bucket_name, context):
         bucket = self.__get_bucket_for_object(bucket_name, context)
@@ -128,6 +140,7 @@ class Database:
             versions,
             start_offset,
             end_offset,
+            include_trailing_delimiter,
         ) = self.__extract_list_object_request(request, context)
         items = []
         rest_onlys = []
@@ -148,7 +161,8 @@ class Database:
             delimiter_index = name.find(delimiter, len(prefix))
             if delimiter != "" and delimiter_index > 0:
                 prefixes.add(name[: delimiter_index + 1])
-                continue
+                if delimiter_index < len(name) - 1 or not include_trailing_delimiter:
+                    continue
             items.append(obj.metadata)
             rest_onlys.append(obj.rest_only)
         return items, list(prefixes), rest_onlys
