@@ -160,6 +160,38 @@ TEST(IAMCredentialsClientTest, WriteLogEntries) {
   EXPECT_STATUS_OK(response);
 }
 
+TEST(IAMCredentialsClientTest, ListLogs) {
+  auto mock = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
+  std::string expected_parent = "projects/my-project";
+  EXPECT_CALL(*mock, ListLogs)
+      .Times(2)
+      .WillRepeatedly([expected_parent](::google::test::admin::database::v1::
+                                            ListLogsRequest const &request) {
+        EXPECT_EQ(request.parent(), expected_parent);
+        return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+            ::google::test::admin::database::v1::ListLogsRequest{},
+            [](::google::test::admin::database::v1::ListLogsRequest const &) {
+              return StatusOr<
+                  ::google::test::admin::database::v1::ListLogsResponse>(
+                  Status(StatusCode::kPermissionDenied, "uh-oh"));
+            },
+            [](::google::test::admin::database::v1::ListLogsResponse const &) {
+              return std::vector<std::string>{};
+            });
+      });
+  IAMCredentialsClient client(std::move(mock));
+  auto range = client.ListLogs(expected_parent);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent(expected_parent);
+  range = client.ListLogs(request);
+  begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+}
+
 } // namespace
 } // namespace golden
 } // namespace GOOGLE_CLOUD_CPP_NS

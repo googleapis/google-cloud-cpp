@@ -57,6 +57,18 @@ IAMCredentialsConnection::WriteLogEntries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+ListLogsRange IAMCredentialsConnection::ListLogs(
+    ::google::test::admin::database::v1::ListLogsRequest request) {
+  return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+    std::move(request),
+    [](::google::test::admin::database::v1::ListLogsRequest const&) {
+      return StatusOr<::google::test::admin::database::v1::ListLogsResponse>{};
+    },
+    [](::google::test::admin::database::v1::ListLogsResponse const&) {
+      return std::vector<std::string>();
+    });
+}
+
 namespace {
 std::unique_ptr<IAMCredentialsRetryPolicy> DefaultRetryPolicy() {
   return IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
@@ -129,6 +141,36 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
         },
         request, __func__);
 }
+
+  ListLogsRange ListLogs(
+      ::google::test::admin::database::v1::ListLogsRequest request) override {
+    request.clear_page_token();
+    auto stub = stub_;
+    auto retry =
+        std::shared_ptr<IAMCredentialsRetryPolicy const>(retry_policy_prototype_->clone());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(
+        backoff_policy_prototype_->clone());
+    auto idempotency = idempotency_policy_->ListLogs(request);
+    char const* function_name = __func__;
+    return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+        std::move(request),
+        [stub, retry, backoff, idempotency, function_name]
+          (::google::test::admin::database::v1::ListLogsRequest const& r) {
+          return google::cloud::internal::RetryLoop(
+              retry->clone(), backoff->clone(), idempotency,
+              [stub](grpc::ClientContext& context,
+                     ::google::test::admin::database::v1::ListLogsRequest const& request) {
+                return stub->ListLogs(context, request);
+              },
+              r, function_name);
+        },
+        [](::google::test::admin::database::v1::ListLogsResponse r) {
+          std::vector<std::string> result(r.log_names().size());
+          auto& messages = *r.mutable_log_names();
+          std::move(messages.begin(), messages.end(), result.begin());
+          return result;
+        });
+  }
 
  private:
   std::shared_ptr<golden_internal::IAMCredentialsStub> stub_;

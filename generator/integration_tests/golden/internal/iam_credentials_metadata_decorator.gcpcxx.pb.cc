@@ -55,6 +55,14 @@ IAMCredentialsMetadata::WriteLogEntries(
   return child_->WriteLogEntries(context, request);
 }
 
+StatusOr<::google::test::admin::database::v1::ListLogsResponse>
+IAMCredentialsMetadata::ListLogs(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListLogsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListLogs(context, request);
+}
+
 void IAMCredentialsMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

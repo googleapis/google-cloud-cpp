@@ -688,6 +688,50 @@ TEST(PredicateUtilsDeathTest, PaginationRepeatedMessageOrderMismatch) {
                "");
 }
 
+TEST(PredicateUtilsTest, PaginationExactlyOneRepatedStringResponse) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type {
+      name: "Input"
+      field { name: "page_size" number: 1 type: TYPE_INT32 }
+      field { name: "page_token" number: 2 type: TYPE_STRING }
+    }
+    message_type {
+      name: "Output"
+      field { name: "next_page_token" number: 1 type: TYPE_STRING }
+      field {
+        name: "repeated_field"
+        number: 2
+        label: LABEL_REPEATED
+        type: TYPE_STRING
+      }
+    }
+    service {
+      name: "Service"
+      method {
+        name: "Paginated"
+        input_type: "google.protobuf.Input"
+        output_type: "google.protobuf.Output"
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(IsPaginated(*service_file_descriptor->service(0)->method(0)));
+  auto result =
+      DeterminePagination(*service_file_descriptor->service(0)->method(0));
+  EXPECT_TRUE(result.has_value());
+  EXPECT_EQ(result->first, "repeated_field");
+  EXPECT_EQ(result->second, "string");
+}
+
 TEST(PredicateUtilsTest, HasPaginatedMethodTrue) {
   FileDescriptorProto service_file;
   /// @cond

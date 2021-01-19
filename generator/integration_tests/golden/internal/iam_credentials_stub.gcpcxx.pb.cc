@@ -68,6 +68,19 @@ DefaultIAMCredentialsStub::WriteLogEntries(
     return response;
 }
 
+StatusOr<::google::test::admin::database::v1::ListLogsResponse>
+DefaultIAMCredentialsStub::ListLogs(
+  grpc::ClientContext& client_context,
+  ::google::test::admin::database::v1::ListLogsRequest const& request) {
+    ::google::test::admin::database::v1::ListLogsResponse response;
+    auto status =
+        grpc_stub_->ListLogs(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 }  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

@@ -53,6 +53,11 @@ class DefaultIAMCredentialsConnectionIdempotencyPolicy : public IAMCredentialsCo
     return Idempotency::kNonIdempotent;
   }
 
+  Idempotency
+  ListLogs(::google::test::admin::database::v1::ListLogsRequest) override {
+    return Idempotency::kIdempotent;
+  }
+
 };
 }  // namespace
 

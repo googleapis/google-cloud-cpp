@@ -79,9 +79,13 @@ TEST(ServiceNameToFilePath, TrailingServiceInIntermediateComponent) {
           "google.spanner.admin.databaseService.v1.DatabaseAdminService"));
 }
 
-TEST(ProtoNameToCppName, Success) {
+TEST(ProtoNameToCppName, MessageType) {
   EXPECT_EQ("::google::spanner::admin::database::v1::Request",
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
+}
+
+TEST(ProtoNameToCppName, StringType) {
+  EXPECT_EQ("std::string", ProtoNameToCppName("string"));
 }
 
 TEST(BuildNamespaces, NoDirectoryPathInternal) {
