@@ -36,6 +36,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigquery/*"
     "*/google/cloud/firestore/*"
     "*/google/cloud/iam/*"
+    "*/google/cloud/logging/*"
     "*/google/cloud/spanner/*"
     "*/google/cloud/storage/*"
     "*/google/cloud/pubsub/*"
