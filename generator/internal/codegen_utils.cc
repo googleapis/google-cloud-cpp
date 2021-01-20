@@ -74,7 +74,6 @@ std::string ServiceNameToFilePath(absl::string_view service_name) {
 }
 
 std::string ProtoNameToCppName(absl::string_view proto_name) {
-  if (proto_name == "string") return "std::string";
   return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 

@@ -84,10 +84,6 @@ TEST(ProtoNameToCppName, MessageType) {
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
 }
 
-TEST(ProtoNameToCppName, StringType) {
-  EXPECT_EQ("std::string", ProtoNameToCppName("string"));
-}
-
 TEST(BuildNamespaces, NoDirectoryPathInternal) {
   auto result = BuildNamespaces("/", NamespaceType::kInternal);
   ASSERT_EQ(result.size(), 4);

@@ -517,8 +517,12 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     if (IsPaginated(method)) {
       auto pagination_info = DeterminePagination(method);
       method_vars["range_output_field_name"] = pagination_info->first;
+      // Add exception to AIP-4233 for response types that have exactly one
+      // repeated field that is of primitive type string.
       method_vars["range_output_type"] =
-          ProtoNameToCppName(pagination_info->second);
+          pagination_info->second == "string"
+              ? "std::string"
+              : ProtoNameToCppName(pagination_info->second);
     }
     SetMethodSignatureMethodVars(method, method_vars);
     SetResourceRoutingMethodVars(method, method_vars);
