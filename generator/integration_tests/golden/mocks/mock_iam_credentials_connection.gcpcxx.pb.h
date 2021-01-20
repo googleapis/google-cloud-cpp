@@ -40,6 +40,10 @@ class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
   WriteLogEntries,
   (::google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
 
+  MOCK_METHOD(golden::ListLogsRange,
+  ListLogs,
+  (::google::test::admin::database::v1::ListLogsRequest request), (override));
+
 };
 
 }  // namespace golden_mocks

@@ -83,6 +83,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
 
   std::vector<std::tuple<std::string, Descriptor const*, int>>
       repeated_message_fields;
+  std::vector<std::pair<std::string, std::string>> repeated_string_fields;
   for (int i = 0; i < response_message->field_count(); ++i) {
     FieldDescriptor const* field = response_message->field(i);
     if (field->is_repeated() &&
@@ -90,9 +91,18 @@ DeterminePagination(google::protobuf::MethodDescriptor const& method) {
       repeated_message_fields.emplace_back(std::make_tuple(
           field->name(), field->message_type(), field->number()));
     }
+    if (field->is_repeated() && field->type() == FieldDescriptor::TYPE_STRING) {
+      repeated_string_fields.emplace_back(
+          std::make_pair(field->name(), "string"));
+    }
   }
 
-  if (repeated_message_fields.empty()) return {};
+  if (repeated_message_fields.empty()) {
+    // Add exception to AIP-4233 for response types that have exactly one
+    // repeated field that is of primitive type string.
+    if (repeated_string_fields.size() != 1) return {};
+    return repeated_string_fields[0];
+  }
 
   if (repeated_message_fields.size() > 1) {
     auto min_field = std::min_element(

@@ -23,6 +23,7 @@
 #include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -51,6 +52,9 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::IAMCredentialsRetryTraits>;
 
+using ListLogsRange = google::cloud::internal::PaginationRange<
+    std::string>;
+
 class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
@@ -63,6 +67,9 @@ class IAMCredentialsConnection {
 
   virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
+
+  virtual ListLogsRange
+  ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
 
 };
 

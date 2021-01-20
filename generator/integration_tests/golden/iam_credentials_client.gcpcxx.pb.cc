@@ -55,6 +55,13 @@ IAMCredentialsClient::WriteLogEntries(std::string const& log_name, std::map<std:
   return connection_->WriteLogEntries(request);
 }
 
+ListLogsRange
+IAMCredentialsClient::ListLogs(std::string const& parent) {
+  ::google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent(parent);
+  return connection_->ListLogs(request);
+}
+
 StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
 IAMCredentialsClient::GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return connection_->GenerateAccessToken(request);
@@ -68,6 +75,11 @@ IAMCredentialsClient::GenerateIdToken(::google::test::admin::database::v1::Gener
 StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
 IAMCredentialsClient::WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return connection_->WriteLogEntries(request);
+}
+
+ListLogsRange
+IAMCredentialsClient::ListLogs(::google::test::admin::database::v1::ListLogsRequest request) {
+  return connection_->ListLogs(request);
 }
 
 }  // namespace golden

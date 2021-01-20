@@ -59,6 +59,11 @@ public:
        ::google::test::admin::database::v1::WriteLogEntriesRequest const
            &request),
       (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListLogsRequest const &request),
+      (override));
 };
 
 std::shared_ptr<golden::IAMCredentialsConnection> CreateTestingConnection(
@@ -185,6 +190,81 @@ TEST(IAMCredentialsConnectionTest, WriteLogEntriesTooManyTransients) {
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto response = conn->WriteLogEntries(request);
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+TEST(IAMCredentialsConnectionTest, ListLogsSuccess) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  std::string const expected_parent = "projects/my-project";
+  EXPECT_CALL(*mock, ListLogs)
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext &,
+                    ::google::test::admin::database::v1::ListLogsRequest const
+                        &request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
+        ::google::test::admin::database::v1::ListLogsResponse page;
+        page.set_next_page_token("page-1");
+        *page.add_log_names() = "log1";
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext &,
+                    ::google::test::admin::database::v1::ListLogsRequest const
+                        &request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-1", request.page_token());
+        ::google::test::admin::database::v1::ListLogsResponse page;
+        page.set_next_page_token("page-2");
+        *page.add_log_names() = "log2";
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext &,
+                    ::google::test::admin::database::v1::ListLogsRequest const
+                        &request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-2", request.page_token());
+        ::google::test::admin::database::v1::ListLogsResponse page;
+        page.clear_next_page_token();
+        *page.add_log_names() = "log3";
+        return make_status_or(page);
+      });
+  auto conn = CreateTestingConnection(std::move(mock));
+  std::vector<std::string> actual_log_names;
+  ::google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent("projects/my-project");
+  for (auto const &log_name : conn->ListLogs(request)) {
+    ASSERT_STATUS_OK(log_name);
+    actual_log_names.push_back(*log_name);
+  }
+  EXPECT_THAT(actual_log_names, ElementsAre("log1", "log2", "log3"));
+}
+
+TEST(IAMCredentialsConnectionTest, ListLogsPermanentError) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, ListLogs)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent("projects/my-project");
+  auto range = conn->ListLogs(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(IAMCredentialsConnectionTest, ListLogsTooManyTransients) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, ListLogs)
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent("projects/my-project");
+  auto range = conn->ListLogs(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
 } // namespace

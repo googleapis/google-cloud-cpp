@@ -53,6 +53,11 @@ public:
        ::google::test::admin::database::v1::WriteLogEntriesRequest const
            &request),
       (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListLogsRequest const &request),
+      (override));
 };
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -128,6 +133,26 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
   grpc::ClientContext context;
   google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto status = stub.WriteLogEntries(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
+TEST_F(MetadataDecoratorTest, ListLogs) {
+  EXPECT_CALL(*mock_, ListLogs(_, _))
+      .WillOnce(
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::ListLogsRequest const &) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context,
+                "google.test.admin.database.v1.IAMCredentials.ListLogs",
+                expected_api_client_header_));
+            return TransientError();
+          });
+
+  IAMCredentialsMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::ListLogsRequest request;
+  request.set_parent("projects/my_project");
+  auto status = stub.ListLogs(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 

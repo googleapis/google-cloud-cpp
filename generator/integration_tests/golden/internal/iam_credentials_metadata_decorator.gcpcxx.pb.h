@@ -45,6 +45,10 @@ class IAMCredentialsMetadata : public IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
+  StatusOr<::google::test::admin::database::v1::ListLogsResponse> ListLogs(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListLogsRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

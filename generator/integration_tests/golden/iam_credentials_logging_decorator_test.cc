@@ -55,6 +55,11 @@ public:
        ::google::test::admin::database::v1::WriteLogEntriesRequest const
            &request),
       (override));
+  MOCK_METHOD(
+      StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListLogsRequest const &request),
+      (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
@@ -160,6 +165,32 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
 
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+TEST_F(LoggingDecoratorTest, ListLogs) {
+  ::google::test::admin::database::v1::ListLogsResponse response;
+  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(response));
+  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  grpc::ClientContext context;
+  auto status = stub.ListLogs(
+      context, google::test::admin::database::v1::ListLogsRequest());
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
+}
+
+TEST_F(LoggingDecoratorTest, ListLogsError) {
+  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(TransientError()));
+  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  grpc::ClientContext context;
+  auto status = stub.ListLogs(
+      context, google::test::admin::database::v1::ListLogsRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 

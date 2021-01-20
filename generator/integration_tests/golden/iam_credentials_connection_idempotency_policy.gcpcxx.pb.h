@@ -45,6 +45,9 @@ class IAMCredentialsConnectionIdempotencyPolicy {
   virtual google::cloud::internal::Idempotency
   WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
+  virtual google::cloud::internal::Idempotency
+  ListLogs(::google::test::admin::database::v1::ListLogsRequest request) = 0;
+
 };
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
