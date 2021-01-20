@@ -258,13 +258,6 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
     }
-    if (!meta.iam_configuration().uniform_bucket_level_access.has_value()) {
-      nlohmann::json ubla;
-      ubla["enabled"] = meta.iam_configuration().bucket_policy_only->enabled;
-      // The lockedTime field is not mutable and should not be set by the client
-      // the server will provide a value.
-      c["uniformBucketLevelAccess"] = std::move(ubla);
-    }
     metadata_as_json["iamConfiguration"] = std::move(c);
   }
 
