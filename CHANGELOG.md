@@ -1,13 +1,14 @@
 # Changelog
 
-**FUTURE BREAKING CHANGES:**
-
-* **Storage:** on or about 2021-01-15 we are planning to remove the
-  `bucket_policy_only` attribute from `storage::BucketIamConfiguration` struct.
-  This attribute represents the pre-GA name for "Uniform Bucket Level Access"
-  becoming GA. Applications should use `uniform_bucket_level_access` instead.
-
 ## v1.24.0 - TBD
+
+### Storage
+
+**BREAKING CHANGES**:
+
+* UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
+  compatibility the C++ Cloud Storage library supported both, however
+  BucketPolicyOnly is now completely removed.
 
 ## v1.23.0 - 2021-01
 
