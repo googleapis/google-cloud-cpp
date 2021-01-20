@@ -28,7 +28,6 @@
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
-* [Google Cloud BigQuery](google/cloud/bigquery/README.md) (experimental)
 * [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
 * [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
 * [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)

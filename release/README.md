@@ -73,7 +73,6 @@ git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud \
    ':(exclude)google/cloud/firestore/' \
-   ':(exclude)google/cloud/bigquery/' \
    ':(exclude)google/cloud/bigtable/' \
    ':(exclude)google/cloud/pubsub/' \
    ':(exclude)google/cloud/spanner/' \
