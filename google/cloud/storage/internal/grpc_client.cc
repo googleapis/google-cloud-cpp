@@ -123,7 +123,7 @@ StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
   ListBucketsResponse res;
   res.next_page_token = std::move(*response.mutable_next_page_token());
   for (auto& item : *response.mutable_items()) {
-    res.items.emplace_back(BucketMetadata().set_name(item.name()));
+    res.items.emplace_back(FromProto(std::move(item)));
   }
 
   return res;
