@@ -723,6 +723,7 @@ string(
            " googleapis_iam_protos"
            " googleapis_pubsub_protos"
            " googleapis_cpp_storage_protos"
+           " googleapis_cpp_logging_protos"
            " googleapis_cpp_iam_v1_iam_policy_protos"
            " googleapis_cpp_iam_v1_options_protos"
            " googleapis_cpp_iam_v1_policy_protos"
