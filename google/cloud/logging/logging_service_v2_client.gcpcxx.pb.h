@@ -227,7 +227,7 @@ class LoggingServiceV2Client {
    * [::google::logging::v2::ListLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/logging/v2/logging.proto#L257)
    */
   ListLogEntriesRange ListLogEntries(
-      ::google::logging::v2::ListLogEntriesRequest request);
+      ::google::logging::v2::ListLogEntriesRequest const& request);
 
   /**
    * Lists the descriptors for monitored resource types used by Logging.
@@ -236,7 +236,8 @@ class LoggingServiceV2Client {
    * [::google::logging::v2::ListMonitoredResourceDescriptorsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/logging/v2/logging.proto#L331)
    */
   ListMonitoredResourceDescriptorsRange ListMonitoredResourceDescriptors(
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+          request);
 
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts.
@@ -245,7 +246,7 @@ class LoggingServiceV2Client {
    * @param request
    * [::google::logging::v2::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/google/logging/v2/logging.proto#L356)
    */
-  ListLogsRange ListLogs(::google::logging::v2::ListLogsRequest request);
+  ListLogsRange ListLogs(::google::logging::v2::ListLogsRequest const& request);
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;

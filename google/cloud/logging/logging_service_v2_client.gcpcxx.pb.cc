@@ -78,18 +78,19 @@ LoggingServiceV2Client::WriteLogEntries(
 }
 
 ListLogEntriesRange LoggingServiceV2Client::ListLogEntries(
-    ::google::logging::v2::ListLogEntriesRequest request) {
+    ::google::logging::v2::ListLogEntriesRequest const& request) {
   return connection_->ListLogEntries(request);
 }
 
 ListMonitoredResourceDescriptorsRange
 LoggingServiceV2Client::ListMonitoredResourceDescriptors(
-    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
+    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+        request) {
   return connection_->ListMonitoredResourceDescriptors(request);
 }
 
 ListLogsRange LoggingServiceV2Client::ListLogs(
-    ::google::logging::v2::ListLogsRequest request) {
+    ::google::logging::v2::ListLogsRequest const& request) {
   return connection_->ListLogs(request);
 }
 

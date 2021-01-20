@@ -157,6 +157,7 @@ if should_run_integration_tests; then
 
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
+    "--copt=-DDEBUG=DEBUG" \
     "--test_tag_filters=integration-test" \
     -- ... \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
