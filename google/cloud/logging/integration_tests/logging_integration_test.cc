@@ -79,6 +79,7 @@ TEST_F(LoggingIntegrationTest, WriteLogEntries) {
 }
 
 TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
+  rpc_tracing_options_.set_endpoint("localhost:1");
   auto client = LoggingServiceV2Client(MakeLoggingServiceV2Connection(
       rpc_tracing_options_, retry_policy_->clone(), backoff_policy_->clone(),
       MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()));
@@ -86,7 +87,7 @@ TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
   auto range = client.ListLogEntries(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnknown));
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogEntries")));
 }
