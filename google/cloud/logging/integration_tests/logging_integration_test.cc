@@ -68,24 +68,25 @@ TEST_F(LoggingIntegrationTest, DeleteLogFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteLog")));
 }
 
-TEST_F(LoggingIntegrationTest, WriteLogEntriesFailure) {
+TEST_F(LoggingIntegrationTest, WriteLogEntries) {
   auto client = LoggingServiceV2Client(
       MakeLoggingServiceV2Connection(rpc_tracing_options_));
   ::google::logging::v2::WriteLogEntriesRequest request;
   auto response = client.WriteLogEntries(request);
-  EXPECT_FALSE(response.ok());
+  EXPECT_TRUE(response.ok());
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
 }
 
 TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
-  auto client = LoggingServiceV2Client(
-      MakeLoggingServiceV2Connection(rpc_tracing_options_));
+  auto client = LoggingServiceV2Client(MakeLoggingServiceV2Connection(
+      rpc_tracing_options_, retry_policy_->clone(), backoff_policy_->clone(),
+      MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()));
   ::google::logging::v2::ListLogEntriesRequest request;
   auto range = client.ListLogEntries(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnknown));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogEntries")));
 }
@@ -98,7 +99,7 @@ TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
   auto range = client.ListMonitoredResourceDescriptors(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kOk));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines,
               Contains(HasSubstr("ListMonitoredResourceDescriptors")));
@@ -112,7 +113,7 @@ TEST_F(LoggingIntegrationTest, ListLogsFailure) {
   auto range = client.ListLogs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kUnavailable));
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
 }
