@@ -41,9 +41,9 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" shutdown
 
 bazel_args=(
+  "-c opt"
   # On macOS gRPC does not compile correctly unless one defines this:
   "--copt=-DGRPC_BAZEL_BUILD"
-  "--copt=-UDEBUG"
   # We need this environment variable because on macOS gRPC crashes if it
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.
@@ -158,7 +158,6 @@ if should_run_integration_tests; then
 
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
-    "--copt=-DDEBUG=DEBUG" \
     "--test_tag_filters=integration-test" \
     -- ... \
     -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
