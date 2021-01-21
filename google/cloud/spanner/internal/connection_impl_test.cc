@@ -482,7 +482,6 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   auto failing_reader = MakeFailingReader(grpc_status);
   auto constexpr kText = R"pb(
     metadata: {
-      transaction: { id: "ABCDEF00" }
       row_type: {
         fields: {
           name: "UserId",
