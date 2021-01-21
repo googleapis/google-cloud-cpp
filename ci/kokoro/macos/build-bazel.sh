@@ -41,7 +41,7 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" shutdown
 
 bazel_args=(
-  "--compilation_mode=fastbuild"
+  "--compilation_mode=opt"
   # On macOS gRPC does not compile correctly unless one defines this:
   "--copt=-DGRPC_BAZEL_BUILD"
   # We need this environment variable because on macOS gRPC crashes if it
