@@ -360,7 +360,7 @@ TEST(GrpcClientBucketMetadata, BucketIamConfigurationRoundtrip) {
             std::chrono::duration_cast<std::chrono::system_clock::duration>(
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
   auto const expected =
-      BucketIamConfiguration{{}, UniformBucketLevelAccess{true, tp}};
+      BucketIamConfiguration{UniformBucketLevelAccess{true, tp}};
   auto const middle = GrpcClient::FromProto(start);
   EXPECT_EQ(middle, expected);
   auto const end = GrpcClient::ToProto(middle);
