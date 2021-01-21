@@ -45,9 +45,6 @@ include(GoogleCloudCppCommon)
 include(IncludeNlohmannJson)
 find_package(Crc32c)
 
-# Generate the version information from the CMake values.
-configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
-
 # Export the version information for Bazel.
 include(CreateBazelConfig)
 
