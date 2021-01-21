@@ -408,6 +408,135 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 }
 
+TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db =
+      spanner::Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock},
+      spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
+  grpc::Status grpc_status(grpc::StatusCode::UNAVAILABLE, "uh-oh");
+  auto failing_reader = MakeFailingReader(grpc_status);
+  auto constexpr kText = R"pb(
+    metadata: {
+      transaction: { id: "ABCDEF00" }
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "12" }
+    values: { string_value: "Steve" }
+    values: { string_value: "42" }
+    values: { string_value: "Ann" }
+  )pb";
+  auto ok_reader = MakeReader({kText});
+
+  // n.b. these calls are explicitly sequenced because using the scoped
+  // `InSequence` object causes gMock to get confused by the reader calls.
+  Sequence s;
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .InSequence(s)
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
+                                            HasBeginTransaction())))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(failing_reader))));
+  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
+                                            HasBeginTransaction())))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(ok_reader))));
+  spanner::Transaction txn =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows = conn->Read(
+      {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto expected = std::vector<RowType>{
+      RowType(12, "Steve"),
+      RowType(42, "Ann"),
+  };
+  int row_number = 0;
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+  EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
+}
+
+TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db =
+      spanner::Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock},
+      spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
+  grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
+  auto failing_reader = MakeFailingReader(grpc_status);
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "UserId",
+          type: { code: INT64 }
+        }
+        fields: {
+          name: "UserName",
+          type: { code: STRING }
+        }
+      }
+    }
+    values: { string_value: "12" }
+    values: { string_value: "Steve" }
+    values: { string_value: "42" }
+    values: { string_value: "Ann" }
+  )pb";
+  auto ok_reader = MakeReader({kText});
+
+  // n.b. these calls are explicitly sequenced because using the scoped
+  // `InSequence` object causes gMock to get confused by the reader calls.
+  Sequence s;
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .InSequence(s)
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
+                                            HasBeginTransaction())))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(failing_reader))));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .InSequence(s)
+      .WillOnce(Return(MakeTestTransaction("FEDCBA98")));
+  EXPECT_CALL(*mock, StreamingRead(_, AllOf(HasSession("test-session-name"),
+                                            HasTransactionId("FEDCBA98"))))
+      .InSequence(s)
+      .WillOnce(Return(ByMove(std::move(ok_reader))));
+
+  spanner::Transaction txn =
+      MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
+  auto rows = conn->Read(
+      {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto expected = std::vector<RowType>{
+      RowType(12, "Steve"),
+      RowType(42, "Ann"),
+  };
+  int row_number = 0;
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+  EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "FEDCBA98"));
+}
+
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
