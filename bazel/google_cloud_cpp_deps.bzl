@@ -90,7 +90,7 @@ def google_cloud_cpp_deps():
             urls = [
                 "https://github.com/google/protobuf/archive/v3.14.0.tar.gz",
             ],
-            tvsha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
+            sha256 = "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
