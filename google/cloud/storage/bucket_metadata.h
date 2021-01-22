@@ -156,7 +156,7 @@ struct UniformBucketLevelAccess {
 using BucketPolicyOnly = UniformBucketLevelAccess;
 
 //@{
-/// @name Comparison operators For BucketOnlyPolicy.
+/// @name Comparison operators For UniformBucketLevelAccess
 inline bool operator==(UniformBucketLevelAccess const& lhs,
                        UniformBucketLevelAccess const& rhs) {
   return std::tie(lhs.enabled, lhs.locked_time) ==
@@ -190,13 +190,13 @@ inline bool operator>=(UniformBucketLevelAccess const& lhs,
 }
 //@}
 
-std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
+std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
 
 /**
  * The IAM configuration for a Bucket.
  *
- * Currently this only holds the BucketOnlyPolicy. In the future, we may define
- * additional IAM which would be included in this object.
+ * Currently this only holds the UniformBucketLevelAccess. In the future, we may
+ * define additional IAM which would be included in this object.
  *
  * @see Before enabling Uniform Bucket Level Access please review the
  *     [feature documentation][ubla-link], as well as
@@ -208,9 +208,6 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
  */
 struct BucketIamConfiguration {
-  /// @deprecated this field will be removed on or about 2021-01-15, use
-  ///     `uniform_bucket_level_access`
-  absl::optional<BucketPolicyOnly> bucket_policy_only;
   absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
 };
 
