@@ -82,35 +82,16 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab9ad80e720c9784bf4db09fd0d3b644e"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a453823cb9dbabe8626a162943b899e5e">BucketPolicyOnly</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketIamConfiguration.html#ab9ad80e720c9784bf4db09fd0d3b644e">bucket_policy_only</a></td></tr>
-<tr class="separator:ab9ad80e720c9784bf4db09fd0d3b644e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebf5f2453d0e0376e3f49f7e62213261"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1UniformBucketLevelAccess.html">UniformBucketLevelAccess</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketIamConfiguration.html#aebf5f2453d0e0376e3f49f7e62213261">uniform_bucket_level_access</a></td></tr>
 <tr class="separator:aebf5f2453d0e0376e3f49f7e62213261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The IAM configuration for a Bucket. </p>
-<p>Currently this only holds the BucketOnlyPolicy. In the future, we may define additional IAM which would be included in this object.</p>
+<p>Currently this only holds the <a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1UniformBucketLevelAccess.html" title="Configure if only the IAM policies are used for access control.">UniformBucketLevelAccess</a>. In the future, we may define additional IAM which would be included in this object.</p>
 <dl class="section see"><dt>See also</dt><dd>Before enabling Uniform Bucket Level Access please review the <a href="https://cloud.google.com/storage/docs/uniform-bucket-level-access">feature documentation</a>, as well as <a href="https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use">"Should you use uniform bucket-level access ?"</a>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00210">210</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ab9ad80e720c9784bf4db09fd0d3b644e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9ad80e720c9784bf4db09fd0d3b644e">&#9670;&nbsp;</a></span>bucket_policy_only</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;<a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a453823cb9dbabe8626a162943b899e5e">BucketPolicyOnly</a>&gt; google::cloud::storage::v1::BucketIamConfiguration::bucket_policy_only</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this field will be removed on or about 2021-01-15, use <code>uniform_bucket_level_access</code> </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00213">213</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
-
-</div>
-</div>
 <a id="aebf5f2453d0e0376e3f49f7e62213261"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aebf5f2453d0e0376e3f49f7e62213261">&#9670;&nbsp;</a></span>uniform_bucket_level_access</h2>
 
@@ -123,7 +104,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00214">214</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="bucket__metadata_8h_source.html#l00211">211</a> of file <a class="el" href="bucket__metadata_8h_source.html">bucket_metadata.h</a>.</p>
 
 </div>
 </div>
