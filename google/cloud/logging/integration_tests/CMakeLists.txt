@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ function (google_cloud_cpp_logging_define_integration_tests)
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("logging_client_integration_tests.bzl"
-                         "logging_client_integration_tests" YEAR "2020")
+                         "logging_client_integration_tests" YEAR "2021")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(logging-client-integration-tests)

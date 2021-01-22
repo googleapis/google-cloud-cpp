@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ add_library(googleapis-c++::logging_client ALIAS logging_client)
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(logging_client YEAR "2020")
+create_bazel_config(logging_client YEAR "2021")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -87,7 +87,7 @@ target_link_libraries(
     logging_client_mocks
     INTERFACE googleapis-c++::logging_client google_cloud_cpp_testing
               GTest::gmock_main GTest::gmock GTest::gtest)
-create_bazel_config(logging_client_mocks YEAR "2020")
+create_bazel_config(logging_client_mocks YEAR "2021")
 target_include_directories(
     logging_client_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
