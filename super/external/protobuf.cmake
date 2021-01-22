@@ -23,9 +23,9 @@ if (NOT TARGET protobuf-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_PROTOBUF_URL
-        "https://github.com/google/protobuf/archive/v3.12.4.tar.gz")
+        "https://github.com/google/protobuf/archive/v3.14.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_PROTOBUF_SHA256
-        "512e5a674bf31f8b7928a64d8adf73ee67b8fe88339ad29adaa3b84dbaa570d8")
+        "d0f5f605d0d656007ce6c8b5a82df3037e1d8fe8b121ed42e536f569dec16113")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()

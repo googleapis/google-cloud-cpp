@@ -167,7 +167,7 @@ cc_binary(
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
-| [protobuf][protobuf-gh] | 3.12.4 | C++ Microgenerator support |
+| [protobuf][protobuf-gh] | 3.14.0 | C++ Microgenerator support |
 
 [gRPC-gh]: https://github.com/grpc/grpc
 [libcurl-gh]: https://github.com/curl/curl
@@ -483,9 +483,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -632,9 +632,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -765,9 +765,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -898,9 +898,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1154,9 +1154,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1319,9 +1319,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1476,9 +1476,9 @@ Google Cloud Platform proto files:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.12.4.tar.gz && \
-    tar -xf v3.12.4.tar.gz && \
-    cd protobuf-3.12.4/cmake && \
+wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
+    tar -xf v3.14.0.tar.gz && \
+    cd protobuf-3.14.0/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
