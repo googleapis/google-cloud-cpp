@@ -138,6 +138,11 @@ RUN cmake --build cmake-out --target install
 
 ## [END packaging.md]
 
+WORKDIR /home/build/verify-exported-targets
+COPY ci/verify_exported_targets /home/build/verify-exported-targets
+RUN cmake -H. -B/i/verify-exported-targets -Wno-dev
+RUN cmake --build /i/verify-exported-targets
+
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
 # Verify that the installed files are actually usable
