@@ -99,7 +99,7 @@ google_cloud_cpp_install_headers(firestore_client
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Firestore C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Firestore.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lfirestore_client -lfirestore_protos")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lfirestore_client")
 
 # Install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
