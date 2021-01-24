@@ -28,7 +28,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Threads REQUIRED)
 # TODO(#5726) - DO NOT CHANGE THESE PACKAGE NAMES These package names are
 # expected to remain usable until we have retired them.  This is a test for
-# backwards compatibility, if you need to change the test, there is good chance
+# backwards compatibility. If you need to change the test, there is good chance
 # you are breaking something.
 find_package(bigtable_client REQUIRED)
 find_package(firestore_client REQUIRED)
@@ -55,7 +55,7 @@ endfunction ()
 
 # TODO(#5726) - DO NOT CHANGE THESE TARGET NAMES These package names are
 # expected to remain usable until we have retired them.  This is a test for
-# backwards compatibility, if you need to change the test, there is good chance
+# backwards compatibility. If you need to change the test, there is good chance
 # you are breaking something.
 add_test_case(t010 google_cloud_cpp_common)
 add_test_case(t020 google_cloud_cpp_grpc_utils)
@@ -67,7 +67,6 @@ add_test_case(t070 firestore_client google_cloud_cpp_common)
 add_test_case(t080 firestore::client google_cloud_cpp_common)
 add_test_case(t090 googleapis-c++::pubsub_client)
 add_test_case(t100 pubsub_client)
-# add_test_case(t110 googleapis-c++::storage_client)
 add_test_case(t120 storage_client)
 add_test_case(t130 googleapis-c++::spanner_client)
 add_test_case(t140 spanner_client)
