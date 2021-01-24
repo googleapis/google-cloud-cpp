@@ -22,7 +22,9 @@ cc_library(
     name = "firestore_client",
     srcs = firestore_client_srcs,
     hdrs = firestore_client_hdrs,
-    deps = [],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+    ],
 )
 
 load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")

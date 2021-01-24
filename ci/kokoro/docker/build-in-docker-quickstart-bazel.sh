@@ -119,6 +119,16 @@ for library in $(quickstart::libraries); do
   fi
 done
 
+echo
+echo "================================================================"
+io::log_yellow "Verifying deprecated (but not retired) targets"
+(
+  cd ci/verify_exported_targets
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    "${BAZEL_BIN}" fetch ... "${external[@]}"
+  "${BAZEL_BIN}" test ... "${bazel_args[@]}"
+)
+
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
   io::log_green "All quickstart builds were successful"
