@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_OPTIONS_H
 
-#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
-#include <cstdint>
 
 namespace google {
 namespace cloud {
@@ -26,21 +23,27 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * Statistics returned for a committed Transaction.
+ * Set options on calls to `spanner::Client::Commit()`.
+ *
+ * @par Example
+ * @snippet samples.cc commit-options
  */
-struct CommitStats {
-  std::int64_t mutation_count;  // total number of mutations
-};
+class CommitOptions {
+ public:
+  /// Default options: no stats.
+  CommitOptions() = default;
 
-/**
- * The result of committing a Transaction.
- */
-struct CommitResult {
-  /// The Cloud Spanner timestamp at which the transaction committed.
-  Timestamp commit_timestamp;
+  /// Set whether the `CommitResult` should contain `CommitStats`.
+  CommitOptions& set_return_stats(bool return_stats) {
+    return_stats_ = return_stats;
+    return *this;
+  }
 
-  /// Additional statistics about the committed transaction.
-  absl::optional<CommitStats> commit_stats;
+  /// Whether the `CommitResult` should contain `CommitStats`.
+  bool return_stats() const { return return_stats_; }
+
+ private:
+  bool return_stats_ = false;
 };
 
 }  // namespace SPANNER_CLIENT_NS
@@ -48,4 +51,4 @@ struct CommitResult {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_OPTIONS_H

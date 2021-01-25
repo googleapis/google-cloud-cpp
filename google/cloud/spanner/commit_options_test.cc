@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,40 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H
-
-#include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
-#include <cstdint>
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+namespace {
 
-/**
- * Statistics returned for a committed Transaction.
- */
-struct CommitStats {
-  std::int64_t mutation_count;  // total number of mutations
-};
+TEST(CommitOptionsTest, Defaults) {
+  CommitOptions options;
+  EXPECT_FALSE(options.return_stats());
+}
 
-/**
- * The result of committing a Transaction.
- */
-struct CommitResult {
-  /// The Cloud Spanner timestamp at which the transaction committed.
-  Timestamp commit_timestamp;
+TEST(SessionPoolOptionsTest, Stats) {
+  CommitOptions options;
+  options.set_return_stats(true);
+  EXPECT_TRUE(options.return_stats());
+}
 
-  /// Additional statistics about the committed transaction.
-  absl::optional<CommitStats> commit_stats;
-};
-
+}  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_RESULT_H

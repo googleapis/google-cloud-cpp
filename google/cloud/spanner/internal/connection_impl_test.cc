@@ -94,6 +94,11 @@ MATCHER_P(HasNakedTransactionId, transaction_id,
   return arg.transaction_id() == transaction_id;
 }
 
+MATCHER_P(HasReturnStats, return_commit_stats,
+          "commit request has expected return-stats value") {
+  return arg.return_commit_stats() == return_commit_stats;
+}
+
 MATCHER(HasBeginTransaction, "request has begin TransactionSelector set") {
   return arg.transaction().has_begin();
 }
@@ -162,11 +167,17 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
   return response;
 }
 
-// Create a `CommitResponse with the given `commit_timestamp`.
+// Create a `CommitResponse` with the given `commit_timestamp` and
+// `commit_stats`.
 spanner_proto::CommitResponse MakeCommitResponse(
-    spanner::Timestamp commit_timestamp) {
+    spanner::Timestamp commit_timestamp,
+    absl::optional<spanner::CommitStats> commit_stats = absl::nullopt) {
   spanner_proto::CommitResponse response;
   *response.mutable_commit_timestamp() = TimestampToProto(commit_timestamp);
+  if (commit_stats.has_value()) {
+    auto* proto_stats = response.mutable_commit_stats();
+    proto_stats->set_mutation_count(commit_stats->mutation_count);
+  }
   return response;
 }
 
@@ -1858,6 +1869,33 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
 
   auto commit = conn->Commit({txn});
   EXPECT_STATUS_OK(commit);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithStats) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  spanner_proto::Transaction txn = MakeTestTransaction();
+  auto db =
+      spanner::Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(
+      db, {mock},
+      spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction(_, _)).WillOnce(Return(txn));
+  EXPECT_CALL(*mock, Commit(_, AllOf(HasSession("test-session-name"),
+                                     HasReturnStats(true))))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value(),
+          spanner::CommitStats{42})));
+
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
+                              {},
+                              spanner::CommitOptions{}.set_return_stats(true)});
+  EXPECT_STATUS_OK(commit);
+  ASSERT_TRUE(commit->commit_stats.has_value());
+  EXPECT_EQ(42, commit->commit_stats->mutation_count);
 }
 
 TEST(ConnectionImplTest, RollbackGetSessionFailure) {
