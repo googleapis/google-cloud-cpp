@@ -72,6 +72,7 @@ cc_library(
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",

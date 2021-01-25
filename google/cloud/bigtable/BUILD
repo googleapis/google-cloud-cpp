@@ -25,6 +25,7 @@ cc_library(
     name = "bigtable_client",
     srcs = bigtable_client_srcs,
     hdrs = bigtable_client_hdrs,
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
     # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud:google_cloud_cpp_common",

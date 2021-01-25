@@ -22,6 +22,7 @@ cc_library(
     name = "pubsub_client",
     srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
