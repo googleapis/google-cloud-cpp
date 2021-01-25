@@ -35,20 +35,17 @@ find_package(firestore_client REQUIRED)
 find_package(storage_client REQUIRED)
 find_package(spanner_client REQUIRED)
 find_package(pubsub_client REQUIRED)
-pkg_check_modules(google_cloud_cpp_common IMPORTED_TARGET REQUIRED
-                  google_cloud_cpp_common)
-pkg_check_modules(google_cloud_cpp_grpc_utils IMPORTED_TARGET REQUIRED
-                  google_cloud_cpp_grpc_utils)
-pkg_check_modules(bigtable_client IMPORTED_TARGET REQUIRED bigtable_client)
-pkg_check_modules(firestore_client IMPORTED_TARGET REQUIRED firestore_client)
-pkg_check_modules(pubsub_client IMPORTED_TARGET REQUIRED pubsub_client)
-pkg_check_modules(spanner_client IMPORTED_TARGET REQUIRED spanner_client)
-pkg_check_modules(storage_client IMPORTED_TARGET REQUIRED storage_client)
 
 include(CTest)
 
 function (add_test_case name)
     add_executable("${name}" verify_exported_targets.cc)
+    target_link_libraries("${name}" PRIVATE ${ARGN})
+    add_test(NAME "${name}" COMMAND "${name}")
+endfunction ()
+
+function (add_proto_test_case name)
+    add_executable("${name}" verify_exported_proto_targets.cc)
     target_link_libraries("${name}" PRIVATE ${ARGN})
     add_test(NAME "${name}" COMMAND "${name}")
 endfunction ()
@@ -71,11 +68,78 @@ add_test_case(t120 storage_client)
 add_test_case(t130 googleapis-c++::spanner_client)
 add_test_case(t140 spanner_client)
 
-add_test_case(t200 PkgConfig::google_cloud_cpp_common)
-add_test_case(t210 PkgConfig::google_cloud_cpp_grpc_utils)
-add_test_case(t220 PkgConfig::bigtable_client)
-add_test_case(t230 PkgConfig::firestore_client
+# TODO(#5726) - DO NOT CHANGE THESE MODULE NAMES These module names are expected
+# to remain usable until we have retired them.  This is a test for backwards
+# compatibility. If you need to change the test, there is good chance you are
+# breaking something.
+set(pkg_config_modules
+    google_cloud_cpp_common google_cloud_cpp_grpc_utils bigtable_client
+    pubsub_client spanner_client storage_client)
+foreach (module ${pkg_config_modules})
+    pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})
+    add_test_case(test_pc_${module} PkgConfig::${module})
+endforeach ()
+
+# This one is special because it does not depend on google_cloud_cpp_common.
+pkg_check_modules(firestore_client IMPORTED_TARGET REQUIRED firestore_client)
+add_test_case(test_pc_firestore_client PkgConfig::firestore_client
               PkgConfig::google_cloud_cpp_common)
-add_test_case(t240 PkgConfig::pubsub_client)
-add_test_case(t250 PkgConfig::spanner_client)
-add_test_case(t260 PkgConfig::storage_client)
+
+# TODO(#5726) - DO NOT CHANGE THESE TARGET NAMES These target names are expected
+# to remain usable until we have retired them.  This is a test for backwards
+# compatibility. If you need to change the test, there is good chance you are
+# breaking something.
+set(googleapis_cpp_installed_libraries_list
+    googleapis_cpp_bigtable_protos
+    googleapis_cpp_cloud_bigquery_protos
+    googleapis_cpp_cloud_speech_protos
+    googleapis_cpp_cloud_texttospeech_protos
+    googleapis_cpp_iam_protos
+    googleapis_cpp_pubsub_protos
+    googleapis_cpp_spanner_protos
+    googleapis_cpp_storage_protos
+    googleapis_cpp_longrunning_operations_protos
+    googleapis_cpp_api_http_protos
+    googleapis_cpp_api_annotations_protos
+    googleapis_cpp_api_auth_protos
+    googleapis_cpp_api_client_protos
+    googleapis_cpp_api_distribution_protos
+    googleapis_cpp_api_field_behavior_protos
+    googleapis_cpp_api_label_protos
+    googleapis_cpp_api_launch_stage_protos
+    googleapis_cpp_api_metric_protos
+    googleapis_cpp_api_monitored_resource_protos
+    googleapis_cpp_api_resource_protos
+    googleapis_cpp_devtools_cloudtrace_v2_trace_protos
+    googleapis_cpp_devtools_cloudtrace_v2_tracing_protos
+    googleapis_cpp_logging_type_protos
+    googleapis_cpp_logging_protos
+    googleapis_cpp_monitoring_protos
+    googleapis_cpp_iam_v1_options_protos
+    googleapis_cpp_iam_v1_policy_protos
+    googleapis_cpp_iam_v1_iam_policy_protos
+    googleapis_cpp_rpc_error_details_protos
+    googleapis_cpp_rpc_status_protos
+    googleapis_cpp_type_calendar_period_protos
+    googleapis_cpp_type_color_protos
+    googleapis_cpp_type_date_protos
+    googleapis_cpp_type_datetime_protos
+    googleapis_cpp_type_dayofweek_protos
+    googleapis_cpp_type_expr_protos
+    googleapis_cpp_type_fraction_protos
+    googleapis_cpp_type_interval_protos
+    googleapis_cpp_type_latlng_protos
+    googleapis_cpp_type_localized_text_protos
+    googleapis_cpp_type_money_protos
+    googleapis_cpp_type_month_protos
+    googleapis_cpp_type_phone_number_protos
+    googleapis_cpp_type_postal_address_protos
+    googleapis_cpp_type_quaternion_protos
+    googleapis_cpp_type_timeofday_protos)
+
+foreach (lib ${googleapis_cpp_installed_libraries_list})
+    string(REPLACE "googleapis_cpp_" "googleapis-c++::" target "${lib}")
+    add_proto_test_case(test_${lib} ${target})
+    pkg_check_modules(${lib} IMPORTED_TARGET REQUIRED ${lib})
+    add_proto_test_case(test_pc_${lib} PkgConfig::${lib})
+endforeach ()

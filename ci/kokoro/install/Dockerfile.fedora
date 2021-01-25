@@ -141,7 +141,8 @@ RUN cmake --build cmake-out --target install
 WORKDIR /home/build/verify-exported-targets
 COPY ci/verify_exported_targets /home/build/verify-exported-targets
 RUN cmake -H. -B/i/verify-exported-targets -Wno-dev
-RUN cmake --build /i/verify-exported-targets
+RUN cmake --build /i/verify-exported-targets -j "${NCPU:-4}"
+RUN cmake --build /i/verify-exported-targets --target test
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
