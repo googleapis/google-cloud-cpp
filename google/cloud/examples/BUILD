@@ -22,8 +22,8 @@ cc_library(
     name = "gcs2cbt_lib",
     srcs = ["gcs2cbt.cc"],
     deps = [
-        "//google/cloud/bigtable:bigtable_client",
-        "//google/cloud/storage:storage_client",
+        "//:bigtable",
+        "//:storage",
     ],
 )
 

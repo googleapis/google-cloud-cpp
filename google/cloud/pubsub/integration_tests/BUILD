@@ -27,7 +27,7 @@ load(":pubsub_client_integration_tests.bzl", "pubsub_client_integration_tests")
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/pubsub:pubsub_client",
+        "//:pubsub",
         "//google/cloud/pubsub:pubsub_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

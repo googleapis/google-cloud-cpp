@@ -24,7 +24,7 @@ cc_library(
     hdrs = storage_examples_common_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/storage:storage_client",
+        "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
     ],
@@ -38,7 +38,7 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
     deps = [
         ":storage_examples_common",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/storage:storage_client",
+        "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -56,7 +56,7 @@ load(":storage_examples.bzl", "storage_examples")
     deps = [
         ":storage_examples_common",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/storage:storage_client",
+        "//:storage",
         "//google/cloud/storage:storage_client_grpc",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",

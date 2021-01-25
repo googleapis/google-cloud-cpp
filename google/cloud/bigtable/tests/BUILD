@@ -31,7 +31,7 @@ load(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//google/cloud/bigtable:bigtable_client",
+        "//:bigtable",
         "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -42,6 +42,6 @@ cc_binary(
     name = "instance_admin_emulator",
     srcs = ["instance_admin_emulator.cc"],
     deps = [
-        "//google/cloud/bigtable:bigtable_client",
+        "//:bigtable",
     ],
 )
