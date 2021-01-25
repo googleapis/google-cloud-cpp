@@ -44,7 +44,7 @@ cc_library(
 cc_library(
     name = "storage",
     deps = [
-        "//google/cloud/storage",
+        "//google/cloud/storage:storage_client",
     ],
 )
 
