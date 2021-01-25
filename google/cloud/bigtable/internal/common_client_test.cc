@@ -37,7 +37,8 @@ class OutstandingTimersTest : public ::testing::Test {
 };
 
 TEST_F(OutstandingTimersTest, Trivial) {
-  std::make_shared<OutstandingTimers>(std::make_shared<CompletionQueue>(cq_));
+  auto unused = std::make_shared<OutstandingTimers>(std::make_shared<CompletionQueue>(cq_));
+  unused.reset();
 }
 
 TEST_F(OutstandingTimersTest, TimerFinishes) {
