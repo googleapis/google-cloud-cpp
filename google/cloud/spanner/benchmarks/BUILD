@@ -24,8 +24,8 @@ cc_library(
     srcs = spanner_client_benchmarks_srcs,
     hdrs = spanner_client_benchmarks_hdrs,
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
         "//:spanner",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_mocks",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -42,8 +42,8 @@ cc_library(
     ],
     deps = [
         ":spanner_client_benchmarks",
-        "//google/cloud:google_cloud_cpp_common",
         "//:spanner",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_mocks",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",

@@ -29,8 +29,8 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
         "integration-test",
     ],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
         "//:spanner",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -41,8 +41,8 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
         "//:spanner",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",

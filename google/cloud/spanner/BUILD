@@ -25,6 +25,7 @@ cc_library(
     name = "spanner_client",
     srcs = spanner_client_srcs,
     hdrs = spanner_client_hdrs,
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -38,7 +39,6 @@ cc_library(
         "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc",
         "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
 )
 
 load(":spanner_client_mocks.bzl", "spanner_client_mocks_hdrs", "spanner_client_mocks_srcs")

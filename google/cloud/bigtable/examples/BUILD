@@ -23,9 +23,9 @@ cc_library(
     srcs = bigtable_examples_common_srcs,
     hdrs = bigtable_examples_common_hdrs,
     deps = [
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//:bigtable",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -39,9 +39,9 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
     srcs = [test],
     deps = [
         ":bigtable_examples_common",
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//:bigtable",
         "//google/cloud/bigtable:bigtable_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -58,9 +58,9 @@ load(":bigtable_examples.bzl", "bigtable_examples")
     ],
     deps = [
         ":bigtable_examples_common",
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
-        "//:bigtable",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
