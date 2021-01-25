@@ -29,6 +29,10 @@ DEPRECATED_TARGETS = [
     "google/cloud/pubsub:pubsub_client",
     "google/cloud/spanner:spanner_client",
     "google/cloud/storage:storage_client",
+    ":bigtable_client",
+    ":pubsub_client",
+    ":spanner_client",
+    ":storage_client",
 ]
 
 [cc_test(
