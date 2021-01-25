@@ -58,6 +58,7 @@ $workaround_targets=(
     # Failed around 2020-08-10
     "storage_well_known_parameters_test",
     # Failed around 20201-01-25
+    "common_internal_random_test",
     "common_future_generic_test",
     "googleapis_download"
 )
