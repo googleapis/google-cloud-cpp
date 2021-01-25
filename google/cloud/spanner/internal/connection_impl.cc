@@ -909,6 +909,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   for (auto&& m : params.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
+  request.set_return_commit_stats(params.options.return_stats());
 
   if (s->selector_case() != spanner_proto::TransactionSelector::kId) {
     auto begin = BeginTransaction(
@@ -939,6 +940,10 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   if (!timestamp) return std::move(timestamp).status();
   spanner::CommitResult r;
   r.commit_timestamp = *std::move(timestamp);
+  if (response->has_commit_stats()) {
+    r.commit_stats.emplace(
+        spanner::CommitStats{response->commit_stats().mutation_count()});
+  }
   return r;
 }
 
