@@ -54,7 +54,7 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     iam_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                      googleapis-c++::iam_protos)
+                      google-cloud-cpp::iam_protos)
 google_cloud_cpp_add_common_options(iam_client)
 set_target_properties(
     iam_client PROPERTIES VERSION "${PROJECT_VERSION}"

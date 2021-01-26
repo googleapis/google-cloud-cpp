@@ -47,7 +47,8 @@ list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
 
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos INTERFACE)
-target_link_libraries(bigtable_protos INTERFACE googleapis-c++::bigtable_protos)
+target_link_libraries(bigtable_protos
+                      INTERFACE google-cloud-cpp::bigtable_protos)
 add_library(bigtable::protos ALIAS bigtable_protos)
 
 find_package(gRPC)

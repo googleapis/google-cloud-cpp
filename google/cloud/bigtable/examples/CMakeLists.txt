@@ -20,7 +20,7 @@ if (BUILD_TESTING)
     target_link_libraries(
         bigtable_examples_common
         bigtable_client
-        bigtable_protos
+        google-cloud-cpp::bigtable_protos
         google_cloud_cpp_common
         google_cloud_cpp_testing
         google_cloud_cpp_grpc_utils

@@ -1,6 +1,47 @@
 # Changelog
 
+**FUTURE CHANGES:**
+
+* In 2022-02-15 (or around that time) we are planning to remove a number of
+  backwards compatibility targets names for Bazel and CMake.  Specifically:
+  - **Bazel Users:** applications should use the targets at the top-level
+    directory, e.g. `//:bigtable`, or `//:pubsub`.
+    - All other Bazel targets will be marked as package private in or around
+      2022-02-15.
+  - **CMake Users:** applications should use the
+    `google-cloud-cpp::*` targets (e.g. `google-cloud-cpp::pubsub`).
+    - :warning: some of these targets are not part of the current release,
+      but will be soon.
+    - The legacy CMake targets generate warnings if using CMake >= 3.17 (the
+      earliest version that supports deprecation warnings).
+    - All exported targets without a `google-cloud-cpp::` prefix will be
+      retired in or around 2022-02-15. These include, but are not limited to:
+      - Any target starting with `googleapis-c++::`
+      - Any exported targets without a prefix, including:
+        `google_cloud_cpp_common`, `google_cloud_cpp_grpc_utils`,
+        `bigtable_client`, `bigtable_protos`, `firestore_client`,
+        `pubsub_client`, `storage_client`, `spanner_client`.
+      - Some target aliases, including `bigtable::client`, `bigtable::protos`,
+        `firestore::client`
+  - **pkg-config users:** applications should use the modules starting with
+    `google_cloud_cpp`
+    - All other modules will be retired in or around 2022-02-15
+  - **Direct users of -l${library} flags:** we do not recommend that
+    applications uses `-l` flags directly, please use `pkg-config` and/or
+    the target names under CMake or Bazel. We make this recommendation because
+    we do not know of any mechanism to provide backwards compatibility for such
+    flags.
+  - If you have any feedback about this change please add comments in
+    [#5726](https://github.com/googleapis/google-cloud-cpp/issues/5726)
+
+
 ## v1.24.0 - TBD
+
+### Bazel
+
+* Starting with this release the legacy targets, such as `//google/cloud/pubsub:pubsub_client` are deprecated and
+  generate warnings recommending a replacement (such as `//:pubsub`). Note that you may be to prefix that with the
+  external package name you gave this library, e.g., `@github_com_google_cloud_cpp//:pubsub`).
 
 ### Storage
 

@@ -283,7 +283,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     set(saved_tidy "${CMAKE_CXX_CLANG_TIDY}")
     set(CMAKE_CXX_CLANG_TIDY "")
     google_cloud_cpp_proto_library(
-        google_cloud_cpp_storage_protos
+        google_cloud_cpp_storage_internal_protos
         internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
     set(CMAKE_CXX_CLANG_TIDY "${saved_tidy}")
@@ -306,9 +306,9 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         PUBLIC storage_client
                google_cloud_cpp_grpc_utils
                google_cloud_cpp_common
-               google_cloud_cpp_storage_protos
+               google_cloud_cpp_storage_internal_protos
                nlohmann_json::nlohmann_json
-               googleapis-c++::storage_protos
+               google-cloud-cpp::storage_protos
                gRPC::grpc++
                protobuf::libprotobuf
                absl::strings
