@@ -28,7 +28,7 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
     deps = [
         "//:spanner",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/spanner:spanner_client_mocks",
+        "//:spanner_mocks",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
