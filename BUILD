@@ -30,6 +30,7 @@ cc_library(
 cc_library(
     name = "bigtable_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = [ "manual" ],
     deps = [
         "//google/cloud/bigtable:bigtable_client_internal",
     ],
@@ -52,6 +53,7 @@ cc_library(
 cc_library(
     name = "pubsub_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = [ "manual" ],
     deps = [
         "//google/cloud/pubsub:pubsub_client_internal",
     ],
@@ -74,6 +76,7 @@ cc_library(
 cc_library(
     name = "spanner_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = [ "manual" ],
     deps = [
         "//google/cloud/spanner:spanner_client_internal",
     ],
@@ -89,6 +92,7 @@ cc_library(
 cc_library(
     name = "storage_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+    tags = [ "manual" ],
     deps = [
         "//google/cloud/storage:storage_client_internal",
     ],

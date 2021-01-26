@@ -97,6 +97,7 @@ cc_library(
         "//google/cloud/storage:storage_client_internal",
     ],
     deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+    tags = [ "manual" ],
 )
 
 load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")

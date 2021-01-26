@@ -50,6 +50,7 @@ cc_library(
         "//google/cloud/spanner:spanner_client_internal",
     ],
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = [ "manual" ],
 )
 
 load(":spanner_client_mocks.bzl", "spanner_client_mocks_hdrs", "spanner_client_mocks_srcs")
@@ -76,6 +77,7 @@ cc_library(
         "//google/cloud/spanner:spanner_mocks_internal",
     ],
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner_mocks instead.",
+    tags = [ "manual" ],
 )
 
 load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")

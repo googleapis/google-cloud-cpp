@@ -48,6 +48,7 @@ cc_library(
         "//google/cloud/bigtable:bigtable_client_internal",
     ],
     deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
+    tags = [ "manual" ],
 )
 
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
