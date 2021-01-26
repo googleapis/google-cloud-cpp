@@ -65,14 +65,17 @@ cc_library(
 )
 
 cc_library(
-    name = "storage_client",
+    name = "storage_client_internal",
     srcs = storage_client_srcs,
     hdrs = storage_client_hdrs,
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+    visibility = [
+        "//google/cloud/storage:__subpackages__",
+        "//:__pkg__",
+     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
@@ -88,6 +91,14 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "storage_client",
+    deps = [
+        "//google/cloud/storage:storage_client_internal",
+    ],
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+)
+
 load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")
 
 cc_library(
@@ -99,8 +110,8 @@ cc_library(
         "//conditions:default": [],
     }),
     deps = [
-        ":storage_client",
         ":storage_client_grpc",
+        "//:storage",
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -124,7 +135,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":storage_client",
+        "//:storage",
         ":storage_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -150,8 +161,8 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":storage_client",
         ":storage_client_testing",
+        "//:storage",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@boringssl//:crypto",

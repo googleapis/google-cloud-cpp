@@ -19,16 +19,27 @@ licenses(["notice"])  # Apache 2.0
 load(":pubsub_client.bzl", "pubsub_client_hdrs", "pubsub_client_srcs")
 
 cc_library(
-    name = "pubsub_client",
+    name = "pubsub_client_internal",
     srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    visibility = [
+        "//google/cloud/pubsub:__subpackages__",
+        "//:__pkg__",
+     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
     ],
+)
+
+cc_library(
+    name = "pubsub_client",
+    deps = [
+        "//google/cloud/pubsub:pubsub_client_internal",
+    ],
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
 )
 
 load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
@@ -38,7 +49,7 @@ cc_library(
     srcs = pubsub_client_testing_srcs,
     hdrs = pubsub_client_testing_hdrs,
     deps = [
-        ":pubsub_client",
+        "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
@@ -53,7 +64,7 @@ cc_library(
     srcs = pubsub_client_mocks_srcs,
     hdrs = pubsub_client_mocks_hdrs,
     deps = [
-        ":pubsub_client",
+        "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
@@ -66,9 +77,9 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":pubsub_client",
         ":pubsub_client_mocks",
         ":pubsub_client_testing",
+        "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
