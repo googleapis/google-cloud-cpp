@@ -20,7 +20,10 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-std::string VersionString() { return ::google::cloud::version_string(); }
+std::string VersionString() {
+  auto const& x = ::google::cloud::version_string();
+  return x;
+}
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
