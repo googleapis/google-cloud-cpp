@@ -81,6 +81,13 @@ DefaultIAMCredentialsStub::ListLogs(
     return response;
 }
 
+std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+DefaultIAMCredentialsStub::TailLogEntries(
+    grpc::ClientContext& client_context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  return grpc_stub_->TailLogEntries(&client_context, request);
+}
+
 }  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

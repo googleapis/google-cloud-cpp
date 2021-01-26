@@ -88,7 +88,7 @@ class DatabaseAdminClient {
    *  `[a-z][a-z0-9_\-]*[a-z0-9]` and be between 2 and 30 characters in length.
    *  If the database ID is a reserved word or if it contains a hyphen, the
    *  database ID must be enclosed in backticks (`` ` ``).
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   CreateDatabase(std::string const& parent, std::string const& create_statement);
@@ -98,7 +98,7 @@ class DatabaseAdminClient {
    *
    * @param name  Required. The name of the requested database. Values are of the form
    *  `projects/<project>/instances/<instance>/databases/<database>`.
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   StatusOr<::google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name);
@@ -114,7 +114,7 @@ class DatabaseAdminClient {
    *
    * @param database  Required. The database to update.
    * @param statements  Required. DDL statements to be applied to the database.
-   * @return [::google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L504)
+   * @return [::google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L506)
    */
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements);
@@ -135,7 +135,7 @@ class DatabaseAdminClient {
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
    * @param database  Required. The database whose schema we wish to get.
-   * @return [::google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L543)
+   * @return [::google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L545)
    */
   StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(std::string const& database);
@@ -308,7 +308,7 @@ class DatabaseAdminClient {
    *  `projects/<project>/instances/<instance>/databases/<database_id>`.
    * @param backup  Name of the backup from which to restore.  Values are of the form
    *  `projects/<project>/instances/<instance>/backups/<backup>`.
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup);
@@ -350,7 +350,7 @@ class DatabaseAdminClient {
   /**
    * Lists Cloud Test databases.
    *
-   * @param request [::google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L375)
+   * @param request [::google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L377)
    */
   ListDatabasesRange
   ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request);
@@ -365,8 +365,8 @@ class DatabaseAdminClient {
    * [response][google.longrunning.Operation.response] field type is
    * [Database][google.test.admin.database.v1.Database], if successful.
    *
-   * @param request [::google::test::admin::database::v1::CreateDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L407)
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @param request [::google::test::admin::database::v1::CreateDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L409)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request);
@@ -374,8 +374,8 @@ class DatabaseAdminClient {
   /**
    * Gets the state of a Cloud Test database.
    *
-   * @param request [::google::test::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L441)
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @param request [::google::test::admin::database::v1::GetDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L443)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   StatusOr<::google::test::admin::database::v1::Database>
   GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request);
@@ -389,8 +389,8 @@ class DatabaseAdminClient {
    * [metadata][google.longrunning.Operation.metadata] field type is
    * [UpdateDatabaseDdlMetadata][google.test.admin.database.v1.UpdateDatabaseDdlMetadata].  The operation has no response.
    *
-   * @param request [::google::test::admin::database::v1::UpdateDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L468)
-   * @return [::google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L504)
+   * @param request [::google::test::admin::database::v1::UpdateDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L470)
+   * @return [::google::test::admin::database::v1::UpdateDatabaseDdlMetadata](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L506)
    */
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
@@ -400,7 +400,7 @@ class DatabaseAdminClient {
    * Completed backups for the database will be retained according to their
    * `expire_time`.
    *
-   * @param request [::google::test::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L521)
+   * @param request [::google::test::admin::database::v1::DropDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L523)
    */
   Status
   DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request);
@@ -410,8 +410,8 @@ class DatabaseAdminClient {
    * DDL statements. This method does not show pending schema updates, those may
    * be queried using the [Operations][google.longrunning.Operations] API.
    *
-   * @param request [::google::test::admin::database::v1::GetDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L532)
-   * @return [::google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L543)
+   * @param request [::google::test::admin::database::v1::GetDatabaseDdlRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L534)
+   * @return [::google::test::admin::database::v1::GetDatabaseDdlResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L545)
    */
   StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
@@ -540,8 +540,8 @@ class DatabaseAdminClient {
    * initiated, without waiting for the optimize operation associated with the
    * first restore to complete.
    *
-   * @param request [::google::test::admin::database::v1::RestoreDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L632)
-   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L327)
+   * @param request [::google::test::admin::database::v1::RestoreDatabaseRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L634)
+   * @return [::google::test::admin::database::v1::Database](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L329)
    */
   future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request);
@@ -556,7 +556,7 @@ class DatabaseAdminClient {
    * include those that have completed/failed/canceled within the last 7 days,
    * and pending operations.
    *
-   * @param request [::google::test::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L551)
+   * @param request [::google::test::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L553)
    */
   ListDatabaseOperationsRange
   ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request);

@@ -79,6 +79,18 @@ IAMCredentialsLogging::ListLogs(
       context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+IAMCredentialsLogging::TailLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+        return child_->TailLogEntries(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 }  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

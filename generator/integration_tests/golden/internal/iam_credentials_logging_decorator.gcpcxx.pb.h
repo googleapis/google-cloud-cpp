@@ -51,6 +51,11 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) override;
 
+  std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  TailLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;

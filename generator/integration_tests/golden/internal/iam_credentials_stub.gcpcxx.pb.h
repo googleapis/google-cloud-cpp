@@ -48,6 +48,11 @@ class IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
+  virtual std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  TailLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
+
 };
 
 class DefaultIAMCredentialsStub : public IAMCredentialsStub {
@@ -75,6 +80,11 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
   ListLogs(
     grpc::ClientContext& client_context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) override;
+
+  std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  TailLogEntries(
+    grpc::ClientContext& client_context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<::google::test::admin::database::v1::IAMCredentials::StubInterface> grpc_stub_;

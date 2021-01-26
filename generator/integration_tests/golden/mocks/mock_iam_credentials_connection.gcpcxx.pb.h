@@ -44,6 +44,10 @@ class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
   ListLogs,
   (::google::test::admin::database::v1::ListLogsRequest request), (override));
 
+  MOCK_METHOD(golden::TailLogEntriesStream,
+  TailLogEntries,
+  (::google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
+
 };
 
 }  // namespace golden_mocks

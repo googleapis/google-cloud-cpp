@@ -84,7 +84,8 @@ add_library(
     internal/iam_credentials_stub_factory.gcpcxx.pb.cc
     internal/iam_credentials_stub_factory.gcpcxx.pb.h
     mocks/mock_database_admin_connection.gcpcxx.pb.h
-    retry_traits.h)
+    retry_traits.h
+    streaming.cc)
 
 target_include_directories(
     google_cloud_cpp_generator_golden_lib
