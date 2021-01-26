@@ -70,8 +70,8 @@ load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
     deps = [
         ":pubsub_samples_common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
         "//:pubsub_mocks",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],

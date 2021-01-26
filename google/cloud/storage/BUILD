@@ -73,9 +73,9 @@ cc_library(
         "//conditions:default": [],
     }),
     visibility = [
-        "//google/cloud/storage:__subpackages__",
         "//:__pkg__",
-     ],
+        "//google/cloud/storage:__subpackages__",
+    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
@@ -93,11 +93,11 @@ cc_library(
 
 cc_library(
     name = "storage_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/storage:storage_client_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
-    tags = [ "manual" ],
 )
 
 load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_client_testing_srcs")
@@ -136,8 +136,8 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        "//:storage",
         ":storage_client_testing",
+        "//:storage",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",

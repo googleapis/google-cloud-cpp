@@ -26,9 +26,9 @@ cc_library(
     srcs = bigtable_client_srcs,
     hdrs = bigtable_client_hdrs,
     visibility = [
-        "//google/cloud/bigtable:__subpackages__",
         "//:__pkg__",
-     ],
+        "//google/cloud/bigtable:__subpackages__",
+    ],
     # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -44,11 +44,11 @@ cc_library(
 
 cc_library(
     name = "bigtable_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/bigtable:bigtable_client_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
-    tags = [ "manual" ],
 )
 
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")

@@ -43,8 +43,8 @@ cc_library(
     deps = [
         ":spanner_client_benchmarks",
         "//:spanner",
-        "//google/cloud:google_cloud_cpp_common",
         "//:spanner_mocks",
+        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/spanner:spanner_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",

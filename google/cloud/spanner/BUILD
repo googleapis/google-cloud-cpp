@@ -26,9 +26,9 @@ cc_library(
     srcs = spanner_client_srcs,
     hdrs = spanner_client_hdrs,
     visibility = [
-        "//google/cloud/spanner:__subpackages__",
         "//:__pkg__",
-     ],
+        "//google/cloud/spanner:__subpackages__",
+    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -46,11 +46,11 @@ cc_library(
 
 cc_library(
     name = "spanner_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/spanner:spanner_client_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
-    tags = [ "manual" ],
 )
 
 load(":spanner_client_mocks.bzl", "spanner_client_mocks_hdrs", "spanner_client_mocks_srcs")
@@ -60,9 +60,9 @@ cc_library(
     srcs = spanner_client_mocks_srcs,
     hdrs = spanner_client_mocks_hdrs,
     visibility = [
-        "//google/cloud/spanner:__subpackages__",
         "//:__pkg__",
-     ],
+        "//google/cloud/spanner:__subpackages__",
+    ],
     deps = [
         "//:spanner",
         "//google/cloud:google_cloud_cpp_common",
@@ -73,11 +73,11 @@ cc_library(
 
 cc_library(
     name = "spanner_client_mocks",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner_mocks instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/spanner:spanner_mocks_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner_mocks instead.",
-    tags = [ "manual" ],
 )
 
 load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")
@@ -87,8 +87,8 @@ cc_library(
     srcs = spanner_client_testing_srcs,
     hdrs = spanner_client_testing_hdrs,
     deps = [
-        "//:spanner_mocks",
         "//:spanner",
+        "//:spanner_mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -101,9 +101,9 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//:spanner_mocks",
         ":spanner_client_testing",
         "//:spanner",
+        "//:spanner_mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

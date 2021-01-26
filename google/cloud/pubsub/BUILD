@@ -23,8 +23,8 @@ cc_library(
     srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
     visibility = [
-        "//google/cloud/pubsub:__subpackages__",
         "//:__pkg__",
+        "//google/cloud/pubsub:__subpackages__",
     ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -36,11 +36,11 @@ cc_library(
 
 cc_library(
     name = "pubsub_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:pubsub_client_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
-    tags = [ "manual" ],
 )
 
 load(":pubsub_client_testing.bzl", "pubsub_client_testing_hdrs", "pubsub_client_testing_srcs")
@@ -65,8 +65,8 @@ cc_library(
     srcs = pubsub_client_mocks_srcs,
     hdrs = pubsub_client_mocks_hdrs,
     visibility = [
-        "//google/cloud/pubsub:__subpackages__",
         "//:__pkg__",
+        "//google/cloud/pubsub:__subpackages__",
     ],
     deps = [
         "//:pubsub",
@@ -78,11 +78,11 @@ cc_library(
 
 cc_library(
     name = "pubsub_client_mocks",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:pubsub_mocks_internal",
     ],
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
-    tags = [ "manual" ],
 )
 
 load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
@@ -91,9 +91,9 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//:pubsub_mocks",
         ":pubsub_client_testing",
         "//:pubsub",
+        "//:pubsub_mocks",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
