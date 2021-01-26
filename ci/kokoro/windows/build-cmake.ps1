@@ -56,7 +56,11 @@ $workaround_targets=(
     # Failed around 2020-07-29
     "storage_internal_tuple_filter_test",
     # Failed around 2020-08-10
-    "storage_well_known_parameters_test"
+    "storage_well_known_parameters_test",
+    # Failed around 2021-01-25
+    "common_internal_random_test",
+    "common_future_generic_test",
+    "googleapis_download"
 )
 ForEach($target IN $workaround_targets) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"

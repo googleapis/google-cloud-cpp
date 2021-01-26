@@ -37,7 +37,10 @@ class OutstandingTimersTest : public ::testing::Test {
 };
 
 TEST_F(OutstandingTimersTest, Trivial) {
-  std::make_shared<OutstandingTimers>(std::make_shared<CompletionQueue>(cq_));
+  // With MSVC 2019 (19.28.29334) the value from make_shared<>
+  // must be captured.
+  auto unused = std::make_shared<OutstandingTimers>(
+      std::make_shared<CompletionQueue>(cq_));
 }
 
 TEST_F(OutstandingTimersTest, TimerFinishes) {
