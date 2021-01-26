@@ -78,7 +78,7 @@ cc_library(
 
 cc_library(
     name = "pubsub_client_mocks",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub_mocks instead.",
     tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:pubsub_mocks_internal",

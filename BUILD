@@ -29,7 +29,7 @@ cc_library(
 
 cc_library(
     name = "bigtable_client",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
     tags = ["manual"],
     deps = [
         "//google/cloud/bigtable:bigtable_client_internal",
@@ -52,7 +52,7 @@ cc_library(
 
 cc_library(
     name = "pubsub_client",
-    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
     tags = ["manual"],
     deps = [
         "//google/cloud/pubsub:pubsub_client_internal",
