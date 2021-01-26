@@ -43,6 +43,13 @@ cc_library(
 )
 
 cc_library(
+    name = "pubsub_mocks",
+    deps = [
+        "//google/cloud/pubsub:pubsub_mocks_internal",
+    ],
+)
+
+cc_library(
     name = "pubsub_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
     deps = [

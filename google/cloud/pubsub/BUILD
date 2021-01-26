@@ -25,7 +25,7 @@ cc_library(
     visibility = [
         "//google/cloud/pubsub:__subpackages__",
         "//:__pkg__",
-     ],
+    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -60,9 +60,13 @@ cc_library(
 load(":pubsub_client_mocks.bzl", "pubsub_client_mocks_hdrs", "pubsub_client_mocks_srcs")
 
 cc_library(
-    name = "pubsub_client_mocks",
+    name = "pubsub_mocks_internal",
     srcs = pubsub_client_mocks_srcs,
     hdrs = pubsub_client_mocks_hdrs,
+    visibility = [
+        "//google/cloud/pubsub:__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
         "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
@@ -71,13 +75,21 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "pubsub_client_mocks",
+    deps = [
+        "//google/cloud/pubsub:pubsub_mocks_internal",
+    ],
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+)
+
 load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":pubsub_client_mocks",
+        "//:pubsub_mocks",
         ":pubsub_client_testing",
         "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
