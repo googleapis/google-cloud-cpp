@@ -39,6 +39,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/polling_loop.h",
     "internal/retry_loop.h",
     "internal/retry_loop_helpers.h",
+    "internal/streaming_read_rpc.h",
     "internal/time_utils.h",
 ]
 
@@ -51,5 +52,6 @@ google_cloud_cpp_grpc_utils_srcs = [
     "internal/default_completion_queue_impl.cc",
     "internal/log_wrapper.cc",
     "internal/retry_loop_helpers.cc",
+    "internal/streaming_read_rpc.cc",
     "internal/time_utils.cc",
 ]
