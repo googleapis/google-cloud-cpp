@@ -22,9 +22,13 @@ licenses(["notice"])  # Apache 2.0
 load(":bigtable_client.bzl", "bigtable_client_hdrs", "bigtable_client_srcs")
 
 cc_library(
-    name = "bigtable_client",
+    name = "bigtable_client_internal",
     srcs = bigtable_client_srcs,
     hdrs = bigtable_client_hdrs,
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/bigtable:__subpackages__",
+    ],
     # Do not sort: grpc++ must come last
     deps = [
         "//google/cloud:google_cloud_cpp_common",
@@ -38,6 +42,15 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "bigtable_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/bigtable:bigtable_client_internal",
+    ],
+)
+
 load(":bigtable_client_testing.bzl", "bigtable_client_testing_hdrs", "bigtable_client_testing_srcs")
 
 cc_library(
@@ -45,7 +58,7 @@ cc_library(
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
     deps = [
-        ":bigtable_client",
+        ":bigtable_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -60,7 +73,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":bigtable_client",
+        ":bigtable_client_internal",
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -78,7 +91,7 @@ cc_test(
         "internal/readrowsparser_test.cc",
     ],
     deps = [
-        ":bigtable_client",
+        ":bigtable_client_internal",
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",

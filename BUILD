@@ -21,29 +21,79 @@ exports_files([
 ])
 
 cc_library(
-    name = "bigtable_client",
+    name = "bigtable",
     deps = [
-        "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/bigtable:bigtable_client_internal",
+    ],
+)
+
+cc_library(
+    name = "bigtable_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:bigtable instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/bigtable:bigtable_client_internal",
+    ],
+)
+
+cc_library(
+    name = "pubsub",
+    deps = [
+        "//google/cloud/pubsub:pubsub_client_internal",
+    ],
+)
+
+cc_library(
+    name = "pubsub_mocks",
+    deps = [
+        "//google/cloud/pubsub:pubsub_mocks_internal",
     ],
 )
 
 cc_library(
     name = "pubsub_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    tags = ["manual"],
     deps = [
-        "//google/cloud/pubsub:pubsub_client",
+        "//google/cloud/pubsub:pubsub_client_internal",
+    ],
+)
+
+cc_library(
+    name = "spanner",
+    deps = [
+        "//google/cloud/spanner:spanner_client_internal",
+    ],
+)
+
+cc_library(
+    name = "spanner_mocks",
+    deps = [
+        "//google/cloud/spanner:spanner_mocks_internal",
     ],
 )
 
 cc_library(
     name = "spanner_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
+    tags = ["manual"],
     deps = [
-        "//google/cloud/spanner:spanner_client",
+        "//google/cloud/spanner:spanner_client_internal",
+    ],
+)
+
+cc_library(
+    name = "storage",
+    deps = [
+        "//google/cloud/storage:storage_client_internal",
     ],
 )
 
 cc_library(
     name = "storage_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
+    tags = ["manual"],
     deps = [
-        "//google/cloud/storage:storage_client",
+        "//google/cloud/storage:storage_client_internal",
     ],
 )

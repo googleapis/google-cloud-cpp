@@ -23,8 +23,8 @@ cc_library(
     srcs = bigtable_benchmark_common_srcs,
     hdrs = bigtable_benchmark_common_hdrs,
     deps = [
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/bigtable:bigtable_client",
     ],
 )
 
@@ -42,8 +42,8 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
     ],
     deps = [
         ":bigtable_benchmark_common",
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/bigtable:bigtable_client",
     ],
 ) for test in bigtable_benchmark_programs]
 
@@ -58,8 +58,8 @@ load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
     }),
     deps = [
         ":bigtable_benchmark_common",
+        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],

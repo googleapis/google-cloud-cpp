@@ -19,14 +19,27 @@ licenses(["notice"])  # Apache 2.0
 load(":pubsub_client.bzl", "pubsub_client_hdrs", "pubsub_client_srcs")
 
 cc_library(
-    name = "pubsub_client",
+    name = "pubsub_client_internal",
     srcs = pubsub_client_srcs,
     hdrs = pubsub_client_hdrs,
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/pubsub:__subpackages__",
+    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+    ],
+)
+
+cc_library(
+    name = "pubsub_client",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/pubsub:pubsub_client_internal",
     ],
 )
 
@@ -37,7 +50,7 @@ cc_library(
     srcs = pubsub_client_testing_srcs,
     hdrs = pubsub_client_testing_hdrs,
     deps = [
-        ":pubsub_client",
+        ":pubsub_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
@@ -48,14 +61,27 @@ cc_library(
 load(":pubsub_client_mocks.bzl", "pubsub_client_mocks_hdrs", "pubsub_client_mocks_srcs")
 
 cc_library(
-    name = "pubsub_client_mocks",
+    name = "pubsub_mocks_internal",
     srcs = pubsub_client_mocks_srcs,
     hdrs = pubsub_client_mocks_hdrs,
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/pubsub:__subpackages__",
+    ],
     deps = [
-        ":pubsub_client",
+        ":pubsub_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
+    ],
+)
+
+cc_library(
+    name = "pubsub_client_mocks",
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:pubsub_mocks instead.",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/pubsub:pubsub_mocks_internal",
     ],
 )
 
@@ -65,9 +91,9 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        ":pubsub_client",
-        ":pubsub_client_mocks",
+        ":pubsub_client_internal",
         ":pubsub_client_testing",
+        ":pubsub_mocks_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
