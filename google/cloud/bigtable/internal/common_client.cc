@@ -21,8 +21,10 @@ namespace internal {
 
 ConnectionRefreshState::ConnectionRefreshState(
     std::shared_ptr<CompletionQueue> const& cq,
+    std::chrono::milliseconds min_conn_refresh_period,
     std::chrono::milliseconds max_conn_refresh_period)
-    : max_conn_refresh_period_(max_conn_refresh_period),
+    : min_conn_refresh_period_(min_conn_refresh_period),
+      max_conn_refresh_period_(max_conn_refresh_period),
       rng_(std::random_device{}()),
       timers_(std::make_shared<OutstandingTimers>(cq)) {}
 
@@ -30,7 +32,8 @@ std::chrono::milliseconds ConnectionRefreshState::RandomizedRefreshDelay() {
   std::lock_guard<std::mutex> lk(mu_);
   return std::chrono::milliseconds(
       std::uniform_int_distribution<decltype(max_conn_refresh_period_)::rep>(
-          1, max_conn_refresh_period_.count())(rng_));
+          min_conn_refresh_period_.count(),
+          max_conn_refresh_period_.count())(rng_));
 }
 
 void ScheduleChannelRefresh(

@@ -425,6 +425,35 @@ TEST(ClientOptionsTest, UserAgentPrefix) {
   EXPECT_THAT(actual, HasSubstr("gcloud-cpp/"));
 }
 
+TEST(ClientOptionsTest, RefreshPeriod) {
+  auto options = bigtable::ClientOptions();
+  EXPECT_LE(options.min_conn_refresh_period(),
+            options.max_conn_refresh_period());
+  using ms = std::chrono::milliseconds;
+
+  options.set_min_conn_refresh_period(ms(1000));
+  EXPECT_EQ(1000, options.min_conn_refresh_period().count());
+
+  options.set_max_conn_refresh_period(ms(2000));
+  EXPECT_EQ(2000, options.max_conn_refresh_period().count());
+
+  options.set_min_conn_refresh_period(ms(3000));
+  EXPECT_EQ(3000, options.min_conn_refresh_period().count());
+  EXPECT_EQ(3000, options.max_conn_refresh_period().count());
+
+  options.set_max_conn_refresh_period(ms(1500));
+  EXPECT_EQ(1500, options.min_conn_refresh_period().count());
+  EXPECT_EQ(1500, options.max_conn_refresh_period().count());
+
+  options.set_max_conn_refresh_period(ms(5000));
+  EXPECT_EQ(1500, options.min_conn_refresh_period().count());
+  EXPECT_EQ(5000, options.max_conn_refresh_period().count());
+
+  options.set_min_conn_refresh_period(ms(1000));
+  EXPECT_EQ(1000, options.min_conn_refresh_period().count());
+  EXPECT_EQ(5000, options.max_conn_refresh_period().count());
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

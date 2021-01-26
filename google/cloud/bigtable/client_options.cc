@@ -27,9 +27,18 @@ std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
   }
   return grpc::GoogleDefaultCredentials();
 }
+
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
-std::chrono::milliseconds constexpr kDefaultRefreshPeriod =
-    std::chrono::minutes(3);
+auto constexpr kDefaultMaxRefreshPeriod =
+    std::chrono::milliseconds(std::chrono::minutes(3));
+
+// As learned from experiments, idle gRPC connections enter IDLE state after 4m.
+auto constexpr kDefaultMinRefreshPeriod =
+    std::chrono::milliseconds(std::chrono::minutes(1));
+
+static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
+              "The default period range must be valid");
+
 }  // anonymous namespace
 
 namespace google {
@@ -102,7 +111,8 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       tracing_options_(internal::DefaultTracingOptions()),
       // Refresh connections before the server has a chance to disconnect them
       // due to being idle.
-      max_conn_refresh_period_(kDefaultRefreshPeriod) {
+      max_conn_refresh_period_(kDefaultMaxRefreshPeriod),
+      min_conn_refresh_period_(kDefaultMinRefreshPeriod) {
   static std::string const kUserAgentPrefix = UserAgentPrefix();
   channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
   channel_arguments_.SetMaxSendMessageSize(
