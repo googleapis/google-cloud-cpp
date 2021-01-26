@@ -51,7 +51,8 @@ if ($LastExitCode) {
 # Tell the antivirus software to ignore the build directory, it can lock
 # files that the linker wants to touch, and leads to flaky/broken builds.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Exclude build directory from AV scans"
-Set-MpPreference -ExclusionPath "${binary_dir}" -ErrorAction SilentlyContinue
+Set-MpPreference -DisableAutoExclusions $false -ErrorAction Continue
+Set-MpPreference -ExclusionPath "${binary_dir}" -ErrorAction Continue
 
 # Workaround some flaky / broken tests in the CI builds, some of the
 # tests where (reported) successfully created during the build,
@@ -65,7 +66,9 @@ $workaround_targets=(
     # Failed around 2021-01-25
     "common_internal_random_test",
     "common_future_generic_test",
-    "googleapis_download"
+    "googleapis_download",
+    # Failed around 2021-01-26
+    "common_future_void_test"
 )
 ForEach($target IN $workaround_targets) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
