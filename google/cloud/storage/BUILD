@@ -112,7 +112,7 @@ cc_library(
     }),
     deps = [
         ":storage_client_grpc",
-        "//:storage",
+        ":storage_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -136,8 +136,8 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
+        ":storage_client_internal",
         ":storage_client_testing",
-        "//:storage",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
@@ -162,8 +162,8 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
+        ":storage_client_internal",
         ":storage_client_testing",
-        "//:storage",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@boringssl//:crypto",

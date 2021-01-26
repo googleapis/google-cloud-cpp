@@ -58,7 +58,7 @@ cc_library(
     srcs = bigtable_client_testing_srcs,
     hdrs = bigtable_client_testing_hdrs,
     deps = [
-        "//:bigtable",
+        ":bigtable_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -73,8 +73,8 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -91,8 +91,8 @@ cc_test(
         "internal/readrowsparser_test.cc",
     ],
     deps = [
+        ":bigtable_client_internal",
         ":bigtable_client_testing",
-        "//:bigtable",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing",

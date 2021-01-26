@@ -64,7 +64,7 @@ cc_library(
         "//google/cloud/spanner:__subpackages__",
     ],
     deps = [
-        "//:spanner",
+        ":spanner_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -87,8 +87,8 @@ cc_library(
     srcs = spanner_client_testing_srcs,
     hdrs = spanner_client_testing_hdrs,
     deps = [
-        "//:spanner",
-        "//:spanner_mocks",
+        ":spanner_client_internal",
+        ":spanner_mocks_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
@@ -101,9 +101,9 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        ":spanner_client_internal",
         ":spanner_client_testing",
-        "//:spanner",
-        "//:spanner_mocks",
+        ":spanner_mocks_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

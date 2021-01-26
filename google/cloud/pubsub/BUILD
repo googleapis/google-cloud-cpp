@@ -50,7 +50,7 @@ cc_library(
     srcs = pubsub_client_testing_srcs,
     hdrs = pubsub_client_testing_hdrs,
     deps = [
-        "//:pubsub",
+        ":pubsub_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
@@ -69,7 +69,7 @@ cc_library(
         "//google/cloud/pubsub:__subpackages__",
     ],
     deps = [
-        "//:pubsub",
+        ":pubsub_client_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc",
@@ -91,9 +91,9 @@ load(":pubsub_client_unit_tests.bzl", "pubsub_client_unit_tests")
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        ":pubsub_client_internal",
         ":pubsub_client_testing",
-        "//:pubsub",
-        "//:pubsub_mocks",
+        ":pubsub_mocks_internal",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
