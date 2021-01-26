@@ -45,11 +45,9 @@ class MockReader : public grpc::ClientReaderInterface<FakeResponse> {
   MOCK_METHOD(bool, Read, (FakeResponse*), (override));
   MOCK_METHOD(grpc::Status, Finish, (), (override));
 
-  // Unused. We define them (as then are pure virtual), but not as mocks.
-  bool NextMessageSize(std::uint32_t*) override {  // LCOV_EXCL_LINE
-    return true;                                   // LCOV_EXCL_LINE
-  }
-  void WaitForInitialMetadata() override {}  // LCOV_EXCL_LINE
+  // Unused. We define them (as they are pure virtual), but not as mocks.
+  bool NextMessageSize(std::uint32_t*) override { return true; }
+  void WaitForInitialMetadata() override {}
 };
 
 TEST(StreamingReadRpcImpl, SuccessfulStream) {
