@@ -48,6 +48,11 @@ if ($LastExitCode) {
     Exit ${LastExitCode}
 }
 
+# Tell the antivirus software to ignore the build directory, it can lock
+# files that the linker wants to touch, and leads to flaky/broken builds.
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Exclude build directory from AV scans"
+Set-MpPreference -ExclusionPath "${binary_dir}" -ErrorAction SilentlyContinue
+
 # Workaround some flaky / broken tests in the CI builds, some of the
 # tests where (reported) successfully created during the build,
 # only to be missing when runing the tests. This is probably a toolchain
