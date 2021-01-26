@@ -32,7 +32,8 @@ std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
 auto constexpr kDefaultMaxRefreshPeriod =
     std::chrono::milliseconds(std::chrono::minutes(3));
 
-// As learned from experiments, idle gRPC connections enter IDLE state after 4m.
+// Applications with hundreds of clients seem to work better with a longer
+// delay for the initial refresh. As there is no particular rush, start with 1m.
 auto constexpr kDefaultMinRefreshPeriod =
     std::chrono::milliseconds(std::chrono::minutes(1));
 
