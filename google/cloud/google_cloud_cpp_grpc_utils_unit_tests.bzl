@@ -27,6 +27,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/background_threads_impl_test.cc",
     "internal/log_wrapper_test.cc",
     "internal/polling_loop_test.cc",
+    "internal/resumable_streaming_read_rpc_test.cc",
     "internal/retry_loop_test.cc",
     "internal/streaming_read_rpc_test.cc",
     "internal/time_utils_test.cc",
