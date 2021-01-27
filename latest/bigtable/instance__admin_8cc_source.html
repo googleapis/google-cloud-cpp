@@ -374,7 +374,7 @@ $(function() {
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    std::string <span class="keyword">const</span>&amp; cluster_id) {</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  btadmin::DeleteClusterRequest request;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keyword">auto</span> name = ClusterName(instance_id, cluster_id);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">ClusterName</a>(instance_id, cluster_id);</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keyword">auto</span> client = client_;</div>
@@ -430,7 +430,7 @@ $(function() {
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  <span class="keyword">auto</span> backoff_policy = clone_rpc_backoff_policy();</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;  btadmin::GetClusterRequest request;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keyword">auto</span> name = ClusterName(instance_id, cluster_id);</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">ClusterName</a>(instance_id, cluster_id);</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  <span class="keyword">auto</span> result = ClientUtils::MakeCall(</div>
@@ -450,7 +450,7 @@ $(function() {
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  promise&lt;StatusOr&lt;btadmin::Cluster&gt;&gt; p;</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keyword">auto</span> result = p.get_future();</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;  btadmin::GetClusterRequest request;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keyword">auto</span> name = ClusterName(instance_id, cluster_id);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">ClusterName</a>(instance_id, cluster_id);</div>
 <div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keyword">auto</span> client = client_;</div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  <span class="keywordflow">return</span> google::cloud::internal::StartRetryAsyncUnaryRpc(</div>
@@ -603,7 +603,7 @@ $(function() {
 <div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;                                    std::string <span class="keyword">const</span>&amp; cluster_id) {</div>
 <div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;  grpc::Status status;</div>
 <div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;  btadmin::DeleteClusterRequest request;</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;  <span class="keyword">auto</span> name = ClusterName(instance_id, cluster_id);</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">ClusterName</a>(instance_id, cluster_id);</div>
 <div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
 <div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;  <span class="keyword">auto</span> metadata_update_policy =</div>
@@ -664,7 +664,7 @@ $(function() {
 <div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;    std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; profile_id) {</div>
 <div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;  grpc::Status status;</div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;  btadmin::GetAppProfileRequest request;</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;  <span class="keyword">auto</span> name = AppProfileName(instance_id, profile_id);</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">AppProfileName</a>(instance_id, profile_id);</div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;  <span class="keyword">auto</span> result = ClientUtils::MakeCall(</div>
@@ -684,7 +684,7 @@ $(function() {
 <div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;                                  std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;                                  std::string <span class="keyword">const</span>&amp; profile_id) {</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;  btadmin::GetAppProfileRequest request;</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;  <span class="keyword">auto</span> name = AppProfileName(instance_id, profile_id);</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">AppProfileName</a>(instance_id, profile_id);</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160; </div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client(client_);</div>
@@ -719,7 +719,7 @@ $(function() {
 <div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;                                     std::string <span class="keyword">const</span>&amp; profile_id,</div>
 <div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;                                     <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">AppProfileUpdateConfig</a> config) {</div>
 <div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;  <span class="keyword">auto</span> request = std::move(config).as_proto();</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;  <span class="keyword">auto</span> name = AppProfileName(instance_id, profile_id);</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">AppProfileName</a>(instance_id, profile_id);</div>
 <div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;  request.mutable_app_profile()-&gt;set_name(name);</div>
 <div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160; </div>
 <div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client(client_);</div>
@@ -806,7 +806,7 @@ $(function() {
 <div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;                                       <span class="keywordtype">bool</span> ignore_warnings) {</div>
 <div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;  grpc::Status status;</div>
 <div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;  btadmin::DeleteAppProfileRequest request;</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;  <span class="keyword">auto</span> name = AppProfileName(instance_id, profile_id);</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">AppProfileName</a>(instance_id, profile_id);</div>
 <div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;  request.set_ignore_warnings(ignore_warnings);</div>
 <div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
@@ -823,7 +823,7 @@ $(function() {
 <div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;    CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;    std::string <span class="keyword">const</span>&amp; profile_id, <span class="keywordtype">bool</span> ignore_warnings) {</div>
 <div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;  btadmin::DeleteAppProfileRequest request;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;  <span class="keyword">auto</span> name = AppProfileName(instance_id, profile_id);</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;  <span class="keyword">auto</span> name = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">AppProfileName</a>(instance_id, profile_id);</div>
 <div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;  request.set_name(name);</div>
 <div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;  request.set_ignore_warnings(ignore_warnings);</div>
 <div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160; </div>
@@ -1189,6 +1189,7 @@ $(function() {
 <div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;}  <span class="comment">// namespace cloud</span></div>
 <div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a7e1439b933e9f51bebf869e0db716174"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">google::cloud::bigtable::v1::AppProfileName</a></div><div class="ttdeci">std::string AppProfileName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;app_profile_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00042">resource_names.cc:42</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList.html">google::cloud::bigtable::v1::ClusterList</a></div><div class="ttdoc">The response for an asynchronous request listing all the clusters.</div><div class="ttdef"><b>Definition:</b> <a href="cluster__list__responses_8h_source.html#l00028">cluster_list_responses.h:28</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy.html">google::cloud::bigtable::v1::MetadataUpdatePolicy</a></div><div class="ttdoc">MetadataUpdatePolicy holds supported metadata and setup ClientContext.</div><div class="ttdef"><b>Definition:</b> <a href="metadata__update__policy_8h_source.html#l00075">metadata_update_policy.h:75</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig_html_a2ffc532132d2b928306430e84fd26f27"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html#a2ffc532132d2b928306430e84fd26f27">google::cloud::bigtable::v1::InstanceUpdateConfig::GetName</a></div><div class="ttdeci">std::string const  &amp; GetName()</div><div class="ttdef"><b>Definition:</b> <a href="instance__update__config_8h_source.html#l00116">instance_update_config.h:116</a></div></div>
@@ -1196,6 +1197,7 @@ $(function() {
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a098b52714cb305f401b93f3c0d6c8449"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::cloud::bigtable::v1::Instance</a></div><div class="ttdeci">::google::bigtable::admin::v2::Instance Instance</div><div class="ttdef"><b>Definition:</b> <a href="instance__update__config_8h_source.html#l00029">instance_update_config.h:29</a></div></div>
 <div class="ttc" id="ainstance__admin_8h_html"><div class="ttname"><a href="instance__admin_8h.html">instance_admin.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">google::cloud::bigtable::v1::AppProfileUpdateConfig</a></div><div class="ttdoc">Build a proto to update an Application Profile configuration.</div><div class="ttdef"><b>Definition:</b> <a href="app__profile__config_8h_source.html#l00068">app_profile_config.h:68</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a00af13f9514d28a5f9fb216f1039c871"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">google::cloud::bigtable::v1::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00035">resource_names.cc:35</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a4232a27fbff13a40a0ad98fd95eb4a9d"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4232a27fbff13a40a0ad98fd95eb4a9d">google::cloud::bigtable::v1::ClientUtils</a></div><div class="ttdeci">bigtable::internal::UnaryClientUtils&lt; InstanceAdminClient &gt; ClientUtils</div><div class="ttdoc">Shortcuts to avoid typing long names over and over.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00038">instance_admin.cc:38</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList_html_a07c4a4e5694caa50999f9440f7f0ed07"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList.html#a07c4a4e5694caa50999f9440f7f0ed07">google::cloud::bigtable::v1::ClusterList::clusters</a></div><div class="ttdeci">std::vector&lt; google::bigtable::admin::v2::Cluster &gt; clusters</div><div class="ttdoc">The list of clusters received from Cloud Bigtable.</div><div class="ttdef"><b>Definition:</b> <a href="cluster__list__responses_8h_source.html#l00030">cluster_list_responses.h:30</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList_html_afa79b9fa6f510d7dd5a72bd8ed00c2d4"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterList.html#afa79b9fa6f510d7dd5a72bd8ed00c2d4">google::cloud::bigtable::v1::ClusterList::failed_locations</a></div><div class="ttdeci">std::vector&lt; std::string &gt; failed_locations</div><div class="ttdoc">The list of Google Cloud Platform locations where the request could not get a response from.</div><div class="ttdef"><b>Definition:</b> <a href="cluster__list__responses_8h_source.html#l00040">cluster_list_responses.h:40</a></div></div>

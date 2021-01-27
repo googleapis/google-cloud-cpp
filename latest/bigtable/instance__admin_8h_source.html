@@ -94,274 +94,280 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="instance__list__responses_8h.html">google/cloud/bigtable/instance_list_responses.h</a>&quot;</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="instance__update__config_8h.html">google/cloud/bigtable/instance_update_config.h</a>&quot;</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="polling__policy_8h.html">google/cloud/bigtable/polling_policy.h</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="version_8h.html">google/cloud/bigtable/version.h</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/future_8h.html">google/cloud/future.h</a>&quot;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/iam__policy_8h.html">google/cloud/iam_policy.h</a>&quot;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">google/cloud/status_or.h</a>&quot;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span>cloud {</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>bigtable {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a> {</div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">  121</a></span>&#160;<span class="keyword">class </span><a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a> {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">  126</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">InstanceAdmin</a>(std::shared_ptr&lt;InstanceAdminClient&gt; client)</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      : client_(std::move(client)),</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        project_name_(<span class="stringliteral">&quot;projects/&quot;</span> + project_id()),</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        rpc_retry_policy_prototype_(</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4203b05fb42aa1269c38f3f16f431a56">DefaultRPCRetryPolicy</a>(internal::kBigtableInstanceAdminLimits)),</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        rpc_backoff_policy_prototype_(</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a84eda145a4716ea481ab438b15e3a175">DefaultRPCBackoffPolicy</a>(internal::kBigtableInstanceAdminLimits)),</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        polling_policy_prototype_(</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#aa61dd065f782225426f13204d6060626">DefaultPollingPolicy</a>(internal::kBigtableInstanceAdminLimits)) {}</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Policies&gt;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">  161</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">InstanceAdmin</a>(std::shared_ptr&lt;InstanceAdminClient&gt; client,</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                         Policies&amp;&amp;... policies)</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      : <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a>(std::move(client)) {</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">  168</a></span>&#160;  std::string <span class="keyword">const</span>&amp; <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">project_name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> project_name_; }</div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">  170</a></span>&#160;  std::string <span class="keyword">const</span>&amp; <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">project_id</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> client_-&gt;project(); }</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">  173</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">InstanceName</a>(std::string <span class="keyword">const</span>&amp; instance_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordflow">return</span> project_name() + <span class="stringliteral">&quot;/instances/&quot;</span> + instance_id;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">  179</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">ClusterName</a>(std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                          std::string <span class="keyword">const</span>&amp; cluster_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">InstanceName</a>(instance_id) + <span class="stringliteral">&quot;/clusters/&quot;</span> + cluster_id;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">  184</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">AppProfileName</a>(std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                             std::string <span class="keyword">const</span>&amp; profile_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">InstanceName</a>(instance_id) + <span class="stringliteral">&quot;/appProfiles/&quot;</span> + profile_id;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; CreateInstance(</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">InstanceConfig</a> instance_config);</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncCreateInstance(</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">bigtable::InstanceConfig</a> instance_config);</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; CreateCluster(</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncCreateCluster(</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config,</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; UpdateInstance(</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html">InstanceUpdateConfig</a> instance_update_config);</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncUpdateInstance(</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html">InstanceUpdateConfig</a> instance_update_config);</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  StatusOr&lt;InstanceList&gt; ListInstances();</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;  future&lt;StatusOr&lt;InstanceList&gt;&gt; AsyncListInstances(CompletionQueue&amp; cq);</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::Instance&gt; GetInstance(</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncGetInstance(</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160; </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;  Status DeleteInstance(std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160; </div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;  future&lt;Status&gt; AsyncDeleteInstance(std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;                                     CompletionQueue&amp; cq);</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;  StatusOr&lt;ClusterList&gt; ListClusters();</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;  StatusOr&lt;ClusterList&gt; ListClusters(std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;  future&lt;StatusOr&lt;ClusterList&gt;&gt; AsyncListClusters(CompletionQueue&amp; cq);</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160; </div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;  future&lt;StatusOr&lt;ClusterList&gt;&gt; AsyncListClusters(</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160; </div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; UpdateCluster(</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config);</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncUpdateCluster(</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config);</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160; </div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;  Status DeleteCluster(std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                       std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160; </div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;  future&lt;Status&gt; AsyncDeleteCluster(CompletionQueue&amp; cq,</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;                                    std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;                                    std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160; </div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::Cluster&gt; GetCluster(</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160; </div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncGetCluster(</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id);</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160; </div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt; CreateAppProfile(</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> config);</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160; </div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;  AsyncCreateAppProfile(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;                        <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> config);</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt; GetAppProfile(</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; profile_id);</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt; AsyncGetAppProfile(</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;      std::string <span class="keyword">const</span>&amp; profile_id);</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160; </div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt; UpdateAppProfile(</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; profile_id,</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">AppProfileUpdateConfig</a> config);</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160; </div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;  AsyncUpdateAppProfile(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;                        std::string <span class="keyword">const</span>&amp; profile_id,</div>
-<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;                        <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">AppProfileUpdateConfig</a> config);</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160; </div>
-<div class="line"><a name="l00977"></a><span class="lineno">  977</span>&#160;  StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
-<div class="line"><a name="l00978"></a><span class="lineno">  978</span>&#160;  ListAppProfiles(std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160; </div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;&gt;</div>
-<div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;  AsyncListAppProfiles(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160; </div>
-<div class="line"><a name="l01024"></a><span class="lineno"> 1024</span>&#160;  Status DeleteAppProfile(std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;                          std::string <span class="keyword">const</span>&amp; profile_id,</div>
-<div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;                          <span class="keywordtype">bool</span> ignore_warnings = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160; </div>
-<div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;  future&lt;Status&gt; AsyncDeleteAppProfile(CompletionQueue&amp; cq,</div>
-<div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;                                       std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160;                                       std::string <span class="keyword">const</span>&amp; profile_id,</div>
-<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;                                       <span class="keywordtype">bool</span> ignore_warnings = <span class="keyword">true</span>);</div>
-<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160; </div>
-<div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;  StatusOr&lt;google::cloud::IamPolicy&gt; GetIamPolicy(</div>
-<div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160; </div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetNativeIamPolicy(</div>
-<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160; </div>
-<div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;  future&lt;StatusOr&lt;google::cloud::IamPolicy&gt;&gt; AsyncGetIamPolicy(</div>
-<div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160; </div>
-<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncGetNativeIamPolicy(</div>
-<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
-<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160; </div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;  StatusOr&lt;google::cloud::IamPolicy&gt; SetIamPolicy(</div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;      google::cloud::IamBindings <span class="keyword">const</span>&amp; iam_bindings,</div>
-<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;      std::string <span class="keyword">const</span>&amp; etag = std::string{});</div>
-<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160; </div>
-<div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160; </div>
-<div class="line"><a name="l01266"></a><span class="lineno"> 1266</span>&#160;  future&lt;StatusOr&lt;google::cloud::IamPolicy&gt;&gt; AsyncSetIamPolicy(</div>
-<div class="line"><a name="l01267"></a><span class="lineno"> 1267</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01268"></a><span class="lineno"> 1268</span>&#160;      google::cloud::IamBindings <span class="keyword">const</span>&amp; iam_bindings,</div>
-<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;      std::string <span class="keyword">const</span>&amp; etag = std::string{});</div>
-<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160; </div>
-<div class="line"><a name="l01297"></a><span class="lineno"> 1297</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncSetIamPolicy(</div>
-<div class="line"><a name="l01298"></a><span class="lineno"> 1298</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01299"></a><span class="lineno"> 1299</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
-<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160; </div>
-<div class="line"><a name="l01321"></a><span class="lineno"> 1321</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
-<div class="line"><a name="l01322"></a><span class="lineno"> 1322</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01323"></a><span class="lineno"> 1323</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
-<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160; </div>
-<div class="line"><a name="l01349"></a><span class="lineno"> 1349</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;std::string&gt;&gt;&gt; AsyncTestIamPermissions(</div>
-<div class="line"><a name="l01350"></a><span class="lineno"> 1350</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line"><a name="l01351"></a><span class="lineno"> 1351</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
-<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160; </div>
-<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCRetryPolicy <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01357"></a><span class="lineno"> 1357</span>&#160;    rpc_retry_policy_prototype_ = policy.clone();</div>
-<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;  }</div>
-<div class="line"><a name="l01359"></a><span class="lineno"> 1359</span>&#160; </div>
-<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCBackoffPolicy <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;    rpc_backoff_policy_prototype_ = policy.clone();</div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;  }</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160; </div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(PollingPolicy <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;    polling_policy_prototype_ = policy.clone();</div>
-<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160;  }</div>
-<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160; </div>
-<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Policy, <span class="keyword">typename</span>... Policies&gt;</div>
-<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;  <span class="keywordtype">void</span> ChangePolicies(Policy&amp;&amp; policy, Policies&amp;&amp;... policies) {</div>
-<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160;    ChangePolicy(policy);</div>
-<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
-<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;  }</div>
-<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;  <span class="keywordtype">void</span> ChangePolicies() {}</div>
-<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160; </div>
-<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;  <span class="keyword">static</span> StatusOr&lt;google::cloud::IamPolicy&gt; ProtoToWrapper(</div>
-<div class="line"><a name="l01377"></a><span class="lineno"> 1377</span>&#160;      google::iam::v1::Policy proto);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="resource__names_8h.html">google/cloud/bigtable/resource_names.h</a>&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="version_8h.html">google/cloud/bigtable/version.h</a>&quot;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/future_8h.html">google/cloud/future.h</a>&quot;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/iam__policy_8h.html">google/cloud/iam_policy.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">google/cloud/status_or.h</a>&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;future&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>cloud {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">namespace </span>bigtable {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a> {</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">  122</a></span>&#160;<span class="keyword">class </span><a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a> {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">  127</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">InstanceAdmin</a>(std::shared_ptr&lt;InstanceAdminClient&gt; client)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      : client_(std::move(client)),</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        project_name_(<span class="stringliteral">&quot;projects/&quot;</span> + project_id()),</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        rpc_retry_policy_prototype_(</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4203b05fb42aa1269c38f3f16f431a56">DefaultRPCRetryPolicy</a>(internal::kBigtableInstanceAdminLimits)),</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        rpc_backoff_policy_prototype_(</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a84eda145a4716ea481ab438b15e3a175">DefaultRPCBackoffPolicy</a>(internal::kBigtableInstanceAdminLimits)),</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        polling_policy_prototype_(</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#aa61dd065f782225426f13204d6060626">DefaultPollingPolicy</a>(internal::kBigtableInstanceAdminLimits)) {}</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Policies&gt;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="comment">// NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">  162</a></span>&#160;  <span class="keyword">explicit</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">InstanceAdmin</a>(std::shared_ptr&lt;InstanceAdminClient&gt; client,</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                         Policies&amp;&amp;... policies)</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      : <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a>(std::move(client)) {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  }</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">  169</a></span>&#160;  std::string <span class="keyword">const</span>&amp; <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">project_name</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> project_name_; }</div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">  171</a></span>&#160;  std::string <span class="keyword">const</span>&amp; <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">project_id</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> client_-&gt;project(); }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">  174</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">InstanceName</a>(std::string <span class="keyword">const</span>&amp; instance_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">google::cloud::bigtable::InstanceName</a>(project_id(), instance_id);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  }</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">  180</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">ClusterName</a>(std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                          std::string <span class="keyword">const</span>&amp; cluster_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">google::cloud::bigtable::ClusterName</a>(project_id(), instance_id,</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                                                cluster_id);</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">  186</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">AppProfileName</a>(std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                             std::string <span class="keyword">const</span>&amp; profile_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">google::cloud::bigtable::AppProfileName</a>(project_id(), instance_id,</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                                                   profile_id);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; CreateInstance(</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">InstanceConfig</a> instance_config);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncCreateInstance(</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">bigtable::InstanceConfig</a> instance_config);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; CreateCluster(</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncCreateCluster(</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config,</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; UpdateInstance(</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html">InstanceUpdateConfig</a> instance_update_config);</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncUpdateInstance(</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html">InstanceUpdateConfig</a> instance_update_config);</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;  StatusOr&lt;InstanceList&gt; ListInstances();</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;  future&lt;StatusOr&lt;InstanceList&gt;&gt; AsyncListInstances(CompletionQueue&amp; cq);</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::Instance&gt; GetInstance(</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160; </div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Instance&gt;&gt; AsyncGetInstance(</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;  Status DeleteInstance(std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160; </div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  future&lt;Status&gt; AsyncDeleteInstance(std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;                                     CompletionQueue&amp; cq);</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160; </div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;  StatusOr&lt;ClusterList&gt; ListClusters();</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160; </div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;  StatusOr&lt;ClusterList&gt; ListClusters(std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160; </div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;  future&lt;StatusOr&lt;ClusterList&gt;&gt; AsyncListClusters(CompletionQueue&amp; cq);</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;  future&lt;StatusOr&lt;ClusterList&gt;&gt; AsyncListClusters(</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; </div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; UpdateCluster(</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config);</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160; </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncUpdateCluster(</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;      CompletionQueue&amp; cq, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">ClusterConfig</a> cluster_config);</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160; </div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;  Status DeleteCluster(std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                       std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160; </div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;  future&lt;Status&gt; AsyncDeleteCluster(CompletionQueue&amp; cq,</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;                                    std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;                                    std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::Cluster&gt; GetCluster(</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::Cluster&gt;&gt; AsyncGetCluster(</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id);</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt; CreateAppProfile(</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> config);</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160; </div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;  AsyncCreateAppProfile(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;                        <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> config);</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160; </div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;  StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt; GetAppProfile(</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; profile_id);</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160; </div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt; AsyncGetAppProfile(</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;      std::string <span class="keyword">const</span>&amp; profile_id);</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt; UpdateAppProfile(</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id, std::string <span class="keyword">const</span>&amp; profile_id,</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">AppProfileUpdateConfig</a> config);</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160; </div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;  future&lt;StatusOr&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;  AsyncUpdateAppProfile(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;                        std::string <span class="keyword">const</span>&amp; profile_id,</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;                        <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">AppProfileUpdateConfig</a> config);</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160; </div>
+<div class="line"><a name="l00980"></a><span class="lineno">  980</span>&#160;  StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;  ListAppProfiles(std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160; </div>
+<div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::AppProfile&gt;&gt;&gt;</div>
+<div class="line"><a name="l01004"></a><span class="lineno"> 1004</span>&#160;  AsyncListAppProfiles(CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l01005"></a><span class="lineno"> 1005</span>&#160; </div>
+<div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160;  Status DeleteAppProfile(std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;                          std::string <span class="keyword">const</span>&amp; profile_id,</div>
+<div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;                          <span class="keywordtype">bool</span> ignore_warnings = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160; </div>
+<div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;  future&lt;Status&gt; AsyncDeleteAppProfile(CompletionQueue&amp; cq,</div>
+<div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;                                       std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;                                       std::string <span class="keyword">const</span>&amp; profile_id,</div>
+<div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;                                       <span class="keywordtype">bool</span> ignore_warnings = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160; </div>
+<div class="line"><a name="l01086"></a><span class="lineno"> 1086</span>&#160;  StatusOr&lt;google::cloud::IamPolicy&gt; GetIamPolicy(</div>
+<div class="line"><a name="l01087"></a><span class="lineno"> 1087</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l01088"></a><span class="lineno"> 1088</span>&#160; </div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetNativeIamPolicy(</div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160; </div>
+<div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160;  future&lt;StatusOr&lt;google::cloud::IamPolicy&gt;&gt; AsyncGetIamPolicy(</div>
+<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160; </div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncGetNativeIamPolicy(</div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id);</div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160; </div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;  StatusOr&lt;google::cloud::IamPolicy&gt; SetIamPolicy(</div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160;      google::cloud::IamBindings <span class="keyword">const</span>&amp; iam_bindings,</div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;      std::string <span class="keyword">const</span>&amp; etag = std::string{});</div>
+<div class="line"><a name="l01204"></a><span class="lineno"> 1204</span>&#160; </div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
+<div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
+<div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160; </div>
+<div class="line"><a name="l01269"></a><span class="lineno"> 1269</span>&#160;  future&lt;StatusOr&lt;google::cloud::IamPolicy&gt;&gt; AsyncSetIamPolicy(</div>
+<div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;      google::cloud::IamBindings <span class="keyword">const</span>&amp; iam_bindings,</div>
+<div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160;      std::string <span class="keyword">const</span>&amp; etag = std::string{});</div>
+<div class="line"><a name="l01273"></a><span class="lineno"> 1273</span>&#160; </div>
+<div class="line"><a name="l01300"></a><span class="lineno"> 1300</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncSetIamPolicy(</div>
+<div class="line"><a name="l01301"></a><span class="lineno"> 1301</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01302"></a><span class="lineno"> 1302</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
+<div class="line"><a name="l01303"></a><span class="lineno"> 1303</span>&#160; </div>
+<div class="line"><a name="l01324"></a><span class="lineno"> 1324</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
+<div class="line"><a name="l01325"></a><span class="lineno"> 1325</span>&#160;      std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01326"></a><span class="lineno"> 1326</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
+<div class="line"><a name="l01327"></a><span class="lineno"> 1327</span>&#160; </div>
+<div class="line"><a name="l01352"></a><span class="lineno"> 1352</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;std::string&gt;&gt;&gt; AsyncTestIamPermissions(</div>
+<div class="line"><a name="l01353"></a><span class="lineno"> 1353</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l01354"></a><span class="lineno"> 1354</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
+<div class="line"><a name="l01355"></a><span class="lineno"> 1355</span>&#160; </div>
+<div class="line"><a name="l01356"></a><span class="lineno"> 1356</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l01358"></a><span class="lineno"> 1358</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCRetryPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01360"></a><span class="lineno"> 1360</span>&#160;    rpc_retry_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;  }</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160; </div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(RPCBackoffPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160;    rpc_backoff_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01365"></a><span class="lineno"> 1365</span>&#160;  }</div>
+<div class="line"><a name="l01366"></a><span class="lineno"> 1366</span>&#160; </div>
+<div class="line"><a name="l01367"></a><span class="lineno"> 1367</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(PollingPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01368"></a><span class="lineno"> 1368</span>&#160;    polling_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01369"></a><span class="lineno"> 1369</span>&#160;  }</div>
+<div class="line"><a name="l01370"></a><span class="lineno"> 1370</span>&#160; </div>
+<div class="line"><a name="l01371"></a><span class="lineno"> 1371</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Policy, <span class="keyword">typename</span>... Policies&gt;</div>
+<div class="line"><a name="l01372"></a><span class="lineno"> 1372</span>&#160;  <span class="keywordtype">void</span> ChangePolicies(Policy&amp;&amp; policy, Policies&amp;&amp;... policies) {</div>
+<div class="line"><a name="l01373"></a><span class="lineno"> 1373</span>&#160;    ChangePolicy(policy);</div>
+<div class="line"><a name="l01374"></a><span class="lineno"> 1374</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
+<div class="line"><a name="l01375"></a><span class="lineno"> 1375</span>&#160;  }</div>
+<div class="line"><a name="l01376"></a><span class="lineno"> 1376</span>&#160;  <span class="keywordtype">void</span> ChangePolicies() {}</div>
 <div class="line"><a name="l01378"></a><span class="lineno"> 1378</span>&#160; </div>
-<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
-<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160;  }</div>
-<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160; </div>
-<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
-<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160;  }</div>
-<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160; </div>
-<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
-<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160;  }</div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160; </div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client_;</div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;  std::string project_name_;</div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
-<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
-<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;};</div>
-<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160; </div>
-<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
-<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
-<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160; </div>
-<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H</span></div>
+<div class="line"><a name="l01379"></a><span class="lineno"> 1379</span>&#160;  <span class="keyword">static</span> StatusOr&lt;google::cloud::IamPolicy&gt; ProtoToWrapper(</div>
+<div class="line"><a name="l01380"></a><span class="lineno"> 1380</span>&#160;      google::iam::v1::Policy proto);</div>
+<div class="line"><a name="l01381"></a><span class="lineno"> 1381</span>&#160; </div>
+<div class="line"><a name="l01382"></a><span class="lineno"> 1382</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
+<div class="line"><a name="l01383"></a><span class="lineno"> 1383</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01384"></a><span class="lineno"> 1384</span>&#160;  }</div>
+<div class="line"><a name="l01385"></a><span class="lineno"> 1385</span>&#160; </div>
+<div class="line"><a name="l01386"></a><span class="lineno"> 1386</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
+<div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;  }</div>
+<div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160; </div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;  }</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160; </div>
+<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160;  std::shared_ptr&lt;InstanceAdminClient&gt; client_;</div>
+<div class="line"><a name="l01395"></a><span class="lineno"> 1395</span>&#160;  std::string project_name_;</div>
+<div class="line"><a name="l01396"></a><span class="lineno"> 1396</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
+<div class="line"><a name="l01397"></a><span class="lineno"> 1397</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
+<div class="line"><a name="l01398"></a><span class="lineno"> 1398</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
+<div class="line"><a name="l01399"></a><span class="lineno"> 1399</span>&#160;};</div>
+<div class="line"><a name="l01400"></a><span class="lineno"> 1400</span>&#160; </div>
+<div class="line"><a name="l01401"></a><span class="lineno"> 1401</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
+<div class="line"><a name="l01402"></a><span class="lineno"> 1402</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
+<div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160; </div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acluster__config_8h_html"><div class="ttname"><a href="cluster__config_8h.html">cluster_config.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">google::cloud::bigtable::v1::InstanceAdmin</a></div><div class="ttdoc">Implements the APIs to administer Cloud Bigtable instances.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00121">instance_admin.h:121</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a7e1439b933e9f51bebf869e0db716174"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a7e1439b933e9f51bebf869e0db716174">google::cloud::bigtable::v1::AppProfileName</a></div><div class="ttdeci">std::string AppProfileName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;app_profile_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00042">resource_names.cc:42</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">google::cloud::bigtable::v1::InstanceAdmin</a></div><div class="ttdoc">Implements the APIs to administer Cloud Bigtable instances.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00122">instance_admin.h:122</a></div></div>
 <div class="ttc" id="astatus__or_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">status_or.h</a></div></div>
 <div class="ttc" id="aiam__policy_8h_html"><div class="ttname"><a href="iam__policy_8h.html">iam_policy.h</a></div></div>
 <div class="ttc" id="acompletion__queue_8h_html"><div class="ttname"><a href="completion__queue_8h.html">completion_queue.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a6b6982c136a05df506dca2f56acfcdeb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">google::cloud::bigtable::v1::InstanceAdmin::project_id</a></div><div class="ttdeci">std::string const  &amp; project_id() const</div><div class="ttdoc">The project id, i.e., project_name() without the projects/ prefix.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00170">instance_admin.h:170</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a6b6982c136a05df506dca2f56acfcdeb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a6b6982c136a05df506dca2f56acfcdeb">google::cloud::bigtable::v1::InstanceAdmin::project_id</a></div><div class="ttdeci">std::string const  &amp; project_id() const</div><div class="ttdoc">The project id, i.e., project_name() without the projects/ prefix.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00171">instance_admin.h:171</a></div></div>
 <div class="ttc" id="ainstance__admin__client_8h_html"><div class="ttname"><a href="instance__admin__client_8h.html">instance_admin_client.h</a></div></div>
+<div class="ttc" id="aresource__names_8h_html"><div class="ttname"><a href="resource__names_8h.html">resource_names.h</a></div><div class="ttdoc">Helper functions to create resource names.</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html">google::cloud::bigtable::v1::AppProfileUpdateConfig</a></div><div class="ttdoc">Build a proto to update an Application Profile configuration.</div><div class="ttdef"><b>Definition:</b> <a href="app__profile__config_8h_source.html#l00068">app_profile_config.h:68</a></div></div>
 <div class="ttc" id="afuture_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/future_8h.html">future.h</a></div></div>
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a35f86c97b5c2f667f98ba53376b9db2d"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">google::cloud::bigtable::v1::InstanceAdmin::InstanceAdmin</a></div><div class="ttdeci">InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client, Policies &amp;&amp;... policies)</div><div class="ttdoc">Create a new InstanceAdmin using explicit policies to handle RPC errors.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00161">instance_admin.h:161</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a35f86c97b5c2f667f98ba53376b9db2d"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a35f86c97b5c2f667f98ba53376b9db2d">google::cloud::bigtable::v1::InstanceAdmin::InstanceAdmin</a></div><div class="ttdeci">InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client, Policies &amp;&amp;... policies)</div><div class="ttdoc">Create a new InstanceAdmin using explicit policies to handle RPC errors.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00162">instance_admin.h:162</a></div></div>
 <div class="ttc" id="ainstance__list__responses_8h_html"><div class="ttname"><a href="instance__list__responses_8h.html">instance_list_responses.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_ac92f07ae5d32b312166a2b71cf50f06e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">google::cloud::bigtable::v1::InstanceAdmin::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;instance_id, std::string const &amp;cluster_id) const</div><div class="ttdoc">Return the fully qualified name of the given cluster_id in give instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00179">instance_admin.h:179</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a00af13f9514d28a5f9fb216f1039c871"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">google::cloud::bigtable::v1::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00035">resource_names.cc:35</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_ac92f07ae5d32b312166a2b71cf50f06e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac92f07ae5d32b312166a2b71cf50f06e">google::cloud::bigtable::v1::InstanceAdmin::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;instance_id, std::string const &amp;cluster_id) const</div><div class="ttdoc">Return the fully qualified name of the given cluster_id in give instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00180">instance_admin.h:180</a></div></div>
 <div class="ttc" id="aiam__policy_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/iam__policy_8h.html">iam_policy.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a07a8a1dbcbf52047c6d4e48df9fb7ec2"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">google::cloud::bigtable::v1::InstanceName</a></div><div class="ttdeci">std::string InstanceName(std::shared_ptr&lt; DataClient &gt; const &amp;client)</div><div class="ttdoc">Return the fully qualified instance name for the client.</div><div class="ttdef"><b>Definition:</b> <a href="data__client_8h_source.html#l00191">data_client.h:191</a></div></div>
 <div class="ttc" id="acluster__list__responses_8h_html"><div class="ttname"><a href="cluster__list__responses_8h.html">cluster_list_responses.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_aa61dd065f782225426f13204d6060626"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#aa61dd065f782225426f13204d6060626">google::cloud::bigtable::v1::DefaultPollingPolicy</a></div><div class="ttdeci">std::unique_ptr&lt; PollingPolicy &gt; DefaultPollingPolicy(internal::RPCPolicyParameters defaults)</div><div class="ttdef"><b>Definition:</b> <a href="polling__policy_8cc_source.html#l00021">polling_policy.cc:21</a></div></div>
 <div class="ttc" id="aversion_8h_html_aebb4d9f586ac64a412e3302f8a4b1c37"><div class="ttname"><a href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a11b793627d92457a0f7909b31f1dd247"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">google::cloud::bigtable::v1::InstanceAdmin::InstanceAdmin</a></div><div class="ttdeci">InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client)</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00126">instance_admin.h:126</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a11b793627d92457a0f7909b31f1dd247"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a11b793627d92457a0f7909b31f1dd247">google::cloud::bigtable::v1::InstanceAdmin::InstanceAdmin</a></div><div class="ttdeci">InstanceAdmin(std::shared_ptr&lt; InstanceAdminClient &gt; client)</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00127">instance_admin.h:127</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a84eda145a4716ea481ab438b15e3a175"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a84eda145a4716ea481ab438b15e3a175">google::cloud::bigtable::v1::DefaultRPCBackoffPolicy</a></div><div class="ttdeci">std::unique_ptr&lt; RPCBackoffPolicy &gt; DefaultRPCBackoffPolicy(internal::RPCPolicyParameters defaults)</div><div class="ttdoc">Return an instance of the default RPCBackoffPolicy.</div><div class="ttdef"><b>Definition:</b> <a href="rpc__backoff__policy_8cc_source.html#l00021">rpc_backoff_policy.cc:21</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">google::cloud::bigtable::v1::ClusterConfig</a></div><div class="ttdoc">Specify the initial configuration for a new cluster.</div><div class="ttdef"><b>Definition:</b> <a href="cluster__config_8h_source.html#l00027">cluster_config.h:27</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">google::cloud::bigtable::v1::InstanceConfig</a></div><div class="ttdoc">Specify the initial configuration for a new instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__config_8h_source.html#l00030">instance_config.h:30</a></div></div>
 <div class="ttc" id="aapp__profile__config_8h_html"><div class="ttname"><a href="app__profile__config_8h.html">app_profile_config.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_adb1108790eaa5686c47b98d0bf0519b5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">google::cloud::bigtable::v1::InstanceAdmin::AppProfileName</a></div><div class="ttdeci">std::string AppProfileName(std::string const &amp;instance_id, std::string const &amp;profile_id) const</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00184">instance_admin.h:184</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_adb1108790eaa5686c47b98d0bf0519b5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#adb1108790eaa5686c47b98d0bf0519b5">google::cloud::bigtable::v1::InstanceAdmin::AppProfileName</a></div><div class="ttdeci">std::string AppProfileName(std::string const &amp;instance_id, std::string const &amp;profile_id) const</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00186">instance_admin.h:186</a></div></div>
 <div class="ttc" id="apolling__policy_8h_html"><div class="ttname"><a href="polling__policy_8h.html">polling_policy.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_aefeee609fab315842e014c1cbadb246c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">google::cloud::bigtable::v1::InstanceAdmin::InstanceName</a></div><div class="ttdeci">std::string InstanceName(std::string const &amp;instance_id) const</div><div class="ttdoc">Return the fully qualified name of the given instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00173">instance_admin.h:173</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_aefeee609fab315842e014c1cbadb246c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aefeee609fab315842e014c1cbadb246c">google::cloud::bigtable::v1::InstanceAdmin::InstanceName</a></div><div class="ttdeci">std::string InstanceName(std::string const &amp;instance_id) const</div><div class="ttdoc">Return the fully qualified name of the given instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00174">instance_admin.h:174</a></div></div>
 <div class="ttc" id="ainstance__update__config_8h_html"><div class="ttname"><a href="instance__update__config_8h.html">instance_update_config.h</a></div></div>
 <div class="ttc" id="ainstance__config_8h_html"><div class="ttname"><a href="instance__config_8h.html">instance_config.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a4203b05fb42aa1269c38f3f16f431a56"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a4203b05fb42aa1269c38f3f16f431a56">google::cloud::bigtable::v1::DefaultRPCRetryPolicy</a></div><div class="ttdeci">std::unique_ptr&lt; RPCRetryPolicy &gt; DefaultRPCRetryPolicy(internal::RPCPolicyParameters defaults)</div><div class="ttdoc">Return an instance of the default RPCRetryPolicy.</div><div class="ttdef"><b>Definition:</b> <a href="rpc__retry__policy_8cc_source.html#l00023">rpc_retry_policy.cc:23</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">google::cloud::bigtable::v1::AppProfileConfig</a></div><div class="ttdoc">Specify the initial configuration for an application profile.</div><div class="ttdef"><b>Definition:</b> <a href="app__profile__config_8h_source.html#l00026">app_profile_config.h:26</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a4c7c80489d100c5e2d109819fa7cf608"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">google::cloud::bigtable::v1::InstanceAdmin::project_name</a></div><div class="ttdeci">std::string const  &amp; project_name() const</div><div class="ttdoc">The full name (projects/&lt;project_id&gt;) of the project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00168">instance_admin.h:168</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a4c7c80489d100c5e2d109819fa7cf608"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4c7c80489d100c5e2d109819fa7cf608">google::cloud::bigtable::v1::InstanceAdmin::project_name</a></div><div class="ttdeci">std::string const  &amp; project_name() const</div><div class="ttdoc">The full name (projects/&lt;project_id&gt;) of the project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00169">instance_admin.h:169</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceUpdateConfig.html">google::cloud::bigtable::v1::InstanceUpdateConfig</a></div><div class="ttdoc">Specify the initial configuration for updating an instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__update__config_8h_source.html#l00032">instance_update_config.h:32</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->
