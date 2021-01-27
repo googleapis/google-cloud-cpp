@@ -45,12 +45,6 @@ include(GoogleCloudCppCommon)
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
      "${PROJECT_SOURCE_DIR}")
 
-# Create a library with the generated files from the relevant protos.
-add_library(bigtable_protos INTERFACE)
-target_link_libraries(bigtable_protos
-                      INTERFACE google-cloud-cpp::bigtable_protos)
-add_library(bigtable::protos ALIAS bigtable_protos)
-
 find_package(gRPC)
 
 # Enable unit tests
@@ -61,7 +55,7 @@ include(CreateBazelConfig)
 
 # the client library
 add_library(
-    bigtable_client # cmake-format: sort
+    google_cloud_cpp_bigtable # cmake-format: sort
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -158,29 +152,31 @@ add_library(
     version.h
     version_info.h)
 target_link_libraries(
-    bigtable_client
+    google_cloud_cpp_bigtable
     PUBLIC absl::memory
-           bigtable_protos
+           google-cloud-cpp::bigtable_protos
            google-cloud-cpp::common
            google-cloud-cpp::grpc_utils
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
-google_cloud_cpp_add_common_options(bigtable_client)
+google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable)
 target_include_directories(
-    bigtable_client
+    google_cloud_cpp_bigtable
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
-target_compile_options(bigtable_client
+target_compile_options(google_cloud_cpp_bigtable
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
-    bigtable_client PROPERTIES VERSION ${PROJECT_VERSION}
-                               SOVERSION ${PROJECT_VERSION_MAJOR})
-add_library(bigtable::client ALIAS bigtable_client)
+    google_cloud_cpp_bigtable
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::bigtable" VERSION
+                                                        ${PROJECT_VERSION}
+               SOVERSION ${PROJECT_VERSION_MAJOR})
+add_library(google-cloud-cpp::bigtable ALIAS google_cloud_cpp_bigtable)
 
 include(CreateBazelConfig)
-create_bazel_config(bigtable_client)
+create_bazel_config(google_cloud_cpp_bigtable)
 
 if (BUILD_TESTING)
     add_library(
@@ -206,8 +202,8 @@ if (BUILD_TESTING)
     target_link_libraries(
         bigtable_client_testing
         PUBLIC absl::memory
-               bigtable_client
-               bigtable_protos
+               google-cloud-cpp::bigtable
+               google-cloud-cpp::bigtable_protos
                google-cloud-cpp::common
                google-cloud-cpp::grpc_utils
                GTest::gmock_main
@@ -294,8 +290,8 @@ if (BUILD_TESTING)
             ${target}
             PRIVATE absl::memory
                     bigtable_client_testing
-                    bigtable_client
-                    bigtable_protos
+                    google-cloud-cpp::bigtable
+                    google-cloud-cpp::bigtable_protos
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     google-cloud-cpp::common
@@ -336,35 +332,13 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-# Install the libraries and headers in the locations determined by
-# GNUInstallDirs
-install(
-    TARGETS bigtable_protos
-    EXPORT bigtable-targets
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_runtime
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_runtime
-            NAMELINK_SKIP
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-# With CMake-3.12 and higher we could avoid this separate command (and the
-# duplication).
-install(
-    TARGETS bigtable_protos
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development
-            NAMELINK_ONLY
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_development)
-
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT bigtable-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
+install(EXPORT google_cloud_cpp_bigtable-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable")
 
 install(
-    TARGETS bigtable_client
-    EXPORT bigtable-targets
+    TARGETS google_cloud_cpp_bigtable
+    EXPORT google_cloud_cpp_bigtable-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -375,14 +349,15 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS bigtable_client
+    TARGETS google_cloud_cpp_bigtable
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers(bigtable_client include/google/cloud/bigtable)
+google_cloud_cpp_install_headers(google_cloud_cpp_bigtable
+                                 include/google/cloud/bigtable)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
@@ -391,23 +366,38 @@ set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_bigtable_protos"
 )
-google_cloud_cpp_absl_pkg_config(absl_pkg_config bigtable_client)
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client" ${absl_pkg_config})
+google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_bigtable)
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_bigtable"
+              ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-               "bigtable_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
+               "google_cloud_cpp_bigtable.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_bigtable-config.cmake" @ONLY)
 write_basic_package_version_file(
-    "bigtable_client-config-version.cmake"
+    "google_cloud_cpp_bigtable-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigtable-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigtable")
+
+# TODO(#5726) - generate backwards compatibility files for pkg-config and CMake
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_bigtable")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+        "bigtable_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+configure_file("legacy.cmake.in" "bigtable_client-config.cmake" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
+# TODO(#5726) - END

@@ -22,6 +22,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
+# TODO(#5726) - replace with new targets after next release
 find_package(bigtable_client REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
