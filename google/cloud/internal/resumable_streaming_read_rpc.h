@@ -53,7 +53,7 @@ using RequestUpdater = std::function<void(ResponseType const&, RequestType&)>;
  * over potentially unbounded amounts of data. Many services provide a mechanism
  * to "resume" these streaming RPCs if the operation is interrupted in the
  * middle. That is, the service may be able to restart the streaming RPC from
- * the item following the last received entry. This is useful because once may
+ * the item following the last received entry. This is useful because one may
  * not want to perform one half of a large download (think TiBs of data) more
  * than once.
  *
@@ -84,6 +84,9 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
         request_(std::move(request)),
         impl_(stream_factory_(request_)) {}
 
+  ResumableStreamingReadRpc(ResumableStreamingReadRpc&&) = delete;
+  ResumableStreamingReadRpc& operator=(ResumableStreamingReadRpc&&) = delete;
+
   void Cancel() override { impl_->Cancel(); }
 
   absl::variant<Status, ResponseType> Read() override {
@@ -101,7 +104,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     // This is important because streaming reads can last very long, many
     // minutes or hours, maybe much longer than the retry policy. For example,
     // consider a retry policy of "try for 5 minutes" and a streaming read that
-    // works for 1 hours and then gets interrupted, in this case it would be
+    // works for 1 hour and then gets interrupted, in this case it would be
     // better to resume the read, giving up after 5 minutes of retries, than
     // just aborting because the retry policy is from one hour ago.
     auto const retry_policy = retry_policy_prototype_->clone();
