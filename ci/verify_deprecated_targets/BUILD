@@ -38,7 +38,7 @@ DEPRECATED_TARGETS = [
 [cc_test(
     name = "verify_" + target.replace("/", "_").replace(":", "_"),
     srcs = [
-        "verify_exported_targets.cc",
+        "verify_legacy_targets.cc",
     ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//" + target,
