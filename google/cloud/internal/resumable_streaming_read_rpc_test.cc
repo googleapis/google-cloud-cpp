@@ -98,7 +98,7 @@ std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
       .clone();
 }
 
-void DefaultUpdater(FakeRequest& request, FakeResponse const& response) {
+void DefaultUpdater(FakeResponse const& response, FakeRequest& request) {
   request.token = response.token;
 }
 

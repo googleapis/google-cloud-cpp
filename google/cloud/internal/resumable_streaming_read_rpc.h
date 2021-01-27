@@ -25,17 +25,47 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+/**
+ * `ResumableStreamingReadRpc<ResponseType, RequestType>` uses callables
+ * compatible with this `std::function<>` to create new streams.
+ */
 template <typename ResponseType, typename RequestType>
 using StreamFactory =
     std::function<std::unique_ptr<StreamingReadRpc<ResponseType>>(RequestType)>;
 
+/**
+ * `ResumableStreamingReadRpc<ResponseType, RequestType>` uses callables
+ * compatible with this `std::function<>` to update the request object after
+ * each response. This is how users of the class can update the resume token or
+ * any other parameters needed to restart a stream from the last received
+ * message.
+ */
 template <typename ResponseType, typename RequestType>
-using RequestUpdater = std::function<void(RequestType&, ResponseType const&)>;
+using RequestUpdater = std::function<void(ResponseType const&, RequestType&)>;
 
 /**
  * A StreamingReadRpc that resumes on transient failures.
  *
+ * This class implements the "resume loop", an analog to `RetryLoop()` for
+ * streaming read RPCs.
  *
+ * Often streaming read RPCs are used to implement "downloads", or large reads
+ * over potentially unbounded amounts of data. Many services provide a mechanism
+ * to "resume" these streaming RPCs if the operation is interrupted in the
+ * middle. That is, the service may be able to restart the streaming RPC from
+ * the item following the last received entry. This is useful because once may
+ * not want to perform one half of a large download (think TiBs of data) more
+ * than once.
+ *
+ * When the service provides such a "resume" mechanism it is typically
+ * implemented as string or byte token returned in each response. Sending the
+ * last received token in the "resume" request signals that the operation should
+ * skip the data received before the token.
+ *
+ * When implementing the resume loop it is important to reset any retry policies
+ * after any progress is made. The retry policy is interpreted as the limit on
+ * the time or number of attempts to *start* a streaming RPC, not a limit on the
+ * total time for the streaming RPC.
  */
 template <typename ResponseType, typename RequestType, typename RetryPolicy,
           typename BackoffPolicy, typename Sleeper>
@@ -59,7 +89,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   absl::variant<Status, ResponseType> Read() override {
     auto response = impl_->Read();
     if (absl::holds_alternative<ResponseType>(response)) {
-      updater_(request_, absl::get<ResponseType>(response));
+      updater_(absl::get<ResponseType>(response), request_);
       return response;
     }
     auto last_status = absl::get<Status>(std::move(response));
@@ -80,7 +110,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
       impl_ = stream_factory_(request_);
       auto r = impl_->Read();
       if (absl::holds_alternative<ResponseType>(r)) {
-        updater_(request_, absl::get<ResponseType>(r));
+        updater_(absl::get<ResponseType>(r), request_);
         return r;
       }
       last_status = absl::get<Status>(std::move(r));
