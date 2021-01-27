@@ -78,7 +78,7 @@ foreach (fname ${storage_client_integration_tests})
         ${target}
         PRIVATE storage_client
                 storage_client_testing
-                google_cloud_cpp_common
+                google-cloud-cpp::common
                 google_cloud_cpp_testing
                 GTest::gmock_main
                 GTest::gmock

@@ -63,8 +63,8 @@ target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
     google_cloud_cpp_generator
-    PUBLIC google_cloud_cpp_grpc_utils
-           google_cloud_cpp_common
+    PUBLIC google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format

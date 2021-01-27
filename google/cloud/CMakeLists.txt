@@ -194,8 +194,11 @@ target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 set_target_properties(
-    google_cloud_cpp_common PROPERTIES VERSION ${PROJECT_VERSION}
-                                       SOVERSION ${PROJECT_VERSION_MAJOR})
+    google_cloud_cpp_common
+    PROPERTIES EXPORTED_NAME "google-cloud-cpp::common" VERSION
+                                                        ${PROJECT_VERSION}
+               SOVERSION ${PROJECT_VERSION_MAJOR})
+add_library(google-cloud-cpp::common ALIAS google_cloud_cpp_common)
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common YEAR 2018)
@@ -221,7 +224,7 @@ function (google_cloud_cpp_common_define_benchmarks)
     foreach (fname ${google_cloud_cpp_common_benchmarks})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target} PRIVATE google_cloud_cpp_common
+        target_link_libraries(${target} PRIVATE google-cloud-cpp::common
                                                 benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
 
@@ -272,7 +275,7 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+            PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
                     absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
@@ -390,7 +393,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::memory
                absl::time
                google-cloud-cpp::rpc_status_protos
-               google_cloud_cpp_common
+               google-cloud-cpp::common
                gRPC::grpc++
                gRPC::grpc)
     google_cloud_cpp_add_common_options(google_cloud_cpp_grpc_utils)
@@ -402,8 +405,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     set_target_properties(
         google_cloud_cpp_grpc_utils
-        PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION
+        PROPERTIES EXPORTED_NAME "google-cloud-cpp::grpc_utils"
+                   VERSION ${PROJECT_VERSION} SOVERSION
                                               ${PROJECT_VERSION_MAJOR})
+    add_library(google-cloud-cpp::grpc_utils ALIAS google_cloud_cpp_grpc_utils)
 
     include(CreateBazelConfig)
     create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
@@ -432,7 +437,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             add_test(NAME ${target} COMMAND ${target})
             target_link_libraries(
                 ${target}
-                PRIVATE google_cloud_cpp_grpc_utils google_cloud_cpp_common
+                PRIVATE google-cloud-cpp::grpc_utils google-cloud-cpp::common
                         benchmark::benchmark_main)
             google_cloud_cpp_add_common_options(${target})
 
@@ -469,10 +474,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                                             "${fname}")
             target_link_libraries(
                 ${target}
-                PRIVATE google_cloud_cpp_grpc_utils
+                PRIVATE google-cloud-cpp::grpc_utils
                         google_cloud_cpp_testing_grpc
                         google_cloud_cpp_testing
-                        google_cloud_cpp_common
+                        google-cloud-cpp::common
                         google-cloud-cpp::bigtable_protos
                         google-cloud-cpp::spanner_protos
                         absl::variant

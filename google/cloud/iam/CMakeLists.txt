@@ -53,7 +53,7 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    iam_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+    iam_client PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
                       google-cloud-cpp::iam_protos)
 google_cloud_cpp_add_common_options(iam_client)
 set_target_properties(

@@ -22,8 +22,8 @@ function (pubsub_client_define_samples)
         pubsub_samples_common
         pubsub_client_testing
         googleapis-c++::pubsub_client
-        google_cloud_cpp_common
-        google_cloud_cpp_grpc_utils
+        google-cloud-cpp::common
+        google-cloud-cpp::grpc_utils
         gRPC::grpc++
         gRPC::grpc
         protobuf::libprotobuf)
@@ -40,8 +40,8 @@ function (pubsub_client_define_samples)
             PRIVATE pubsub_samples_common
                     googleapis-c++::pubsub_client
                     google_cloud_cpp_testing
-                    google_cloud_cpp_common
-                    google_cloud_cpp_grpc_utils
+                    google-cloud-cpp::common
+                    google-cloud-cpp::grpc_utils
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest

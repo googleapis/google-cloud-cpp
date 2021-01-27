@@ -242,7 +242,7 @@ target_link_libraries(
            absl::str_format
            absl::time
            absl::variant
-           google_cloud_cpp_common
+           google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
@@ -304,8 +304,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     target_link_libraries(
         storage_client_grpc
         PUBLIC storage_client
-               google_cloud_cpp_grpc_utils
-               google_cloud_cpp_common
+               google-cloud-cpp::grpc_utils
+               google-cloud-cpp::common
                google_cloud_cpp_storage_internal_protos
                nlohmann_json::nlohmann_json
                google-cloud-cpp::storage_protos

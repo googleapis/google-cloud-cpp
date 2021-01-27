@@ -130,7 +130,7 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+    pubsub_client PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
                          google-cloud-cpp::pubsub_protos absl::flat_hash_map)
 google_cloud_cpp_add_common_options(pubsub_client)
 set_target_properties(
@@ -194,8 +194,8 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/test_retry_policies.h)
     target_link_libraries(
         pubsub_client_testing
-        PUBLIC pubsub_client google_cloud_cpp_grpc_utils
-               google_cloud_cpp_common google-cloud-cpp::pubsub_protos
+        PUBLIC pubsub_client google-cloud-cpp::grpc_utils
+               google-cloud-cpp::common google-cloud-cpp::pubsub_protos
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsub_client_testing)
     target_compile_options(pubsub_client_testing

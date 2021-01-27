@@ -21,9 +21,9 @@ if (BUILD_TESTING)
         bigtable_examples_common
         bigtable_client
         google-cloud-cpp::bigtable_protos
-        google_cloud_cpp_common
+        google-cloud-cpp::common
         google_cloud_cpp_testing
-        google_cloud_cpp_grpc_utils
+        google-cloud-cpp::grpc_utils
         gRPC::grpc++
         gRPC::grpc
         protobuf::libprotobuf)
@@ -65,8 +65,8 @@ if (BUILD_TESTING)
                     bigtable_client
                     bigtable_protos
                     google_cloud_cpp_testing
-                    google_cloud_cpp_common
-                    google_cloud_cpp_grpc_utils
+                    google-cloud-cpp::common
+                    google-cloud-cpp::grpc_utils
                     absl::time
                     GTest::gmock_main
                     GTest::gmock
@@ -85,9 +85,9 @@ if (BUILD_TESTING)
             PRIVATE bigtable_examples_common
                     bigtable_client
                     bigtable_protos
-                    google_cloud_cpp_common
+                    google-cloud-cpp::common
                     google_cloud_cpp_testing
-                    google_cloud_cpp_grpc_utils
+                    google-cloud-cpp::grpc_utils
                     absl::time
                     gRPC::grpc++
                     gRPC::grpc

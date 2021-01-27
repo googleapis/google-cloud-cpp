@@ -161,8 +161,8 @@ target_link_libraries(
     bigtable_client
     PUBLIC absl::memory
            bigtable_protos
-           google_cloud_cpp_common
-           google_cloud_cpp_grpc_utils
+           google-cloud-cpp::common
+           google-cloud-cpp::grpc_utils
            gRPC::grpc++
            gRPC::grpc
            protobuf::libprotobuf)
@@ -208,8 +208,8 @@ if (BUILD_TESTING)
         PUBLIC absl::memory
                bigtable_client
                bigtable_protos
-               google_cloud_cpp_common
-               google_cloud_cpp_grpc_utils
+               google-cloud-cpp::common
+               google-cloud-cpp::grpc_utils
                GTest::gmock_main
                GTest::gmock
                GTest::gtest
@@ -298,8 +298,8 @@ if (BUILD_TESTING)
                     bigtable_protos
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
-                    google_cloud_cpp_common
-                    google_cloud_cpp_grpc_utils
+                    google-cloud-cpp::common
+                    google-cloud-cpp::grpc_utils
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest
