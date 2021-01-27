@@ -71,7 +71,7 @@ foreach (short_name ${GOOGLE_CLOUD_CPP_LEGACY_PROTO_LIBS})
     add_library(googleapis-c++::${short_name} IMPORTED INTERFACE)
     set_target_properties(googleapis-c++::${short_name} PROPERTIES
         INTERFACE_LINK_LIBRARIES google-cloud-cpp::${short_name})
-    if (CMAKE_VERSION VERSION_GREATER 3.16)
+    if (CMAKE_VERSION VERSION_GREATER 3.17)
         set_target_properties(googleapis-c++::${short_name} PROPERTIES
         DEPRECATION "This target will be removed on or about 2022-02-15, please use google-cloud-cpp::${short_name} instead")
     endif ()

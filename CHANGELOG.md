@@ -12,7 +12,7 @@
     `google-cloud-cpp::*` targets (e.g. `google-cloud-cpp::pubsub`).
     - :warning: some of these targets are not part of the current release,
       but will be soon.
-    - The legacy CMake targets generate warnings if using CMake >= 3.17 (the
+    - The legacy CMake targets generate warnings if using CMake >= 3.18 (the
       earliest version that supports deprecation warnings).
     - All exported targets without a `google-cloud-cpp::` prefix will be
       retired in or around 2022-02-15. These include, but are not limited to:
