@@ -132,6 +132,8 @@ add_library(
     polling_policy.cc
     polling_policy.h
     read_modify_write_rule.h
+    resource_names.cc
+    resource_names.h
     row.h
     row_key.h
     row_key_sample.h

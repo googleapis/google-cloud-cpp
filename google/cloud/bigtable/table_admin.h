@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
@@ -836,8 +837,8 @@ class TableAdmin {
      *     where PROJECT_ID is obtained from the associated AdminClient and
      *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
      */
-    ListBackupsParams& set_cluster(std::string const& cluster_id) {
-      this->cluster_id = cluster_id;
+    ListBackupsParams& set_cluster(std::string c) {
+      this->cluster_id = std::move(c);
       return *this;
     }
 
@@ -879,8 +880,8 @@ class TableAdmin {
      *       * `size_bytes > 10000000000` --> The backup's size is greater than
      *          10GB
      */
-    ListBackupsParams& set_filter(std::string const& filter) {
-      this->filter = filter;
+    ListBackupsParams& set_filter(std::string f) {
+      this->filter = std::move(f);
       return *this;
     }
 
@@ -907,8 +908,8 @@ class TableAdmin {
      *     If order_by is empty, results will be sorted by `start_time` in
      *     descending order starting from the most recently created backup.
      */
-    ListBackupsParams& set_order_by(std::string const& order_by) {
-      this->order_by = order_by;
+    ListBackupsParams& set_order_by(std::string o) {
+      this->order_by = std::move(o);
       return *this;
     }
 
@@ -999,12 +1000,28 @@ class TableAdmin {
           cluster_id(std::move(cluster_id)),
           backup_id(std::move(backup_id)) {}
 
+    /// @deprecated covert the parameters to a proto.
     google::bigtable::admin::v2::RestoreTableRequest AsProto(
         std::string const& instance_name) const;
 
     std::string table_id;
     std::string cluster_id;
     std::string backup_id;
+  };
+
+  /**
+   * Parameters for `RestoreTable` and `AsyncRestoreTable`.
+   *
+   * @param table_id the name of the table relative to the instance managed by
+   *     this object. The full table name is
+   *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/tables/<table_id>`
+   *     where PROJECT_ID is obtained from the associated AdminClient and
+   *     INSTANCE_ID is the instance_id() of this object.
+   * @param backup_name the full name of the backup used to restore @p table_id.
+   */
+  struct RestoreTableFromInstanceParams {
+    std::string table_id;
+    std::string backup_name;
   };
 
   /**
@@ -1058,6 +1075,57 @@ class TableAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
       CompletionQueue& cq, RestoreTableParams const& params);
+
+  /**
+   * Restore a backup into a new table in the instance.
+   *
+   * @param params instance of `RestoreTableParams`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_snippets.cc restore2
+   */
+  StatusOr<google::bigtable::admin::v2::Table> RestoreTable(
+      RestoreTableFromInstanceParams params);
+
+  /**
+   * Sends an asynchronous request to restore a backup into a new table in the
+   * instance.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param params instance of `RestoreTableParams`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Example
+   * @snippet bigtable_table_admin_backup_async_snippets.cc async restore2
+   */
+  future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
+      CompletionQueue& cq, RestoreTableFromInstanceParams params);
 
   /**
    * Modify the schema for an existing table.
@@ -1603,19 +1671,21 @@ class TableAdmin {
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {
-    return instance_name() + "/tables/" + table_id;
+    return google::cloud::bigtable::TableName(project(), instance_id(),
+                                              table_id);
   }
 
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(std::string const& cluster_id) const {
-    return instance_name() + "/clusters/" + cluster_id;
+    return google::cloud::bigtable::ClusterName(project(), instance_id(),
+                                                cluster_id);
   }
 
   /// Return the fully qualified name of a Backup.
   std::string BackupName(std::string const& cluster_id,
                          std::string const& backup_id) const {
-    return instance_name() + "/clusters/" + cluster_id + "/backups/" +
-           backup_id;
+    return google::cloud::bigtable::BackupName(project(), instance_id(),
+                                               cluster_id, backup_id);
   }
 
  private:
