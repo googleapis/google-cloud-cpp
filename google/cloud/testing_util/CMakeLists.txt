@@ -107,7 +107,7 @@ if (BUILD_TESTING)
     target_link_libraries(
         google_cloud_cpp_testing_grpc
         PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-               googleapis-c++::api_annotations_protos protobuf::libprotobuf
+               google-cloud-cpp::api_annotations_protos protobuf::libprotobuf
                GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
 

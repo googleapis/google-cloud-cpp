@@ -56,7 +56,7 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     logging_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                          googleapis-c++::logging_protos)
+                          google-cloud-cpp::logging_protos)
 google_cloud_cpp_add_common_options(logging_client)
 set_target_properties(
     logging_client PROPERTIES VERSION "${PROJECT_VERSION}"

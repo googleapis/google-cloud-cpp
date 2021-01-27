@@ -153,7 +153,7 @@ target_link_libraries(
            absl::time
            google_cloud_cpp_grpc_utils
            google_cloud_cpp_common
-           googleapis-c++::spanner_protos)
+           google-cloud-cpp::spanner_protos)
 set_target_properties(
     spanner_client PROPERTIES VERSION "${PROJECT_VERSION}"
                               SOVERSION "${PROJECT_VERSION_MAJOR}")

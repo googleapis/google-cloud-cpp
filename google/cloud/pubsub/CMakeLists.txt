@@ -131,7 +131,7 @@ target_include_directories(
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
     pubsub_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                         googleapis-c++::pubsub_protos absl::flat_hash_map)
+                         google-cloud-cpp::pubsub_protos absl::flat_hash_map)
 google_cloud_cpp_add_common_options(pubsub_client)
 set_target_properties(
     pubsub_client PROPERTIES VERSION "${PROJECT_VERSION}"
@@ -195,7 +195,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     target_link_libraries(
         pubsub_client_testing
         PUBLIC pubsub_client google_cloud_cpp_grpc_utils
-               google_cloud_cpp_common googleapis-c++::pubsub_protos
+               google_cloud_cpp_common google-cloud-cpp::pubsub_protos
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsub_client_testing)
     target_compile_options(pubsub_client_testing

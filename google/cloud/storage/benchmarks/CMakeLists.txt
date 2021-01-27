@@ -35,7 +35,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     target_link_libraries(
         storage_benchmarks
         PUBLIC storage_client storage_client_testing google_cloud_cpp_testing
-               google_cloud_cpp_grpc_utils googleapis-c++::storage_protos
+               google_cloud_cpp_grpc_utils google-cloud-cpp::storage_protos
                CURL::libcurl)
     google_cloud_cpp_add_common_options(storage_benchmarks)
 

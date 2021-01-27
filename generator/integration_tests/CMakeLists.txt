@@ -41,15 +41,15 @@ google_cloud_cpp_grpcpp_library(
     ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download)
 target_link_libraries(
     google_cloud_cpp_generator_testing_grpc_lib
-    PUBLIC googleapis-c++::api_annotations_protos
-           googleapis-c++::api_client_protos
-           googleapis-c++::api_field_behavior_protos
-           googleapis-c++::api_resource_protos
-           googleapis-c++::iam_v1_iam_policy_protos
-           googleapis-c++::iam_v1_policy_protos
-           googleapis-c++::longrunning_operations_protos
-           googleapis-c++::rpc_status_protos
-    PRIVATE googleapis_cpp_common_flags)
+    PUBLIC google-cloud-cpp::api_annotations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_field_behavior_protos
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::iam_v1_iam_policy_protos
+           google-cloud-cpp::iam_v1_policy_protos
+           google-cloud-cpp::longrunning_operations_protos
+           google-cloud-cpp::rpc_status_protos
+    PRIVATE external_googleapis_common_flags)
 
 function (google_cloud_cpp_generator_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the

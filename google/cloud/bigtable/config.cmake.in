@@ -13,18 +13,20 @@
 # limitations under the License.
 
 include(CMakeFindDependencyMacro)
-# googleapis finds both gRPC and Protobuf, no need to load them here.
-find_dependency(googleapis)
+# google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
+find_dependency(google_cloud_cpp_googleapis)
 find_dependency(google_cloud_cpp_common)
 find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
+# TODO(#5726) - this is needed to preserve backwards compatibility
+find_dependency(googleapis)
 
 include("${CMAKE_CURRENT_LIST_DIR}/bigtable-targets.cmake")
 
 if (NOT TARGET bigtable::protos)
     add_library(bigtable::protos IMPORTED INTERFACE)
     set_target_properties(bigtable::protos PROPERTIES
-        INTERFACE_LINK_LIBRARIES "bigtable_protos")
+        INTERFACE_LINK_LIBRARIES "google-cloud-cpp::bigtable_protos")
 endif ()
 
 if (NOT TARGET bigtable::client)

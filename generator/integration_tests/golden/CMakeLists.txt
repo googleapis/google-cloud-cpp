@@ -95,8 +95,8 @@ target_link_libraries(
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
            google_cloud_cpp_grpc_utils
            google_cloud_cpp_common
-           googleapis-c++::api_client_protos
-           googleapis-c++::longrunning_operations_protos
+           google-cloud-cpp::api_client_protos
+           google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc)
 google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden_lib)

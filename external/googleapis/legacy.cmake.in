@@ -1,0 +1,78 @@
+# ~~~
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ~~~
+
+find_dependency(google_cloud_cpp_googleapis)
+
+set(GOOGLE_CLOUD_CPP_LEGACY_PROTO_LIBS
+    bigtable_protos
+    cloud_bigquery_protos
+    cloud_speech_protos
+    cloud_texttospeech_protos
+    iam_protos
+    pubsub_protos
+    spanner_protos
+    storage_protos
+    longrunning_operations_protos
+    api_http_protos
+    api_annotations_protos
+    api_auth_protos
+    api_client_protos
+    api_distribution_protos
+    api_field_behavior_protos
+    api_label_protos
+    api_launch_stage_protos
+    api_metric_protos
+    api_monitored_resource_protos
+    api_resource_protos
+    devtools_cloudtrace_v2_trace_protos
+    devtools_cloudtrace_v2_tracing_protos
+    logging_type_protos
+    logging_protos
+    monitoring_protos
+    iam_v1_options_protos
+    iam_v1_policy_protos
+    iam_v1_iam_policy_protos
+    rpc_error_details_protos
+    rpc_status_protos
+    type_calendar_period_protos
+    type_color_protos
+    type_date_protos
+    type_datetime_protos
+    type_dayofweek_protos
+    type_expr_protos
+    type_fraction_protos
+    type_interval_protos
+    type_latlng_protos
+    type_localized_text_protos
+    type_money_protos
+    type_month_protos
+    type_phone_number_protos
+    type_postal_address_protos
+    type_quaternion_protos
+    type_timeofday_protos)
+
+foreach (short_name ${GOOGLE_CLOUD_CPP_LEGACY_PROTO_LIBS})
+    if (TARGET googleapis-c++::${short_name})
+        continue()
+    endif ()
+    add_library(googleapis-c++::${short_name} IMPORTED INTERFACE)
+    set_target_properties(googleapis-c++::${short_name} PROPERTIES
+        INTERFACE_LINK_LIBRARIES google-cloud-cpp::${short_name})
+    if (CMAKE_VERSION VERSION_GREATER 3.17)
+        set_target_properties(googleapis-c++::${short_name} PROPERTIES
+        DEPRECATION "This target will be removed on or about 2022-02-15, please use google-cloud-cpp::${short_name} instead")
+    endif ()
+endforeach ()

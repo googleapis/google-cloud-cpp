@@ -389,7 +389,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         PUBLIC absl::function_ref
                absl::memory
                absl::time
-               googleapis-c++::rpc_status_protos
+               google-cloud-cpp::rpc_status_protos
                google_cloud_cpp_common
                gRPC::grpc++
                gRPC::grpc)
@@ -473,8 +473,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         google_cloud_cpp_testing_grpc
                         google_cloud_cpp_testing
                         google_cloud_cpp_common
-                        googleapis-c++::bigtable_protos
-                        googleapis-c++::spanner_protos
+                        google-cloud-cpp::bigtable_protos
+                        google-cloud-cpp::spanner_protos
                         absl::variant
                         GTest::gmock_main
                         GTest::gmock
