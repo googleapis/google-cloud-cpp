@@ -288,8 +288,8 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::GetBackup(
     std::string const& cluster_id, std::string const& backup_id) {
   grpc::Status status;
   btadmin::GetBackupRequest request;
-  std::string name =
-      instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
+  auto name = google::cloud::bigtable::BackupName(project(), instance_id(),
+                                                  cluster_id, backup_id);
   request.set_name(name);
 
   MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
@@ -309,8 +309,8 @@ future<StatusOr<google::bigtable::admin::v2::Backup>>
 TableAdmin::AsyncGetBackup(CompletionQueue& cq, std::string const& cluster_id,
                            std::string const& backup_id) {
   google::bigtable::admin::v2::GetBackupRequest request{};
-  std::string name =
-      instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
+  auto name = google::cloud::bigtable::BackupName(project(), instance_id(),
+                                                  cluster_id, backup_id);
   request.set_name(name);
 
   // Copy the client because we lack C++14 extended lambda captures.
@@ -428,8 +428,8 @@ Status TableAdmin::DeleteBackup(std::string const& cluster_id,
                                 std::string const& backup_id) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
-  request.set_name(instance_name() + "/clusters/" + cluster_id + "/backups/" +
-                   backup_id);
+  request.set_name(google::cloud::bigtable::BackupName(project(), instance_id(),
+                                                       cluster_id, backup_id));
 
   MetadataUpdatePolicy metadata_update_policy(request.name(),
                                               MetadataParamTypes::NAME);
@@ -450,8 +450,8 @@ future<Status> TableAdmin::AsyncDeleteBackup(CompletionQueue& cq,
                                              std::string const& backup_id) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
-  request.set_name(instance_name() + "/clusters/" + cluster_id + "/backups/" +
-                   backup_id);
+  request.set_name(google::cloud::bigtable::BackupName(project(), instance_id(),
+                                                       cluster_id, backup_id));
   auto client = client_;
   auto metadata_update_policy = clone_metadata_update_policy();
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -568,6 +568,38 @@ StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 TableAdmin::AsyncRestoreTable(CompletionQueue& cq,
                               RestoreTableParams const& params) {
+  return AsyncRestoreTable(
+      cq,
+      RestoreTableFromInstanceParams{
+          params.table_id, BackupName(params.cluster_id, params.backup_id)});
+}
+
+google::bigtable::admin::v2::RestoreTableRequest AsProto(
+    std::string const& instance_name,
+    TableAdmin::RestoreTableFromInstanceParams p) {
+  google::bigtable::admin::v2::RestoreTableRequest proto;
+  proto.set_parent(instance_name);
+  proto.set_table_id(std::move(p.table_id));
+  proto.set_backup(std::move(p.backup_name));
+  return proto;
+}
+
+StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
+    RestoreTableFromInstanceParams params) {
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
+  return AsyncRestoreTable(cq, std::move(params))
+      .then(
+          [cq](future<StatusOr<google::bigtable::admin::v2::Table>> f) mutable {
+            cq.Shutdown();
+            return f.get();
+          })
+      .get();
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+TableAdmin::AsyncRestoreTable(CompletionQueue& cq,
+                              RestoreTableFromInstanceParams params) {
   MetadataUpdatePolicy metadata_update_policy(instance_name(),
                                               MetadataParamTypes::PARENT);
   auto client = client_;
@@ -582,7 +614,7 @@ TableAdmin::AsyncRestoreTable(CompletionQueue& cq,
                grpc::CompletionQueue* cq) {
         return client->AsyncRestoreTable(context, request, cq);
       },
-      params.AsProto(instance_name()), cq);
+      AsProto(instance_name(), std::move(params)), cq);
 }
 
 StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
@@ -1138,7 +1170,8 @@ future<StatusOr<std::vector<std::string>>> TableAdmin::AsyncTestIamPermissions(
 }
 
 std::string TableAdmin::InstanceName() const {
-  return "projects/" + client_->project() + "/instances/" + instance_id_;
+  return google::cloud::bigtable::InstanceName(client_->project(),
+                                               instance_id_);
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

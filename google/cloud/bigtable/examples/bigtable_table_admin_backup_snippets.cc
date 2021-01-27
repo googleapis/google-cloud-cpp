@@ -144,6 +144,26 @@ void RestoreTable(google::cloud::bigtable::TableAdmin const& admin,
   (admin, argv.at(0), argv.at(1), argv.at(2));
 }
 
+void RestoreTableFromInstance(google::cloud::bigtable::TableAdmin const& admin,
+                              std::vector<std::string> const& argv) {
+  //! [restore2]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string const& table_id,
+     std::string const& other_instance_id, std::string const& cluster_id,
+     std::string const& backup_id) {
+    StatusOr<google::bigtable::admin::v2::Table> table =
+        admin.RestoreTable(cbt::TableAdmin::RestoreTableFromInstanceParams{
+            table_id, cbt::BackupName(admin.project(), other_instance_id,
+                                      cluster_id, backup_id)});
+    if (!table) throw std::runtime_error(table.status().message());
+    std::cout << "Table successfully restored: " << table->DebugString()
+              << "\n";
+  }
+  //! [restore2]
+  (admin, argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -217,6 +237,12 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning RestoreTable() example" << std::endl;
   RestoreTable(admin, {table_id_1, cluster_id, backup_id_1});
 
+  (void)admin.DeleteTable(table_id_1);
+
+  std::cout << "\nRunning RestoreTable() example" << std::endl;
+  RestoreTableFromInstance(admin,
+                           {table_id_1, instance_id, cluster_id, backup_id_1});
+
   std::cout << "\nRunning DeleteBackup() example" << std::endl;
   DeleteBackup(admin, {cluster_id, backup_id_1});
 
@@ -246,6 +272,10 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry("restore-table",
                                  {"<table-id>", "<cluster-id>", "<backup-id>"},
                                  RestoreTable),
+      examples::MakeCommandEntry(
+          "restore-table-from-instance",
+          {"<table-id>", "<other-instance-id>", "<cluster-id>", "<backup-id>"},
+          RestoreTableFromInstance),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

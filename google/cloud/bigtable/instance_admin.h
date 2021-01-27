@@ -25,6 +25,7 @@
 #include "google/cloud/bigtable/instance_list_responses.h"
 #include "google/cloud/bigtable/instance_update_config.h"
 #include "google/cloud/bigtable/polling_policy.h"
+#include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_policy.h"
@@ -171,19 +172,21 @@ class InstanceAdmin {
 
   /// Return the fully qualified name of the given instance_id.
   std::string InstanceName(std::string const& instance_id) const {
-    return project_name() + "/instances/" + instance_id;
+    return google::cloud::bigtable::InstanceName(project_id(), instance_id);
   }
 
   /// Return the fully qualified name of the given cluster_id in give
   /// instance_id.
   std::string ClusterName(std::string const& instance_id,
                           std::string const& cluster_id) const {
-    return InstanceName(instance_id) + "/clusters/" + cluster_id;
+    return google::cloud::bigtable::ClusterName(project_id(), instance_id,
+                                                cluster_id);
   }
 
   std::string AppProfileName(std::string const& instance_id,
                              std::string const& profile_id) const {
-    return InstanceName(instance_id) + "/appProfiles/" + profile_id;
+    return google::cloud::bigtable::AppProfileName(project_id(), instance_id,
+                                                   profile_id);
   }
 
   /**

@@ -215,6 +215,40 @@ void AsyncRestoreTable(google::cloud::bigtable::TableAdmin const& admin,
   (admin, std::move(cq), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void AsyncRestoreTableFromInstance(
+    google::cloud::bigtable::TableAdmin const& admin,
+    google::cloud::bigtable::CompletionQueue cq,
+    std::vector<std::string> const& argv) {
+  //! [async restore2]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
+     std::string const& table_id, std::string const& other_instance_id,
+     std::string const& cluster_id, std::string const& backup_id) {
+    future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
+        admin.AsyncRestoreTable(
+            cq,
+            cbt::TableAdmin::RestoreTableFromInstanceParams{
+                table_id, cbt::BackupName(admin.project(), other_instance_id,
+                                          cluster_id, backup_id)});
+
+    auto final = table_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
+          auto table = f.get();
+
+          if (!table) {
+            throw std::runtime_error(table.status().message());
+          }
+          std::cout << "Table successfully restored: " << table->DebugString()
+                    << "\n";
+        });
+    final.get();
+  }
+  //! [async restore2]
+  (admin, std::move(cq), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
 }  // anonymous namespace
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -294,6 +328,12 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning AsyncRestoreTable() example" << std::endl;
   AsyncRestoreTable(admin, cq, {table_id, cluster_id, backup_id});
 
+  (void)admin.DeleteTable(table_id);
+
+  std::cout << "\nRunning AsyncRestoreTableFromInstance() example" << std::endl;
+  AsyncRestoreTableFromInstance(admin, cq,
+                                {table_id, instance_id, cluster_id, backup_id});
+
   std::cout << "\nRunning AsyncDeleteBackup() example" << std::endl;
   AsyncDeleteBackup(admin, cq, {cluster_id, backup_id});
 
@@ -322,6 +362,10 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry("async-restore-table",
                                  {"<table-id>", "<cluster-id>", "<backup-id>"},
                                  AsyncRestoreTable),
+      examples::MakeCommandEntry(
+          "async-restore-table-from-instance",
+          {"<table-id>", "<other-instance>", "<cluster-id>", "<backup-id>"},
+          AsyncRestoreTableFromInstance),
 
       {"auto", RunAll},
   });
