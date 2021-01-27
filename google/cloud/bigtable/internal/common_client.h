@@ -74,12 +74,14 @@ class ConnectionRefreshState {
  public:
   explicit ConnectionRefreshState(
       std::shared_ptr<CompletionQueue> const& cq,
+      std::chrono::milliseconds min_conn_refresh_period,
       std::chrono::milliseconds max_conn_refresh_period);
   std::chrono::milliseconds RandomizedRefreshDelay();
   OutstandingTimers& timers() { return *timers_; }
 
  private:
   std::mutex mu_;
+  std::chrono::milliseconds min_conn_refresh_period_;
   std::chrono::milliseconds max_conn_refresh_period_;
   google::cloud::internal::DefaultPRNG rng_;
   std::shared_ptr<OutstandingTimers> timers_;
@@ -124,7 +126,8 @@ class CommonClient {
             google::cloud::internal::DefaultBackgroundThreads(1)),
         cq_(std::make_shared<CompletionQueue>(background_threads_->cq())),
         refresh_state_(std::make_shared<ConnectionRefreshState>(
-            cq_, options_.max_conn_refresh_period())) {}
+            cq_, options_.min_conn_refresh_period(),
+            options_.max_conn_refresh_period())) {}
 
   ~CommonClient() {
     // This will stop the refresh of the channels.

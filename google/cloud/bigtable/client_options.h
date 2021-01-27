@@ -338,10 +338,39 @@ class ClientOptions {
    * moments not more apart from each other than this duration. This is
    * necessary to avoid all connections simultaneously expiring and causing
    * latency spikes.
+   *
+   * If needed it changes max_conn_refresh_period() to preserve the invariant:
+   *
+   * @code
+   * assert(min_conn_refresh_period() <= max_conn_refresh_period())
+   * @endcode
    */
-  ClientOptions& set_max_conn_refresh_period(
-      std::chrono::milliseconds max_conn_refresh_period) {
-    max_conn_refresh_period_ = max_conn_refresh_period;
+  ClientOptions& set_max_conn_refresh_period(std::chrono::milliseconds period) {
+    max_conn_refresh_period_ = period;
+    min_conn_refresh_period_ = (std::min)(min_conn_refresh_period_, period);
+    return *this;
+  }
+
+  /**
+   * Minimum connection refresh period, as set via `set_min_conn_refresh_period`
+   */
+  std::chrono::milliseconds min_conn_refresh_period() {
+    return min_conn_refresh_period_;
+  }
+
+  /**
+   * Configures the *minimum* connection refresh period. The library will wait
+   * at least this long before attempting any refresh operation.
+   *
+   * If needed it changes max_conn_refresh_period() to preserve the invariant:
+   *
+   * @code
+   * assert(min_conn_refresh_period() <= max_conn_refresh_period())
+   * @endcode
+   */
+  ClientOptions& set_min_conn_refresh_period(std::chrono::milliseconds period) {
+    min_conn_refresh_period_ = period;
+    max_conn_refresh_period_ = (std::max)(max_conn_refresh_period_, period);
     return *this;
   }
 
@@ -368,7 +397,9 @@ class ClientOptions {
   std::set<std::string> tracing_components_;
   TracingOptions tracing_options_;
   std::chrono::milliseconds max_conn_refresh_period_;
+  std::chrono::milliseconds min_conn_refresh_period_;
 };
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
