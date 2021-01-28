@@ -39,6 +39,7 @@ namespace generator {
  *   --plugin=protoc-gen-cpp_codegen=${PLUGIN_BIN_PATH}/protoc-gen-cpp_codegen \
  *   --cpp_codegen_out=. \
  *   --cpp_codegen_opt=product_path=google/cloud/spanner
+ *   --cpp_codegen_opt=copyright_year=2020
  * @endcode
  */
 class Generator : public google::protobuf::compiler::CodeGenerator {

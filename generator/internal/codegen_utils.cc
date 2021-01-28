@@ -17,6 +17,9 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "absl/strings/str_split.h"
+#include "absl/time/civil_time.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <cctype>
 #include <string>
@@ -130,12 +133,27 @@ ProcessCommandLineArgs(std::string const& parameters) {
         "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
   }
 
+  auto copyright_year =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "copyright_year";
+                   });
+  auto current_year =
+      absl::FormatTime("%Y", absl::Now(), absl::LocalTimeZone());
+  if (copyright_year != command_line_args.end() &&
+      copyright_year->second.empty()) {
+    copyright_year->second = current_year;
+  }
+  if (copyright_year == command_line_args.end()) {
+    command_line_args.emplace_back("copyright_year", current_year);
+  }
+
   return command_line_args;
 }
 
 std::string CopyrightLicenseFileHeader() {
   static auto constexpr kHeader =  // clang-format off
-  "// Copyright 2021 Google LLC\n"
+  "// Copyright $copyright_year$ Google LLC\n"
   "//\n"
   "// Licensed under the Apache License, Version 2.0 (the \"License\");\n"
   "// you may not use this file except in compliance with the License.\n"
