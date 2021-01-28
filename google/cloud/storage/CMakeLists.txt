@@ -345,7 +345,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
     create_bazel_config(google_cloud_cpp_storage_grpc)
 else ()
-    add_library(google_cloud_cpp_storage_internal_proos INTERFACE)
+    add_library(google_cloud_cpp_storage_internal_protos INTERFACE)
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
