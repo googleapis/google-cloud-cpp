@@ -270,7 +270,7 @@ $(function() {
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    *<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>.mutable_array_element_type() = MakeTypeProto(v.empty() ? T{} : v[0]);</div>
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="comment">// Checks that vector elements have exactly the same proto Type, which</span></div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">// includes field names. This is documented UB.</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; e : v) {</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp;&amp; e : v) {</div>
 <div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;      <span class="keywordflow">if</span> (!google::protobuf::util::MessageDifferencer::Equals(</div>
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;              MakeTypeProto(e), <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>.array_element_type())) {</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;        google::cloud::internal::ThrowInvalidArgument(<span class="stringliteral">&quot;Mismatched types&quot;</span>);</div>
