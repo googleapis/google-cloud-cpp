@@ -394,7 +394,7 @@ install(
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_bigtable")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-        "bigtable_client.pc" @ONLY)
+               "bigtable_client.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 configure_file("legacy.cmake.in" "bigtable_client-config.cmake" @ONLY)
