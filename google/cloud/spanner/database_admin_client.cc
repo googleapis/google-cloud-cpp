@@ -57,13 +57,17 @@ Status DatabaseAdminClient::DropDatabase(Database db) {
 }
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
-    Database db, Backup const& backup) {
-  return conn_->RestoreDatabase({std::move(db), backup.FullName()});
+    Database db, Backup const& backup,
+    absl::optional<KmsKeyName> encryption_key) {
+  return conn_->RestoreDatabase(
+      {std::move(db), backup.FullName(), std::move(encryption_key)});
 }
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
-    Database db, google::spanner::admin::database::v1::Backup const& backup) {
-  return conn_->RestoreDatabase({std::move(db), backup.name()});
+    Database db, google::spanner::admin::database::v1::Backup const& backup,
+    absl::optional<KmsKeyName> encryption_key) {
+  return conn_->RestoreDatabase(
+      {std::move(db), backup.name(), std::move(encryption_key)});
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
@@ -132,9 +136,10 @@ DatabaseAdminClient::TestIamPermissions(Database db,
 
 future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id,
-    std::chrono::system_clock::time_point expire_time) {
-  return conn_->CreateBackup(
-      {std::move(db), std::move(backup_id), expire_time});
+    std::chrono::system_clock::time_point expire_time,
+    absl::optional<KmsKeyName> encryption_key) {
+  return conn_->CreateBackup({std::move(db), std::move(backup_id), expire_time,
+                              std::move(encryption_key)});
 }
 
 StatusOr<gcsa::Backup> DatabaseAdminClient::GetBackup(Backup const& backup) {

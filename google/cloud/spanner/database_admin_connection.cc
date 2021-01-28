@@ -283,6 +283,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_parent(p.database.instance().FullName());
     request.set_database_id(p.database.database_id());
     request.set_backup(std::move(p.backup_full_name));
+    if (p.encryption_key) {
+      request.mutable_encryption_config()->set_kms_key_name(
+          p.encryption_key->FullName());
+    }
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,
@@ -356,6 +360,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     backup.set_database(p.database.FullName());
     *backup.mutable_expire_time() =
         google::cloud::internal::ToProtoTimestamp(p.expire_time);
+    if (p.encryption_key) {
+      request.mutable_encryption_config()->set_kms_key_name(
+          p.encryption_key->FullName());
+    }
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,

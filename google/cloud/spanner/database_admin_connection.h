@@ -175,6 +175,8 @@ class DatabaseAdminConnection {
     Database database;
     std::string backup_id;
     std::chrono::system_clock::time_point expire_time;
+    /// The KMS key that was used to encrypt and decrypt the database.
+    absl::optional<KmsKeyName> encryption_key;
   };
 
   /// Wrap the arguments for `GetBackup()`.
@@ -202,6 +204,8 @@ class DatabaseAdminConnection {
     Database database;
     /// The source backup for the restore.
     std::string backup_full_name;
+    /// The KMS key that was used to encrypt and decrypt the database.
+    absl::optional<KmsKeyName> encryption_key;
   };
 
   /// Wrap the arguments for `UpdateBackup()`.

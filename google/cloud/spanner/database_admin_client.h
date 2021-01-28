@@ -228,6 +228,9 @@ class DatabaseAdminClient {
    * The new database must be in the same project and in an instance with the
    * same instance configuration as the instance containing the backup.
    *
+   * @p encryption_key The name of the Cloud KMS key used to encrypt and decrypt
+   * the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -235,7 +238,8 @@ class DatabaseAdminClient {
    * @snippet samples.cc restore-database
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(Database db, Backup const& backup);
+  RestoreDatabase(Database db, Backup const& backup,
+                  absl::optional<KmsKeyName> encryption_key = absl::nullopt);
 
   /**
    * Create a new database by restoring from a completed backup.
@@ -251,7 +255,8 @@ class DatabaseAdminClient {
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(Database db,
-                  google::spanner::admin::database::v1::Backup const& backup);
+                  google::spanner::admin::database::v1::Backup const& backup,
+                  absl::optional<KmsKeyName> encryption_key = absl::nullopt);
 
   /**
    * Gets the IAM policy for a database.
@@ -373,6 +378,9 @@ class DatabaseAdminClient {
    * The @p expire_time must be at least 6 hours and at most 366 days from the
    * time the `CreateBackup()` request is processed.
    *
+   * @p encryption_key The name of the Cloud KMS key used to encrypt and decrypt
+   * the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -381,7 +389,8 @@ class DatabaseAdminClient {
    */
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       Database db, std::string backup_id,
-      std::chrono::system_clock::time_point expire_time);
+      std::chrono::system_clock::time_point expire_time,
+      absl::optional<KmsKeyName> encryption_key = absl::nullopt);
 
   /**
    * Retrieve metadata information about a Backup.
