@@ -157,7 +157,7 @@ DatabaseAdminClient::ListBackupOperations(std::string const& parent) {
 
 ListDatabasesRange
 DatabaseAdminClient::ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request) {
-  return connection_->ListDatabases(request);
+  return connection_->ListDatabases(std::move(request));
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
@@ -222,7 +222,7 @@ DatabaseAdminClient::DeleteBackup(::google::test::admin::database::v1::DeleteBac
 
 ListBackupsRange
 DatabaseAdminClient::ListBackups(::google::test::admin::database::v1::ListBackupsRequest request) {
-  return connection_->ListBackups(request);
+  return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
@@ -232,12 +232,12 @@ DatabaseAdminClient::RestoreDatabase(::google::test::admin::database::v1::Restor
 
 ListDatabaseOperationsRange
 DatabaseAdminClient::ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return connection_->ListDatabaseOperations(request);
+  return connection_->ListDatabaseOperations(std::move(request));
 }
 
 ListBackupOperationsRange
 DatabaseAdminClient::ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return connection_->ListBackupOperations(request);
+  return connection_->ListBackupOperations(std::move(request));
 }
 
 }  // namespace golden

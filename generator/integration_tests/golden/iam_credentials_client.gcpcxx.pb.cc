@@ -79,7 +79,7 @@ IAMCredentialsClient::WriteLogEntries(::google::test::admin::database::v1::Write
 
 ListLogsRange
 IAMCredentialsClient::ListLogs(::google::test::admin::database::v1::ListLogsRequest request) {
-  return connection_->ListLogs(request);
+  return connection_->ListLogs(std::move(request));
 }
 
 }  // namespace golden
