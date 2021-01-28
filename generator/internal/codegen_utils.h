@@ -108,6 +108,11 @@ ProcessCommandLineArgs(std::string const& parameters);
  */
 std::string CopyrightLicenseFileHeader();
 
+/**
+ * Current year for copyright boilerplate purposes.
+ */
+std::string CurrentCopyrightYear();
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

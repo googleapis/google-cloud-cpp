@@ -17,7 +17,6 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "absl/strings/str_split.h"
-#include "absl/time/civil_time.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -27,6 +26,12 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+
+std::string CurrentCopyrightYear() {
+  static std::string const kCurrentCopyrightYear =
+      absl::FormatTime("%Y", absl::Now(), absl::UTCTimeZone());
+  return kCurrentCopyrightYear;
+}
 
 std::string GeneratedFileSuffix() { return ".gcpcxx.pb"; }
 
@@ -138,14 +143,12 @@ ProcessCommandLineArgs(std::string const& parameters) {
                    [](std::pair<std::string, std::string> const& p) {
                      return p.first == "copyright_year";
                    });
-  auto current_year =
-      absl::FormatTime("%Y", absl::Now(), absl::LocalTimeZone());
   if (copyright_year != command_line_args.end() &&
       copyright_year->second.empty()) {
-    copyright_year->second = current_year;
+    copyright_year->second = CurrentCopyrightYear();
   }
   if (copyright_year == command_line_args.end()) {
-    command_line_args.emplace_back("copyright_year", current_year);
+    command_line_args.emplace_back("copyright_year", CurrentCopyrightYear());
   }
 
   return command_line_args;

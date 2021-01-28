@@ -196,28 +196,26 @@ TEST(ProcessCommandLineArgs, EmptyCommitHash) {
       "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
 }
 
-TEST(ProcessCommandLineArgs, NoCopyrighYearParameterOrValue) {
+TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
-  auto expected_year =
-      absl::FormatTime("%Y", absl::Now(), absl::LocalTimeZone());
+  auto expected_year = CurrentCopyrightYear();
   EXPECT_TRUE(result.ok());
   EXPECT_EQ(result->back().first, "copyright_year");
   EXPECT_EQ(result->back().second, expected_year);
 }
 
-TEST(ProcessCommandLineArgs, NoCopyrighYearValue) {
+TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=");
-  auto expected_year =
-      absl::FormatTime("%Y", absl::Now(), absl::LocalTimeZone());
+  auto expected_year = CurrentCopyrightYear();
   EXPECT_TRUE(result.ok());
   EXPECT_EQ(result->back().first, "copyright_year");
   EXPECT_EQ(result->back().second, expected_year);
 }
 
-TEST(ProcessCommandLineArgs, CopyrighYearWithValue) {
+TEST(ProcessCommandLineArgs, CopyrightYearWithValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=1995");

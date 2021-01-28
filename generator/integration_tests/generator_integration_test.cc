@@ -20,6 +20,7 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "generator/generator.h"
+#include "generator/internal/codegen_utils.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <gmock/gmock.h>
 #include <fstream>
@@ -95,8 +96,7 @@ class GeneratorIntegrationTest
 
     product_path_ = "generator/integration_tests/golden/";
     googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
-    copyright_year_ =
-        absl::FormatTime("%Y", absl::Now(), absl::LocalTimeZone());
+    copyright_year_ = CurrentCopyrightYear();
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
