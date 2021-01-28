@@ -51,8 +51,7 @@ add_test_case(t120 storage_client)
 
 set(pkg_config_modules
     google_cloud_cpp_common google_cloud_cpp_grpc_utils
-        google_cloud_cpp_bigtable
-    pubsub_client spanner_client storage_client)
+    google_cloud_cpp_bigtable pubsub_client spanner_client storage_client)
 foreach (module ${pkg_config_modules})
     pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})
     add_test_case(test_pc_${module} PkgConfig::${module})
