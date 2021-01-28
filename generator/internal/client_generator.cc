@@ -307,7 +307,7 @@ Status ClientGenerator::GenerateCc() {
                  // clang-format off
    {"$method_name$Range\n"
     "$client_class_name$::$method_name$($request_type$ request) {\n"
-    "  return connection_->$method_name$(request);\n"
+    "  return connection_->$method_name$(std::move(request));\n"
     "}\n\n"}
                  // clang-format on
              },
