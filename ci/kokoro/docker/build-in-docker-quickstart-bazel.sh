@@ -122,12 +122,24 @@ done
 echo
 echo "================================================================"
 io::log_yellow "Verifying deprecated (but not retired) targets"
-(
-  cd ci/verify_exported_targets
+env -C ci/verify_deprecated_targets \
   "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
-    "${BAZEL_BIN}" fetch ... "${external[@]}"
-  "${BAZEL_BIN}" test ... "${bazel_args[@]}"
-)
+  "${BAZEL_BIN}" fetch ... "${external[@]}"
+if ! env -C ci/verify_deprecated_targets "${BAZEL_BIN}" test ... "${bazel_args[@]}"; then
+  io::log_red "Building deprecated targets failed"
+  errors="${errors} 'deprecated targets'"
+fi
+
+echo
+echo "================================================================"
+io::log_yellow "Verifying current targets"
+env -C ci/verify_current_targets \
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+  "${BAZEL_BIN}" fetch ... "${external[@]}"
+if ! env -C ci/verify_current_targets "${BAZEL_BIN}" test ... "${bazel_args[@]}"; then
+  io::log_red "Building current targets failed"
+  errors="${errors} 'current targets'"
+fi
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then

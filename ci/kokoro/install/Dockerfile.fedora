@@ -138,11 +138,17 @@ RUN cmake --build cmake-out --target install
 
 ## [END packaging.md]
 
-WORKDIR /home/build/verify-exported-targets
-COPY ci/verify_exported_targets /home/build/verify-exported-targets
-RUN cmake -H. -B/i/verify-exported-targets -Wno-dev
-RUN cmake --build /i/verify-exported-targets -j "${NCPU:-4}"
-RUN cmake --build /i/verify-exported-targets --target test
+WORKDIR /home/build/verify-current-targets
+COPY ci/verify_current_targets /home/build/verify-current-targets
+RUN cmake -H. -B/i/verify-current-targets -Wno-dev
+RUN cmake --build /i/verify-current-targets -j "${NCPU:-4}"
+RUN cmake --build /i/verify-current-targets --target test
+
+WORKDIR /home/build/verify-deprecated-targets
+COPY ci/verify_deprecated_targets /home/build/verify-deprecated-targets
+RUN cmake -H. -B/i/verify-deprecated-targets -Wno-dev
+RUN cmake --build /i/verify-deprecated-targets -j "${NCPU:-4}"
+RUN cmake --build /i/verify-deprecated-targets --target test
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
