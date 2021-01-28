@@ -18,7 +18,7 @@ if (BUILD_TESTING)
     add_library(storage_examples_common # cmake-format: sort
                 storage_examples_common.cc storage_examples_common.h)
     target_link_libraries(storage_examples_common storage_client_testing
-                          storage_client google_cloud_cpp_common)
+                          storage_client google-cloud-cpp::common)
     google_cloud_cpp_add_common_options(storage_examples_common)
 
     set(storage_examples
@@ -73,7 +73,7 @@ if (BUILD_TESTING)
             PRIVATE storage_examples_common
                     storage_client
                     google_cloud_cpp_testing
-                    google_cloud_cpp_common
+                    google-cloud-cpp::common
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)
@@ -86,7 +86,7 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE storage_examples_common storage_client_grpc storage_client
-                    google_cloud_cpp_common google_cloud_cpp_testing)
+                    google-cloud-cpp::common google_cloud_cpp_testing)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
             ${target} PROPERTIES LABELS

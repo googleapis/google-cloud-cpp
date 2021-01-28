@@ -151,8 +151,8 @@ target_link_libraries(
            absl::numeric
            absl::strings
            absl::time
-           google_cloud_cpp_grpc_utils
-           google_cloud_cpp_common
+           google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common
            google-cloud-cpp::spanner_protos)
 set_target_properties(
     spanner_client PROPERTIES VERSION "${PROJECT_VERSION}"

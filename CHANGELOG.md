@@ -39,9 +39,11 @@
 
 ### Bazel
 
-* Starting with this release the legacy targets, such as `//google/cloud/pubsub:pubsub_client` are deprecated and
-  generate warnings recommending a replacement (such as `//:pubsub`). Note that you may have be to prefix the
-  target with the external package name you gave this library, e.g., `@github_com_google_cloud_cpp//:pubsub`).
+* Starting with this release the legacy targets, such as
+  `//google/cloud/pubsub:pubsub_client` are deprecated and generate warnings
+  recommending a replacement (such as `//:pubsub`). Note that you may have to
+  prefix the target with the external package name you gave this library, e.g.,
+  `@github_com_google_cloud_cpp//:pubsub`.
 
 ### Storage
 

@@ -45,7 +45,7 @@ if (BUILD_TESTING)
     target_link_libraries(
         google_cloud_cpp_testing
         PUBLIC absl::symbolize absl::failure_signal_handler
-               google_cloud_cpp_common GTest::gmock)
+               google-cloud-cpp::common GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
 
     include(CheckCXXSymbolExists)
@@ -80,7 +80,7 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
         google_cloud_cpp_add_executable(target "common_testing" "${fname}")
         target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+            ${target} PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
                               GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
@@ -106,7 +106,7 @@ if (BUILD_TESTING)
         validate_metadata.h)
     target_link_libraries(
         google_cloud_cpp_testing_grpc
-        PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+        PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
                google-cloud-cpp::api_annotations_protos protobuf::libprotobuf
                GTest::gmock)
     google_cloud_cpp_add_common_options(google_cloud_cpp_testing_grpc)
@@ -125,7 +125,7 @@ if (BUILD_TESTING)
             ${target}
             PRIVATE google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing
-                    google_cloud_cpp_common
+                    google-cloud-cpp::common
                     protobuf::libprotobuf
                     GTest::gmock_main
                     GTest::gmock

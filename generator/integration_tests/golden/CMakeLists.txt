@@ -93,8 +93,8 @@ target_include_directories(
 target_link_libraries(
     google_cloud_cpp_generator_golden_lib
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
-           google_cloud_cpp_grpc_utils
-           google_cloud_cpp_common
+           google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
