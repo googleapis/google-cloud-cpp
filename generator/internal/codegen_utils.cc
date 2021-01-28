@@ -143,12 +143,10 @@ ProcessCommandLineArgs(std::string const& parameters) {
                    [](std::pair<std::string, std::string> const& p) {
                      return p.first == "copyright_year";
                    });
-  if (copyright_year != command_line_args.end() &&
-      copyright_year->second.empty()) {
-    copyright_year->second = CurrentCopyrightYear();
-  }
   if (copyright_year == command_line_args.end()) {
     command_line_args.emplace_back("copyright_year", CurrentCopyrightYear());
+  } else if (copyright_year->second.empty()) {
+    copyright_year->second = CurrentCopyrightYear();
   }
 
   return command_line_args;
