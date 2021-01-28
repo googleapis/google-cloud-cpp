@@ -458,7 +458,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   if [[ "${CHECK_ABI:-}" == "yes" ]]; then
     io::log_yellow "Checking ABI compatibility."
     libraries=(
-      "bigtable_client"
+      "google_cloud_cpp_bigtable"
       "google_cloud_cpp_common"
       "google_cloud_cpp_grpc_utils"
       "spanner_client"
