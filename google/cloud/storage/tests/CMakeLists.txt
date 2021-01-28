@@ -76,10 +76,10 @@ foreach (fname ${storage_client_integration_tests})
     google_cloud_cpp_add_executable(target "storage" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE storage_client
-                storage_client_testing
-                google-cloud-cpp::common
+        PRIVATE storage_client_testing
                 google_cloud_cpp_testing
+                google-cloud-cpp::storage
+                google-cloud-cpp::common
                 GTest::gmock_main
                 GTest::gmock
                 GTest::gtest
@@ -89,7 +89,7 @@ foreach (fname ${storage_client_integration_tests})
                 nlohmann_json)
     if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         target_link_libraries(
-            ${target} PRIVATE storage_client
+            ${target} PRIVATE google-cloud-cpp::storage
                               google_cloud_cpp_storage_tests_conformance_protos)
     endif ()
 

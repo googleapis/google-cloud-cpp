@@ -32,7 +32,7 @@ find_package(google_cloud_cpp_bigtable REQUIRED)
 find_package(google_cloud_cpp_firestore REQUIRED)
 find_package(google_cloud_cpp_pubsub REQUIRED)
 find_package(google_cloud_cpp_spanner REQUIRED)
-find_package(storage_client REQUIRED)
+find_package(google_cloud_cpp_storage REQUIRED)
 
 include(CTest)
 
@@ -48,7 +48,7 @@ add_test_case(t030 google-cloud-cpp::bigtable)
 add_test_case(t040 google-cloud-cpp::experimental-firestore)
 add_test_case(t100 google-cloud-cpp::pubsub)
 add_test_case(t110 google-cloud-cpp::spanner)
-add_test_case(t120 storage_client)
+add_test_case(t120 google-cloud-cpp::storage)
 
 set(pkg_config_modules
     # cmake-format: sortable
@@ -57,7 +57,7 @@ set(pkg_config_modules
     google_cloud_cpp_grpc_utils
     google_cloud_cpp_pubsub
     google_cloud_cpp_spanner
-    storage_client)
+    google_cloud_cpp_storage)
 foreach (module ${pkg_config_modules})
     pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})
     add_test_case(test_pc_${module} PkgConfig::${module})

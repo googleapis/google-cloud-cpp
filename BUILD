@@ -92,7 +92,7 @@ cc_library(
 cc_library(
     name = "storage",
     deps = [
-        "//google/cloud/storage:storage_client_internal",
+        "//google/cloud/storage:google_cloud_cpp_storage",
     ],
 )
 
@@ -101,6 +101,6 @@ cc_library(
     deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
     tags = ["manual"],
     deps = [
-        "//google/cloud/storage:storage_client_internal",
+        "//google/cloud/storage:google_cloud_cpp_storage",
     ],
 )

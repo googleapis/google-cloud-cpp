@@ -18,7 +18,7 @@
 include(SelectMSVCRuntime)
 
 add_executable(gcs2cbt gcs2cbt.cc)
-target_link_libraries(gcs2cbt google-cloud-cpp::bigtable storage_client
+target_link_libraries(gcs2cbt google-cloud-cpp::bigtable google-cloud-cpp::storage
                       google-cloud-cpp::grpc_utils)
 google_cloud_cpp_add_common_options(gcs2cbt)
 if (BUILD_TESTING)

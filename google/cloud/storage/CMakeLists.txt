@@ -57,7 +57,7 @@ find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(
-    storage_client # cmake-format: sort
+    google_cloud_cpp_storage # cmake-format: sort
     bucket_access_control.cc
     bucket_access_control.h
     bucket_metadata.cc
@@ -236,7 +236,7 @@ add_library(
     well_known_parameters.cc
     well_known_parameters.h)
 target_link_libraries(
-    storage_client
+    google_cloud_cpp_storage
     PUBLIC absl::memory
            absl::strings
            absl::str_format
@@ -250,16 +250,16 @@ target_link_libraries(
            OpenSSL::SSL
            OpenSSL::Crypto
            ZLIB::ZLIB)
-google_cloud_cpp_add_common_options(storage_client)
+google_cloud_cpp_add_common_options(google_cloud_cpp_storage)
 target_include_directories(
-    storage_client PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                          $<INSTALL_INTERFACE:include>)
-target_compile_options(storage_client
+    google_cloud_cpp_storage PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                    $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_storage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 # GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
 # variable may be used without being initialized), in this file. GCC-8.0 no
-# longers emits that diagnostic, and neither does Clang. On the assumption that
+# longer emits that diagnostic, and neither does Clang. On the assumption that
 # this is a spurious warning we disable it for older versions of GCC. I (coryan)
 # did not research in exactly what version was this warning introduced, and when
 # it was fixed. I do not believe we need to be that accurate.
@@ -272,10 +272,13 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
 endif ()
 
 set_target_properties(
-    storage_client PROPERTIES VERSION ${PROJECT_VERSION}
-                              SOVERSION ${PROJECT_VERSION_MAJOR})
+    google_cloud_cpp_storage
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::storage" VERSION
+                                                       ${PROJECT_VERSION}
+               SOVERSION ${PROJECT_VERSION_MAJOR})
+add_library(google-cloud-cpp::storage ALIAS google_cloud_cpp_storage)
 
-create_bazel_config(storage_client)
+create_bazel_config(google_cloud_cpp_storage)
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
@@ -287,8 +290,15 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
     set(CMAKE_CXX_CLANG_TIDY "${saved_tidy}")
+    add_library(google-cloud-cpp::internal-storage-protos ALIAS
+                google_cloud_cpp_storage_internal_protos)
+    set_target_properties(
+        google_cloud_cpp_storage_internal_protos
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos"
+                   VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
     add_library(
-        storage_client_grpc
+        google_cloud_cpp_storage_grpc
         grpc_plugin.cc
         grpc_plugin.h
         internal/grpc_client.cc
@@ -302,13 +312,13 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/hybrid_client.cc
         internal/hybrid_client.h)
     target_link_libraries(
-        storage_client_grpc
-        PUBLIC storage_client
+        google_cloud_cpp_storage_grpc
+        PUBLIC google-cloud-cpp::storage
                google-cloud-cpp::grpc_utils
                google-cloud-cpp::common
                google_cloud_cpp_storage_internal_protos
-               nlohmann_json::nlohmann_json
                google-cloud-cpp::storage_protos
+               nlohmann_json::nlohmann_json
                gRPC::grpc++
                protobuf::libprotobuf
                absl::strings
@@ -318,22 +328,30 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                OpenSSL::SSL
                OpenSSL::Crypto
                ZLIB::ZLIB)
-    google_cloud_cpp_add_common_options(storage_client_grpc)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_storage_grpc)
     target_include_directories(
-        storage_client_grpc PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                   $<INSTALL_INTERFACE:include>)
-    target_compile_options(storage_client_grpc
+        google_cloud_cpp_storage_grpc
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_storage_grpc
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-    target_compile_definitions(storage_client_grpc
+    target_compile_definitions(google_cloud_cpp_storage_grpc
                                PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
-        storage_client_grpc PROPERTIES VERSION ${PROJECT_VERSION}
-                                       SOVERSION ${PROJECT_VERSION_MAJOR})
+        google_cloud_cpp_storage_grpc
+        PROPERTIES EXPORT_VERSION "google-cloud-cpp::experimental-storage-grpc"
+                   VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
 
-    create_bazel_config(storage_client_grpc)
+    create_bazel_config(google_cloud_cpp_storage_grpc)
 else ()
-    add_library(storage_client_grpc INTERFACE)
+    add_library(google_cloud_cpp_storage_internal_proos INTERFACE)
+    add_library(google_cloud_cpp_storage_grpc INTERFACE)
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
+            google_cloud_cpp_storage_grpc)
+add_library(google-cloud-cpp::internal-storage-protos ALIAS
+            google_cloud_cpp_storage_internal_protos)
 
 if (BUILD_TESTING)
     add_library(
@@ -361,8 +379,8 @@ if (BUILD_TESTING)
     target_link_libraries(
         storage_client_testing
         PUBLIC absl::memory
-               storage_client_grpc
-               storage_client
+               google-cloud-cpp::experimental-storage-grpc
+               google-cloud-cpp::storage
                nlohmann_json::nlohmann_json
                GTest::gmock_main
                GTest::gmock
@@ -477,7 +495,7 @@ if (BUILD_TESTING)
             PRIVATE absl::memory
                     storage_client_testing
                     google_cloud_cpp_testing
-                    storage_client
+                    google-cloud-cpp::storage
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest
@@ -514,11 +532,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             google_cloud_cpp_add_executable(target "storage" "${fname}")
             target_link_libraries(
                 ${target}
-                PRIVATE storage_client_grpc
-                        storage_client_testing
+                PRIVATE storage_client_testing
                         google_cloud_cpp_testing
                         google_cloud_cpp_testing_grpc
-                        storage_client
+                        google-cloud-cpp::experimental-storage-grpc
+                        google-cloud-cpp::storage
                         GTest::gmock_main
                         GTest::gmock
                         GTest::gtest
@@ -547,10 +565,10 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT storage-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage")
 
 install(
-    TARGETS storage_client
+    TARGETS google_cloud_cpp_storage
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -562,41 +580,56 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS storage_client
+    TARGETS google_cloud_cpp_storage
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)
+google_cloud_cpp_install_headers(google_cloud_cpp_storage
+                                 include/google/cloud/storage)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Storage.")
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
-google_cloud_cpp_absl_pkg_config(absl_pkg_config storage_client)
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client" " -lcrc32c"
+google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_storage)
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c"
               ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-               "storage_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
+               "google_cloud_cpp_storage.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_storage-config.cmake" @ONLY)
 write_basic_package_version_file(
-    "storage_client-config-version.cmake"
+    "google_cloud_cpp_storage-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage")
 
 install(FILES testing/mock_client.h
         DESTINATION include/google/cloud/storage/testing)
+
+# TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_storage")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+               "storage_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+configure_file("legacy.cmake.in" "storage_client-config.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+# TODO(#5726) - END
