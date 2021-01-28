@@ -33,9 +33,9 @@ function (pubsub_client_define_benchmarks)
         google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::pubsub_client
-                    pubsub_client_testing
+            PRIVATE pubsub_client_testing
                     google_cloud_cpp_testing
+                    google-cloud-cpp::pubsub
                     absl::str_format
                     GTest::gmock_main
                     GTest::gmock

@@ -32,7 +32,7 @@ find_package(absl CONFIG REQUIRED)
 unset(FPHSA_NAME_MISMATCHED)
 
 add_library(
-    pubsub_client # cmake-format: sort
+    google_cloud_cpp_pubsub # cmake-format: sort
     ack_handler.cc
     ack_handler.h
     application_callback.h
@@ -125,33 +125,37 @@ add_library(
     version.h
     version_info.h)
 target_include_directories(
-    pubsub_client
+    google_cloud_cpp_pubsub
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    pubsub_client PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-                         google-cloud-cpp::pubsub_protos absl::flat_hash_map)
-google_cloud_cpp_add_common_options(pubsub_client)
+    google_cloud_cpp_pubsub
+    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
+           google-cloud-cpp::pubsub_protos absl::flat_hash_map)
+google_cloud_cpp_add_common_options(google_cloud_cpp_pubsub)
 set_target_properties(
-    pubsub_client PROPERTIES VERSION "${PROJECT_VERSION}"
-                             SOVERSION "${PROJECT_VERSION_MAJOR}")
-target_compile_options(pubsub_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    google_cloud_cpp_pubsub
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::pubsub" VERSION
+                                                      "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
+target_compile_options(google_cloud_cpp_pubsub
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(googleapis-c++::pubsub_client ALIAS pubsub_client)
+add_library(google-cloud-cpp::pubsub ALIAS google_cloud_cpp_pubsub)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(pubsub_client YEAR "2020")
+create_bazel_config(google_cloud_cpp_pubsub YEAR "2020")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-add_library(pubsub_client_mocks INTERFACE)
+add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 target_sources(
-    pubsub_client_mocks
+    google_cloud_cpp_pubsub_mocks
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
@@ -159,17 +163,20 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
 target_link_libraries(
-    pubsub_client_mocks
-    INTERFACE googleapis-c++::pubsub_client google_cloud_cpp_testing
-              GTest::gmock_main GTest::gmock GTest::gtest)
-create_bazel_config(pubsub_client_mocks YEAR "2020")
+    google_cloud_cpp_pubsub_mocks
+    INTERFACE google-cloud-cpp::pubsub GTest::gmock_main GTest::gmock
+              GTest::gtest)
+create_bazel_config(google_cloud_cpp_pubsub_mocks YEAR "2020")
 target_include_directories(
-    pubsub_client_mocks
+    google_cloud_cpp_pubsub_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
               $<INSTALL_INTERFACE:include>)
-target_compile_options(pubsub_client_mocks
+set_target_properties(google_cloud_cpp_pubsub_mocks
+                      PROPERTIES EXPORT_NAME "google-cloud-cpp::pubsub_mocks")
+target_compile_options(google_cloud_cpp_pubsub_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::pubsub_mocks ALIAS google_cloud_cpp_pubsub_mocks)
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_pubsub_client_define_tests)
@@ -194,7 +201,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/test_retry_policies.h)
     target_link_libraries(
         pubsub_client_testing
-        PUBLIC pubsub_client google-cloud-cpp::grpc_utils
+        PUBLIC google-cloud-cpp::pubsub google-cloud-cpp::grpc_utils
                google-cloud-cpp::common google-cloud-cpp::pubsub_protos
                GTest::gmock GTest::gtest)
     google_cloud_cpp_add_common_options(pubsub_client_testing)
@@ -252,11 +259,11 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         google_cloud_cpp_add_executable(target "pubsub" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE pubsub_client_mocks
-                    pubsub_client_testing
-                    googleapis-c++::pubsub_client
+            PRIVATE pubsub_client_testing
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
+                    google-cloud-cpp::pubsub_mocks
+                    google-cloud-cpp::pubsub
                     absl::str_format
                     GTest::gmock_main
                     GTest::gmock
@@ -294,12 +301,12 @@ include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT pubsub-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub")
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS pubsub_client
+    TARGETS google_cloud_cpp_pubsub
     EXPORT pubsub-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_pubsub_runtime
@@ -311,15 +318,16 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS pubsub_client
+    TARGETS google_cloud_cpp_pubsub
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_pubsub_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_pubsub_development)
 
-google_cloud_cpp_install_headers("pubsub_client" "include/google/cloud/pubsub")
-google_cloud_cpp_install_headers("pubsub_client_mocks"
+google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
+                                 "include/google/cloud/pubsub")
+google_cloud_cpp_install_headers("google_cloud_cpp_pubsub_mocks"
                                  "include/google/cloud/pubsub")
 
 # Setup global variables used in the following *.in files.
@@ -330,29 +338,43 @@ set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
 set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_pubsub_protos"
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common google_cloud_cpp_pubsub_protos"
 )
-google_cloud_cpp_absl_pkg_config(absl_pkg_config pubsub_client)
-string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lpubsub_client" ${absl_pkg_config})
+google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_pubsub)
+string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_pubsub"
+              ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"
-               "pubsub_client.pc" @ONLY)
+               "google_cloud_cpp_pubsub.pc" @ONLY)
 install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client.pc"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
     COMPONENT google_cloud_cpp_pubsub_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "pubsub_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_pubsub-config.cmake" @ONLY)
 write_basic_package_version_file(
-    "pubsub_client-config-version.cmake"
+    "google_cloud_cpp_pubsub-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client"
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_pubsub_development)
+
+# TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_pubsub")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+               "pubsub_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+configure_file("legacy.cmake.in" "pubsub_client-config.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client")
+# TODO(#5726) - END
