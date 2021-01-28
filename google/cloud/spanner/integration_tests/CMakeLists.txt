@@ -45,7 +45,7 @@ function (spanner_client_define_integration_tests)
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::spanner_client
+            PRIVATE google-cloud-cpp::spanner
                     spanner_client_testing
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing

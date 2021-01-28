@@ -69,14 +69,14 @@ cc_library(
 cc_library(
     name = "spanner",
     deps = [
-        "//google/cloud/spanner:spanner_client_internal",
+        "//google/cloud/spanner:google_cloud_cpp_spanner",
     ],
 )
 
 cc_library(
     name = "spanner_mocks",
     deps = [
-        "//google/cloud/spanner:spanner_mocks_internal",
+        "//google/cloud/spanner:google_cloud_cpp_spanner_mocks",
     ],
 )
 
@@ -85,7 +85,7 @@ cc_library(
     deprecation = "this target will be removed on or around 2022-02-15, please use //:spanner instead.",
     tags = ["manual"],
     deps = [
-        "//google/cloud/spanner:spanner_client_internal",
+        "//google/cloud/spanner:google_cloud_cpp_spanner",
     ],
 )
 
