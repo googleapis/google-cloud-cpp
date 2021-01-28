@@ -12,18 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":firestore_client.bzl", "firestore_client_hdrs", "firestore_client_srcs")
+load(":google_cloud_cpp_firestore.bzl", "google_cloud_cpp_firestore_hdrs", "google_cloud_cpp_firestore_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_firestore",
+    srcs = google_cloud_cpp_firestore_srcs,
+    hdrs = google_cloud_cpp_firestore_hdrs,
+    visibility = ["//:__pkg__"],
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+    ],
+)
 
 cc_library(
     name = "firestore_client",
-    srcs = firestore_client_srcs,
-    hdrs = firestore_client_hdrs,
+    deprecation = "this target will be removed on or around 2022-02-15, please use //:experimental_firestore instead.",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
+        ":google_cloud_cpp_firestore",
     ],
 )
 
@@ -37,7 +48,7 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":firestore_client",
+        ":google_cloud_cpp_firestore",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in firestore_client_unit_tests]
