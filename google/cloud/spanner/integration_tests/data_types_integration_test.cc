@@ -46,7 +46,7 @@ StatusOr<T> WriteReadData(Client& client, T const& data,
                           std::string const& column) {
   Mutations mutations;
   int id = 0;
-  for (auto const& x : data) {
+  for (auto&& x : data) {
     mutations.push_back(MakeInsertMutation("DataTypes", {"Id", column},
                                            "Id-" + std::to_string(id++), x));
   }
