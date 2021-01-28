@@ -420,7 +420,7 @@ class Value {
     *t.mutable_array_element_type() = MakeTypeProto(v.empty() ? T{} : v[0]);
     // Checks that vector elements have exactly the same proto Type, which
     // includes field names. This is documented UB.
-    for (auto const& e : v) {
+    for (auto&& e : v) {
       if (!google::protobuf::util::MessageDifferencer::Equals(
               MakeTypeProto(e), t.array_element_type())) {
         google::cloud::internal::ThrowInvalidArgument("Mismatched types");
