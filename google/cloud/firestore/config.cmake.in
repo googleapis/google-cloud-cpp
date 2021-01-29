@@ -18,7 +18,3 @@ find_dependency(google_cloud_cpp_grpc_utils)
 find_dependency(absl)
 
 include("${CMAKE_CURRENT_LIST_DIR}/firestore-targets.cmake")
-
-add_library(firestore::client IMPORTED INTERFACE)
-set_target_properties(firestore::client PROPERTIES
-    INTERFACE_LINK_LIBRARIES "firestore_client")

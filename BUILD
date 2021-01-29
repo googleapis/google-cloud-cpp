@@ -37,6 +37,13 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental_firestore",
+    deps = [
+        "//google/cloud/firestore:google_cloud_cpp_firestore",
+    ],
+)
+
+cc_library(
     name = "pubsub",
     deps = [
         "//google/cloud/pubsub:pubsub_client_internal",
