@@ -23,8 +23,8 @@ GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
     "/DWIN32_LEAN_AND_MEAN",
 ]
 
-load(":storage_client.bzl", "storage_client_hdrs", "storage_client_srcs")
-load(":storage_client_grpc.bzl", "storage_client_grpc_hdrs", "storage_client_grpc_srcs")
+load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
+load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 
 proto_library(
     name = "google_cloud_cpp_storage_internal_grpc_resumable_session_url_proto",
@@ -39,17 +39,17 @@ cc_proto_library(
 )
 
 cc_library(
-    name = "storage_client_grpc",
-    srcs = storage_client_grpc_srcs,
-    hdrs = storage_client_grpc_hdrs,
+    name = "google_cloud_cpp_storage_grpc",
+    srcs = google_cloud_cpp_storage_grpc_srcs,
+    hdrs = google_cloud_cpp_storage_grpc_hdrs,
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
     deps = [
+        ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_internal_grpc_resumable_session_url_cc_proto",
-        ":storage_client",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -65,9 +65,9 @@ cc_library(
 )
 
 cc_library(
-    name = "storage_client_internal",
-    srcs = storage_client_srcs,
-    hdrs = storage_client_hdrs,
+    name = "google_cloud_cpp_storage",
+    srcs = google_cloud_cpp_storage_srcs,
+    hdrs = google_cloud_cpp_storage_hdrs,
     copts = select({
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
@@ -96,7 +96,7 @@ cc_library(
     deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
     tags = ["manual"],
     deps = [
-        "//google/cloud/storage:storage_client_internal",
+        "//google/cloud/storage:google_cloud_cpp_storage",
     ],
 )
 
@@ -111,8 +111,8 @@ cc_library(
         "//conditions:default": [],
     }),
     deps = [
-        ":storage_client_grpc",
-        ":storage_client_internal",
+        ":google_cloud_cpp_storage",
+        ":google_cloud_cpp_storage_grpc",
         "//google/cloud:google_cloud_cpp_common",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
@@ -136,7 +136,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":storage_client_internal",
+        ":google_cloud_cpp_storage",
         ":storage_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
@@ -162,7 +162,7 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "//conditions:default": ["-lpthread"],
     }),
     deps = [
-        ":storage_client_internal",
+        ":google_cloud_cpp_storage",
         ":storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",

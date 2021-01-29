@@ -57,7 +57,7 @@ load(":storage_examples.bzl", "storage_examples")
         ":storage_examples_common",
         "//:storage",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/storage:storage_client_grpc",
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
