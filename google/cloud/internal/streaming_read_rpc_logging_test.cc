@@ -48,7 +48,6 @@ class StreamingReadRpcLoggingTest : public ::testing::Test {
         std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
     logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
   }
-
   void TearDown() override {
     google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
     logger_id_ = 0;
@@ -68,7 +67,6 @@ TEST_F(StreamingReadRpcLoggingTest, Cancel) {
   StreamingReadRpcLogging<google::protobuf::Duration> reader(std::move(mock),
                                                              TracingOptions{});
   reader.Cancel();
-
   EXPECT_THAT(ClearLogLines(), Contains(HasSubstr("Cancel")));
 }
 
@@ -78,7 +76,6 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
       EXPECT_EQ(status.code(), StatusCode::kInvalidArgument);
       EXPECT_EQ(status.message(), "Invalid argument.");
     }
-
     void operator()(google::protobuf::Duration const& response) {
       EXPECT_EQ(response.seconds(), 42);
     }
