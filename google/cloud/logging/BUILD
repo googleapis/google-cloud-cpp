@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":logging_client.bzl", "logging_client_hdrs", "logging_client_srcs")
+load(":google_cloud_cpp_logging.bzl", "google_cloud_cpp_logging_hdrs", "google_cloud_cpp_logging_srcs")
 
 cc_library(
-    name = "logging_client",
-    srcs = logging_client_srcs,
-    hdrs = logging_client_hdrs,
+    name = "google_cloud_cpp_logging",
+    srcs = google_cloud_cpp_logging_srcs,
+    hdrs = google_cloud_cpp_logging_hdrs,
+    visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -29,14 +30,15 @@ cc_library(
     ],
 )
 
-load(":logging_client_mocks.bzl", "logging_client_mocks_hdrs", "logging_client_mocks_srcs")
+load(":google_cloud_cpp_logging_mocks.bzl", "google_cloud_cpp_logging_mocks_hdrs", "google_cloud_cpp_logging_mocks_srcs")
 
 cc_library(
-    name = "logging_client_mocks",
-    srcs = logging_client_mocks_srcs,
-    hdrs = logging_client_mocks_hdrs,
+    name = "google_cloud_cpp_logging_mocks",
+    srcs = google_cloud_cpp_logging_mocks_srcs,
+    hdrs = google_cloud_cpp_logging_mocks_hdrs,
+    visibility = ["//:__pkg__"],
     deps = [
-        ":logging_client",
+        ":google_cloud_cpp_logging",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
     ],

@@ -10,8 +10,6 @@
       2022-02-15.
   - **CMake Users:** applications should use the
     `google-cloud-cpp::*` targets (e.g. `google-cloud-cpp::pubsub`).
-    - :warning: some of these targets are not part of the current release,
-      but will be soon.
     - The legacy CMake targets generate warnings if using CMake >= 3.18 (the
       earliest version that supports deprecation warnings).
     - All exported targets without a `google-cloud-cpp::` prefix will be
