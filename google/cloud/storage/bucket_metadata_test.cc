@@ -106,7 +106,7 @@ BucketMetadata CreateBucketMetadataForTest() {
           "enabled": true,
           "lockedTime": "2020-01-02T03:04:05Z"
         },
-        "publicAccessPrevention": "unspecified",
+        "publicAccessPrevention": "unspecified"
       },
       "id": "test-bucket",
       "kind": "storage#bucket",
@@ -963,7 +963,6 @@ TEST(BucketMetadataPatchBuilder, SetIamConfiguration) {
   auto const expected = nlohmann::json{
       {"publicAccessPrevention", "enforced"},
       {"uniformBucketLevelAccess", {{"enabled", true}}},
-      {"bucketPolicyOnly", {{"enabled", true}}},
   };
   EXPECT_EQ(json["iamConfiguration"], expected);
 }
