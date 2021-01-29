@@ -20,6 +20,8 @@ CURRENT_TARGETS = [
     ":bigtable",
     ":experimental-firestore",
     ":experimental-iam",
+    ":experimental-logging",
+    ":experimental-logging-mocks",
     ":pubsub",
     ":spanner",
     ":storage",

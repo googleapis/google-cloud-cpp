@@ -118,3 +118,17 @@ cc_library(
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
     ],
 )
+
+cc_library(
+    name = "experimental-logging",
+    deps = [
+        "//google/cloud/logging:google_cloud_cpp_logging",
+    ],
+)
+
+cc_library(
+    name = "experimental-logging-mocks",
+    deps = [
+        "//google/cloud/logging:google_cloud_cpp_logging_mocks",
+    ],
+)
