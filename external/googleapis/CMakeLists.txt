@@ -664,9 +664,23 @@ install(
     TARGETS ${external_googleapis_installed_libraries_list}
             external_googleapis_common_flags
     EXPORT googleapis-targets
-    RUNTIME DESTINATION bin
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(
+    TARGETS ${external_googleapis_installed_libraries_list}
+            external_googleapis_common_flags
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 
 foreach (target ${external_googleapis_installed_libraries_list})
     google_cloud_cpp_install_proto_library_headers("${target}")
@@ -706,14 +720,18 @@ function (external_googleapis_install_pc target)
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
     configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "${target}.pc"
                    @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
     # TODO(#5726) - also install the module with the legacy name
     string(REPLACE "google_cloud_cpp_" "googleapis_cpp_" legacy ${target})
     configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "${legacy}.pc"
                    @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${legacy}.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/${legacy}.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
 endfunction ()
 
 # Create and install the pkg-config files.
@@ -754,8 +772,10 @@ string(
            " libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "googleapis.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -768,8 +788,10 @@ write_basic_package_version_file(
     COMPATIBILITY ExactVersion)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT googleapis-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis")
+install(
+    EXPORT googleapis-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis"
+    COMPONENT google_cloud_cpp_development)
 install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_googleapis-config.cmake"
@@ -777,7 +799,8 @@ install(
         "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis")
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis"
+    COMPONENT google_cloud_cpp_development)
 
 # TODO(#5726) - we need to install the legacy CMake configuration under the
 # googleapis-c++ names:
@@ -788,6 +811,8 @@ write_basic_package_version_file(
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/googleapis-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis"
+    COMPONENT google_cloud_cpp_development)

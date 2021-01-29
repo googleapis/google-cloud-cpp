@@ -104,8 +104,10 @@ add_subdirectory(integration_tests)
 include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT google_cloud_cpp_logging-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_logging")
+install(
+    EXPORT google_cloud_cpp_logging-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_logging"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -113,12 +115,12 @@ install(
     TARGETS google_cloud_cpp_logging
     EXPORT google_cloud_cpp_logging-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_logging_runtime
+            COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_logging_runtime
+            COMPONENT google_cloud_cpp_runtime
             NAMELINK_SKIP
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_logging_development)
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(

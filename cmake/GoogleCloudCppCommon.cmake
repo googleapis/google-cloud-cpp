@@ -141,7 +141,10 @@ function (google_cloud_cpp_install_headers target destination)
         # INTERFACE libraries use absolute paths, yuck.
         string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/" "" relative "${relative}")
         get_filename_component(dir "${relative}" DIRECTORY)
-        install(FILES "${header}" DESTINATION "${destination}/${dir}")
+        install(
+            FILES "${header}"
+            DESTINATION "${destination}/${dir}"
+            COMPONENT google_cloud_cpp_development)
     endforeach ()
 endfunction ()
 

@@ -300,8 +300,10 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT pubsub-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub")
+install(
+    EXPORT pubsub-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -309,21 +311,21 @@ install(
     TARGETS google_cloud_cpp_pubsub
     EXPORT pubsub-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_pubsub_runtime
+            COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_pubsub_runtime
+            COMPONENT google_cloud_cpp_runtime
             NAMELINK_SKIP
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_pubsub_development)
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
     TARGETS google_cloud_cpp_pubsub
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_pubsub_development
+            COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_pubsub_development)
+            COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers("google_cloud_cpp_pubsub"
                                  "include/google/cloud/pubsub")
@@ -350,7 +352,7 @@ configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_pubsub_development)
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -365,16 +367,20 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_pubsub-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
-    COMPONENT google_cloud_cpp_pubsub_development)
+    COMPONENT google_cloud_cpp_development)
 
 # TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_pubsub")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "pubsub_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 configure_file("legacy.cmake.in" "pubsub_client-config.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client"
+    COMPONENT google_cloud_cpp_development)
 # TODO(#5726) - END

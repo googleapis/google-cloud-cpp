@@ -82,19 +82,23 @@ install(
     EXPORT firestore-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 
 # The exports can only be installed if all the dependencies are installed. CMake
 # needs to know where the submodules will be installed from,
-install(EXPORT firestore-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_firestore")
+install(
+    EXPORT firestore-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_firestore"
+    COMPONENT google_cloud_cpp_development)
 
 install(
     TARGETS google_cloud_cpp_firestore
     EXPORT firestore-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 google_cloud_cpp_install_headers(google_cloud_cpp_firestore
                                  include/google/cloud/firestore)
 
@@ -108,8 +112,10 @@ set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_firestore")
 # Install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "google_cloud_cpp_firestore.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_firestore.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_firestore.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -124,7 +130,8 @@ install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_firestore-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_firestore-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_firestore")
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_firestore"
+    COMPONENT google_cloud_cpp_development)
 
 # TODO(#5726) - generate and install pkg-config and CMake support for backwards
 # compatibility
@@ -132,9 +139,13 @@ set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_firestore")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "firestore_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 configure_file("legacy.cmake.in" "firestore_client-config.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client"
+    COMPONENT google_cloud_cpp_development)
 # TODO(#5726) - END

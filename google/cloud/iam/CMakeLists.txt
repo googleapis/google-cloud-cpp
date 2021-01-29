@@ -102,8 +102,10 @@ add_subdirectory(integration_tests)
 include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT google_cloud_cpp_iam-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam")
+install(
+    EXPORT google_cloud_cpp_iam-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
