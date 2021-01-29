@@ -20,20 +20,24 @@ project(verify-exported-targets CXX C)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# We list the common libraries first because we want to load their packages
+# early.
+set(common_libraries common grpc_utils)
+
+# Add GA libraries to this list, the only difference is the name of the CMake
+# targets
+set(ga_libraries # cmake-format: sortable
+                 bigtable pubsub spanner storage)
+
+# Add experimental (non-GA) libraries here.
+set(experimental_libraries # cmake-format: sortable
+                           firestore)
+
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and
 # backwards compatible.
 find_package(PkgConfig REQUIRED)
-
 find_package(Threads REQUIRED)
-find_package(google_cloud_cpp_common REQUIRED)
-find_package(google_cloud_cpp_grpc_utils REQUIRED)
-find_package(google_cloud_cpp_bigtable REQUIRED)
-find_package(google_cloud_cpp_firestore REQUIRED)
-find_package(google_cloud_cpp_pubsub REQUIRED)
-find_package(google_cloud_cpp_spanner REQUIRED)
-find_package(google_cloud_cpp_storage REQUIRED)
-
 include(CTest)
 
 function (add_test_case name)
@@ -42,23 +46,21 @@ function (add_test_case name)
     add_test(NAME "${name}" COMMAND "${name}")
 endfunction ()
 
-add_test_case(t010 google-cloud-cpp::common)
-add_test_case(t020 google-cloud-cpp::grpc_utils)
-add_test_case(t030 google-cloud-cpp::bigtable)
-add_test_case(t040 google-cloud-cpp::experimental-firestore)
-add_test_case(t100 google-cloud-cpp::pubsub)
-add_test_case(t110 google-cloud-cpp::spanner)
-add_test_case(t120 google-cloud-cpp::storage)
+foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
+    find_package("google_cloud_cpp_${library}" REQUIRED)
+endforeach ()
 
-set(pkg_config_modules
-    # cmake-format: sortable
-    google_cloud_cpp_bigtable
-    google_cloud_cpp_common
-    google_cloud_cpp_grpc_utils
-    google_cloud_cpp_pubsub
-    google_cloud_cpp_spanner
-    google_cloud_cpp_storage)
-foreach (module ${pkg_config_modules})
-    pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})
-    add_test_case(test_pc_${module} PkgConfig::${module})
+foreach (library ${common_libraries} ${ga_libraries})
+    add_test_case(test_cmake_${library} google-cloud-cpp::${library})
+endforeach ()
+
+foreach (library ${experimental_libraries})
+    add_test_case(test_cmake_${library}
+                  google-cloud-cpp::experimental-${library})
+endforeach ()
+
+foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
+    pkg_check_modules(${library} IMPORTED_TARGET REQUIRED
+                      google_cloud_cpp_${library})
+    add_test_case(test_pc_${library} PkgConfig::${library})
 endforeach ()
