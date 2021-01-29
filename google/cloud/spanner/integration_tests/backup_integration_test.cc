@@ -263,7 +263,6 @@ TEST_F(BackupTestWithCleanup, BackupTestWithCMEK) {
   auto backup = backup_future.get();
   EXPECT_STATUS_OK(backup);
 
-  // TODO(mr-salty) should we do this in the other test?
   auto drop_db_status = database_admin_client_.DropDatabase(db);
   EXPECT_STATUS_OK(drop_db_status);
 
