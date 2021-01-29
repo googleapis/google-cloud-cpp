@@ -31,7 +31,7 @@ find_package(google_cloud_cpp_grpc_utils REQUIRED)
 find_package(google_cloud_cpp_bigtable REQUIRED)
 find_package(google_cloud_cpp_firestore REQUIRED)
 find_package(google_cloud_cpp_pubsub REQUIRED)
-find_package(spanner_client REQUIRED)
+find_package(google_cloud_cpp_spanner REQUIRED)
 find_package(storage_client REQUIRED)
 
 include(CTest)
@@ -47,7 +47,7 @@ add_test_case(t020 google-cloud-cpp::grpc_utils)
 add_test_case(t030 google-cloud-cpp::bigtable)
 add_test_case(t040 google-cloud-cpp::experimental-firestore)
 add_test_case(t100 google-cloud-cpp::pubsub)
-add_test_case(t110 spanner_client)
+add_test_case(t110 google-cloud-cpp::spanner)
 add_test_case(t120 storage_client)
 
 set(pkg_config_modules
@@ -56,7 +56,7 @@ set(pkg_config_modules
     google_cloud_cpp_common
     google_cloud_cpp_grpc_utils
     google_cloud_cpp_pubsub
-    spanner_client
+    google_cloud_cpp_spanner
     storage_client)
 foreach (module ${pkg_config_modules})
     pkg_check_modules(${module} IMPORTED_TARGET REQUIRED ${module})

@@ -19,8 +19,8 @@ function (spanner_client_define_benchmarks)
                 benchmarks_config.cc benchmarks_config.h)
     target_link_libraries(
         spanner_client_benchmarks
-        PUBLIC spanner_client_mocks googleapis-c++::spanner_client
-               google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+        PUBLIC google_cloud_cpp_testing google-cloud-cpp::spanner_mocks
+               google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
                GTest::gtest)
     create_bazel_config(spanner_client_benchmarks YEAR "2019")
     google_cloud_cpp_add_common_options(spanner_client_benchmarks)
@@ -49,9 +49,9 @@ function (spanner_client_define_benchmarks)
         target_link_libraries(
             ${target}
             PRIVATE spanner_client_benchmarks
-                    googleapis-c++::spanner_client
                     spanner_client_testing
                     google_cloud_cpp_testing
+                    google-cloud-cpp::spanner
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)

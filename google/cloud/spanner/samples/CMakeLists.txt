@@ -35,8 +35,8 @@ function (spanner_client_define_samples)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::spanner_client spanner_client_testing
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+            PRIVATE spanner_client_testing google_cloud_cpp_testing
+                    google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
                     GTest::gtest)
     endforeach ()
 
