@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":iam_client.bzl", "iam_client_hdrs", "iam_client_srcs")
+load(":google_cloud_cpp_iam.bzl", "google_cloud_cpp_iam_hdrs", "google_cloud_cpp_iam_srcs")
 
 cc_library(
-    name = "iam_client",
-    srcs = iam_client_srcs,
-    hdrs = iam_client_hdrs,
+    name = "google_cloud_cpp_iam",
+    srcs = google_cloud_cpp_iam_srcs,
+    hdrs = google_cloud_cpp_iam_hdrs,
+    visibility = ["//:__pkg__"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
@@ -29,14 +30,15 @@ cc_library(
     ],
 )
 
-load(":iam_client_mocks.bzl", "iam_client_mocks_hdrs", "iam_client_mocks_srcs")
+load(":google_cloud_cpp_iam_mocks.bzl", "google_cloud_cpp_iam_mocks_hdrs", "google_cloud_cpp_iam_mocks_srcs")
 
 cc_library(
-    name = "iam_client_mocks",
-    srcs = iam_client_mocks_srcs,
-    hdrs = iam_client_mocks_hdrs,
+    name = "google_cloud_cpp_iam_mocks",
+    srcs = google_cloud_cpp_iam_mocks_srcs,
+    hdrs = google_cloud_cpp_iam_mocks_hdrs,
+    visibility = ["//:__pkg__"],
     deps = [
-        ":iam_client",
+        ":google_cloud_cpp_iam",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc",

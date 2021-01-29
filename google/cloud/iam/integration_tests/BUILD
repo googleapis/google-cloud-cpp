@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -26,8 +26,8 @@ load(":iam_client_integration_tests.bzl", "iam_client_integration_tests")
         "integration-test",
     ],
     deps = [
+        "//:experimental-iam",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/iam:iam_client",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest_main",
