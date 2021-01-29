@@ -18,6 +18,7 @@ licenses(["notice"])  # Apache 2.0
 
 CURRENT_TARGETS = [
     ":bigtable",
+    ":experimental-firestore",
     ":pubsub",
     ":spanner",
     ":storage",
