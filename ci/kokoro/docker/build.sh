@@ -27,6 +27,7 @@ export DISTRO_VERSION=33
 export CMAKE_SOURCE_DIR="."
 
 export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
+export CHECK_GENERATED_CODE_HASH="yes"
 
 # Define the build tool so other scripts (e.g. cache download),
 # currently the possible values are `CMake` or `Bazel`.
@@ -106,6 +107,13 @@ elif [[ "${BUILD_NAME}" = "integration" ]]; then
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   # TODO(4306): Enable the backup tests once they don't timeout too often.
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
+  export BUILD_TOOL="Bazel"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+elif [[ "${BUILD_NAME}" = "generate-libraries" ]]; then
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=33
+  export GENERATE_LIBRARIES="yes"
+  RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
@@ -469,6 +477,15 @@ docker_flags=(
   # If set to 'yes', the build script will verify that auto-generated
   # markdown files are in sync.
   "--env" "CHECK_MARKDOWN=${CHECK_MARKDOWN:-}"
+
+  # If set to 'yes', the build script will verify that generated library code
+  # was generated from proto files that are the same version that is defined
+  # in the bazel dependencies.
+  "--env" "CHECK_GENERATED_CODE_HASH=${CHECK_GENERATED_CODE_HASH:-}"
+
+  # If set, run the generate-libraries.sh script to generate library code from
+  # proto files.
+  "--env" "GENERATE_LIBRARIES=${GENERATE_LIBRARIES:-}"
 
   # If set to 'yes', the build script will configure clang-tidy. Currently
   # only the CMake builds use this flag.

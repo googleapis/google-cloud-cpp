@@ -94,6 +94,18 @@ io::log "Fetching dependencies"
   @go_sdk//... \
   @remotejdk11_linux//:jdk
 
+if [[ "${GENERATE_LIBRARIES}" == "yes" ]]; then
+  io::log "Generating libraries from proto files"
+  "${PROJECT_ROOT}/generator/generate-libraries.sh"
+fi
+
+echo "================================================================"
+io::log_yellow "Verify googleapis commit hash for generated code"
+(
+  cd "${PROJECT_ROOT}"
+  ./ci/check-generated-code-hash.sh
+)
+
 echo "================================================================"
 io::log "Compiling and running unit tests"
 echo "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
