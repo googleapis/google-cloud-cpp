@@ -35,15 +35,17 @@ io::log_yellow "Build microgenerator plugin"
 ${BAZEL_BIN} build //generator:protoc-gen-cpp_codegen
 
 product_path_proto_path_to_generate=(
-  "google/cloud/iam,google/iam/credentials/v1/iamcredentials.proto"
-  "google/cloud/logging,google/logging/v2/logging.proto"
+  "2020 google/cloud/iam google/iam/credentials/v1/iamcredentials.proto"
+  "2021 google/cloud/logging google/logging/v2/logging.proto"
 )
 
 io::log_yellow "Run protoc and format generated .h and .cc files:"
 cd "${PROJECT_ROOT}"
-for pair in "${product_path_proto_path_to_generate[@]}"; do
-  product_path=${pair%%,*}
-  proto_file=${pair#*,}
+for proto in "${product_path_proto_path_to_generate[@]}"; do
+  tuple=( $proto )
+  copyright_year=${tuple[0]}
+  product_path=${tuple[1]}
+  proto_file=${tuple[2]}
   echo "Generate code from ${proto_file} to ${product_path}"
   GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes "${BAZEL_BIN_DIR}"/external/com_google_protobuf/protoc \
     --plugin=protoc-gen-cpp_codegen="${BAZEL_BIN_DIR}"/generator/protoc-gen-cpp_codegen \
@@ -52,6 +54,7 @@ for pair in "${product_path_proto_path_to_generate[@]}"; do
     --proto_path="${BAZEL_OUTPUT_BASE}"/external/com_google_protobuf/src \
     --proto_path="${BAZEL_OUTPUT_BASE}"/external/com_google_googleapis \
     --cpp_codegen_opt=googleapis_commit_hash="${BAZEL_DEPS_GOOGLEAPIS_HASH}" \
+    --cpp_codegen_opt=copyright_year="${copyright_year}" \
     "${BAZEL_OUTPUT_BASE}"/external/com_google_googleapis/"${proto_file}"
 
   find "${product_path}" \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
