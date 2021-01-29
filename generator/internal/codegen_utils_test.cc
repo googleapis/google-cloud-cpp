@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -192,6 +194,34 @@ TEST(ProcessCommandLineArgs, EmptyCommitHash) {
   EXPECT_EQ(
       result.status().message(),
       "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+}
+
+TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
+  auto expected_year = CurrentCopyrightYear();
+  EXPECT_TRUE(result.ok());
+  EXPECT_EQ(result->back().first, "copyright_year");
+  EXPECT_EQ(result->back().second, expected_year);
+}
+
+TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/"
+      ",googleapis_commit_hash=foo,copyright_year=");
+  auto expected_year = CurrentCopyrightYear();
+  EXPECT_TRUE(result.ok());
+  EXPECT_EQ(result->back().first, "copyright_year");
+  EXPECT_EQ(result->back().second, expected_year);
+}
+
+TEST(ProcessCommandLineArgs, CopyrightYearWithValue) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/pubsub/"
+      ",googleapis_commit_hash=foo,copyright_year=1995");
+  EXPECT_TRUE(result.ok());
+  EXPECT_EQ(result->back().first, "copyright_year");
+  EXPECT_EQ(result->back().second, "1995");
 }
 
 }  // namespace
