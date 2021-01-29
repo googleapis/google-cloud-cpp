@@ -284,8 +284,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_database_id(p.database.database_id());
     request.set_backup(std::move(p.backup_full_name));
     if (p.encryption_key) {
-      request.mutable_encryption_config()->set_kms_key_name(
-          p.encryption_key->FullName());
+      auto& encryption = *request.mutable_encryption_config();
+      encryption.set_encryption_type(
+          gcsa::RestoreDatabaseEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+      encryption.set_kms_key_name(p.encryption_key->FullName());
     }
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
@@ -361,8 +363,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     *backup.mutable_expire_time() =
         google::cloud::internal::ToProtoTimestamp(p.expire_time);
     if (p.encryption_key) {
-      request.mutable_encryption_config()->set_kms_key_name(
-          p.encryption_key->FullName());
+      auto& encryption = *request.mutable_encryption_config();
+      encryption.set_encryption_type(
+          gcsa::CreateBackupEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+      encryption.set_kms_key_name(p.encryption_key->FullName());
     }
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),

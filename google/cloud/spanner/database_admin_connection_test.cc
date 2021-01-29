@@ -522,17 +522,21 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, RestoreDatabase(_, _))
-      .WillOnce(
-          [](grpc::ClientContext&, gcsa::RestoreDatabaseRequest const& r) {
-            EXPECT_TRUE(r.has_encryption_config());
-            EXPECT_EQ(r.encryption_config().kms_key_name(),
-                      "projects/test-project/locations/some-location/keyRings/"
-                      "a-key-ring/cryptoKeys/restore-key-name");
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
+      .WillOnce([](grpc::ClientContext&,
+                   gcsa::RestoreDatabaseRequest const& r) {
+        EXPECT_TRUE(r.has_encryption_config());
+        EXPECT_EQ(
+            gcsa::RestoreDatabaseEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION,
+            r.encryption_config().encryption_type());
+        EXPECT_EQ(
+            "projects/test-project/locations/some-location/keyRings/"
+            "a-key-ring/cryptoKeys/restore-key-name",
+            r.encryption_config().kms_key_name());
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
   EXPECT_CALL(*mock, GetOperation(_, _))
       .WillOnce([](grpc::ClientContext&,
                    google::longrunning::GetOperationRequest const& r) {
@@ -822,9 +826,13 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   EXPECT_CALL(*mock, CreateBackup(_, _))
       .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const& r) {
         EXPECT_TRUE(r.has_encryption_config());
-        EXPECT_EQ(r.encryption_config().kms_key_name(),
-                  "projects/test-project/locations/some-location/keyRings/"
-                  "a-key-ring/cryptoKeys/backup-key-name");
+        EXPECT_EQ(
+            gcsa::CreateBackupEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION,
+            r.encryption_config().encryption_type());
+        EXPECT_EQ(
+            "projects/test-project/locations/some-location/keyRings/a-key-ring/"
+            "cryptoKeys/backup-key-name",
+            r.encryption_config().kms_key_name());
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
