@@ -27,8 +27,8 @@ add_library(
     setup.h)
 target_link_libraries(
     bigtable_benchmark_common
-    bigtable_client
-    bigtable_protos
+    google-cloud-cpp::bigtable
+    google-cloud-cpp::bigtable_protos
     google-cloud-cpp::common
     google-cloud-cpp::grpc_utils
     gRPC::grpc++
@@ -53,10 +53,10 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE bigtable_benchmark_common
-                    bigtable_client
                     bigtable_client_testing
-                    google-cloud-cpp::bigtable_protos
                     google_cloud_cpp_testing
+                    google-cloud-cpp::bigtable
+                    google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
                     GTest::gmock_main
@@ -85,8 +85,8 @@ foreach (fname ${bigtable_benchmark_programs})
     target_link_libraries(
         ${target}
         PRIVATE bigtable_benchmark_common
-                bigtable_client
-                bigtable_protos
+                google-cloud-cpp::bigtable
+                google-cloud-cpp::bigtable_protos
                 google-cloud-cpp::grpc_utils
                 gRPC::grpc++
                 gRPC::grpc

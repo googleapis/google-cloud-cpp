@@ -19,7 +19,7 @@ if (BUILD_TESTING)
                 bigtable_examples_common.cc bigtable_examples_common.h)
     target_link_libraries(
         bigtable_examples_common
-        bigtable_client
+        google-cloud-cpp::bigtable
         google-cloud-cpp::bigtable_protos
         google-cloud-cpp::common
         google_cloud_cpp_testing
@@ -62,9 +62,9 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE bigtable_examples_common
-                    bigtable_client
-                    bigtable_protos
                     google_cloud_cpp_testing
+                    google-cloud-cpp::bigtable
+                    google-cloud-cpp::bigtable_protos
                     google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
                     absl::time
@@ -83,10 +83,10 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE bigtable_examples_common
-                    bigtable_client
-                    bigtable_protos
-                    google-cloud-cpp::common
                     google_cloud_cpp_testing
+                    google-cloud-cpp::bigtable
+                    google-cloud-cpp::bigtable_protos
+                    google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
                     absl::time
                     gRPC::grpc++

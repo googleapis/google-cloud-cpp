@@ -19,12 +19,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":bigtable_client.bzl", "bigtable_client_hdrs", "bigtable_client_srcs")
+load(":google_cloud_cpp_bigtable.bzl", "google_cloud_cpp_bigtable_hdrs", "google_cloud_cpp_bigtable_srcs")
 
 cc_library(
     name = "bigtable_client_internal",
-    srcs = bigtable_client_srcs,
-    hdrs = bigtable_client_hdrs,
+    srcs = google_cloud_cpp_bigtable_srcs,
+    hdrs = google_cloud_cpp_bigtable_hdrs,
     visibility = [
         "//:__pkg__",
         "//google/cloud/bigtable:__subpackages__",
