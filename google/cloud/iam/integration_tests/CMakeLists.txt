@@ -37,9 +37,9 @@ function (google_cloud_cpp_iam_define_integration_tests)
         google_cloud_cpp_add_executable(target "iam" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::iam_client google_cloud_cpp_testing_grpc
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-                    GTest::gtest)
+            PRIVATE google_cloud_cpp_testing_grpc google_cloud_cpp_testing
+                    google-cloud-cpp::experimental-iam GTest::gmock_main
+                    GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of

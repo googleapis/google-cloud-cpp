@@ -104,3 +104,17 @@ cc_library(
         "//google/cloud/storage:google_cloud_cpp_storage",
     ],
 )
+
+cc_library(
+    name = "experimental-iam",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam",
+    ],
+)
+
+cc_library(
+    name = "experimental-iam-mocks",
+    deps = [
+        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
+    ],
+)

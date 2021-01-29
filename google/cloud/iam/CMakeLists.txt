@@ -31,7 +31,7 @@ find_package(absl CONFIG REQUIRED)
 unset(FPHSA_NAME_MISMATCHED)
 
 add_library(
-    iam_client # cmake-format: sort
+    google_cloud_cpp_iam # cmake-format: sort
     iam_credentials_client.gcpcxx.pb.cc
     iam_credentials_client.gcpcxx.pb.h
     iam_credentials_connection.gcpcxx.pb.cc
@@ -48,49 +48,52 @@ add_library(
     internal/iam_credentials_stub_factory.gcpcxx.pb.h
     retry_traits.h)
 target_include_directories(
-    iam_client
+    google_cloud_cpp_iam
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    iam_client PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-                      google-cloud-cpp::iam_protos)
-google_cloud_cpp_add_common_options(iam_client)
+    google_cloud_cpp_iam
+    PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
+           google-cloud-cpp::iam_protos)
+google_cloud_cpp_add_common_options(google_cloud_cpp_iam)
 set_target_properties(
-    iam_client PROPERTIES VERSION "${PROJECT_VERSION}"
-                          SOVERSION "${PROJECT_VERSION_MAJOR}")
-target_compile_options(iam_client PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    google_cloud_cpp_iam
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-iam
+               VERSION "${PROJECT_VERSION}" SOVERSION
+                                            "${PROJECT_VERSION_MAJOR}")
+target_compile_options(google_cloud_cpp_iam
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-set_target_properties(iam_client PROPERTIES EXPORT_NAME
-                                            googleapis-c++::iam_client)
-add_library(googleapis-c++::iam_client ALIAS iam_client)
+add_library(google-cloud-cpp::experimental-iam ALIAS google_cloud_cpp_iam)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
 include(CreateBazelConfig)
-create_bazel_config(iam_client YEAR "2020")
+create_bazel_config(google_cloud_cpp_iam YEAR "2020")
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
-add_library(iam_client_mocks INTERFACE)
+add_library(google_cloud_cpp_iam_mocks INTERFACE)
 target_sources(
-    iam_client_mocks
+    google_cloud_cpp_iam_mocks
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.gcpcxx.pb.h
 )
 target_link_libraries(
-    iam_client_mocks
-    INTERFACE googleapis-c++::iam_client google_cloud_cpp_testing
-              GTest::gmock_main GTest::gmock GTest::gtest)
-create_bazel_config(iam_client_mocks YEAR "2020")
+    google_cloud_cpp_iam_mocks
+    INTERFACE google-cloud-cpp::experimental-iam_mocks
+              google-cloud-cpp::experimental-iam GTest::gmock_main GTest::gmock
+              GTest::gtest)
+create_bazel_config(google_cloud_cpp_iam_mocks YEAR "2020")
 target_include_directories(
-    iam_client_mocks
+    google_cloud_cpp_iam_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
               $<INSTALL_INTERFACE:include>)
-target_compile_options(iam_client_mocks
+target_compile_options(google_cloud_cpp_iam_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
@@ -99,33 +102,35 @@ add_subdirectory(integration_tests)
 include(GNUInstallDirs)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT iam-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/iam_client")
+install(EXPORT google_cloud_cpp_iam-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam")
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
 install(
-    TARGETS iam_client
-    EXPORT iam-targets
+    TARGETS google_cloud_cpp_iam
+    EXPORT google_cloud_cpp_iam-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_iam_runtime
+            COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_iam_runtime
+            COMPONENT google_cloud_cpp_runtime
             NAMELINK_SKIP
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_iam_development)
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS iam_client
+    TARGETS google_cloud_cpp_iam
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_iam_development
+            COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_iam_development)
+            COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_install_headers("iam_client" "include/google/cloud/iam")
-google_cloud_cpp_install_headers("iam_client_mocks" "include/google/cloud/iam")
+google_cloud_cpp_install_headers("google_cloud_cpp_iam"
+                                 "include/google/cloud/iam")
+google_cloud_cpp_install_headers("google_cloud_cpp_iam_mocks"
+                                 "include/google/cloud/iam")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
@@ -136,27 +141,28 @@ set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to access Google Cloud IAM.")
 set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_iam_protos"
 )
-google_cloud_cpp_absl_pkg_config(absl_pkg_config iam_client)
-string(CONCAT GOOGLE_CLOUD_PC_LIBS "-liam_client" ${absl_pkg_config})
+google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_iam)
+string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_iam" ${absl_pkg_config})
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/iam/config.pc.in"
-               "iam_client.pc" @ONLY)
+               "google_cloud_cpp_iam.pc" @ONLY)
 install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/iam_client.pc"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_iam_development)
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "iam_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "google_cloud_cpp_iam-config.cmake" @ONLY)
 write_basic_package_version_file(
-    "iam_client-config-version.cmake"
+    "google_cloud_cpp_iam-config-version.cmake"
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY ExactVersion)
 
 install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/iam_client-config.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/iam_client-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/iam_client"
-    COMPONENT google_cloud_cpp_iam_development)
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
+    COMPONENT google_cloud_cpp_development)
