@@ -40,7 +40,7 @@ function (google_cloud_cpp_pubsub_define_integration_tests)
         target_link_libraries(
             ${target}
             PRIVATE pubsub_client_testing
-                    googleapis-c++::pubsub_client
+                    google-cloud-cpp::pubsub
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_testing
                     GTest::gmock_main

@@ -463,7 +463,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
       "google_cloud_cpp_grpc_utils"
       "spanner_client"
       "storage_client"
-      "pubsub_client"
+      "google_cloud_cpp_pubsub"
     )
     echo "${libraries[@]}" | xargs -n 1 -P "${NCPU}" \
       env -C "${PROJECT_ROOT}" ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}"

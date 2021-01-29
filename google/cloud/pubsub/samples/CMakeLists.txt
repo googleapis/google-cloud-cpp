@@ -21,7 +21,7 @@ function (pubsub_client_define_samples)
     target_link_libraries(
         pubsub_samples_common
         pubsub_client_testing
-        googleapis-c++::pubsub_client
+        google-cloud-cpp::pubsub
         google-cloud-cpp::common
         google-cloud-cpp::grpc_utils
         gRPC::grpc++
@@ -38,8 +38,8 @@ function (pubsub_client_define_samples)
         target_link_libraries(
             ${target}
             PRIVATE pubsub_samples_common
-                    googleapis-c++::pubsub_client
                     google_cloud_cpp_testing
+                    google-cloud-cpp::pubsub
                     google-cloud-cpp::common
                     google-cloud-cpp::grpc_utils
                     GTest::gmock_main
@@ -74,8 +74,8 @@ function (pubsub_client_define_samples)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE pubsub_samples_common googleapis-c++::pubsub_client
-                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+            PRIVATE pubsub_samples_common google_cloud_cpp_testing
+                    google-cloud-cpp::pubsub GTest::gmock_main GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()

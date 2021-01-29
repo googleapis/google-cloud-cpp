@@ -79,5 +79,5 @@ zcat "${EXPECTED_DUMP_PATH}" >"${EXPECTED_DUMP_FILE}"
 # number indicating the length of the symbol within the "internal"
 # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
 abi-compliance-checker \
-  -skip-internal-symbols "(8internal|15pubsub_internal)\d" \
+  -skip-internal-symbols "(8internal|15pubsub_internal|16spanner_internal)\d" \
   -src -l "${LIBRARY}" -old "${EXPECTED_DUMP_FILE}" -new "${ACTUAL_DUMP_FILE}"
