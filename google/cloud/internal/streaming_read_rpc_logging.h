@@ -25,6 +25,8 @@
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
+#include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -39,20 +41,23 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
  public:
   StreamingReadRpcLogging(
       std::unique_ptr<StreamingReadRpc<ResponseType>> reader,
-      TracingOptions tracing_options)
+      TracingOptions tracing_options, std::string request_id)
       : reader_(std::move(reader)),
-        tracing_options_(std::move(tracing_options)) {}
+        tracing_options_(std::move(tracing_options)),
+        request_id_(std::move(request_id)) {}
   ~StreamingReadRpcLogging() override = default;
 
   void Cancel() override {
-    GCP_LOG(DEBUG) << __func__ << "() << (void)";
+    auto const prefix = std::string(__func__) + "(" + request_id_ + ")";
+    GCP_LOG(DEBUG) << prefix << "() << (void)";
     reader_->Cancel();
-    GCP_LOG(DEBUG) << __func__ << "() << (void)";
+    GCP_LOG(DEBUG) << prefix << "() << (void)";
   }
   absl::variant<Status, ResponseType> Read() override {
-    GCP_LOG(DEBUG) << __func__ << "() << (void)";
+    auto const prefix = std::string(__func__) + "(" + request_id_ + ")";
+    GCP_LOG(DEBUG) << prefix << "() << (void)";
     auto result = reader_->Read();
-    GCP_LOG(DEBUG) << __func__ << "() >> "
+    GCP_LOG(DEBUG) << prefix << "() >> "
                    << absl::visit(ResultVisitor(tracing_options_), result);
     return result;
   }
@@ -64,8 +69,9 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
         : tracing_options_(std::move(tracing_options)) {}
 
     std::string operator()(Status const& status) {
-      return absl::StrCat(StatusCodeToString(status.code()), ": ",
-                          status.message());
+      std::stringstream output;
+      output << status;
+      return output.str();
     }
     std::string operator()(ResponseType const& response) {
       return DebugString(response, tracing_options_);
@@ -77,6 +83,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
 
   std::unique_ptr<StreamingReadRpc<ResponseType>> reader_;
   TracingOptions tracing_options_;
+  std::string request_id_;
 };
 
 }  // namespace internal

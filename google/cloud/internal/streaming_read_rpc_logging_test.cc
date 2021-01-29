@@ -64,8 +64,9 @@ TEST_F(StreamingReadRpcLoggingTest, Cancel) {
   auto mock =
       absl::make_unique<MockStreamingReadRpc<google::protobuf::Duration>>();
   EXPECT_CALL(*mock, Cancel()).Times(1);
-  StreamingReadRpcLogging<google::protobuf::Duration> reader(std::move(mock),
-                                                             TracingOptions{});
+  StreamingReadRpcLogging<google::protobuf::Duration> reader(
+      std::move(mock), TracingOptions{},
+      google::cloud::internal::RequestIdForLogging());
   reader.Cancel();
   EXPECT_THAT(ClearLogLines(), Contains(HasSubstr("Cancel")));
 }
@@ -93,8 +94,9 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
         Status status(StatusCode::kInvalidArgument, "Invalid argument.");
         return status;
       });
-  StreamingReadRpcLogging<google::protobuf::Duration> reader(std::move(mock),
-                                                             TracingOptions{});
+  StreamingReadRpcLogging<google::protobuf::Duration> reader(
+      std::move(mock), TracingOptions{},
+      google::cloud::internal::RequestIdForLogging());
   auto result = reader.Read();
   absl::visit(ResultVisitor(), result);
   auto log_lines = ClearLogLines();
