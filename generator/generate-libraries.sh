@@ -42,7 +42,7 @@ product_path_proto_path_to_generate=(
 io::log_yellow "Run protoc and format generated .h and .cc files:"
 cd "${PROJECT_ROOT}"
 for proto in "${product_path_proto_path_to_generate[@]}"; do
-  tuple=( $proto )
+  read -a tuple <<<"${proto}"
   copyright_year=${tuple[0]}
   product_path=${tuple[1]}
   proto_file=${tuple[2]}
