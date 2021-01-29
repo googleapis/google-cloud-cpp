@@ -547,8 +547,9 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  Database dbase("test-project", "test-instance", "test-db");
-  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+  Instance instance("test-project", "test-instance");
+  Database dbase(instance, "test-db");
+  Backup backup(instance, "test-backup");
   KmsKeyName encryption_key("test-project", "some-location", "a-key-ring",
                             "restore-key-name");
   auto fut = conn->RestoreDatabase({dbase, backup.FullName(), encryption_key});

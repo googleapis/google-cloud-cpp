@@ -243,7 +243,7 @@ TEST_F(BackupTestWithCleanup, BackupTestWithCMEK) {
       google::cloud::spanner_testing::RandomDatabaseName(generator);
   ASSERT_FALSE(project_id_.empty());
   Instance in(project_id_, *instance_id);
-  Database db(project_id_, *instance_id, database_id);
+  Database db(in, database_id);
 
   KmsKeyName encryption_key(project_id_, kLocation, kKeyRing, kKeyName);
   // TODO(mr-salty) we should probably have a nicer way to generate this.
