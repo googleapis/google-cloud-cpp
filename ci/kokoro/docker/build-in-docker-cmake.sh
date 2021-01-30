@@ -379,24 +379,26 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   io::log_yellow "testing install script for runtime components"
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_runtime
   EXPECTED_RUNTIME_DIRS=(
+    "/var/tmp/staging/"
     "/var/tmp/staging/${libdir}"
   )
+  readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
   readonly EXPECTED_RUNTIME_DIRS
   if comm -23 \
     <(find /var/tmp/staging/ -type d | sort) \
     <(/usr/bin/printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
     io::log_red "Installed directories do not match expectation:"
     diff -u \
-      <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}") \
-      <(find /var/tmp/staging/ -type d | sort)
-    /bin/false
+      <(find /var/tmp/staging/ -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}")
+    exit 1
   fi
 
   echo
   io::log_yellow "testing install script for development components"
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_development
   EXPECTED_LIB_DIRS=(
-    "/var/tmp/staging/${libdir}"
+    "/var/tmp/staging/${libdir}/"
     "/var/tmp/staging/${libdir}/cmake"
     "/var/tmp/staging/${libdir}/cmake/bigtable_client"
     "/var/tmp/staging/${libdir}/cmake/firestore_client"
@@ -419,13 +421,13 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   readarray -t EXPECTED_LIB_DIRS < <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}" | sort)
   readonly EXPECTED_LIB_DIRS
   if comm -23 \
-    <(find "/var/tmp/staging/${libdir}" -type d | sort) \
-    <(/usr/bin/printf "%s\n" "${EXPECTED_LIB_DIRS[@]}") | grep -q /var/tmp; then
+    <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
+    <(/usr/bin/printf "%s\n" "${EXPECTED_LIB_DIRS[@]}") | grep -q /var/tmp/staging; then
     io::log_red "Installed directories do not match expectation:"
     diff -u \
-      <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}") \
-      <(find "/var/tmp/staging/${libdir}" -type d | sort)
-    /bin/false
+      <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}")
+    exit 1
   fi
 
   # Also verify that the install directory does not get unexpected files or
@@ -481,9 +483,9 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     <(/usr/bin/printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}") | grep -q /var/tmp; then
     io::log_red "Installed directories do not match expectation:"
     diff -u \
-      <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}") \
-      <(find /var/tmp/staging/include/google/cloud -type d | sort)
-    /bin/false
+      <(find /var/tmp/staging/include/google/cloud -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}")
+    exit 1
   fi
 
   io::log_yellow "Verify no extraneous files were installed."
