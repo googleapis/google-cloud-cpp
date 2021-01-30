@@ -120,7 +120,7 @@ cat <<"EOF"
 * This project works with or without exceptions enabled
 * This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
 
-### API Breaking Changes
+## Public API and API Breaking Changes
 
 In general, we avoid making backwards incompatible changes to our C++ APIs (see
 below for the definition of "API"). Sometimes such changes yield benefits to
@@ -145,33 +145,131 @@ We request that our customers adhere to the following guidelines to avoid
 accidentally depending on parts of the library we do not consider to be part of
 the public API and therefore may change (including removal) without notice:
 
+Previous versions of the library will remain available on the [GitHub Releases
+page](https://github.com/googleapis/google-cloud-cpp/releases). In many cases,
+you will be able to use an older version even if a newer version has changes
+that you are unable (or do not have time) to adopt.
+
+Note that this document has no bearing on the Google Cloud Platform deprecation
+policy described at https://cloud.google.com/terms.
+
+### C++ Symbols and Files
+
 * You should only include headers matching the `google/cloud/${library}/*.h`,
   `google/cloud/${library}/mock/*.h` or `google/cloud/*.h` patterns.
 * You should **NOT** directly include headers in any subdirectories, such as
   `google/cloud/${library}/internal`.
 * The files *included from* our public headers are **not part of our public
   API**. Depending on indirect includes may break your build in the future, as
-  we may change a header "foo.h" to stop including "bar.h" if "foo.h" no longer
-  needs the symbols in "bar.h". To avoid having your code broken, you should
-  directly include the public headers that define all the symbols you use (this
-  is sometimes known as
+  we may change a header `"foo.h"` to stop including `"bar.h"` if `"foo.h"` no
+  longer needs the symbols in `"bar.h"`. To avoid having your code broken, you
+  should directly include the public headers that define all the symbols you
+  use (this is sometimes known as
   [include-what-you-use](https://include-what-you-use.org/)).
 * Any file or symbol that lives within a directory or namespace containing
-  "internal", "impl", "test", "detail", "benchmark", "sample", or "example", is
+  `internal`, `impl`, `test`, `detail`, `benchmark`, `sample`, or `example`, is
   explicitly **not part of our public API**.
-* Any file or symbol with "Impl" or "impl" in its name is **not part of our
+* Any file or symbol with `Impl` or `impl` in its name is **not part of our
   public API**.
+* Any symbol with `experimental` in its name is not part of the public API.
 
-Previous versions of the library will remain available on the [GitHub Releases
-page](https://github.com/googleapis/google-cloud-cpp/releases).
+## Beyond the C++ API
 
-Note that this document has no bearing on the Google Cloud Platform deprecation
-policy described at https://cloud.google.com/terms.
+Applications developers interact with a C++ library through more than just
+the C++ symbols and headers. They also need to reference the name of the
+library in their build scripts. Depending of the build system they use
+this may be a CMake target, a Bazel rule, a pkg-config module, or just the
+name of some object in the file system.
+
+As with the C++ API, we try to avoid breaking changes to these interface
+points. Sometimes such changes yield benefits to our customers, in the form of
+easier-to-understand what names go with with services, or more consistency
+across services. When these benefits warrant it, we will announce these changes
+prominently in our `CHANGELOG.md` file and in the affected release's notes.
+Nevertheless, though we take commercially reasonable efforts to prevent this,
+it is possible that backwards incompatible changes go undetected and,
+therefore, undocumented. We apologize if this is the case and welcome feedback
+or bug reports to rectify the problem.
+
+### Experimental Libraries
+
+From time to time we add libraries to `google-cloud-cpp` to validate new
+designs, expose experimental (or otherwise not generally available) GCP
+features, or simply because a library is not yet complete. Such libraries
+will have `experimental` in their CMake target and Bazel rule. The README
+file for these libraries will also document that they are experimental.
+Such libraries are subject to change, including removal, without notice.
+This includes, but it is not limited to, all their symbols, pre-processor
+macros, files, targets, rules, and installed artifacts.
+
+### Bazel rules
+
+Only the rules exported at the top-level directory, except experimental rules,
+are part of the public API (e.g. `//:spanner`). Experimental rules have
+`experimental` in their name, e.g. `//:experimental-firestore`).
+
+Previously we some of the rules in subdirectories
+(e.g. `//google/cloud/bigtable:bigtable_client`) had public visibility. These
+rules are deprecated as of 2021-02-15, and will be become inaccessible
+(or removed) on or shortly after **2022-02-15**.
+
+### CMake targets and packages
+
+Only CMake packages starting with the `google_cloud_cpp_` prefix are part of
+the public API. Only targets starting with `google-cloud-cpp::`, except
+experimental targets, are part of the public API. Experimental targets have
+`experimental` in their name (e.g. `google-cloud-cpp::experimental-iam`).
+
+In previous versions we released packages with other prefixes (or without
+specific prefixes), these are deprecated as of 2021-02-15, and will be retired
+on or shortly after **2022-02-15**. Same applies to any targets exported with
+other prefixes (or without an specific prefix).
+
+#### CMake targets outside packages
+
+We are aware that some applications use `git submodules` or CMake's
+`FetchContent` to build dependencies in a subdirectory. We do not test
+`google-cloud-cpp` with these approaches, and cannot recommend that
+applications use them. Having said that, application developers using them
+should consider:
+  * Targets not starting with `google-cloud-cpp::` are subject to change,
+    including removal, without notice.
+  * We define targets starting with `google-cloud-cpp::` that should provide
+    the same functionality as the exported targets when you install
+    `google-cloud-cpp`.
+
+### pkg-config modules
+
+Only modules starting with `google_cloud_cpp_` are part of the public API.
+
+In previous versions we released modules with other prefixes (or without
+specific prefixes), these are deprecated as of 2021-02-15, and will be retired
+on or shortly after **2022-02-15**.
+
+### Library Names
+
+Library names are not part of the public API. Applications should not use these
+names directly, e.g., by using `-lgoogle_cloud_cpp_bigtable` in their
+command-line. We recommend that applications use CMake targets or pkg-config
+modules to build their  command-line options.
+
+### Documentation and Comments
+
+The documentation (and its links) is intended for human consumption and not
+third party websites, or automation (such as scripts scrapping the contents).
+The contents and links of our documentation may change without notice.
+
+### Other Interface Points
+
+We think this covers all interface points, if we missed something please
+file an [GitHub issue][github-issue]
 
 ## Contact us
 
 If you have questions or comments, or want to file bugs or request feature,
-please do so using GitHub's normal Issues mechanism: [Contact Us](https://github.com/googleapis/google-cloud-cpp/issues/new/choose)
+please do so using GitHub's normal Issues mechanism: [Contact Us][github-issue]
+
+[github-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
 
 ## Contributing changes
 
