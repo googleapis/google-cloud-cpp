@@ -378,22 +378,28 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   echo
   io::log_yellow "testing install script for runtime components"
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_runtime
-  EXPECTED_RUNTIME_DIRS=(
-    "/var/tmp/staging/"
-    "/var/tmp/staging/${libdir}"
-  )
-  readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
-  readonly EXPECTED_RUNTIME_DIRS
-  IFS=$'\n' readarray -t ACTUAL_RUNTIME_DIRS < <(find /var/tmp/staging/ -type d | sort)
-  readonly ACTUAL_RUNTIME_DIRS
-  if comm -23 \
-    <(/usr/bin/printf '%s\n' "${EXPECTED_RUNTIME_DIRS[@]}") \
-    <(/usr/bin/printf '%s\n' "${ACTUAL_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
-    io::log_red "Installed runtime directories do not match expectation:"
-    diff -u \
+  # Static builds do not create any runtime components, so the previous step
+  # may create no directories.
+  if grep -q '^BUILD_SHARED_LIBS' "${BINARY_DIR}/CMakeCache.txt"; then
+    echo
+    io::log_yellow "verify the expected runtime directories are created"
+    EXPECTED_RUNTIME_DIRS=(
+      "/var/tmp/staging/"
+      "/var/tmp/staging/${libdir}"
+    )
+    readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
+    readonly EXPECTED_RUNTIME_DIRS
+    IFS=$'\n' readarray -t ACTUAL_RUNTIME_DIRS < <(find /var/tmp/staging/ -type d | sort)
+    readonly ACTUAL_RUNTIME_DIRS
+    if comm -23 \
       <(/usr/bin/printf '%s\n' "${EXPECTED_RUNTIME_DIRS[@]}") \
-      <(/usr/bin/printf "%s\n" "${ACTUAL_RUNTIME_DIRS[@]}")
-    exit 1
+      <(/usr/bin/printf '%s\n' "${ACTUAL_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
+      io::log_red "Installed runtime directories do not match expectation:"
+      diff -u \
+        <(/usr/bin/printf '%s\n' "${EXPECTED_RUNTIME_DIRS[@]}") \
+        <(/usr/bin/printf "%s\n" "${ACTUAL_RUNTIME_DIRS[@]}")
+      exit 1
+    fi
   fi
 
   echo
@@ -401,7 +407,7 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_development
 
   echo
-  io::log_yellow "verify on the expected directories are created"
+  io::log_yellow "verify the expected directories for CMake and pkgconfig are created"
   EXPECTED_LIB_DIRS=(
     "/var/tmp/staging/${libdir}/"
     "/var/tmp/staging/${libdir}/cmake"
@@ -439,7 +445,7 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   fi
 
   echo
-  io::log_yellow "Verify installed protos created only expected directories."
+  io::log_yellow "Verify installed protos create the expected directories."
   EXPECTED_PROTO_DIRS=(
     "/var/tmp/staging/include/google/api"
     "/var/tmp/staging/include/google/bigtable/admin/v2"
@@ -481,10 +487,8 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     exit 1
   fi
 
-  # Also verify that the install directory does not get unexpected files or
-  # directories installed.
   echo
-  io::log_yellow "Verify installed headers created only expected directories."
+  io::log_yellow "Verify installed headers create the expected directories."
   EXPECTED_INCLUDE_DIRS=(
     "/var/tmp/staging/include/google/cloud"
     "/var/tmp/staging/include/google/cloud/internal"
@@ -528,7 +532,7 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     exit 1
   fi
 
-  io::log_yellow "Verify no extraneous files were installed."
+  io::log_yellow "Verify only files with expected extensions are created installed."
   export PKG_CONFIG_PATH="/var/tmp/staging/${libdir}/pkgconfig:${PKG_CONFIG_PATH:-}"
 
   # Get the version of one of the libraries. These should all be the same, so
