@@ -384,6 +384,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/retry_loop_helpers.h
         internal/streaming_read_rpc.cc
         internal/streaming_read_rpc.h
+        internal/streaming_read_rpc_logging.h
         internal/time_utils.cc
         internal/time_utils.h)
     target_link_libraries(
@@ -461,6 +462,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/polling_loop_test.cc
             internal/resumable_streaming_read_rpc_test.cc
             internal/retry_loop_test.cc
+            internal/streaming_read_rpc_logging_test.cc
             internal/streaming_read_rpc_test.cc
             internal/time_utils_test.cc)
 
