@@ -75,13 +75,12 @@ if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=("-DBUILD_TESTING=OFF")
 fi
 
-if [[ "${CLANG_TIDY:-}" = "yes" ]]; then
+if [[ "${CLANG_TIDY:-}" == "yes" ]]; then
   cmake_extra_flags+=("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
   # On pre-submit builds we run clang-tidy on only the changed files (see below)
   # in other cases (interactive builds, continuous builds) we run clang-tidy as
   # part of the regular build.
-  if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" && \
-    "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GIT_ON_BORG" ]]; then
+  if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" && "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GIT_ON_BORG" ]]; then
     cmake_extra_flags+=("-DCMAKE_CXX_CLANG_TIDY=clang-tidy")
   fi
 fi
@@ -127,9 +126,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
   clang-tidy -dump-config
 fi
 
-if [[ "${CLANG_TIDY:-}" == "yes" && (\
-  "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || \
-  "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
+if [[ "${CLANG_TIDY:-}" == "yes" && ("${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
   # For presubmit builds we only run clang-tidy on the files that have changed
   # w.r.t. the target branch.
   TARGET_BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}"
@@ -178,7 +175,7 @@ if [[ -n "${RUNS_PER_TEST}" ]]; then
   ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
 fi
 
-if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
+if [[ "${BUILD_TESTING:-}" == "yes" ]]; then
   # When the user does a super-build the tests are hidden in a subdirectory.
   # We can tell that ${BINARY_DIR} does not have the tests by checking for this
   # file:
@@ -272,9 +269,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       return 0
     elif [[ "${RUN_INTEGRATION_TESTS:-}" == "auto" ]]; then
       # auto: only try to run integration tests if the config files are present
-      if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r \
-        "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r \
-        "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ]]; then
+      if [[ -r "${GOOGLE_APPLICATION_CREDENTIALS}" && -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ]]; then
         return 0
       fi
     fi
@@ -375,16 +370,71 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 fi
 
 # Test the install rule and that the installation works.
-if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
+if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
+  # Fetch the lib directory (lib vs. lib64) as detected by CMake.
+  libdir="$(grep '^CMAKE_INSTALL_LIBDIR:PATH' "${BINARY_DIR}/CMakeCache.txt")"
+  libdir="${libdir#*=}"
+
   echo
-  io::log_yellow "testing install rule"
-  cmake --build "${BINARY_DIR}" --target install
+  io::log_yellow "testing install script for runtime components"
+  cmake --install "${BINARY_DIR}" --component google_cloud_cpp_runtime
+  EXPECTED_RUNTIME_DIRS=(
+    "/var/tmp/staging/"
+    "/var/tmp/staging/${libdir}"
+  )
+  readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
+  readonly EXPECTED_RUNTIME_DIRS
+  if comm -23 \
+    <(find /var/tmp/staging/ -type d | sort) \
+    <(/usr/bin/printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
+    io::log_red "Installed directories do not match expectation:"
+    diff -u \
+      <(find /var/tmp/staging/ -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}")
+    exit 1
+  fi
+
+  echo
+  io::log_yellow "testing install script for development components"
+  cmake --install "${BINARY_DIR}" --component google_cloud_cpp_development
+  EXPECTED_LIB_DIRS=(
+    "/var/tmp/staging/${libdir}/"
+    "/var/tmp/staging/${libdir}/cmake"
+    "/var/tmp/staging/${libdir}/cmake/bigtable_client"
+    "/var/tmp/staging/${libdir}/cmake/firestore_client"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_bigtable"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_common"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_firestore"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_googleapis"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_grpc_utils"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_iam"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_logging"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_pubsub"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_spanner"
+    "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_storage"
+    "/var/tmp/staging/${libdir}/cmake/googleapis"
+    "/var/tmp/staging/${libdir}/cmake/pubsub_client"
+    "/var/tmp/staging/${libdir}/cmake/spanner_client"
+    "/var/tmp/staging/${libdir}/cmake/storage_client"
+    "/var/tmp/staging/${libdir}/pkgconfig"
+  )
+  readarray -t EXPECTED_LIB_DIRS < <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}" | sort)
+  readonly EXPECTED_LIB_DIRS
+  if comm -23 \
+    <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
+    <(/usr/bin/printf "%s\n" "${EXPECTED_LIB_DIRS[@]}") | grep -q /var/tmp/staging; then
+    io::log_red "Installed directories do not match expectation:"
+    diff -u \
+      <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}")
+    exit 1
+  fi
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
   io::log_yellow "Verify installed headers created only expected directories."
-  EXPECTED_DIRS=(
+  EXPECTED_INCLUDE_DIRS=(
     "/var/tmp/staging/include/google/cloud"
     "/var/tmp/staging/include/google/cloud/bigquery"
     "/var/tmp/staging/include/google/cloud/bigquery/connection"
@@ -426,24 +476,24 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
     "/var/tmp/staging/include/google/cloud/testing_util"
     "/var/tmp/staging/include/google/cloud/texttospeech"
     "/var/tmp/staging/include/google/cloud/texttospeech/v1")
-  printf "%s\n" "${EXPECTED_DIRS[@]}" | sort | readarray -t EXPECTED_DIRS
-  readonly EXPECTED_DIRS
+  readarray -t < <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}" | sort)
+  readonly EXPECTED_INCLUDE_DIRS
   if comm -23 \
     <(find /var/tmp/staging/include/google/cloud -type d | sort) \
-    <(/usr/bin/printf "%s\n" "${EXPECTED_DIRS[@]}") | grep -q /var/tmp; then
+    <(/usr/bin/printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}") | grep -q /var/tmp; then
     io::log_red "Installed directories do not match expectation:"
     diff -u \
-      <(printf "%s\n" "${EXPECTED_DIRS[@]}") \
-      <(find /var/tmp/staging/include/google/cloud -type d | sort)
-    /bin/false
+      <(find /var/tmp/staging/include/google/cloud -type d | sort) \
+      <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}")
+    exit 1
   fi
 
   io::log_yellow "Verify no extraneous files were installed."
-  export PKG_CONFIG_PATH="/var/tmp/staging/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
+  export PKG_CONFIG_PATH="/var/tmp/staging/${libdir}/pkgconfig:${PKG_CONFIG_PATH:-}"
 
   # Get the version of one of the libraries. These should all be the same, so
   # it does not matter what we use.
-  GOOGLE_CLOUD_CPP_VERSION=$(pkg-config storage_client --modversion) || true
+  GOOGLE_CLOUD_CPP_VERSION=$(pkg-config google_cloud_cpp_common --modversion) || true
   GOOGLE_CLOUD_CPP_VERSION_MAJOR=$(echo "${GOOGLE_CLOUD_CPP_VERSION}" | cut -d'.' -f1)
 
   mapfile -t files < <(find /var/tmp/staging/ -type f | grep -vE \

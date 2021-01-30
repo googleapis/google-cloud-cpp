@@ -380,8 +380,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT spanner-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_spanner")
+install(
+    EXPORT spanner-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_spanner"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -389,21 +391,21 @@ install(
     TARGETS google_cloud_cpp_spanner
     EXPORT spanner-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            COMPONENT google_cloud_cpp_spanner_runtime
+            COMPONENT google_cloud_cpp_runtime
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_spanner_runtime
+            COMPONENT google_cloud_cpp_runtime
             NAMELINK_SKIP
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_spanner_development)
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
     TARGETS google_cloud_cpp_spanner
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_spanner_development
+            COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            COMPONENT google_cloud_cpp_spanner_development)
+            COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers("google_cloud_cpp_spanner"
                                  "include/google/cloud/spanner")
@@ -427,7 +429,7 @@ configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_spanner_development)
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -442,7 +444,7 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_spanner"
-    COMPONENT google_cloud_cpp_spanner_development)
+    COMPONENT google_cloud_cpp_development)
 
 # TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_spanner")
@@ -452,10 +454,10 @@ configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_spanner_development)
+    COMPONENT google_cloud_cpp_development)
 configure_file("legacy.cmake.in" "spanner_client-config.cmake" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client"
-    COMPONENT google_cloud_cpp_spanner_development)
+    COMPONENT google_cloud_cpp_development)
 # TODO(#5726) - END

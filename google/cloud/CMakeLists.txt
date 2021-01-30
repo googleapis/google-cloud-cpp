@@ -285,8 +285,10 @@ if (BUILD_TESTING)
 endif ()
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT google_cloud_cpp_common-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
+install(
+    EXPORT google_cloud_cpp_common-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common"
+    COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -328,8 +330,10 @@ string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common"
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "google_cloud_cpp_common.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -343,7 +347,8 @@ install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_common-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common"
+    COMPONENT google_cloud_cpp_development)
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     find_package(gRPC)
@@ -502,12 +507,14 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         EXPORT grpc_utils-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
 
     # Export the CMake targets to make it easy to create configuration files.
     install(
         EXPORT grpc_utils-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils"
+        COMPONENT google_cloud_cpp_development)
 
     install(
         TARGETS google_cloud_cpp_grpc_utils
@@ -546,8 +553,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                    "google_cloud_cpp_grpc_utils.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils.pc"
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
 
     # Create and install the CMake configuration files.
     configure_file("grpc_utils/config.cmake.in"
@@ -561,7 +570,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils"
+        COMPONENT google_cloud_cpp_development)
 
     add_subdirectory(samples)
 endif ()

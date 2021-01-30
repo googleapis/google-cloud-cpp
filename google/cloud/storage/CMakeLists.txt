@@ -564,8 +564,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Export the CMake targets to make it easy to create configuration files.
-install(EXPORT storage-targets
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage")
+install(
+    EXPORT storage-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage"
+    COMPONENT google_cloud_cpp_development)
 
 install(
     TARGETS google_cloud_cpp_storage
@@ -602,8 +604,10 @@ string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c"
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "google_cloud_cpp_storage.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -617,19 +621,26 @@ install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage")
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage"
+    COMPONENT google_cloud_cpp_development)
 
-install(FILES testing/mock_client.h
-        DESTINATION include/google/cloud/storage/testing)
+install(
+    FILES testing/mock_client.h
+    DESTINATION include/google/cloud/storage/testing
+    COMPONENT google_cloud_cpp_development)
 
 # TODO(#5726) - generate pkg-config and CMake files for backwards compatibility
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_storage")
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "")
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "storage_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 configure_file("legacy.cmake.in" "storage_client-config.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client"
+    COMPONENT google_cloud_cpp_development)
 # TODO(#5726) - END
