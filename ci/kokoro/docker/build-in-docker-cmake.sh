@@ -378,30 +378,39 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   echo
   io::log_yellow "testing install script for runtime components"
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_runtime
-  EXPECTED_RUNTIME_DIRS=(
-    "/var/tmp/staging/"
-    "/var/tmp/staging/${libdir}"
-  )
-  readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
-  readonly EXPECTED_RUNTIME_DIRS
-  if comm -23 \
-    <(find /var/tmp/staging/ -type d | sort) \
-    <(/usr/bin/printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
-    io::log_red "Installed directories do not match expectation:"
-    diff -u \
-      <(find /var/tmp/staging/ -type d | sort) \
-      <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}")
-    exit 1
+  # Static builds do not create any runtime components, so the previous step
+  # may create no directories.
+  if grep -q '^BUILD_SHARED_LIBS' "${BINARY_DIR}/CMakeCache.txt"; then
+    echo
+    io::log_yellow "verify the expected runtime directories are created"
+    EXPECTED_RUNTIME_DIRS=(
+      "/var/tmp/staging/"
+      "/var/tmp/staging/${libdir}"
+    )
+    readarray -t EXPECTED_RUNTIME_DIRS < <(printf "%s\n" "${EXPECTED_RUNTIME_DIRS[@]}" | sort)
+    readonly EXPECTED_RUNTIME_DIRS
+    IFS=$'\n' readarray -t ACTUAL_RUNTIME_DIRS < <(find /var/tmp/staging/ -type d | sort)
+    readonly ACTUAL_RUNTIME_DIRS
+    if comm -23 \
+      <(/usr/bin/printf '%s\n' "${EXPECTED_RUNTIME_DIRS[@]}") \
+      <(/usr/bin/printf '%s\n' "${ACTUAL_RUNTIME_DIRS[@]}") | grep -q /var/tmp; then
+      io::log_red "Installed runtime directories do not match expectation:"
+      diff -u \
+        <(/usr/bin/printf '%s\n' "${EXPECTED_RUNTIME_DIRS[@]}") \
+        <(/usr/bin/printf "%s\n" "${ACTUAL_RUNTIME_DIRS[@]}")
+      exit 1
+    fi
   fi
 
   echo
   io::log_yellow "testing install script for development components"
   cmake --install "${BINARY_DIR}" --component google_cloud_cpp_development
+
+  echo
+  io::log_yellow "verify the expected directories for CMake and pkgconfig are created"
   EXPECTED_LIB_DIRS=(
     "/var/tmp/staging/${libdir}/"
     "/var/tmp/staging/${libdir}/cmake"
-    "/var/tmp/staging/${libdir}/cmake/bigtable_client"
-    "/var/tmp/staging/${libdir}/cmake/firestore_client"
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_bigtable"
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_common"
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_firestore"
@@ -412,46 +421,79 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_pubsub"
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_spanner"
     "/var/tmp/staging/${libdir}/cmake/google_cloud_cpp_storage"
+    "/var/tmp/staging/${libdir}/pkgconfig"
+    # TODO(#5726) - these can be removed after 2022-02-15
+    "/var/tmp/staging/${libdir}/cmake/bigtable_client"
+    "/var/tmp/staging/${libdir}/cmake/firestore_client"
     "/var/tmp/staging/${libdir}/cmake/googleapis"
     "/var/tmp/staging/${libdir}/cmake/pubsub_client"
     "/var/tmp/staging/${libdir}/cmake/spanner_client"
     "/var/tmp/staging/${libdir}/cmake/storage_client"
-    "/var/tmp/staging/${libdir}/pkgconfig"
+    # TODO(#5726) - END
   )
   readarray -t EXPECTED_LIB_DIRS < <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}" | sort)
   readonly EXPECTED_LIB_DIRS
+  IFS=$'\n' readarray -t ACTUAL_LIB_DIRS < <(find "/var/tmp/staging/${libdir}/" -type d | sort)
   if comm -23 \
-    <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
-    <(/usr/bin/printf "%s\n" "${EXPECTED_LIB_DIRS[@]}") | grep -q /var/tmp/staging; then
-    io::log_red "Installed directories do not match expectation:"
+    <(/usr/bin/printf '%s\n' "${EXPECTED_LIB_DIRS[@]}") \
+    <(/usr/bin/printf '%s\n' "${ACTUAL_LIB_DIRS[@]}") | grep -q /var/tmp/staging; then
+    io::log_red "Installed library directories do not match expectation:"
     diff -u \
-      <(find "/var/tmp/staging/${libdir}/" -type d | sort) \
-      <(printf "%s\n" "${EXPECTED_LIB_DIRS[@]}")
+      <(/usr/bin/printf '%s\n' "${EXPECTED_LIB_DIRS[@]}") \
+      <(/usr/bin/printf '%s\n' "${ACTUAL_LIB_DIRS[@]}")
     exit 1
   fi
 
-  # Also verify that the install directory does not get unexpected files or
-  # directories installed.
   echo
-  io::log_yellow "Verify installed headers created only expected directories."
-  EXPECTED_INCLUDE_DIRS=(
-    "/var/tmp/staging/include/google/cloud"
-    "/var/tmp/staging/include/google/cloud/bigquery"
-    "/var/tmp/staging/include/google/cloud/bigquery/connection"
+  io::log_yellow "Verify installed protos create the expected directories."
+  EXPECTED_PROTO_DIRS=(
+    "/var/tmp/staging/include/google/api"
+    "/var/tmp/staging/include/google/bigtable/admin/v2"
+    "/var/tmp/staging/include/google/bigtable/v2"
     "/var/tmp/staging/include/google/cloud/bigquery/connection/v1beta1"
-    "/var/tmp/staging/include/google/cloud/bigquery/datatransfer"
     "/var/tmp/staging/include/google/cloud/bigquery/datatransfer/v1"
-    "/var/tmp/staging/include/google/cloud/bigquery/internal"
-    "/var/tmp/staging/include/google/cloud/bigquery/logging"
     "/var/tmp/staging/include/google/cloud/bigquery/logging/v1"
-    "/var/tmp/staging/include/google/cloud/bigquery/storage"
     "/var/tmp/staging/include/google/cloud/bigquery/storage/v1beta1"
     "/var/tmp/staging/include/google/cloud/bigquery/v2"
-    "/var/tmp/staging/include/google/cloud/bigtable"
-    "/var/tmp/staging/include/google/cloud/bigtable/internal"
-    "/var/tmp/staging/include/google/cloud/dialogflow"
     "/var/tmp/staging/include/google/cloud/dialogflow/v2"
     "/var/tmp/staging/include/google/cloud/dialogflow/v2beta1"
+    "/var/tmp/staging/include/google/cloud/speech/v1"
+    "/var/tmp/staging/include/google/cloud/texttospeech/v1"
+    "/var/tmp/staging/include/google/devtools/cloudtrace/v2"
+    "/var/tmp/staging/include/google/iam/credentials/v1"
+    "/var/tmp/staging/include/google/iam/v1"
+    "/var/tmp/staging/include/google/logging/type"
+    "/var/tmp/staging/include/google/logging/v2"
+    "/var/tmp/staging/include/google/longrunning"
+    "/var/tmp/staging/include/google/monitoring/v3"
+    "/var/tmp/staging/include/google/pubsub/v1"
+    "/var/tmp/staging/include/google/rpc"
+    "/var/tmp/staging/include/google/spanner/admin/database/v1"
+    "/var/tmp/staging/include/google/spanner/admin/instance/v1"
+    "/var/tmp/staging/include/google/spanner/v1"
+    "/var/tmp/staging/include/google/storage/v1"
+    "/var/tmp/staging/include/google/type"
+  )
+  readarray -t < <(printf "%s\n" "${EXPECTED_PROTO_DIRS[@]}" | sort)
+  readonly EXPECTED_PROTO_DIRS
+  IFS=$'\n' readarray -t ACTUAL_PROTO_DIRS < <(find /var/tmp/staging/ -name '*.proto' -printf '%h\n' | sort -u)
+  readonly ACTUAL_PROTO_DIRS
+  if comm -23 \
+    <(/usr/bin/printf '%s\n' "${EXPECTED_PROTO_DIRS[@]}") \
+    <(/usr/bin/printf '%s\n' "${ACTUAL_PROTO_DIRS[@]}") | grep -q /var/tmp; then
+    diff -u \
+      <(/usr/bin/printf '%s\n' "${EXPECTED_PROTO_DIRS[@]}") \
+      <(/usr/bin/printf '%s\n' "${ACTUAL_PROTO_DIRS[@]}")
+    exit 1
+  fi
+
+  echo
+  io::log_yellow "Verify installed headers create the expected directories."
+  EXPECTED_INCLUDE_DIRS=(
+    "/var/tmp/staging/include/google/cloud"
+    "/var/tmp/staging/include/google/cloud/internal"
+    "/var/tmp/staging/include/google/cloud/bigtable"
+    "/var/tmp/staging/include/google/cloud/bigtable/internal"
     "/var/tmp/staging/include/google/cloud/firestore"
     "/var/tmp/staging/include/google/cloud/grpc_utils"
     "/var/tmp/staging/include/google/cloud/iam"
@@ -467,28 +509,25 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     "/var/tmp/staging/include/google/cloud/spanner"
     "/var/tmp/staging/include/google/cloud/spanner/internal"
     "/var/tmp/staging/include/google/cloud/spanner/mocks"
-    "/var/tmp/staging/include/google/cloud/speech"
-    "/var/tmp/staging/include/google/cloud/speech/v1"
     "/var/tmp/staging/include/google/cloud/storage"
     "/var/tmp/staging/include/google/cloud/storage/internal"
     "/var/tmp/staging/include/google/cloud/storage/oauth2"
-    "/var/tmp/staging/include/google/cloud/storage/testing"
-    "/var/tmp/staging/include/google/cloud/testing_util"
-    "/var/tmp/staging/include/google/cloud/texttospeech"
-    "/var/tmp/staging/include/google/cloud/texttospeech/v1")
-  readarray -t < <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}" | sort)
+    "/var/tmp/staging/include/google/cloud/storage/testing")
+  readarray -t EXPECTED_INCLUDE_DIRS < <(printf "%s\n" "${EXPECTED_PROTO_DIRS[@]}" "${EXPECTED_INCLUDE_DIRS[@]}" | sort -u)
   readonly EXPECTED_INCLUDE_DIRS
+  IFS=$'\n' readarray -t ACTUAL_INCLUDE_DIRS < <(find /var/tmp/staging/include -name '*.h' -printf '%h\n' | sort -u)
+  readonly ACTUAL_INCLUDE_DIRS
   if comm -23 \
-    <(find /var/tmp/staging/include/google/cloud -type d | sort) \
-    <(/usr/bin/printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}") | grep -q /var/tmp; then
-    io::log_red "Installed directories do not match expectation:"
+    <(/usr/bin/printf '%s\n' "${EXPECTED_INCLUDE_DIRS[@]}") \
+    <(/usr/bin/printf '%s\n' "${ACTUAL_INCLUDE_DIRS[@]}") | grep -q /var/tmp; then
+    io::log_red "Installed include directories do not match expectation:"
     diff -u \
-      <(find /var/tmp/staging/include/google/cloud -type d | sort) \
-      <(printf "%s\n" "${EXPECTED_INCLUDE_DIRS[@]}")
+      <(/usr/bin/printf '%s\n' "${EXPECTED_INCLUDE_DIRS[@]}") \
+      <(/usr/bin/printf '%s\n' "${ACTUAL_INCLUDE_DIRS[@]}")
     exit 1
   fi
 
-  io::log_yellow "Verify no extraneous files were installed."
+  io::log_yellow "Verify only files with expected extensions are installed."
   export PKG_CONFIG_PATH="/var/tmp/staging/${libdir}/pkgconfig:${PKG_CONFIG_PATH:-}"
 
   # Get the version of one of the libraries. These should all be the same, so
