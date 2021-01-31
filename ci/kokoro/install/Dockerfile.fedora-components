@@ -90,7 +90,7 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 
-RUN cmake -DSHARED_LIBS=ON -DBUILD_TESTING=OFF -H. -Bcmake-out
+RUN cmake -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 
 # This is the fun part. We will create a "stage" that contains the source
