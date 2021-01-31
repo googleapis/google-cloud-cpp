@@ -520,11 +520,6 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   if comm -23 \
     <(/usr/bin/printf '%s\n' "${EXPECTED_INCLUDE_DIRS[@]}") \
     <(/usr/bin/printf '%s\n' "${ACTUAL_INCLUDE_DIRS[@]}") | grep -q /var/tmp; then
-    io::log_red "DEBUG DEBUG EXPECTED"
-    /usr/bin/printf '%s\n' "${EXPECTED_INCLUDE_DIRS[@]}"
-    io::log_red "DEBUG DEBUG ACTUAL"
-    /usr/bin/printf '%s\n' "${ACTUAL_INCLUDE_DIRS[@]}"
-    io::log_red "Installed proto directories do not match expectation:"
     io::log_red "Installed include directories do not match expectation:"
     diff -u \
       <(/usr/bin/printf '%s\n' "${EXPECTED_INCLUDE_DIRS[@]}") \
@@ -532,7 +527,7 @@ if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
     exit 1
   fi
 
-  io::log_yellow "Verify only files with expected extensions are created installed."
+  io::log_yellow "Verify only files with expected extensions are installed."
   export PKG_CONFIG_PATH="/var/tmp/staging/${libdir}/pkgconfig:${PKG_CONFIG_PATH:-}"
 
   # Get the version of one of the libraries. These should all be the same, so
