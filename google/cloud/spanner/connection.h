@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CONNECTION_H
 
 #include "google/cloud/spanner/batch_dml_result.h"
-#include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/keys.h"
@@ -117,7 +116,6 @@ class Connection {
   struct CommitParams {
     Transaction transaction;
     Mutations mutations;
-    CommitOptions options;
   };
 
   /// Wrap the arguments to `Rollback()`.

@@ -17,7 +17,6 @@
 
 #include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/client_options.h"
-#include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/connection_options.h"
@@ -523,7 +522,6 @@ class Client {
    * @param rerun_policy controls for how long (or how many times) the mutator
    *     will be rerun after the transaction aborts.
    * @param backoff_policy controls how long `Commit` waits between reruns.
-   * @param options to apply to the commit.
    *
    * @throw Rethrows any exception thrown by @p `mutator` (after rolling back
    *     the transaction). However, a `RuntimeStatusError` exception is
@@ -536,8 +534,7 @@ class Client {
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      CommitOptions const& options = {});
+      std::unique_ptr<BackoffPolicy> backoff_policy);
 
   /**
    * Commits a read-write transaction.
@@ -545,17 +542,15 @@ class Client {
    * Same as above, but uses the default rerun and backoff policies.
    *
    * @param mutator the function called to create mutations
-   * @param options to apply to the commit.
    *
    * @par Example
    * @snippet samples.cc commit-with-mutator
    */
   StatusOr<CommitResult> Commit(
-      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      CommitOptions const& options = {});
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator);
 
   /**
-   * Commits the @p mutations, using the @p options, atomically in order.
+   * Commits the given @p mutations atomically in order.
    *
    * This function uses the re-run loop described above with the default
    * policies.
@@ -563,8 +558,7 @@ class Client {
    * @par Example
    * @snippet samples.cc commit-with-mutations
    */
-  StatusOr<CommitResult> Commit(Mutations mutations,
-                                CommitOptions const& options = {});
+  StatusOr<CommitResult> Commit(Mutations mutations);
 
   /**
    * Commits a read-write transaction.
@@ -586,13 +580,11 @@ class Client {
    * @param mutations The mutations to be executed when this transaction
    *     commits. All mutations are applied atomically, in the order they appear
    *     in this list.
-   * @param options to apply to the commit.
    *
    * @return A `StatusOr` containing the result of the commit or error status
    *     on failure.
    */
-  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
-                                CommitOptions const& options = {});
+  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations);
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.

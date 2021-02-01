@@ -23,7 +23,6 @@ google_cloud_cpp_spanner_hdrs = [
     "bytes.h",
     "client.h",
     "client_options.h",
-    "commit_options.h",
     "commit_result.h",
     "connection.h",
     "connection_options.h",
