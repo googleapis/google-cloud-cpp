@@ -36,10 +36,6 @@
 
 ## v1.24.0 - 2021-02
 
-**NOTE**:
-We are clarifying our approach to backwards compatibility beyond the C++ API.
-See the [README.md](README.md) on GitHub for details
-
 ### Bazel
 * Starting with this release the legacy targets, such as
   `//google/cloud/pubsub:pubsub_client` are deprecated and generate warnings
@@ -52,9 +48,12 @@ See the [README.md](README.md) on GitHub for details
 * feat(bigtable): better control over channel refresh (#5753)
 
 ### Spanner
-No user-facing changes.
+* feat(spanner): statistics returned for a committed transaction (#5745)
 
-### Storage
+### Bigtable
+* feat(bigtable): restore from backups in other instance (#5754)
+* feat(bigtable): better control over channel refresh (#5753)
+
 **BREAKING CHANGES**:
 * UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
   compatibility the C++ Cloud Storage library supported both, however
