@@ -54,10 +54,7 @@ See the [README.md](README.md) on GitHub for details
 ### Spanner
 * feat(spanner): statistics returned for a committed transaction (#5745)
 
-### Bigtable
-* feat(bigtable): restore from backups in other instance (#5754)
-* feat(bigtable): better control over channel refresh (#5753)
-
+### Storage
 **BREAKING CHANGES**:
 * UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
   compatibility the C++ Cloud Storage library supported both, however
