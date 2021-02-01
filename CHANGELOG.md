@@ -32,24 +32,37 @@
   - If you have any feedback about this change please add comments in
     [#5726](https://github.com/googleapis/google-cloud-cpp/issues/5726)
 
+## v1.25.0 - TBD
 
-## v1.24.0 - TBD
+## v1.24.0 - 2021-02
 
 ### Bazel
-
 * Starting with this release the legacy targets, such as
   `//google/cloud/pubsub:pubsub_client` are deprecated and generate warnings
   recommending a replacement (such as `//:pubsub`). Note that you may have to
   prefix the target with the external package name you gave this library, e.g.,
-  `@github_com_google_cloud_cpp//:pubsub`.
+  `@github_com_google_cloud_cpp//:pubsub`. (#5746)
+
+### Bigtable
+* feat(bigtable): restore from backups in other instance (#5754)
+* feat(bigtable): better control over channel refresh (#5753)
+
+### Spanner
+* feat(spanner): statistics returned for a committed transaction (#5745)
 
 ### Storage
 
 **BREAKING CHANGES**:
-
 * UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
   compatibility the C++ Cloud Storage library supported both, however
-  BucketPolicyOnly is now completely removed.
+  BucketPolicyOnly is now completely removed. (#5720)
+
+**Other Changes**:
+* feat(storage): Support includeTrailingDelimiter in Client::ListObjects (#5713)
+
+### Common Libraries
+**BREAKING CHANGES**:
+* refactor!: removed old bigquery code (#5722)
 
 ## v1.23.0 - 2021-01
 
