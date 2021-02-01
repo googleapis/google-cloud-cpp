@@ -36,6 +36,10 @@
 
 ## v1.24.0 - 2021-02
 
+**NOTE**:
+We are clarifying our approach to backwards compatibility beyond the C++ API.
+See the [README.md](README.md) on GitHub for details
+
 ### Bazel
 * Starting with this release the legacy targets, such as
   `//google/cloud/pubsub:pubsub_client` are deprecated and generate warnings
