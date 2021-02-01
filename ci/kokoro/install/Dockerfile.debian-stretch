@@ -116,9 +116,9 @@ RUN wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.34.0.tar.gz && \
-    tar -xf v1.34.0.tar.gz && \
-    cd grpc-1.34.0 && \
+RUN wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
+    tar -xf v1.35.0.tar.gz && \
+    cd grpc-1.35.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
