@@ -55,7 +55,6 @@ See the [README.md](README.md) on GitHub for details
 * feat(spanner): statistics returned for a committed transaction (#5745)
 
 ### Storage
-
 **BREAKING CHANGES**:
 * UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
   compatibility the C++ Cloud Storage library supported both, however
