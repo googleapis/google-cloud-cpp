@@ -196,8 +196,8 @@ or bug reports to rectify the problem.
 From time to time we add libraries to `google-cloud-cpp` to validate new
 designs, expose experimental (or otherwise not generally available) GCP
 features, or simply because a library is not yet complete. Such libraries
-will have `experimental` in their CMake target and Bazel rule. The README
-file for these libraries will also document that they are experimental.
+will have `experimental` in their CMake target and Bazel rule names. The
+README file for these libraries will also document that they are experimental.
 Such libraries are subject to change, including removal, without notice.
 This includes, but it is not limited to, all their symbols, pre-processor
 macros, files, targets, rules, and installed artifacts.
@@ -205,8 +205,8 @@ macros, files, targets, rules, and installed artifacts.
 ### Bazel rules
 
 Only the rules exported at the top-level directory are intended for customer
-user, e.g.,`//:spanner`. Experimental rules have `experimental` in their name,
-e.g. `//:experimental-firestore`, as previously stated, experimental rules are
+use, e.g.,`//:spanner`. Experimental rules have `experimental` in their name,
+e.g. `//:experimental-firestore`. As previously stated, experimental rules are
 subject to change or removal without notice.
 
 Previously some of the rules in subdirectories
@@ -216,12 +216,11 @@ rules are deprecated as of 2021-02-15, and will be become inaccessible
 
 ### CMake targets and packages
 
-Only CMake packages starting with the `google_cloud_cpp_` prefix intended for
-customer use. Only targets starting with `google-cloud-cpp::`, except
-experimental targets, are intended for customer use. Experimental targets have
-`experimental` in their name (e.g. `google-cloud-cpp::experimental-iam`), as
-previously stated, experimental targets are subject to change or removal without
-notice.
+Only CMake packages starting with the `google_cloud_cpp_` prefix are intended
+for customer use. Only targets starting with `google-cloud-cpp::`, are intended
+for customer use. Experimental targets have `experimental` in their name (e.g.
+`google-cloud-cpp::experimental-iam`). As previously stated, experimental
+targets are subject to change or removal without notice.
 
 In previous versions we released packages with other prefixes (or without
 specific prefixes), these are deprecated as of 2021-02-15, and will be retired
@@ -244,26 +243,25 @@ We try to provide stable names for the previously described mechanisms:
 * CMake targets loaded via `find_package()`,
 * pkg-config modules
 
-It is certainly possible to use the the library through other mechanisms,
-and while these may work, we may accidentally break these from time to time.
-Examples of such uses and the recommended alternatives include:
+It is certainly possible to use the library using other approaches. While
+these may work, we may accidentally break these from time to time. Examples of
+such, and the recommended alternatives, include:
 
-* CMake's FetchContent and/or git submodules: in these approaches the
+* CMake's `FetchContent` and/or git submodules: in these approaches the
   `google-cloud-cpp` library becomes a sub-directory of a larger CMake build
-  We do not test `google-cloud-cpp` in this configuration, and we find it
-  problematic as **all** CMake targets become visible to the larger project.
+  We do not test `google-cloud-cpp` in these  configurations, and we find them
+  brittle as **all** CMake targets become visible to the larger project.
   This is both prone to conflicts, and makes it impossible to enforce that
-  some targets are only for testing or implementation.
+  some targets are only for testing or are implementation details.
   Applications may want to consider source package managers, such as
-  `vcpkg`, or should use CMake super builds via `ExternalProject_Add()`
-  as alternatives.
+  `vcpkg`, or CMake super builds via `ExternalProject_Add()` as alternatives.
 
 * Using library names directly: applications should not use the
   library names, e.g., by using `-lgoogle_cloud_cpp_bigtable`
   in build scripts. We may need to split or merge libraries over time,
   making such names unstable. Applications should use CMake targets,
   e.g., `google-cloud-cpp::bigtable`, or pkg-config modules, e.g.,
-  `$(pkg-config google_cloud_cpp_bigtable --libs)`.
+  `$(pkg-config google_cloud_cpp_bigtable --libs)` instead.
 
 ### Documentation and Comments
 
