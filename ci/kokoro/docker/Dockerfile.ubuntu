@@ -34,6 +34,7 @@ RUN apt-get update && \
         libcurl4-openssl-dev \
         libssl-dev \
         libtool \
+        llvm-9 \
         lsb-release \
         make \
         ninja-build \
