@@ -25,11 +25,7 @@ std::chrono::system_clock::time_point ParseRfc3339(
     std::string const& timestamp) {
   std::string err;
   absl::Time t;
-  // TODO(#5593): Once we take a dep on Abseil >= Sept 2020 LTS, we can remove
-  // this call to `absl::AsciiStrToUpper()`, because then `absl::ParseTime()`
-  // will handle `T` and `Z` in upper or lower case.
-  auto const upper = absl::AsciiStrToUpper(timestamp);
-  if (!absl::ParseTime(absl::RFC3339_full, upper, &t, &err)) {
+  if (!absl::ParseTime(absl::RFC3339_full, timestamp, &t, &err)) {
     google::cloud::internal::ThrowInvalidArgument(
         "Error parsing RFC-3339 timestamp: '" + timestamp + "': " + err);
   }
