@@ -21,7 +21,6 @@ spanner_client_unit_tests = [
     "bytes_test.cc",
     "client_options_test.cc",
     "client_test.cc",
-    "commit_options_test.cc",
     "connection_options_test.cc",
     "create_instance_request_builder_test.cc",
     "database_admin_client_test.cc",
