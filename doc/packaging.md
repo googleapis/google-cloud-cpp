@@ -231,9 +231,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -336,9 +336,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -463,9 +463,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -613,9 +613,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -747,9 +747,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -899,9 +899,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1079,9 +1079,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1174,9 +1174,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1358,9 +1358,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1517,9 +1517,9 @@ We need a recent version of Abseil.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \

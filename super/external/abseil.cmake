@@ -20,9 +20,9 @@ if (NOT TARGET abseil-cpp-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_ABSEIL_CPP_URL
-        "https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz")
+        "https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz")
     set(GOOGLE_CLOUD_CPP_ABSEIL_CPP_SHA256
-        "f41868f7a938605c92936230081175d1eae87f6ea2c248f41077c8f88316f111")
+        "ebe2ad1480d27383e4bf4211e2ca2ef312d5e6a09eba869fd2e8a5c5d553ded2")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
