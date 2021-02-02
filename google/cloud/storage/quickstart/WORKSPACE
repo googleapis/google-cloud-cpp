@@ -14,7 +14,7 @@
 
 # A minimal WORKSPACE file showing how to use the Google Cloud Storage C++
 # client library in Bazel-based projects.
-workspace(name = "com_github_googleapis_google_cloud_cpp_storage_quickstart")
+workspace(name = "google_cloud_cpp_storage_quickstart")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -23,9 +23,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    sha256 = "914c9596ee9f271a4ba2de701388009d1f6a7eb0ea269d625aae06be1a51ee9e",
-    strip_prefix = "google-cloud-cpp-1.23.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.23.0.tar.gz",
+    sha256 = "705992bbf5d86a5d5b4276fe249ca495bc0827f1835cb433f3f6be777072aa62",
+    strip_prefix = "google-cloud-cpp-1.24.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.24.0.tar.gz",
 )
 
 # Load indirect dependencies due to
