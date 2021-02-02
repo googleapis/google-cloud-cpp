@@ -33,7 +33,7 @@ grpc_port = 0
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
-root.debug = True
+root.debug = False
 
 
 @root.route("/")
@@ -91,7 +91,7 @@ def root_put_object_with_bucket(bucket_name, object_name):
 # === WSGI APP TO HANDLE JSON API === #
 GCS_HANDLER_PATH = "/storage/v1"
 gcs = flask.Flask(__name__)
-gcs.debug = True
+gcs.debug = False
 
 
 # === BUCKET === #
@@ -609,7 +609,7 @@ def object_acl_delete(bucket_name, object_name, entity):
 # Define the WSGI application to handle bucket requests.
 DOWNLOAD_HANDLER_PATH = "/download/storage/v1"
 download = flask.Flask(__name__)
-download.debug = True
+download.debug = False
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>")
@@ -636,7 +636,7 @@ def object_get(bucket_name, object_name):
 # Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = "/upload/storage/v1"
 upload = flask.Flask(__name__)
-upload.debug = True
+upload.debug = False
 
 
 @upload.route("/b/<bucket_name>/o", methods=["POST"])
