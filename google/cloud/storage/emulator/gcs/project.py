@@ -191,7 +191,7 @@ class GcsProject(object):
 
 PROJECTS_HANDLER_PATH = "/storage/v1/projects"
 projects = flask.Flask(__name__)
-projects.debug = True
+projects.debug = False
 
 VALID_PROJECTS = {}
 

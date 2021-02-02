@@ -22,7 +22,7 @@ import utils
 
 IAM_HANDLER_PATH = "/iamapi"
 iam = flask.Flask(__name__)
-iam.debug = True
+iam.debug = False
 
 
 @iam.route("/projects/-/serviceAccounts/<service_account>:signBlob", methods=["POST"])
