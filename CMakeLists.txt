@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.5)
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(
     google-cloud-cpp
-    VERSION 1.24.0
+    VERSION 1.25.0
     LANGUAGES CXX C)
 
 # Configure the Compiler options, we use C++11 features by default.
