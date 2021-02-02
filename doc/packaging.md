@@ -162,13 +162,15 @@ cc_binary(
 
 | Library | Minimum version | Description |
 | ------- | --------------: | ----------- |
-| [gRPC][gRPC-gh] | 1.16.x | gRPC++ for Cloud Bigtable |
+| [Abseil][abseil-gh] | 20200923, Patch 3 | Abseil C++ common library |
+| [gRPC][gRPC-gh] | 1.35.x | gRPC++ for Cloud Bigtable |
 | [libcurl][libcurl-gh] | 7.47.0  | HTTP client library for the Google Cloud Storage client |
 | [crc32c][crc32c-gh]  | 1.0.6 | Hardware-accelerated CRC32C implementation |
 | [OpenSSL][OpenSSL-gh] | 1.0.2 | Crypto functions for Google Cloud Storage authentication |
 | [nlohmann/json][nlohmann-json-gh] | 3.4.0 | JSON for Modern C++ |
 | [protobuf][protobuf-gh] | 3.14.0 | C++ Microgenerator support |
 
+[abseil-gh]: https://github.com/abseil/abseil-cpp
 [gRPC-gh]: https://github.com/grpc/grpc
 [libcurl-gh]: https://github.com/curl/curl
 [crc32c-gh]: https://github.com/google/crc32c
