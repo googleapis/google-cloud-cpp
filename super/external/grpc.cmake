@@ -17,6 +17,7 @@
 include(ExternalProjectHelper)
 include(external/abseil)
 include(external/c-ares)
+include(external/re2)
 include(external/ssl)
 include(external/protobuf)
 
@@ -24,9 +25,9 @@ if (NOT TARGET grpc-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/v1.29.1.tar.gz")
+        "https://github.com/grpc/grpc/archive/v1.35.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
-        "0343e6dbde66e9a31c691f2f61e98d79f3584e03a11511fad3f10e3667832a45")
+        "27dd2fc5c9809ddcde8eb6fa1fa278a3486566dfc28335fca13eb8df8bd3b958")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()
@@ -34,7 +35,8 @@ if (NOT TARGET grpc-project)
     include(ExternalProject)
     ExternalProject_Add(
         grpc-project
-        DEPENDS c-ares-project protobuf-project ssl-project abseil-cpp-project
+        DEPENDS c-ares-project protobuf-project re2-project ssl-project
+                abseil-cpp-project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/grpc"
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
@@ -50,6 +52,7 @@ if (NOT TARGET grpc-project)
                    -DgRPC_ABSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
+                   -DgRPC_RE2_PROVIDER=package
                    -DgRPC_SSL_PROVIDER=package
                    -DgRPC_ZLIB_PROVIDER=package
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}

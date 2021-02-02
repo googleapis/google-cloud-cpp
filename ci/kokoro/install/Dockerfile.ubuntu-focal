@@ -25,8 +25,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 # ```
 
 # #### Abseil
@@ -35,9 +35,9 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -77,9 +77,9 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
-    tar -xf v1.29.1.tar.gz && \
-    cd grpc-1.29.1 && \
+RUN wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
+    tar -xf v1.35.0.tar.gz && \
+    cd grpc-1.35.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -87,6 +87,7 @@ RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -H. -Bcmake-out && \

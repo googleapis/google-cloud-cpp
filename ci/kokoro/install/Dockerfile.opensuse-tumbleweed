@@ -23,7 +23,8 @@ ARG NCPU=4
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y c-ares-devel ccache cmake gcc gcc-c++ \
-        git gzip libcurl-devel libopenssl-devel make tar wget zlib-devel
+        git gzip libcurl-devel libopenssl-devel make re2-devel tar wget \
+        zlib-devel
 # ```
 
 # The version of Protobuf packaged with openSUSE/Tumbleweed is recent enough to
@@ -50,9 +51,9 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
-    tar -xf 20200225.2.tar.gz && \
-    cd abseil-cpp-20200225.2 && \
+RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
+    tar -xf 20200923.3.tar.gz && \
+    cd abseil-cpp-20200923.3 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -72,9 +73,9 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
-    tar -xf v1.29.1.tar.gz && \
-    cd grpc-1.29.1 && \
+RUN wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
+    tar -xf v1.35.0.tar.gz && \
+    cd grpc-1.35.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -82,6 +83,7 @@ RUN wget -q https://github.com/grpc/grpc/archive/v1.29.1.tar.gz && \
         -DgRPC_ABSL_PROVIDER=package \
         -DgRPC_CARES_PROVIDER=package \
         -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
         -H. -Bcmake-out && \
