@@ -51,6 +51,9 @@ See the [README.md](README.md) on GitHub for details
 * feat(bigtable): restore from backups in other instance (#5754)
 * feat(bigtable): better control over channel refresh (#5753)
 
+### Spanner
+No user-facing changes.
+
 ### Storage
 **BREAKING CHANGES**:
 * UniformBucketLevelAccess was known as BucketPolicyOnly during the beta. For
