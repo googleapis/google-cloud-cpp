@@ -14,7 +14,6 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(google_cloud_cpp_storage)
-find_dependency(googleapis)
 
 foreach (target storage_client)
     if (TARGET ${target})
