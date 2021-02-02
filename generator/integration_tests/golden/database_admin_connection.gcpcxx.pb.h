@@ -135,6 +135,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy);
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    DatabaseAdminConnectionOptions const& options,
     std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
     std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,

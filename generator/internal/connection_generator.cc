@@ -52,6 +52,7 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/connection_options.h",
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
+       HasStreamingReadMethod() ? "google/cloud/internal/stream_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
@@ -76,7 +77,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "  google::cloud::ConnectionOptions<$connection_options_traits_name$>;\n\n");
   // clang-format on
 
-  HeaderPrint(  // clang-format off
+  HeaderPrint(   // clang-format off
     "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
@@ -89,7 +90,7 @@ Status ConnectionGenerator::GenerateHeader() {
     //  clang-format on
   );
 
-  // List*Range types
+  // Range types
   for (auto const& method : methods()) {
     HeaderPrintMethod(
         method,
@@ -99,9 +100,19 @@ Status ConnectionGenerator::GenerateHeader() {
    {"using $method_name$Range = "
     "google::cloud::internal::PaginationRange<\n"
     "    $range_output_type$>;\n\n"},
-                // clang-format on
-            },
-            All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+                 // clang-format on
+             },
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {// clang-format off
+   {"using $method_name$Stream = google::cloud::internal::StreamRange<\n"
+    "    $response_type$>;\n"
+    "\n"
+    "void $service_name$$method_name$StreamingUpdater(\n"
+    "    $response_type$ const& response,\n"
+    "    $request_type$& request);\n\n"}
+     }, IsStreamingRead)},
+              // clang-format on
         __FILE__, __LINE__);
   }
 
@@ -146,7 +157,15 @@ Status ConnectionGenerator::GenerateHeader() {
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"  virtual $method_name$Stream\n"
+    "  $method_name$($request_type$ request);\n\n"},
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -173,6 +192,7 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderPrint(
       {// clang-format off
    {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+    "    $connection_options_name$ const& options,\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
@@ -201,7 +221,13 @@ Status ConnectionGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("connection_header_path"), vars("stub_factory_header_path"),
        HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/resumable_streaming_read_rpc.h"
+           : "",
        "google/cloud/internal/retry_loop.h",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           : "",
        "google/cloud/internal/user_agent_prefix.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
@@ -277,7 +303,23 @@ Status ConnectionGenerator::GenerateCc() {
                      // clang-format on
                  },
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"$method_name$Stream $connection_class_name$::$method_name$(\n"
+    "    $request_type$) {\n"
+    "  return google::cloud::internal::MakeStreamRange<\n"
+    "      $response_type$>(\n"
+    "      []() -> absl::variant<Status,\n"
+    "      $response_type$>{\n"
+    "        return Status(StatusCode::kUnimplemented, \"not implemented\");}\n"
+    "      );\n"
+    "}\n\n"
+                     // clang-format on
+                 },
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -323,25 +365,29 @@ Status ConnectionGenerator::GenerateCc() {
        {generator_internal::HasLongrunningMethod,
         "      std::unique_ptr<PollingPolicy> polling_policy,\n", ""},
        {"      std::unique_ptr<$idempotency_class_name$> "
-        "idempotency_policy)\n"
+        "idempotency_policy,\n"
+        "      $connection_options_name$ options)\n"
         "      : stub_(std::move(stub)),\n"
         "        retry_policy_prototype_(std::move(retry_policy)),\n"
         "        backoff_policy_prototype_(std::move(backoff_policy)),\n"},
        {generator_internal::HasLongrunningMethod,
         "        polling_policy_prototype_(std::move(polling_policy)),\n", ""},
-       {"        idempotency_policy_(std::move(idempotency_policy)) {}\n"
+       {"        idempotency_policy_(std::move(idempotency_policy)),\n"
+        "        options_(std::move(options)) {}\n"
         "\n"
         "  explicit $connection_class_name$Impl(\n"
         "      "
         "std::shared_ptr<$product_internal_namespace$::$stub_class_name$> "
-        "stub)\n"
+        "stub,\n"
+        "      $connection_options_name$ options)\n"
         "      : $connection_class_name$Impl(\n"
         "          std::move(stub),\n"
         "          DefaultRetryPolicy(),\n"
         "          DefaultBackoffPolicy(),\n"},
        {generator_internal::HasLongrunningMethod,
         "          DefaultPollingPolicy(),\n", ""},
-       {"          MakeDefault$idempotency_class_name$()) {}\n"
+       {"          MakeDefault$idempotency_class_name$(),\n"
+        "          std::move(options)) {}\n"
         "\n"
         "  ~$connection_class_name$Impl() override = default;\n\n"}});
   //  clang-format on
@@ -433,7 +479,52 @@ Status ConnectionGenerator::GenerateCc() {
                      // clang-format on
                  },
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"  $method_name$Stream $method_name$(\n"
+    "      $request_type$ request) override {\n"
+    "    auto stub = stub_;\n"
+    "    auto retry_policy =\n"
+    "        std::shared_ptr<$retry_policy_name$ const>(\n"
+    "            retry_policy_prototype_->clone());\n"
+    "    auto backoff_policy = std::shared_ptr<BackoffPolicy const>(\n"
+    "        backoff_policy_prototype_->clone());\n"
+    "\n"
+    "    auto factory = [stub](\n"
+    "        $request_type$ const& request) {\n"
+    "      auto context = absl::make_unique<grpc::ClientContext>();\n"
+    "      auto stream = stub->$method_name$(*context, request);\n"
+    "      return absl::make_unique<\n"
+    "          internal::StreamingReadRpcImpl<\n"
+    "            $response_type$>>(\n"
+    "          std::move(context), std::move(stream));\n"
+    "    };\n"
+    "\n"
+    "    auto resumable =\n"
+    "        internal::MakeResumableStreamingReadRpc<\n"
+    "            $response_type$,\n"
+    "            $request_type$>(\n"
+    "                retry_policy->clone(), backoff_policy->clone(),\n"
+    "                [](std::chrono::milliseconds) {}, factory,\n"
+    "                $service_name$$method_name$StreamingUpdater,\n"
+    "                std::move(request));\n"
+    "\n"
+    "    if (options_.tracing_enabled(\"rpc-streams\")) {\n"
+    "      resumable = std::make_shared<internal::StreamingReadRpcLogging<\n"
+    "                $response_type$>>(\n"
+    "              std::move(resumable), options_.tracing_options(), \"foo\");\n"
+    "    }\n"
+    "\n"
+    "    return internal::MakeStreamRange(internal::StreamReader<\n"
+    "        $response_type$>(\n"
+    "        [resumable]{return resumable->Read();}));\n"
+    "  }\n\n"
+                     // clang-format on
+                 },
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -520,6 +611,7 @@ Status ConnectionGenerator::GenerateCc() {
    {generator_internal::HasLongrunningMethod,
     "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n", ""},
    {"  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
+    "  $connection_options_name$ options_;\n"
     "};\n"}});
   // clang-format on
 
@@ -529,7 +621,7 @@ Status ConnectionGenerator::GenerateCc() {
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
     "    $connection_options_name$ const& options) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
-    "      $product_internal_namespace$::CreateDefault$stub_class_name$(options));\n"
+    "      $product_internal_namespace$::CreateDefault$stub_class_name$(options), options);\n"
     "}\n\n");
   // clang-format on
 
@@ -546,13 +638,14 @@ Status ConnectionGenerator::GenerateCc() {
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options),\n"
     "      std::move(retry_policy), std::move(backoff_policy),\n"},
    {generator_internal::HasLongrunningMethod,
-    "      std::move(polling_policy), std::move(idempotency_policy));\n}\n\n",
-    "      std::move(idempotency_policy));\n}\n\n"}});
+    "      std::move(polling_policy), std::move(idempotency_policy), options);\n}\n\n",
+    "      std::move(idempotency_policy), options);\n}\n\n"}});
   // clang-format on
 
   CcPrint(
       {// clang-format off
    {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
+    "    $connection_options_name$ const& options,\n"
     "    std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
@@ -562,8 +655,8 @@ Status ConnectionGenerator::GenerateCc() {
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      std::move(stub), std::move(retry_policy), std::move(backoff_policy),\n"},
    {generator_internal::HasLongrunningMethod,
-    "      std::move(polling_policy), std::move(idempotency_policy));\n}\n\n",
-    "      std::move(idempotency_policy));\n}\n\n"}});
+    "      std::move(polling_policy), std::move(idempotency_policy), options);\n}\n\n",
+    "      std::move(idempotency_policy), options);\n}\n\n"}});
   // clang-format on
 
   CcCloseNamespaces();

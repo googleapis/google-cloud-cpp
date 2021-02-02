@@ -18,8 +18,9 @@
 
 #include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/streaming_read.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
@@ -71,7 +72,7 @@ ListLogsRange IAMCredentialsConnection::ListLogs(
 }
 
 TailLogEntriesStream IAMCredentialsConnection::TailLogEntries(
-    ::google::test::admin::database::v1::TailLogEntriesRequest const&) {
+    ::google::test::admin::database::v1::TailLogEntriesRequest) {
   return google::cloud::internal::MakeStreamRange<
       ::google::test::admin::database::v1::TailLogEntriesResponse>(
       []() -> absl::variant<Status,
@@ -98,19 +99,23 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
       std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
       std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy)
+      std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy,
+      IAMCredentialsConnectionOptions options)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        idempotency_policy_(std::move(idempotency_policy)) {}
+        idempotency_policy_(std::move(idempotency_policy)),
+        options_(std::move(options)) {}
 
   explicit IAMCredentialsConnectionImpl(
-      std::shared_ptr<golden_internal::IAMCredentialsStub> stub)
+      std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
+      IAMCredentialsConnectionOptions options)
       : IAMCredentialsConnectionImpl(
           std::move(stub),
           DefaultRetryPolicy(),
           DefaultBackoffPolicy(),
-          MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()) {}
+          MakeDefaultIAMCredentialsConnectionIdempotencyPolicy(),
+          std::move(options)) {}
 
   ~IAMCredentialsConnectionImpl() override = default;
 
@@ -184,7 +189,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   }
 
   TailLogEntriesStream TailLogEntries(
-      ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
+      ::google::test::admin::database::v1::TailLogEntriesRequest request) override {
     auto stub = stub_;
     auto retry_policy =
         std::shared_ptr<IAMCredentialsRetryPolicy const>(
@@ -209,7 +214,13 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
                 retry_policy->clone(), backoff_policy->clone(),
                 [](std::chrono::milliseconds) {}, factory,
                 IAMCredentialsTailLogEntriesStreamingUpdater,
-                request);
+                std::move(request));
+
+    if (options_.tracing_enabled("rpc-streams")) {
+      resumable = std::make_shared<internal::StreamingReadRpcLogging<
+                ::google::test::admin::database::v1::TailLogEntriesResponse>>(
+              std::move(resumable), options_.tracing_options(), "foo");
+    }
 
     return internal::MakeStreamRange(internal::StreamReader<
         ::google::test::admin::database::v1::TailLogEntriesResponse>(
@@ -221,13 +232,14 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy_;
+  IAMCredentialsConnectionOptions options_;
 };
 }  // namespace
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     IAMCredentialsConnectionOptions const& options) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
-      golden_internal::CreateDefaultIAMCredentialsStub(options));
+      golden_internal::CreateDefaultIAMCredentialsStub(options), options);
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
@@ -238,17 +250,18 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
   return std::make_shared<IAMCredentialsConnectionImpl>(
       golden_internal::CreateDefaultIAMCredentialsStub(options),
       std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+      std::move(idempotency_policy), options);
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
+    IAMCredentialsConnectionOptions const& options,
     std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+      std::move(idempotency_policy), options);
 }
 
 }  // namespace golden

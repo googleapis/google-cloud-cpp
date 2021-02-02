@@ -93,7 +93,16 @@ Status MockConnectionGenerator::GenerateHeader() {
     "  ($request_type$ request), (override));\n\n"},
                  // clang-format on
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"  MOCK_METHOD($product_namespace$::$method_name$Stream,\n"
+    "  $method_name$,\n"
+    "  ($request_type$ request), (override));\n\n"},
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

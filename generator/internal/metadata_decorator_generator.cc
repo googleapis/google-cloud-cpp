@@ -77,7 +77,16 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
                          // clang-format on
                          "\n"}},
-                       IsNonStreaming)},
+                       IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "    $method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) override;\n"
+               // clang-format on
+               "\n"}},
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -148,9 +157,9 @@ Status MetadataDecoratorGenerator::GenerateCc() {
     CcPrintMethod(
         method,
         {MethodPattern(
-            {
-                {IsResponseTypeEmpty,
-                 // clang-format off
+             {
+                 {IsResponseTypeEmpty,
+                  // clang-format off
     "Status\n",
     "StatusOr<$response_type$>\n"},
    {"$metadata_class_name$::$method_name$(\n"
@@ -162,10 +171,25 @@ Status MetadataDecoratorGenerator::GenerateCc() {
    {"  return child_->$method_name$(context, request);\n"
     "}\n"
     "\n",}
-                // clang-format on
-            },
-            // clang-format on
-            IsNonStreaming)},
+                 // clang-format on
+             },
+             IsNonStreaming),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "$metadata_class_name$::$method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) {\n"},
+   {HasRoutingHeader,
+    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
+    "  SetMetadata(context, {});\n"},
+   {"  return child_->$method_name$(context, request);\n"
+    "}\n"
+    "\n",}
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

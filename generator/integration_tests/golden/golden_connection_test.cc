@@ -155,7 +155,7 @@ std::shared_ptr<golden::DatabaseAdminConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::DatabaseAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  return golden::MakeDatabaseAdminConnection(
+  return golden::MakeDatabaseAdminConnection({},
       std::move(mock), retry.clone(), backoff.clone(), polling.clone(),
       golden::MakeDefaultDatabaseAdminConnectionIdempotencyPolicy());
 }

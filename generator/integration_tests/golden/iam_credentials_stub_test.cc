@@ -14,9 +14,11 @@
 
 #include "generator/integration_tests/golden/internal/iam_credentials_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
+#include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
 
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::Return;
 
 namespace google {
@@ -126,6 +128,32 @@ public:
        const ::google::test::admin::database::v1::ListLogsRequest &request,
        ::grpc::CompletionQueue *cq),
       (override));
+  MOCK_METHOD(
+      ::grpc::ClientReaderInterface<
+          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
+      TailLogEntriesRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::TailLogEntriesRequest
+           &request),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncReaderInterface<
+          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
+      AsyncTailLogEntriesRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::TailLogEntriesRequest
+           &request,
+       ::grpc::CompletionQueue *cq, void *tag),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncReaderInterface<
+          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
+      PrepareAsyncTailLogEntriesRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::TailLogEntriesRequest
+           &request,
+       ::grpc::CompletionQueue *cq),
+      (override));
 };
 
 class IAMCredentialsStubTest : public ::testing::Test {
@@ -199,6 +227,37 @@ TEST_F(IAMCredentialsStubTest, ListLogs) {
   EXPECT_TRUE(success.ok());
   auto failure = stub.ListLogs(context, request);
   EXPECT_EQ(failure.status(), TransientError());
+}
+
+class MockTailLogEntriesResponse
+    : public ::grpc::ClientReaderInterface<
+          google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(::grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (uint32_t *), (override));
+  MOCK_METHOD(bool, Read,
+              (google::test::admin::database::v1::TailLogEntriesResponse *),
+              (override));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+};
+
+TEST_F(IAMCredentialsStubTest, TailLogEntries) {
+  grpc::Status status;
+  grpc::ClientContext context;
+  auto *success_response = new MockTailLogEntriesResponse;
+  auto *failure_response = new MockTailLogEntriesResponse;
+  EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
+  EXPECT_CALL(*failure_response, Finish())
+      .WillOnce(Return(GrpcTransientError()));
+  google::test::admin::database::v1::TailLogEntriesRequest request;
+  EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw(&context, _))
+      .WillOnce(Return(success_response))
+      .WillOnce(Return(failure_response));
+  DefaultIAMCredentialsStub stub(std::move(grpc_stub_));
+  auto success = stub.TailLogEntries(context, request);
+  EXPECT_TRUE(success->Finish().ok());
+  auto failure = stub.TailLogEntries(context, request);
+  EXPECT_EQ(failure->Finish().error_code(), grpc::StatusCode::UNAVAILABLE);
 }
 
 } // namespace

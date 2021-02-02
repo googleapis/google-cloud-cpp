@@ -70,15 +70,24 @@ Status StubGenerator::GenerateHeader() {
     HeaderPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "  virtual Status $method_name$(\n",
     "  virtual StatusOr<$response_type$> $method_name$(\n"},
    {"    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) = 0;\n"
-              // clang-format on
-              "\n"}},
-            IsNonStreaming)},
+               // clang-format on
+               "\n"}},
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  virtual std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) = 0;\n"
+    "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -136,7 +145,16 @@ Status StubGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
     "\n"}},
                        // clang-format on
-                       IsNonStreaming)},
+                       IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& client_context,\n"
+    "    $request_type$ const& request) override;\n"
+    "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -208,8 +226,8 @@ Status StubGenerator::GenerateCc() {
     CcPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "Status\n",
     "StatusOr<$response_type$>\n"},
     {"Default$stub_class_name$::$method_name$(\n"
@@ -226,8 +244,18 @@ Status StubGenerator::GenerateCc() {
     "    return response;\n"},
    {"}\n"
     "\n"}},
-            // clang-format on
-            IsNonStreaming)},
+             // clang-format on
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "Default$stub_class_name$::$method_name$(\n"
+    "    grpc::ClientContext& client_context,\n"
+    "    $request_type$ const& request) {\n"
+    "  return grpc_stub_->$method_name$(&client_context, request);\n"
+    "}\n\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

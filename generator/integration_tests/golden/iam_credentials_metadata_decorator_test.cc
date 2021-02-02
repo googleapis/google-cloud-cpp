@@ -26,6 +26,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
+using ::testing::Return;
 
 class MockIAMCredentialsStub
     : public google::cloud::golden_internal::IAMCredentialsStub {
@@ -58,6 +59,13 @@ public:
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
+  MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
+                  ::google::test::admin::database::v1::TailLogEntriesResponse>>,
+              TailLogEntries,
+              (grpc::ClientContext & context,
+               ::google::test::admin::database::v1::TailLogEntriesRequest const
+                   &request),
+              (override));
 };
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -65,6 +73,10 @@ protected:
   void SetUp() override {
     expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
     mock_ = std::make_shared<MockIAMCredentialsStub>();
+  }
+
+  static grpc::Status GrpcTransientError() {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   }
 
   static Status TransientError() {
@@ -154,6 +166,43 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
   request.set_parent("projects/my_project");
   auto status = stub.ListLogs(context, request);
   EXPECT_EQ(TransientError(), status.status());
+}
+
+class MockTailLogEntriesResponse
+    : public ::grpc::ClientReaderInterface<
+          google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(::grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (uint32_t *), (override));
+  MOCK_METHOD(bool, Read,
+              (google::test::admin::database::v1::TailLogEntriesResponse *),
+              (override));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+};
+
+TEST_F(MetadataDecoratorTest, TailLogEntries) {
+  auto mock_response = new MockTailLogEntriesResponse;
+  EXPECT_CALL(*mock_response, Finish())
+      .WillOnce((Return(GrpcTransientError())));
+  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+      .WillOnce(
+          [mock_response,
+           this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::TailLogEntriesRequest const
+                     &) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context,
+                "google.test.admin.database.v1.IAMCredentials.TailLogEntries",
+                expected_api_client_header_));
+            return std::unique_ptr<grpc::ClientReaderInterface<
+                ::google::test::admin::database::v1::TailLogEntriesResponse>>(
+                mock_response);
+          });
+  IAMCredentialsMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::TailLogEntriesRequest request;
+  auto response = stub.TailLogEntries(context, request);
+  EXPECT_FALSE(response->Finish().ok());
 }
 
 } // namespace

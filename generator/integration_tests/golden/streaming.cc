@@ -20,8 +20,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
 
 void IAMCredentialsTailLogEntriesStreamingUpdater(
-    ::google::test::admin::database::v1::TailLogEntriesRequest&,
-    ::google::test::admin::database::v1::TailLogEntriesResponse const&) {
+    ::google::test::admin::database::v1::TailLogEntriesResponse const&,
+    ::google::test::admin::database::v1::TailLogEntriesRequest&) {
   // implementation here
 }
 

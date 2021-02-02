@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
+#include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
 
 namespace google {
@@ -25,6 +26,7 @@ namespace golden_internal {
 namespace {
 
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -60,6 +62,13 @@ public:
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
+  MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
+                  ::google::test::admin::database::v1::TailLogEntriesResponse>>,
+              TailLogEntries,
+              (grpc::ClientContext & context,
+               ::google::test::admin::database::v1::TailLogEntriesRequest const
+                   &request),
+              (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
@@ -192,6 +201,38 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+class MockTailLogEntriesResponse
+    : public ::grpc::ClientReaderInterface<
+          google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(::grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (uint32_t *), (override));
+  MOCK_METHOD(bool, Read,
+              (google::test::admin::database::v1::TailLogEntriesResponse *),
+              (override));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+};
+
+TEST_F(LoggingDecoratorTest, TailLogEntries) {
+  ::grpc::Status status;
+  auto mock_response = new MockTailLogEntriesResponse;
+  EXPECT_CALL(*mock_response, Finish()).WillOnce((Return(status)));
+  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<::grpc::ClientReaderInterface<
+              google::test::admin::database::v1::TailLogEntriesResponse>>(
+              mock_response))));
+  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  grpc::ClientContext context;
+  auto response = stub.TailLogEntries(
+      context, google::test::admin::database::v1::TailLogEntriesRequest());
+  EXPECT_TRUE(response->Finish().ok());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
 }
 
 } // namespace

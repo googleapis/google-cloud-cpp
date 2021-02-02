@@ -60,8 +60,8 @@ using TailLogEntriesStream = google::cloud::internal::StreamRange<
     ::google::test::admin::database::v1::TailLogEntriesResponse>;
 
 void IAMCredentialsTailLogEntriesStreamingUpdater(
-    ::google::test::admin::database::v1::TailLogEntriesRequest& request,
-    ::google::test::admin::database::v1::TailLogEntriesResponse const& response);
+    ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
+    ::google::test::admin::database::v1::TailLogEntriesRequest& request);
 
 class IAMCredentialsConnection {
  public:
@@ -80,7 +80,7 @@ class IAMCredentialsConnection {
   ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
 
   virtual TailLogEntriesStream
-  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
+  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
 
 };
 
@@ -94,6 +94,7 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy);
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
+    IAMCredentialsConnectionOptions const& options,
     std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,

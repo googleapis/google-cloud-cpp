@@ -80,7 +80,16 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
                          // clang-format on
                          "\n"}},
-                       IsNonStreaming)},
+                       IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) override;\n"
+               // clang-format on
+               "\n"}},
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -150,8 +159,8 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     CcPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "Status\n",
     "StatusOr<$response_type$>\n"},
     {
@@ -166,8 +175,24 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "      context, request, __func__, tracing_options_);\n"
     "}\n"
     "\n"}},
-            // clang-format on
-            IsNonStreaming)},
+             // clang-format on
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off}
+              {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+               "$logging_class_name$::$method_name$(\n"
+               "    grpc::ClientContext& context,\n"
+               "    $request_type$ const& request) {\n"
+               "  return google::cloud::internal::LogWrapper(\n"
+               "      [this](grpc::ClientContext& context,\n"
+               "             $request_type$ const& request) {\n"
+               "        return child_->$method_name$(context, request);\n"
+               "      },\n"
+               "      context, request, __func__, tracing_options_);\n"
+               "}\n"
+               "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

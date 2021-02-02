@@ -40,7 +40,7 @@ template <typename ResponseType>
 class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
  public:
   StreamingReadRpcLogging(
-      std::unique_ptr<StreamingReadRpc<ResponseType>> reader,
+      std::shared_ptr<StreamingReadRpc<ResponseType>> reader,
       TracingOptions tracing_options, std::string request_id)
       : reader_(std::move(reader)),
         tracing_options_(std::move(tracing_options)),
@@ -81,7 +81,7 @@ class StreamingReadRpcLogging : public StreamingReadRpc<ResponseType> {
     TracingOptions tracing_options_;
   };
 
-  std::unique_ptr<StreamingReadRpc<ResponseType>> reader_;
+  std::shared_ptr<StreamingReadRpc<ResponseType>> reader_;
   TracingOptions tracing_options_;
   std::string request_id_;
 };
