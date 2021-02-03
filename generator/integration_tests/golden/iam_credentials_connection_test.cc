@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Mock;
 using ::testing::Return;
@@ -270,6 +271,37 @@ TEST(IAMCredentialsConnectionTest, ListLogsTooManyTransients) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+class MockGrpcReader : public grpc::ClientReaderInterface<
+    ::google::test::admin::database::v1::TailLogEntriesResponse> {
+ public:
+  MOCK_METHOD1(Read, bool(
+      ::google::test::admin::database::v1::TailLogEntriesResponse*));
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD0(WaitForInitialMetadata, void());
+};
+
+std::unique_ptr<MockGrpcReader> MakeFailingReader(grpc::Status status) {
+  auto reader = absl::make_unique<MockGrpcReader>();
+  EXPECT_CALL(*reader, Read).WillOnce(Return(false));
+  EXPECT_CALL(*reader, Finish).WillOnce(Return(std::move(status)));
+  return reader;
+}
+
+TEST(IAMCredentialsConnectionTest, TailLogEntriesPermanentError) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, TailLogEntries)
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          grpc::Status(grpc::StatusCode::PERMISSION_DENIED,
+              "Permission Denied.")))));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+  auto range = conn->TailLogEntries(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
 } // namespace
