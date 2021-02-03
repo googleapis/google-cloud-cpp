@@ -93,6 +93,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     auto response = impl_->Read();
     if (absl::holds_alternative<ResponseType>(response)) {
       updater_(absl::get<ResponseType>(response), request_);
+      has_received_data_ = true;
       return response;
     }
     auto last_status = absl::get<Status>(std::move(response));
@@ -109,16 +110,18 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     // just aborting because the retry policy is from one hour ago.
     auto const retry_policy = retry_policy_prototype_->clone();
     auto const backoff_policy = backoff_policy_prototype_->clone();
-    while (!retry_policy->IsExhausted()) {
+    while (!retry_policy->IsExhausted()
+           && (has_received_data_ || retry_policy->OnFailure(last_status))) {
+      sleeper_(backoff_policy->OnCompletion());
+      has_received_data_ = false;
       impl_ = stream_factory_(request_);
       auto r = impl_->Read();
       if (absl::holds_alternative<ResponseType>(r)) {
         updater_(absl::get<ResponseType>(r), request_);
+        has_received_data_ = true;
         return r;
       }
       last_status = absl::get<Status>(std::move(r));
-      if (!retry_policy->OnFailure(last_status)) return last_status;
-      sleeper_(backoff_policy->OnCompletion());
     }
     return last_status;
   }
@@ -131,6 +134,7 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
   RequestUpdater<ResponseType, RequestType> const updater_;
   RequestType request_;
   std::unique_ptr<StreamingReadRpc<ResponseType>> impl_;
+  bool has_received_data_ = false;
 };
 
 /// A helper to apply type deduction.
