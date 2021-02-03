@@ -110,8 +110,8 @@ class ResumableStreamingReadRpc : public StreamingReadRpc<ResponseType> {
     // just aborting because the retry policy is from one hour ago.
     auto const retry_policy = retry_policy_prototype_->clone();
     auto const backoff_policy = backoff_policy_prototype_->clone();
-    while (!retry_policy->IsExhausted()
-           && (has_received_data_ || retry_policy->OnFailure(last_status))) {
+    while (!retry_policy->IsExhausted() &&
+           (has_received_data_ || retry_policy->OnFailure(last_status))) {
       sleeper_(backoff_policy->OnCompletion());
       has_received_data_ = false;
       impl_ = stream_factory_(request_);
