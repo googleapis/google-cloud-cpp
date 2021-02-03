@@ -21,8 +21,7 @@ project(google-cloud-cpp-storage-quickstart CXX C)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(CURL REQUIRED)
-find_package(storage_client REQUIRED)
+find_package(google_cloud_cpp_storage REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -33,4 +32,4 @@ endif ()
 
 # Once the packages are found, define the targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart storage_client)
+target_link_libraries(quickstart google-cloud-cpp::storage)

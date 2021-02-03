@@ -21,9 +21,7 @@ project(google-cloud-cpp-bigtable-quickstart CXX C)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Threads REQUIRED)
-# TODO(#5726) - replace with new targets after next release
-find_package(bigtable_client REQUIRED)
+find_package(google_cloud_cpp_bigtable REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -34,4 +32,4 @@ endif ()
 
 # Once the bigtable_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart bigtable::client)
+target_link_libraries(quickstart google-cloud-cpp::bigtable)

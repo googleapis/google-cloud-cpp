@@ -47,7 +47,7 @@ if [[ -d "${vcpkg_dir}" ]]; then
 else
   git clone --quiet --shallow-since 2020-10-20 \
     https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-  git -C "${vcpkg_dir}" checkout a84190e1deca1b6a466a82b439e5e4b9f8c41b0e
+  git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
 fi
 
 if [[ -d "${HOME}/vcpkg-quickstart-cache" && ! -d \

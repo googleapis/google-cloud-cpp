@@ -23,9 +23,7 @@ project(google-cloud-cpp-spanner-quickstart CXX C)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Use find_package() to find a pre-installed version of google-cloud-cpp-
-# spanner:
-find_package(spanner_client REQUIRED)
+find_package(google_cloud_cpp_spanner REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -36,4 +34,4 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart googleapis-c++::spanner_client)
+target_link_libraries(quickstart google-cloud-cpp::spanner)
