@@ -21,8 +21,7 @@ project(google-cloud-cpp-pubsub-quickstart CXX C)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Threads REQUIRED)
-find_package(pubsub_client REQUIRED)
+find_package(google_cloud_cpp_pubsub REQUIRED)
 
 # MSVC requires some additional code to select the correct runtime library
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
@@ -33,4 +32,4 @@ endif ()
 
 # Once the pubsub_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart googleapis-c++::pubsub_client)
+target_link_libraries(quickstart google-cloud-cpp::pubsub)

@@ -60,7 +60,7 @@ if (-not (Test-Path ${vcpkg_dir})) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
     git clone --quiet --shallow-since 2020-10-20 `
         https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-    git -C "${vcpkg_dir}" checkout a84190e1deca1b6a466a82b439e5e4b9f8c41b0e
+    git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red `
             "vcpkg git setup failed with exit code $LastExitCode"
@@ -69,7 +69,7 @@ if (-not (Test-Path ${vcpkg_dir})) {
 } else {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating vcpkg repository."
     git -C "${vcpkg_dir}" pull
-    git -C "${vcpkg_dir}" checkout a84190e1deca1b6a466a82b439e5e4b9f8c41b0e
+    git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
 }
 if (-not (Test-Path "${vcpkg_dir}")) {
     Write-Host -ForegroundColor Red "Missing vcpkg directory (${vcpkg_dir})."
