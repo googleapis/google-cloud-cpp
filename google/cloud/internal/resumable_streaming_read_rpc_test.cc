@@ -204,7 +204,7 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
   EXPECT_THAT(values, ElementsAre("value-0"));
 }
 
-TEST(ResumableStreamingReadRpc, PermanenetFailure) {
+TEST(ResumableStreamingReadRpc, PermanentFailure) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const&) {
@@ -241,6 +241,35 @@ TEST(ResumableStreamingReadRpc, PermanenetFailure) {
     break;
   }
   EXPECT_THAT(values, ElementsAre("value-0"));
+}
+
+TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
+  MockStub mock;
+  EXPECT_CALL(mock, StreamingRead).WillOnce([](FakeRequest const&) {
+    auto stream = absl::make_unique<MockStreamingReadRpc>();
+    EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
+    return stream;
+  });
+  auto reader = MakeResumableStreamingReadRpc<FakeResponse, FakeRequest>(
+      DefaultRetryPolicy(), DefaultBackoffPolicy(),
+      [](std::chrono::milliseconds) {},
+      [&mock](FakeRequest const& request) {
+        return mock.StreamingRead(request);
+      },
+      DefaultUpdater, FakeRequest{"test-key", {}});
+
+  std::vector<std::string> values;
+  for (;;) {
+    auto v = reader->Read();
+    if (absl::holds_alternative<FakeResponse>(v)) {
+      values.push_back(absl::get<FakeResponse>(std::move(v)).value);
+      continue;
+    }
+    EXPECT_THAT(absl::get<Status>(std::move(v)),
+                StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+    break;
+  }
+  EXPECT_THAT(values, IsEmpty());
 }
 
 }  // namespace
