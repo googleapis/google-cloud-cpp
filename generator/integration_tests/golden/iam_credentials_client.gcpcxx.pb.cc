@@ -62,6 +62,13 @@ IAMCredentialsClient::ListLogs(std::string const& parent) {
   return connection_->ListLogs(request);
 }
 
+TailLogEntriesStream
+IAMCredentialsClient::TailLogEntries(std::vector<std::string> const& resource_names) {
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+  *request.mutable_resource_names() = {resource_names.begin(), resource_names.end()};
+  return connection_->TailLogEntries(request);
+}
+
 StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
 IAMCredentialsClient::GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return connection_->GenerateAccessToken(request);
@@ -80,6 +87,11 @@ IAMCredentialsClient::WriteLogEntries(::google::test::admin::database::v1::Write
 ListLogsRange
 IAMCredentialsClient::ListLogs(::google::test::admin::database::v1::ListLogsRequest request) {
   return connection_->ListLogs(std::move(request));
+}
+
+TailLogEntriesStream
+IAMCredentialsClient::TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request) {
+  return connection_->TailLogEntries(std::move(request));
 }
 
 }  // namespace golden

@@ -803,6 +803,7 @@ service IAMCredentials {
       post: "/v2/entries:tail"
       body: "*"
     };
+    option (google.api.method_signature) = "resource_names";
   }
 }
 

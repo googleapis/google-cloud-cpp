@@ -66,10 +66,13 @@ public:
        ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
   MOCK_METHOD(
-      (std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>),
-      TailLogEntries, (grpc::ClientContext& context,
-      ::google::test::admin::database::v1::TailLogEntriesRequest const& request),
-              (override));
+      (std::unique_ptr<grpc::ClientReaderInterface<
+           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
+      TailLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::TailLogEntriesRequest const
+           &request),
+      (override));
 };
 
 std::shared_ptr<golden::IAMCredentialsConnection> CreateTestingConnection(
@@ -273,12 +276,14 @@ TEST(IAMCredentialsConnectionTest, ListLogsTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-class MockGrpcReader : public grpc::ClientReaderInterface<
-    ::google::test::admin::database::v1::TailLogEntriesResponse> {
- public:
-  MOCK_METHOD1(Read, bool(
-      ::google::test::admin::database::v1::TailLogEntriesResponse*));
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+class MockGrpcReader
+    : public grpc::ClientReaderInterface<
+          ::google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD1(
+      Read,
+      bool(::google::test::admin::database::v1::TailLogEntriesResponse *));
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t *));
   MOCK_METHOD0(Finish, grpc::Status());
   MOCK_METHOD0(WaitForInitialMetadata, void());
 };
@@ -293,9 +298,8 @@ std::unique_ptr<MockGrpcReader> MakeFailingReader(grpc::Status status) {
 TEST(IAMCredentialsConnectionTest, TailLogEntriesPermanentError) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, TailLogEntries)
-      .WillOnce(Return(ByMove(MakeFailingReader(
-          grpc::Status(grpc::StatusCode::PERMISSION_DENIED,
-              "Permission Denied.")))));
+      .WillOnce(Return(ByMove(MakeFailingReader(grpc::Status(
+          grpc::StatusCode::PERMISSION_DENIED, "Permission Denied.")))));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   auto range = conn->TailLogEntries(request);

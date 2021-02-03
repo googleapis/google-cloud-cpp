@@ -128,7 +128,17 @@ Status ClientGenerator::GenerateHeader() {
                    {method_string},
                    // clang-format on
                },
-               All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+               All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+           MethodPattern(
+               {
+                   // clang-format off
+                   {FormatMethodCommentsFromRpcComments(
+                     method, MethodParameterStyle::kApiMethodSignature)},
+                   {"  $method_name$Stream\n"},
+                   {method_string},
+                   // clang-format on
+               },
+               IsStreamingRead)},
           __FILE__, __LINE__);
     }
   }
@@ -172,7 +182,17 @@ Status ClientGenerator::GenerateHeader() {
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+                 {FormatMethodCommentsFromRpcComments(
+        method, MethodParameterStyle::kProtobufReqeust)},
+   {"  $method_name$Stream\n"
+    "  $method_name$($request_type$ request);\n\n"},
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -269,7 +289,19 @@ Status ClientGenerator::GenerateCc() {
                   "}\n\n"}
                    // clang-format on
                },
-               All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+               All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+           MethodPattern(
+               {
+                   // clang-format off
+                   {"$method_name$Stream\n"},
+                  {method_string},
+                  {"  $request_type$ request;\n"},
+                   {method_request_string},
+                  {"  return connection_->$method_name$(request);\n"
+                  "}\n\n"}
+                   // clang-format on
+               },
+               IsStreamingRead)},
           __FILE__, __LINE__);
     }
   }
@@ -311,7 +343,17 @@ Status ClientGenerator::GenerateCc() {
     "}\n\n"}
                  // clang-format on
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"$method_name$Stream\n"
+    "$client_class_name$::$method_name$($request_type$ request) {\n"
+    "  return connection_->$method_name$(std::move(request));\n"
+    "}\n\n"}
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

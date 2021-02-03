@@ -89,7 +89,7 @@ class IAMCredentialsClient {
    *  Must be set to a value less than or equal to 3600 (1 hour). If a value is
    *  not specified, the token's lifetime will be set to a default value of one
    *  hour.
-   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L846)
+   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L847)
    */
   StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, ::google::protobuf::Duration const& lifetime);
@@ -114,7 +114,7 @@ class IAMCredentialsClient {
    *  grants access to.
    * @param include_email  Include the service account email in the token. If set to `true`, the
    *  token will contain `email` and `email_verified` claims.
-   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L888)
+   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L889)
    */
   StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email);
@@ -145,7 +145,7 @@ class IAMCredentialsClient {
    *  entries in `entries`. If a log entry already has a label with the same key
    *  as a label in this parameter, then the log entry's label is not changed.
    *  See [LogEntry][google.logging.v2.LogEntry].
-   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L927)
+   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L928)
    */
   StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels);
@@ -164,10 +164,29 @@ class IAMCredentialsClient {
   ListLogs(std::string const& parent);
 
   /**
+   * Streaming read of log entries as they are ingested. Until the stream is
+   * terminated, it will continue reading logs.
+   *
+   * @param resource_names  Required. Name of a parent resource from which to retrieve log entries:
+   *      "projects/[PROJECT_ID]"
+   *      "organizations/[ORGANIZATION_ID]"
+   *      "billingAccounts/[BILLING_ACCOUNT_ID]"
+   *      "folders/[FOLDER_ID]"
+   *  May alternatively be one or more views:
+   *      "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
+   *      "organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
+   *      "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
+   *      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
+   * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1189)
+   */
+  TailLogEntriesStream
+  TailLogEntries(std::vector<std::string> const& resource_names);
+
+  /**
    * Generates an OAuth 2.0 access token for a service account.
    *
-   * @param request [::google::test::admin::database::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L809)
-   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L846)
+   * @param request [::google::test::admin::database::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L810)
+   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L847)
    */
   StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
@@ -175,8 +194,8 @@ class IAMCredentialsClient {
   /**
    * Generates an OpenID Connect ID token for a service account.
    *
-   * @param request [::google::test::admin::database::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L855)
-   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L888)
+   * @param request [::google::test::admin::database::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L856)
+   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L889)
    */
   StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request);
@@ -190,8 +209,8 @@ class IAMCredentialsClient {
    * different resources (projects, organizations, billing accounts or
    * folders)
    *
-   * @param request [::google::test::admin::database::v1::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L894)
-   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L927)
+   * @param request [::google::test::admin::database::v1::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L895)
+   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L928)
    */
   StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
@@ -200,10 +219,20 @@ class IAMCredentialsClient {
    * Lists the logs in projects, organizations, folders, or billing accounts.
    * Only logs that have entries are listed.
    *
-   * @param request [::google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L930)
+   * @param request [::google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L931)
    */
   ListLogsRange
   ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
+
+  /**
+   * Streaming read of log entries as they are ingested. Until the stream is
+   * terminated, it will continue reading logs.
+   *
+   * @param request [::google::test::admin::database::v1::TailLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1157)
+   * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1189)
+   */
+  TailLogEntriesStream
+  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
 
  private:
   std::shared_ptr<IAMCredentialsConnection> connection_;
