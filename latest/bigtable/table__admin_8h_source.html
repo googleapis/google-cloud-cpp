@@ -341,124 +341,124 @@ $(function() {
 <div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
 <div class="line"><a name="l01340"></a><span class="lineno"> 1340</span>&#160;      std::string <span class="keyword">const</span>&amp; consistency_token);</div>
 <div class="line"><a name="l01341"></a><span class="lineno"> 1341</span>&#160; </div>
-<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;  google::cloud::future&lt;StatusOr&lt;Consistency&gt;&gt; WaitForConsistency(</div>
-<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; consistency_token);</div>
-<div class="line"><a name="l01364"></a><span class="lineno"> 1364</span>&#160; </div>
-<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;  google::cloud::future&lt;StatusOr&lt;Consistency&gt;&gt; AsyncWaitForConsistency(</div>
-<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
-<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;      std::string <span class="keyword">const</span>&amp; consistency_token);</div>
-<div class="line"><a name="l01394"></a><span class="lineno"> 1394</span>&#160; </div>
-<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;  Status DropAllRows(std::string <span class="keyword">const</span>&amp; table_id);</div>
-<div class="line"><a name="l01414"></a><span class="lineno"> 1414</span>&#160; </div>
-<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;  future&lt;Status&gt; AsyncDropAllRows(CompletionQueue&amp; cq,</div>
-<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160;                                  std::string <span class="keyword">const</span>&amp; table_id);</div>
-<div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160; </div>
-<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetIamPolicy(std::string <span class="keyword">const</span>&amp; table_id);</div>
-<div class="line"><a name="l01461"></a><span class="lineno"> 1461</span>&#160; </div>
-<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetIamPolicy(std::string <span class="keyword">const</span>&amp; cluster_id,</div>
-<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160;                                                 std::string <span class="keyword">const</span>&amp; backup_id);</div>
-<div class="line"><a name="l01483"></a><span class="lineno"> 1483</span>&#160; </div>
-<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncGetIamPolicy(</div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id);</div>
-<div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160; </div>
-<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
-<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
-<div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160; </div>
-<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
-<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id,</div>
-<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
-<div class="line"><a name="l01565"></a><span class="lineno"> 1565</span>&#160; </div>
-<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncSetIamPolicy(</div>
-<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
-<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
-<div class="line"><a name="l01595"></a><span class="lineno"> 1595</span>&#160; </div>
-<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
-<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
-<div class="line"><a name="l01618"></a><span class="lineno"> 1618</span>&#160; </div>
-<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
-<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id,</div>
-<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
-<div class="line"><a name="l01643"></a><span class="lineno"> 1643</span>&#160; </div>
-<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;std::string&gt;&gt;&gt; AsyncTestIamPermissions(</div>
-<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
-<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
-<div class="line"><a name="l01671"></a><span class="lineno"> 1671</span>&#160; </div>
-<div class="line"><a name="l01673"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116"> 1673</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116">TableName</a>(std::string <span class="keyword">const</span>&amp; table_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a63bb0692ded1292a0381d4c2f4532a73">google::cloud::bigtable::TableName</a>(project(), instance_id(),</div>
-<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;                                              table_id);</div>
-<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160;  }</div>
-<div class="line"><a name="l01677"></a><span class="lineno"> 1677</span>&#160; </div>
-<div class="line"><a name="l01679"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176"> 1679</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">ClusterName</a>(std::string <span class="keyword">const</span>&amp; cluster_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">google::cloud::bigtable::ClusterName</a>(project(), instance_id(),</div>
-<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;                                                cluster_id);</div>
-<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160;  }</div>
-<div class="line"><a name="l01683"></a><span class="lineno"> 1683</span>&#160; </div>
-<div class="line"><a name="l01685"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800"> 1685</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">BackupName</a>(std::string <span class="keyword">const</span>&amp; cluster_id,</div>
-<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;                         std::string <span class="keyword">const</span>&amp; backup_id)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a10e6e9a182b4d61a4f177e8d84994e59">google::cloud::bigtable::BackupName</a>(project(), instance_id(),</div>
-<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;                                               cluster_id, backup_id);</div>
-<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160;  }</div>
-<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160; </div>
-<div class="line"><a name="l01691"></a><span class="lineno"> 1691</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l01693"></a><span class="lineno"> 1693</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;    rpc_retry_policy_prototype_ = policy.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCRetryPolicy.html#a0dc1b0c6e49797f79546546fe7f818f8">clone</a>();</div>
-<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160;  }</div>
-<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160; </div>
-<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;    rpc_backoff_policy_prototype_ = policy.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html#a847efae21667ea979f39d89e85bd89d5">clone</a>();</div>
-<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160;  }</div>
-<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160; </div>
-<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(PollingPolicy <span class="keyword">const</span>&amp; policy) {</div>
-<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;    polling_policy_prototype_ = policy.clone();</div>
-<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160;  }</div>
-<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160; </div>
-<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Policy, <span class="keyword">typename</span>... Policies&gt;</div>
-<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;  <span class="keywordtype">void</span> ChangePolicies(Policy&amp;&amp; policy, Policies&amp;&amp;... policies) {</div>
-<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    ChangePolicy(policy);</div>
-<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
-<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;  }</div>
-<div class="line"><a name="l01711"></a><span class="lineno"> 1711</span>&#160;  <span class="keywordtype">void</span> ChangePolicies() {}</div>
-<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160; </div>
-<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
-<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160;  }</div>
-<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160; </div>
-<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
-<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160;  }</div>
-<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160; </div>
-<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;  MetadataUpdatePolicy clone_metadata_update_policy() {</div>
-<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;    <span class="keywordflow">return</span> metadata_update_policy_;</div>
-<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160;  }</div>
-<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160; </div>
-<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
-<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
-<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160;  }</div>
-<div class="line"><a name="l01729"></a><span class="lineno"> 1729</span>&#160; </div>
-<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160;  std::string <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">InstanceName</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160; </div>
-<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;  std::shared_ptr&lt;AdminClient&gt; client_;</div>
-<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;  std::string instance_id_;</div>
-<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;  std::string instance_name_;</div>
-<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
-<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
-<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;  bigtable::MetadataUpdatePolicy metadata_update_policy_;</div>
-<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
-<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160;};</div>
-<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160; </div>
-<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
-<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
-<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160; </div>
-<div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_ADMIN_H</span></div>
+<div class="line"><a name="l01361"></a><span class="lineno"> 1361</span>&#160;  google::cloud::future&lt;StatusOr&lt;Consistency&gt;&gt; WaitForConsistency(</div>
+<div class="line"><a name="l01362"></a><span class="lineno"> 1362</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; consistency_token);</div>
+<div class="line"><a name="l01363"></a><span class="lineno"> 1363</span>&#160; </div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;  google::cloud::future&lt;StatusOr&lt;Consistency&gt;&gt; AsyncWaitForConsistency(</div>
+<div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
+<div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;      std::string <span class="keyword">const</span>&amp; consistency_token);</div>
+<div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160; </div>
+<div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;  Status DropAllRows(std::string <span class="keyword">const</span>&amp; table_id);</div>
+<div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160; </div>
+<div class="line"><a name="l01439"></a><span class="lineno"> 1439</span>&#160;  future&lt;Status&gt; AsyncDropAllRows(CompletionQueue&amp; cq,</div>
+<div class="line"><a name="l01440"></a><span class="lineno"> 1440</span>&#160;                                  std::string <span class="keyword">const</span>&amp; table_id);</div>
+<div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160; </div>
+<div class="line"><a name="l01459"></a><span class="lineno"> 1459</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetIamPolicy(std::string <span class="keyword">const</span>&amp; table_id);</div>
+<div class="line"><a name="l01460"></a><span class="lineno"> 1460</span>&#160; </div>
+<div class="line"><a name="l01480"></a><span class="lineno"> 1480</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; GetIamPolicy(std::string <span class="keyword">const</span>&amp; cluster_id,</div>
+<div class="line"><a name="l01481"></a><span class="lineno"> 1481</span>&#160;                                                 std::string <span class="keyword">const</span>&amp; backup_id);</div>
+<div class="line"><a name="l01482"></a><span class="lineno"> 1482</span>&#160; </div>
+<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncGetIamPolicy(</div>
+<div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id);</div>
+<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160; </div>
+<div class="line"><a name="l01532"></a><span class="lineno"> 1532</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
+<div class="line"><a name="l01533"></a><span class="lineno"> 1533</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
+<div class="line"><a name="l01534"></a><span class="lineno"> 1534</span>&#160; </div>
+<div class="line"><a name="l01561"></a><span class="lineno"> 1561</span>&#160;  StatusOr&lt;google::iam::v1::Policy&gt; SetIamPolicy(</div>
+<div class="line"><a name="l01562"></a><span class="lineno"> 1562</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id,</div>
+<div class="line"><a name="l01563"></a><span class="lineno"> 1563</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
+<div class="line"><a name="l01564"></a><span class="lineno"> 1564</span>&#160; </div>
+<div class="line"><a name="l01591"></a><span class="lineno"> 1591</span>&#160;  future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; AsyncSetIamPolicy(</div>
+<div class="line"><a name="l01592"></a><span class="lineno"> 1592</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
+<div class="line"><a name="l01593"></a><span class="lineno"> 1593</span>&#160;      google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy);</div>
+<div class="line"><a name="l01594"></a><span class="lineno"> 1594</span>&#160; </div>
+<div class="line"><a name="l01615"></a><span class="lineno"> 1615</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
+<div class="line"><a name="l01616"></a><span class="lineno"> 1616</span>&#160;      std::string <span class="keyword">const</span>&amp; table_id, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
+<div class="line"><a name="l01617"></a><span class="lineno"> 1617</span>&#160; </div>
+<div class="line"><a name="l01639"></a><span class="lineno"> 1639</span>&#160;  StatusOr&lt;std::vector&lt;std::string&gt;&gt; TestIamPermissions(</div>
+<div class="line"><a name="l01640"></a><span class="lineno"> 1640</span>&#160;      std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id,</div>
+<div class="line"><a name="l01641"></a><span class="lineno"> 1641</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
+<div class="line"><a name="l01642"></a><span class="lineno"> 1642</span>&#160; </div>
+<div class="line"><a name="l01667"></a><span class="lineno"> 1667</span>&#160;  future&lt;StatusOr&lt;std::vector&lt;std::string&gt;&gt;&gt; AsyncTestIamPermissions(</div>
+<div class="line"><a name="l01668"></a><span class="lineno"> 1668</span>&#160;      CompletionQueue&amp; cq, std::string <span class="keyword">const</span>&amp; table_id,</div>
+<div class="line"><a name="l01669"></a><span class="lineno"> 1669</span>&#160;      std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions);</div>
+<div class="line"><a name="l01670"></a><span class="lineno"> 1670</span>&#160; </div>
+<div class="line"><a name="l01672"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116"> 1672</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116">TableName</a>(std::string <span class="keyword">const</span>&amp; table_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l01673"></a><span class="lineno"> 1673</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a63bb0692ded1292a0381d4c2f4532a73">google::cloud::bigtable::TableName</a>(project(), instance_id(),</div>
+<div class="line"><a name="l01674"></a><span class="lineno"> 1674</span>&#160;                                              table_id);</div>
+<div class="line"><a name="l01675"></a><span class="lineno"> 1675</span>&#160;  }</div>
+<div class="line"><a name="l01676"></a><span class="lineno"> 1676</span>&#160; </div>
+<div class="line"><a name="l01678"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176"> 1678</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">ClusterName</a>(std::string <span class="keyword">const</span>&amp; cluster_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l01679"></a><span class="lineno"> 1679</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a00af13f9514d28a5f9fb216f1039c871">google::cloud::bigtable::ClusterName</a>(project(), instance_id(),</div>
+<div class="line"><a name="l01680"></a><span class="lineno"> 1680</span>&#160;                                                cluster_id);</div>
+<div class="line"><a name="l01681"></a><span class="lineno"> 1681</span>&#160;  }</div>
+<div class="line"><a name="l01682"></a><span class="lineno"> 1682</span>&#160; </div>
+<div class="line"><a name="l01684"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800"> 1684</a></span>&#160;  std::string <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">BackupName</a>(std::string <span class="keyword">const</span>&amp; cluster_id,</div>
+<div class="line"><a name="l01685"></a><span class="lineno"> 1685</span>&#160;                         std::string <span class="keyword">const</span>&amp; backup_id)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l01686"></a><span class="lineno"> 1686</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a10e6e9a182b4d61a4f177e8d84994e59">google::cloud::bigtable::BackupName</a>(project(), instance_id(),</div>
+<div class="line"><a name="l01687"></a><span class="lineno"> 1687</span>&#160;                                               cluster_id, backup_id);</div>
+<div class="line"><a name="l01688"></a><span class="lineno"> 1688</span>&#160;  }</div>
+<div class="line"><a name="l01689"></a><span class="lineno"> 1689</span>&#160; </div>
+<div class="line"><a name="l01690"></a><span class="lineno"> 1690</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l01692"></a><span class="lineno"> 1692</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCRetryPolicy.html">RPCRetryPolicy</a> <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01694"></a><span class="lineno"> 1694</span>&#160;    rpc_retry_policy_prototype_ = policy.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCRetryPolicy.html#a0dc1b0c6e49797f79546546fe7f818f8">clone</a>();</div>
+<div class="line"><a name="l01695"></a><span class="lineno"> 1695</span>&#160;  }</div>
+<div class="line"><a name="l01696"></a><span class="lineno"> 1696</span>&#160; </div>
+<div class="line"><a name="l01697"></a><span class="lineno"> 1697</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html">RPCBackoffPolicy</a> <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01698"></a><span class="lineno"> 1698</span>&#160;    rpc_backoff_policy_prototype_ = policy.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html#a847efae21667ea979f39d89e85bd89d5">clone</a>();</div>
+<div class="line"><a name="l01699"></a><span class="lineno"> 1699</span>&#160;  }</div>
+<div class="line"><a name="l01700"></a><span class="lineno"> 1700</span>&#160; </div>
+<div class="line"><a name="l01701"></a><span class="lineno"> 1701</span>&#160;  <span class="keywordtype">void</span> ChangePolicy(PollingPolicy <span class="keyword">const</span>&amp; policy) {</div>
+<div class="line"><a name="l01702"></a><span class="lineno"> 1702</span>&#160;    polling_policy_prototype_ = policy.clone();</div>
+<div class="line"><a name="l01703"></a><span class="lineno"> 1703</span>&#160;  }</div>
+<div class="line"><a name="l01704"></a><span class="lineno"> 1704</span>&#160; </div>
+<div class="line"><a name="l01705"></a><span class="lineno"> 1705</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Policy, <span class="keyword">typename</span>... Policies&gt;</div>
+<div class="line"><a name="l01706"></a><span class="lineno"> 1706</span>&#160;  <span class="keywordtype">void</span> ChangePolicies(Policy&amp;&amp; policy, Policies&amp;&amp;... policies) {</div>
+<div class="line"><a name="l01707"></a><span class="lineno"> 1707</span>&#160;    ChangePolicy(policy);</div>
+<div class="line"><a name="l01708"></a><span class="lineno"> 1708</span>&#160;    ChangePolicies(std::forward&lt;Policies&gt;(policies)...);</div>
+<div class="line"><a name="l01709"></a><span class="lineno"> 1709</span>&#160;  }</div>
+<div class="line"><a name="l01710"></a><span class="lineno"> 1710</span>&#160;  <span class="keywordtype">void</span> ChangePolicies() {}</div>
+<div class="line"><a name="l01712"></a><span class="lineno"> 1712</span>&#160; </div>
+<div class="line"><a name="l01713"></a><span class="lineno"> 1713</span>&#160;  std::unique_ptr&lt;RPCRetryPolicy&gt; clone_rpc_retry_policy() {</div>
+<div class="line"><a name="l01714"></a><span class="lineno"> 1714</span>&#160;    <span class="keywordflow">return</span> rpc_retry_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01715"></a><span class="lineno"> 1715</span>&#160;  }</div>
+<div class="line"><a name="l01716"></a><span class="lineno"> 1716</span>&#160; </div>
+<div class="line"><a name="l01717"></a><span class="lineno"> 1717</span>&#160;  std::unique_ptr&lt;RPCBackoffPolicy&gt; clone_rpc_backoff_policy() {</div>
+<div class="line"><a name="l01718"></a><span class="lineno"> 1718</span>&#160;    <span class="keywordflow">return</span> rpc_backoff_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01719"></a><span class="lineno"> 1719</span>&#160;  }</div>
+<div class="line"><a name="l01720"></a><span class="lineno"> 1720</span>&#160; </div>
+<div class="line"><a name="l01721"></a><span class="lineno"> 1721</span>&#160;  MetadataUpdatePolicy clone_metadata_update_policy() {</div>
+<div class="line"><a name="l01722"></a><span class="lineno"> 1722</span>&#160;    <span class="keywordflow">return</span> metadata_update_policy_;</div>
+<div class="line"><a name="l01723"></a><span class="lineno"> 1723</span>&#160;  }</div>
+<div class="line"><a name="l01724"></a><span class="lineno"> 1724</span>&#160; </div>
+<div class="line"><a name="l01725"></a><span class="lineno"> 1725</span>&#160;  std::unique_ptr&lt;PollingPolicy&gt; clone_polling_policy() {</div>
+<div class="line"><a name="l01726"></a><span class="lineno"> 1726</span>&#160;    <span class="keywordflow">return</span> polling_policy_prototype_-&gt;clone();</div>
+<div class="line"><a name="l01727"></a><span class="lineno"> 1727</span>&#160;  }</div>
+<div class="line"><a name="l01728"></a><span class="lineno"> 1728</span>&#160; </div>
+<div class="line"><a name="l01730"></a><span class="lineno"> 1730</span>&#160;  std::string <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">InstanceName</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l01731"></a><span class="lineno"> 1731</span>&#160; </div>
+<div class="line"><a name="l01732"></a><span class="lineno"> 1732</span>&#160;  std::shared_ptr&lt;AdminClient&gt; client_;</div>
+<div class="line"><a name="l01733"></a><span class="lineno"> 1733</span>&#160;  std::string instance_id_;</div>
+<div class="line"><a name="l01734"></a><span class="lineno"> 1734</span>&#160;  std::string instance_name_;</div>
+<div class="line"><a name="l01735"></a><span class="lineno"> 1735</span>&#160;  std::shared_ptr&lt;RPCRetryPolicy const&gt; rpc_retry_policy_prototype_;</div>
+<div class="line"><a name="l01736"></a><span class="lineno"> 1736</span>&#160;  std::shared_ptr&lt;RPCBackoffPolicy const&gt; rpc_backoff_policy_prototype_;</div>
+<div class="line"><a name="l01737"></a><span class="lineno"> 1737</span>&#160;  bigtable::MetadataUpdatePolicy metadata_update_policy_;</div>
+<div class="line"><a name="l01738"></a><span class="lineno"> 1738</span>&#160;  std::shared_ptr&lt;PollingPolicy const&gt; polling_policy_prototype_;</div>
+<div class="line"><a name="l01739"></a><span class="lineno"> 1739</span>&#160;};</div>
+<div class="line"><a name="l01740"></a><span class="lineno"> 1740</span>&#160; </div>
+<div class="line"><a name="l01741"></a><span class="lineno"> 1741</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
+<div class="line"><a name="l01742"></a><span class="lineno"> 1742</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
+<div class="line"><a name="l01743"></a><span class="lineno"> 1743</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l01744"></a><span class="lineno"> 1744</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l01745"></a><span class="lineno"> 1745</span>&#160; </div>
+<div class="line"><a name="l01746"></a><span class="lineno"> 1746</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_ADMIN_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy_html_a847efae21667ea979f39d89e85bd89d5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html#a847efae21667ea979f39d89e85bd89d5">google::cloud::bigtable::v1::RPCBackoffPolicy::clone</a></div><div class="ttdeci">virtual std::unique_ptr&lt; RPCBackoffPolicy &gt; clone() const =0</div><div class="ttdoc">Return a new copy of this object.</div></div>
 <div class="ttc" id="ametadata__update__policy_8h_html"><div class="ttname"><a href="metadata__update__policy_8h.html">metadata_update_policy.h</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1UpdateBackupParams_html_a12eff7d82eae122f6ff1c3064c445d05"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1UpdateBackupParams.html#a12eff7d82eae122f6ff1c3064c445d05">google::cloud::bigtable::v1::TableAdmin::UpdateBackupParams::backup_name</a></div><div class="ttdeci">std::string backup_name</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00649">table_admin.h:649</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1UpdateBackupParams_html_a94f40d1c979d9286616801af2ff09348"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1UpdateBackupParams.html#a94f40d1c979d9286616801af2ff09348">google::cloud::bigtable::v1::TableAdmin::UpdateBackupParams::expire_time</a></div><div class="ttdeci">std::chrono::system_clock::time_point expire_time</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00650">table_admin.h:650</a></div></div>
 <div class="ttc" id="astatus__or_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">status_or.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a9468309a09a2a54c445dfd7bd71db800"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">google::cloud::bigtable::v1::TableAdmin::BackupName</a></div><div class="ttdeci">std::string BackupName(std::string const &amp;cluster_id, std::string const &amp;backup_id) const</div><div class="ttdoc">Return the fully qualified name of a Backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01685">table_admin.h:1685</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a9468309a09a2a54c445dfd7bd71db800"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9468309a09a2a54c445dfd7bd71db800">google::cloud::bigtable::v1::TableAdmin::BackupName</a></div><div class="ttdeci">std::string BackupName(std::string const &amp;cluster_id, std::string const &amp;backup_id) const</div><div class="ttdoc">Return the fully qualified name of a Backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01684">table_admin.h:1684</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams_html_af89b2ce1eb889a1cebc287d635d151a0"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams.html#af89b2ce1eb889a1cebc287d635d151a0">google::cloud::bigtable::v1::TableAdmin::ListBackupsParams::set_filter</a></div><div class="ttdeci">ListBackupsParams &amp; set_filter(std::string f)</div><div class="ttdoc">Sets the filtering expression.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00883">table_admin.h:883</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1CreateBackupParams_html_a0345969091dac14cc48c9563e3de9c4b"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1CreateBackupParams.html#a0345969091dac14cc48c9563e3de9c4b">google::cloud::bigtable::v1::TableAdmin::CreateBackupParams::cluster_id</a></div><div class="ttdeci">std::string cluster_id</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00491">table_admin.h:491</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1RestoreTableParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1RestoreTableParams.html">google::cloud::bigtable::v1::TableAdmin::RestoreTableParams</a></div><div class="ttdoc">Parameters for RestoreTable and AsyncRestoreTable.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00995">table_admin.h:995</a></div></div>
@@ -467,7 +467,7 @@ $(function() {
 <div class="ttc" id="acompletion__queue_8h_html"><div class="ttname"><a href="completion__queue_8h.html">completion_queue.h</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1CreateBackupParams_html_ad08a004e7249bd7e9b671a1f5105d3fb"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1CreateBackupParams.html#ad08a004e7249bd7e9b671a1f5105d3fb">google::cloud::bigtable::v1::TableAdmin::CreateBackupParams::CreateBackupParams</a></div><div class="ttdeci">CreateBackupParams(std::string cluster_id, std::string backup_id, std::string table_id, std::chrono::system_clock::time_point expire_time)</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00480">table_admin.h:480</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataParamTypes_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataParamTypes.html">google::cloud::bigtable::v1::MetadataParamTypes</a></div><div class="ttdoc">Define the class for governing x-goog-request-params metadata value.</div><div class="ttdef"><b>Definition:</b> <a href="metadata__update__policy_8h_source.html#l00040">metadata_update_policy.h:40</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae75740491f211b8e4ea061021fe92176"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">google::cloud::bigtable::v1::TableAdmin::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;cluster_id) const</div><div class="ttdoc">Return the fully qualified name of a Cluster.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01679">table_admin.h:1679</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae75740491f211b8e4ea061021fe92176"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae75740491f211b8e4ea061021fe92176">google::cloud::bigtable::v1::TableAdmin::ClusterName</a></div><div class="ttdeci">std::string ClusterName(std::string const &amp;cluster_id) const</div><div class="ttdoc">Return the fully qualified name of a Cluster.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01678">table_admin.h:1678</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams.html">google::cloud::bigtable::v1::TableAdmin::ListBackupsParams</a></div><div class="ttdoc">Parameters for ListBackups and AsyncListBackups.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00827">table_admin.h:827</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_aca479340ebd72aeeef9a85404d7eb0aeaf9f8d006118de5ad04dd7c000b8f3b91"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#aca479340ebd72aeeef9a85404d7eb0aeaf9f8d006118de5ad04dd7c000b8f3b91">google::cloud::bigtable::v1::Consistency::kInconsistent</a></div><div class="ttdeci">@ kInconsistent</div><div class="ttdoc">Some of the mutations created before the consistency token have not been received by all the table re...</div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams_html_a0ef2c64b3188e5241379453cbec138bb"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1ListBackupsParams.html#a0ef2c64b3188e5241379453cbec138bb">google::cloud::bigtable::v1::TableAdmin::ListBackupsParams::set_cluster</a></div><div class="ttdeci">ListBackupsParams &amp; set_cluster(std::string c)</div><div class="ttdoc">Sets the cluster_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00840">table_admin.h:840</a></div></div>
@@ -476,7 +476,7 @@ $(function() {
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_aca479340ebd72aeeef9a85404d7eb0ae"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#aca479340ebd72aeeef9a85404d7eb0ae">google::cloud::bigtable::v1::Consistency</a></div><div class="ttdeci">Consistency</div><div class="ttdoc">The result of checking replication against a given token.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00040">table_admin.h:40</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a75d12baaa70efed463c4ada1cb4a6bdb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">google::cloud::bigtable::v1::TableAdmin::project</a></div><div class="ttdeci">std::string const  &amp; project() const</div><div class="ttdoc">Use the default view as defined for each function.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00213">table_admin.h:213</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1RestoreTableFromInstanceParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_1_1RestoreTableFromInstanceParams.html">google::cloud::bigtable::v1::TableAdmin::RestoreTableFromInstanceParams</a></div><div class="ttdoc">Parameters for RestoreTable and AsyncRestoreTable.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01022">table_admin.h:1022</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a8bd9ff9451df5d012139ba5e46be6116"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116">google::cloud::bigtable::v1::TableAdmin::TableName</a></div><div class="ttdeci">std::string TableName(std::string const &amp;table_id) const</div><div class="ttdoc">Return the fully qualified name of a table in this object's instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01673">table_admin.h:1673</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a8bd9ff9451df5d012139ba5e46be6116"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8bd9ff9451df5d012139ba5e46be6116">google::cloud::bigtable::v1::TableAdmin::TableName</a></div><div class="ttdeci">std::string TableName(std::string const &amp;table_id) const</div><div class="ttdoc">Return the fully qualified name of a table in this object's instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l01672">table_admin.h:1672</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a10e6e9a182b4d61a4f177e8d84994e59"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a10e6e9a182b4d61a4f177e8d84994e59">google::cloud::bigtable::v1::BackupName</a></div><div class="ttdeci">std::string BackupName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00049">resource_names.cc:49</a></div></div>
 <div class="ttc" id="aresource__names_8h_html"><div class="ttname"><a href="resource__names_8h.html">resource_names.h</a></div><div class="ttdoc">Helper functions to create resource names.</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RPCBackoffPolicy.html">google::cloud::bigtable::v1::RPCBackoffPolicy</a></div><div class="ttdoc">Define the interface for controlling how the Bigtable client backsoff from failed RPC operations.</div><div class="ttdef"><b>Definition:</b> <a href="rpc__backoff__policy_8h_source.html#l00044">rpc_backoff_policy.h:44</a></div></div>

@@ -351,13 +351,7 @@ Static Public Attributes</h2></td></tr>
 <p>Input iterator over rows in the response. </p>
 <p>The returned iterator is a single-pass input iterator that reads rows from the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RowReader.html" title="Object returned by Table::ReadRows(), enumerates rows in the response.">RowReader</a> when incremented. The first row may be read when the iterator is constructed.</p>
 <p>Creating, and particularly incrementing, multiple iterators on the same <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1RowReader.html" title="Object returned by Table::ReadRows(), enumerates rows in the response.">RowReader</a> is unsupported and can produce incorrect results.</p>
-<p>Retry and backoff policies are honored.</p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if the read failed after retries. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Retry and backoff policies are honored. </p>
 
 <p class="definition">Definition at line <a class="el" href="row__reader_8cc_source.html#l00098">98</a> of file <a class="el" href="row__reader_8cc_source.html">row_reader.cc</a>.</p>
 

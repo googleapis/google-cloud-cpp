@@ -1987,7 +1987,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Backup. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01685">1685</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01684">1684</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -2076,7 +2076,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01679">1679</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01678">1678</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -3130,7 +3130,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01673">1673</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01672">1672</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -3336,13 +3336,7 @@ template&lt;typename... Policies&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the consistency status for the table. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::exception</td><td>if the operation cannot be completed.</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
