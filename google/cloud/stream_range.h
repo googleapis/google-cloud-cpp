@@ -95,7 +95,11 @@ class StreamRange {
   }
 
  public:
-  /// An input iterator for a `StreamRange<T>`
+  /**
+   * An input iterator for a `StreamRange<T>` -- DO NOT USE DIRECTLY.
+   *
+   * Use `StreamRange<T>::iterator` instead.
+   */
   template <typename U>
   class IteratorImpl {
    public:
