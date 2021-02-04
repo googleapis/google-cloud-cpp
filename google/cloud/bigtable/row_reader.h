@@ -89,8 +89,6 @@ class RowReader {
    * results.
    *
    * Retry and backoff policies are honored.
-   *
-   * @throws std::runtime_error if the read failed after retries.
    */
   iterator begin();
 
