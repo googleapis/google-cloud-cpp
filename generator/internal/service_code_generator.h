@@ -91,6 +91,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasLongrunningMethod() const;
   bool HasPaginatedMethod() const;
   bool HasMessageWithMapField() const;
+  bool HasStreamingReadMethod() const;
 
  private:
   enum class FileType { kHeaderFile, kCcFile };

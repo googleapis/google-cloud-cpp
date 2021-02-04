@@ -42,6 +42,11 @@ bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service);
 bool HasMessageWithMapField(google::protobuf::ServiceDescriptor const& service);
 
 /**
+ * Determines if the service contains at least once rpc with a stream response.
+ */
+bool HasStreamingReadMethod(google::protobuf::ServiceDescriptor const& service);
+
+/**
  * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233
@@ -53,6 +58,12 @@ bool IsPaginated(google::protobuf::MethodDescriptor const& method);
  * streaming, nor bidirectional streaming.
  */
 bool IsNonStreaming(google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Determines if the given method has a stream response and a non-stream
+ * request.
+ */
+bool IsStreamingRead(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Determines if the given method is a long running operation.
