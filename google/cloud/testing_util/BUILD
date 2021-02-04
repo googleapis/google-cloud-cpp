@@ -16,22 +16,26 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load("@bazel_skylib//lib:selects.bzl", "selects")
 load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
 config_setting(
     name = "windows",
+    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
     values = {"cpu": "x64_windows"},
     visibility = ["//visibility:public"],
 )
 
 config_setting(
     name = "linux_x86_64",
+    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
     values = {"cpu": "k8"},
     visibility = ["//visibility:public"],
 )
 
 config_setting(
     name = "macos",
+    deprecation = "This config setting is deprecated, to be retired on 2022-03-15. See #... for details.",
     values = {"cpu": "darwin"},
     visibility = ["//visibility:public"],
 )
@@ -40,10 +44,24 @@ cc_library(
     name = "google_cloud_cpp_testing",
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
-    defines = select({
-        ":linux_x86_64": [
-            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=1",
-            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE_THREAD=1",
+    defines = selects.with_or({
+        (
+            "@bazel_tools//src/conditions:linux_x86_64",
+            "@bazel_tools//src/conditions:linux_s390x",
+            "@bazel_tools//src/conditions:linux_ppc64le",
+            "@bazel_tools//src/conditions:linux_ppc",
+            "@bazel_tools//src/conditions:linux_aarch64",
+        ): [
+            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE",
+            "GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD",
+        ],
+        (
+            "@bazel_tools//src/conditions:darwin_x86_64",
+            "@bazel_tools//src/conditions:darwin",
+            "@bazel_tools//src/conditions:freebsd",
+            "@bazel_tools//src/conditions:openbsd",
+        ): [
+            "GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE",
         ],
         "//conditions:default": [],
     }),
