@@ -74,7 +74,13 @@ std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
   grpc::ChannelArguments args;
   if (DirectPathEnabled()) {
     args.SetServiceConfigJSON(R"json({
-      "loadBalancingConfig": [{"grpclb": {}}]
+      "loadBalancingConfig": [{
+        "grpclb": {
+          "childPolicy": [{
+            "pick_first": {}
+          }]
+        }
+      }]
     })json");
   }
   return grpc::CreateCustomChannel(GrpcEndpoint(), GrpcCredentials(options),
