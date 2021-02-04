@@ -57,8 +57,6 @@ cc_library(
         ],
         (
             "@bazel_tools//src/conditions:darwin_x86_64",
-            "@bazel_tools//src/conditions:darwin_arm64e",
-            "@bazel_tools//src/conditions:darwin_arm64",
             "@bazel_tools//src/conditions:darwin",
             "@bazel_tools//src/conditions:freebsd",
             "@bazel_tools//src/conditions:openbsd",
