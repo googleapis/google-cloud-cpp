@@ -103,7 +103,7 @@ class StreamRange {
  public:
   /// An input iterator for a `StreamRange<T>`
   template <typename U>
-  class Iterator {
+  class IteratorImpl {
    public:
     using iterator_category = std::input_iterator_tag;
     using value_type = U;
@@ -114,43 +114,43 @@ class StreamRange {
     using const_pointer = value_type const*;
 
     /// Constructs an "end" iterator.
-    explicit Iterator() = default;
+    explicit IteratorImpl() = default;
 
     reference operator*() { return owner_->current_; }
     pointer operator->() { return &owner_->current_; }
     const_reference operator*() const { return owner_->current_; }
     const_pointer operator->() const { return &owner_->current_; }
 
-    Iterator& operator++() {
+    IteratorImpl& operator++() {
       owner_->Next();
       is_end_ = owner_->is_end_;
       return *this;
     }
 
-    Iterator operator++(int) {
+    IteratorImpl operator++(int) {
       auto copy = *this;
       ++*this;
       return copy;
     }
 
-    friend bool operator==(Iterator const& a, Iterator const& b) {
+    friend bool operator==(IteratorImpl const& a, IteratorImpl const& b) {
       return a.is_end_ == b.is_end_;
     }
 
-    friend bool operator!=(Iterator const& a, Iterator const& b) {
+    friend bool operator!=(IteratorImpl const& a, IteratorImpl const& b) {
       return !(a == b);
     }
 
    private:
     friend class StreamRange;
-    explicit Iterator(StreamRange* owner)
+    explicit IteratorImpl(StreamRange* owner)
         : owner_(owner), is_end_(owner_->is_end_) {}
     StreamRange* owner_;
     bool is_end_ = true;
   };
 
   using value_type = StatusOr<T>;
-  using iterator = Iterator<value_type>;
+  using iterator = IteratorImpl<value_type>;
   using difference_type = typename iterator::difference_type;
   using reference = typename iterator::reference;
   using pointer = typename iterator::pointer;
