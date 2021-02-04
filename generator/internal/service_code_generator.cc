@@ -77,6 +77,10 @@ bool ServiceCodeGenerator::HasMessageWithMapField() const {
   return generator_internal::HasMessageWithMapField(*service_descriptor_);
 }
 
+bool ServiceCodeGenerator::HasStreamingReadMethod() const {
+  return generator_internal::HasStreamingReadMethod(*service_descriptor_);
+}
+
 VarsDictionary const& ServiceCodeGenerator::vars() const {
   return service_vars_;
 }

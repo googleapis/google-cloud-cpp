@@ -904,6 +904,93 @@ TEST_F(HasMessageWithMapFieldTest, HasNoMessageWithMapField) {
   EXPECT_FALSE(HasMessageWithMapField(*service_file_descriptor->service(1)));
 }
 
+const char* const kStreamingServiceProto =
+    "syntax = \"proto3\";\n"
+    "package google.protobuf;\n"
+    "// Leading comments about message Foo.\n"
+    "message Foo {\n"
+    "  string baz = 1;\n"
+    "  map<string, string> labels = 2;\n"
+    "}\n"
+    "// Leading comments about message Empty.\n"
+    "message Bar {\n"
+    "  int32 x = 1;\n"
+    "}\n"
+    "// Leading comments about service Service0.\n"
+    "service Service0 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(Foo) returns (stream Bar) {\n"
+    "  }\n"
+    "  // Leading comments about rpc Method1.\n"
+    "  rpc Method1(stream Foo) returns (Bar) {\n"
+    "  }\n"
+    "  // Leading comments about rpc Method2.\n"
+    "  rpc Method2(stream Foo) returns (stream Bar) {\n"
+    "  }\n"
+    "  // Leading comments about rpc Method3.\n"
+    "  rpc Method3(Foo) returns (Bar) {\n"
+    "  }\n"
+    "}\n"
+    "service Service1 {\n"
+    "  // Leading comments about rpc Method0.\n"
+    "  rpc Method0(stream Foo) returns (Bar) {\n"
+    "  }\n"
+    "  // Leading comments about rpc Method1.\n"
+    "  rpc Method1(stream Foo) returns (stream Bar) {\n"
+    "  }\n"
+    "  // Leading comments about rpc Method2.\n"
+    "  rpc Method2(Foo) returns (Bar) {\n"
+    "  }\n"
+    "}\n";
+
+class StreamingReadTest : public testing::Test {
+ public:
+  StreamingReadTest()
+      : source_tree_(std::map<std::string, std::string>{
+            {std::string("google/cloud/foo/streaming.proto"),
+             kStreamingServiceProto}}),
+        source_tree_db_(&source_tree_),
+        merged_db_(&simple_db_, &source_tree_db_),
+        pool_(&merged_db_, &collector_) {
+    // we need descriptor.proto to be accessible by the pool
+    // since our test file imports it
+    FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto_);
+    simple_db_.Add(file_proto_);
+  }
+
+ private:
+  FileDescriptorProto file_proto_;
+  AbortingErrorCollector collector_;
+  StringSourceTree source_tree_;
+  google::protobuf::SimpleDescriptorDatabase simple_db_;
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
+  google::protobuf::MergedDescriptorDatabase merged_db_;
+
+ protected:
+  DescriptorPool pool_;
+};
+
+TEST_F(StreamingReadTest, IsStreamingRead) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/foo/streaming.proto");
+  EXPECT_TRUE(IsStreamingRead(*service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(
+      IsStreamingRead(*service_file_descriptor->service(0)->method(1)));
+  EXPECT_FALSE(
+      IsStreamingRead(*service_file_descriptor->service(0)->method(2)));
+  EXPECT_FALSE(
+      IsStreamingRead(*service_file_descriptor->service(0)->method(3)));
+}
+
+TEST_F(StreamingReadTest, HasStreamingRead) {
+  const FileDescriptor* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/foo/streaming.proto");
+  EXPECT_TRUE(generator_internal::HasStreamingReadMethod(
+      *service_file_descriptor->service(0)));
+  EXPECT_FALSE(generator_internal::HasStreamingReadMethod(
+      *service_file_descriptor->service(1)));
+}
+
 TEST(PredicateUtilsTest, HasRoutingHeaderSuccess) {
   google::protobuf::FileDescriptorProto service_file;
   /// @cond

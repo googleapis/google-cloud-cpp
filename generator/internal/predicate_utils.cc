@@ -61,6 +61,14 @@ bool HasMessageWithMapField(
   return false;
 }
 
+bool HasStreamingReadMethod(
+    google::protobuf::ServiceDescriptor const& service) {
+  for (int i = 0; i < service.method_count(); ++i) {
+    if (IsStreamingRead(*service.method(i))) return true;
+  }
+  return false;
+}
+
 // https://google.aip.dev/client-libraries/4233
 google::cloud::optional<std::pair<std::string, std::string>>
 DeterminePagination(google::protobuf::MethodDescriptor const& method) {
@@ -129,6 +137,10 @@ bool IsPaginated(google::protobuf::MethodDescriptor const& method) {
 
 bool IsNonStreaming(google::protobuf::MethodDescriptor const& method) {
   return !method.client_streaming() && !method.server_streaming();
+}
+
+bool IsStreamingRead(google::protobuf::MethodDescriptor const& method) {
+  return !method.client_streaming() && method.server_streaming();
 }
 
 bool IsLongrunningOperation(google::protobuf::MethodDescriptor const& method) {
