@@ -1346,7 +1346,6 @@ class TableAdmin {
    *     consistency.
    * @param consistency_token the consistency token of the table.
    * @return the consistency status for the table.
-   * @throws std::exception if the operation cannot be completed.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.

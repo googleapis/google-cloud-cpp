@@ -55,24 +55,12 @@ class ReadRowsParser {
 
   virtual ~ReadRowsParser() = default;
 
-  /**
-   * Pass an input chunk proto to the parser.
-   *
-   * @throws std::runtime_error if called while a row is available
-   * (HasNext() is true).
-   *
-   * @throws std::runtime_error if validation failed.
-   */
+  /// Pass an input chunk proto to the parser.
   virtual void HandleChunk(
       google::bigtable::v2::ReadRowsResponse_CellChunk chunk,
       grpc::Status& status);
 
-  /**
-   * Signal that the input stream reached the end.
-   *
-   * @throws std::runtime_error if more data was expected to finish
-   * the current row.
-   */
+  /// Signal that the input stream reached the end.
   virtual void HandleEndOfStream(grpc::Status& status);
 
   /**
