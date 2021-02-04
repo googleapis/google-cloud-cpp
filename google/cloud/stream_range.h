@@ -67,22 +67,16 @@ StreamRange<T> MakeStreamRange(StreamReader<T>);
  * access iterators that will work with any normal C++ constructs and
  * algorithms that accept [Input Iterators][input-iter-link].
  *
- * The `T` objects are read from the caller-provided `internal::StreamReader`
- * functor, which is invoked repeatedly as the range is iterated. The
- * `internal::StreamReader` can return an OK `Status` to indicate a successful
- * end of stream, or a non-OK `Status` to indicate an error, or a `T`. The
- * `internal::StreamReader` will not be invoked again after it returns a
- * `Status`.
+ * Callers should only consume/iterate this range. There is no public way for a
+ * caller to construct a non-empty instance.
  *
- * @par Example: Printing integers from 1-10.
+ * @par Example: Iterating a range of 10 integers
  *
  * @code
- * int counter = 0;
- * auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
- *   if (counter++ < 10) return counter;
- *   return Status{};
- * };
- * StreamRange<int> sr(std::move(reader));
+ * // Some function that returns a StreamRange<int>
+ * StreamRange<int> MakeRangeFromOneTo(int n);
+ *
+ * StreamRange<int> sr = MakeRangeFromOneTo(10);
  * for (int x : sr) {
  *   std::cout << x << "\n";
  * }
@@ -202,6 +196,27 @@ class StreamRange {
 
   /**
    * Constructs a `StreamRange<T>` that will use the given @p reader.
+   *
+   * The `T` objects are read from the caller-provided `internal::StreamReader`
+   * functor, which is invoked repeatedly as the range is iterated. The
+   * `internal::StreamReader` can return an OK `Status` to indicate a successful
+   * end of stream, or a non-OK `Status` to indicate an error, or a `T`. The
+   * `internal::StreamReader` will not be invoked again after it returns a
+   * `Status`.
+   *
+   * @par Example: Printing integers from 1-10.
+   *
+   * @code
+   * int counter = 0;
+   * auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+   *   if (counter++ < 10) return counter;
+   *   return Status{};
+   * };
+   * StreamRange<int> sr(std::move(reader));
+   * for (int x : sr) {
+   *   std::cout << x << "\n";
+   * }
+   * @endcode
    *
    * @param reader must not be nullptr.
    */
