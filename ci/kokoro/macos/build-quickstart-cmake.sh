@@ -33,7 +33,7 @@ curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 
 # Compile vcpkg only if we don't already have a cached binary.
-vcpkg_cache_dir="${HOME}/.cache/bin"
+vcpkg_cache_dir="${HOME}/.cache/google-cloud-cpp/vcpkg"
 vcpkg_cache_bin="${vcpkg_cache_dir}/vcpkg.${vcpkg_sha}"
 mkdir -p "${vcpkg_cache_dir}"
 if [[ -x "${vcpkg_cache_bin}" ]]; then
