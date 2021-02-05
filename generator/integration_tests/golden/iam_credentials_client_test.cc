@@ -13,6 +13,7 @@
 // limitations under the License.
 #include "generator/integration_tests/golden/iam_credentials_client.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/mocks/mock_iam_credentials_connection.gcpcxx.pb.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -168,7 +169,8 @@ TEST(IAMCredentialsClientTest, ListLogs) {
       .WillRepeatedly([expected_parent](::google::test::admin::database::v1::
                                             ListLogsRequest const &request) {
         EXPECT_EQ(request.parent(), expected_parent);
-        return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+        return google::cloud::internal::MakePaginationRange<
+            StreamRange<std::string>>(
             ::google::test::admin::database::v1::ListLogsRequest{},
             [](::google::test::admin::database::v1::ListLogsRequest const &) {
               return StatusOr<

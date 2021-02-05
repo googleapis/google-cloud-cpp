@@ -23,7 +23,6 @@
 #include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -53,12 +52,6 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::IAMCredentialsRetryTraits>;
 
-using ListLogsRange = google::cloud::internal::PaginationRange<
-    std::string>;
-
-using TailLogEntriesStream = google::cloud::StreamRange<
-    ::google::test::admin::database::v1::TailLogEntriesResponse>;
-
 void IAMCredentialsTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
     ::google::test::admin::database::v1::TailLogEntriesRequest& request);
@@ -76,10 +69,10 @@ class IAMCredentialsConnection {
   virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
 
-  virtual ListLogsRange
+  virtual StreamRange<std::string>
   ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
 
-  virtual TailLogEntriesStream
+  virtual StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
 
 };

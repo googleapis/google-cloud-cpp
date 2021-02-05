@@ -26,7 +26,7 @@ using google::cloud::internal::Idempotency;
 namespace gtab = ::google::test::admin::database::v1;
 
 class GoldenIdempotencyPolicyTest : public ::testing::Test {
- protected:
+protected:
   void SetUp() override {
     policy_ = golden::MakeDefaultDatabaseAdminConnectionIdempotencyPolicy();
   }
@@ -119,8 +119,8 @@ TEST_F(GoldenIdempotencyPolicyTest, ListBackupOperations) {
   EXPECT_EQ(policy_->ListBackupOperations(request), Idempotency::kIdempotent);
 }
 
-}  // namespace
-}  // namespace golden_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace cloud
-}  // namespace google
+} // namespace
+} // namespace golden_internal
+} // namespace GOOGLE_CLOUD_CPP_NS
+} // namespace cloud
+} // namespace google

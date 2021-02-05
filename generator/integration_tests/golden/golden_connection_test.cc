@@ -147,7 +147,8 @@ public:
 
 std::shared_ptr<golden::DatabaseAdminConnection> CreateTestingConnection(
     std::shared_ptr<golden_internal::DatabaseAdminStub> mock) {
-  golden::DatabaseAdminLimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
+  golden::DatabaseAdminLimitedErrorCountRetryPolicy retry(
+      /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
@@ -167,7 +168,8 @@ TEST(DatabaseAdminConnectionOptionsTest, DefaultEndpoint) {
 
 TEST(DatabaseAdminConnectionOptionsTest, UserAgentPrefix) {
   golden::DatabaseAdminConnectionOptions options;
-  EXPECT_THAT(options.user_agent_prefix(), HasSubstr("gcloud-cpp/" + version_string()));
+  EXPECT_THAT(options.user_agent_prefix(),
+              HasSubstr("gcloud-cpp/" + version_string()));
 }
 
 TEST(DatabaseAdminConnectionOptionsTest, DefaultNumChannels) {

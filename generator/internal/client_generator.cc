@@ -124,7 +124,7 @@ Status ClientGenerator::GenerateHeader() {
                    // clang-format off
                    {FormatMethodCommentsFromRpcComments(
                      method, MethodParameterStyle::kApiMethodSignature)},
-                   {"  $method_name$Range\n"},
+                   {"  StreamRange<$range_output_type$>\n"},
                    {method_string},
                    // clang-format on
                },
@@ -134,7 +134,7 @@ Status ClientGenerator::GenerateHeader() {
                    // clang-format off
                    {FormatMethodCommentsFromRpcComments(
                      method, MethodParameterStyle::kApiMethodSignature)},
-                   {"  $method_name$Stream\n"},
+                   {"  StreamRange<$response_type$>\n"},
                    {method_string},
                    // clang-format on
                },
@@ -178,7 +178,7 @@ Status ClientGenerator::GenerateHeader() {
                  // clang-format off
                  {FormatMethodCommentsFromRpcComments(
         method, MethodParameterStyle::kProtobufReqeust)},
-   {"  $method_name$Range\n"
+   {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
@@ -188,7 +188,7 @@ Status ClientGenerator::GenerateHeader() {
                  // clang-format off
                  {FormatMethodCommentsFromRpcComments(
         method, MethodParameterStyle::kProtobufReqeust)},
-   {"  $method_name$Stream\n"
+   {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
@@ -281,7 +281,7 @@ Status ClientGenerator::GenerateCc() {
            MethodPattern(
                {
                    // clang-format off
-                   {"$method_name$Range\n"},
+                   {"StreamRange<$range_output_type$>\n"},
                   {method_string},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -293,7 +293,7 @@ Status ClientGenerator::GenerateCc() {
            MethodPattern(
                {
                    // clang-format off
-                   {"$method_name$Stream\n"},
+                   {"StreamRange<$response_type$>\n"},
                   {method_string},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
@@ -337,7 +337,7 @@ Status ClientGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"$method_name$Range\n"
+   {"StreamRange<$range_output_type$>\n"
     "$client_class_name$::$method_name$($request_type$ request) {\n"
     "  return connection_->$method_name$(std::move(request));\n"
     "}\n\n"}
@@ -347,7 +347,7 @@ Status ClientGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"$method_name$Stream\n"
+   {"StreamRange<$response_type$>\n"
     "$client_class_name$::$method_name$($request_type$ request) {\n"
     "  return connection_->$method_name$(std::move(request));\n"
     "}\n\n"}

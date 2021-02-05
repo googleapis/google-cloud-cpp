@@ -51,10 +51,11 @@ Status ConnectionGenerator::GenerateHeader() {
        vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
        "google/cloud/connection_options.h",
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
-       HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
-       HasStreamingReadMethod() ? "google/cloud/stream_range.h" : "",
+       HasStreamingReadMethod() || HasPaginatedMethod()
+           ? "google/cloud/stream_range.h"
+           : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -78,7 +79,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "  google::cloud::ConnectionOptions<$connection_options_traits_name$>;\n\n");
   // clang-format on
 
-  HeaderPrint(   // clang-format off
+  HeaderPrint(  // clang-format off
     "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
@@ -96,24 +97,12 @@ Status ConnectionGenerator::GenerateHeader() {
     HeaderPrintMethod(
         method,
         {MethodPattern(
-            {
-                // clang-format off
-   {"using $method_name$Range = "
-    "google::cloud::internal::PaginationRange<\n"
-    "    $range_output_type$>;\n\n"},
-                 // clang-format on
-             },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
-         MethodPattern(
-             {// clang-format off
-   {"using $method_name$Stream = google::cloud::StreamRange<\n"
-    "    $response_type$>;\n"
-    "\n"
-    "void $service_name$$method_name$StreamingUpdater(\n"
+             {  // clang-format off
+   {"void $service_name$$method_name$StreamingUpdater(\n"
     "    $response_type$ const& response,\n"
     "    $request_type$& request);\n\n"}
      }, IsStreamingRead)},
-              // clang-format on
+                // clang-format on
         __FILE__, __LINE__);
   }
 
@@ -154,7 +143,7 @@ Status ConnectionGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-   {"  virtual $method_name$Range\n"
+   {"  virtual StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
@@ -162,7 +151,7 @@ Status ConnectionGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-   {"  virtual $method_name$Stream\n"
+   {"  virtual StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
@@ -220,6 +209,7 @@ Status ConnectionGenerator::GenerateCc() {
   // includes
   CcLocalIncludes(
       {vars("connection_header_path"), vars("stub_factory_header_path"),
+       HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/resumable_streaming_read_rpc.h"
@@ -289,9 +279,10 @@ Status ConnectionGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"$method_name$Range $connection_class_name$::$method_name$(\n"
+   {"StreamRange<$range_output_type$> $connection_class_name$::$method_name$(\n"
     "    $request_type$ request) {\n"
-    "  return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
+    "  return google::cloud::internal::MakePaginationRange<StreamRange<\n"
+    "    $range_output_type$>>(\n"
     "    std::move(request),\n"
     "    []($request_type$ const&) {\n"
     "      return StatusOr<$response_type$>{};\n"
@@ -307,7 +298,7 @@ Status ConnectionGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"$method_name$Stream $connection_class_name$::$method_name$(\n"
+   {"StreamRange<$response_type$> $connection_class_name$::$method_name$(\n"
     "    $request_type$) {\n"
     "  return google::cloud::internal::MakeStreamRange<\n"
     "      $response_type$>(\n"
@@ -443,7 +434,7 @@ Status ConnectionGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"  $method_name$Range $method_name$(\n"
+   {"  StreamRange<$range_output_type$> $method_name$(\n"
     "      $request_type$ request) override {\n"
     "    request.clear_page_token();\n"
     "    auto stub = stub_;\n"
@@ -453,7 +444,8 @@ Status ConnectionGenerator::GenerateCc() {
     "        backoff_policy_prototype_->clone());\n"
     "    auto idempotency = idempotency_policy_->$method_name$(request);\n"
     "    char const* function_name = __func__;\n"
-    "    return google::cloud::internal::MakePaginationRange<$method_name$Range>(\n"
+    "    return google::cloud::internal::MakePaginationRange<StreamRange<\n"
+    "        $range_output_type$>>(\n"
     "        std::move(request),\n"
     "        [stub, retry, backoff, idempotency, function_name]\n"
     "          ($request_type$ const& r) {\n"
@@ -479,7 +471,7 @@ Status ConnectionGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"  $method_name$Stream $method_name$(\n"
+   {"  StreamRange<$response_type$> $method_name$(\n"
     "      $request_type$ request) override {\n"
     "    auto stub = stub_;\n"
     "    auto retry_policy =\n"

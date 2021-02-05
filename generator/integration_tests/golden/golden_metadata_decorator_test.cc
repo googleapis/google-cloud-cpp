@@ -32,110 +32,109 @@ using ::testing::_;
 
 class MockGoldenStub
     : public google::cloud::golden_internal::DatabaseAdminStub {
- public:
+public:
   ~MockGoldenStub() override = default;
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>,
       ListDatabases,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabasesRequest const&
-           request),
+       ::google::test::admin::database::v1::ListDatabasesRequest const
+           &request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateDatabase,
               (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::CreateDatabaseRequest const&
-                   request),
+               ::google::test::admin::database::v1::CreateDatabaseRequest const
+                   &request),
               (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseRequest const& request),
+       ::google::test::admin::database::v1::GetDatabaseRequest const &request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
-           request),
+       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
+           &request),
       (override));
 
   MOCK_METHOD(
       Status, DropDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DropDatabaseRequest const& request),
+       ::google::test::admin::database::v1::DropDatabaseRequest const &request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
       GetDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseDdlRequest const&
-           request),
+       ::google::test::admin::database::v1::GetDatabaseDdlRequest const
+           &request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::SetIamPolicyRequest const& request),
+               ::google::iam::v1::SetIamPolicyRequest const &request),
               (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::GetIamPolicyRequest const& request),
+               ::google::iam::v1::GetIamPolicyRequest const &request),
               (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
               (grpc::ClientContext & context,
-               ::google::iam::v1::TestIamPermissionsRequest const& request),
+               ::google::iam::v1::TestIamPermissionsRequest const &request),
               (override));
 
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, CreateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::CreateBackupRequest const& request),
+       ::google::test::admin::database::v1::CreateBackupRequest const &request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetBackupRequest const& request),
+       ::google::test::admin::database::v1::GetBackupRequest const &request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateBackupRequest const& request),
+       ::google::test::admin::database::v1::UpdateBackupRequest const &request),
       (override));
 
   MOCK_METHOD(
       Status, DeleteBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DeleteBackupRequest const& request),
+       ::google::test::admin::database::v1::DeleteBackupRequest const &request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListBackupsResponse>,
       ListBackups,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupsRequest const& request),
+       ::google::test::admin::database::v1::ListBackupsRequest const &request),
       (override));
 
-  MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-      (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
-           request),
-      (override));
+  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, RestoreDatabase,
+              (grpc::ClientContext & context,
+               ::google::test::admin::database::v1::RestoreDatabaseRequest const
+                   &request),
+              (override));
 
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListDatabaseOperationsResponse>,
       ListDatabaseOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
-           request),
+       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const
+           &request),
       (override));
 
   MOCK_METHOD(
@@ -143,25 +142,25 @@ class MockGoldenStub
           ::google::test::admin::database::v1::ListBackupOperationsResponse>,
       ListBackupOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupOperationsRequest const&
-           request),
+       ::google::test::admin::database::v1::ListBackupOperationsRequest const
+           &request),
       (override));
 
   /// Poll a long-running operation.
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::GetOperationRequest const& request),
+               google::longrunning::GetOperationRequest const &request),
               (override));
 
   /// Cancel a long-running operation.
   MOCK_METHOD(Status, CancelOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::CancelOperationRequest const& request),
+               google::longrunning::CancelOperationRequest const &request),
               (override));
 };
 
 class MetadataDecoratorTest : public ::testing::Test {
- protected:
+protected:
   void SetUp() override {
     expected_api_client_header_ = google::cloud::internal::ApiClientHeader();
     mock_ = std::make_shared<MockGoldenStub>();
@@ -178,8 +177,9 @@ class MetadataDecoratorTest : public ::testing::Test {
 TEST_F(MetadataDecoratorTest, GetDatabase) {
   EXPECT_CALL(*mock_, GetDatabase(_, _))
       .WillOnce(
-          [this](grpc::ClientContext& context,
-                 google::test::admin::database::v1::GetDatabaseRequest const&) {
+          [this](
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::GetDatabaseRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.GetDatabase",
@@ -200,8 +200,8 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases(_, _))
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::ListDatabasesRequest const&) {
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::ListDatabasesRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.ListDatabases",
@@ -220,9 +220,9 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
 TEST_F(MetadataDecoratorTest, CreateDatabase) {
   EXPECT_CALL(*mock_, CreateDatabase(_, _))
       .WillOnce(
-          [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::CreateDatabaseRequest const&) {
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::CreateDatabaseRequest const
+                     &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.CreateDatabase",
@@ -240,15 +240,17 @@ TEST_F(MetadataDecoratorTest, CreateDatabase) {
 
 TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
   EXPECT_CALL(*mock_, UpdateDatabaseDdl(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::test::admin::database::v1::
-                           UpdateDatabaseDdlRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context,
-            "google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl",
-            expected_api_client_header_));
-        return TransientError();
-      });
+      .WillOnce(
+          [this](
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::UpdateDatabaseDdlRequest const
+                  &) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context,
+                "google.test.admin.database.v1.DatabaseAdmin.UpdateDatabaseDdl",
+                expected_api_client_header_));
+            return TransientError();
+          });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -263,8 +265,8 @@ TEST_F(MetadataDecoratorTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase(_, _))
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::DropDatabaseRequest const&) {
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::DropDatabaseRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.DropDatabase",
@@ -284,9 +286,9 @@ TEST_F(MetadataDecoratorTest, DropDatabase) {
 TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
   EXPECT_CALL(*mock_, GetDatabaseDdl(_, _))
       .WillOnce(
-          [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::GetDatabaseDdlRequest const&) {
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::GetDatabaseDdlRequest const
+                     &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.GetDatabaseDdl",
@@ -305,8 +307,8 @@ TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
 
 TEST_F(MetadataDecoratorTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::SetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext &context,
+                       google::iam::v1::SetIamPolicyRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.test.admin.database.v1.DatabaseAdmin.SetIamPolicy",
             expected_api_client_header_));
@@ -324,8 +326,8 @@ TEST_F(MetadataDecoratorTest, SetIamPolicy) {
 
 TEST_F(MetadataDecoratorTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::GetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext &context,
+                       google::iam::v1::GetIamPolicyRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.test.admin.database.v1.DatabaseAdmin.GetIamPolicy",
             expected_api_client_header_));
@@ -343,8 +345,8 @@ TEST_F(MetadataDecoratorTest, GetIamPolicy) {
 
 TEST_F(MetadataDecoratorTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::TestIamPermissionsRequest const&) {
+      .WillOnce([this](grpc::ClientContext &context,
+                       google::iam::v1::TestIamPermissionsRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context,
             "google.test.admin.database.v1.DatabaseAdmin.TestIamPermissions",
@@ -365,8 +367,8 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
   EXPECT_CALL(*mock_, CreateBackup(_, _))
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::CreateBackupRequest const&) {
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::CreateBackupRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.CreateBackup",
@@ -385,8 +387,8 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
 TEST_F(MetadataDecoratorTest, GetBackup) {
   EXPECT_CALL(*mock_, GetBackup(_, _))
       .WillOnce(
-          [this](grpc::ClientContext& context,
-                 google::test::admin::database::v1::GetBackupRequest const&) {
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::GetBackupRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.GetBackup",
@@ -407,8 +409,8 @@ TEST_F(MetadataDecoratorTest, UpdateBackup) {
   EXPECT_CALL(*mock_, UpdateBackup(_, _))
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::UpdateBackupRequest const&) {
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::UpdateBackupRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.UpdateBackup",
@@ -429,8 +431,8 @@ TEST_F(MetadataDecoratorTest, DeleteBackup) {
   EXPECT_CALL(*mock_, DeleteBackup(_, _))
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
-              google::test::admin::database::v1::DeleteBackupRequest const&) {
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::DeleteBackupRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.DeleteBackup",
@@ -450,8 +452,9 @@ TEST_F(MetadataDecoratorTest, DeleteBackup) {
 TEST_F(MetadataDecoratorTest, ListBackups) {
   EXPECT_CALL(*mock_, ListBackups(_, _))
       .WillOnce(
-          [this](grpc::ClientContext& context,
-                 google::test::admin::database::v1::ListBackupsRequest const&) {
+          [this](
+              grpc::ClientContext &context,
+              google::test::admin::database::v1::ListBackupsRequest const &) {
             EXPECT_STATUS_OK(IsContextMDValid(
                 context,
                 "google.test.admin.database.v1.DatabaseAdmin.ListBackups",
@@ -469,15 +472,16 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
 
 TEST_F(MetadataDecoratorTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, RestoreDatabase(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::test::admin::database::v1::
-                           RestoreDatabaseRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            context,
-            "google.test.admin.database.v1.DatabaseAdmin.RestoreDatabase",
-            expected_api_client_header_));
-        return TransientError();
-      });
+      .WillOnce(
+          [this](grpc::ClientContext &context,
+                 google::test::admin::database::v1::RestoreDatabaseRequest const
+                     &) {
+            EXPECT_STATUS_OK(IsContextMDValid(
+                context,
+                "google.test.admin.database.v1.DatabaseAdmin.RestoreDatabase",
+                expected_api_client_header_));
+            return TransientError();
+          });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -489,9 +493,9 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
 
 TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
   EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext &context,
                        google::test::admin::database::v1::
-                           ListDatabaseOperationsRequest const&) {
+                           ListDatabaseOperationsRequest const &) {
         EXPECT_STATUS_OK(
             IsContextMDValid(context,
                              "google.test.admin.database.v1.DatabaseAdmin."
@@ -510,9 +514,9 @@ TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
 
 TEST_F(MetadataDecoratorTest, ListBackupOperations) {
   EXPECT_CALL(*mock_, ListBackupOperations(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext &context,
                        google::test::admin::database::v1::
-                           ListBackupOperationsRequest const&) {
+                           ListBackupOperationsRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context,
             "google.test.admin.database.v1.DatabaseAdmin.ListBackupOperations",
@@ -530,8 +534,8 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
 
 TEST_F(MetadataDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::longrunning::GetOperationRequest const&) {
+      .WillOnce([this](grpc::ClientContext &context,
+                       google::longrunning::GetOperationRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.longrunning.Operations.GetOperation",
             expected_api_client_header_));
@@ -548,8 +552,8 @@ TEST_F(MetadataDecoratorTest, GetOperation) {
 
 TEST_F(MetadataDecoratorTest, CancelOperation) {
   EXPECT_CALL(*mock_, CancelOperation(_, _))
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::longrunning::CancelOperationRequest const&) {
+      .WillOnce([this](grpc::ClientContext &context,
+                       google::longrunning::CancelOperationRequest const &) {
         EXPECT_STATUS_OK(IsContextMDValid(
             context, "google.longrunning.Operations.CancelOperation",
             expected_api_client_header_));
@@ -564,8 +568,8 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
   EXPECT_EQ(TransientError(), status);
 }
 
-}  // namespace
-}  // namespace golden_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace cloud
-}  // namespace google
+} // namespace
+} // namespace golden_internal
+} // namespace GOOGLE_CLOUD_CPP_NS
+} // namespace cloud
+} // namespace google

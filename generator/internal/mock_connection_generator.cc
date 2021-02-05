@@ -88,7 +88,7 @@ Status MockConnectionGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-   {"  MOCK_METHOD($product_namespace$::$method_name$Range,\n"
+   {"  MOCK_METHOD(StreamRange<$range_output_type$>,\n"
     "  $method_name$,\n"
     "  ($request_type$ request), (override));\n\n"},
                  // clang-format on
@@ -97,7 +97,7 @@ Status MockConnectionGenerator::GenerateHeader() {
          MethodPattern(
              {
                  // clang-format off
-   {"  MOCK_METHOD($product_namespace$::$method_name$Stream,\n"
+   {"  MOCK_METHOD(StreamRange<$response_type$>,\n"
     "  $method_name$,\n"
     "  ($request_type$ request), (override));\n\n"},
                  // clang-format on
