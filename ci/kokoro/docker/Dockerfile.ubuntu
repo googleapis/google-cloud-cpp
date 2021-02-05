@@ -44,6 +44,7 @@ RUN apt-get update && \
         python3-pip \
         tar \
         unzip \
+        zip \
         wget \
         zlib1g-dev \
         apt-utils \
