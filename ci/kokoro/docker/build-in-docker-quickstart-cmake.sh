@@ -50,20 +50,12 @@ else
   git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
 fi
 
-if [[ -d "${HOME}/vcpkg-quickstart-cache" && ! -d \
-  "${vcpkg_dir}/installed" ]]; then
-  cp -r "${HOME}/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
-fi
-
 (
   cd "${vcpkg_dir}"
   ./bootstrap-vcpkg.sh
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
-# Use the new installed/ directory to create the cache.
-rm -fr "${HOME}/vcpkg-quickstart-cache"
-cp -r "${vcpkg_dir}/installed" "${HOME}/vcpkg-quickstart-cache"
 
 run_quickstart="false"
 readonly CONFIG_DIR="/c"
