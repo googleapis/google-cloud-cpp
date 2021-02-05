@@ -46,7 +46,7 @@ namespace internal {
  * @code
  * int counter = 0;
  * auto reader = [&counter]() -> StreamReader<int>::result_type {
- *   if (counter++ < 10) return counter;
+ *   if (++counter <= 10) return counter;
  *   return Status{};  // OK
  * };
  * @endcode
@@ -213,7 +213,7 @@ class StreamRange {
    * @code
    * int counter = 0;
    * auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
-   *   if (counter++ < 10) return counter;
+   *   if (++counter <= 10) return counter;
    *   return Status{};
    * };
    * StreamRange<int> sr(std::move(reader));
