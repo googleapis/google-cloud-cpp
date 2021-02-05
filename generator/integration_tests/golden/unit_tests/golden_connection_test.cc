@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/database_admin_connection.gcpcxx.pb.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <gmock/gmock.h>
+#include "generator/integration_tests/golden/database_admin_connection.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
+#include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
@@ -36,112 +36,113 @@ using ::testing::Return;
 
 class MockGoldenStub
     : public google::cloud::golden_internal::DatabaseAdminStub {
-public:
+ public:
   ~MockGoldenStub() override = default;
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>,
       ListDatabases,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabasesRequest const
-           &request),
+       ::google::test::admin::database::v1::ListDatabasesRequest const&
+           request),
       (override));
   MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateDatabase,
               (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::CreateDatabaseRequest const
-                   &request),
+               ::google::test::admin::database::v1::CreateDatabaseRequest const&
+                   request),
               (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseRequest const &request),
+       ::google::test::admin::database::v1::GetDatabaseRequest const& request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-           &request),
+       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
+           request),
       (override));
   MOCK_METHOD(
       Status, DropDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DropDatabaseRequest const &request),
+       ::google::test::admin::database::v1::DropDatabaseRequest const& request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
       GetDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseDdlRequest const
-           &request),
+       ::google::test::admin::database::v1::GetDatabaseDdlRequest const&
+           request),
       (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::SetIamPolicyRequest const &request),
+               ::google::iam::v1::SetIamPolicyRequest const& request),
               (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::GetIamPolicyRequest const &request),
+               ::google::iam::v1::GetIamPolicyRequest const& request),
               (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
               (grpc::ClientContext & context,
-               ::google::iam::v1::TestIamPermissionsRequest const &request),
+               ::google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, CreateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::CreateBackupRequest const &request),
+       ::google::test::admin::database::v1::CreateBackupRequest const& request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetBackupRequest const &request),
+       ::google::test::admin::database::v1::GetBackupRequest const& request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateBackupRequest const &request),
+       ::google::test::admin::database::v1::UpdateBackupRequest const& request),
       (override));
   MOCK_METHOD(
       Status, DeleteBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DeleteBackupRequest const &request),
+       ::google::test::admin::database::v1::DeleteBackupRequest const& request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListBackupsResponse>,
       ListBackups,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupsRequest const &request),
+       ::google::test::admin::database::v1::ListBackupsRequest const& request),
       (override));
-  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-              (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::RestoreDatabaseRequest const
-                   &request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
+           request),
+      (override));
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListDatabaseOperationsResponse>,
       ListDatabaseOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const
-           &request),
+       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
+           request),
       (override));
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListBackupOperationsResponse>,
       ListBackupOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupOperationsRequest const
-           &request),
+       ::google::test::admin::database::v1::ListBackupOperationsRequest const&
+           request),
       (override));
   /// Poll a long-running operation.
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::GetOperationRequest const &request),
+               google::longrunning::GetOperationRequest const& request),
               (override));
   /// Cancel a long-running operation.
   MOCK_METHOD(Status, CancelOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::CancelOperationRequest const &request),
+               google::longrunning::CancelOperationRequest const& request),
               (override));
 };
 
@@ -185,9 +186,9 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListDatabasesRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListDatabasesRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_TRUE(request.page_token().empty());
 
@@ -200,9 +201,9 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListDatabasesRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListDatabasesRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-1", request.page_token());
 
@@ -215,9 +216,9 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListDatabasesRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListDatabasesRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-2", request.page_token());
 
@@ -231,7 +232,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
   std::vector<std::string> actual_names;
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
-  for (auto const &database : conn->ListDatabases(request)) {
+  for (auto const& database : conn->ListDatabases(request)) {
     ASSERT_STATUS_OK(database);
     actual_names.push_back(database->name());
   }
@@ -270,18 +271,16 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
 TEST(GoldenConnectionTest, CreateDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateDatabaseRequest const
-                 &) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             CreateDatabaseRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -305,13 +304,11 @@ TEST(GoldenConnectionTest, CreateDatabaseSuccess) {
 TEST(GoldenConnectionTest, HandleCreateDatabaseError) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateDatabaseRequest const
-                 &) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             CreateDatabaseRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
   auto fut = conn->CreateDatabase(dbase);
@@ -324,18 +321,16 @@ TEST(GoldenConnectionTest, HandleCreateDatabaseError) {
 TEST(DatabaseAdminClientTest, CreateDatabaseErrorInPoll) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, CreateDatabase)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateDatabaseRequest const
-                 &) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(std::move(op));
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             CreateDatabaseRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(std::move(op));
+      });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_done(true);
@@ -359,9 +354,9 @@ TEST(DatabaseAdminClientTest, GetDatabaseSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::GetDatabaseRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::GetDatabaseRequest const&
+                  request) {
             EXPECT_EQ(expected_name, request.name());
             ::google::test::admin::database::v1::Database response;
             response.set_name(request.name());
@@ -411,21 +406,18 @@ TEST(DatabaseAdminClientTest, GetDatabaseTooManyTransients) {
 TEST(DatabaseAdminClientTest, UpdateDatabaseDdlSuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-                 &) {
-            ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata
-                metadata;
-            metadata.set_database("test-database");
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             UpdateDatabaseDdlRequest const&) {
+        ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata metadata;
+        metadata.set_database("test-database");
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -453,13 +445,11 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseDdlSuccess) {
 TEST(DatabaseAdminClientTest, UpdateDatabaseDdlErrorInPoll) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-                 &) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             UpdateDatabaseDdlRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
@@ -476,18 +466,16 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseDdlErrorInPoll) {
 TEST(DatabaseAdminClientTest, UpdateDatabaseDdlGetOperationError) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-                 &) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(std::move(op));
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             UpdateDatabaseDdlRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(std::move(op));
+      });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_done(true);
@@ -514,9 +502,9 @@ TEST(DatabaseAdminClientTest, DropDatabaseSuccess) {
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::DropDatabaseRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::DropDatabaseRequest const&
+                  request) {
             EXPECT_EQ(expected_name, request.database());
             return Status();
           });
@@ -549,9 +537,9 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdlSuccess) {
       "projects/test-project/instances/test-instance/databases/test-database";
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&expected_name](grpc::ClientContext &,
+      .WillOnce([&expected_name](grpc::ClientContext&,
                                  ::google::test::admin::database::v1::
-                                     GetDatabaseDdlRequest const &request) {
+                                     GetDatabaseDdlRequest const& request) {
         EXPECT_EQ(expected_name, request.database());
         ::google::test::admin::database::v1::GetDatabaseDdlResponse response;
         response.add_statements("CREATE DATABASE test-database");
@@ -611,8 +599,8 @@ TEST(DatabaseAdminClientTest, SetIamPolicySuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([&expected_name, &expected_policy](
-                    grpc::ClientContext &,
-                    google::iam::v1::SetIamPolicyRequest const &request) {
+                    grpc::ClientContext&,
+                    google::iam::v1::SetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         EXPECT_THAT(request.policy(), IsProtoEqual(expected_policy));
         auto response = expected_policy;
@@ -671,11 +659,11 @@ TEST(DatabaseAdminClientTest, GetIamPolicySuccess) {
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&expected_name, &expected_role, &expected_member](
-                    grpc::ClientContext &,
-                    google::iam::v1::GetIamPolicyRequest const &request) {
+                    grpc::ClientContext&,
+                    google::iam::v1::GetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         google::iam::v1::Policy response;
-        auto &binding = *response.add_bindings();
+        auto& binding = *response.add_bindings();
         binding.set_role(expected_role);
         *binding.add_members() = expected_member;
         return response;
@@ -726,8 +714,8 @@ TEST(DatabaseAdminClientTest, TestIamPermissionsSuccess) {
   std::string const expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce([&expected_name, &expected_permission](
-                    grpc::ClientContext &,
-                    google::iam::v1::TestIamPermissionsRequest const &request) {
+                    grpc::ClientContext&,
+                    google::iam::v1::TestIamPermissionsRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         EXPECT_EQ(1, request.permissions_size());
         EXPECT_EQ(expected_permission, request.permissions(0));
@@ -777,16 +765,16 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, CreateBackup)
       .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateBackupRequest const &) {
+          [](grpc::ClientContext&,
+             ::google::test::admin::database::v1::CreateBackupRequest const&) {
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
             op.set_done(false);
             return make_status_or(op);
           });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -818,22 +806,22 @@ TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   promise<void> p;
   EXPECT_CALL(*mock, CreateBackup)
       .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateBackupRequest const &) {
+          [](grpc::ClientContext&,
+             ::google::test::admin::database::v1::CreateBackupRequest const&) {
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
             op.set_done(false);
             return make_status_or(op);
           });
   EXPECT_CALL(*mock, CancelOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::CancelOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return google::cloud::Status();
       });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([&p](grpc::ClientContext &,
-                     google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([&p](grpc::ClientContext&,
+                     google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -842,8 +830,8 @@ TEST(DatabaseAdminClientTest, CreateBackupCancel) {
         p.get_future().get();
         return make_status_or(op);
       })
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -874,8 +862,8 @@ TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, CreateBackup)
       .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::CreateBackupRequest const &) {
+          [](grpc::ClientContext&,
+             ::google::test::admin::database::v1::CreateBackupRequest const&) {
             return StatusOr<google::longrunning::Operation>(
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           });
@@ -898,9 +886,9 @@ TEST(DatabaseAdminClientTest, GetBackupSuccess) {
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](
-                    grpc::ClientContext &,
-                    ::google::test::admin::database::v1::GetBackupRequest const
-                        &request) {
+                    grpc::ClientContext&,
+                    ::google::test::admin::database::v1::GetBackupRequest const&
+                        request) {
         EXPECT_EQ(expected_name, request.name());
         ::google::test::admin::database::v1::Backup response;
         response.set_name(request.name());
@@ -948,9 +936,9 @@ TEST(DatabaseAdminClientTest, UpdateBackupSuccess) {
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::UpdateBackupRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::UpdateBackupRequest const&
+                  request) {
             EXPECT_EQ(expected_name, request.backup().name());
             ::google::test::admin::database::v1::Backup response;
             response.set_name(request.backup().name());
@@ -999,9 +987,9 @@ TEST(DatabaseAdminClientTest, DeleteBackupSuccess) {
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::DeleteBackupRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::DeleteBackupRequest const&
+                  request) {
             EXPECT_EQ(expected_name, request.name());
             return google::cloud::Status();
           });
@@ -1046,9 +1034,9 @@ TEST(DatabaseAdminClientTest, ListBackups) {
   EXPECT_CALL(*mock, ListBackups)
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListBackupsRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListBackupsRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_TRUE(request.page_token().empty());
             ::google::test::admin::database::v1::ListBackupsResponse page;
@@ -1059,9 +1047,9 @@ TEST(DatabaseAdminClientTest, ListBackups) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListBackupsRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListBackupsRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-1", request.page_token());
             ::google::test::admin::database::v1::ListBackupsResponse page;
@@ -1072,9 +1060,9 @@ TEST(DatabaseAdminClientTest, ListBackups) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext &,
-              ::google::test::admin::database::v1::ListBackupsRequest const
-                  &request) {
+              grpc::ClientContext&,
+              ::google::test::admin::database::v1::ListBackupsRequest const&
+                  request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-2", request.page_token());
             ::google::test::admin::database::v1::ListBackupsResponse page;
@@ -1086,7 +1074,7 @@ TEST(DatabaseAdminClientTest, ListBackups) {
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
-  for (auto const &backup : conn->ListBackups(request)) {
+  for (auto const& backup : conn->ListBackups(request)) {
     ASSERT_STATUS_OK(backup);
     actual_names.push_back(backup->name());
   }
@@ -1126,18 +1114,16 @@ TEST(DatabaseAdminClientTest, ListBackupsTooManyFailures) {
 TEST(DatabaseAdminClientTest, RestoreDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::RestoreDatabaseRequest const
-                 &) {
-            google::longrunning::Operation op;
-            op.set_name("test-operation-name");
-            op.set_done(false);
-            return make_status_or(op);
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             RestoreDatabaseRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
   EXPECT_CALL(*mock, GetOperation)
-      .WillOnce([](grpc::ClientContext &,
-                   google::longrunning::GetOperationRequest const &r) {
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
         op.set_name(r.name());
@@ -1166,13 +1152,11 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseSuccess) {
 TEST(DatabaseAdminClientTest, HandleRestoreDatabaseError) {
   auto mock = std::make_shared<MockGoldenStub>();
   EXPECT_CALL(*mock, RestoreDatabase)
-      .WillOnce(
-          [](grpc::ClientContext &,
-             ::google::test::admin::database::v1::RestoreDatabaseRequest const
-                 &) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          });
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             RestoreDatabaseRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
@@ -1193,9 +1177,9 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
       "projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce(
-          [&expected_parent](grpc::ClientContext &,
+          [&expected_parent](grpc::ClientContext&,
                              ::google::test::admin::database::v1::
-                                 ListDatabaseOperationsRequest const &request) {
+                                 ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_TRUE(request.page_token().empty());
 
@@ -1207,9 +1191,9 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
             return make_status_or(page);
           })
       .WillOnce(
-          [&expected_parent](grpc::ClientContext &,
+          [&expected_parent](grpc::ClientContext&,
                              ::google::test::admin::database::v1::
-                                 ListDatabaseOperationsRequest const &request) {
+                                 ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-1", request.page_token());
 
@@ -1221,9 +1205,9 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
             return make_status_or(page);
           })
       .WillOnce(
-          [&expected_parent](grpc::ClientContext &,
+          [&expected_parent](grpc::ClientContext&,
                              ::google::test::admin::database::v1::
-                                 ListDatabaseOperationsRequest const &request) {
+                                 ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("page-2", request.page_token());
 
@@ -1237,7 +1221,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
-  for (auto const &operation : conn->ListDatabaseOperations(request)) {
+  for (auto const& operation : conn->ListDatabaseOperations(request)) {
     ASSERT_STATUS_OK(operation);
     actual_names.push_back(operation->name());
   }
@@ -1279,9 +1263,9 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
       "projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackupOperations)
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
+                    grpc::ClientContext&,
                     ::google::test::admin::database::v1::
-                        ListBackupOperationsRequest const &request) {
+                        ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
 
@@ -1292,9 +1276,9 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
+                    grpc::ClientContext&,
                     ::google::test::admin::database::v1::
-                        ListBackupOperationsRequest const &request) {
+                        ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-1", request.page_token());
         ::google::test::admin::database::v1::ListBackupOperationsResponse page;
@@ -1304,9 +1288,9 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
+                    grpc::ClientContext&,
                     ::google::test::admin::database::v1::
-                        ListBackupOperationsRequest const &request) {
+                        ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-2", request.page_token());
         ::google::test::admin::database::v1::ListBackupOperationsResponse page;
@@ -1318,7 +1302,7 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/test-project/instances/test-instance");
   std::vector<std::string> actual_names;
-  for (auto const &operation : conn->ListBackupOperations(request)) {
+  for (auto const& operation : conn->ListBackupOperations(request)) {
     ASSERT_STATUS_OK(operation);
     actual_names.push_back(operation->name());
   }
@@ -1353,8 +1337,8 @@ TEST(DatabaseAdminClientTest, ListBackupOperationsTooManyFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

@@ -28,136 +28,133 @@ namespace golden_internal {
 namespace {
 class MockGrpcIAMCredentialsStub : public ::google::test::admin::database::v1::
                                        IAMCredentials::StubInterface {
-public:
+ public:
   ~MockGrpcIAMCredentialsStub() override = default;
   MOCK_METHOD(
       ::grpc::Status, GenerateAccessToken,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest
-           &request,
-       ::google::test::admin::database::v1::GenerateAccessTokenResponse
-           *response),
+       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+           request,
+       ::google::test::admin::database::v1::GenerateAccessTokenResponse*
+           response),
       (override));
   MOCK_METHOD(
       ::grpc::Status, GenerateIdToken,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest
-           &request,
-       ::google::test::admin::database::v1::GenerateIdTokenResponse *response),
+       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+           request,
+       ::google::test::admin::database::v1::GenerateIdTokenResponse* response),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::GenerateAccessTokenResponse> *,
+          ::google::test::admin::database::v1::GenerateAccessTokenResponse>*,
       AsyncGenerateAccessTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::GenerateAccessTokenResponse> *,
+          ::google::test::admin::database::v1::GenerateAccessTokenResponse>*,
       PrepareAsyncGenerateAccessTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateAccessTokenRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::GenerateAccessTokenRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::GenerateIdTokenResponse> *,
+          ::google::test::admin::database::v1::GenerateIdTokenResponse>*,
       AsyncGenerateIdTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::GenerateIdTokenResponse> *,
+          ::google::test::admin::database::v1::GenerateIdTokenResponse>*,
       PrepareAsyncGenerateIdTokenRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::GenerateIdTokenRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::GenerateIdTokenRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::Status, WriteLogEntries,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest
-           &request,
-       ::google::test::admin::database::v1::WriteLogEntriesResponse *response),
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+           request,
+       ::google::test::admin::database::v1::WriteLogEntriesResponse* response),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::WriteLogEntriesResponse> *,
+          ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
       AsyncWriteLogEntriesRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::WriteLogEntriesResponse> *,
+          ::google::test::admin::database::v1::WriteLogEntriesResponse>*,
       PrepareAsyncWriteLogEntriesRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::WriteLogEntriesRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::WriteLogEntriesRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::Status, ListLogs,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest &request,
-       ::google::test::admin::database::v1::ListLogsResponse *response),
+       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::google::test::admin::database::v1::ListLogsResponse* response),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::ListLogsResponse> *,
+          ::google::test::admin::database::v1::ListLogsResponse>*,
       AsyncListLogsRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<
-          ::google::test::admin::database::v1::ListLogsResponse> *,
+          ::google::test::admin::database::v1::ListLogsResponse>*,
       PrepareAsyncListLogsRaw,
       (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::ListLogsRequest &request,
-       ::grpc::CompletionQueue *cq),
+       const ::google::test::admin::database::v1::ListLogsRequest& request,
+       ::grpc::CompletionQueue* cq),
       (override));
-  MOCK_METHOD(
-      ::grpc::ClientReaderInterface<
-          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
-      TailLogEntriesRaw,
-      (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::TailLogEntriesRequest
-           &request),
-      (override));
-  MOCK_METHOD(
-      ::grpc::ClientAsyncReaderInterface<
-          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
-      AsyncTailLogEntriesRaw,
-      (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::TailLogEntriesRequest
-           &request,
-       ::grpc::CompletionQueue *cq, void *tag),
-      (override));
-  MOCK_METHOD(
-      ::grpc::ClientAsyncReaderInterface<
-          ::google::test::admin::database::v1::TailLogEntriesResponse> *,
-      PrepareAsyncTailLogEntriesRaw,
-      (::grpc::ClientContext * context,
-       const ::google::test::admin::database::v1::TailLogEntriesRequest
-           &request,
-       ::grpc::CompletionQueue *cq),
-      (override));
+  MOCK_METHOD(::grpc::ClientReaderInterface<
+                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
+              TailLogEntriesRaw,
+              (::grpc::ClientContext * context,
+               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+                   request),
+              (override));
+  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<
+                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
+              AsyncTailLogEntriesRaw,
+              (::grpc::ClientContext * context,
+               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+                   request,
+               ::grpc::CompletionQueue* cq, void* tag),
+              (override));
+  MOCK_METHOD(::grpc::ClientAsyncReaderInterface<
+                  ::google::test::admin::database::v1::TailLogEntriesResponse>*,
+              PrepareAsyncTailLogEntriesRaw,
+              (::grpc::ClientContext * context,
+               const ::google::test::admin::database::v1::TailLogEntriesRequest&
+                   request,
+               ::grpc::CompletionQueue* cq),
+              (override));
 };
 
 class IAMCredentialsStubTest : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override {
     grpc_stub_ = std::unique_ptr<MockGrpcIAMCredentialsStub>(
         new MockGrpcIAMCredentialsStub());
@@ -232,11 +229,11 @@ TEST_F(IAMCredentialsStubTest, ListLogs) {
 class MockTailLogEntriesResponse
     : public ::grpc::ClientReaderInterface<
           google::test::admin::database::v1::TailLogEntriesResponse> {
-public:
+ public:
   MOCK_METHOD(::grpc::Status, Finish, (), (override));
-  MOCK_METHOD(bool, NextMessageSize, (uint32_t *), (override));
+  MOCK_METHOD(bool, NextMessageSize, (uint32_t*), (override));
   MOCK_METHOD(bool, Read,
-              (google::test::admin::database::v1::TailLogEntriesResponse *),
+              (google::test::admin::database::v1::TailLogEntriesResponse*),
               (override));
   MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
 };
@@ -244,8 +241,8 @@ public:
 TEST_F(IAMCredentialsStubTest, TailLogEntries) {
   grpc::Status status;
   grpc::ClientContext context;
-  auto *success_response = new MockTailLogEntriesResponse;
-  auto *failure_response = new MockTailLogEntriesResponse;
+  auto* success_response = new MockTailLogEntriesResponse;
+  auto* failure_response = new MockTailLogEntriesResponse;
   EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
   EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
   EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
@@ -264,8 +261,8 @@ TEST_F(IAMCredentialsStubTest, TailLogEntries) {
   EXPECT_EQ(failure_status.code(), StatusCode::kUnavailable);
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

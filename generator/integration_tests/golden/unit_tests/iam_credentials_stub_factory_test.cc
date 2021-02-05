@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -26,7 +26,7 @@ namespace {
 using ::testing::HasSubstr;
 
 class IAMCredentialsStubFactoryTest : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override {
     backend_ =
         std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
@@ -44,9 +44,9 @@ protected:
 
   std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
 
-private:
+ private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0; // NOLINT
+  long logger_id_ = 0;  // NOLINT
 };
 
 TEST_F(IAMCredentialsStubFactoryTest, DefaultStubWithoutLogging) {
@@ -63,8 +63,8 @@ TEST_F(IAMCredentialsStubFactoryTest, DefaultStubWithLogging) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

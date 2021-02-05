@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include <gmock/gmock.h>
+#include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
+#include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
@@ -36,42 +36,42 @@ using ::testing::Return;
 
 class MockIAMCredentialsStub
     : public google::cloud::golden_internal::IAMCredentialsStub {
-public:
+ public:
   ~MockIAMCredentialsStub() override = default;
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateAccessTokenRequest const
-           &request),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateIdTokenRequest const
-           &request),
+       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
+           request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
       WriteLogEntries,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::WriteLogEntriesRequest const
-           &request),
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
+           request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListLogsRequest const &request),
+       ::google::test::admin::database::v1::ListLogsRequest const& request),
       (override));
   MOCK_METHOD(
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::TailLogEntriesRequest const
-           &request),
+       ::google::test::admin::database::v1::TailLogEntriesRequest const&
+           request),
       (override));
 };
 
@@ -94,9 +94,9 @@ std::shared_ptr<golden::IAMCredentialsConnection> CreateTestingConnection(
 TEST(IAMCredentialsConnectionTest, GenerateAccessTokenSuccess) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce([](grpc::ClientContext &,
+      .WillOnce([](grpc::ClientContext&,
                    ::google::test::admin::database::v1::
-                       GenerateAccessTokenRequest const &) {
+                       GenerateAccessTokenRequest const&) {
         ::google::test::admin::database::v1::GenerateAccessTokenResponse
             response;
         return response;
@@ -132,8 +132,8 @@ TEST(IAMCredentialsConnectionTest, GenerateAccessTokenTooManyTransients) {
 TEST(IAMCredentialsConnectionTest, GenerateIdTokenSuccess) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, GenerateIdToken)
-      .WillOnce([](grpc::ClientContext &, ::google::test::admin::database::v1::
-                                              GenerateIdTokenRequest const &) {
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             GenerateIdTokenRequest const&) {
         ::google::test::admin::database::v1::GenerateIdTokenResponse response;
         return response;
       });
@@ -168,8 +168,8 @@ TEST(IAMCredentialsConnectionTest, GenerateIdTokenTooManyTransients) {
 TEST(IAMCredentialsConnectionTest, WriteLogEntriesSuccess) {
   auto mock = std::make_shared<MockIAMCredentialsStub>();
   EXPECT_CALL(*mock, WriteLogEntries)
-      .WillOnce([](grpc::ClientContext &, ::google::test::admin::database::v1::
-                                              WriteLogEntriesRequest const &) {
+      .WillOnce([](grpc::ClientContext&, ::google::test::admin::database::v1::
+                                             WriteLogEntriesRequest const&) {
         ::google::test::admin::database::v1::WriteLogEntriesResponse response;
         return response;
       });
@@ -206,9 +206,9 @@ TEST(IAMCredentialsConnectionTest, ListLogsSuccess) {
   std::string const expected_parent = "projects/my-project";
   EXPECT_CALL(*mock, ListLogs)
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
-                    ::google::test::admin::database::v1::ListLogsRequest const
-                        &request) {
+                    grpc::ClientContext&,
+                    ::google::test::admin::database::v1::ListLogsRequest const&
+                        request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
         ::google::test::admin::database::v1::ListLogsResponse page;
@@ -217,9 +217,9 @@ TEST(IAMCredentialsConnectionTest, ListLogsSuccess) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
-                    ::google::test::admin::database::v1::ListLogsRequest const
-                        &request) {
+                    grpc::ClientContext&,
+                    ::google::test::admin::database::v1::ListLogsRequest const&
+                        request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-1", request.page_token());
         ::google::test::admin::database::v1::ListLogsResponse page;
@@ -228,9 +228,9 @@ TEST(IAMCredentialsConnectionTest, ListLogsSuccess) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext &,
-                    ::google::test::admin::database::v1::ListLogsRequest const
-                        &request) {
+                    grpc::ClientContext&,
+                    ::google::test::admin::database::v1::ListLogsRequest const&
+                        request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-2", request.page_token());
         ::google::test::admin::database::v1::ListLogsResponse page;
@@ -242,7 +242,7 @@ TEST(IAMCredentialsConnectionTest, ListLogsSuccess) {
   std::vector<std::string> actual_log_names;
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");
-  for (auto const &log_name : conn->ListLogs(request)) {
+  for (auto const& log_name : conn->ListLogs(request)) {
     ASSERT_STATUS_OK(log_name);
     actual_log_names.push_back(*log_name);
   }
@@ -279,7 +279,7 @@ TEST(IAMCredentialsConnectionTest, ListLogsTooManyTransients) {
 class MockTailLogEntriesStreamingReadRpc
     : public internal::StreamingReadRpc<
           google::test::admin::database::v1::TailLogEntriesResponse> {
-public:
+ public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(
       (absl::variant<
@@ -287,8 +287,8 @@ public:
       Read, (), (override));
 };
 
-std::unique_ptr<MockTailLogEntriesStreamingReadRpc>
-MakeFailingReader(Status status) {
+std::unique_ptr<MockTailLogEntriesStreamingReadRpc> MakeFailingReader(
+    Status status) {
   auto reader = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
   EXPECT_CALL(*reader, Read).WillOnce(Return(status));
   return reader;
@@ -307,8 +307,8 @@ TEST(IAMCredentialsConnectionTest, TailLogEntriesPermanentError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
