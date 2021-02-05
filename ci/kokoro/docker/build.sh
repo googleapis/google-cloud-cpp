@@ -121,6 +121,7 @@ elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO_VERSION=18.04
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+  GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance,backup"
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
