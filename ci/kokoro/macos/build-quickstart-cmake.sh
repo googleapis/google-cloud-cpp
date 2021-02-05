@@ -23,22 +23,30 @@ source module etc/quickstart-config.sh
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-# Clone and build vcpkg
-vcpkg_dir="cmake-out/vcpkg-quickstart"
-if [[ -d "${vcpkg_dir}" ]]; then
-  git -C "${vcpkg_dir}" pull --quiet
+# Fetch vcpkg at the specified hash.
+vcpkg_dir="${HOME}/vcpkg-quickstart"
+vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
+vcpkg_bin="${vcpkg_dir}/vcpkg"
+mkdir -p "${vcpkg_dir}"
+echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
+curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" |
+  tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
+
+# Compile vcpkg only if we don't already have a cached binary.
+vcpkg_cache_dir="${HOME}/.cache/google-cloud-cpp/vcpkg"
+vcpkg_cache_bin="${vcpkg_cache_dir}/vcpkg.${vcpkg_sha}"
+mkdir -p "${vcpkg_cache_dir}"
+if [[ -x "${vcpkg_cache_bin}" ]]; then
+  echo "Using cached binary ${vcpkg_cache_bin}"
+  cp "${vcpkg_cache_bin}" "${vcpkg_bin}"
 else
-  git clone --quiet --shallow-since 2020-10-20 \
-    https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-  git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
+  "${vcpkg_dir}"/bootstrap-vcpkg.sh
+  rm -vf "${vcpkg_cache_dir}"/* # Clean up stale cached vcpkg binaries
+  cp "${vcpkg_bin}" "${vcpkg_cache_bin}"
 fi
 
-(
-  cd "${vcpkg_dir}"
-  ./bootstrap-vcpkg.sh
-  ./vcpkg remove --outdated --recurse
-  ./vcpkg install google-cloud-cpp
-)
+"${vcpkg_bin}" remove --outdated --recurse
+"${vcpkg_bin}" install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"

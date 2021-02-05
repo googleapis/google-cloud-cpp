@@ -43,6 +43,9 @@ maybe_dirs=(
   # This is where ccache stores its files, if present we want to back it up
   "${HOME}/.ccache"
 
+  # This is where vcpkg caches its output.
+  "${HOME}/.cache"
+
   # The quickstart builds need to preserve the contents of the vcpkg installed/
   # directory, but we have to separate it from the other files in `vcpkg` or
   # things like `git clone` do not work as expected.
