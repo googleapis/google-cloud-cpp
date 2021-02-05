@@ -24,8 +24,8 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/stream_range.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -56,7 +56,7 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
 using ListLogsRange = google::cloud::internal::PaginationRange<
     std::string>;
 
-using TailLogEntriesStream = google::cloud::internal::StreamRange<
+using TailLogEntriesStream = google::cloud::StreamRange<
     ::google::test::admin::database::v1::TailLogEntriesResponse>;
 
 void IAMCredentialsTailLogEntriesStreamingUpdater(

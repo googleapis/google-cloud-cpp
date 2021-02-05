@@ -52,9 +52,10 @@ Status ConnectionGenerator::GenerateHeader() {
        "google/cloud/connection_options.h",
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
-       HasStreamingReadMethod() ? "google/cloud/internal/stream_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
-       "google/cloud/status_or.h", "google/cloud/version.h"});
+       "google/cloud/status_or.h",
+       HasStreamingReadMethod() ? "google/cloud/stream_range.h" : "",
+       "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
@@ -105,7 +106,7 @@ Status ConnectionGenerator::GenerateHeader() {
              All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
          MethodPattern(
              {// clang-format off
-   {"using $method_name$Stream = google::cloud::internal::StreamRange<\n"
+   {"using $method_name$Stream = google::cloud::StreamRange<\n"
     "    $response_type$>;\n"
     "\n"
     "void $service_name$$method_name$StreamingUpdater(\n"
