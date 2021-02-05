@@ -45,10 +45,10 @@ maybe_dirs=(
 
   # Default location for vcpkg's binary cache.
   # https://vcpkg.readthedocs.io/en/latest/specifications/binarycaching/
-  "${HOME_DIR}/.cache/vcpkg"
+  "${HOME}/.cache/vcpkg"
 
   # This dir may contain arbitrary things that our scripts want to cache.
-  "${HOME_DIR}/.cache/google-cloud-cpp"
+  "${HOME}/.cache/google-cloud-cpp"
 )
 
 dirs=()
