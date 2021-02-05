@@ -39,8 +39,12 @@ maybe_dirs=(
   # This is where ccache stores its files, if present we want to back it up
   "${HOME_DIR}/.ccache"
 
-  # Bazel and vcpkg put their caches within here.
-  "${HOME_DIR}/.cache"
+  # Default location for vcpkg's binary cache.
+  # https://vcpkg.readthedocs.io/en/latest/specifications/binarycaching/
+  "${HOME_DIR}/.cache/vcpkg"
+
+  # This dir may contain arbitrary things that our scripts want to cache.
+  "${HOME_DIR}/.cache/google-cloud-cpp"
 )
 
 dirs=()

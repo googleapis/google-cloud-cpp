@@ -43,13 +43,12 @@ maybe_dirs=(
   # This is where ccache stores its files, if present we want to back it up
   "${HOME}/.ccache"
 
-  # This is where vcpkg caches its output.
-  "${HOME}/.cache"
+  # Default location for vcpkg's binary cache.
+  # https://vcpkg.readthedocs.io/en/latest/specifications/binarycaching/
+  "${HOME_DIR}/.cache/vcpkg"
 
-  # The quickstart builds need to preserve the contents of the vcpkg installed/
-  # directory, but we have to separate it from the other files in `vcpkg` or
-  # things like `git clone` do not work as expected.
-  "${PROJECT_ROOT}/cmake-out/upload/vcpkg-installed"
+  # This dir may contain arbitrary things that our scripts want to cache.
+  "${HOME_DIR}/.cache/google-cloud-cpp"
 )
 
 dirs=()
