@@ -24,6 +24,7 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+
 Status CleanupStaleInstances(std::string const& project_id,
                              std::regex const& instance_name_regex) {
   spanner::DatabaseAdminClient database_admin_client(

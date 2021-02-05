@@ -24,6 +24,15 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+
+/**
+ * Delete any instances (and their backups) within the project @p project_id
+ * that match the @p instance_name_regex and are named with a YYYY-MM-DD prior
+ * to yesterday.
+ *
+ * instance_name_regex.mark_count() must be (at least) 2, where the first two
+ * capture groups are the instance ID and the YYYY-MM-DD fragment respectively.
+ */
 Status CleanupStaleInstances(std::string const& project_id,
                              std::regex const& instance_name_regex);
 
