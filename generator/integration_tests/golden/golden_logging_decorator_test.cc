@@ -31,20 +31,20 @@ using ::testing::Return;
 
 class MockGoldenStub
     : public google::cloud::golden_internal::DatabaseAdminStub {
-public:
+ public:
   ~MockGoldenStub() override = default;
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>,
       ListDatabases,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabasesRequest const
-           &request),
+       ::google::test::admin::database::v1::ListDatabasesRequest const&
+       request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateDatabase,
               (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::CreateDatabaseRequest const
-                   &request),
+               ::google::test::admin::database::v1::CreateDatabaseRequest const&
+               request),
               (override));
 
   MOCK_METHOD(
@@ -56,8 +56,8 @@ public:
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const
-           &request),
+       ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
+       request),
       (override));
 
   MOCK_METHOD(
@@ -70,8 +70,8 @@ public:
       StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
       GetDatabaseDdl,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseDdlRequest const
-           &request),
+       ::google::test::admin::database::v1::GetDatabaseDdlRequest const&
+       request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
@@ -121,19 +121,20 @@ public:
        ::google::test::admin::database::v1::ListBackupsRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-              (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::RestoreDatabaseRequest const
-                   &request),
-              (override));
+  MOCK_METHOD(
+      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::RestoreDatabaseRequest const&
+       request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListDatabaseOperationsResponse>,
       ListDatabaseOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const
-           &request),
+       ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
+       request),
       (override));
 
   MOCK_METHOD(
@@ -141,8 +142,8 @@ public:
           ::google::test::admin::database::v1::ListBackupOperationsResponse>,
       ListBackupOperations,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupOperationsRequest const
-           &request),
+       ::google::test::admin::database::v1::ListBackupOperationsRequest const&
+       request),
       (override));
 
   /// Poll a long-running operation.
