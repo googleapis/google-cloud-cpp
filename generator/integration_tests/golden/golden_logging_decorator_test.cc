@@ -50,7 +50,7 @@ public:
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Database>, GetDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetDatabaseRequest const &request),
+       ::google::test::admin::database::v1::GetDatabaseRequest const& request),
       (override));
 
   MOCK_METHOD(
@@ -63,7 +63,7 @@ public:
   MOCK_METHOD(
       Status, DropDatabase,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DropDatabaseRequest const &request),
+       ::google::test::admin::database::v1::DropDatabaseRequest const& request),
       (override));
 
   MOCK_METHOD(
@@ -76,49 +76,49 @@ public:
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::SetIamPolicyRequest const &request),
+               ::google::iam::v1::SetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
               (grpc::ClientContext & context,
-               ::google::iam::v1::GetIamPolicyRequest const &request),
+               ::google::iam::v1::GetIamPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
               (grpc::ClientContext & context,
-               ::google::iam::v1::TestIamPermissionsRequest const &request),
+               ::google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
   MOCK_METHOD(
       StatusOr<::google::longrunning::Operation>, CreateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::CreateBackupRequest const &request),
+       ::google::test::admin::database::v1::CreateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GetBackupRequest const &request),
+       ::google::test::admin::database::v1::GetBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::Backup>, UpdateBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::UpdateBackupRequest const &request),
+       ::google::test::admin::database::v1::UpdateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
       Status, DeleteBackup,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::DeleteBackupRequest const &request),
+       ::google::test::admin::database::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListBackupsResponse>,
       ListBackups,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListBackupsRequest const &request),
+       ::google::test::admin::database::v1::ListBackupsRequest const& request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::longrunning::Operation>, RestoreDatabase,
@@ -148,18 +148,18 @@ public:
   /// Poll a long-running operation.
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::GetOperationRequest const &request),
+               google::longrunning::GetOperationRequest const& request),
               (override));
 
   /// Cancel a long-running operation.
   MOCK_METHOD(Status, CancelOperation,
               (grpc::ClientContext & client_context,
-               google::longrunning::CancelOperationRequest const &request),
+               google::longrunning::CancelOperationRequest const& request),
               (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override {
     backend_ =
         std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
@@ -180,7 +180,7 @@ protected:
 
   std::shared_ptr<MockGoldenStub> mock_;
 
-private:
+ private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
   long logger_id_ = 0; // NOLINT
 };
@@ -473,8 +473,8 @@ TEST_F(LoggingDecoratorTest, CancelOperation) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
