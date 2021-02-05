@@ -22,6 +22,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
@@ -33,7 +34,8 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  public:
   ~IAMCredentialsLogging() override = default;
   IAMCredentialsLogging(std::shared_ptr<IAMCredentialsStub> child,
-                       TracingOptions tracing_options);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
     grpc::ClientContext& context,
@@ -51,7 +53,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
@@ -59,6 +61,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };  // IAMCredentialsLogging
 
 }  // namespace golden_internal

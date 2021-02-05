@@ -126,6 +126,11 @@ class ConnectionOptions {
     return *this;
   }
 
+  /// Return the set of tracing components.
+  std::set<std::string> const& components() const {
+    return tracing_components_;
+  }
+
   /// Return the options for use when tracing RPCs.
   TracingOptions const& tracing_options() const { return tracing_options_; }
 

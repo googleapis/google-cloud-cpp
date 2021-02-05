@@ -246,18 +246,22 @@ TEST_F(IAMCredentialsStubTest, TailLogEntries) {
   grpc::ClientContext context;
   auto *success_response = new MockTailLogEntriesResponse;
   auto *failure_response = new MockTailLogEntriesResponse;
+  EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
   EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
-  EXPECT_CALL(*failure_response, Finish())
-      .WillOnce(Return(GrpcTransientError()));
+  EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
+  EXPECT_CALL(*failure_response, Finish).WillOnce(Return(GrpcTransientError()));
+
   google::test::admin::database::v1::TailLogEntriesRequest request;
-  EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw(&context, _))
+  EXPECT_CALL(*grpc_stub_, TailLogEntriesRaw)
       .WillOnce(Return(success_response))
       .WillOnce(Return(failure_response));
   DefaultIAMCredentialsStub stub(std::move(grpc_stub_));
-  auto success = stub.TailLogEntries(context, request);
-  EXPECT_TRUE(success->Finish().ok());
-  auto failure = stub.TailLogEntries(context, request);
-  EXPECT_EQ(failure->Finish().error_code(), grpc::StatusCode::UNAVAILABLE);
+  auto success_stream = stub.TailLogEntries(context, request);
+  auto success_status = absl::get<Status>(success_stream->Read());
+  EXPECT_TRUE(success_status.ok());
+  auto failure_stream = stub.TailLogEntries(context, request);
+  auto failure_status = absl::get<Status>(failure_stream->Read());
+  EXPECT_EQ(failure_status.code(), StatusCode::kUnavailable);
 }
 
 } // namespace

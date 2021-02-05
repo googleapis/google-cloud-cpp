@@ -18,6 +18,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_IAM_CREDENTIALS_STUB_GCPCXX_PB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_IAM_CREDENTIALS_STUB_GCPCXX_PB_H
 
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -48,7 +49,7 @@ class IAMCredentialsStub {
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
-  virtual std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  virtual std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     grpc::ClientContext& context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
@@ -81,7 +82,7 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
     grpc::ClientContext& client_context,
     ::google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<grpc::ClientReaderInterface<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     grpc::ClientContext& client_context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;

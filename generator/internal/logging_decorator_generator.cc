@@ -53,7 +53,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
                        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "string"});
+       "memory", "set", "string"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
@@ -65,7 +65,8 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     " public:\n"
     "  ~$logging_class_name$() override = default;\n"
     "  $logging_class_name$(std::shared_ptr<$stub_class_name$> child,\n"
-    "                       TracingOptions tracing_options);\n"
+    "                       TracingOptions tracing_options,\n"
+    "                       std::set<std::string> components);\n"
     "\n");
   // clang-format on
 
@@ -83,7 +84,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
                        IsNonStreaming),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) override;\n"
@@ -114,6 +115,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     " private:\n"
     "  std::shared_ptr<$stub_class_name$> child_;\n"
     "  TracingOptions tracing_options_;\n"
+    "  std::set<std::string> components_;\n"
     "};  // $logging_class_name$\n"
     "\n");
   // clang-format on
@@ -137,6 +139,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   // includes
   CcLocalIncludes({vars("logging_header_path"),
                    "google/cloud/internal/log_wrapper.h",
+                   HasStreamingReadMethod()
+                       ? "google/cloud/internal/streaming_read_rpc_logging.h"
+                       : "",
                    "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
@@ -148,9 +153,10 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   CcPrint(  // clang-format off
     "$logging_class_name$::$logging_class_name$(\n"
     "    std::shared_ptr<$stub_class_name$> child,\n"
-    "    TracingOptions tracing_options)\n"
-    "    : child_(std::move(child)), "
-    "tracing_options_(std::move(tracing_options)) {}\n"
+    "    TracingOptions tracing_options,\n"
+    "    std::set<std::string> components)\n"
+    "    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),\n"
+    "      components_(std::move(components)) {}\n"
     "\n");
   // clang-format on
 
@@ -179,13 +185,23 @@ Status LoggingDecoratorGenerator::GenerateCc() {
              IsNonStreaming),
          MethodPattern(
              {// clang-format off}
-              {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+              {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
                "$logging_class_name$::$method_name$(\n"
                "    grpc::ClientContext& context,\n"
                "    $request_type$ const& request) {\n"
                "  return google::cloud::internal::LogWrapper(\n"
                "      [this](grpc::ClientContext& context,\n"
-               "             $request_type$ const& request) {\n"
+               "             $request_type$ const& request) ->\n"
+               "      "
+               "std::unique_ptr<internal::StreamingReadRpc<$response_type$>> "
+               "{\n"
+               "        if (components_.count(\"rpc-streams\") > 0) {\n"
+               "          return "
+               "absl::make_unique<internal::StreamingReadRpcLogging<\n"
+               "             $response_type$>>(\n"
+               "             child_->$method_name$(context, request), "
+               "tracing_options_, internal::RequestIdForLogging());\n"
+               "        }\n"
                "        return child_->$method_name$(context, request);\n"
                "      },\n"
                "      context, request, __func__, tracing_options_);\n"

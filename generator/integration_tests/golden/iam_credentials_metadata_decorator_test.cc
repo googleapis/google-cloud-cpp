@@ -59,13 +59,14 @@ public:
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
-  MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
-                  ::google::test::admin::database::v1::TailLogEntriesResponse>>,
-              TailLogEntries,
-              (grpc::ClientContext & context,
-               ::google::test::admin::database::v1::TailLogEntriesRequest const
-                   &request),
-              (override));
+  MOCK_METHOD(
+      (std::unique_ptr<internal::StreamingReadRpc<
+           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
+      TailLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::TailLogEntriesRequest const
+           &request),
+      (override));
 };
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -168,23 +169,22 @@ TEST_F(MetadataDecoratorTest, ListLogs) {
   EXPECT_EQ(TransientError(), status.status());
 }
 
-class MockTailLogEntriesResponse
-    : public ::grpc::ClientReaderInterface<
+class MockTailLogEntriesStreamingReadRpc
+    : public internal::StreamingReadRpc<
           google::test::admin::database::v1::TailLogEntriesResponse> {
 public:
-  MOCK_METHOD(::grpc::Status, Finish, (), (override));
-  MOCK_METHOD(bool, NextMessageSize, (uint32_t *), (override));
-  MOCK_METHOD(bool, Read,
-              (google::test::admin::database::v1::TailLogEntriesResponse *),
-              (override));
-  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(
+      (absl::variant<
+          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
+      Read, (), (override));
 };
 
 TEST_F(MetadataDecoratorTest, TailLogEntries) {
-  auto mock_response = new MockTailLogEntriesResponse;
-  EXPECT_CALL(*mock_response, Finish())
-      .WillOnce((Return(GrpcTransientError())));
-  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  EXPECT_CALL(*mock_response, Read)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(
           [mock_response,
            this](grpc::ClientContext &context,
@@ -194,7 +194,7 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
                 context,
                 "google.test.admin.database.v1.IAMCredentials.TailLogEntries",
                 expected_api_client_header_));
-            return std::unique_ptr<grpc::ClientReaderInterface<
+            return std::unique_ptr<internal::StreamingReadRpc<
                 ::google::test::admin::database::v1::TailLogEntriesResponse>>(
                 mock_response);
           });
@@ -202,7 +202,7 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
   grpc::ClientContext context;
   google::test::admin::database::v1::TailLogEntriesRequest request;
   auto response = stub.TailLogEntries(context, request);
-  EXPECT_FALSE(response->Finish().ok());
+  EXPECT_FALSE(absl::get<Status>(response->Read()).ok());
 }
 
 } // namespace

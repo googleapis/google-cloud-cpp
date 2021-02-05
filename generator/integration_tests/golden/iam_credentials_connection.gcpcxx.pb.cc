@@ -200,11 +200,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
     auto factory = [stub](
         ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
       auto context = absl::make_unique<grpc::ClientContext>();
-      auto stream = stub->TailLogEntries(*context, request);
-      return absl::make_unique<
-          internal::StreamingReadRpcImpl<
-            ::google::test::admin::database::v1::TailLogEntriesResponse>>(
-          std::move(context), std::move(stream));
+      return stub->TailLogEntries(*context, request);
     };
 
     auto resumable =
@@ -215,12 +211,6 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
                 [](std::chrono::milliseconds) {}, factory,
                 IAMCredentialsTailLogEntriesStreamingUpdater,
                 std::move(request));
-
-    if (options_.tracing_enabled("rpc-streams")) {
-      resumable = std::make_shared<internal::StreamingReadRpcLogging<
-                ::google::test::admin::database::v1::TailLogEntriesResponse>>(
-              std::move(resumable), options_.tracing_options(), "foo");
-    }
 
     return internal::MakeStreamRange(internal::StreamReader<
         ::google::test::admin::database::v1::TailLogEntriesResponse>(

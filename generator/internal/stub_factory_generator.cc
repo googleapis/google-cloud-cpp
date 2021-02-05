@@ -119,8 +119,8 @@ Status StubFactoryGenerator::GenerateCc() {
     "  if (options.tracing_enabled(\"rpc\")) {\n"
     "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
     "    stub = std::make_shared<$logging_class_name$>(std::move(stub),\n"
-    "                                                  "
-    "options.tracing_options());\n"
+    "                                                  options.tracing_options(),\n"
+    "                                                  options.components());\n"
     "  }\n"
     "  return stub;\n"
     "}\n\n");

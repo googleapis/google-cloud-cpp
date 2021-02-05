@@ -80,7 +80,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
                        IsNonStreaming),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "    $method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) override;\n"
@@ -177,7 +177,7 @@ Status MetadataDecoratorGenerator::GenerateCc() {
          MethodPattern(
              {
                  // clang-format off
-   {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "$metadata_class_name$::$method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) {\n"},

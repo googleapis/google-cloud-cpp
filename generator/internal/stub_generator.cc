@@ -48,7 +48,10 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  HeaderLocalIncludes({"google/cloud/status_or.h", "google/cloud/version.h"});
+  HeaderLocalIncludes({HasStreamingReadMethod()
+                           ? "google/cloud/internal/streaming_read_rpc.h"
+                           : "",
+                       "google/cloud/status_or.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -81,7 +84,7 @@ Status StubGenerator::GenerateHeader() {
              IsNonStreaming),
          MethodPattern(
              {// clang-format off
-   {"  virtual std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) = 0;\n"
@@ -148,7 +151,7 @@ Status StubGenerator::GenerateHeader() {
                        IsNonStreaming),
          MethodPattern(
              {// clang-format off
-   {"  std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
     "    grpc::ClientContext& client_context,\n"
     "    $request_type$ const& request) override;\n"
@@ -206,6 +209,7 @@ Status StubGenerator::GenerateCc() {
 
   // includes
   CcLocalIncludes({vars("stub_header_path"),
+                   HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
                    "google/cloud/grpc_error_delegate.h",
                    "google/cloud/status_or.h"});
   CcSystemIncludes(
@@ -248,11 +252,15 @@ Status StubGenerator::GenerateCc() {
              IsNonStreaming),
          MethodPattern(
              {// clang-format off
-   {"std::unique_ptr<grpc::ClientReaderInterface<$response_type$>>\n"
+   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "Default$stub_class_name$::$method_name$(\n"
-    "    grpc::ClientContext& client_context,\n"
+    "    grpc::ClientContext&,\n"
     "    $request_type$ const& request) {\n"
-    "  return grpc_stub_->$method_name$(&client_context, request);\n"
+    "  auto context = absl::make_unique<grpc::ClientContext>();\n"
+    "  auto stream = grpc_stub_->TailLogEntries(context.get(), request);\n"
+    "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
+    "      ::google::test::admin::database::v1::TailLogEntriesResponse>>(\n"
+    "      std::move(context), std::move(stream));\n"
     "}\n\n"}},
              // clang-format on
              IsStreamingRead)},
