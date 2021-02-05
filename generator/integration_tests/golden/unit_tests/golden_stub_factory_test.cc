@@ -26,7 +26,7 @@ namespace {
 using ::testing::HasSubstr;
 
 class GoldenStubFactoryTest : public ::testing::Test {
- protected:
+protected:
   void SetUp() override {
     backend_ =
         std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
@@ -44,9 +44,9 @@ class GoldenStubFactoryTest : public ::testing::Test {
 
   std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
 
- private:
+private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  long logger_id_ = 0; // NOLINT
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
@@ -63,8 +63,8 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }
 
-}  // namespace
-}  // namespace golden_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace cloud
-}  // namespace google
+} // namespace
+} // namespace golden_internal
+} // namespace GOOGLE_CLOUD_CPP_NS
+} // namespace cloud
+} // namespace google

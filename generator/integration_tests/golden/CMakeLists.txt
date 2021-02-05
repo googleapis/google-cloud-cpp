@@ -114,20 +114,20 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
-        golden_client_test.cc
-        golden_connection_test.cc
-        golden_idempotency_policy_test.cc
-        golden_logging_decorator_test.cc
-        golden_metadata_decorator_test.cc
-        golden_stub_factory_test.cc
-        golden_stub_test.cc
-        iam_credentials_client_test.cc
-        iam_credentials_connection_test.cc
-        iam_credentials_idempotency_policy_test.cc
-        iam_credentials_logging_decorator_test.cc
-        iam_credentials_metadata_decorator_test.cc
-        iam_credentials_stub_factory_test.cc
-        iam_credentials_stub_test.cc)
+        unit_tests/golden_client_test.cc
+        unit_tests/golden_connection_test.cc
+        unit_tests/golden_idempotency_policy_test.cc
+        unit_tests/golden_logging_decorator_test.cc
+        unit_tests/golden_metadata_decorator_test.cc
+        unit_tests/golden_stub_factory_test.cc
+        unit_tests/golden_stub_test.cc
+        unit_tests/iam_credentials_client_test.cc
+        unit_tests/iam_credentials_connection_test.cc
+        unit_tests/iam_credentials_idempotency_policy_test.cc
+        unit_tests/iam_credentials_logging_decorator_test.cc
+        unit_tests/iam_credentials_metadata_decorator_test.cc
+        unit_tests/iam_credentials_stub_factory_test.cc
+        unit_tests/iam_credentials_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
