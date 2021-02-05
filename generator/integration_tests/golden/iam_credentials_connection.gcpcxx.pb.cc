@@ -18,7 +18,9 @@
 
 #include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
@@ -67,6 +69,16 @@ ListLogsRange IAMCredentialsConnection::ListLogs(
     [](::google::test::admin::database::v1::ListLogsResponse const&) {
       return std::vector<std::string>();
     });
+}
+
+TailLogEntriesStream IAMCredentialsConnection::TailLogEntries(
+    ::google::test::admin::database::v1::TailLogEntriesRequest) {
+  return google::cloud::internal::MakeStreamRange<
+      ::google::test::admin::database::v1::TailLogEntriesResponse>(
+      []() -> absl::variant<Status,
+      ::google::test::admin::database::v1::TailLogEntriesResponse>{
+        return Status(StatusCode::kUnimplemented, "not implemented");}
+      );
 }
 
 namespace {
@@ -170,6 +182,35 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
           std::move(messages.begin(), messages.end(), result.begin());
           return result;
         });
+  }
+
+  TailLogEntriesStream TailLogEntries(
+      ::google::test::admin::database::v1::TailLogEntriesRequest request) override {
+    auto stub = stub_;
+    auto retry_policy =
+        std::shared_ptr<IAMCredentialsRetryPolicy const>(
+            retry_policy_prototype_->clone());
+    auto backoff_policy = std::shared_ptr<BackoffPolicy const>(
+        backoff_policy_prototype_->clone());
+
+    auto factory = [stub](
+        ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+      auto context = absl::make_unique<grpc::ClientContext>();
+      return stub->TailLogEntries(*context, request);
+    };
+
+    auto resumable =
+        internal::MakeResumableStreamingReadRpc<
+            ::google::test::admin::database::v1::TailLogEntriesResponse,
+            ::google::test::admin::database::v1::TailLogEntriesRequest>(
+                retry_policy->clone(), backoff_policy->clone(),
+                [](std::chrono::milliseconds) {}, factory,
+                IAMCredentialsTailLogEntriesStreamingUpdater,
+                std::move(request));
+
+    return internal::MakeStreamRange(internal::StreamReader<
+        ::google::test::admin::database::v1::TailLogEntriesResponse>(
+        [resumable]{return resumable->Read();}));
   }
 
  private:

@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
+#include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
 
 namespace google {
@@ -25,6 +26,7 @@ namespace golden_internal {
 namespace {
 
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -60,6 +62,14 @@ public:
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
+  MOCK_METHOD(
+      (std::unique_ptr<internal::StreamingReadRpc<
+           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
+      TailLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::TailLogEntriesRequest const
+           &request),
+      (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
@@ -92,7 +102,7 @@ private:
 TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
   ::google::test::admin::database::v1::GenerateAccessTokenResponse response;
   EXPECT_CALL(*mock_, GenerateAccessToken(_, _)).WillOnce(Return(response));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
@@ -105,7 +115,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
 TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
   EXPECT_CALL(*mock_, GenerateAccessToken(_, _))
       .WillOnce(Return(TransientError()));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
@@ -119,7 +129,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
 TEST_F(LoggingDecoratorTest, GenerateIdToken) {
   ::google::test::admin::database::v1::GenerateIdTokenResponse response;
   EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(response));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
@@ -131,7 +141,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdToken) {
 
 TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
   EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(TransientError()));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
@@ -145,7 +155,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
 TEST_F(LoggingDecoratorTest, WriteLogEntries) {
   ::google::test::admin::database::v1::WriteLogEntriesResponse response;
   EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(response));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
@@ -157,7 +167,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntries) {
 
 TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
   EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(TransientError()));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
@@ -171,7 +181,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
 TEST_F(LoggingDecoratorTest, ListLogs) {
   ::google::test::admin::database::v1::ListLogsResponse response;
   EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(response));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
       context, google::test::admin::database::v1::ListLogsRequest());
@@ -183,7 +193,7 @@ TEST_F(LoggingDecoratorTest, ListLogs) {
 
 TEST_F(LoggingDecoratorTest, ListLogsError) {
   EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(TransientError()));
-  IAMCredentialsLogging stub(mock_, TracingOptions{});
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
       context, google::test::admin::database::v1::ListLogsRequest());
@@ -192,6 +202,57 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
+}
+
+class MockTailLogEntriesStreamingReadRpc
+    : public internal::StreamingReadRpc<
+          google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(
+      (absl::variant<
+          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
+      Read, (), (override));
+};
+
+TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
+  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
+  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<internal::StreamingReadRpc<
+              google::test::admin::database::v1::TailLogEntriesResponse>>(
+              mock_response))));
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto response = stub.TailLogEntries(
+      context, google::test::admin::database::v1::TailLogEntriesRequest());
+  EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Read"))));
+}
+
+TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
+  auto mock_response = new MockTailLogEntriesStreamingReadRpc;
+  EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
+  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<internal::StreamingReadRpc<
+              google::test::admin::database::v1::TailLogEntriesResponse>>(
+              mock_response))));
+  IAMCredentialsLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
+  grpc::ClientContext context;
+  auto response = stub.TailLogEntries(
+      context, google::test::admin::database::v1::TailLogEntriesRequest());
+  EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
+
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
 }
 
 } // namespace

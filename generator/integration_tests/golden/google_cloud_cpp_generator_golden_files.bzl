@@ -47,4 +47,5 @@ google_cloud_cpp_generator_golden_files = [
     "internal/iam_credentials_stub_factory.gcpcxx.pb.h",
     "mocks/mock_database_admin_connection.gcpcxx.pb.h",
     "retry_traits.h",
+    "streaming.cc",
 ]

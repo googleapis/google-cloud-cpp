@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::AtLeast;
+using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Mock;
 using ::testing::Return;
@@ -63,6 +64,14 @@ public:
       StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListLogsRequest const &request),
+      (override));
+  MOCK_METHOD(
+      (std::unique_ptr<internal::StreamingReadRpc<
+           ::google::test::admin::database::v1::TailLogEntriesResponse>>),
+      TailLogEntries,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::TailLogEntriesRequest const
+           &request),
       (override));
 };
 
@@ -265,6 +274,37 @@ TEST(IAMCredentialsConnectionTest, ListLogsTooManyTransients) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+class MockTailLogEntriesStreamingReadRpc
+    : public internal::StreamingReadRpc<
+          google::test::admin::database::v1::TailLogEntriesResponse> {
+public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(
+      (absl::variant<
+          Status, google::test::admin::database::v1::TailLogEntriesResponse>),
+      Read, (), (override));
+};
+
+std::unique_ptr<MockTailLogEntriesStreamingReadRpc>
+MakeFailingReader(Status status) {
+  auto reader = absl::make_unique<MockTailLogEntriesStreamingReadRpc>();
+  EXPECT_CALL(*reader, Read).WillOnce(Return(status));
+  return reader;
+}
+
+TEST(IAMCredentialsConnectionTest, TailLogEntriesPermanentError) {
+  auto mock = std::make_shared<MockIAMCredentialsStub>();
+  EXPECT_CALL(*mock, TailLogEntries)
+      .WillOnce(Return(ByMove(MakeFailingReader(
+          Status(StatusCode::kPermissionDenied, "Permission Denied.")))));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+  auto range = conn->TailLogEntries(request);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
 } // namespace

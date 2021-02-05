@@ -53,7 +53,9 @@ Status ConnectionGenerator::GenerateHeader() {
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
-       "google/cloud/status_or.h", "google/cloud/version.h"});
+       "google/cloud/status_or.h",
+       HasStreamingReadMethod() ? "google/cloud/stream_range.h" : "",
+       "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
@@ -76,7 +78,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "  google::cloud::ConnectionOptions<$connection_options_traits_name$>;\n\n");
   // clang-format on
 
-  HeaderPrint(  // clang-format off
+  HeaderPrint(   // clang-format off
     "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
     "    $product_internal_namespace$::$retry_traits_name$>;\n"
     "\n"
@@ -89,7 +91,7 @@ Status ConnectionGenerator::GenerateHeader() {
     //  clang-format on
   );
 
-  // List*Range types
+  // Range types
   for (auto const& method : methods()) {
     HeaderPrintMethod(
         method,
@@ -99,9 +101,19 @@ Status ConnectionGenerator::GenerateHeader() {
    {"using $method_name$Range = "
     "google::cloud::internal::PaginationRange<\n"
     "    $range_output_type$>;\n\n"},
-                // clang-format on
-            },
-            All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+                 // clang-format on
+             },
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {// clang-format off
+   {"using $method_name$Stream = google::cloud::StreamRange<\n"
+    "    $response_type$>;\n"
+    "\n"
+    "void $service_name$$method_name$StreamingUpdater(\n"
+    "    $response_type$ const& response,\n"
+    "    $request_type$& request);\n\n"}
+     }, IsStreamingRead)},
+              // clang-format on
         __FILE__, __LINE__);
   }
 
@@ -146,7 +158,15 @@ Status ConnectionGenerator::GenerateHeader() {
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"  virtual $method_name$Stream\n"
+    "  $method_name$($request_type$ request);\n\n"},
+                 // clang-format on
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -201,7 +221,13 @@ Status ConnectionGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("connection_header_path"), vars("stub_factory_header_path"),
        HasLongrunningMethod() ? "google/cloud/internal/polling_loop.h" : "",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/resumable_streaming_read_rpc.h"
+           : "",
        "google/cloud/internal/retry_loop.h",
+       HasStreamingReadMethod()
+           ? "google/cloud/internal/streaming_read_rpc_logging.h"
+           : "",
        "google/cloud/internal/user_agent_prefix.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
@@ -277,7 +303,23 @@ Status ConnectionGenerator::GenerateCc() {
                      // clang-format on
                  },
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"$method_name$Stream $connection_class_name$::$method_name$(\n"
+    "    $request_type$) {\n"
+    "  return google::cloud::internal::MakeStreamRange<\n"
+    "      $response_type$>(\n"
+    "      []() -> absl::variant<Status,\n"
+    "      $response_type$>{\n"
+    "        return Status(StatusCode::kUnimplemented, \"not implemented\");}\n"
+    "      );\n"
+    "}\n\n"
+                     // clang-format on
+                 },
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -433,7 +475,42 @@ Status ConnectionGenerator::GenerateCc() {
                      // clang-format on
                  },
              },
-             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated))},
+             All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated)),
+         MethodPattern(
+             {
+                 // clang-format off
+   {"  $method_name$Stream $method_name$(\n"
+    "      $request_type$ request) override {\n"
+    "    auto stub = stub_;\n"
+    "    auto retry_policy =\n"
+    "        std::shared_ptr<$retry_policy_name$ const>(\n"
+    "            retry_policy_prototype_->clone());\n"
+    "    auto backoff_policy = std::shared_ptr<BackoffPolicy const>(\n"
+    "        backoff_policy_prototype_->clone());\n"
+    "\n"
+    "    auto factory = [stub](\n"
+    "        $request_type$ const& request) {\n"
+    "      auto context = absl::make_unique<grpc::ClientContext>();\n"
+    "      return stub->$method_name$(*context, request);\n"
+    "    };\n"
+    "\n"
+    "    auto resumable =\n"
+    "        internal::MakeResumableStreamingReadRpc<\n"
+    "            $response_type$,\n"
+    "            $request_type$>(\n"
+    "                retry_policy->clone(), backoff_policy->clone(),\n"
+    "                [](std::chrono::milliseconds) {}, factory,\n"
+    "                $service_name$$method_name$StreamingUpdater,\n"
+    "                std::move(request));\n"
+    "\n"
+    "    return internal::MakeStreamRange(internal::StreamReader<\n"
+    "        $response_type$>(\n"
+    "        [resumable]{return resumable->Read();}));\n"
+    "  }\n\n"
+                     // clang-format on
+                 },
+             },
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

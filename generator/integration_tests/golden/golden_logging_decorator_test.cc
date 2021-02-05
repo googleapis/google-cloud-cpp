@@ -191,7 +191,7 @@ TEST_F(LoggingDecoratorTest, GetDatabaseSuccess) {
   database.set_name("my_database");
   EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(database));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GetDatabase(
       context, google::test::admin::database::v1::GetDatabaseRequest());
@@ -205,7 +205,7 @@ TEST_F(LoggingDecoratorTest, GetDatabaseSuccess) {
 TEST_F(LoggingDecoratorTest, GetDatabase) {
   EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GetDatabase(
       context, google::test::admin::database::v1::GetDatabaseRequest());
@@ -219,7 +219,7 @@ TEST_F(LoggingDecoratorTest, GetDatabase) {
 TEST_F(LoggingDecoratorTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListDatabases(
       context, google::test::admin::database::v1::ListDatabasesRequest());
@@ -233,7 +233,7 @@ TEST_F(LoggingDecoratorTest, ListDatabases) {
 TEST_F(LoggingDecoratorTest, CreateDatabase) {
   EXPECT_CALL(*mock_, CreateDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.CreateDatabase(
       context, google::test::admin::database::v1::CreateDatabaseRequest());
@@ -248,7 +248,7 @@ TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
   EXPECT_CALL(*mock_, UpdateDatabaseDdl(_, _))
       .WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.UpdateDatabaseDdl(
       context, google::test::admin::database::v1::UpdateDatabaseDdlRequest());
@@ -262,7 +262,7 @@ TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
 TEST_F(LoggingDecoratorTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.DropDatabase(
       context, google::test::admin::database::v1::DropDatabaseRequest());
@@ -276,7 +276,7 @@ TEST_F(LoggingDecoratorTest, DropDatabase) {
 TEST_F(LoggingDecoratorTest, GetDatabaseDdl) {
   EXPECT_CALL(*mock_, GetDatabaseDdl(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GetDatabaseDdl(
       context, google::test::admin::database::v1::GetDatabaseDdlRequest());
@@ -290,7 +290,7 @@ TEST_F(LoggingDecoratorTest, GetDatabaseDdl) {
 TEST_F(LoggingDecoratorTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status =
       stub.SetIamPolicy(context, google::iam::v1::SetIamPolicyRequest());
@@ -304,7 +304,7 @@ TEST_F(LoggingDecoratorTest, SetIamPolicy) {
 TEST_F(LoggingDecoratorTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status =
       stub.GetIamPolicy(context, google::iam::v1::GetIamPolicyRequest());
@@ -319,7 +319,7 @@ TEST_F(LoggingDecoratorTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
       .WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.TestIamPermissions(
       context, google::iam::v1::TestIamPermissionsRequest());
@@ -333,7 +333,7 @@ TEST_F(LoggingDecoratorTest, TestIamPermissions) {
 TEST_F(LoggingDecoratorTest, CreateBackup) {
   EXPECT_CALL(*mock_, CreateBackup(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.CreateBackup(
       context, google::test::admin::database::v1::CreateBackupRequest());
@@ -347,7 +347,7 @@ TEST_F(LoggingDecoratorTest, CreateBackup) {
 TEST_F(LoggingDecoratorTest, GetBackup) {
   EXPECT_CALL(*mock_, GetBackup(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GetBackup(
       context, google::test::admin::database::v1::GetBackupRequest());
@@ -361,7 +361,7 @@ TEST_F(LoggingDecoratorTest, GetBackup) {
 TEST_F(LoggingDecoratorTest, UpdateBackup) {
   EXPECT_CALL(*mock_, UpdateBackup(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.UpdateBackup(
       context, google::test::admin::database::v1::UpdateBackupRequest());
@@ -375,7 +375,7 @@ TEST_F(LoggingDecoratorTest, UpdateBackup) {
 TEST_F(LoggingDecoratorTest, DeleteBackup) {
   EXPECT_CALL(*mock_, DeleteBackup(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.DeleteBackup(
       context, google::test::admin::database::v1::DeleteBackupRequest());
@@ -389,7 +389,7 @@ TEST_F(LoggingDecoratorTest, DeleteBackup) {
 TEST_F(LoggingDecoratorTest, ListBackups) {
   EXPECT_CALL(*mock_, ListBackups(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListBackups(
       context, google::test::admin::database::v1::ListBackupsRequest());
@@ -403,7 +403,7 @@ TEST_F(LoggingDecoratorTest, ListBackups) {
 TEST_F(LoggingDecoratorTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, RestoreDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.RestoreDatabase(
       context, google::test::admin::database::v1::RestoreDatabaseRequest());
@@ -418,7 +418,7 @@ TEST_F(LoggingDecoratorTest, ListDatabaseOperations) {
   EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
       .WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListDatabaseOperations(
       context,
@@ -434,7 +434,7 @@ TEST_F(LoggingDecoratorTest, ListBackupOperations) {
   EXPECT_CALL(*mock_, ListBackupOperations(_, _))
       .WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListBackupOperations(
       context,
@@ -449,7 +449,7 @@ TEST_F(LoggingDecoratorTest, ListBackupOperations) {
 TEST_F(LoggingDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status =
       stub.GetOperation(context, google::longrunning::GetOperationRequest());
@@ -463,7 +463,7 @@ TEST_F(LoggingDecoratorTest, GetOperation) {
 TEST_F(LoggingDecoratorTest, CancelOperation) {
   EXPECT_CALL(*mock_, CancelOperation(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_, TracingOptions{});
+  DatabaseAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.CancelOperation(
       context, google::longrunning::CancelOperationRequest());

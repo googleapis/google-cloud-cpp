@@ -53,7 +53,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
                        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
-       "memory", "string"});
+       "memory", "set", "string"});
   HeaderPrint("\n");
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
@@ -65,7 +65,8 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     " public:\n"
     "  ~$logging_class_name$() override = default;\n"
     "  $logging_class_name$(std::shared_ptr<$stub_class_name$> child,\n"
-    "                       TracingOptions tracing_options);\n"
+    "                       TracingOptions tracing_options,\n"
+    "                       std::set<std::string> components);\n"
     "\n");
   // clang-format on
 
@@ -80,7 +81,16 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
                          // clang-format on
                          "\n"}},
-                       IsNonStreaming)},
+                       IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) override;\n"
+               // clang-format on
+               "\n"}},
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -105,6 +115,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
     " private:\n"
     "  std::shared_ptr<$stub_class_name$> child_;\n"
     "  TracingOptions tracing_options_;\n"
+    "  std::set<std::string> components_;\n"
     "};  // $logging_class_name$\n"
     "\n");
   // clang-format on
@@ -128,6 +139,9 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   // includes
   CcLocalIncludes({vars("logging_header_path"),
                    "google/cloud/internal/log_wrapper.h",
+                   HasStreamingReadMethod()
+                       ? "google/cloud/internal/streaming_read_rpc_logging.h"
+                       : "",
                    "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
   CcPrint("\n");
@@ -139,9 +153,10 @@ Status LoggingDecoratorGenerator::GenerateCc() {
   CcPrint(  // clang-format off
     "$logging_class_name$::$logging_class_name$(\n"
     "    std::shared_ptr<$stub_class_name$> child,\n"
-    "    TracingOptions tracing_options)\n"
-    "    : child_(std::move(child)), "
-    "tracing_options_(std::move(tracing_options)) {}\n"
+    "    TracingOptions tracing_options,\n"
+    "    std::set<std::string> components)\n"
+    "    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),\n"
+    "      components_(std::move(components)) {}\n"
     "\n");
   // clang-format on
 
@@ -150,8 +165,8 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     CcPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "Status\n",
     "StatusOr<$response_type$>\n"},
     {
@@ -166,8 +181,35 @@ Status LoggingDecoratorGenerator::GenerateCc() {
     "      context, request, __func__, tracing_options_);\n"
     "}\n"
     "\n"}},
-            // clang-format on
-            IsNonStreaming)},
+             // clang-format on
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off}
+              {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+               "$logging_class_name$::$method_name$(\n"
+               "    grpc::ClientContext& context,\n"
+               "    $request_type$ const& request) {\n"
+               "  return google::cloud::internal::LogWrapper(\n"
+               "      [this](grpc::ClientContext& context,\n"
+               "             $request_type$ const& request) ->\n"
+               "      std::unique_ptr<internal::StreamingReadRpc<\n"
+               "          $response_type$>> {\n"
+               "        auto stream = child_->$method_name$(context, "
+               "request);\n"
+               "        if (components_.count(\"rpc-streams\") > 0) {\n"
+               "          stream = "
+               "absl::make_unique<internal::StreamingReadRpcLogging<\n"
+               "             $response_type$>>(\n"
+               "               std::move(stream), tracing_options_,\n"
+               "               internal::RequestIdForLogging());\n"
+               "        }\n"
+               "        return stream;\n"
+               "      },\n"
+               "      context, request, __func__, tracing_options_);\n"
+               "}\n"
+               "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

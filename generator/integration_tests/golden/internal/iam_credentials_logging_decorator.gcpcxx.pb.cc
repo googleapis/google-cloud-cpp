@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 #include "generator/integration_tests/golden/internal/iam_credentials_logging_decorator.gcpcxx.pb.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
 #include <memory>
@@ -28,8 +29,10 @@ namespace golden_internal {
 
 IAMCredentialsLogging::IAMCredentialsLogging(
     std::shared_ptr<IAMCredentialsStub> child,
-    TracingOptions tracing_options)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
 
 StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
 IAMCredentialsLogging::GenerateAccessToken(
@@ -75,6 +78,27 @@ IAMCredentialsLogging::ListLogs(
       [this](grpc::ClientContext& context,
              ::google::test::admin::database::v1::ListLogsRequest const& request) {
         return child_->ListLogs(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+IAMCredentialsLogging::TailLogEntries(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             ::google::test::admin::database::v1::TailLogEntriesRequest const& request) ->
+      std::unique_ptr<internal::StreamingReadRpc<
+          ::google::test::admin::database::v1::TailLogEntriesResponse>> {
+        auto stream = child_->TailLogEntries(context, request);
+        if (components_.count("rpc-streams") > 0) {
+          stream = absl::make_unique<internal::StreamingReadRpcLogging<
+             ::google::test::admin::database::v1::TailLogEntriesResponse>>(
+               std::move(stream), tracing_options_,
+               internal::RequestIdForLogging());
+        }
+        return stream;
       },
       context, request, __func__, tracing_options_);
 }

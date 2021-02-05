@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
@@ -34,7 +35,8 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
  public:
   ~DatabaseAdminLogging() override = default;
   DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child,
-                       TracingOptions tracing_options);
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<::google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
     grpc::ClientContext& context,
@@ -117,6 +119,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
  private:
   std::shared_ptr<DatabaseAdminStub> child_;
   TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };  // DatabaseAdminLogging
 
 }  // namespace golden_internal

@@ -48,7 +48,10 @@ Status StubGenerator::GenerateHeader() {
   // clang-format on
 
   // includes
-  HeaderLocalIncludes({"google/cloud/status_or.h", "google/cloud/version.h"});
+  HeaderLocalIncludes({HasStreamingReadMethod()
+                           ? "google/cloud/internal/streaming_read_rpc.h"
+                           : "",
+                       "google/cloud/status_or.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -70,15 +73,24 @@ Status StubGenerator::GenerateHeader() {
     HeaderPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "  virtual Status $method_name$(\n",
     "  virtual StatusOr<$response_type$> $method_name$(\n"},
    {"    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) = 0;\n"
-              // clang-format on
-              "\n"}},
-            IsNonStreaming)},
+               // clang-format on
+               "\n"}},
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& context,\n"
+    "    $request_type$ const& request) = 0;\n"
+    "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -136,7 +148,16 @@ Status StubGenerator::GenerateHeader() {
     "    $request_type$ const& request) override;\n"
     "\n"}},
                        // clang-format on
-                       IsNonStreaming)},
+                       IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+    "  $method_name$(\n"
+    "    grpc::ClientContext& client_context,\n"
+    "    $request_type$ const& request) override;\n"
+    "\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 
@@ -188,6 +209,7 @@ Status StubGenerator::GenerateCc() {
 
   // includes
   CcLocalIncludes({vars("stub_header_path"),
+                   HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
                    "google/cloud/grpc_error_delegate.h",
                    "google/cloud/status_or.h"});
   CcSystemIncludes(
@@ -208,8 +230,8 @@ Status StubGenerator::GenerateCc() {
     CcPrintMethod(
         method,
         {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
+             {{IsResponseTypeEmpty,
+               // clang-format off
     "Status\n",
     "StatusOr<$response_type$>\n"},
     {"Default$stub_class_name$::$method_name$(\n"
@@ -226,8 +248,22 @@ Status StubGenerator::GenerateCc() {
     "    return response;\n"},
    {"}\n"
     "\n"}},
-            // clang-format on
-            IsNonStreaming)},
+             // clang-format on
+             IsNonStreaming),
+         MethodPattern(
+             {// clang-format off
+   {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
+    "Default$stub_class_name$::$method_name$(\n"
+    "    grpc::ClientContext&,\n"
+    "    $request_type$ const& request) {\n"
+    "  auto context = absl::make_unique<grpc::ClientContext>();\n"
+    "  auto stream = grpc_stub_->TailLogEntries(context.get(), request);\n"
+    "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
+    "      ::google::test::admin::database::v1::TailLogEntriesResponse>>(\n"
+    "      std::move(context), std::move(stream));\n"
+    "}\n\n"}},
+             // clang-format on
+             IsStreamingRead)},
         __FILE__, __LINE__);
   }
 

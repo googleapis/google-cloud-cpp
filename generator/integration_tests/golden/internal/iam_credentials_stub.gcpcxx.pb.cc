@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/iam_credentials_stub.gcpcxx.pb.h"
+#include "absl/memory/memory.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -79,6 +80,17 @@ DefaultIAMCredentialsStub::ListLogs(
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
+}
+
+std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+DefaultIAMCredentialsStub::TailLogEntries(
+    grpc::ClientContext&,
+    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  auto context = absl::make_unique<grpc::ClientContext>();
+  auto stream = grpc_stub_->TailLogEntries(context.get(), request);
+  return absl::make_unique<internal::StreamingReadRpcImpl<
+      ::google::test::admin::database::v1::TailLogEntriesResponse>>(
+      std::move(context), std::move(stream));
 }
 
 }  // namespace golden_internal

@@ -47,7 +47,8 @@ CreateDefaultDatabaseAdminStub(golden::DatabaseAdminConnectionOptions const& opt
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DatabaseAdminLogging>(std::move(stub),
-                                                  options.tracing_options());
+                                                  options.tracing_options(),
+                                                  options.components());
   }
   return stub;
 }

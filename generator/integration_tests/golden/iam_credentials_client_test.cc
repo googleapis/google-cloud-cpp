@@ -192,6 +192,38 @@ TEST(IAMCredentialsClientTest, ListLogs) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(IAMCredentialsClientTest, TailLogEntries) {
+  auto mock = std::make_shared<golden_mocks::MockIAMCredentialsConnection>();
+  std::vector<std::string> expected_resource_names = {"projects/my-project"};
+  EXPECT_CALL(*mock, TailLogEntries)
+      .Times(2)
+      .WillRepeatedly(
+          [expected_resource_names](
+              ::google::test::admin::database::v1::TailLogEntriesRequest const
+                  &request) {
+            EXPECT_THAT(request.resource_names(),
+                        ElementsAreArray(expected_resource_names));
+            return google::cloud::internal::MakeStreamRange<
+                ::google::test::admin::database::v1::TailLogEntriesResponse>(
+                []() -> absl::variant<Status, ::google::test::admin::database::
+                                                  v1::TailLogEntriesResponse> {
+                  return Status(StatusCode::kPermissionDenied, "uh-oh");
+                });
+          });
+  IAMCredentialsClient client(std::move(mock));
+  auto range = client.TailLogEntries(expected_resource_names);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+  ::google::test::admin::database::v1::TailLogEntriesRequest request;
+  *request.mutable_resource_names() = {expected_resource_names.begin(),
+                                       expected_resource_names.end()};
+  range = client.TailLogEntries(request);
+  begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+}
+
 } // namespace
 } // namespace golden
 } // namespace GOOGLE_CLOUD_CPP_NS
