@@ -89,13 +89,16 @@ IAMCredentialsLogging::TailLogEntries(
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
              ::google::test::admin::database::v1::TailLogEntriesRequest const& request) ->
-      std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>> {
+      std::unique_ptr<internal::StreamingReadRpc<
+          ::google::test::admin::database::v1::TailLogEntriesResponse>> {
+        auto stream = child_->TailLogEntries(context, request);
         if (components_.count("rpc-streams") > 0) {
-          return absl::make_unique<internal::StreamingReadRpcLogging<
+          stream = absl::make_unique<internal::StreamingReadRpcLogging<
              ::google::test::admin::database::v1::TailLogEntriesResponse>>(
-             child_->TailLogEntries(context, request), tracing_options_, internal::RequestIdForLogging());
+               std::move(stream), tracing_options_,
+               internal::RequestIdForLogging());
         }
-        return child_->TailLogEntries(context, request);
+        return stream;
       },
       context, request, __func__, tracing_options_);
 }
