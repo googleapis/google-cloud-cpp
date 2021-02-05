@@ -38,13 +38,13 @@ class MockGoldenStub
       ListDatabases,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListDatabasesRequest const&
-       request),
+           request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateDatabase,
               (grpc::ClientContext & context,
                ::google::test::admin::database::v1::CreateDatabaseRequest const&
-               request),
+                   request),
               (override));
 
   MOCK_METHOD(
@@ -57,7 +57,7 @@ class MockGoldenStub
       StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
-       request),
+           request),
       (override));
 
   MOCK_METHOD(
@@ -71,7 +71,7 @@ class MockGoldenStub
       GetDatabaseDdl,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::GetDatabaseDdlRequest const&
-       request),
+           request),
       (override));
 
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
@@ -125,7 +125,7 @@ class MockGoldenStub
       StatusOr<::google::longrunning::Operation>, RestoreDatabase,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&
-       request),
+           request),
       (override));
 
   MOCK_METHOD(
@@ -134,7 +134,7 @@ class MockGoldenStub
       ListDatabaseOperations,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
-       request),
+           request),
       (override));
 
   MOCK_METHOD(
@@ -143,7 +143,7 @@ class MockGoldenStub
       ListBackupOperations,
       (grpc::ClientContext & context,
        ::google::test::admin::database::v1::ListBackupOperationsRequest const&
-       request),
+           request),
       (override));
 
   /// Poll a long-running operation.
@@ -183,7 +183,7 @@ class LoggingDecoratorTest : public ::testing::Test {
 
  private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0; // NOLINT
+  long logger_id_ = 0;  // NOLINT
 };
 
 TEST_F(LoggingDecoratorTest, GetDatabaseSuccess) {

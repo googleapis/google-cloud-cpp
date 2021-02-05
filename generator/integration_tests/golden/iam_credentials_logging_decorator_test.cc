@@ -33,47 +33,47 @@ using ::testing::Return;
 
 class MockIAMCredentialsStub
     : public google::cloud::golden_internal::IAMCredentialsStub {
- public:
+public:
   ~MockIAMCredentialsStub() override = default;
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
-       request),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const
+           &request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::GenerateIdTokenRequest const&
-       request),
+       ::google::test::admin::database::v1::GenerateIdTokenRequest const
+           &request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
       WriteLogEntries,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::WriteLogEntriesRequest const&
-       request),
+       ::google::test::admin::database::v1::WriteLogEntriesRequest const
+           &request),
       (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListLogsResponse>, ListLogs,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::ListLogsRequest const& request),
+       ::google::test::admin::database::v1::ListLogsRequest const &request),
       (override));
   MOCK_METHOD(
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
       (grpc::ClientContext & context,
-       ::google::test::admin::database::v1::TailLogEntriesRequest const&
-       request),
+       ::google::test::admin::database::v1::TailLogEntriesRequest const
+           &request),
       (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
- protected:
+protected:
   void SetUp() override {
     backend_ =
         std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
@@ -94,7 +94,7 @@ class LoggingDecoratorTest : public ::testing::Test {
 
   std::shared_ptr<MockIAMCredentialsStub> mock_;
 
- private:
+private:
   std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
   long logger_id_ = 0; // NOLINT
 };
@@ -207,7 +207,7 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
 class MockTailLogEntriesStreamingReadRpc
     : public internal::StreamingReadRpc<
           google::test::admin::database::v1::TailLogEntriesResponse> {
- public:
+public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(
       (absl::variant<
@@ -255,8 +255,8 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
 }
 
-}  // namespace
-}  // namespace golden_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace cloud
-}  // namespace google
+} // namespace
+} // namespace golden_internal
+} // namespace GOOGLE_CLOUD_CPP_NS
+} // namespace cloud
+} // namespace google
