@@ -45,12 +45,12 @@ vcpkg_dir="${HOME}/vcpkg-quickstart"
 vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
 echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
 mkdir -p "${vcpkg_dir}"
-curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" \
-  | tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
+curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" |
+  tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 
-${vcpkg_dir}/bootstrap-vcpkg.sh
-${vcpkg_dir}/vcpkg remove --outdated --recurse
-${vcpkg_dir}/vcpkg install google-cloud-cpp
+"${vcpkg_dir}"/bootstrap-vcpkg.sh
+"${vcpkg_dir}"/vcpkg remove --outdated --recurse
+"${vcpkg_dir}"/vcpkg install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="/c"
