@@ -40,17 +40,30 @@ echo
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-# Fetch and build vcpkg
+# Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
 vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
-echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
+vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
+echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
 curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 
-"${vcpkg_dir}"/bootstrap-vcpkg.sh
-"${vcpkg_dir}"/vcpkg remove --outdated --recurse
-"${vcpkg_dir}"/vcpkg install google-cloud-cpp
+# Compile vcpkg only if we don't already have a cached binary.
+vcpkg_cache_dir="${HOME}/.cache/bin"
+vcpkg_cache_bin="${vcpkg_cache_dir}/vcpkg.${vcpkg_sha}"
+mkdir -p "${vcpkg_cache_dir}"
+if [[ -x "${vcpkg_cache_bin}" ]]; then
+  echo "Using cached binary ${vcpkg_cache_bin}"
+  cp "${vcpkg_cache_bin}" "${vcpkg_bin}"
+else
+  "${vcpkg_dir}"/bootstrap-vcpkg.sh
+  rm -vf "${vcpkg_cache_dir}"/* # Clean up stale cached vcpkg binaries
+  cp "${vcpkg_bin}" "${vcpkg_cache_bin}"
+fi
+
+"${vcpkg_bin}" remove --outdated --recurse
+"${vcpkg_bin}" install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="/c"
