@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -26,6 +26,11 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+// Defined below.
+template <typename T>
+class StreamRange;
+
 namespace internal {
 
 /**
@@ -41,7 +46,7 @@ namespace internal {
  * @code
  * int counter = 0;
  * auto reader = [&counter]() -> StreamReader<int>::result_type {
- *   if (counter++ < 10) return counter;
+ *   if (++counter <= 10) return counter;
  *   return Status{};  // OK
  * };
  * @endcode
@@ -49,28 +54,29 @@ namespace internal {
 template <typename T>
 using StreamReader = std::function<absl::variant<Status, T>()>;
 
+// Defined below.
+template <typename T>
+StreamRange<T> MakeStreamRange(StreamReader<T>);
+
+}  // namespace internal
+
 /**
  * A `StreamRange<T>` puts a range-like interface on a stream of `T` objects.
- *
- * The `T` objects are read from the caller-provided `StreamReader` functor,
- * which is invoked repeatedly as the range is iterated. The `StreamReader` can
- * return an OK `Status` to indicate a successful end of stream, or a non-OK
- * `Status` to indicate an error, or a `T`. The `StreamReader` will not be
- * invoked again after it returns a `Status`.
  *
  * Callers can iterate the range using its `begin()` and `end()` members to
  * access iterators that will work with any normal C++ constructs and
  * algorithms that accept [Input Iterators][input-iter-link].
  *
- * @par Example: Printing integers from 1-10.
+ * Callers should only consume/iterate this range. There is no public way for a
+ * caller to construct a non-empty instance.
+ *
+ * @par Example: Iterating a range of 10 integers
  *
  * @code
- * int counter = 0;
- * auto reader = [&counter]() -> StreamReader<int>::result_type {
- *   if (counter++ < 10) return counter;
- *   return Status{};
- * };
- * StreamRange<int> sr(std::move(reader));
+ * // Some function that returns a StreamRange<int>
+ * StreamRange<int> MakeRangeFromOneTo(int n);
+ *
+ * StreamRange<int> sr = MakeRangeFromOneTo(10);
  * for (int x : sr) {
  *   std::cout << x << "\n";
  * }
@@ -85,13 +91,17 @@ class StreamRange {
   template <typename U>
   static constexpr bool IsMoveNoexcept() {
     return noexcept(StatusOr<U>(std::declval<U>()))&& noexcept(
-        StreamReader<U>(std::declval<StreamReader<U>>()));
+        internal::StreamReader<U>(std::declval<internal::StreamReader<U>>()));
   }
 
  public:
-  /// An input iterator for a `StreamRange<T>`
+  /**
+   * An input iterator for a `StreamRange<T>` -- DO NOT USE DIRECTLY.
+   *
+   * Use `StreamRange<T>::iterator` instead.
+   */
   template <typename U>
-  class Iterator {
+  class IteratorImpl {
    public:
     using iterator_category = std::input_iterator_tag;
     using value_type = U;
@@ -102,43 +112,43 @@ class StreamRange {
     using const_pointer = value_type const*;
 
     /// Constructs an "end" iterator.
-    explicit Iterator() = default;
+    explicit IteratorImpl() = default;
 
     reference operator*() { return owner_->current_; }
     pointer operator->() { return &owner_->current_; }
     const_reference operator*() const { return owner_->current_; }
     const_pointer operator->() const { return &owner_->current_; }
 
-    Iterator& operator++() {
+    IteratorImpl& operator++() {
       owner_->Next();
       is_end_ = owner_->is_end_;
       return *this;
     }
 
-    Iterator operator++(int) {
+    IteratorImpl operator++(int) {
       auto copy = *this;
       ++*this;
       return copy;
     }
 
-    friend bool operator==(Iterator const& a, Iterator const& b) {
+    friend bool operator==(IteratorImpl const& a, IteratorImpl const& b) {
       return a.is_end_ == b.is_end_;
     }
 
-    friend bool operator!=(Iterator const& a, Iterator const& b) {
+    friend bool operator!=(IteratorImpl const& a, IteratorImpl const& b) {
       return !(a == b);
     }
 
    private:
     friend class StreamRange;
-    explicit Iterator(StreamRange* owner)
+    explicit IteratorImpl(StreamRange* owner)
         : owner_(owner), is_end_(owner_->is_end_) {}
     StreamRange* owner_;
     bool is_end_ = true;
   };
 
   using value_type = StatusOr<T>;
-  using iterator = Iterator<value_type>;
+  using iterator = IteratorImpl<value_type>;
   using difference_type = typename iterator::difference_type;
   using reference = typename iterator::reference;
   using pointer = typename iterator::pointer;
@@ -186,21 +196,45 @@ class StreamRange {
   }
 
   template <typename U>
-  friend StreamRange<U> MakeStreamRange(StreamReader<U>);
+  friend StreamRange<U> internal::MakeStreamRange(internal::StreamReader<U>);
 
   /**
    * Constructs a `StreamRange<T>` that will use the given @p reader.
    *
+   * The `T` objects are read from the caller-provided `internal::StreamReader`
+   * functor, which is invoked repeatedly as the range is iterated. The
+   * `internal::StreamReader` can return an OK `Status` to indicate a successful
+   * end of stream, or a non-OK `Status` to indicate an error, or a `T`. The
+   * `internal::StreamReader` will not be invoked again after it returns a
+   * `Status`.
+   *
+   * @par Example: Printing integers from 1-10.
+   *
+   * @code
+   * int counter = 0;
+   * auto reader = [&counter]() -> internal::StreamReader<int>::result_type {
+   *   if (++counter <= 10) return counter;
+   *   return Status{};
+   * };
+   * StreamRange<int> sr(std::move(reader));
+   * for (int x : sr) {
+   *   std::cout << x << "\n";
+   * }
+   * @endcode
+   *
    * @param reader must not be nullptr.
    */
-  explicit StreamRange(StreamReader<T> reader) : reader_(std::move(reader)) {
+  explicit StreamRange(internal::StreamReader<T> reader)
+      : reader_(std::move(reader)) {
     Next();
   }
 
-  StreamReader<T> reader_;
+  internal::StreamReader<T> reader_;
   StatusOr<T> current_;
   bool is_end_ = true;
 };
+
+namespace internal {
 
 /**
  * Factory to construct a `StreamRange<T>` with the given `StreamReader<T>`.
@@ -219,8 +253,9 @@ StreamRange<T> MakeStreamRange(StreamReader<T> reader) {
 }
 
 }  // namespace internal
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_STREAM_RANGE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STREAM_RANGE_H
