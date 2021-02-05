@@ -6,10 +6,10 @@ var indexSectionsWithContent =
   3: "abcfgiklopstv",
   4: "abcdefgiklmnoprstuvw~",
   5: "bcdeflmstv",
-  6: "beiostv",
+  6: "bcdeioprstv",
   7: "s",
   8: "gk",
-  9: "fmo",
+  9: "fmos",
   10: "g",
   11: "cd"
 };

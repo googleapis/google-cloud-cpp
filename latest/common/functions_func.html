@@ -99,6 +99,7 @@ $(function() {
 </li>
 <li>begin()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9">google::cloud::v1::IamBindings</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a9dd0177f1356eed6ecd0dfbb900a1373">google::cloud::v1::StreamRange&lt; T &gt;</a>
 </li>
 <li>bindings()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6a4a65be49d3f8432c4b9345dcdf74fb">google::cloud::v1::IamBindings</a>
@@ -177,6 +178,7 @@ $(function() {
 </li>
 <li>end()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a1c7300b46ad365f0928f65063058d635">google::cloud::v1::IamBindings</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#aac48362a29c52fe22960bb9374339f2a">google::cloud::v1::StreamRange&lt; T &gt;</a>
 </li>
 <li>endpoint()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2075c888b810090452199ddf6feeb7ff">google::cloud::v1::ConnectionOptions&lt; ConnectionTraits &gt;</a>
@@ -225,6 +227,9 @@ $(function() {
 </li>
 <li>is_enabled()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a5e65e33bad034236bf3d64eeba795cad">google::cloud::v1::LogSink</a>
+</li>
+<li>IteratorImpl()
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#af4b3ffc5cdebd7c4bd12b826bba1d812">google::cloud::v1::StreamRange&lt; T &gt;::IteratorImpl&lt; U &gt;</a>
 </li>
 </ul>
 
@@ -300,18 +305,24 @@ $(function() {
 </li>
 <li>operator*()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a266106795418b6a8c4a0716711fff840">google::cloud::v1::StatusOr&lt; T &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#a6594f1d05a2ccc9df7d1de7e9ccb8bcb">google::cloud::v1::StreamRange&lt; T &gt;::IteratorImpl&lt; U &gt;</a>
+</li>
+<li>operator++()
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#a99f26b35c994738cff54672e596818a6">google::cloud::v1::StreamRange&lt; T &gt;::IteratorImpl&lt; U &gt;</a>
 </li>
 <li>operator-&gt;()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a5cb0a1c5ff445789dc133342f6df8121">google::cloud::v1::StatusOr&lt; T &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#aa61b230effc4e30c362d06d2764406ff">google::cloud::v1::StreamRange&lt; T &gt;::IteratorImpl&lt; U &gt;</a>
 </li>
 <li>operator&lt;&lt;()
 : <a class="el" href="structgoogle_1_1cloud_1_1v1_1_1NullStream.html#aba702dcad9cd33a8a44f581ed8ee7eba">google::cloud::v1::NullStream</a>
 </li>
 <li>operator=()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a0898cf6abee979c58a6a4caa8d90c00f">google::cloud::v1::KmsKeyName</a>
-, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a904892ec85cdf354058b773dffb38554">google::cloud::v1::promise&lt; T &gt;</a>
-, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#afbd8b818c2200551606e597410f26c20">google::cloud::v1::promise&lt; void &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a079b12981f692586699f0afb6be35a2c">google::cloud::v1::promise&lt; T &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html#ab8862d6bdc53959b2b2e14b34fd5f961">google::cloud::v1::promise&lt; void &gt;</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a53d7ba4c0b6d2975d58caf8c83a50b68">google::cloud::v1::StatusOr&lt; T &gt;</a>
+, <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a83173adf74cd19111b2fa5c87fb7dd31">google::cloud::v1::StreamRange&lt; T &gt;</a>
 </li>
 </ul>
 
@@ -397,14 +408,17 @@ $(function() {
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Status.html#abff23b054b2048655f320e949cb2eae9">google::cloud::v1::Status</a>
 </li>
 <li>status()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#abc5134b48b8535c596996b56be2bd26f">google::cloud::v1::StatusOr&lt; T &gt;</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a5e4443be161d02ae1c64dfb0b7ee2abf">google::cloud::v1::StatusOr&lt; T &gt;</a>
 </li>
 <li>StatusOr()
-: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a5aadf55e1b7e6103f54515e788f346ca">google::cloud::v1::StatusOr&lt; T &gt;</a>
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a8ff8aef5de0b700bfb5260563f699208">google::cloud::v1::StatusOr&lt; T &gt;</a>
 </li>
 <li>Stream()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Logger.html#a9cad2dea09116ea36ce18d3d4b0d6893">google::cloud::v1::Logger&lt; CompileTimeEnabled &gt;</a>
 , <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#ae591c2de56de2da7fbdf4f6b44d59d7b">google::cloud::v1::Logger&lt; false &gt;</a>
+</li>
+<li>StreamRange()
+: <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#ad274bda6e54d960be77a21105d73dc97">google::cloud::v1::StreamRange&lt; T &gt;</a>
 </li>
 <li>swap()
 : <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1promise.html#a2f2ca12826260ab2fb20a83619c3b561">google::cloud::v1::promise&lt; T &gt;</a>

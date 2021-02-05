@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['shared_5fstate_5ftype_436',['shared_state_type',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1future.html#ac89e4e34e65898c183ed032c322453f3',1,'google::cloud::v1::future::shared_state_type()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1future_3_01void_01_4.html#a47349053a71366f29aac171db13e5d0a',1,'google::cloud::v1::future&lt; void &gt;::shared_state_type()']]]
+  ['iterator_455',['iterator',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac',1,'google::cloud::v1::IamBindings::iterator()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a9c11085d53eec780a7c27b0a1abf7779',1,'google::cloud::v1::StreamRange::iterator()']]],
+  ['iterator_5fcategory_456',['iterator_category',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#af6f9314787fe94ce70f55979bde78c49',1,'google::cloud::v1::StreamRange::IteratorImpl']]]
 ];

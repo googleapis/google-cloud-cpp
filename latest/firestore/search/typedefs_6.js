@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['value_5ftype_438',['value_type',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html#a660d48acaf8bbe7de3b1c7dbe34c45e2',1,'google::cloud::v1::StatusOr']]]
+  ['pointer_458',['pointer',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#a833d3151ca8555157257be6fbf6016b9',1,'google::cloud::v1::StreamRange::IteratorImpl::pointer()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a79c81d68c0324940b5f428d551081f4d',1,'google::cloud::v1::StreamRange::pointer()']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pubsubmessagedatatype_1008',['PubsubMessageDataType',['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#af305b600a61a03098f05c59fa4897587',1,'google::cloud::pubsub::PubsubMessageDataType()'],['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#af305b600a61a03098f05c59fa4897587',1,'google::cloud::pubsub::v1::PubsubMessageDataType()']]]
+  ['optional_1029',['optional',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]]
 ];

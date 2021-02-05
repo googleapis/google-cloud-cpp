@@ -8,6 +8,6 @@ var searchData=
   ['backgroundthreadsfactory_14',['BackgroundThreadsFactory',['../classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#ad60fc34066e5b46d52e0437dea969d12',1,'google::cloud::v1::ConnectionOptions']]],
   ['backoff_5fpolicy_2eh_15',['backoff_policy.h',['../backoff__policy_8h.html',1,'']]],
   ['backoffpolicy_16',['BackoffPolicy',['../namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae',1,'google::cloud::BackoffPolicy()'],['../namespacegoogle_1_1cloud_1_1v1.html#a9cc78873b34952b05cf266563dcca8ae',1,'google::cloud::v1::BackoffPolicy()']]],
-  ['begin_17',['begin',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9',1,'google::cloud::v1::IamBindings']]],
+  ['begin_17',['begin',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9',1,'google::cloud::v1::IamBindings::begin()'],['../classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a9dd0177f1356eed6ecd0dfbb900a1373',1,'google::cloud::v1::StreamRange::begin()']]],
   ['bindings_18',['bindings',['../structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#adf55f038b6b4e6fe8a270738173cd591',1,'google::cloud::v1::IamPolicy::bindings()'],['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6a4a65be49d3f8432c4b9345dcdf74fb',1,'google::cloud::v1::IamBindings::bindings()']]]
 ];

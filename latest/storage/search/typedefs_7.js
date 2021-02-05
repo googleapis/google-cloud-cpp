@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['shared_5fstate_5ftype_2054',['shared_state_type',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1future.html#ac89e4e34e65898c183ed032c322453f3',1,'google::cloud::v1::future::shared_state_type()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1future_3_01void_01_4.html#a47349053a71366f29aac171db13e5d0a',1,'google::cloud::v1::future&lt; void &gt;::shared_state_type()']]]
+  ['pointer_2075',['pointer',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#a833d3151ca8555157257be6fbf6016b9',1,'google::cloud::v1::StreamRange::IteratorImpl::pointer()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a79c81d68c0324940b5f428d551081f4d',1,'google::cloud::v1::StreamRange::pointer()']]]
 ];

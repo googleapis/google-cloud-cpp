@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exponentialbackoffpolicy_998',['ExponentialBackoffPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5',1,'google::cloud::v1::ExponentialBackoffPolicy()'],['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a953aa9b925add24a5704b8a15749fe47',1,'google::cloud::pubsub::ExponentialBackoffPolicy()'],['../namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a953aa9b925add24a5704b8a15749fe47',1,'google::cloud::pubsub::v1::ExponentialBackoffPolicy()']]]
+  ['difference_5ftype_1018',['difference_type',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#aec8105a0a29b7a388037cc35108e5726',1,'google::cloud::v1::StreamRange::IteratorImpl::difference_type()'],['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html#a8df4ae59a18ee69697bd0f99961174de',1,'google::cloud::v1::StreamRange::difference_type()']]]
 ];

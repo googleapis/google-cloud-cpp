@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optional_435',['optional',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]]
+  ['exponentialbackoffpolicy_454',['ExponentialBackoffPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a67c01b1a851ec3bf8c4cc8d845c899d5',1,'google::cloud::v1']]]
 ];

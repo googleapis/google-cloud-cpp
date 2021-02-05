@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['retrypolicy_2053',['RetryPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a45a8cc7d57e5b12071421768233525ce',1,'google::cloud::storage::RetryPolicy()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a45a8cc7d57e5b12071421768233525ce',1,'google::cloud::storage::v1::RetryPolicy()']]]
+  ['objectorprefix_2073',['ObjectOrPrefix',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a3253c31feddc80f1bc2d28f7ec9db773',1,'google::cloud::storage::ObjectOrPrefix()'],['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a3253c31feddc80f1bc2d28f7ec9db773',1,'google::cloud::storage::v1::ObjectOrPrefix()']]],
+  ['optional_2074',['optional',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]]
 ];
