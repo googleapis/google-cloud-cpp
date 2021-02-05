@@ -23,22 +23,17 @@ source module etc/quickstart-config.sh
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-# Clone and build vcpkg
+# Fetch and build vcpkg
 vcpkg_dir="cmake-out/vcpkg-quickstart"
-if [[ -d "${vcpkg_dir}" ]]; then
-  git -C "${vcpkg_dir}" pull --quiet
-else
-  git clone --quiet --shallow-since 2020-10-20 \
-    https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-  git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
-fi
+vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
+echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
+mkdir -p "${vcpkg_dir}"
+curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" \
+  | tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 
-(
-  cd "${vcpkg_dir}"
-  ./bootstrap-vcpkg.sh
-  ./vcpkg remove --outdated --recurse
-  ./vcpkg install google-cloud-cpp
-)
+${vcpkg_dir}/bootstrap-vcpkg.sh
+${vcpkg_dir}/vcpkg remove --outdated --recurse
+${vcpkg_dir}/vcpkg install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
