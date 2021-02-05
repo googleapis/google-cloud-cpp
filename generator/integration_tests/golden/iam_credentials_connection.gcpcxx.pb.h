@@ -94,7 +94,6 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy);
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    IAMCredentialsConnectionOptions const& options,
     std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,

@@ -99,23 +99,19 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
       std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
       std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy,
-      IAMCredentialsConnectionOptions options)
+      std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
-        idempotency_policy_(std::move(idempotency_policy)),
-        options_(std::move(options)) {}
+        idempotency_policy_(std::move(idempotency_policy)) {}
 
   explicit IAMCredentialsConnectionImpl(
-      std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
-      IAMCredentialsConnectionOptions options)
+      std::shared_ptr<golden_internal::IAMCredentialsStub> stub)
       : IAMCredentialsConnectionImpl(
           std::move(stub),
           DefaultRetryPolicy(),
           DefaultBackoffPolicy(),
-          MakeDefaultIAMCredentialsConnectionIdempotencyPolicy(),
-          std::move(options)) {}
+          MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()) {}
 
   ~IAMCredentialsConnectionImpl() override = default;
 
@@ -222,14 +218,13 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
   std::unique_ptr<IAMCredentialsRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy_;
-  IAMCredentialsConnectionOptions options_;
 };
 }  // namespace
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     IAMCredentialsConnectionOptions const& options) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
-      golden_internal::CreateDefaultIAMCredentialsStub(options), options);
+      golden_internal::CreateDefaultIAMCredentialsStub(options));
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
@@ -240,18 +235,17 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
   return std::make_shared<IAMCredentialsConnectionImpl>(
       golden_internal::CreateDefaultIAMCredentialsStub(options),
       std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy), options);
+      std::move(idempotency_policy));
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    IAMCredentialsConnectionOptions const& options,
     std::shared_ptr<golden_internal::IAMCredentialsStub> stub,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> idempotency_policy) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy), options);
+      std::move(idempotency_policy));
 }
 
 }  // namespace golden

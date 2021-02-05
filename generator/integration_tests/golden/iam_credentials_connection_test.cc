@@ -87,7 +87,7 @@ std::shared_ptr<golden::IAMCredentialsConnection> CreateTestingConnection(
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
   return golden::MakeIAMCredentialsConnection(
-      {}, std::move(mock), retry.clone(), backoff.clone(),
+      std::move(mock), retry.clone(), backoff.clone(),
       golden::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy());
 }
 

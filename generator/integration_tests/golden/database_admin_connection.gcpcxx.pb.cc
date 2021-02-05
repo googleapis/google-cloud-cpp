@@ -202,25 +202,21 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::unique_ptr<PollingPolicy> polling_policy,
-      std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy,
-      DatabaseAdminConnectionOptions options)
+      std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
         polling_policy_prototype_(std::move(polling_policy)),
-        idempotency_policy_(std::move(idempotency_policy)),
-        options_(std::move(options)) {}
+        idempotency_policy_(std::move(idempotency_policy)) {}
 
   explicit DatabaseAdminConnectionImpl(
-      std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
-      DatabaseAdminConnectionOptions options)
+      std::shared_ptr<golden_internal::DatabaseAdminStub> stub)
       : DatabaseAdminConnectionImpl(
           std::move(stub),
           DefaultRetryPolicy(),
           DefaultBackoffPolicy(),
           DefaultPollingPolicy(),
-          MakeDefaultDatabaseAdminConnectionIdempotencyPolicy(),
-          std::move(options)) {}
+          MakeDefaultDatabaseAdminConnectionIdempotencyPolicy()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
 
@@ -619,14 +615,13 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
   std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy_;
-  DatabaseAdminConnectionOptions options_;
 };
 }  // namespace
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     DatabaseAdminConnectionOptions const& options) {
   return std::make_shared<DatabaseAdminConnectionImpl>(
-      golden_internal::CreateDefaultDatabaseAdminStub(options), options);
+      golden_internal::CreateDefaultDatabaseAdminStub(options));
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
@@ -638,11 +633,10 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
   return std::make_shared<DatabaseAdminConnectionImpl>(
       golden_internal::CreateDefaultDatabaseAdminStub(options),
       std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy), options);
+      std::move(polling_policy), std::move(idempotency_policy));
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    DatabaseAdminConnectionOptions const& options,
     std::shared_ptr<golden_internal::DatabaseAdminStub> stub,
     std::unique_ptr<DatabaseAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
@@ -650,7 +644,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {
   return std::make_shared<DatabaseAdminConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy), options);
+      std::move(polling_policy), std::move(idempotency_policy));
 }
 
 }  // namespace golden
