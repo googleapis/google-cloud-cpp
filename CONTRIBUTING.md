@@ -1,5 +1,7 @@
 # How to become a contributor and submit your own code
 
+DO NOT SUBMIT -- JGM TESTING BUILD LATENCY
+
 ## Contributor License Agreements
 
 We'd love to accept your patches! Before we can take them, we
