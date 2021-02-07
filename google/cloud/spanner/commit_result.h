@@ -17,8 +17,6 @@
 
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
-#include "absl/types/optional.h"
-#include <cstdint>
 
 namespace google {
 namespace cloud {
@@ -26,21 +24,11 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * Statistics returned for a committed Transaction.
- */
-struct CommitStats {
-  std::int64_t mutation_count;  // total number of mutations
-};
-
-/**
  * The result of committing a Transaction.
  */
 struct CommitResult {
   /// The Cloud Spanner timestamp at which the transaction committed.
   Timestamp commit_timestamp;
-
-  /// Additional statistics about the committed transaction.
-  absl::optional<CommitStats> commit_stats;
 };
 
 }  // namespace SPANNER_CLIENT_NS
