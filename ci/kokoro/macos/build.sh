@@ -104,8 +104,8 @@ echo "================================================================"
 io::log_yellow "getting roots.pem for gRPC."
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
 rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
-wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
-  -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
+curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
+  https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 
 BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-master}"
 readonly BRANCH
