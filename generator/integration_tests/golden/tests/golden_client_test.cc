@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/database_admin_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_database_admin_connection.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <gmock/gmock.h>
+#include "generator/integration_tests/golden/database_admin_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_database_admin_connection.gcpcxx.pb.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
+#include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
