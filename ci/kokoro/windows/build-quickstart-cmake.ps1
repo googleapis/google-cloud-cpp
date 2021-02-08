@@ -45,9 +45,21 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
         . "${integration_tests_config}"
         ${env:GOOGLE_APPLICATION_CREDENTIALS}="${test_key_file_json}"
         ${env:GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}="yes"
-        (New-Object System.Net.WebClient).Downloadfile(
-            'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem',
-             "${env:KOKORO_GFILE_DIR}/roots.pem")
+        ForEach($_ in (1, 2, 3)) {
+            if ( $_ -ne 1) {
+                Start-Sleep -Seconds (60 * $_)
+            }
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "Downloading roots.pem [$_]"
+            try {
+                (New-Object System.Net.WebClient).Downloadfile(
+                        'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem',
+                        "${env:KOKORO_GFILE_DIR}/roots.pem")
+                break
+            } catch {
+                Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+            }
+        }
         ${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}="${env:KOKORO_GFILE_DIR}/roots.pem"
         ${env:RUN_INTEGRATION_TESTS}="true"
     }

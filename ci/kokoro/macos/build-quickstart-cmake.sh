@@ -55,7 +55,7 @@ readonly ROOTS_PEM_SOURCE="https://raw.githubusercontent.com/grpc/grpc/master/et
 if [[ -r "${CREDENTIALS_FILE}" ]]; then
   if [[ -r "${CONFIG_DIR}/roots.pem" ]]; then
     run_quickstart="true"
-  elif wget -O "${CONFIG_DIR}/roots.pem" -q "${ROOTS_PEM_SOURCE}"; then
+  elif curl -sSL --retry 10 -o "${CONFIG_DIR}/roots.pem" "${ROOTS_PEM_SOURCE}"; then
     run_quickstart="true"
   fi
 fi
