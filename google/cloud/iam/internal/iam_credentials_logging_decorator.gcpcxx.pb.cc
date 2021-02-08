@@ -27,8 +27,11 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam_internal {
 
 IAMCredentialsLogging::IAMCredentialsLogging(
-    std::shared_ptr<IAMCredentialsStub> child, TracingOptions tracing_options)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
+    std::shared_ptr<IAMCredentialsStub> child, TracingOptions tracing_options,
+    std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
+      components_(std::move(components)) {}
 
 StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsLogging::GenerateAccessToken(

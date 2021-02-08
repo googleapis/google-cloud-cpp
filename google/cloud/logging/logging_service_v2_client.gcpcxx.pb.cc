@@ -49,7 +49,8 @@ LoggingServiceV2Client::WriteLogEntries(
   return connection_->WriteLogEntries(request);
 }
 
-ListLogEntriesRange LoggingServiceV2Client::ListLogEntries(
+StreamRange<::google::logging::v2::LogEntry>
+LoggingServiceV2Client::ListLogEntries(
     std::vector<std::string> const& resource_names, std::string const& filter,
     std::string const& order_by) {
   ::google::logging::v2::ListLogEntriesRequest request;
@@ -60,7 +61,8 @@ ListLogEntriesRange LoggingServiceV2Client::ListLogEntries(
   return connection_->ListLogEntries(request);
 }
 
-ListLogsRange LoggingServiceV2Client::ListLogs(std::string const& parent) {
+StreamRange<std::string> LoggingServiceV2Client::ListLogs(
+    std::string const& parent) {
   ::google::logging::v2::ListLogsRequest request;
   request.set_parent(parent);
   return connection_->ListLogs(request);
@@ -77,18 +79,19 @@ LoggingServiceV2Client::WriteLogEntries(
   return connection_->WriteLogEntries(request);
 }
 
-ListLogEntriesRange LoggingServiceV2Client::ListLogEntries(
+StreamRange<::google::logging::v2::LogEntry>
+LoggingServiceV2Client::ListLogEntries(
     ::google::logging::v2::ListLogEntriesRequest request) {
   return connection_->ListLogEntries(std::move(request));
 }
 
-ListMonitoredResourceDescriptorsRange
+StreamRange<::google::api::MonitoredResourceDescriptor>
 LoggingServiceV2Client::ListMonitoredResourceDescriptors(
     ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   return connection_->ListMonitoredResourceDescriptors(std::move(request));
 }
 
-ListLogsRange LoggingServiceV2Client::ListLogs(
+StreamRange<std::string> LoggingServiceV2Client::ListLogs(
     ::google::logging::v2::ListLogsRequest request) {
   return connection_->ListLogs(std::move(request));
 }

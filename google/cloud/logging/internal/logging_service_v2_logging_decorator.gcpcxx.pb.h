@@ -22,6 +22,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
@@ -33,7 +34,8 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2Logging() override = default;
   LoggingServiceV2Logging(std::shared_ptr<LoggingServiceV2Stub> child,
-                          TracingOptions tracing_options);
+                          TracingOptions tracing_options,
+                          std::set<std::string> components);
 
   Status DeleteLog(
       grpc::ClientContext& context,
@@ -60,6 +62,7 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
   TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };  // LoggingServiceV2Logging
 
 }  // namespace logging_internal

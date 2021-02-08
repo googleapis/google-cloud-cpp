@@ -43,8 +43,8 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<LoggingServiceV2Logging>(std::move(stub),
-                                                     options.tracing_options());
+    stub = std::make_shared<LoggingServiceV2Logging>(
+        std::move(stub), options.tracing_options(), options.components());
   }
   return stub;
 }

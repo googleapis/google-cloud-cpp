@@ -23,8 +23,8 @@
 #include "google/cloud/logging/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -54,15 +54,6 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
-using ListLogEntriesRange =
-    google::cloud::internal::PaginationRange<::google::logging::v2::LogEntry>;
-
-using ListMonitoredResourceDescriptorsRange =
-    google::cloud::internal::PaginationRange<
-        ::google::api::MonitoredResourceDescriptor>;
-
-using ListLogsRange = google::cloud::internal::PaginationRange<std::string>;
-
 class LoggingServiceV2Connection {
  public:
   virtual ~LoggingServiceV2Connection() = 0;
@@ -73,14 +64,14 @@ class LoggingServiceV2Connection {
   virtual StatusOr<::google::logging::v2::WriteLogEntriesResponse>
   WriteLogEntries(::google::logging::v2::WriteLogEntriesRequest const& request);
 
-  virtual ListLogEntriesRange ListLogEntries(
+  virtual StreamRange<::google::logging::v2::LogEntry> ListLogEntries(
       ::google::logging::v2::ListLogEntriesRequest request);
 
-  virtual ListMonitoredResourceDescriptorsRange
+  virtual StreamRange<::google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
       ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
-  virtual ListLogsRange ListLogs(
+  virtual StreamRange<std::string> ListLogs(
       ::google::logging::v2::ListLogsRequest request);
 };
 

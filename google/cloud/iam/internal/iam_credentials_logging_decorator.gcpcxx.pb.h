@@ -22,6 +22,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
@@ -33,7 +34,8 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  public:
   ~IAMCredentialsLogging() override = default;
   IAMCredentialsLogging(std::shared_ptr<IAMCredentialsStub> child,
-                        TracingOptions tracing_options);
+                        TracingOptions tracing_options,
+                        std::set<std::string> components);
 
   StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
@@ -57,6 +59,7 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
  private:
   std::shared_ptr<IAMCredentialsStub> child_;
   TracingOptions tracing_options_;
+  std::set<std::string> components_;
 };  // IAMCredentialsLogging
 
 }  // namespace iam_internal

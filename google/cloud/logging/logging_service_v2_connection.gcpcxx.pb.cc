@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/logging_service_v2_connection.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
@@ -52,9 +53,11 @@ LoggingServiceV2Connection::WriteLogEntries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-ListLogEntriesRange LoggingServiceV2Connection::ListLogEntries(
+StreamRange<::google::logging::v2::LogEntry>
+LoggingServiceV2Connection::ListLogEntries(
     ::google::logging::v2::ListLogEntriesRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListLogEntriesRange>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<::google::logging::v2::LogEntry>>(
       std::move(request),
       [](::google::logging::v2::ListLogEntriesRequest const&) {
         return StatusOr<::google::logging::v2::ListLogEntriesResponse>{};
@@ -64,11 +67,11 @@ ListLogEntriesRange LoggingServiceV2Connection::ListLogEntries(
       });
 }
 
-ListMonitoredResourceDescriptorsRange
+StreamRange<::google::api::MonitoredResourceDescriptor>
 LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
     ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   return google::cloud::internal::MakePaginationRange<
-      ListMonitoredResourceDescriptorsRange>(
+      StreamRange<::google::api::MonitoredResourceDescriptor>>(
       std::move(request),
       [](::google::logging::v2::
              ListMonitoredResourceDescriptorsRequest const&) {
@@ -81,9 +84,9 @@ LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
       });
 }
 
-ListLogsRange LoggingServiceV2Connection::ListLogs(
+StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
     ::google::logging::v2::ListLogsRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
       std::move(request),
       [](::google::logging::v2::ListLogsRequest const&) {
         return StatusOr<::google::logging::v2::ListLogsResponse>{};
@@ -151,7 +154,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         request, __func__);
   }
 
-  ListLogEntriesRange ListLogEntries(
+  StreamRange<::google::logging::v2::LogEntry> ListLogEntries(
       ::google::logging::v2::ListLogEntriesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -161,7 +164,8 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListLogEntries(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListLogEntriesRange>(
+    return google::cloud::internal::MakePaginationRange<
+        StreamRange<::google::logging::v2::LogEntry>>(
         std::move(request),
         [stub, retry, backoff, idempotency,
          function_name](::google::logging::v2::ListLogEntriesRequest const& r) {
@@ -183,7 +187,8 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         });
   }
 
-  ListMonitoredResourceDescriptorsRange ListMonitoredResourceDescriptors(
+  StreamRange<::google::api::MonitoredResourceDescriptor>
+  ListMonitoredResourceDescriptors(
       ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request)
       override {
     request.clear_page_token();
@@ -196,7 +201,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         idempotency_policy_->ListMonitoredResourceDescriptors(request);
     char const* function_name = __func__;
     return google::cloud::internal::MakePaginationRange<
-        ListMonitoredResourceDescriptorsRange>(
+        StreamRange<::google::api::MonitoredResourceDescriptor>>(
         std::move(request),
         [stub, retry, backoff, idempotency,
          function_name](::google::logging::v2::
@@ -220,7 +225,7 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         });
   }
 
-  ListLogsRange ListLogs(
+  StreamRange<std::string> ListLogs(
       ::google::logging::v2::ListLogsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -230,7 +235,8 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListLogs(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+    return google::cloud::internal::MakePaginationRange<
+        StreamRange<std::string>>(
         std::move(request),
         [stub, retry, backoff, idempotency,
          function_name](::google::logging::v2::ListLogsRequest const& r) {

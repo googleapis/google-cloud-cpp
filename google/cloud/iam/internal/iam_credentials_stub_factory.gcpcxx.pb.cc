@@ -42,8 +42,8 @@ std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<IAMCredentialsLogging>(std::move(stub),
-                                                   options.tracing_options());
+    stub = std::make_shared<IAMCredentialsLogging>(
+        std::move(stub), options.tracing_options(), options.components());
   }
   return stub;
 }
