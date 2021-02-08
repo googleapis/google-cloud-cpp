@@ -80,8 +80,8 @@ cmake -Hsuper -Bcmake-out
 cmake --build cmake-out -- -j $(nproc)
 ```
 
-The binary artifacts for the library, such as examples, will be located in
-`cmake-out/build/google-cloud-cpp/`.
+The binary artifacts, such as examples, will be placed in
+`cmake-out/super/src/google_cloud_cpp_project-build/`.
 
 ## Quickstart
 
