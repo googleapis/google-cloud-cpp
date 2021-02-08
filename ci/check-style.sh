@@ -88,6 +88,16 @@ time {
     done
 }
 
+# Currently, we need to exclude golden files from being formatted, but at the
+# same time format the unit tests for those golden files. Due to clang-formats
+# limited exclusion functionality, we must maintain a second copy of the
+# project clang-format config in the unit test directory.
+clang_format_project_file="${PROJECT_ROOT}/.clang-format"
+clang_format_generator_file="${PROJECT_ROOT}/generator/integration_tests/golden/tests/.clang-format"
+if ! cmp -s "${clang_format_project_file}" "${clang_format_generator_file}"; then
+  cp "${clang_format_project_file}" "${clang_format_generator_file}"
+fi
+
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
 # different formatting output (sigh).
