@@ -203,14 +203,14 @@ class MockGrpcDatabaseAdminStub
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncDropDatabaseRaw,
       (::grpc::ClientContext * context,
        const ::google::test::admin::database::v1::DropDatabaseRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncDropDatabaseRaw,
       (::grpc::ClientContext * context,
        const ::google::test::admin::database::v1::DropDatabaseRequest& request,
@@ -233,28 +233,28 @@ class MockGrpcDatabaseAdminStub
                ::grpc::CompletionQueue* cq),
               (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::iam::v1::Policy>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::iam::v1::Policy>*,
       AsyncSetIamPolicyRaw,
       (::grpc::ClientContext * context,
        const ::google::iam::v1::SetIamPolicyRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::iam::v1::Policy>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::iam::v1::Policy>*,
       PrepareAsyncSetIamPolicyRaw,
       (::grpc::ClientContext * context,
        const ::google::iam::v1::SetIamPolicyRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::iam::v1::Policy>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::iam::v1::Policy>*,
       AsyncGetIamPolicyRaw,
       (::grpc::ClientContext * context,
        const ::google::iam::v1::GetIamPolicyRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::iam::v1::Policy>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::iam::v1::Policy>*,
       PrepareAsyncGetIamPolicyRaw,
       (::grpc::ClientContext * context,
        const ::google::iam::v1::GetIamPolicyRequest& request,
@@ -323,14 +323,14 @@ class MockGrpcDatabaseAdminStub
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncDeleteBackupRaw,
       (::grpc::ClientContext * context,
        const ::google::test::admin::database::v1::DeleteBackupRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncDeleteBackupRaw,
       (::grpc::ClientContext * context,
        const ::google::test::admin::database::v1::DeleteBackupRequest& request,
@@ -466,28 +466,28 @@ class MockLongrunningOperationsStub
                ::grpc::CompletionQueue* cq),
               (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncDeleteOperationRaw,
       (::grpc::ClientContext * context,
        const ::google::longrunning::DeleteOperationRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncDeleteOperationRaw,
       (::grpc::ClientContext * context,
        const ::google::longrunning::DeleteOperationRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncCancelOperationRaw,
       (::grpc::ClientContext * context,
        const ::google::longrunning::CancelOperationRequest& request,
        ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
-      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncCancelOperationRaw,
       (::grpc::ClientContext * context,
        const ::google::longrunning::CancelOperationRequest& request,

@@ -11,16 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#include "generator/integration_tests/golden/iam_credentials_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_iam_credentials_connection.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <gmock/gmock.h>
+#include "generator/integration_tests/golden/iam_credentials_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_iam_credentials_connection.gcpcxx.pb.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
+#include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
@@ -73,7 +73,7 @@ TEST(IAMCredentialsClientTest, GenerateAccessToken) {
       .WillRepeatedly([expected_name, expected_delegates, expected_scope,
                        expected_lifetime](
                           ::google::test::admin::database::v1::
-                              GenerateAccessTokenRequest const &request) {
+                              GenerateAccessTokenRequest const& request) {
         EXPECT_EQ(request.name(), expected_name);
         EXPECT_THAT(request.delegates(), ElementsAreArray(expected_delegates));
         EXPECT_THAT(request.scope(), ElementsAreArray(expected_scope));
@@ -104,20 +104,18 @@ TEST(IAMCredentialsClientTest, GenerateIdToken) {
   bool expected_include_email = true;
   EXPECT_CALL(*mock, GenerateIdToken)
       .Times(2)
-      .WillRepeatedly(
-          [expected_name, expected_delegates, expected_audience,
-           expected_include_email](
-              ::google::test::admin::database::v1::GenerateIdTokenRequest const
-                  &request) {
-            EXPECT_EQ(request.name(), expected_name);
-            EXPECT_THAT(request.delegates(),
-                        testing::ElementsAreArray(expected_delegates));
-            EXPECT_EQ(request.audience(), expected_audience);
-            EXPECT_EQ(request.include_email(), expected_include_email);
-            ::google::test::admin::database::v1::GenerateIdTokenResponse
-                response;
-            return response;
-          });
+      .WillRepeatedly([expected_name, expected_delegates, expected_audience,
+                       expected_include_email](
+                          ::google::test::admin::database::v1::
+                              GenerateIdTokenRequest const& request) {
+        EXPECT_EQ(request.name(), expected_name);
+        EXPECT_THAT(request.delegates(),
+                    testing::ElementsAreArray(expected_delegates));
+        EXPECT_EQ(request.audience(), expected_audience);
+        EXPECT_EQ(request.include_email(), expected_include_email);
+        ::google::test::admin::database::v1::GenerateIdTokenResponse response;
+        return response;
+      });
   IAMCredentialsClient client(std::move(mock));
   auto response =
       client.GenerateIdToken(expected_name, expected_delegates,
@@ -142,7 +140,7 @@ TEST(IAMCredentialsClientTest, WriteLogEntries) {
       .Times(2)
       .WillRepeatedly([expected_log_name, expected_labels](
                           ::google::test::admin::database::v1::
-                              WriteLogEntriesRequest const &request) {
+                              WriteLogEntriesRequest const& request) {
         EXPECT_EQ(request.log_name(), expected_log_name);
         std::map<std::string, std::string> labels = {request.labels().begin(),
                                                      request.labels().end()};
@@ -167,17 +165,17 @@ TEST(IAMCredentialsClientTest, ListLogs) {
   EXPECT_CALL(*mock, ListLogs)
       .Times(2)
       .WillRepeatedly([expected_parent](::google::test::admin::database::v1::
-                                            ListLogsRequest const &request) {
+                                            ListLogsRequest const& request) {
         EXPECT_EQ(request.parent(), expected_parent);
         return google::cloud::internal::MakePaginationRange<
             StreamRange<std::string>>(
             ::google::test::admin::database::v1::ListLogsRequest{},
-            [](::google::test::admin::database::v1::ListLogsRequest const &) {
+            [](::google::test::admin::database::v1::ListLogsRequest const&) {
               return StatusOr<
                   ::google::test::admin::database::v1::ListLogsResponse>(
                   Status(StatusCode::kPermissionDenied, "uh-oh"));
             },
-            [](::google::test::admin::database::v1::ListLogsResponse const &) {
+            [](::google::test::admin::database::v1::ListLogsResponse const&) {
               return std::vector<std::string>{};
             });
       });
@@ -201,8 +199,8 @@ TEST(IAMCredentialsClientTest, TailLogEntries) {
       .Times(2)
       .WillRepeatedly(
           [expected_resource_names](
-              ::google::test::admin::database::v1::TailLogEntriesRequest const
-                  &request) {
+              ::google::test::admin::database::v1::TailLogEntriesRequest const&
+                  request) {
             EXPECT_THAT(request.resource_names(),
                         ElementsAreArray(expected_resource_names));
             return google::cloud::internal::MakeStreamRange<
@@ -226,8 +224,8 @@ TEST(IAMCredentialsClientTest, TailLogEntries) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-} // namespace
-} // namespace golden
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

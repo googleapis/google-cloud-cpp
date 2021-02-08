@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/database_admin_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -25,7 +25,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
-class GoldenStubFactoryTest : public ::testing::Test {
+class IAMCredentialsStubFactoryTest : public ::testing::Test {
  protected:
   void SetUp() override {
     backend_ =
@@ -49,16 +49,16 @@ class GoldenStubFactoryTest : public ::testing::Test {
   long logger_id_ = 0;  // NOLINT
 };
 
-TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultDatabaseAdminStub({});
+TEST_F(IAMCredentialsStubFactoryTest, DefaultStubWithoutLogging) {
+  auto default_stub = CreateDefaultIAMCredentialsStub({});
   auto const log_lines = ClearLogLines();
   EXPECT_EQ(log_lines.size(), 0);
 }
 
-TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
-  golden::DatabaseAdminConnectionOptions options;
+TEST_F(IAMCredentialsStubFactoryTest, DefaultStubWithLogging) {
+  golden::IAMCredentialsConnectionOptions options;
   options.enable_tracing("rpc");
-  auto default_stub = CreateDefaultDatabaseAdminStub(options);
+  auto default_stub = CreateDefaultIAMCredentialsStub(options);
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }

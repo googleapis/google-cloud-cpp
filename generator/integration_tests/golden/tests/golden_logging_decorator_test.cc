@@ -11,10 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#include "generator/integration_tests/golden/internal/database_admin_logging_decorator.gcpcxx.pb.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "generator/integration_tests/golden/internal/database_admin_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 

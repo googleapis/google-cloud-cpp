@@ -25,7 +25,7 @@ namespace {
 using google::cloud::internal::Idempotency;
 
 class IAMCredentialsIdempotencyPolicyTest : public ::testing::Test {
-protected:
+ protected:
   void SetUp() override {
     policy_ = golden::MakeDefaultIAMCredentialsConnectionIdempotencyPolicy();
   }
@@ -53,8 +53,8 @@ TEST_F(IAMCredentialsIdempotencyPolicyTest, ListLogs) {
   EXPECT_EQ(policy_->ListLogs(request), Idempotency::kIdempotent);
 }
 
-} // namespace
-} // namespace golden_internal
-} // namespace GOOGLE_CLOUD_CPP_NS
-} // namespace cloud
-} // namespace google
+}  // namespace
+}  // namespace golden_internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google
