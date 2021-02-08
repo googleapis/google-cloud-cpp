@@ -111,7 +111,7 @@ TEST(FutureTestString, SetValueRefRef) {
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
 // NOLINTNEXTLINE(google-readability-avoid-underscore-in-googletest-name)
 TEST(FutureTestInt, conform_30_6_5_3) {
-  // TODO(coryan) - allocators are not supported for now.
+  // TODO(#3936) - allocators are not supported for now.
   static_assert(!std::uses_allocator<promise<int>, std::allocator<int>>::value,
                 "promise<int> should use allocators if provided");
 }
