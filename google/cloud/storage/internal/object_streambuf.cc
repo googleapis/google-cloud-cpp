@@ -27,17 +27,16 @@ namespace internal {
 ObjectReadStreambuf::ObjectReadStreambuf(
     ReadObjectRangeRequest const& request,
     std::unique_ptr<ObjectReadSource> source, std::streamoff pos_in_stream)
-    : source_(std::move(source)), source_pos_(pos_in_stream) {
-  hash_validator_ = CreateHashValidator(request);
-}
+    : source_(std::move(source)),
+      source_pos_(pos_in_stream),
+      hash_validator_(CreateHashValidator(request)) {}
 
-ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const& request,
+ObjectReadStreambuf::ObjectReadStreambuf(ReadObjectRangeRequest const&,
                                          Status status)
-    : source_(new ObjectReadErrorSource(status)), source_pos_(-1) {
-  // TODO(coryan) - revisit this, we probably do not need the validator.
-  hash_validator_ = CreateHashValidator(request);
-  status_ = std::move(status);
-}
+    : source_(new ObjectReadErrorSource(status)),
+      source_pos_(-1),
+      hash_validator_(absl::make_unique<NullHashValidator>()),
+      status_(std::move(status)) {}
 
 bool ObjectReadStreambuf::IsOpen() const { return source_->IsOpen(); }
 
