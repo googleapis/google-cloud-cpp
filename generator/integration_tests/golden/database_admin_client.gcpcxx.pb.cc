@@ -27,7 +27,7 @@ namespace golden {
 DatabaseAdminClient::DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> connection) : connection_(std::move(connection)) {}
 DatabaseAdminClient::~DatabaseAdminClient() = default;
 
-ListDatabasesRange
+StreamRange<::google::test::admin::database::v1::Database>
 DatabaseAdminClient::ListDatabases(std::string const& parent) {
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent(parent);
@@ -125,7 +125,7 @@ DatabaseAdminClient::DeleteBackup(std::string const& name) {
   return connection_->DeleteBackup(request);
 }
 
-ListBackupsRange
+StreamRange<::google::test::admin::database::v1::Backup>
 DatabaseAdminClient::ListBackups(std::string const& parent) {
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent(parent);
@@ -141,21 +141,21 @@ DatabaseAdminClient::RestoreDatabase(std::string const& parent, std::string cons
   return connection_->RestoreDatabase(request);
 }
 
-ListDatabaseOperationsRange
+StreamRange<::google::longrunning::Operation>
 DatabaseAdminClient::ListDatabaseOperations(std::string const& parent) {
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListDatabaseOperations(request);
 }
 
-ListBackupOperationsRange
+StreamRange<::google::longrunning::Operation>
 DatabaseAdminClient::ListBackupOperations(std::string const& parent) {
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListBackupOperations(request);
 }
 
-ListDatabasesRange
+StreamRange<::google::test::admin::database::v1::Database>
 DatabaseAdminClient::ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request) {
   return connection_->ListDatabases(std::move(request));
 }
@@ -220,7 +220,7 @@ DatabaseAdminClient::DeleteBackup(::google::test::admin::database::v1::DeleteBac
   return connection_->DeleteBackup(request);
 }
 
-ListBackupsRange
+StreamRange<::google::test::admin::database::v1::Backup>
 DatabaseAdminClient::ListBackups(::google::test::admin::database::v1::ListBackupsRequest request) {
   return connection_->ListBackups(std::move(request));
 }
@@ -230,12 +230,12 @@ DatabaseAdminClient::RestoreDatabase(::google::test::admin::database::v1::Restor
   return connection_->RestoreDatabase(request);
 }
 
-ListDatabaseOperationsRange
+StreamRange<::google::longrunning::Operation>
 DatabaseAdminClient::ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
   return connection_->ListDatabaseOperations(std::move(request));
 }
 
-ListBackupOperationsRange
+StreamRange<::google::longrunning::Operation>
 DatabaseAdminClient::ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request) {
   return connection_->ListBackupOperations(std::move(request));
 }

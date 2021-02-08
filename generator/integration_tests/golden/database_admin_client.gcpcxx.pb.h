@@ -68,7 +68,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance whose databases should be listed.
    *  Values are of the form `projects/<project>/instances/<instance>`.
    */
-  ListDatabasesRange
+  StreamRange<::google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent);
 
   /**
@@ -275,7 +275,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance to list backups from.  Values are of the
    *  form `projects/<project>/instances/<instance>`.
    */
-  ListBackupsRange
+  StreamRange<::google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent);
 
   /**
@@ -326,7 +326,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance of the database operations.
    *  Values are of the form `projects/<project>/instances/<instance>`.
    */
-  ListDatabaseOperationsRange
+  StreamRange<::google::longrunning::Operation>
   ListDatabaseOperations(std::string const& parent);
 
   /**
@@ -344,7 +344,7 @@ class DatabaseAdminClient {
    * @param parent  Required. The instance of the backup operations. Values are of
    *  the form `projects/<project>/instances/<instance>`.
    */
-  ListBackupOperationsRange
+  StreamRange<::google::longrunning::Operation>
   ListBackupOperations(std::string const& parent);
 
   /**
@@ -352,7 +352,7 @@ class DatabaseAdminClient {
    *
    * @param request [::google::test::admin::database::v1::ListDatabasesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L377)
    */
-  ListDatabasesRange
+  StreamRange<::google::test::admin::database::v1::Database>
   ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request);
 
   /**
@@ -518,7 +518,7 @@ class DatabaseAdminClient {
    *
    * @param request [::google::test::admin::database::v1::ListBackupsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L203)
    */
-  ListBackupsRange
+  StreamRange<::google::test::admin::database::v1::Backup>
   ListBackups(::google::test::admin::database::v1::ListBackupsRequest request);
 
   /**
@@ -558,7 +558,7 @@ class DatabaseAdminClient {
    *
    * @param request [::google::test::admin::database::v1::ListDatabaseOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L553)
    */
-  ListDatabaseOperationsRange
+  StreamRange<::google::longrunning::Operation>
   ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request);
 
   /**
@@ -575,7 +575,7 @@ class DatabaseAdminClient {
    *
    * @param request [::google::test::admin::database::v1::ListBackupOperationsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/backup.proto#L274)
    */
-  ListBackupOperationsRange
+  StreamRange<::google::longrunning::Operation>
   ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request);
 
  private:

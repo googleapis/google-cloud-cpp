@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/database_admin_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/database_admin_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -40,9 +41,10 @@ int DatabaseAdminConnectionOptionsTraits::default_num_channels() { return 4; }
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
-ListDatabasesRange DatabaseAdminConnection::ListDatabases(
+StreamRange<::google::test::admin::database::v1::Database> DatabaseAdminConnection::ListDatabases(
     ::google::test::admin::database::v1::ListDatabasesRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+    ::google::test::admin::database::v1::Database>>(
     std::move(request),
     [](::google::test::admin::database::v1::ListDatabasesRequest const&) {
       return StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>{};
@@ -130,9 +132,10 @@ DatabaseAdminConnection::DeleteBackup(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-ListBackupsRange DatabaseAdminConnection::ListBackups(
+StreamRange<::google::test::admin::database::v1::Backup> DatabaseAdminConnection::ListBackups(
     ::google::test::admin::database::v1::ListBackupsRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+    ::google::test::admin::database::v1::Backup>>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupsRequest const&) {
       return StatusOr<::google::test::admin::database::v1::ListBackupsResponse>{};
@@ -150,9 +153,10 @@ DatabaseAdminConnection::RestoreDatabase(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
+StreamRange<::google::longrunning::Operation> DatabaseAdminConnection::ListDatabaseOperations(
     ::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+    ::google::longrunning::Operation>>(
     std::move(request),
     [](::google::test::admin::database::v1::ListDatabaseOperationsRequest const&) {
       return StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>{};
@@ -162,9 +166,10 @@ ListDatabaseOperationsRange DatabaseAdminConnection::ListDatabaseOperations(
     });
 }
 
-ListBackupOperationsRange DatabaseAdminConnection::ListBackupOperations(
+StreamRange<::google::longrunning::Operation> DatabaseAdminConnection::ListBackupOperations(
     ::google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+    ::google::longrunning::Operation>>(
     std::move(request),
     [](::google::test::admin::database::v1::ListBackupOperationsRequest const&) {
       return StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>{};
@@ -220,7 +225,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
   ~DatabaseAdminConnectionImpl() override = default;
 
-  ListDatabasesRange ListDatabases(
+  StreamRange<::google::test::admin::database::v1::Database> ListDatabases(
       ::google::test::admin::database::v1::ListDatabasesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -230,7 +235,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabases(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
+    return google::cloud::internal::MakePaginationRange<StreamRange<
+        ::google::test::admin::database::v1::Database>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListDatabasesRequest const& r) {
@@ -424,7 +430,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         request, __func__);
 }
 
-  ListBackupsRange ListBackups(
+  StreamRange<::google::test::admin::database::v1::Backup> ListBackups(
       ::google::test::admin::database::v1::ListBackupsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -434,7 +440,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackups(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
+    return google::cloud::internal::MakePaginationRange<StreamRange<
+        ::google::test::admin::database::v1::Backup>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListBackupsRequest const& r) {
@@ -473,7 +480,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     return AwaitRestoreDatabase(*std::move(operation));
 }
 
-  ListDatabaseOperationsRange ListDatabaseOperations(
+  StreamRange<::google::longrunning::Operation> ListDatabaseOperations(
       ::google::test::admin::database::v1::ListDatabaseOperationsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -483,7 +490,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabaseOperations(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
+    return google::cloud::internal::MakePaginationRange<StreamRange<
+        ::google::longrunning::Operation>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListDatabaseOperationsRequest const& r) {
@@ -503,7 +511,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         });
   }
 
-  ListBackupOperationsRange ListBackupOperations(
+  StreamRange<::google::longrunning::Operation> ListBackupOperations(
       ::google::test::admin::database::v1::ListBackupOperationsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -513,7 +521,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackupOperations(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
+    return google::cloud::internal::MakePaginationRange<StreamRange<
+        ::google::longrunning::Operation>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListBackupOperationsRequest const& r) {

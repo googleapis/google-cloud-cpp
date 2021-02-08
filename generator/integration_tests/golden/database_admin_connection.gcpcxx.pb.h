@@ -24,9 +24,9 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/connection_options.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -55,23 +55,11 @@ using DatabaseAdminLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::DatabaseAdminRetryTraits>;
 
-using ListDatabasesRange = google::cloud::internal::PaginationRange<
-    ::google::test::admin::database::v1::Database>;
-
-using ListBackupsRange = google::cloud::internal::PaginationRange<
-    ::google::test::admin::database::v1::Backup>;
-
-using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange<
-    ::google::longrunning::Operation>;
-
-using ListBackupOperationsRange = google::cloud::internal::PaginationRange<
-    ::google::longrunning::Operation>;
-
 class DatabaseAdminConnection {
  public:
   virtual ~DatabaseAdminConnection() = 0;
 
-  virtual ListDatabasesRange
+  virtual StreamRange<::google::test::admin::database::v1::Database>
   ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request);
 
   virtual future<StatusOr<::google::test::admin::database::v1::Database>>
@@ -110,16 +98,16 @@ class DatabaseAdminConnection {
   virtual Status
   DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request);
 
-  virtual ListBackupsRange
+  virtual StreamRange<::google::test::admin::database::v1::Backup>
   ListBackups(::google::test::admin::database::v1::ListBackupsRequest request);
 
   virtual future<StatusOr<::google::test::admin::database::v1::Database>>
   RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request);
 
-  virtual ListDatabaseOperationsRange
+  virtual StreamRange<::google::longrunning::Operation>
   ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request);
 
-  virtual ListBackupOperationsRange
+  virtual StreamRange<::google::longrunning::Operation>
   ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request);
 
 };

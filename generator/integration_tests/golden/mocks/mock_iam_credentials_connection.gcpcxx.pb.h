@@ -40,11 +40,11 @@ class MockIAMCredentialsConnection : public golden::IAMCredentialsConnection {
   WriteLogEntries,
   (::google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
 
-  MOCK_METHOD(golden::ListLogsRange,
+  MOCK_METHOD(StreamRange<std::string>,
   ListLogs,
   (::google::test::admin::database::v1::ListLogsRequest request), (override));
 
-  MOCK_METHOD(golden::TailLogEntriesStream,
+  MOCK_METHOD(StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>,
   TailLogEntries,
   (::google::test::admin::database::v1::TailLogEntriesRequest request), (override));
 

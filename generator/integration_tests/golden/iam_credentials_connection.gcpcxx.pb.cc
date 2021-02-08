@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/iam_credentials_connection.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
@@ -59,9 +60,10 @@ IAMCredentialsConnection::WriteLogEntries(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-ListLogsRange IAMCredentialsConnection::ListLogs(
+StreamRange<std::string> IAMCredentialsConnection::ListLogs(
     ::google::test::admin::database::v1::ListLogsRequest request) {
-  return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+    std::string>>(
     std::move(request),
     [](::google::test::admin::database::v1::ListLogsRequest const&) {
       return StatusOr<::google::test::admin::database::v1::ListLogsResponse>{};
@@ -71,7 +73,7 @@ ListLogsRange IAMCredentialsConnection::ListLogs(
     });
 }
 
-TailLogEntriesStream IAMCredentialsConnection::TailLogEntries(
+StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> IAMCredentialsConnection::TailLogEntries(
     ::google::test::admin::database::v1::TailLogEntriesRequest) {
   return google::cloud::internal::MakeStreamRange<
       ::google::test::admin::database::v1::TailLogEntriesResponse>(
@@ -154,7 +156,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
         request, __func__);
 }
 
-  ListLogsRange ListLogs(
+  StreamRange<std::string> ListLogs(
       ::google::test::admin::database::v1::ListLogsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
@@ -164,7 +166,8 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListLogs(request);
     char const* function_name = __func__;
-    return google::cloud::internal::MakePaginationRange<ListLogsRange>(
+    return google::cloud::internal::MakePaginationRange<StreamRange<
+        std::string>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
           (::google::test::admin::database::v1::ListLogsRequest const& r) {
@@ -184,7 +187,7 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
         });
   }
 
-  TailLogEntriesStream TailLogEntries(
+  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
       ::google::test::admin::database::v1::TailLogEntriesRequest request) override {
     auto stub = stub_;
     auto retry_policy =

@@ -14,6 +14,7 @@
 
 #include "generator/integration_tests/golden/database_admin_client.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/mocks/mock_database_admin_connection.gcpcxx.pb.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -70,7 +71,8 @@ TEST(GoldenClientTest, ListDatabases) {
                                               ListDatabasesRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
 
-        return google::cloud::internal::MakePaginationRange<ListDatabasesRange>(
+        return google::cloud::internal::MakePaginationRange<
+            StreamRange<::google::test::admin::database::v1::Database>>(
             ::google::test::admin::database::v1::ListDatabasesRequest{},
             [](::google::test::admin::database::v1::ListDatabasesRequest const
                    &) {
@@ -497,7 +499,8 @@ TEST(GoldenClientTest, ListBackups) {
       .WillRepeatedly([expected_instance](::google::test::admin::database::v1::
                                               ListBackupsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
-        return google::cloud::internal::MakePaginationRange<ListBackupsRange>(
+        return google::cloud::internal::MakePaginationRange<
+            StreamRange<::google::test::admin::database::v1::Backup>>(
             ::google::test::admin::database::v1::ListBackupsRequest{},
             [](::google::test::admin::database::v1::ListBackupsRequest const
                    &) {
@@ -577,7 +580,8 @@ TEST(GoldenClientTest, ListDatabaseOperations) {
           [expected_instance](::google::test::admin::database::v1::
                                   ListDatabaseOperationsRequest const &r) {
             EXPECT_EQ(expected_instance, r.parent());
-            return google::cloud::internal::MakePaginationRange<ListDatabaseOperationsRange>(
+            return google::cloud::internal::MakePaginationRange<
+                StreamRange<::google::longrunning::Operation>>(
                 ::google::test::admin::database::v1::
                     ListDatabaseOperationsRequest{},
                 [](::google::test::admin::database::v1::
@@ -614,7 +618,8 @@ TEST(GoldenClientTest, ListBackupOperations) {
                           ::google::test::admin::database::v1::
                               ListBackupOperationsRequest const &r) {
         EXPECT_EQ(expected_instance, r.parent());
-        return google::cloud::internal::MakePaginationRange<ListBackupOperationsRange>(
+        return google::cloud::internal::MakePaginationRange<
+            StreamRange<::google::longrunning::Operation>>(
             ::google::test::admin::database::v1::ListBackupOperationsRequest{},
             [](::google::test::admin::database::v1::
                    ListBackupOperationsRequest const &) {

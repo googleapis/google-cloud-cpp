@@ -160,7 +160,7 @@ class IAMCredentialsClient {
    *      "billingAccounts/[BILLING_ACCOUNT_ID]"
    *      "folders/[FOLDER_ID]"
    */
-  ListLogsRange
+  StreamRange<std::string>
   ListLogs(std::string const& parent);
 
   /**
@@ -179,7 +179,7 @@ class IAMCredentialsClient {
    *      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
    * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1189)
    */
-  TailLogEntriesStream
+  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(std::vector<std::string> const& resource_names);
 
   /**
@@ -221,7 +221,7 @@ class IAMCredentialsClient {
    *
    * @param request [::google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L931)
    */
-  ListLogsRange
+  StreamRange<std::string>
   ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
 
   /**
@@ -231,7 +231,7 @@ class IAMCredentialsClient {
    * @param request [::google::test::admin::database::v1::TailLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1157)
    * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1189)
    */
-  TailLogEntriesStream
+  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
 
  private:

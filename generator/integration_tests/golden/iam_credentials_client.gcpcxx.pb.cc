@@ -55,14 +55,14 @@ IAMCredentialsClient::WriteLogEntries(std::string const& log_name, std::map<std:
   return connection_->WriteLogEntries(request);
 }
 
-ListLogsRange
+StreamRange<std::string>
 IAMCredentialsClient::ListLogs(std::string const& parent) {
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent(parent);
   return connection_->ListLogs(request);
 }
 
-TailLogEntriesStream
+StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
 IAMCredentialsClient::TailLogEntries(std::vector<std::string> const& resource_names) {
   ::google::test::admin::database::v1::TailLogEntriesRequest request;
   *request.mutable_resource_names() = {resource_names.begin(), resource_names.end()};
@@ -84,12 +84,12 @@ IAMCredentialsClient::WriteLogEntries(::google::test::admin::database::v1::Write
   return connection_->WriteLogEntries(request);
 }
 
-ListLogsRange
+StreamRange<std::string>
 IAMCredentialsClient::ListLogs(::google::test::admin::database::v1::ListLogsRequest request) {
   return connection_->ListLogs(std::move(request));
 }
 
-TailLogEntriesStream
+StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
 IAMCredentialsClient::TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request) {
   return connection_->TailLogEntries(std::move(request));
 }
