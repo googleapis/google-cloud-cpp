@@ -208,67 +208,40 @@ for how to do this.  Then you can clone the code:
 > cd google-cloud-cpp
 ```
 
-### Compile `google-cloud-cpp` using cmake and vcpkg
+### Use the CI scripts to compile `google-cloud-cpp`
 
-### Download and compile `vcpkg`
-
-The previous installation should create a
-`Developer Command Prompt for VS 2017` entry in your "Windows" menu, use that
-entry to create a new shell.
-In that shell, install `vcpkg` the Microsoft-supported ports for many Open
-Source projects:
+You can use the CI driver scripts to compile the code. You need to load the
+MSVC environment variables:
 
 ```console
-> cd \Users\%USERNAME%
-> git clone --depth 10 https://github.com/Microsoft/vcpkg.git
-> cd vcpkg
-> .\bootstrap-vcpkg.bat
+> set MSVC_VERSION=2019
+> call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 ```
 
-You can get `vcpkg` to compile all the dependencies for `google-cloud-cpp` by
-installing `google-cloud-cpp` itself:
+Or to setup for 32-bit builds:
 
 ```console
-> vcpkg.exe install google-cloud-cpp:x64-windows-static
-> vcpkg.exe integrate install
+> set MSVC_VERSION=2019
+> call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
 ```
 
-Compile the code using:
+Then run the CI scripts, for example, to compile and run the tests with CMake
+in debug mode:
 
 ```console
-> cd \Users\%USERNAME%\google-cloud-cpp
-> call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-> cmake -GNinja -H. -Bcmake-out
-   -DCMAKE_BUILD_TYPE=Debug
-   -DCMAKE_TOOLCHAIN_FILE=C:\Users\%USERNAME%\vcpkg\scripts\buildsystems\vcpkg.cmake
-   -DVCPKG_TARGET_TRIPLET=x64-windows-static
-> cmake --build cmake-out
+> cd google-cloud-cpp
+> powershell -exec bypass ci/kokoro/windows/build.ps1 cmake-debug
 ```
 
-Run the tests using:
+While to compile and run the tests with Bazel in debug mode you would use:
 
 ```console
-> cd cmake-out
-> ctest --output-on-failure
+> cd google-cloud-cpp
+> powershell -exec bypass ci/kokoro/windows/build.ps1 bazel-debug
 ```
 
-### Compile `google-cloud-cpp` using bazel
-
-Due to Windows command line length limits, create an abbreviated output directory:
-```console
-mkdir c:\b
-```
-
-Compile the code:
-```console
-cd \Users\%USERNAME%\google-cloud-cpp
-bazel --output_user_root="c:\b" build //google/cloud/...:all
-```
-
-Run all the tests:
-```console
-bazel --output_user_root="c:\b" test //google/cloud/...:all
-```
+We used to have instructions to setup manual builds with CMake and Bazel on
+Windows, but they quickly get out of date.
 
 ## Appendix: Creating a Linux VM using Google Compute Engine
 

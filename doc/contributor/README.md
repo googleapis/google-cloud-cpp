@@ -3,7 +3,7 @@
 Thank you for contributing to `google-cloud-cpp`. We receive contributions from
 folks with very different backgrounds. Some of you are experienced C++
 developers, but this might be your first contribution to a GitHub hosted
-project. Some of your may be experienced GitHub contributors, but this might be
+project. Some of you may be experienced GitHub contributors, but this might be
 the first time contributing to a C++ library project. Some of you may be
 experienced with both, but `google-cloud-cpp` has special requirements to
 support multiple platforms, compilers, and even multiple build tools.
@@ -53,9 +53,13 @@ $ env NCPU=4 CHECK_STYLE=yes ./ci/check-style.sh
 ```
 
 Please be  advised that `clang-format` has been known to generate slightly
-different formatting in different versions. We use version 10 (the latest on
-Fedora at the time of this writing); use the same version if you run into
-problems.
+different formatting in different versions. We update this version from time to
+time, it is clang-tidy-11 as-of 2021-02-09, but this could be out of date. If
+you need to confirm this look at the
+[Dockerfile](/ci/kokoro/docker/Dockerfile.fedora-install) used in the
+`clang-tidy` build, find out which version of Fedora is in use, and then find
+out what is the `clang` version included in that distro: search on pkgs.org,
+repology.org, or Google; or just ask around.
 
 To run exactly the same formatting programs that the CI builds will run first
 setup your workstation to

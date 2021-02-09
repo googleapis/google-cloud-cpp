@@ -1,4 +1,4 @@
-# How-to Guide: setting for CMake-based builds
+# How-to Guide: Setup for CMake-based builds
 
 This document describes how to setup your workstation to build the Google Cloud
 C++ client libraries using CMake. The intended audience is developers of the
@@ -24,7 +24,7 @@ exercise to the reader. PRs to improve this document are most welcome!
 Unless explicitly stated, this document assumes you running these commands at
 the top-level directory of the project, as in:
 
-```console
+```shell
 cd $HOME
 git clone git@github:<github-username>/google-cloud-cpp.git
 cd google-cloud-cpp
@@ -43,16 +43,34 @@ you use Ninja for this build because it is substantially faster than Make for
 these use-cases. Note that if Ninja is not installed in your workstation you may
 need to remove the `-GNinja` flag:
 
-```console
+```shell
 cmake -Hsuper -Bcmake-out/si \
     -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-cpp -GNinja
 ```
 
 Install the dependencies:
 
-```console
-cmake --build cmake-out/si --target project-dependencies -- -j $(nproc)
+```shell
+cmake --build cmake-out/si --target project-dependencies
 ```
+
+If you are **not** using Ninja in your build you may need to specify a `-j`
+option to parallelize the build:
+
+```shell
+cmake --build cmake-out/si --target project-dependencies -j $(nproc)
+```
+
+Some developers prefer to use a subset of their cores for the build, replace
+`$(nproc)` with a number in that case. Also note that prior to CMake 3.12 you
+need to use a `--` to pass the `-j` option directly to the underlying `ninja(1)`
+or `make(1)` program:
+
+```shell
+cmake --build cmake-out/si --target project-dependencies -- -j 4
+```
+
+The rest of this document will omit the `-j` option
 
 Now you can use these dependencies multiple times. To use them, add the
 `$HOME/local-cpp` directory to `CMAKE_PREFIX_PATH` when you configure the
@@ -60,9 +78,7 @@ project:
 
 ```shell
 cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
-
-# Adjust the number of threads used by modifying parameter for `-j 4`
-cmake --build cmake-out/home -- -j 4
+cmake --build cmake-out/home
 ```
 
 To run the unit tests (only) use:
@@ -75,7 +91,7 @@ To run the unit tests (only) use:
 If you also want to run the integration tests you need to setup multiple
 [environment variables](/ci/etc/integration-tests-config.sh):
 
-```console
+```shell
 (cd cmake-out/home && ctest --output-on-failure)
 ```
 
@@ -84,12 +100,12 @@ If you also want to run the integration tests you need to setup multiple
 If your workstation has multiple compilers (or multiple versions of a compiler)
 installed, you can change the compiler using:
 
-```console
-$ CXX=clang++ CC=clang cmake -H. -Bcmake-out/manual
+```shell
+CXX=clang++ CC=clang cmake -H. -Bcmake-out/manual
 
 # Then compile and test normally:
-$ cmake --build cmake-out/manual -j 4
-$ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
+cmake --build cmake-out/manual
+(cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
 ### Changing the Build Type
@@ -97,12 +113,12 @@ $ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
 
-```console
-$ cmake -H. -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
+```shell
+cmake -H. -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
 
 # Then compile and test normally:
-$ cmake --build cmake-out/manual -j 4
-$ (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
+cmake --build cmake-out/manual
+(cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
 This project supports the standard CMake
