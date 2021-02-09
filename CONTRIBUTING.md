@@ -32,5 +32,5 @@ culture in the project.
 
 ## More Information
 
-This document used to be much longer. We have refactored the documents to 
+This document used to be much longer. We have refactored the documents to
 separate [Contributor Guides](/doc/contributor/README.md).

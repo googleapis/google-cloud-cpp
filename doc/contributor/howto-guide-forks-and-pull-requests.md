@@ -68,7 +68,7 @@ change for review you need to create a pull request. Typically you start by:
    address those by either answering the questions in the review or
    **adding more [commits][about-commits]** to your branch and `git push` -ing
    those commits to your fork.
-   
+
 ### Resolving Conflicts and Rebasing
 
 From time to time your pull request may have conflicts with the destination
@@ -86,7 +86,7 @@ git push --force-with-lease
 
 ### Reproducing CI build failures
 
-If you are a Googler, when you submit your pull request a number (about 40 at 
+If you are a Googler, when you submit your pull request a number (about 40 at
 last count) of builds start automatically. For non-Googlers, a project owner
 needs to set the `kokoro: run` label in your PR for these builds to start.
 

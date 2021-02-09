@@ -16,7 +16,7 @@ is surprising (or wrong! We need to improve these documents too).
 ## Key Documents
 
 * [Forks and Pull Requests](howto-guide-forks-and-pull-requests.md): the basic
-  workflows for GitHub projects. 
+  workflows for GitHub projects.
 * [Running CI builds locally](howto-guide-running-ci-builds-locally.md): how to
   reproduce CI results locally, for faster edit -> build -> test cycles.
 * [Setup a development workstation](howto-guide-setup-development-workstation.md):
