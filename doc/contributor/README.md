@@ -9,7 +9,7 @@ experienced with both, but `google-cloud-cpp` has special requirements to
 support multiple platforms, compilers, and even multiple build tools.
 
 To help you navigate the project we have prepared (over time) a number of
-documents. You do not need to read each one, specially if they addressed areas
+documents. You do not need to read each one, specially if they address areas
 you are already familiar with, but you may want to browse them in case something
 is surprising (or wrong! We need to improve these documents too).
 
