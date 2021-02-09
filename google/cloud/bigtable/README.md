@@ -92,7 +92,9 @@ int main(int argc, char* argv[]) try {
   tests should read [build and install](/README.md#build-and-install] section in
   the top-level README file.
 * Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development environment](/doc/setup-development-environment.md)
+  [setup a development workstation][howto-setup-dev-workstation].
+
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ## Contributing changes
 
