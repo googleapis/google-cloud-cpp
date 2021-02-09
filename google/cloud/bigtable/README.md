@@ -29,10 +29,10 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Quickstart
 
-The [quickstart/](quickstart/) directory contains a minimal environment to
-help you quickly get started using this client library. The following is the
-"Hello World" program you'll be running, which should give you a taste of this
-library.
+The [quickstart/](quickstart/README.md) directory contains a minimal environment
+to get started using this client library in a larger project. The following
+"Hello World" program is used in this quickstart, and should give you a taste of
+this library.
 
 ```cc
 #include "google/cloud/bigtable/table.h"
@@ -81,6 +81,18 @@ int main(int argc, char* argv[]) try {
   return 1;
 }
 ```
+
+* Packaging maintainers or developers that prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the
+  [packaging guide](/doc/packaging.md).
+* Developers wanting to use this client library as part of a larger CMake or
+  Bazel project should consult the aforementioned
+  [quickstart](quickstart/README.md).
+* Developers wanting to compile the library just to run some of the examples or
+  tests should read [build and install](/README.md#build-and-install] section in
+  the top-level README file.
+* Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [setup a development environment](/doc/setup-development-environment.md)
 
 ## Contributing changes
 

@@ -25,7 +25,21 @@ cat <<'END_OF_PREAMBLE'
 <!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
 
 This document is intended for package maintainers or for people who might like
-to "install" the `google-cloud-cpp` libraries.
+to "install" the `google-cloud-cpp` libraries in `/usr/local` or a similar
+directory.
+
+* Packaging maintainers or developers that prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the current
+  document.
+* Developers wanting to use the libraries as part of a larger CMake or Bazel
+  project should consult the [quickstart guides](/README.md#quickstart) for the
+  library or libraries they want to use.
+* Developers wanting to compile the library just to run some of the examples or
+  tests should consult the
+  [building and installing](/README.md#building-and-installing) section of the
+  top-level README file.
+* Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [setup a development environment](/doc/setup-development-environment.md)
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
 

@@ -5,6 +5,19 @@ C++ client library in your own project. These instructions assume that you have
 some experience as a C++ developer and that you have a working C++ toolchain
 (compiler, linker, etc.) installed on your platform.
 
+* Packaging maintainers or developers that prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the
+  [packaging guide](/doc/packaging.md).
+* Developers wanting to use the libraries as part of a larger CMake or Bazel
+  project should consult the current document. Note that there are similar
+  documents for each library in their corresponding directories.
+* Developers wanting to compile the library just to run some of the examples or
+  tests should consult the
+  [building and installing](/README.md#building-and-installing) section of the
+  top-level README file.
+* Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [setup a development environment](/doc/setup-development-environment.md)
+
 ## Before you begin
 
 To run the quickstart examples you will need a working Google Cloud Platform

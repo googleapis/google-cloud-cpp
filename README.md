@@ -41,23 +41,47 @@ See each library's `README.md` file for more information about:
 * The library's support status if not Generally Available (GA); unless noted in
   a library's `README.md`, these libraries are all GA and supported by Google.
 
-## Install
+## Building and Installing
 
-On most platforms, with all dependencies installed, the following commands will
-compile and install all the libraries:
+This is a quickstart guide for developers wanting to compile the libraries and
+run the examples included with the libraries.
 
-```sh
-cmake -H. -Bcmake-out
-cmake --build cmake-out
-sudo cmake --build cmake-out --target install
+* Packaging maintainers or developers that prefer to install the library in a
+  fixed directory (such as `/usr/local` or `/opt`) should consult the
+  [packaging guide](/doc/packaging.md).
+* Developers wanting to use the libraries as part of a larger CMake or Bazel
+  project should consult the [quickstart guides](#quickstart) for the library
+  or libraries they want to use.
+* Developers wanting to compile the library just to run some of the examples or
+  tests should read the current document.
+* Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [setup a development environment](/doc/setup-development-environment.md)
+
+### Building with Bazel
+
+This library requires Bazel >= 3.0. From the top-level directory, run the usual
+commands.
+
+```shell
+bazel build //...
 ```
 
-You can find detailed instructions on how to install and/or compile all the
-dependencies for several platforms in the [packaging guide](doc/packaging.md).
+### Building with CMake
 
-For application developers who prefer to build from source, the quickstart
-guides for each library (see above) include instructions on how to incorporate
-the library into their CMake-based or Bazel-based builds.
+This library requires CMake >= 3.5. If you are planning to install the libraries
+please consult the [packaging guide](/doc/packaging.md), these instructions will
+**NOT** produce artifacts that you can put in `/usr/local`, or share with your
+colleagues.
+
+From the top-level directory of `google-cloud-cpp` run these commands:
+
+```shell
+cmake -Hsuper -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
+```
+
+The binary artifacts, such as examples, will be placed in
+`cmake-out/super/src/google_cloud_cpp_project-build/`.
 
 ## Quickstart
 

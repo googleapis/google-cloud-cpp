@@ -101,7 +101,7 @@ if should_run_integration_tests; then
     export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 
     if [[ "${SOURCE_DIR}" == "super" ]]; then
-      cd "${BINARY_DIR}/build/google-cloud-cpp/src/google_cloud_cpp_project-build/"
+      cd "${BINARY_DIR}/src/google_cloud_cpp_project-build/"
     else
       cd "${BINARY_DIR}"
     fi
