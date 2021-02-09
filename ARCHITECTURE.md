@@ -102,9 +102,16 @@ These are some examples:
   class.
 - Pub/Sub has two non-admin clients, the
   [pubsub::Publisher](/google/cloud/pubsub/publisher.h)
-  and the [pubsub::Subscriber](/google/cloud/pubsub/subscriber.h).
+  and the [pubsub::Subscriber](/google/cloud/pubsub/subscriber.h). It also has
+  two admin clients:
+  [pubsub::TopicAdminClient](/google/cloud/pubsub/topic_admin_client.h),
+  and [pubsub::SubscriptionAdminClient](/google/cloud/pubsub/subscription_admin_client.h).
 - Spanner has one non-admin client, the
-  [spanner::Client](/google/cloud/spanner/client.h).
+  [spanner::Client](/google/cloud/spanner/client.h). It also has two admin
+  clients:
+  [pubsub::InstanceAdminClient](/google/cloud/spanner/instance_admin_client.h),
+  and
+  [pubsub::DatabaseAdminClient](/google/cloud/spanner/database_admin_client.h).
 
 Generally these classes are very "thin", they take function arguments from the
 application, package them in lightweight structure, and then forward the request
@@ -161,17 +168,10 @@ their testing.
 Bigtable does not have `*Stub` and `*Connection` classes, they are sadly merged
 into a single layer.
 
-### Storage
-
-The Storage `*Connection` classes are called `storage::internal::RawClient`,
-which sadly forces our users to reach into the `internal` namespace to mock
-things.  Furthermore, some of the `RawClient` decorators should be called
-`*Stub`.
-
 ### Pub/Sub
 
 Pub/Sub generally follow these patterns, but there is substantial code outside
-it to implement a few features:
+the main classes to implement a few features:
 
 - The `Publisher` needs to buffer messages until there is enough of them to
   justify a `AsyncPublish()` call. Moreover, when using ordering keys the
@@ -182,3 +182,15 @@ it to implement a few features:
   time, and must implement flow control for messages delivered to the
   application. There is a series of classes dedicate to keeping a
   "session" working correctly.
+
+### Spanner
+
+Spanner implements some key features in the
+[spanner_internal::SessionPool](/google/cloud/spanner/internal/session_pool.h).
+
+### Storage
+
+The Storage `*Connection` classes are called `storage::internal::RawClient`,
+which sadly forces our users to reach into the `internal` namespace to mock
+things.  Furthermore, some of the `RawClient` decorators should be called
+`*Stub`.
