@@ -42,6 +42,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/utility_test.cc",
     "kms_key_name_test.cc",
     "log_test.cc",
+    "options_test.cc",
     "status_or_test.cc",
     "status_test.cc",
     "stream_range_test.cc",

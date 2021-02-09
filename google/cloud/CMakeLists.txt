@@ -166,6 +166,7 @@ add_library(
     log.cc
     log.h
     optional.h
+    options.h
     polling_policy.h
     status.cc
     status.h
@@ -178,7 +179,7 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::flat_hash_map absl::memory
+    google_cloud_cpp_common PUBLIC absl::any absl::flat_hash_map absl::memory
                                    absl::optional absl::time Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
@@ -260,6 +261,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        options_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc
