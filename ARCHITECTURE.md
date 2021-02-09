@@ -14,23 +14,24 @@ in scope, though only a handful of services have been implemented to this point.
 
 What do we mean by idiomatic? We mean that C++ developers will find the
 APIs familiar, or "natural", that these APIs will fit well with the rest of the
-C++ ecosystem, that very few new "concepts" are needed to understand how to use
-these libraries.
+C++ ecosystem, and that very few new "concepts" are needed to understand how to
+use these libraries.
 
 More specifically, some of the functionality offered by these libraries include:
 
 - The libraries automatically *retry* RPCs that fail with a retriable error,
   such as network failures.
-- The libraries only retry operations when it is safe to do so, "delete the
-  first row" is not a safe operation to retry when the previous result is
-  unknown. In the documentation we refer to operations that are safe to retry
-  as [idempotent](https://en.wikipedia.org/wiki/Idempotence).
+- The libraries only retry operations when it is safe to do so. For example,
+  "delete the first row" is not a safe operation to retry when the previous
+  result is unknown. In the documentation we refer to operations that are safe
+  to retry as [idempotent](https://en.wikipedia.org/wiki/Idempotence).
 - The libraries also *resume* large downloads or database reads from the last
   fully received element, minimizing the amount of duplicate data received by
   your application.
-- The application can always change the retry and resume policies, the libraries
-  have reasonable defaults, and implement best practices for backing off before
-  retrying an operation. If these defaults do not work, you can change them.
+- The application can always change the retry and resume policies. The libraries
+  have reasonable defaults for these policies, and implement best practices for
+  backing off before retrying an operation. If these defaults do not work in
+  your specific use-case, you can change them.
 - The libraries convert long running operations into a `future`, an object
   that will get a value asynchronously. The library takes care of polling the
   long running operation until it is completed (or fails).
@@ -81,7 +82,7 @@ to be interesting for `google-cloud-cpp` developers and contributors.
   integration tests where we test the library using emulators and/or the
   production environment.
 - `testing/` contains testing utilities shared by the unit tests and the
-  integration tests of the library. They are not intended to be part of the
+  integration tests of the library.
 
 ## The `*Client` classes
 
@@ -91,7 +92,7 @@ for the service. It is common for services to have separate `service`
 definitions for "admin" operations, such as creating a new instance of the
 service, or changing permissions, as opposed to "normal" operations, such as
 inserting a new row, or publishing a new message. When "admin" services are
-defined, there are separate `${library}::Client` objects.
+defined, there are separate `${library}::*Client` objects.
 
 These are some examples:
 
@@ -113,7 +114,7 @@ These are some examples:
   and
   [pubsub::DatabaseAdminClient](/google/cloud/spanner/database_admin_client.h).
 
-Generally these classes are very "thin", they take function arguments from the
+Generally these classes are very "thin"; they take function arguments from the
 application, package them in lightweight structure, and then forward the request
 to the `${library}::*Connection` class.
 
@@ -161,7 +162,7 @@ their testing.
 | `*Metadata` | Injects resource metadata headers for routing |
 | `*RoundRobin` | Round-robins over several `*Stub`s, not all libraries have them |
 
-## Exceptions
+## Deviations from the "normal" Architecture
 
 ### Bigtable
 
