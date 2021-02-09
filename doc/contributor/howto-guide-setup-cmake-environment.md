@@ -50,65 +50,68 @@ cmake -Hsuper -Bcmake-out/si \
 
 Install the dependencies:
 
+> **Note:** Ninja will parallelize the build to use all the cores in your
+> workstation, if you are not using Ninja, or want to limit the number of cores
+> used by the build use the `-j` option.
+
 ```shell
 cmake --build cmake-out/si --target project-dependencies
 ```
 
-If you are **not** using Ninja in your build you may need to specify a `-j`
-option to parallelize the build:
+## Building with the installed dependencies
+
+Now you can use these dependencies from different builds. Configure your CMake
+builds with `-DCMAKE_PREFIX_PATH=$HOME/local-cpp` to build `google-cloud-cpp`:
 
 ```shell
-cmake --build cmake-out/si --target project-dependencies -j $(nproc)
-```
-
-Some developers prefer to use a subset of their cores for the build, replace
-`$(nproc)` with a number in that case. Also note that prior to CMake 3.12 you
-need to use a `--` to pass the `-j` option directly to the underlying `ninja(1)`
-or `make(1)` program:
-
-```shell
-cmake --build cmake-out/si --target project-dependencies -- -j 4
-```
-
-The rest of this document will omit the `-j` option
-
-Now you can use these dependencies multiple times. To use them, add the
-`$HOME/local-cpp` directory to `CMAKE_PREFIX_PATH` when you configure the
-project:
-
-```shell
+cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
 cmake --build cmake-out/home
 ```
 
-To run the unit tests (only) use:
+You can use these dependencies from other locations too:
 
 ```shell
-# Verify build by running tests
-(cd cmake-out/home && ctest --output-on-failure -LE integration-test)
+cd $HOME/another-google-cloud-cpp-clone
+cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
+cmake --build cmake-out/home
+```
+
+## Running the unit tests
+
+Once you have built `google-cloud-cpp` you can run the unit tests using:
+
+```shell
+env -C cmake-out/home ctest --output-on-failure -LE integration-test
 ```
 
 If you also want to run the integration tests you need to setup multiple
-[environment variables](/ci/etc/integration-tests-config.sh):
+[environment variables](/ci/etc/integration-tests-config.sh), and then run:
 
 ```shell
-(cd cmake-out/home && ctest --output-on-failure)
+env -C cmake-out/home ctest --output-on-failure
 ```
 
-### Changing the Compiler
+## Other Build Options
+
+You can configure and build with different compilers, build options, etc. all
+sharing the same pre-built dependencies.
+
+### Changing the compiler
 
 If your workstation has multiple compilers (or multiple versions of a compiler)
 installed, you can change the compiler using:
 
 ```shell
-CXX=clang++ CC=clang cmake -H. -Bcmake-out/manual
+CXX=clang++ CC=clang \
+    cmake -H. -Bcmake-out/clang -DCMAKE_PREFIX_PATH=$HOME/local-cpp
 
 # Then compile and test normally:
-cmake --build cmake-out/manual
-(cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
+cmake --build cmake-out/clang
+(cd cmake-out/clang && ctest --output-on-failure -LE integration-test)
 ```
 
-### Changing the Build Type
+### Changing the build type
 
 By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
@@ -121,5 +124,5 @@ cmake --build cmake-out/manual
 (cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
-This project supports the standard CMake
+`google-cloud-cpp` supports the standard CMake
 [build types](https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html).
