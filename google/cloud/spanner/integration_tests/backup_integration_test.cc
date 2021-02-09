@@ -106,7 +106,9 @@ class BackupTest : public ::testing::Test {
         database_admin_client_(MakeDatabaseAdminConnection(
             ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
             spanner_testing::TestBackoffPolicy(),
-            spanner_testing::TestPollingPolicy())) {}
+            spanner_testing::TestPollingPolicy())) {
+    static_cast<void>(kCleanupEnv);
+  }
 
  protected:
   google::cloud::internal::DefaultPRNG generator_;
