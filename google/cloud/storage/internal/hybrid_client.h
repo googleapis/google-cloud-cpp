@@ -29,6 +29,7 @@ namespace internal {
 class HybridClient : public RawClient {
  public:
   explicit HybridClient(ClientOptions options);
+  explicit HybridClient(ClientOptions options, int channel_id);
   ~HybridClient() override = default;
 
   ClientOptions const& client_options() const override;

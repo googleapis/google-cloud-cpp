@@ -30,11 +30,14 @@ namespace internal {
 bool DirectPathEnabled();
 
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&);
+std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&,
+                                                          int channel_id);
 
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
   explicit GrpcClient(ClientOptions options);
+  explicit GrpcClient(ClientOptions options, int channel_id);
   ~GrpcClient() override = default;
 
   //@{

@@ -103,7 +103,7 @@ this program.
 using TestResults = std::vector<ThroughputResult>;
 
 TestResults RunThread(ThroughputOptions const& ThroughputOptions,
-                      std::string const& bucket_name);
+                      std::string const& bucket_name, int thread_id);
 void PrintResults(TestResults const& results);
 
 google::cloud::StatusOr<ThroughputOptions> ParseArgs(int argc, char* argv[]);
@@ -205,7 +205,7 @@ int main(int argc, char* argv[]) {
   std::vector<std::future<TestResults>> tasks;
   for (int i = 0; i != options->thread_count; ++i) {
     tasks.emplace_back(
-        std::async(std::launch::async, RunThread, *options, bucket_name));
+        std::async(std::launch::async, RunThread, *options, bucket_name, i));
   }
   for (auto& f : tasks) {
     PrintResults(f.get());
@@ -232,7 +232,7 @@ void PrintResults(TestResults const& results) {
 }
 
 TestResults RunThread(ThroughputOptions const& options,
-                      std::string const& bucket_name) {
+                      std::string const& bucket_name, int thread_id) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -246,7 +246,8 @@ TestResults RunThread(ThroughputOptions const& options,
 
   gcs::Client rest_client(*client_options);
 
-  auto uploaders = gcs_bm::CreateUploadExperiments(options, *client_options);
+  auto uploaders =
+      gcs_bm::CreateUploadExperiments(options, *client_options, thread_id);
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
@@ -254,7 +255,7 @@ TestResults RunThread(ThroughputOptions const& options,
     return {};
   }
   auto downloaders =
-      gcs_bm::CreateDownloadExperiments(options, *client_options);
+      gcs_bm::CreateDownloadExperiments(options, *client_options, thread_id);
   if (downloaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
