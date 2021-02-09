@@ -16,20 +16,19 @@ contributions to the project.
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
 * Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development environment](/doc/setup-development-environment.md)
-
+  [setup a development environment](/doc/contributor/howto-guide-setup-development-workstation.md)
 
 ## Linux
 
 Install the dependencies needed for your distribution. The top-level
-[README](../README.md) file should list the minimal development tools necessary
+[README](/README.md) file lists the minimal development tools necessary
 to compile `google-cloud-cpp`. But for active development you may want to
 install additional tools to run the unit and integration tests.
 
 These instructions will describe how to install these tools for Ubuntu 18.04
 (Bionic Beaver). For other distributions you may consult the Dockerfile used by
 the integration tests. We use
-[Dockerfile.fedora-install](../ci/kokoro/docker/Dockerfile.fedora-install) to
+[Dockerfile.fedora-install](/ci/kokoro/docker/Dockerfile.fedora-install) to
 to enforce formatting for our builds. If you use a different distribution, you
 will need to use the corresponding package manager (`dnf`, `zypper`, `apk`,
 etc.) and find the corresponding package names.
@@ -107,8 +106,8 @@ export PATH=$PATH:$HOME/.local/bin
 
 You need to install the Google Cloud SDK. These instructions work for a GCE
 VM, but you may need to adapt them for your environment. Check the instructions
-on the
-[Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
+on the [Google Cloud SDK website](https://cloud.google.com/sdk/) for
+alternatives.
 
 ```console
 ./ci/install-cloud-sdk.sh
@@ -116,7 +115,8 @@ on the
 
 ### Clone and compile `google-cloud-cpp`
 
-You may need to clone and compile the code as described [here](setup-cmake-environment.md)
+You may need to clone and compile the code as described
+[here](howto-guide-setup-cmake-environment.md)
 
 Run the tests using:
 
@@ -142,7 +142,7 @@ env -C cmake-out/home \
 
 You may want to [install Docker](https://docs.docker.com/engine/installation/),
 this will allow you to use the build scripts to test on multiple platforms,
-as described in [CONTRIBUTING.md](../CONTRIBUTING.md).
+as described in [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
 ## Windows
 
