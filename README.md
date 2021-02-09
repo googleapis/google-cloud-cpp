@@ -55,7 +55,9 @@ run the examples included with the libraries.
 * Developers wanting to compile the library just to run some of the examples or
   tests should read the current document.
 * Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development environment](/doc/setup-development-environment.md)
+  [setup a development workstation][howto-setup-dev-workstation].
+
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 
 ### Building with Bazel
 

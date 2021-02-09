@@ -101,8 +101,7 @@ One of the builds (`clang-tidy`) is particularly useful because it enforces the
 formatting and style guide rules for the project. It does more than running
 `clang-tidy`, it also formats CMake files, `BUILD` files, the C++ code, shell
 scripts, and ensures the automatically generated documentation is up to date.
-There is also a separate [guide](howto-guide-style-guide-and-formatting.md) on
-this topic alone.
+This is covered in more detail in the [style section](README.md#style).
 
 ## Merging the changes
 

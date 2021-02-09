@@ -15,8 +15,8 @@ contributions to the project.
   tests should consult the
   [building and installing](/README.md#building-and-installing) section of the
   top-level README file.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development environment](/doc/contributor/howto-guide-setup-development-workstation.md)
+* Contributors and developers **to** `google-cloud-cpp`, this is the right
+  document
 
 ## Linux
 
