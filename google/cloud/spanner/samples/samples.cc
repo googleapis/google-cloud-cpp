@@ -30,6 +30,8 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
@@ -71,22 +73,21 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& instance_id,
                     std::string const& display_name,
                     std::string const& region) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   namespace spanner = google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
   std::string region_id = region.empty() ? "us-central1" : region;
   std::string instance_config =
       "projects/" + project_id + "/instanceConfigs/regional-" + region_id;
-  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
-      client.CreateInstance(
-          spanner::CreateInstanceRequestBuilder(in, instance_config)
-              .SetDisplayName(display_name)
-              .SetNodeCount(1)
-              .SetLabels({{"cloud_spanner_samples", "true"}})
-              .Build());
-  auto instance = f.get();
+  auto instance =
+      client
+          .CreateInstance(
+              spanner::CreateInstanceRequestBuilder(in, instance_config)
+                  .SetDisplayName(display_name)
+                  .SetNodeCount(1)
+                  .SetLabels({{"cloud_spanner_samples", "true"}})
+                  .Build())
+          .get();
   if (!instance) throw std::runtime_error(instance.status().message());
   std::cout << "Created instance [" << in << "]\n";
 }
@@ -427,8 +428,6 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   std::vector<std::string> extra_statements;
@@ -446,9 +445,7 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
           AlbumTitle   STRING(MAX)
       ) PRIMARY KEY (SingerId, AlbumId),
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
-  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
-      client.CreateDatabase(database, std::move(extra_statements));
-  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  auto db = client.CreateDatabase(database, std::move(extra_statements)).get();
   if (!db) throw std::runtime_error(db.status().message());
   std::cout << "Created database [" << database << "]\n";
 }
@@ -459,8 +456,6 @@ void CreateDatabaseWithVersionRetentionPeriod(
     google::cloud::spanner::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   std::vector<std::string> extra_statements;
@@ -480,9 +475,7 @@ void CreateDatabaseWithVersionRetentionPeriod(
           AlbumTitle   STRING(MAX)
       ) PRIMARY KEY (SingerId, AlbumId),
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
-  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
-      client.CreateDatabase(database, std::move(extra_statements));
-  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  auto db = client.CreateDatabase(database, std::move(extra_statements)).get();
   if (!db) throw std::runtime_error(db.status().message());
   std::cout << "Created database [" << database << "]:\n" << db->DebugString();
 
@@ -499,10 +492,8 @@ void CreateDatabaseWithEncryptionKey(
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id,
     google::cloud::KmsKeyName const& encryption_key) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
-  using ::google::cloud::spanner::Database;
-  Database database(project_id, instance_id, database_id);
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
   std::vector<std::string> extra_statements;
   extra_statements.emplace_back(R"""(
       CREATE TABLE Singers (
@@ -518,10 +509,10 @@ void CreateDatabaseWithEncryptionKey(
           AlbumTitle   STRING(MAX)
       ) PRIMARY KEY (SingerId, AlbumId),
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
-  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
-      client.CreateDatabase(database, std::move(extra_statements),
-                            encryption_key);
-  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  auto db =
+      client
+          .CreateDatabase(database, std::move(extra_statements), encryption_key)
+          .get();
   if (!db) throw std::runtime_error(db.status().message());
   std::cout << "Created database [" << database << "]\n";
 
@@ -569,27 +560,23 @@ void CreateTableWithDatatypes(
     google::cloud::spanner::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(database, {R"""(
-            CREATE TABLE Venues (
-                VenueId         INT64 NOT NULL,
-                VenueName       STRING(100),
-                VenueInfo       BYTES(MAX),
-                Capacity        INT64,
-                AvailableDates  ARRAY<DATE>,
-                LastContactDate DATE,
-                OutdoorVenue    BOOL,
-                PopularityScore FLOAT64,
-                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
-                    (allow_commit_timestamp=true)
-            ) PRIMARY KEY (VenueId))"""});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata = client
+                      .UpdateDatabase(database, {R"""(
+                        CREATE TABLE Venues (
+                            VenueId         INT64 NOT NULL,
+                            VenueName       STRING(100),
+                            VenueInfo       BYTES(MAX),
+                            Capacity        INT64,
+                            AvailableDates  ARRAY<DATE>,
+                            LastContactDate DATE,
+                            OutdoorVenue    BOOL,
+                            PopularityScore FLOAT64,
+                            LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+                                (allow_commit_timestamp=true)
+                        ) PRIMARY KEY (VenueId))"""})
+                      .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Venues` table created, new DDL:\n"
             << metadata->DebugString() << "\n";
@@ -601,24 +588,20 @@ void CreateTableWithTimestamp(
     google::cloud::spanner::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(database, {R"""(
-            CREATE TABLE Performances (
-                SingerId        INT64 NOT NULL,
-                VenueId         INT64 NOT NULL,
-                EventDate       Date,
-                Revenue         INT64,
-                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
-                    (allow_commit_timestamp=true)
-            ) PRIMARY KEY (SingerId, VenueId, EventDate),
-                INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata = client
+                      .UpdateDatabase(database, {R"""(
+                        CREATE TABLE Performances (
+                            SingerId        INT64 NOT NULL,
+                            VenueId         INT64 NOT NULL,
+                            EventDate       Date,
+                            Revenue         INT64,
+                            LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+                                (allow_commit_timestamp=true)
+                        ) PRIMARY KEY (SingerId, VenueId, EventDate),
+                            INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""})
+                      .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Performances` table created, new DDL:\n"
             << metadata->DebugString() << "\n";
@@ -629,16 +612,14 @@ void CreateTableWithTimestamp(
 void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
               std::string const& project_id, std::string const& instance_id,
               std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(
-          database, {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata =
+      client
+          .UpdateDatabase(
+              database,
+              {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"})
+          .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
             << metadata->DebugString() << "\n";
@@ -674,16 +655,13 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
 void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
                std::string const& project_id, std::string const& instance_id,
                std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(
-          database, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata =
+      client
+          .UpdateDatabase(
+              database, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"})
+          .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Added MarketingBudget column\n";
 }
@@ -694,17 +672,15 @@ void AddTimestampColumn(google::cloud::spanner::DatabaseAdminClient client,
                         std::string const& project_id,
                         std::string const& instance_id,
                         std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(
-          database, {"ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP "
-                     "OPTIONS (allow_commit_timestamp=true)"});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata =
+      client
+          .UpdateDatabase(
+              database,
+              {"ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP "
+               "OPTIONS (allow_commit_timestamp=true)"})
+          .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "Added LastUpdateTime column\n";
 }
@@ -715,17 +691,13 @@ void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
                      std::string const& instance_id,
                      std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(database, {R"""(
-            CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
-                STORING (MarketingBudget))"""});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata = client
+                      .UpdateDatabase(database, {R"""(
+                        CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
+                            STORING (MarketingBudget))"""})
+                      .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
             << metadata->DebugString() << "\n";
@@ -764,18 +736,19 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
                   std::string const& database_id,
                   std::string const& backup_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  auto backup = client
-                    .CreateBackup(database, backup_id,
-                                  std::chrono::system_clock::now() +
-                                      std::chrono::hours(7))
-                    .get();
+  auto expire_time = absl::ToChronoTime(absl::Now() + absl::Hours(7));
+  auto version_time = absl::ToChronoTime(absl::Now());
+  auto backup =
+      client.CreateBackup(database, backup_id, expire_time, version_time).get();
   if (!backup.ok()) throw std::runtime_error(backup.status().message());
-  std::cout << "Backup '" << backup->name() << "' of size "
-            << backup->size_bytes() << " bytes was created at "
+  std::cout << "Backup '" << backup->name() << "' of '" << database.FullName()
+            << "' as of "
+            << google::protobuf::util::TimeUtil::ToString(
+                   backup->version_time())
+            << " and of size " << backup->size_bytes() << " bytes"
+            << " was created at "
             << google::protobuf::util::TimeUtil::ToString(backup->create_time())
             << ".\n";
 }
@@ -791,25 +764,30 @@ void CreateBackupCommand(std::vector<std::string> const& argv) {
   CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3]);
 }
 
-//! [restore-database] [START spanner_restore_database]
+//! [restore-database] [START spanner_restore_backup]
 void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
                      std::string const& instance_id,
                      std::string const& database_id,
                      std::string const& backup_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  google::cloud::spanner::Backup backup(
-      google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  google::cloud::spanner::Backup backup(database.instance(), backup_id);
   auto restored_db = client.RestoreDatabase(database, backup).get();
   if (!restored_db.ok())
     throw std::runtime_error(restored_db.status().message());
-  std::cout << "Database '" << restored_db->name() << "' was restored from "
-            << " backup '" << backup.FullName() << "'.\n";
+  std::cout << "Database '" << restored_db->name() << "' was restored from"
+            << " backup '" << backup.FullName() << "'";
+  if (restored_db->restore_info().source_type() ==
+      google::spanner::admin::database::v1::BACKUP) {
+    auto const& backup_info = restored_db->restore_info().backup_info();
+    std::cout << " of '" << backup_info.source_database() << "' as of "
+              << google::protobuf::util::TimeUtil::ToString(
+                     backup_info.version_time());
+  }
+  std::cout << ".\n";
 }
-//! [restore-database] [END spanner_restore_database]
+//! [restore-database] [END spanner_restore_backup]
 
 void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
@@ -825,7 +803,6 @@ void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
 void GetBackup(google::cloud::spanner::DatabaseAdminClient client,
                std::string const& project_id, std::string const& instance_id,
                std::string const& backup_id) {
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
   auto backup = client.GetBackup(backup_name);
@@ -850,13 +827,12 @@ void GetBackupCommand(std::vector<std::string> const& argv) {
 void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
                   std::string const& backup_id) {
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
   auto backup = client.UpdateBackupExpireTime(
       backup_name, std::chrono::system_clock::now() + std::chrono::hours(7));
   if (!backup.ok()) throw std::runtime_error(backup.status().message());
-  std::cout << "Backup '" << backup->name() << "' updated to new expire_time "
+  std::cout << "Backup '" << backup->name() << "' updated to expire at "
             << google::protobuf::util::TimeUtil::ToString(backup->expire_time())
             << ".\n";
 }
@@ -875,10 +851,9 @@ void UpdateBackupCommand(std::vector<std::string> const& argv) {
 void DeleteBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
                   std::string const& backup_id) {
-  using ::google::cloud::Status;
   google::cloud::spanner::Backup backup(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
-  Status status = client.DeleteBackup(backup);
+  auto status = client.DeleteBackup(backup);
   if (!status.ok()) throw std::runtime_error(status.message());
   std::cout << "Backup '" << backup.FullName() << "' was deleted.\n";
 }
@@ -900,9 +875,6 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
                            std::string const& instance_id,
                            std::string const& database_id,
                            std::string const& backup_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::Status;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   auto f = client.CreateBackup(
@@ -911,7 +883,7 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
   f.cancel();
   auto backup = f.get();
   if (backup.ok()) {
-    Status status = client.DeleteBackup(backup.value());
+    auto status = client.DeleteBackup(*backup);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Backup '" << backup->name() << "' was deleted.\n";
   } else {
@@ -970,7 +942,7 @@ void ListBackupOperations(google::cloud::spanner::DatabaseAdminClient client,
     std::cout << "Backup " << metadata.name() << " on database "
               << metadata.database()
               << " progress: " << metadata.progress().progress_percent()
-              << "% complete.";
+              << "% complete.\n";
   }
 }
 //! [list-backup-operations] [END spanner_list_backup_operations]
@@ -989,7 +961,7 @@ void ListDatabaseOperations(google::cloud::spanner::DatabaseAdminClient client,
         metadata;
     operation->metadata().UnpackTo(&metadata);
     std::cout << "Database " << metadata.name() << " restored from backup is "
-              << metadata.progress().progress_percent() << "% optimized.";
+              << metadata.progress().progress_percent() << "% optimized.\n";
   }
 }
 //! [list-database-operations] [END spanner_list_database_operations]
@@ -1696,16 +1668,12 @@ void AddNumericColumn(google::cloud::spanner::DatabaseAdminClient client,
                       std::string const& project_id,
                       std::string const& instance_id,
                       std::string const& database_id) {
-  using ::google::cloud::future;
-  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      f = client.UpdateDatabase(database, {R"""(
-            ALTER TABLE Venues ADD COLUMN Revenue NUMERIC)"""});
-  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-      metadata = f.get();
+  auto metadata = client
+                      .UpdateDatabase(database, {R"""(
+                        ALTER TABLE Venues ADD COLUMN Revenue NUMERIC)"""})
+                      .get();
   if (!metadata) throw std::runtime_error(metadata.status().message());
   std::cout << "`Venues` table altered, new DDL:\n"
             << metadata->DebugString() << "\n";
@@ -1872,7 +1840,7 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
     std::cout << "AlbumId: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
     if (marketing_budget) {
-      std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
+      std::cout << "MarketingBudget: " << *marketing_budget << "\n";
     } else {
       std::cout << "MarketingBudget: NULL\n";
     }
@@ -1923,7 +1891,7 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
     std::cout << "AlbumTitle: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
     if (marketing_budget) {
-      std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
+      std::cout << "MarketingBudget: " << *marketing_budget << "\n";
     } else {
       std::cout << "MarketingBudget: NULL\n";
     }
@@ -1988,7 +1956,7 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
     std::cout << "AlbumTitle: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
     if (marketing_budget) {
-      std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
+      std::cout << "MarketingBudget: " << *marketing_budget << "\n";
     } else {
       std::cout << "MarketingBudget: NULL\n";
     }
@@ -3279,7 +3247,7 @@ void RunAll(bool emulator) {
         std::string restore_database_id =
             google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-        std::cout << "\nRunning spanner_restore_database sample" << std::endl;
+        std::cout << "\nRunning spanner_restore_backup sample" << std::endl;
         RestoreDatabase(database_admin_client, project_id, crud_instance_id,
                         restore_database_id, backup_id);
 

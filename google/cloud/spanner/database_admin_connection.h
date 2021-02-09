@@ -129,7 +129,7 @@ class DatabaseAdminConnection {
     Database database;
   };
 
-  /// Wrap the arguments for `CreateDatabase()`.
+  /// Wrap the arguments for `UpdateDatabase()`.
   struct UpdateDatabaseParams {
     /// The name of the database.
     Database database;
@@ -175,6 +175,10 @@ class DatabaseAdminConnection {
     Database database;
     std::string backup_id;
     std::chrono::system_clock::time_point expire_time;
+    // The backup will contain an externally consistent copy of the database
+    // at `version_time`. If `version_time` is not specified, the system will
+    // set `version_time` to the `create_time` of the backup.
+    absl::optional<std::chrono::system_clock::time_point> version_time;
     /// The KMS key that was used to encrypt and decrypt the database.
     absl::optional<KmsKeyName> encryption_key;
   };
