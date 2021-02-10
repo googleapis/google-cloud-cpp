@@ -18,6 +18,17 @@ contributions to the project.
 * Contributors and developers **to** `google-cloud-cpp`, this is the right
   document
 
+## Table of Contents
+
+* [Linux](#linux)
+* [Windows](#windows)
+* [macOS](#macos)
+* [Appendix: Linux VM on Google Compute Engine][appending-linux]
+* [Appendix: Windows VM on Google Compute Engine][appending-windows]
+
+[appending-linux]: #appendix-linux-vm-on-google-compute-engine
+[appending-windows]: #appendix-windows-vm-on-google-compute-engine
+
 ## Linux
 
 Install the dependencies needed for your distribution. The top-level
@@ -243,7 +254,78 @@ While to compile and run the tests with Bazel in debug mode you would use:
 We used to have instructions to setup manual builds with CMake and Bazel on
 Windows, but they quickly get out of date.
 
-## Appendix: Creating a Linux VM using Google Compute Engine
+## macOS
+
+> :warning: this is work in progress, these instructions might be incomplete
+> because we don't know how to create a "fresh" macOS install to verify we did
+> not miss a step.
+
+[homebrew]: https://brew.sh/
+
+To build on macOS you will need the command-line development tools, and some
+packages from [homebrew]. Start by installing the command-line development
+tools:
+
+```shell
+sudo xcode-select --install
+```
+
+Verify that worked by checking your compiler:
+
+```shell
+c++ --version
+# Expected output: Apple clang .*
+```
+
+Install [homebrew], their home page should have up to date instructions. Once
+you have installed `homebrew`, use it to install some development tools:
+
+```shell
+brew update
+brew install cmake bazel openssl git ninja
+```
+
+You may also want to install `ccache` to improve the rebuild times, and
+`google-cloud-sdk` if you are planning to run the integration tests.
+
+Then clone the repository:
+
+```shell
+cd $HOME
+git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
+cd google-cloud-cpp
+```
+
+### Running the CI scripts
+
+The CI scripts follow a similar pattern to the scripts for Linux and Windows:
+
+```shell
+./ci/kokoro/macos/build.sh bazel   # <-- Run the `bazel` CI build
+./ci/kokoro/macos/build.sh cmake-super  # <-- Build with CMake
+```
+
+### Manual builds with CMake
+
+The [guide](/doc/contributor/howto-guide-setup-cmake-environment.md) generally
+works for macOS too. The only difference is the configuration for OpenSSL. The
+native OpenSSL library on macOS does not work, but the one distributed by
+`homebrew` does. You **must** set the `OPENSSL_ROOT_DIR` environment variable
+before configuring CMake, so CMake can use this alternative version. You cannot
+just pass this as a `-D` option to CMake, because the value must recurse to all
+the external projects in the super build.
+
+```shell
+export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
+cmake -Hsuper -Bcmake-out/si \
+    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX="${HOME}/local-cpp" -GNinja
+cmake --build cmake-out/si --target project-dependencies
+
+cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH="${HOME}/local-cpp" -GNinja
+cmake --build cmake-out/home
+```
+
+## Appendix: Linux VM on Google Compute Engine
 
 From time to time you may want to setup a Linux VM in Google Compute Engine.
 This might be useful to run performance tests in isolation, but "close" to the
@@ -302,7 +384,7 @@ To login to this image use:
 $ gcloud compute ssh --ssh-flag=-A --zone=${ZONE} ${VM}
 ```
 
-## Appendix: Creating a Windows VM using Google Compute Engine
+## Appendix: Windows VM on Google Compute Engine
 
 If you do not have a Windows workstation, but need a Windows development
 environment to troubleshoot a test or build problem, it might be convenient to
