@@ -277,9 +277,8 @@ c++ --version
 # Expected output: Apple clang .*
 ```
 
-Install [homebrew], their home page up to date instructions, we are not copying
-them here because they would easily get out of date. Once `homebrew` is
-installed, install some development tools:
+Install [homebrew], their home page should have up to date instructions. Once
+you have installed `homebrew`, use it to install some development tools:
 
 ```shell
 brew update
