@@ -33,6 +33,23 @@ inline namespace STORAGE_CLIENT_NS {
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
+ * @note the Credentials parameter in the configuration is ignored. The gRPC
+ *     client only supports Google Default Credentials.
+ *
+ * @param options the configuration parameters for the Client.
+ * @param channel_id set the `grpc.channel_id` attribute in the underlying
+ *   gRPC channel, this can be used to segregate the gRPC channels for different
+ *   clients.
+ *
+ * @warning this is an experimental feature, and subject to change without
+ *     notice.
+ */
+google::cloud::storage::Client DefaultGrpcClient(
+    google::cloud::storage::ClientOptions options, int channel_id);
+
+/**
+ * Create a `google::cloud::storage::Client` object configured to use gRPC.
+ *
  * @warning this is an experimental feature, and subject to change without
  *     notice.
  *
@@ -52,8 +69,10 @@ StatusOr<google::cloud::storage::Client> DefaultGrpcClient();
  * @warning this is an experimental feature, and subject to change without
  *     notice.
  */
-google::cloud::storage::Client DefaultGrpcClient(
-    google::cloud::storage::ClientOptions options);
+inline google::cloud::storage::Client DefaultGrpcClient(
+    google::cloud::storage::ClientOptions options) {
+  return DefaultGrpcClient(std::move(options), 0);
+}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage_experimental

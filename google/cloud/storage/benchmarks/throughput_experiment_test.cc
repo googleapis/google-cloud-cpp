@@ -52,7 +52,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   options.enabled_apis = {GetParam()};
 
   auto const& client_options = client->raw_client()->client_options();
-  auto experiments = CreateUploadExperiments(options, client_options);
+  auto experiments =
+      CreateUploadExperiments(options, client_options, /*thread_id=*/0);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
     ThroughputExperimentConfig config{OpType::kOpInsert,
@@ -81,7 +82,8 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   options.enabled_apis = {GetParam()};
 
   auto const& client_options = client->raw_client()->client_options();
-  auto experiments = CreateDownloadExperiments(options, client_options);
+  auto experiments =
+      CreateDownloadExperiments(options, client_options, /*thread_id=*/0);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
 

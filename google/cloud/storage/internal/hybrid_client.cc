@@ -25,6 +25,10 @@ HybridClient::HybridClient(ClientOptions options)
     : grpc_(std::make_shared<GrpcClient>(options)),
       curl_(CurlClient::Create(std::move(options))) {}
 
+HybridClient::HybridClient(ClientOptions options, int channel_id)
+    : grpc_(std::make_shared<GrpcClient>(options, channel_id)),
+      curl_(CurlClient::Create(std::move(options))) {}
+
 ClientOptions const& HybridClient::client_options() const {
   return curl_->client_options();
 }

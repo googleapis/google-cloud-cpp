@@ -246,20 +246,23 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   ApiName api_;
 };
 
-std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel() {
+std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   gcs::ClientOptions options{gcs::oauth2::GoogleDefaultCredentials().value()};
-  return gcs::internal::CreateGrpcChannel(options);
+  return gcs::internal::CreateGrpcChannel(options, thread_id);
 #else
-  return grpc::CreateChannel("storage.googleapis.com",
-                             grpc::GoogleDefaultCredentials());
+  grpc::ChannelArguments args;
+  args.SetInt("grpc.channel_id", thread_id);
+  return grpc::CreateCustomChannel("storage.googleapis.com",
+                                   grpc::GoogleDefaultCredentials(), args);
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 }
 
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
-  DownloadObjectRawGrpc()
-      : stub_(google::storage::v1::Storage::NewStub(CreateGcsChannel())) {}
+  explicit DownloadObjectRawGrpc(int thread_id)
+      : stub_(google::storage::v1::Storage::NewStub(
+            CreateGcsChannel(thread_id))) {}
   ~DownloadObjectRawGrpc() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
@@ -304,7 +307,8 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options) {
+    google::cloud::storage::ClientOptions const& client_options,
+    int thread_id) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto contents = MakeRandomData(generator, options.maximum_write_size);
   gcs::Client rest_client(client_options);
@@ -317,18 +321,19 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
       case ApiName::kApiRawGrpc: {
         gcs::Client grpc_client =
             google::cloud::storage_experimental::DefaultGrpcClient(
-                client_options);
+                client_options, thread_id);
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, false));
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, true));
       }
       // this comment keeps clang-format from merging to previous line
-      // we thing `} break;` is just weird.
+      // methinks `} break;` is just weird.
       break;
 #else
       case ApiName::kApiGrpc:
       case ApiName::kApiRawGrpc:
+        (void)thread_id;
         break;
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
       case ApiName::kApiXml:
@@ -347,7 +352,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options) {
+    google::cloud::storage::ClientOptions const& client_options,
+    int thread_id) {
   gcs::Client rest_client(client_options);
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
@@ -373,7 +379,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
         result.push_back(absl::make_unique<DownloadObjectLibcurl>(a));
         break;
       case ApiName::kApiRawGrpc:
-        result.push_back(absl::make_unique<DownloadObjectRawGrpc>());
+        result.push_back(absl::make_unique<DownloadObjectRawGrpc>(thread_id));
         break;
     }
   }

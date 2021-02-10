@@ -71,7 +71,13 @@ std::shared_ptr<grpc::ChannelCredentials> GrpcCredentials(
 
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
     ClientOptions const& options) {
+  return CreateGrpcChannel(options, 0);
+}
+
+std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
+    ClientOptions const& options, int channel_id) {
   grpc::ChannelArguments args;
+  args.SetInt("grpc.channel_id", channel_id);
   if (DirectPathEnabled()) {
     args.SetServiceConfigJSON(R"json({
       "loadBalancingConfig": [{
@@ -91,6 +97,11 @@ GrpcClient::GrpcClient(ClientOptions options)
     : options_(std::move(options)),
       stub_(google::storage::v1::Storage::NewStub(CreateGrpcChannel(options))) {
 }
+
+GrpcClient::GrpcClient(ClientOptions options, int channel_id)
+    : options_(std::move(options)),
+      stub_(google::storage::v1::Storage::NewStub(
+          CreateGrpcChannel(options, channel_id))) {}
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
     grpc::ClientContext& context, google::storage::v1::Object& result) {
