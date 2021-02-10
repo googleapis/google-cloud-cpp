@@ -554,12 +554,12 @@ docker_flags=(
   # it to store $HOME/.ccache
 
   # Make the fake directory available inside the docker image as `/h`.
-  "--volume" "${PWD}/${BUILD_HOME}:/h"
+  "--volume" "${PWD}/${BUILD_HOME}:/h:Z"
   "--env" "HOME=/h"
 
   # Mount the current directory (which is the top-level directory for the
   # project) as `/v` inside the docker image, and move to that directory.
-  "--volume" "${PWD}:/v"
+  "--volume" "${PWD}:/v:Z"
   "--workdir" "/v"
 
   # Mask any other builds that may exist at the same time. That is, these
