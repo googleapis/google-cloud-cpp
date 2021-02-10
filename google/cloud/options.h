@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
 
-#include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
 #include "absl/types/optional.h"
 #include <typeindex>
 #include <typeinfo>
+#include <unordered_map>
 
 namespace google {
 namespace cloud {
@@ -120,7 +120,7 @@ class Options {
   }
 
  private:
-  absl::flat_hash_map<std::type_index, absl::any> m_;
+  std::unordered_map<std::type_index, absl::any> m_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
