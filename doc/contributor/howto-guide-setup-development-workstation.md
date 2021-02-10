@@ -17,7 +17,7 @@ contributions to the project.
   top-level README file.
 * Contributors and developers **to** `google-cloud-cpp`, this is the right
   document
-  
+
 ## Table of Contents
 
 * [Linux](#linux)
@@ -263,7 +263,7 @@ Windows, but they quickly get out of date.
 [homebrew]: https://brew.sh/
 
 To build on macOS you will need the command-line development tools, and some
-packages from [homebrew]. Start by installing the command-line development 
+packages from [homebrew]. Start by installing the command-line development
 tools:
 
 ```shell
@@ -311,7 +311,7 @@ The CI scripts follow a similar pattern to the scripts for Linux and Windows:
 The [guide](/doc/contributor/howto-guide-setup-cmake-environment.md) generally
 works for macOS too. The only difference is the configuration for OpenSSL. The
 native OpenSSL library on macOS does not work, but the one distributed by
-`homebrew` does. You **must** set the `OPENSSL_ROOT_DIR` environment variable 
+`homebrew` does. You **must** set the `OPENSSL_ROOT_DIR` environment variable
 before configuring CMake, so CMake can use this alternative version. You cannot
 just pass this as a `-D` option to CMake, because the value must recurse to all
 the external projects in the super build.
