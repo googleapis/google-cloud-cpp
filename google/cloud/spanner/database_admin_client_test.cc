@@ -348,12 +348,15 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
   std::string backup_id = "test-backup";
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
+  std::chrono::system_clock::time_point version_time =
+      std::chrono::system_clock::now() - std::chrono::hours(7);
   Backup backup_name(dbase.instance(), backup_id);
   EXPECT_CALL(*mock, CreateBackup(_))
-      .WillOnce([&dbase, &expire_time, &backup_id, &backup_name](
+      .WillOnce([&dbase, &expire_time, &version_time, &backup_id, &backup_name](
                     DatabaseAdminConnection::CreateBackupParams const& p) {
         EXPECT_EQ(p.database, dbase);
         EXPECT_EQ(p.expire_time, expire_time);
+        EXPECT_EQ(p.version_time, version_time);
         EXPECT_EQ(p.backup_id, backup_id);
         gcsa::Backup backup;
         backup.set_name(backup_name.FullName());
@@ -362,7 +365,7 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
       });
 
   DatabaseAdminClient client(std::move(mock));
-  auto fut = client.CreateBackup(dbase, backup_id, expire_time);
+  auto fut = client.CreateBackup(dbase, backup_id, expire_time, version_time);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);

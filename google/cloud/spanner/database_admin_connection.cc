@@ -362,6 +362,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     backup.set_database(p.database.FullName());
     *backup.mutable_expire_time() =
         google::cloud::internal::ToProtoTimestamp(p.expire_time);
+    if (p.version_time) {
+      *backup.mutable_version_time() =
+          google::cloud::internal::ToProtoTimestamp(*p.version_time);
+    }
     if (p.encryption_key) {
       auto& encryption = *request.mutable_encryption_config();
       encryption.set_encryption_type(

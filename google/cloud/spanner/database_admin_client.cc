@@ -137,8 +137,10 @@ DatabaseAdminClient::TestIamPermissions(Database db,
 future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id,
     std::chrono::system_clock::time_point expire_time,
+    absl::optional<std::chrono::system_clock::time_point> version_time,
     absl::optional<KmsKeyName> encryption_key) {
   return conn_->CreateBackup({std::move(db), std::move(backup_id), expire_time,
+                              std::move(version_time),
                               std::move(encryption_key)});
 }
 

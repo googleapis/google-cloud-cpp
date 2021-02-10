@@ -368,8 +368,8 @@ class DatabaseAdminClient {
    * This function creates a database backup for the given Google Cloud Spanner
    * database.
    *
-   * Note that the backup id must be unique within the same instance, it must be
-   * between 2 and 60 characters long, it must start with a lowercase letter
+   * Note that the @p backup_id must be unique within the same instance, it must
+   * be between 2 and 60 characters long, it must start with a lowercase letter
    * (`[a-z]`), it must end with a lowercase letter or a number (`[a-z0-9]`) and
    * any characters between the beginning and ending characters must be lower
    * case letters, numbers, underscore (`_`) or dashes (`-`), that is, they must
@@ -377,6 +377,10 @@ class DatabaseAdminClient {
    *
    * The @p expire_time must be at least 6 hours and at most 366 days from the
    * time the `CreateBackup()` request is processed.
+   *
+   * The backup will contain an externally consistent copy of the database
+   * at @p version_time, if set. Otherwise, the version_time will be the
+   * create_time of the backup.
    *
    * @p encryption_key The name of the Cloud KMS key used to encrypt and decrypt
    * the database.
@@ -390,6 +394,8 @@ class DatabaseAdminClient {
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       Database db, std::string backup_id,
       std::chrono::system_clock::time_point expire_time,
+      absl::optional<std::chrono::system_clock::time_point> version_time =
+          absl::nullopt,
       absl::optional<KmsKeyName> encryption_key = absl::nullopt);
 
   /**

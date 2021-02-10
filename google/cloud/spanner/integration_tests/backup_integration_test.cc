@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
@@ -19,13 +20,15 @@
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
-#include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
@@ -37,122 +40,125 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::internal::ToAbslTime;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+using ::testing::Not;
+
 // Constants used to identify the encryption key.
 // For staging, the location must be us-central1.
 auto constexpr kLocation = "us-central1";
 auto constexpr kKeyRing = "spanner-cmek";
 auto constexpr kKeyName = "spanner-cmek-test-key";
 
-class BackupTest : public testing::Test {
+std::string const& ProjectId() {
+  static std::string project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  return project_id;
+}
+
+bool RunSlowBackupTests() {
+  static bool run_slow_backup_tests =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
+          .value_or("")
+          .find("backup") != std::string::npos;
+  return run_slow_backup_tests;
+}
+
+bool Emulator() {
+  static bool emulator =
+      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+  return emulator;
+}
+
+class CleanupStaleInstances : public ::testing::Environment {
+ public:
+  void SetUp() override {
+    std::regex instance_name_regex(
+        R"(projects/.+/instances/)"
+        R"((temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
+
+    // Make sure we're using a correct regex.
+    EXPECT_EQ(2, instance_name_regex.mark_count());
+    auto generator = google::cloud::internal::MakeDefaultPRNG();
+    Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator));
+    auto fq_instance_name = in.FullName();
+    std::smatch m;
+    EXPECT_TRUE(std::regex_match(fq_instance_name, m, instance_name_regex));
+    EXPECT_EQ(3, m.size());
+
+    if (RunSlowBackupTests()) {
+      EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
+          in.project_id(), instance_name_regex));
+    }
+  }
+};
+
+::testing::Environment* const kCleanupEnv =
+    ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
+
+class BackupTest : public ::testing::Test {
  public:
   BackupTest()
-      : instance_admin_client_(MakeInstanceAdminConnection(
-            ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
-            spanner_testing::TestBackoffPolicy(),
-            spanner_testing::TestPollingPolicy())),
+      : generator_(google::cloud::internal::MakeDefaultPRNG()),
         database_admin_client_(MakeDatabaseAdminConnection(
             ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
             spanner_testing::TestBackoffPolicy(),
-            spanner_testing::TestPollingPolicy())) {}
+            spanner_testing::TestPollingPolicy())) {
+    static_cast<void>(kCleanupEnv);
+  }
 
  protected:
-  void SetUp() override {
-    emulator_ =
-        google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    auto const run_slow_integration_tests =
-        google::cloud::internal::GetEnv(
-            "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
-            .value_or("");
-    run_slow_backup_tests_ =
-        run_slow_integration_tests.find("backup") != std::string::npos;
-  }
-  InstanceAdminClient instance_admin_client_;
+  google::cloud::internal::DefaultPRNG generator_;
   DatabaseAdminClient database_admin_client_;
-  bool emulator_ = false;
-  std::string project_id_;
-  bool run_slow_backup_tests_ = false;
-};
-
-class BackupTestWithCleanup : public BackupTest {
- protected:
-  void SetUp() override {
-    BackupTest::SetUp();
-    instance_name_regex_ = std::regex(
-        R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
-    instance_config_regex_ = std::regex(".*us-west.*");
-    if (!run_slow_backup_tests_) {
-      return;
-    }
-    auto s = spanner_testing::CleanupStaleInstances(project_id_,
-                                                    instance_name_regex_);
-    EXPECT_STATUS_OK(s) << s.message();
-  }
-  std::regex instance_name_regex_;
-  std::regex instance_config_regex_;
 };
 
 /// @test Backup related integration tests.
-TEST_F(BackupTestWithCleanup, BackupTestSuite) {
-  if (!run_slow_backup_tests_ || emulator_) {
-    GTEST_SKIP();
-  }
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::string instance_id =
-      google::cloud::spanner_testing::RandomInstanceName(generator);
-  std::string database_id =
-      google::cloud::spanner_testing::RandomDatabaseName(generator);
-  std::string restore_database_id =
-      google::cloud::spanner_testing::RandomDatabaseName(generator);
-  ASSERT_FALSE(project_id_.empty());
-  ASSERT_FALSE(instance_id.empty());
-  Instance in(project_id_, instance_id);
+TEST_F(BackupTest, BackupTest) {
+  if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
-  // Make sure we're using correct regex.
-  std::smatch m;
-  auto full_name = in.FullName();
-  EXPECT_TRUE(std::regex_match(full_name, m, instance_name_regex_));
-  std::string instance_config = spanner_testing::PickInstanceConfig(
-      project_id_, instance_config_regex_, generator);
+  InstanceAdminClient instance_admin_client(MakeInstanceAdminConnection(
+      ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
+      spanner_testing::TestBackoffPolicy(),
+      spanner_testing::TestPollingPolicy()));
+
+  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
+  auto instance_config = spanner_testing::PickInstanceConfig(
+      in.project_id(), std::regex(".*us-west.*"), generator_);
   ASSERT_FALSE(instance_config.empty()) << "could not get an instance config";
-  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
-      instance_admin_client_.CreateInstance(
-          CreateInstanceRequestBuilder(in, instance_config)
-              .SetDisplayName("test-display-name")
-              .SetNodeCount(1)
-              .Build());
-  auto instance = f.get();
+  EXPECT_STATUS_OK(
+      instance_admin_client
+          .CreateInstance(CreateInstanceRequestBuilder(in, instance_config)
+                              .SetDisplayName("test-display-name")
+                              .SetNodeCount(1)
+                              .Build())
+          .get());
 
-  EXPECT_STATUS_OK(instance);
-
-  Database db(project_id_, instance_id, database_id);
-
-  auto database_future = database_admin_client_.CreateDatabase(db);
-  auto database = database_future.get();
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+  auto database = database_admin_client_.CreateDatabase(db).get();
   ASSERT_STATUS_OK(database);
 
-  auto backup_future = database_admin_client_.CreateBackup(
-      db, database_id,
-      std::chrono::system_clock::now() + std::chrono::hours(7));
+  auto expire_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(7));
+  auto backup_future =
+      database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
   // Cancel the CreateBackup operation.
   backup_future.cancel();
   auto cancelled_backup = backup_future.get();
   if (cancelled_backup) {
-    auto delete_result =
-        database_admin_client_.DeleteBackup(cancelled_backup.value());
-    EXPECT_STATUS_OK(delete_result);
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*cancelled_backup));
   }
 
   // Then create a Backup without cancelling
-  backup_future = database_admin_client_.CreateBackup(
-      db, database_id,
-      std::chrono::system_clock::now() + std::chrono::hours(7));
+  backup_future =
+      database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
   // List the backup operations
-  auto filter = std::string("(metadata.database:") + database_id + ") AND " +
-                "(metadata.@type:type.googleapis.com/" +
+  auto filter = std::string("(metadata.database:") + db.database_id() +
+                ") AND " + "(metadata.@type:type.googleapis.com/" +
                 "google.spanner.admin.database.v1.CreateBackupMetadata)";
 
   std::vector<std::string> db_names;
@@ -164,22 +170,27 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
     db_names.push_back(metadata.database());
   }
   EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), db.FullName()))
-      << "Database " << database_id
+      << "Database " << db.database_id()
       << " not found in the backup operation list.";
 
   auto backup = backup_future.get();
   EXPECT_STATUS_OK(backup);
+  if (backup) {
+    EXPECT_EQ(ToAbslTime(backup->expire_time()), absl::FromChrono(expire_time));
+    // Verify that the version_time is the same as the creation_time.
+    EXPECT_EQ(ToAbslTime(backup->version_time()),
+              ToAbslTime(backup->create_time()));
+  }
 
-  google::cloud::spanner::Backup backup_name = google::cloud::spanner::Backup(
-      google::cloud::spanner::Instance(project_id_, instance_id), database_id);
+  Backup backup_name(in, db.database_id());
   auto backup_get = database_admin_client_.GetBackup(backup_name);
   EXPECT_STATUS_OK(backup_get);
   EXPECT_EQ(backup_get->name(), backup->name());
+
   // RestoreDatabase
-  Database restore_db(project_id_, instance_id, restore_database_id);
-  auto r_future =
-      database_admin_client_.RestoreDatabase(restore_db, backup_name);
-  auto restored_database = r_future.get();
+  Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
+  auto restored_database =
+      database_admin_client_.RestoreDatabase(restore_db, backup_name).get();
   EXPECT_STATUS_OK(restored_database);
 
   // List the database operations
@@ -198,9 +209,9 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
                           restored_database->name()))
       << "Backup " << restored_database->name()
       << " not found in the OptimizeRestoredDatabase operation list.";
-  auto drop_restored_db_status =
-      database_admin_client_.DropDatabase(restore_db);
-  EXPECT_STATUS_OK(drop_restored_db_status);
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db));
+
   filter = std::string("expire_time < \"3000-01-01T00:00:00Z\"");
   std::vector<std::string> backup_names;
   for (auto const& b : database_admin_client_.ListBackups(in, filter)) {
@@ -210,63 +221,280 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
   EXPECT_LE(
       1, std::count(backup_names.begin(), backup_names.end(), backup->name()))
       << "Backup " << backup->name() << " not found in the backup list.";
+
   auto new_expire_time =
-      std::chrono::system_clock::now() + std::chrono::hours(7);
-  auto updated_backup = database_admin_client_.UpdateBackupExpireTime(
-      backup.value(), new_expire_time);
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(8));
+  auto updated_backup =
+      database_admin_client_.UpdateBackupExpireTime(*backup, new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
-  auto expected_timestamp =
-      google::cloud::internal::ToProtoTimestamp(new_expire_time);
-  EXPECT_EQ(expected_timestamp.seconds(),
-            updated_backup->expire_time().seconds());
-  // The server only preserves micros.
-  EXPECT_EQ(expected_timestamp.nanos() / 1000,
-            updated_backup->expire_time().nanos() / 1000);
-  auto delete_result = database_admin_client_.DeleteBackup(backup.value());
-  EXPECT_STATUS_OK(delete_result);
-  auto status = instance_admin_client_.DeleteInstance(in);
-  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(ToAbslTime(updated_backup->expire_time()),
+            absl::FromChrono(new_expire_time));
+
+  EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+  EXPECT_STATUS_OK(instance_admin_client.DeleteInstance(in));
+}
+
+/// @test Verify creating/restoring a backup with a valid version_time.
+TEST_F(BackupTest, CreateBackupWithVersionTime) {
+  if (!RunSlowBackupTests()) GTEST_SKIP();
+
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')"),
+      "CREATE TABLE Counters ("
+      "  Name   STRING(64) NOT NULL,"
+      "  Value  INT64 NOT NULL"
+      ") PRIMARY KEY (Name)"};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+
+  std::string const version_key = "version";
+  std::vector<absl::Time> version_times;
+  // version_times[0]: when Counters[version_key] does not exist
+  version_times.push_back(ToAbslTime(database->create_time()));
+  {
+    spanner::Client client(spanner::MakeConnection(db));
+    auto commit = client.Commit(spanner::Mutations{
+        spanner::InsertMutationBuilder("Counters", {"Name", "Value"})
+            .EmplaceRow(version_key, 1)  // the version we'll backup/restore
+            .Build()});
+    EXPECT_STATUS_OK(commit);
+    if (commit) {
+      // version_times[1]: when Counters[version_key] == 1
+      version_times.push_back(*commit->commit_timestamp.get<absl::Time>());
+      commit = client.Commit(spanner::Mutations{
+          spanner::UpdateMutationBuilder("Counters", {"Name", "Value"})
+              .EmplaceRow(version_key, 2)  // latest version
+              .Build()});
+      EXPECT_STATUS_OK(commit);
+      if (commit) {
+        // version_times[2]: when Counters[version_key] == 2
+        version_times.push_back(*commit->commit_timestamp.get<absl::Time>());
+      }
+    }
+  }
+
+  if (version_times.size() == 3) {
+    EXPECT_LT(version_times[0], version_times[1]);
+    EXPECT_LT(version_times[1], version_times[2]);
+    // Create a backup when Counters[version_key] == 1.
+    // NOTE: The conversion to std::chrono::system_clock::time_point
+    // undoubtedly loses precision, which could cause an earlier backup
+    // to be made. DatabaseAdminClient::CreateBackup() should take a
+    // version_time that has at least the precision of a TIMESTAMP.
+    auto version_time = absl::ToChronoTime(version_times[1]);
+    auto expire_time = absl::ToChronoTime(version_times[0] + absl::Hours(8));
+    auto backup =
+        database_admin_client_
+            .CreateBackup(db, db.database_id(), expire_time, version_time)
+            .get();
+    EXPECT_THAT(backup, IsOk()) << backup.status();
+    if (backup) {
+      EXPECT_EQ(ToAbslTime(backup->expire_time()),
+                absl::FromChrono(expire_time));
+      EXPECT_EQ(ToAbslTime(backup->version_time()),
+                absl::FromChrono(version_time));
+      EXPECT_GT(ToAbslTime(backup->create_time()),
+                absl::FromChrono(version_time));
+
+      Database rdb(in, spanner_testing::RandomDatabaseName(generator_));
+      auto restored =
+          database_admin_client_.RestoreDatabase(rdb, *backup).get();
+      EXPECT_THAT(restored, IsOk()) << restored.status();
+      if (restored) {
+        auto const& restore_info = restored->restore_info();
+        EXPECT_EQ(restore_info.source_type(),
+                  google::spanner::admin::database::v1::BACKUP);
+        if (restore_info.source_type() ==
+            google::spanner::admin::database::v1::BACKUP) {
+          auto const& backup_info = restore_info.backup_info();
+          EXPECT_EQ(backup_info.backup(), backup->name());
+          EXPECT_EQ(ToAbslTime(backup_info.version_time()),
+                    absl::FromChrono(version_time));
+          EXPECT_LT(ToAbslTime(backup_info.version_time()),
+                    ToAbslTime(backup_info.create_time()));
+          EXPECT_EQ(backup_info.source_database(), db.FullName());
+        }
+        auto database = database_admin_client_.GetDatabase(rdb);
+        EXPECT_THAT(database, IsOk()) << database.status();
+        if (database) {
+          auto const& restore_info = database->restore_info();
+          EXPECT_EQ(restore_info.source_type(),
+                    google::spanner::admin::database::v1::BACKUP);
+          if (restore_info.source_type() ==
+              google::spanner::admin::database::v1::BACKUP) {
+            auto const& backup_info = restore_info.backup_info();
+            EXPECT_EQ(ToAbslTime(backup_info.version_time()),
+                      absl::FromChrono(version_time));
+          }
+        }
+        bool found_restored = false;
+        for (auto const& database : database_admin_client_.ListDatabases(in)) {
+          EXPECT_THAT(database, IsOk()) << database.status();
+          if (!database) continue;
+          if (database->name() == rdb.FullName()) {
+            EXPECT_FALSE(found_restored);
+            found_restored = true;
+            auto const& restore_info = database->restore_info();
+            EXPECT_EQ(restore_info.source_type(),
+                      google::spanner::admin::database::v1::BACKUP);
+            if (restore_info.source_type() ==
+                google::spanner::admin::database::v1::BACKUP) {
+              auto const& backup_info = restore_info.backup_info();
+              EXPECT_EQ(ToAbslTime(backup_info.version_time()),
+                        absl::FromChrono(version_time));
+            }
+          }
+        }
+        EXPECT_TRUE(found_restored);
+        {
+          spanner::Client client(spanner::MakeConnection(rdb));
+          auto keys = spanner::KeySet().AddKey(spanner::MakeKey(version_key));
+          auto rows = client.Read("Counters", std::move(keys), {"Value"});
+          using RowType = std::tuple<std::int64_t>;
+          auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
+          EXPECT_THAT(row, IsOk()) << row.status();
+          if (row) {
+            // Expect to see the state of the table at version_time.
+            EXPECT_EQ(std::get<0>(*std::move(row)), 1);
+          }
+        }
+        EXPECT_STATUS_OK(database_admin_client_.DropDatabase(rdb));
+      }
+
+      EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+    }
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+}
+
+/// @test Verify creating a backup with an expired version_time fails.
+TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')")};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+
+  // version_time too far in the past (outside the version_retention_period).
+  auto version_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) - absl::Hours(2));
+  auto expire_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(8));
+  auto backup =
+      database_admin_client_
+          .CreateBackup(db, db.database_id(), expire_time, version_time)
+          .get();
+  EXPECT_THAT(backup, Not(IsOk()));
+  EXPECT_THAT(backup.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("earlier than the creation time")));
+  if (backup) {
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+}
+
+/// @test Verify creating a backup with a future version_time fails.
+TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')")};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+
+  // version_time in the future.
+  auto version_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(2));
+  auto expire_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(8));
+  auto backup =
+      database_admin_client_
+          .CreateBackup(db, db.database_id(), expire_time, version_time)
+          .get();
+  EXPECT_THAT(backup, Not(IsOk()));
+  EXPECT_THAT(backup.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("with a future version time")));
+  if (backup) {
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
 }
 
 /// @test Tests backup/restore with Customer Managed Encryption Key
-TEST_F(BackupTestWithCleanup, BackupTestWithCMEK) {
-  if (!run_slow_backup_tests_ || emulator_) {
-    GTEST_SKIP();
-  }
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto instance_id =
-      spanner_testing::PickRandomInstance(generator, project_id_);
-  ASSERT_STATUS_OK(instance_id);
-  std::string database_id =
-      google::cloud::spanner_testing::RandomDatabaseName(generator);
-  std::string restore_database_id =
-      google::cloud::spanner_testing::RandomDatabaseName(generator);
-  ASSERT_FALSE(project_id_.empty());
-  Instance in(project_id_, *instance_id);
-  Database db(in, database_id);
+TEST_F(BackupTest, BackupTestWithCMEK) {
+  if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
-  KmsKeyName encryption_key(project_id_, kLocation, kKeyRing, kKeyName);
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_STATUS_OK(instance_id);
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  KmsKeyName encryption_key(in.project_id(), kLocation, kKeyRing, kKeyName);
   // TODO(mr-salty) we should probably have a nicer way to generate this.
   // There is also no guarantee the key version will stay at 1, so maybe we
   // should just do a substring or regex match.
   std::string kms_key_version =
       encryption_key.FullName() + "/cryptoKeyVersions/1";
 
-  auto database_future = database_admin_client_.CreateDatabase(
-      db, /*extra_statements=*/{}, encryption_key);
-  auto database = database_future.get();
+  auto database =
+      database_admin_client_
+          .CreateDatabase(db, /*extra_statements=*/{}, encryption_key)
+          .get();
   ASSERT_STATUS_OK(database);
 
-  auto backup_future = database_admin_client_.CreateBackup(
-      db, database_id, std::chrono::system_clock::now() + std::chrono::hours(7),
-      encryption_key);
-  auto backup = backup_future.get();
+  auto expire_time =
+      absl::ToChronoTime(ToAbslTime(database->create_time()) + absl::Hours(7));
+  auto backup = database_admin_client_
+                    .CreateBackup(db, db.database_id(), expire_time,
+                                  absl::nullopt, encryption_key)
+                    .get();
   EXPECT_STATUS_OK(backup);
 
-  auto drop_db_status = database_admin_client_.DropDatabase(db);
-  EXPECT_STATUS_OK(drop_db_status);
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
 
-  google::cloud::spanner::Backup backup_name(in, database_id);
+  Backup backup_name(in, db.database_id());
   auto backup_get = database_admin_client_.GetBackup(backup_name);
   EXPECT_STATUS_OK(backup_get);
   EXPECT_EQ(backup_get->name(), backup->name());
@@ -277,19 +505,17 @@ TEST_F(BackupTestWithCleanup, BackupTestWithCMEK) {
   EXPECT_EQ(kms_key_version, backup_get->encryption_info().kms_key_version());
 
   // RestoreDatabase
-  Database restore_db(project_id_, *instance_id, restore_database_id);
-  auto r_future = database_admin_client_.RestoreDatabase(
-      restore_db, backup_name, encryption_key);
-  auto restored_database = r_future.get();
+  Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
+  auto restored_database =
+      database_admin_client_
+          .RestoreDatabase(restore_db, backup_name, encryption_key)
+          .get();
   EXPECT_STATUS_OK(restored_database);
 
-  auto drop_restored_db_status =
-      database_admin_client_.DropDatabase(restore_db);
-  EXPECT_STATUS_OK(drop_restored_db_status);
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db));
   auto filter = std::string("expire_time < \"3000-01-01T00:00:00Z\"");
   bool found = false;
   for (auto const& b : database_admin_client_.ListBackups(in, filter)) {
-    if (!backup) break;
     if (b->name() == backup->name()) {
       found = true;
       EXPECT_TRUE(b->has_encryption_info());
@@ -300,8 +526,8 @@ TEST_F(BackupTestWithCleanup, BackupTestWithCMEK) {
     }
   }
   EXPECT_TRUE(found);
-  auto delete_result = database_admin_client_.DeleteBackup(backup.value());
-  EXPECT_STATUS_OK(delete_result);
+
+  EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
 }
 
 }  // namespace
