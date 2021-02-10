@@ -706,6 +706,23 @@ void WriteConditionally(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
+void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
+  // [START bigtable_configure_connection_pool]
+  namespace cbt = google::cloud::bigtable;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& table_id) {
+    auto constexpr kPoolSize = 250;
+    auto table = cbt::Table(
+        cbt::CreateDefaultDataClient(
+            project_id, instance_id,
+            cbt::ClientOptions().set_connection_pool_size(kPoolSize)),
+        table_id);
+    std::cout << "Connected with channel pool size of " << kPoolSize << "\n";
+  }
+  // [END bigtable_configure_connection_pool]
+  (argv.at(0), argv.at(1), argv.at(2));
+}
+
 std::string DefaultTablePrefix() { return "tbl-data-"; }
 
 void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
@@ -783,6 +800,9 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
           admin.project(), admin.instance_id(),
           google::cloud::bigtable::ClientOptions()),
       table_id, cbt::AlwaysRetryMutationPolicy());
+
+  std::cout << "\nRunning ConfigureConnectionPoolSize()" << std::endl;
+  ConfigureConnectionPoolSize({admin.project(), admin.instance_id(), table_id});
 
   std::cout << "\nPreparing data for MutateDeleteColumns()" << std::endl;
   MutateInsertUpdateRows(
