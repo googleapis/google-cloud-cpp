@@ -56,7 +56,7 @@ start_emulator() {
   local port="${1:-0}"
 
   echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment set-up"
-  echo "Launching emulator emulator in the background"
+  echo "Launching Cloud Storage emulator in the background"
   trap kill_emulator EXIT
 
   gunicorn --bind "0.0.0.0:${port}" \
