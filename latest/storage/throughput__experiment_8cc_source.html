@@ -316,143 +316,149 @@ $(function() {
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  ApiName api_;</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;};</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;std::shared_ptr&lt;grpc::ChannelInterface&gt; CreateGcsChannel() {</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;std::shared_ptr&lt;grpc::ChannelInterface&gt; CreateGcsChannel(<span class="keywordtype">int</span> thread_id) {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">gcs::ClientOptions</a> options{<a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a457fd54e504ebad9b9b84c73a3ae9f63">gcs::oauth2::GoogleDefaultCredentials</a>().value()};</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">return</span> gcs::internal::CreateGrpcChannel(options);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">return</span> gcs::internal::CreateGrpcChannel(options, thread_id);</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  <span class="keywordflow">return</span> grpc::CreateChannel(<span class="stringliteral">&quot;storage.googleapis.com&quot;</span>,</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                             <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a457fd54e504ebad9b9b84c73a3ae9f63">grpc::GoogleDefaultCredentials</a>());</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;}</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="keyword">class </span>DownloadObjectRawGrpc : <span class="keyword">public</span> ThroughputExperiment {</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  DownloadObjectRawGrpc()</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      : stub_(<a class="code" href="namespacegoogle.html">google</a>::storage::v1::Storage::NewStub(CreateGcsChannel())) {}</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  ~DownloadObjectRawGrpc() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  ThroughputResult Run(std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                       std::string <span class="keyword">const</span>&amp; object_name,</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                       ThroughputExperimentConfig <span class="keyword">const</span>&amp; config)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    Timer timer;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    timer.Start();</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    google::storage::v1::GetObjectMediaRequest request;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    request.set_bucket(bucket_name);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    request.set_object(object_name);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    grpc::ClientContext context;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">auto</span> stream = stub_-&gt;GetObjectMedia(&amp;context, request);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    google::storage::v1::GetObjectMediaResponse response;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    std::int64_t bytes_received = 0;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keywordflow">while</span> (stream-&gt;Read(&amp;response)) {</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      <span class="keywordflow">if</span> (response.has_checksummed_data()) {</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        bytes_received += response.checksummed_data().content().size();</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      }</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    }</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> status =</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        ::google::cloud::MakeStatusFromRpcError(stream-&gt;Finish());</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    timer.Stop();</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">return</span> ThroughputResult{config.op,</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                            config.object_size,</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                            config.app_buffer_size,</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                            <span class="comment">/*lib_buffer_size=*/</span>0,</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                            <span class="comment">/*crc_enabled=*/</span><span class="keyword">false</span>,</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                            <span class="comment">/*md5_enabled=*/</span><span class="keyword">false</span>,</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                            ApiName::kApiRawGrpc,</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                            timer.elapsed_time(),</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                            timer.cpu_time(),</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                            status};</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  }</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  std::unique_ptr&lt;google::storage::v1::Storage::StubInterface&gt; stub_;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;};</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}  <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateUploadExperiments(</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options) {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;  <span class="keyword">auto</span> generator = google::cloud::internal::DefaultPRNG(std::random_device{}());</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;  <span class="keyword">auto</span> contents = MakeRandomData(generator, options.maximum_write_size);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> rest_client(client_options);</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; result;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> a : options.enabled_apis) {</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="keywordflow">switch</span> (a) {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc: {</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> grpc_client =</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::DefaultGrpcClient</a>(</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                client_options);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        result.push_back(</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            absl::make_unique&lt;UploadObject&gt;(grpc_client, a, contents, <span class="keyword">false</span>));</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        result.push_back(</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            absl::make_unique&lt;UploadObject&gt;(grpc_client, a, contents, <span class="keyword">true</span>));</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      }</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      <span class="comment">// this comment keeps clang-format from merging to previous line</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;      <span class="comment">// we thing `} break;` is just weird.</span></div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc:</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiXml:</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiJson:</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawJson:</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawXml:</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        result.push_back(</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            absl::make_unique&lt;UploadObject&gt;(rest_client, a, contents, <span class="keyword">false</span>));</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        result.push_back(</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;            absl::make_unique&lt;UploadObject&gt;(rest_client, a, contents, <span class="keyword">true</span>));</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    }</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  }</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateDownloadExperiments(</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options) {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> rest_client(client_options);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  grpc::ChannelArguments args;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  args.SetInt(<span class="stringliteral">&quot;grpc.channel_id&quot;</span>, thread_id);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keywordflow">return</span> grpc::CreateCustomChannel(<span class="stringliteral">&quot;storage.googleapis.com&quot;</span>,</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                                   <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a457fd54e504ebad9b9b84c73a3ae9f63">grpc::GoogleDefaultCredentials</a>(), args);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;<span class="keyword">class </span>DownloadObjectRawGrpc : <span class="keyword">public</span> ThroughputExperiment {</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="keyword">explicit</span> DownloadObjectRawGrpc(<span class="keywordtype">int</span> thread_id)</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      : stub_(<a class="code" href="namespacegoogle.html">google</a>::storage::v1::Storage::NewStub(</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            CreateGcsChannel(thread_id))) {}</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  ~DownloadObjectRawGrpc() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  ThroughputResult Run(std::string <span class="keyword">const</span>&amp; bucket_name,</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                       std::string <span class="keyword">const</span>&amp; object_name,</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                       ThroughputExperimentConfig <span class="keyword">const</span>&amp; config)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    Timer timer;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    timer.Start();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    google::storage::v1::GetObjectMediaRequest request;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    request.set_bucket(bucket_name);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    request.set_object(object_name);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    grpc::ClientContext context;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="keyword">auto</span> stream = stub_-&gt;GetObjectMedia(&amp;context, request);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    google::storage::v1::GetObjectMediaResponse response;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    std::int64_t bytes_received = 0;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="keywordflow">while</span> (stream-&gt;Read(&amp;response)) {</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      <span class="keywordflow">if</span> (response.has_checksummed_data()) {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        bytes_received += response.checksummed_data().content().size();</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      }</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    }</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> status =</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        ::google::cloud::MakeStatusFromRpcError(stream-&gt;Finish());</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    timer.Stop();</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordflow">return</span> ThroughputResult{config.op,</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                            config.object_size,</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                            config.app_buffer_size,</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                            <span class="comment">/*lib_buffer_size=*/</span>0,</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                            <span class="comment">/*crc_enabled=*/</span><span class="keyword">false</span>,</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                            <span class="comment">/*md5_enabled=*/</span><span class="keyword">false</span>,</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                            ApiName::kApiRawGrpc,</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                            timer.elapsed_time(),</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                            timer.cpu_time(),</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                            status};</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  std::unique_ptr&lt;google::storage::v1::Storage::StubInterface&gt; stub_;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;};</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;}  <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateUploadExperiments(</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keywordtype">int</span> thread_id) {</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keyword">auto</span> generator = google::cloud::internal::DefaultPRNG(std::random_device{}());</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keyword">auto</span> contents = MakeRandomData(generator, options.maximum_write_size);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> rest_client(client_options);</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; result;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> a : options.enabled_apis) {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordflow">switch</span> (a) {</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc: {</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> grpc_client =</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::DefaultGrpcClient</a>(</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                client_options, thread_id);</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        result.push_back(</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            absl::make_unique&lt;UploadObject&gt;(grpc_client, a, contents, <span class="keyword">false</span>));</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        result.push_back(</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            absl::make_unique&lt;UploadObject&gt;(grpc_client, a, contents, <span class="keyword">true</span>));</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      }</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="comment">// this comment keeps clang-format from merging to previous line</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      <span class="comment">// methinks `} break;` is just weird.</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc:</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        (void)thread_id;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiXml:</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiJson:</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawJson:</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawXml:</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        result.push_back(</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            absl::make_unique&lt;UploadObject&gt;(rest_client, a, contents, <span class="keyword">false</span>));</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        result.push_back(</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;            absl::make_unique&lt;UploadObject&gt;(rest_client, a, contents, <span class="keyword">true</span>));</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    }</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;}</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; result;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> a : options.enabled_apis) {</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordflow">switch</span> (a) {</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObject&gt;(</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::DefaultGrpcClient</a>(</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;                client_options),</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;            a));</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiXml:</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiJson:</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObject&gt;(rest_client, a));</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawXml:</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawJson:</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObjectLibcurl&gt;(a));</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc:</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObjectRawGrpc&gt;());</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    }</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  }</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;}</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160; </div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;}  <span class="comment">// namespace storage_benchmarks</span></div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateDownloadExperiments(</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options,</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordtype">int</span> thread_id) {</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> rest_client(client_options);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; result;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> a : options.enabled_apis) {</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordflow">switch</span> (a) {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObject&gt;(</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;            <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::DefaultGrpcClient</a>(</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;                client_options),</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;            a));</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiGrpc:</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiXml:</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiJson:</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObject&gt;(rest_client, a));</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawXml:</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawJson:</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObjectLibcurl&gt;(a));</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;      <span class="keywordflow">case</span> ApiName::kApiRawGrpc:</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        result.push_back(absl::make_unique&lt;DownloadObjectRawGrpc&gt;(thread_id));</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    }</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  }</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;}</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}  <span class="comment">// namespace storage_benchmarks</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00187">client.h:187</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage__experimental_1_1v1_html_ac090c76c650be677fdf7ce42744af607"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::v1::DefaultGrpcClient</a></div><div class="ttdeci">StatusOr&lt; google::cloud::storage::Client &gt; DefaultGrpcClient()</div><div class="ttdoc">Create a google::cloud::storage::Client object configured to use gRPC.</div><div class="ttdef"><b>Definition:</b> <a href="grpc__plugin_8cc_source.html#l00034">grpc_plugin.cc:34</a></div></div>

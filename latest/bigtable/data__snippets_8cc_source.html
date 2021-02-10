@@ -751,256 +751,276 @@ $(function() {
 <div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;  (std::move(table));</div>
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;}</div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160; </div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;std::string DefaultTablePrefix() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;tbl-data-&quot;</span>; }</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="keywordtype">void</span> RunMutateExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;                       google::cloud::internal::DefaultPRNG&amp; generator) {</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(DefaultTablePrefix(), generator);</div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;      table_id,</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>({{<span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::MaxNumVersions(10)}}, {}));</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160; </div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;          admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>(),</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;          <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="keywordtype">void</span> ConfigureConnectionPoolSize(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;  <span class="comment">// [START bigtable_configure_connection_pool]</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;  [](std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;     std::string <span class="keyword">const</span>&amp; table_id) {</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    <span class="keyword">auto</span> constexpr kPoolSize = 250;</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    <span class="keyword">auto</span> table = <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">cbt::Table</a>(</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;        <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">cbt::CreateDefaultDataClient</a>(</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;            project_id, instance_id,</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;            <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">cbt::ClientOptions</a>().set_connection_pool_size(kPoolSize)),</div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;        table_id);</div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;Connected with channel pool size of &quot;</span> &lt;&lt; kPoolSize &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;  }</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;  <span class="comment">// [END bigtable_configure_connection_pool]</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;  (argv.at(0), argv.at(1), argv.at(2));</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;}</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160; </div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;std::string DefaultTablePrefix() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;tbl-data-&quot;</span>; }</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160; </div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateInsertUpdateRows() example [1]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;row1&quot;</span>, <span class="stringliteral">&quot;fam:col1=value1.1&quot;</span>,</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;                                 <span class="stringliteral">&quot;fam:col2=value1.2&quot;</span>, <span class="stringliteral">&quot;fam:col3=value1.3&quot;</span>});</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateInsertUpdateRows() example [2]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;row2&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2.1&quot;</span>,</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;                                 <span class="stringliteral">&quot;fam:col2=value2.2&quot;</span>, <span class="stringliteral">&quot;fam:col3=value2.3&quot;</span>});</div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160; </div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;}</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160; </div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;<span class="keywordtype">void</span> RunWriteExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;                      google::cloud::internal::DefaultPRNG&amp; generator) {</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160; </div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(<span class="stringliteral">&quot;mobile-time-series-&quot;</span>, generator);</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>(</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;                    {{<span class="stringliteral">&quot;stats_summary&quot;</span>, cbt::GcRule::MaxNumVersions(11)}}, {}));</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;  <span class="comment">// Some temporary variables to make the snippet below more readable.</span></div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> project_id = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>();</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> instance_id = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>();</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;          project_id, instance_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160; </div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteSimple() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;  WriteSimple(table, {});</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteBatch() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;  WriteBatch(table, {});</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteIncrement() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;  WriteIncrement(table, {});</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteConditionally() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;  WriteConditionally(table, {});</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="keywordtype">void</span> RunMutateExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;                       google::cloud::internal::DefaultPRNG&amp; generator) {</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(DefaultTablePrefix(), generator);</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;      table_id,</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>({{<span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::MaxNumVersions(10)}}, {}));</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160; </div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;          admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>(),</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;          <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateInsertUpdateRows() example [1]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;row1&quot;</span>, <span class="stringliteral">&quot;fam:col1=value1.1&quot;</span>,</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;                                 <span class="stringliteral">&quot;fam:col2=value1.2&quot;</span>, <span class="stringliteral">&quot;fam:col3=value1.3&quot;</span>});</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateInsertUpdateRows() example [2]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;row2&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2.1&quot;</span>,</div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;                                 <span class="stringliteral">&quot;fam:col2=value2.2&quot;</span>, <span class="stringliteral">&quot;fam:col3=value2.3&quot;</span>});</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160; </div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;}</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160; </div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="keywordtype">void</span> RunWriteExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;                      google::cloud::internal::DefaultPRNG&amp; generator) {</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160; </div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(<span class="stringliteral">&quot;mobile-time-series-&quot;</span>, generator);</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>(</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;                    {{<span class="stringliteral">&quot;stats_summary&quot;</span>, cbt::GcRule::MaxNumVersions(11)}}, {}));</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
 <div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160; </div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;}</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160; </div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;<span class="keywordtype">void</span> RunDataExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;                     google::cloud::internal::DefaultPRNG&amp; generator) {</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;  <span class="comment">// Some temporary variables to make the snippet below more readable.</span></div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> project_id = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>();</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> instance_id = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>();</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;          project_id, instance_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
 <div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160; </div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(DefaultTablePrefix(), generator);</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Creating table &quot;</span> &lt;&lt; table_id &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;      table_id,</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>({{<span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::MaxNumVersions(10)}}, {}));</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;          admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>(),</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;          <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160; </div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for MutateDeleteColumns()&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;  MutateInsertUpdateRows(</div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;      table, {<span class="stringliteral">&quot;insert-update-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteColumns() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;  MutateDeleteColumns({table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a430b10cee0704099c000f99418676916">project_id</a>(), table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a7a5c8c8c128e5533205d41829753d439">instance_id</a>(),</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;                       table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a83b9f3b405faa95ddb3c57e8e3820fc8">table_id</a>(), <span class="stringliteral">&quot;insert-update-01&quot;</span>, <span class="stringliteral">&quot;fam:col3&quot;</span>,</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;                       <span class="stringliteral">&quot;fam:col4&quot;</span>});</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteRows() example [1]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;  MutateDeleteRows(table, {<span class="stringliteral">&quot;insert-update-01&quot;</span>});</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteSimple() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;  WriteSimple(table, {});</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteBatch() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;  WriteBatch(table, {});</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteIncrement() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;  WriteIncrement(table, {});</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running WriteConditionally() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;  WriteConditionally(table, {});</div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;}</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160; </div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;<span class="keywordtype">void</span> RunDataExamples(<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::TableAdmin</a> admin,</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;                     google::cloud::internal::DefaultPRNG&amp; generator) {</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160; </div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;  <span class="keyword">auto</span> table_id = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#a5ca5845f1d6d445ca6935728ddf034f5">examples::RandomTableId</a>(DefaultTablePrefix(), generator);</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Creating table &quot;</span> &lt;&lt; table_id &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;  <span class="keyword">auto</span> schema = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">CreateTable</a>(</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;      table_id,</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>({{<span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::MaxNumVersions(10)}}, {}));</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;  <span class="keywordflow">if</span> (!schema) <span class="keywordflow">throw</span> std::runtime_error(schema.status().message());</div>
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160; </div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for MutateDeleteRows()&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;  MutateInsertUpdateRows(</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;      table, {<span class="stringliteral">&quot;to-delete-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;  MutateInsertUpdateRows(</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;      table, {<span class="stringliteral">&quot;to-delete-02&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteRows() example [2]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;  MutateDeleteRows(table, {<span class="stringliteral">&quot;to-delete-01&quot;</span>, <span class="stringliteral">&quot;to-delete-02&quot;</span>});</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for RenameColumn()&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>});</div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-1&quot;</span>});</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-2&quot;</span>});</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running RenameColumn() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;  RenameColumn(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col0&quot;</span>, <span class="stringliteral">&quot;new-name&quot;</span>});</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160; </div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for multiple examples&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;  InsertTestData(table, {});</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;  Apply(table, {});</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() with relaxed idempotency example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;  ApplyRelaxedIdempotency(table, {<span class="stringliteral">&quot;apply-relaxed-idempotency&quot;</span>});</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() with custom retry example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;  ApplyCustomRetry(table, {<span class="stringliteral">&quot;apply-custom-retry&quot;</span>});</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running BulkApply() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;  BulkApply(table, {});</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160; </div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulate data for prefix and row set examples&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;  PopulateTableHierarchy(table, {});</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running SampleRows() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;  SampleRows(table, {});</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160; </div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running RowExists example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;  RowExists(table, {<span class="stringliteral">&quot;root/0/0/1&quot;</span>});</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteAllCells example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  DeleteAllCells(table, {<span class="stringliteral">&quot;root/0/0/1&quot;</span>});</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteFamilyCells() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;  DeleteFamilyCells(table, {<span class="stringliteral">&quot;root/0/1/0&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>});</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteSelectiveFamilyCells() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;  DeleteSelectiveFamilyCells(table, {<span class="stringliteral">&quot;root/0/1/0&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col2&quot;</span>});</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160; </div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for CheckAndMutate() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>, <span class="stringliteral">&quot;fam:flip-flop:on&quot;</span>});</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;  MutateInsertUpdateRows(</div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;      table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>, <span class="stringliteral">&quot;fam:unused=unused-value&quot;</span>});</div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [1]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;  CheckAndMutate(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>});</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [2]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;  CheckAndMutate(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>});</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [3]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;  CheckAndMutateNotPresent(table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>});</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [4]&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;  MutateInsertUpdateRows(</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;      table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>, <span class="stringliteral">&quot;fam:unused=unused-value&quot;</span>});</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;  CheckAndMutateNotPresent(table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>});</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160; </div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;  <span class="keyword">auto</span> random_key_suffix = [&amp;generator] {</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;    <span class="keywordflow">return</span> google::cloud::internal::Sample(</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;        generator, 8, <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>);</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;  };</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html">google::cloud::bigtable::Table</a> table(</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a0fa701b519d83686c5ffcdd4cbb24e3d">google::cloud::bigtable::CreateDefaultDataClient</a>(</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;          admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>(),</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;          <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">google::cloud::bigtable::ClientOptions</a>()),</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;      table_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AlwaysRetryMutationPolicy.html">cbt::AlwaysRetryMutationPolicy</a>());</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160; </div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nRunning ConfigureConnectionPoolSize()&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;  ConfigureConnectionPoolSize({admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb">instance_id</a>(), table_id});</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160; </div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for MutateDeleteColumns()&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;  MutateInsertUpdateRows(</div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;      table, {<span class="stringliteral">&quot;insert-update-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteColumns() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;  MutateDeleteColumns({table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a430b10cee0704099c000f99418676916">project_id</a>(), table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a7a5c8c8c128e5533205d41829753d439">instance_id</a>(),</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;                       table.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a83b9f3b405faa95ddb3c57e8e3820fc8">table_id</a>(), <span class="stringliteral">&quot;insert-update-01&quot;</span>, <span class="stringliteral">&quot;fam:col3&quot;</span>,</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;                       <span class="stringliteral">&quot;fam:col4&quot;</span>});</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteRows() example [1]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;  MutateDeleteRows(table, {<span class="stringliteral">&quot;insert-update-01&quot;</span>});</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160; </div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for MutateDeleteRows()&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;  MutateInsertUpdateRows(</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;      table, {<span class="stringliteral">&quot;to-delete-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;  MutateInsertUpdateRows(</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;      table, {<span class="stringliteral">&quot;to-delete-02&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>, <span class="stringliteral">&quot;fam:col1=value2-0&quot;</span>,</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;              <span class="stringliteral">&quot;fam:col3=value3-0&quot;</span>, <span class="stringliteral">&quot;fam:col4=value4-0&quot;</span>});</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running MutateDeleteRows() example [2]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;  MutateDeleteRows(table, {<span class="stringliteral">&quot;to-delete-01&quot;</span>, <span class="stringliteral">&quot;to-delete-02&quot;</span>});</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160; </div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for RenameColumn()&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-0&quot;</span>});</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-1&quot;</span>});</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam:col0=value0-2&quot;</span>});</div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running RenameColumn() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;  RenameColumn(table, {<span class="stringliteral">&quot;mix-match-01&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col0&quot;</span>, <span class="stringliteral">&quot;new-name&quot;</span>});</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160; </div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPreparing data for multiple examples&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;  InsertTestData(table, {});</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;  Apply(table, {});</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() with relaxed idempotency example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;  ApplyRelaxedIdempotency(table, {<span class="stringliteral">&quot;apply-relaxed-idempotency&quot;</span>});</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running Apply() with custom retry example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;  ApplyCustomRetry(table, {<span class="stringliteral">&quot;apply-custom-retry&quot;</span>});</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running BulkApply() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;  BulkApply(table, {});</div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160; </div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulate data for prefix and row set examples&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;  PopulateTableHierarchy(table, {});</div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160; </div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running SampleRows() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;  SampleRows(table, {});</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running RowExists example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;  RowExists(table, {<span class="stringliteral">&quot;root/0/0/1&quot;</span>});</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteAllCells example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;  DeleteAllCells(table, {<span class="stringliteral">&quot;root/0/0/1&quot;</span>});</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteFamilyCells() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;  DeleteFamilyCells(table, {<span class="stringliteral">&quot;root/0/1/0&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>});</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running DeleteSelectiveFamilyCells() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;  DeleteSelectiveFamilyCells(table, {<span class="stringliteral">&quot;root/0/1/0&quot;</span>, <span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col2&quot;</span>});</div>
 <div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160; </div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;  <span class="comment">// TODO(#3523) why do we need to run this twice?</span></div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for CheckAndMutate() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;  <span class="keyword">auto</span> read_row_key = <span class="stringliteral">&quot;read-row-&quot;</span> + random_key_suffix();</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;  ReadRow(table, {read_row_key});</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;  MutateInsertUpdateRows(table, {read_row_key, <span class="stringliteral">&quot;fam:flip-flop:on&quot;</span>});</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;  ReadRow(table, {read_row_key});</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;  CheckAndMutate(table, {read_row_key});</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;  ReadRow(table, {read_row_key});</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;  CheckAndMutate(table, {read_row_key});</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;  ReadRow(table, {read_row_key});</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for ReadModifyWrite() example&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;  <span class="keyword">auto</span> read_modify_write_key = <span class="stringliteral">&quot;read-modify-write-&quot;</span> + random_key_suffix();</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for CheckAndMutate() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;  MutateInsertUpdateRows(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>, <span class="stringliteral">&quot;fam:flip-flop:on&quot;</span>});</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;  MutateInsertUpdateRows(</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>, <span class="stringliteral">&quot;fam:unused=unused-value&quot;</span>});</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [1]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;  CheckAndMutate(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>});</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [2]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;  CheckAndMutate(table, {<span class="stringliteral">&quot;check-and-mutate-row&quot;</span>});</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [3]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;  CheckAndMutateNotPresent(table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>});</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;Running CheckAndMutate() example [4]&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;  MutateInsertUpdateRows(</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;      table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>, <span class="stringliteral">&quot;fam:unused=unused-value&quot;</span>});</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;  CheckAndMutateNotPresent(table, {<span class="stringliteral">&quot;check-and-mutate-row-not-present&quot;</span>});</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160; </div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;  <span class="keyword">auto</span> random_key_suffix = [&amp;generator] {</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;    <span class="keywordflow">return</span> google::cloud::internal::Sample(</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;        generator, 8, <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz0123456789&quot;</span>);</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;  };</div>
 <div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160; </div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;}</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160; </div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;  <span class="keywordflow">if</span> (!argv.empty()) <span class="keywordflow">throw</span> google::cloud::bigtable::examples::Usage{<span class="stringliteral">&quot;auto&quot;</span>};</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;  examples::CheckEnvironmentVariablesAreSet({</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;      <span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>,</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;      <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID&quot;</span>,</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;  });</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> project_id =</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;      google::cloud::internal::GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value();</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> instance_id = google::cloud::internal::GetEnv(</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;                               <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID&quot;</span>)</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;                               .value();</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160; </div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin(</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#af631d3074faac714f581dc63f40528e4">cbt::CreateDefaultAdminClient</a>(project_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">cbt::ClientOptions</a>{}),</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;      instance_id);</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160; </div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;  <span class="comment">// If a previous run of these samples crashes before cleaning up there may be</span></div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;  <span class="comment">// old tables left over. As there are quotas on the total number of tables we</span></div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;  <span class="comment">// remove stale tables after 48 hours.</span></div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#af974efe1ca4ee5562a6d254d9afc219d">examples::CleanupOldTables</a>(DefaultTablePrefix(), admin);</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#af974efe1ca4ee5562a6d254d9afc219d">examples::CleanupOldTables</a>(<span class="stringliteral">&quot;mobile-time-series-&quot;</span>, admin);</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160; </div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;  <span class="comment">// Initialize a generator with some amount of entropy.</span></div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;  <span class="keyword">auto</span> generator = google::cloud::internal::DefaultPRNG(std::random_device{}());</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;  RunMutateExamples(admin, generator);</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;  RunWriteExamples(admin, generator);</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;  RunDataExamples(admin, generator);</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;}</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160; </div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;}  <span class="comment">// anonymous namespace</span></div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160; </div>
-<div class="line"><a name="l00918"></a><span class="lineno"><a class="line" href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">  918</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {  <span class="comment">// NOLINT(bugprone-exception-escape)</span></div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;  google::cloud::testing_util::InstallCrashHandler(argv[0]);</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160; </div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;  <span class="keyword">using</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">google::cloud::bigtable::examples::MakeCommandEntry</a>;</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;  google::cloud::bigtable::examples::Commands commands = {</div>
-<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply&quot;</span>, {}, Apply),</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply-relaxed-idempotency&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>},</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;                       ApplyRelaxedIdempotency),</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply-custom-retry&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, ApplyCustomRetry),</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;bulk-apply&quot;</span>, {}, BulkApply),</div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;check-and-mutate&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, CheckAndMutate),</div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;check-and-mutate-not-present&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>},</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;                       CheckAndMutateNotPresent),</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;read-modify-write&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, ReadModifyWrite),</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;sample-rows&quot;</span>, {}, SampleRows),</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-all-cells&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, DeleteAllCells),</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-family-cells&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;family-name&gt;&quot;</span>},</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;                       DeleteFamilyCells),</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-selective-family-cells&quot;</span>,</div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;                       {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;family-name&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;column-name&gt;&quot;</span>},</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;                       DeleteSelectiveFamilyCells),</div>
-<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;row-exists&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, RowExists),</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;      {<span class="stringliteral">&quot;mutate-delete-columns&quot;</span>, MutateDeleteColumns},</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;      {<span class="stringliteral">&quot;mutate-delete-rows&quot;</span>, MutateDeleteRowsCommand},</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;      {<span class="stringliteral">&quot;mutate-insert-update-rows&quot;</span>, MutateInsertUpdateRowsCommand},</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;rename-column&quot;</span>,</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;                       {<span class="stringliteral">&quot;&lt;key&gt; &lt;family&gt; &lt;old-name&gt; &lt;new-name&gt;&quot;</span>}, RenameColumn),</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;insert-test-data&quot;</span>, {}, InsertTestData),</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;populate-table-hierarchy&quot;</span>, {}, PopulateTableHierarchy),</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-simple&quot;</span>, {}, WriteSimple),</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-batch&quot;</span>, {}, WriteBatch),</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-increment&quot;</span>, {}, WriteIncrement),</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-conditional&quot;</span>, {}, WriteConditionally),</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>},</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;  };</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160; </div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;  google::cloud::bigtable::examples::Example example(std::move(commands));</div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;  <span class="keywordflow">return</span> example.Run(argc, argv);</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;}</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;  <span class="comment">// TODO(#3523) why do we need to run this twice?</span></div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for CheckAndMutate() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;  <span class="keyword">auto</span> read_row_key = <span class="stringliteral">&quot;read-row-&quot;</span> + random_key_suffix();</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;  ReadRow(table, {read_row_key});</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;  MutateInsertUpdateRows(table, {read_row_key, <span class="stringliteral">&quot;fam:flip-flop:on&quot;</span>});</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;  ReadRow(table, {read_row_key});</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;  CheckAndMutate(table, {read_row_key});</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;  ReadRow(table, {read_row_key});</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;  CheckAndMutate(table, {read_row_key});</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;  ReadRow(table, {read_row_key});</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160; </div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;  std::cout &lt;&lt; <span class="stringliteral">&quot;\nPopulating data for ReadModifyWrite() example&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;  <span class="keyword">auto</span> read_modify_write_key = <span class="stringliteral">&quot;read-modify-write-&quot;</span> + random_key_suffix();</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;  ReadModifyWrite(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;  ReadRow(table, {read_modify_write_key});</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160; </div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;  admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">DeleteTable</a>(table_id);</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;}</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;  <span class="keywordflow">if</span> (!argv.empty()) <span class="keywordflow">throw</span> google::cloud::bigtable::examples::Usage{<span class="stringliteral">&quot;auto&quot;</span>};</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;  examples::CheckEnvironmentVariablesAreSet({</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;      <span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>,</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;      <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID&quot;</span>,</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;  });</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> project_id =</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;      google::cloud::internal::GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value();</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> instance_id = google::cloud::internal::GetEnv(</div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;                               <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID&quot;</span>)</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;                               .value();</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160; </div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin(</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#af631d3074faac714f581dc63f40528e4">cbt::CreateDefaultAdminClient</a>(project_id, <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html">cbt::ClientOptions</a>{}),</div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;      instance_id);</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;  <span class="comment">// If a previous run of these samples crashes before cleaning up there may be</span></div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;  <span class="comment">// old tables left over. As there are quotas on the total number of tables we</span></div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;  <span class="comment">// remove stale tables after 48 hours.</span></div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#af974efe1ca4ee5562a6d254d9afc219d">examples::CleanupOldTables</a>(DefaultTablePrefix(), admin);</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#af974efe1ca4ee5562a6d254d9afc219d">examples::CleanupOldTables</a>(<span class="stringliteral">&quot;mobile-time-series-&quot;</span>, admin);</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160; </div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;  <span class="comment">// Initialize a generator with some amount of entropy.</span></div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;  <span class="keyword">auto</span> generator = google::cloud::internal::DefaultPRNG(std::random_device{}());</div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;  RunMutateExamples(admin, generator);</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;  RunWriteExamples(admin, generator);</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;  RunDataExamples(admin, generator);</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;}</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160; </div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;}  <span class="comment">// anonymous namespace</span></div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160; </div>
+<div class="line"><a name="l00938"></a><span class="lineno"><a class="line" href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">  938</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {  <span class="comment">// NOLINT(bugprone-exception-escape)</span></div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;  google::cloud::testing_util::InstallCrashHandler(argv[0]);</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
+<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;  <span class="keyword">using</span> <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">google::cloud::bigtable::examples::MakeCommandEntry</a>;</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;  google::cloud::bigtable::examples::Commands commands = {</div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply&quot;</span>, {}, Apply),</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply-relaxed-idempotency&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>},</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;                       ApplyRelaxedIdempotency),</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;apply-custom-retry&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, ApplyCustomRetry),</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;bulk-apply&quot;</span>, {}, BulkApply),</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;check-and-mutate&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, CheckAndMutate),</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;check-and-mutate-not-present&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>},</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;                       CheckAndMutateNotPresent),</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;read-modify-write&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, ReadModifyWrite),</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;sample-rows&quot;</span>, {}, SampleRows),</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-all-cells&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, DeleteAllCells),</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-family-cells&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;family-name&gt;&quot;</span>},</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;                       DeleteFamilyCells),</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;delete-selective-family-cells&quot;</span>,</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;                       {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;family-name&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;column-name&gt;&quot;</span>},</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;                       DeleteSelectiveFamilyCells),</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;row-exists&quot;</span>, {<span class="stringliteral">&quot;&lt;row-key&gt;&quot;</span>}, RowExists),</div>
+<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;      {<span class="stringliteral">&quot;mutate-delete-columns&quot;</span>, MutateDeleteColumns},</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;      {<span class="stringliteral">&quot;mutate-delete-rows&quot;</span>, MutateDeleteRowsCommand},</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;      {<span class="stringliteral">&quot;mutate-insert-update-rows&quot;</span>, MutateInsertUpdateRowsCommand},</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;rename-column&quot;</span>,</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;                       {<span class="stringliteral">&quot;&lt;key&gt; &lt;family&gt; &lt;old-name&gt; &lt;new-name&gt;&quot;</span>}, RenameColumn),</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;insert-test-data&quot;</span>, {}, InsertTestData),</div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;populate-table-hierarchy&quot;</span>, {}, PopulateTableHierarchy),</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-simple&quot;</span>, {}, WriteSimple),</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-batch&quot;</span>, {}, WriteBatch),</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-increment&quot;</span>, {}, WriteIncrement),</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">MakeCommandEntry</a>(<span class="stringliteral">&quot;write-conditional&quot;</span>, {}, WriteConditionally),</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>},</div>
+<div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;  };</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160; </div>
+<div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160;  google::cloud::bigtable::examples::Example example(std::move(commands));</div>
+<div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;  <span class="keywordflow">return</span> example.Run(argc, argv);</div>
+<div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="adata__snippets_8cc_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="data__snippets_8cc_source.html#l00918">data_snippets.cc:918</a></div></div>
+<div class="ttc" id="adata__snippets_8cc_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="data__snippets_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="data__snippets_8cc_source.html#l00938">data_snippets.cc:938</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1examples_html_af974efe1ca4ee5562a6d254d9afc219d"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#af974efe1ca4ee5562a6d254d9afc219d">google::cloud::bigtable::examples::CleanupOldTables</a></div><div class="ttdeci">void CleanupOldTables(std::string const &amp;prefix, google::cloud::bigtable::TableAdmin admin)</div><div class="ttdef"><b>Definition:</b> <a href="bigtable__examples__common_8cc_source.html#l00041">bigtable_examples_common.cc:41</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table_html_a6db958030bc117ab00971d196fbd1236"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#a6db958030bc117ab00971d196fbd1236">google::cloud::bigtable::v1::Table::Apply</a></div><div class="ttdeci">Status Apply(SingleRowMutation mut)</div><div class="ttdoc">Attempts to apply the mutation to a row.</div><div class="ttdef"><b>Definition:</b> <a href="table_8cc_source.html#l00071">table.cc:71</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a75d12baaa70efed463c4ada1cb4a6bdb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">google::cloud::bigtable::v1::TableAdmin::project</a></div><div class="ttdeci">std::string const  &amp; project() const</div><div class="ttdoc">Use the default view as defined for each function.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00213">table_admin.h:213</a></div></div>

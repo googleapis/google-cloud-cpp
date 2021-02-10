@@ -176,7 +176,7 @@ $(function() {
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="stringliteral"></span><span class="keyword">using</span> TestResults = std::vector&lt;ThroughputResult&gt;;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;TestResults RunThread(ThroughputOptions <span class="keyword">const</span>&amp; ThroughputOptions,</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                      std::string <span class="keyword">const</span>&amp; bucket_name);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                      std::string <span class="keyword">const</span>&amp; bucket_name, <span class="keywordtype">int</span> thread_id);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keywordtype">void</span> PrintResults(TestResults <span class="keyword">const</span>&amp; results);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;google::cloud::StatusOr&lt;ThroughputOptions&gt; ParseArgs(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]);</div>
@@ -278,7 +278,7 @@ $(function() {
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  std::vector&lt;std::future&lt;TestResults&gt;&gt; tasks;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i != options-&gt;thread_count; ++i) {</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    tasks.emplace_back(</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        std::async(std::launch::async, RunThread, *options, bucket_name));</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        std::async(std::launch::async, RunThread, *options, bucket_name, i));</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  }</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; f : tasks) {</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    PrintResults(f.get());</div>
@@ -305,7 +305,7 @@ $(function() {
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;TestResults RunThread(ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                      std::string <span class="keyword">const</span>&amp; bucket_name) {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                      std::string <span class="keyword">const</span>&amp; bucket_name, <span class="keywordtype">int</span> thread_id) {</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  <span class="keyword">auto</span> generator = google::cloud::internal::DefaultPRNG(std::random_device{}());</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  google::cloud::StatusOr&lt;gcs::ClientOptions&gt; client_options =</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      gcs::ClientOptions::CreateDefaultClientOptions();</div>
@@ -319,147 +319,148 @@ $(function() {
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> rest_client(*client_options);</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keyword">auto</span> uploaders = gcs_bm::CreateUploadExperiments(options, *client_options);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">if</span> (uploaders.empty()) {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">// This is possible if only gRPC is requested but the benchmark was compiled</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="comment">// without gRPC support.</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# None of the APIs configured are available\n&quot;</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordflow">return</span> {};</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  }</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  <span class="keyword">auto</span> downloaders =</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      gcs_bm::CreateDownloadExperiments(options, *client_options);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keywordflow">if</span> (downloaders.empty()) {</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="comment">// This is possible if only gRPC is requested but the benchmark was compiled</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="comment">// without gRPC support.</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# None of the APIs configured are available\n&quot;</span>;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="keywordflow">return</span> {};</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; uploader_generator(</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      0, uploaders.size() - 1);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; downloader_generator(</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      0, downloaders.size() - 1);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  std::uniform_int_distribution&lt;std::int64_t&gt; size_generator(</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      options.minimum_object_size, options.maximum_object_size);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; write_size_generator(</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      options.minimum_write_size / options.write_quantum,</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      options.maximum_write_size / options.write_quantum);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; read_size_generator(</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      options.minimum_read_size / options.read_quantum,</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      options.maximum_read_size / options.read_quantum);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; crc32c_generator(</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      0, options.enabled_crc32c.size() - 1);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; md5_generator(</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      0, options.enabled_crc32c.size() - 1);</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  std::bernoulli_distribution use_insert;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; api_generator(</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      0, options.enabled_apis.size() - 1);</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <span class="keyword">auto</span> deadline = std::chrono::steady_clock::now() + options.duration;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  gcs_bm::Timer timer;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  TestResults results;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  std::int32_t iteration_count = 0;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> start = std::chrono::steady_clock::now();</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;       iteration_count &lt; options.maximum_sample_count &amp;&amp;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;       (iteration_count &lt; options.minimum_sample_count || start &lt; deadline);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;       start = std::chrono::steady_clock::now(), ++iteration_count) {</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    <span class="keyword">auto</span> object_name = <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a34618094f6e57758fb58285e9423eb6c">gcs_bm::MakeRandomObjectName</a>(generator);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keyword">auto</span> object_size = size_generator(generator);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keyword">auto</span> write_size = options.write_quantum * write_size_generator(generator);</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keyword">auto</span> read_size = options.read_quantum * read_size_generator(generator);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keywordtype">bool</span> <span class="keyword">const</span> enable_crc = options.enabled_crc32c[crc32c_generator(generator)];</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordtype">bool</span> <span class="keyword">const</span> enable_md5 = options.enabled_md5[md5_generator(generator)];</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> api = options.enabled_apis[api_generator(generator)];</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keyword">auto</span>&amp; uploader = uploaders[uploader_generator(generator)];</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keyword">auto</span> upload_result =</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        uploader-&gt;Run(bucket_name, object_name,</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                      gcs_bm::ThroughputExperimentConfig{</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                          gcs_bm::kOpWrite, object_size, write_size,</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                          upload_buffer_size, enable_crc, enable_md5});</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keyword">auto</span> status = upload_result.status;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    results.emplace_back(std::move(upload_result));</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keywordflow">if</span> (!status.ok()) {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      <span class="keywordflow">if</span> (options.thread_count == 1) {</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;# status=&quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;, api=&quot;</span> &lt;&lt; gcs_bm::ToString(api)</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;      }</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    }</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keyword">auto</span>&amp; downloader = downloaders[downloader_generator(generator)];</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      results.emplace_back(downloader-&gt;Run(</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;          bucket_name, object_name,</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;          gcs_bm::ThroughputExperimentConfig{op, object_size, read_size,</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                                             download_buffer_size, enable_crc,</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                                             enable_md5}));</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    }</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">if</span> (options.thread_count == 1) {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="comment">// Immediately print the results, this makes it easier to debug problems.</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      PrintResults(results);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      results.clear();</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    }</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    (void)rest_client.DeleteObject(bucket_name, object_name);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  }</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordflow">return</span> results;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;google::cloud::StatusOr&lt;ThroughputOptions&gt; SelfTest(<span class="keywordtype">char</span> <span class="keyword">const</span>* argv0) {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keyword">using</span> google::cloud::internal::GetEnv;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keyword">using</span> google::cloud::internal::Sample;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; var :</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;       {<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>, <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID&quot;</span>}) {</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> value = GetEnv(var).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordflow">if</span> (!value.empty()) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    std::ostringstream os;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;The environment variable &quot;</span> &lt;&lt; var &lt;&lt; <span class="stringliteral">&quot; is not set or empty&quot;</span>;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kUnknown,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                                 std::move(os).str());</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  }</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  <span class="keywordflow">return</span> gcs_bm::ParseThroughputOptions(</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      {</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;          argv0,</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;          <span class="stringliteral">&quot;--project-id=&quot;</span> + GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value(),</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;          <span class="stringliteral">&quot;--region=&quot;</span> +</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;              GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID&quot;</span>).value(),</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;          <span class="stringliteral">&quot;--thread-count=1&quot;</span>,</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;          <span class="stringliteral">&quot;--minimum-object-size=16KiB&quot;</span>,</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;          <span class="stringliteral">&quot;--maximum-object-size=32KiB&quot;</span>,</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;          <span class="stringliteral">&quot;--minimum-write-size=16KiB&quot;</span>,</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;          <span class="stringliteral">&quot;--maximum-write-size=128KiB&quot;</span>,</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;          <span class="stringliteral">&quot;--write-quantum=16KiB&quot;</span>,</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;          <span class="stringliteral">&quot;--minimum-read-size=16KiB&quot;</span>,</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;          <span class="stringliteral">&quot;--maximum-read-size=128KiB&quot;</span>,</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;          <span class="stringliteral">&quot;--read-quantum=16KiB&quot;</span>,</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;          <span class="stringliteral">&quot;--duration=1s&quot;</span>,</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;          <span class="stringliteral">&quot;--minimum-sample-count=4&quot;</span>,</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;          <span class="stringliteral">&quot;--maximum-sample-count=10&quot;</span>,</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;          <span class="stringliteral">&quot;--enabled-apis=JSON,XML&quot;</span>,</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;          <span class="stringliteral">&quot;--enabled-crc32c=enabled&quot;</span>,</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;          <span class="stringliteral">&quot;--enabled-md5=disabled&quot;</span>,</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      },</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      kDescription);</div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;}</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160; </div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;google::cloud::StatusOr&lt;ThroughputOptions&gt; ParseArgs(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <span class="keywordtype">bool</span> auto_run =</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;      google::cloud::internal::GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES&quot;</span>)</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;          .value_or(<span class="stringliteral">&quot;&quot;</span>) == <span class="stringliteral">&quot;yes&quot;</span>;</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;  <span class="keywordflow">if</span> (auto_run) <span class="keywordflow">return</span> SelfTest(argv[0]);</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160; </div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;  <span class="keywordflow">return</span> gcs_bm::ParseThroughputOptions({argv, argv + argc}, kDescription);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;}</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;}  <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keyword">auto</span> uploaders =</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      gcs_bm::CreateUploadExperiments(options, *client_options, thread_id);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">if</span> (uploaders.empty()) {</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="comment">// This is possible if only gRPC is requested but the benchmark was compiled</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="comment">// without gRPC support.</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# None of the APIs configured are available\n&quot;</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> {};</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  }</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  <span class="keyword">auto</span> downloaders =</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      gcs_bm::CreateDownloadExperiments(options, *client_options, thread_id);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  <span class="keywordflow">if</span> (downloaders.empty()) {</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="comment">// This is possible if only gRPC is requested but the benchmark was compiled</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="comment">// without gRPC support.</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    std::cout &lt;&lt; <span class="stringliteral">&quot;# None of the APIs configured are available\n&quot;</span>;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">return</span> {};</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  }</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; uploader_generator(</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      0, uploaders.size() - 1);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; downloader_generator(</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      0, downloaders.size() - 1);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  std::uniform_int_distribution&lt;std::int64_t&gt; size_generator(</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      options.minimum_object_size, options.maximum_object_size);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; write_size_generator(</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      options.minimum_write_size / options.write_quantum,</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      options.maximum_write_size / options.write_quantum);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; read_size_generator(</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      options.minimum_read_size / options.read_quantum,</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      options.maximum_read_size / options.read_quantum);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; crc32c_generator(</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      0, options.enabled_crc32c.size() - 1);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; md5_generator(</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      0, options.enabled_crc32c.size() - 1);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  std::bernoulli_distribution use_insert;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  std::uniform_int_distribution&lt;std::size_t&gt; api_generator(</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      0, options.enabled_apis.size() - 1);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;  <span class="keyword">auto</span> deadline = std::chrono::steady_clock::now() + options.duration;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  gcs_bm::Timer timer;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  TestResults results;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  std::int32_t iteration_count = 0;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> start = std::chrono::steady_clock::now();</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;       iteration_count &lt; options.maximum_sample_count &amp;&amp;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;       (iteration_count &lt; options.minimum_sample_count || start &lt; deadline);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;       start = std::chrono::steady_clock::now(), ++iteration_count) {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;    <span class="keyword">auto</span> object_name = <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1examples.html#a34618094f6e57758fb58285e9423eb6c">gcs_bm::MakeRandomObjectName</a>(generator);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keyword">auto</span> object_size = size_generator(generator);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keyword">auto</span> write_size = options.write_quantum * write_size_generator(generator);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    <span class="keyword">auto</span> read_size = options.read_quantum * read_size_generator(generator);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;    <span class="keywordtype">bool</span> <span class="keyword">const</span> enable_crc = options.enabled_crc32c[crc32c_generator(generator)];</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordtype">bool</span> <span class="keyword">const</span> enable_md5 = options.enabled_md5[md5_generator(generator)];</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> api = options.enabled_apis[api_generator(generator)];</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keyword">auto</span>&amp; uploader = uploaders[uploader_generator(generator)];</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keyword">auto</span> upload_result =</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        uploader-&gt;Run(bucket_name, object_name,</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                      gcs_bm::ThroughputExperimentConfig{</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                          gcs_bm::kOpWrite, object_size, write_size,</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                          upload_buffer_size, enable_crc, enable_md5});</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <span class="keyword">auto</span> status = upload_result.status;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    results.emplace_back(std::move(upload_result));</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160; </div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keywordflow">if</span> (!status.ok()) {</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      <span class="keywordflow">if</span> (options.thread_count == 1) {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        std::cout &lt;&lt; <span class="stringliteral">&quot;# status=&quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;, api=&quot;</span> &lt;&lt; gcs_bm::ToString(api)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    }</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keyword">auto</span>&amp; downloader = downloaders[downloader_generator(generator)];</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> op : {gcs_bm::kOpRead0, gcs_bm::kOpRead1, gcs_bm::kOpRead2}) {</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      results.emplace_back(downloader-&gt;Run(</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;          bucket_name, object_name,</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;          gcs_bm::ThroughputExperimentConfig{op, object_size, read_size,</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                                             download_buffer_size, enable_crc,</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                                             enable_md5}));</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    }</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordflow">if</span> (options.thread_count == 1) {</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      <span class="comment">// Immediately print the results, this makes it easier to debug problems.</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;      PrintResults(results);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      results.clear();</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    }</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    (void)rest_client.DeleteObject(bucket_name, object_name);</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  }</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <span class="keywordflow">return</span> results;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;}</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;google::cloud::StatusOr&lt;ThroughputOptions&gt; SelfTest(<span class="keywordtype">char</span> <span class="keyword">const</span>* argv0) {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keyword">using</span> google::cloud::internal::GetEnv;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <span class="keyword">using</span> google::cloud::internal::Sample;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; var :</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;       {<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>, <span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID&quot;</span>}) {</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> value = GetEnv(var).value_or(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keywordflow">if</span> (!value.empty()) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    std::ostringstream os;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    os &lt;&lt; <span class="stringliteral">&quot;The environment variable &quot;</span> &lt;&lt; var &lt;&lt; <span class="stringliteral">&quot; is not set or empty&quot;</span>;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordflow">return</span> google::cloud::Status(google::cloud::StatusCode::kUnknown,</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                                 std::move(os).str());</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  <span class="keywordflow">return</span> gcs_bm::ParseThroughputOptions(</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      {</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;          argv0,</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;          <span class="stringliteral">&quot;--project-id=&quot;</span> + GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_PROJECT&quot;</span>).value(),</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;          <span class="stringliteral">&quot;--region=&quot;</span> +</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;              GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID&quot;</span>).value(),</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;          <span class="stringliteral">&quot;--thread-count=1&quot;</span>,</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;          <span class="stringliteral">&quot;--minimum-object-size=16KiB&quot;</span>,</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;          <span class="stringliteral">&quot;--maximum-object-size=32KiB&quot;</span>,</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;          <span class="stringliteral">&quot;--minimum-write-size=16KiB&quot;</span>,</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;          <span class="stringliteral">&quot;--maximum-write-size=128KiB&quot;</span>,</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;          <span class="stringliteral">&quot;--write-quantum=16KiB&quot;</span>,</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;          <span class="stringliteral">&quot;--minimum-read-size=16KiB&quot;</span>,</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;          <span class="stringliteral">&quot;--maximum-read-size=128KiB&quot;</span>,</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;          <span class="stringliteral">&quot;--read-quantum=16KiB&quot;</span>,</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;          <span class="stringliteral">&quot;--duration=1s&quot;</span>,</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;          <span class="stringliteral">&quot;--minimum-sample-count=4&quot;</span>,</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;          <span class="stringliteral">&quot;--maximum-sample-count=10&quot;</span>,</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;          <span class="stringliteral">&quot;--enabled-apis=JSON,XML&quot;</span>,</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;          <span class="stringliteral">&quot;--enabled-crc32c=enabled&quot;</span>,</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;          <span class="stringliteral">&quot;--enabled-md5=disabled&quot;</span>,</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;      },</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      kDescription);</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;}</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;google::cloud::StatusOr&lt;ThroughputOptions&gt; ParseArgs(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keywordtype">bool</span> auto_run =</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;      google::cloud::internal::GetEnv(<span class="stringliteral">&quot;GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES&quot;</span>)</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;          .value_or(<span class="stringliteral">&quot;&quot;</span>) == <span class="stringliteral">&quot;yes&quot;</span>;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;  <span class="keywordflow">if</span> (auto_run) <span class="keywordflow">return</span> SelfTest(argv[0]);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  <span class="keywordflow">return</span> gcs_bm::ParseThroughputOptions({argv, argv + argc}, kDescription);</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;}</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}  <span class="comment">// namespace</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astorage__throughput__vs__cpu__benchmark_8cc_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="storage__throughput__vs__cpu__benchmark_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="storage__throughput__vs__cpu__benchmark_8cc_source.html#l00113">storage_throughput_vs_cpu_benchmark.cc:113</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00187">client.h:187</a></div></div>

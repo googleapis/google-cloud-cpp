@@ -107,14 +107,14 @@ $(function() {
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">DefaultGrpcClient</a>(*std::move(options));</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#a437bca313119c3df771425231d80c385">   41</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::Client</a> <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">DefaultGrpcClient</a>(</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> options) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ada148b71273e4f19243f21d4742b9ab2">   41</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::Client</a> <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">DefaultGrpcClient</a>(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> options, <span class="keywordtype">int</span> channel_id) {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">if</span> (UseGrpcForMetadata()) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::make_shared&lt;storage::internal::GrpcClient&gt;(std::move(options)));</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(std::make_shared&lt;storage::internal::GrpcClient&gt;(</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::move(options), channel_id));</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      std::make_shared&lt;storage::internal::HybridClient&gt;(std::move(options)));</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(std::make_shared&lt;storage::internal::HybridClient&gt;(</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      std::move(options), channel_id));</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">// namespace STORAGE_CLIENT_NS</span></div>

@@ -117,11 +117,11 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateUploadExperiments(</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateDownloadExperiments(</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}  <span class="comment">// namespace storage_benchmarks</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}  <span class="comment">// namespace cloud</span></div>
