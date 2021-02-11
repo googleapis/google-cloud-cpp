@@ -21,10 +21,12 @@
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/iam_updater.h"
 #include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/status_or.h"
+#include "absl/base/attributes.h"
 #include "absl/types/optional.h"
 #include <chrono>
 
@@ -392,11 +394,36 @@ class DatabaseAdminClient {
    * @snippet samples.cc create-backup
    */
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
-      Database db, std::string backup_id,
-      std::chrono::system_clock::time_point expire_time,
-      absl::optional<std::chrono::system_clock::time_point> version_time =
-          absl::nullopt,
+      Database db, std::string backup_id, Timestamp expire_time,
+      absl::optional<Timestamp> version_time = absl::nullopt,
       absl::optional<KmsKeyName> encryption_key = absl::nullopt);
+
+  /**
+   * Creates a new Cloud Spanner backup for the given database.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation. Transient failures are not retried.
+   *
+   * This function creates a database backup for the given Google Cloud Spanner
+   * database.
+   *
+   * Note that the @p backup_id must be unique within the same instance, it must
+   * be between 2 and 60 characters long, it must start with a lowercase letter
+   * (`[a-z]`), it must end with a lowercase letter or a number (`[a-z0-9]`) and
+   * any characters between the beginning and ending characters must be lower
+   * case letters, numbers, underscore (`_`) or dashes (`-`), that is, they must
+   * belong to the `[a-z0-9_-]` character set.
+   *
+   * The @p expire_time must be at least 6 hours and at most 366 days from the
+   * time the `CreateBackup()` request is processed.
+   *
+   * @return A `google::cloud::future` that becomes satisfied when the operation
+   *   completes on the service. Note that this can take minutes in some cases.
+   */
+  ABSL_DEPRECATED("Use the Timestamp overload instead")
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      Database db, std::string backup_id,
+      std::chrono::system_clock::time_point expire_time);
 
   /**
    * Retrieve metadata information about a Backup.
@@ -464,7 +491,7 @@ class DatabaseAdminClient {
    */
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
       google::spanner::admin::database::v1::Backup const& backup,
-      std::chrono::system_clock::time_point const& expire_time);
+      Timestamp expire_time);
 
   /**
    * Update backup's @p expire_time.
@@ -478,6 +505,33 @@ class DatabaseAdminClient {
    * @par Example
    * @snippet samples.cc update-backup
    */
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
+      Backup const& backup, Timestamp expire_time);
+
+  /**
+   * Update backup's @p expire_time.
+   *
+   * @par Idempotency
+   * This operation is idempotent as its result does not depend on the previous
+   * state of the backup. Note that, as is the case with all operations, it is
+   * subject to race conditions if multiple tasks are attempting to change the
+   * expire time in the same backup.
+   */
+  ABSL_DEPRECATED("Use the Timestamp overload instead")
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
+      google::spanner::admin::database::v1::Backup const& backup,
+      std::chrono::system_clock::time_point const& expire_time);
+
+  /**
+   * Update backup's @p expire_time.
+   *
+   * @par Idempotency
+   * This operation is idempotent as its result does not depend on the previous
+   * state of the backup. Note that, as is the case with all operations, it is
+   * subject to race conditions if multiple tasks are attempting to change the
+   * expire time in the same backup.
+   */
+  ABSL_DEPRECATED("Use the Timestamp overload instead")
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
       Backup const& backup,
       std::chrono::system_clock::time_point const& expire_time);

@@ -16,10 +16,10 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
-#include <chrono>
 #include <cmath>
 #include <ios>
 #include <limits>
@@ -39,10 +39,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
-MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
-  return std::chrono::system_clock::from_time_t(sec) +
-         std::chrono::nanoseconds(nanos);
+absl::Time MakeTime(std::time_t sec, int nanos) {
+  return absl::FromTimeT(sec) + absl::Nanoseconds(nanos);
 }
 
 template <typename T>
@@ -170,7 +168,7 @@ TEST(Value, BasicSemantics) {
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
+      auto ts = MakeTimestamp(MakeTime(t, nanos)).value();
       SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
                    internal::TimestampToRFC3339(ts));
       TestBasicSemantics(ts);
@@ -697,7 +695,7 @@ TEST(Value, ProtoConversionTimestamp) {
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
+      auto ts = MakeTimestamp(MakeTime(t, nanos)).value();
       Value const v(ts);
       auto const p = internal::ToProto(v);
       EXPECT_EQ(v, internal::FromProto(p.first, p.second));
@@ -1228,7 +1226,7 @@ TEST(Value, OutputStreamMatchesT) {
 
   // Timestamp
   StreamMatchesValueStream(Timestamp());
-  StreamMatchesValueStream(MakeTimestamp(MakeTimePoint(1, 1)).value());
+  StreamMatchesValueStream(MakeTimestamp(MakeTime(1, 1)).value());
 
   // std::vector<T>
   // Not included, because a raw vector cannot be streamed.
