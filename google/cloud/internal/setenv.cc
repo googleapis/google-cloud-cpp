@@ -13,13 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/internal/setenv.h"
-#ifdef _WIN32
-// We need _putenv_s()
-#include <stdlib.h>
-#else
-// On Unix-like systems we need setenv()/unsetenv(), which are defined here:
-#include <cstdlib>
-#endif  // _WIN32
+// We need _putenv_s() on WIN32 and setenv()/unsetenv() on Posix. clang-tidy
+// recommends including <cstdlib>. That seems wrong, as <cstdlib> is not
+// guaranteed to define the Posix/WIN32 functions.
+#include <stdlib.h>  // NOLINT(modernize-deprecated-headers)
 
 namespace google {
 namespace cloud {
