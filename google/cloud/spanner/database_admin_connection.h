@@ -28,6 +28,7 @@
 #include "google/cloud/kms_key_name.h"
 #include "absl/types/optional.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -175,7 +176,11 @@ class DatabaseAdminConnection {
     /// The name of the database.
     Database database;
     std::string backup_id;
-    Timestamp expire_time;
+    // `expire_time` is deprecated. `DatabaseAdminClient::CreateBackup()`
+    // initializes it, but `DatabaseAdminConnection::CreateBackup()` now
+    // ignores it. Use `expire_timestamp` instead.
+    std::chrono::system_clock::time_point expire_time;
+    Timestamp expire_timestamp;
     // The backup will contain an externally consistent copy of the database
     // at `version_time`. If `version_time` is not specified, the system will
     // set `version_time` to the `create_time` of the backup.

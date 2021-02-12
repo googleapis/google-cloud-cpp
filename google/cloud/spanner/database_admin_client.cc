@@ -145,9 +145,14 @@ future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id, Timestamp expire_time,
     absl::optional<Timestamp> version_time,
     absl::optional<KmsKeyName> encryption_key) {
-  return conn_->CreateBackup({std::move(db), std::move(backup_id), expire_time,
-                              std::move(version_time),
-                              std::move(encryption_key)});
+  auto expire_time_point =
+      expire_time.get<std::chrono::system_clock::time_point>();
+  if (!expire_time_point) {
+    expire_time_point = std::chrono::system_clock::time_point::max();
+  }
+  return conn_->CreateBackup(
+      {std::move(db), std::move(backup_id), *std::move(expire_time_point),
+       expire_time, std::move(version_time), std::move(encryption_key)});
 }
 
 StatusOr<gcsa::Backup> DatabaseAdminClient::GetBackup(Backup const& backup) {

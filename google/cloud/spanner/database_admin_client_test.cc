@@ -355,7 +355,12 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
       .WillOnce([&dbase, &expire_time, &version_time, &backup_id, &backup_name](
                     DatabaseAdminConnection::CreateBackupParams const& p) {
         EXPECT_EQ(p.database, dbase);
-        EXPECT_EQ(p.expire_time, expire_time);
+        EXPECT_EQ(MakeTimestamp(p.expire_time).value(),
+                  MakeTimestamp(
+                      expire_time.get<std::chrono::system_clock::time_point>()
+                          .value())
+                      .value());
+        EXPECT_EQ(p.expire_timestamp, expire_time);
         EXPECT_EQ(p.version_time, version_time);
         EXPECT_EQ(p.backup_id, backup_id);
         gcsa::Backup backup;

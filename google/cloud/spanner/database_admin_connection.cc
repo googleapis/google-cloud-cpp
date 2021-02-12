@@ -360,7 +360,9 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_backup_id(p.backup_id);
     auto& backup = *request.mutable_backup();
     backup.set_database(p.database.FullName());
-    *backup.mutable_expire_time() = internal::TimestampToProto(p.expire_time);
+    // `p.expire_time` is deprecated and ignored here.
+    *backup.mutable_expire_time() =
+        internal::TimestampToProto(p.expire_timestamp);
     if (p.version_time) {
       *backup.mutable_version_time() =
           internal::TimestampToProto(*p.version_time);

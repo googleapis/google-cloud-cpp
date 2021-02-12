@@ -834,7 +834,7 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", expire_time, version_time, absl::nullopt});
+      {dbase, "test-backup", {}, expire_time, version_time, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
@@ -882,7 +882,7 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   KmsKeyName encryption_key("test-project", "some-location", "a-key-ring",
                             "backup-key-name");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, encryption_key});
+      {dbase, "test-backup", {}, {}, absl::nullopt, encryption_key});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
@@ -938,7 +938,7 @@ TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, absl::nullopt});
+      {dbase, "test-backup", {}, {}, absl::nullopt, absl::nullopt});
   fut.cancel();
   p.set_value();
   auto backup = fut.get();
@@ -962,7 +962,7 @@ TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, absl::nullopt});
+      {dbase, "test-backup", {}, {}, absl::nullopt, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kPermissionDenied));
