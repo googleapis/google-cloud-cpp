@@ -100,7 +100,7 @@ if (Test-Path "${vcpkg_dir}\vcpkg.exe") {
         try {
             (New-Object System.Net.WebClient).Downloadfile(
                     "https://github.com/microsoft/vcpkg-tool/releases/download/${vcpkg_tool_version}/vcpkg.exe",
-                    "cmake-out\vcpkg\vcpkg.exe")
+                    "${vcpkg_dir}\vcpkg.exe")
             break
         } catch {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
