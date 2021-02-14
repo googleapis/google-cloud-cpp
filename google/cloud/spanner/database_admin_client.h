@@ -26,7 +26,6 @@
 #include "google/cloud/future.h"
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/status_or.h"
-#include "absl/base/attributes.h"
 #include "absl/types/optional.h"
 #include <chrono>
 
@@ -420,7 +419,6 @@ class DatabaseAdminClient {
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    */
-  ABSL_DEPRECATED("Use the Timestamp overload instead")
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       Database db, std::string backup_id,
       std::chrono::system_clock::time_point expire_time);
@@ -517,7 +515,6 @@ class DatabaseAdminClient {
    * subject to race conditions if multiple tasks are attempting to change the
    * expire time in the same backup.
    */
-  ABSL_DEPRECATED("Use the Timestamp overload instead")
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
       google::spanner::admin::database::v1::Backup const& backup,
       std::chrono::system_clock::time_point const& expire_time);
@@ -531,7 +528,6 @@ class DatabaseAdminClient {
    * subject to race conditions if multiple tasks are attempting to change the
    * expire time in the same backup.
    */
-  ABSL_DEPRECATED("Use the Timestamp overload instead")
   StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
       Backup const& backup,
       std::chrono::system_clock::time_point const& expire_time);
