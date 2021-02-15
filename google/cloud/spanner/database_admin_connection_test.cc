@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -30,8 +31,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::internal::ToAbslTime;
-using ::google::cloud::internal::ToProtoTimestamp;
 using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -795,8 +794,8 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   Database dbase("test-project", "test-instance", "test-db");
   auto now = absl::Now();
-  auto expire_time = absl::ToChronoTime(now + absl::Hours(7));
-  auto version_time = absl::ToChronoTime(now - absl::Hours(7));
+  auto expire_time = MakeTimestamp(now + absl::Hours(7)).value();
+  auto version_time = MakeTimestamp(now - absl::Hours(7)).value();
 
   EXPECT_CALL(*mock, CreateBackup(_, _))
       .WillOnce([&dbase, &expire_time, &version_time](
@@ -805,10 +804,10 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
         EXPECT_EQ("test-backup", r.backup_id());
         auto const& backup = r.backup();
         EXPECT_EQ(dbase.FullName(), backup.database());
-        EXPECT_EQ(absl::FromChrono(expire_time),
-                  ToAbslTime(backup.expire_time()));
-        EXPECT_EQ(absl::FromChrono(version_time),
-                  ToAbslTime(backup.version_time()));
+        EXPECT_EQ(internal::TimestampFromProto(backup.expire_time()),
+                  expire_time);
+        EXPECT_EQ(internal::TimestampFromProto(backup.version_time()),
+                  version_time);
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -824,24 +823,26 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
         op.set_done(true);
         gcsa::Backup backup;
         backup.set_name("test-backup");
-        *backup.mutable_expire_time() = ToProtoTimestamp(expire_time);
-        *backup.mutable_version_time() = ToProtoTimestamp(version_time);
-        *backup.mutable_create_time() = ToProtoTimestamp(absl::Now());
+        *backup.mutable_expire_time() = internal::TimestampToProto(expire_time);
+        *backup.mutable_version_time() =
+            internal::TimestampToProto(version_time);
+        *backup.mutable_create_time() =
+            google::cloud::internal::ToProtoTimestamp(absl::Now());
         op.mutable_response()->PackFrom(backup);
         return make_status_or(op);
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", expire_time, version_time, absl::nullopt});
+      {dbase, "test-backup", {}, expire_time, version_time, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
 
   EXPECT_EQ("test-backup", backup->name());
-  EXPECT_EQ(ToAbslTime(backup->expire_time()), absl::FromChrono(expire_time));
-  EXPECT_EQ(ToAbslTime(backup->version_time()), absl::FromChrono(version_time));
-  EXPECT_GT(ToAbslTime(backup->create_time()), absl::FromChrono(version_time));
+  EXPECT_EQ(internal::TimestampFromProto(backup->expire_time()), expire_time);
+  EXPECT_EQ(internal::TimestampFromProto(backup->version_time()), version_time);
+  EXPECT_GT(internal::TimestampFromProto(backup->create_time()), version_time);
 }
 
 /// @test Verify that using an encryption key works.
@@ -881,7 +882,7 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   KmsKeyName encryption_key("test-project", "some-location", "a-key-ring",
                             "backup-key-name");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, encryption_key});
+      {dbase, "test-backup", {}, {}, absl::nullopt, encryption_key});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
@@ -937,7 +938,7 @@ TEST(DatabaseAdminClientTest, CreateBackupCancel) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, absl::nullopt});
+      {dbase, "test-backup", {}, {}, absl::nullopt, absl::nullopt});
   fut.cancel();
   p.set_value();
   auto backup = fut.get();
@@ -961,7 +962,7 @@ TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateBackup(
-      {dbase, "test-backup", {}, absl::nullopt, absl::nullopt});
+      {dbase, "test-backup", {}, {}, absl::nullopt, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kPermissionDenied));

@@ -18,6 +18,8 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 
@@ -28,7 +30,6 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
-using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -346,17 +347,41 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
 
   Database dbase("test-project", "test-instance", "test-db");
   std::string backup_id = "test-backup";
-  std::chrono::system_clock::time_point expire_time =
-      std::chrono::system_clock::now() + std::chrono::hours(7);
-  std::chrono::system_clock::time_point version_time =
-      std::chrono::system_clock::now() - std::chrono::hours(7);
+  auto now = absl::Now();
+  auto expire_time = MakeTimestamp(now + absl::Hours(7)).value();
+  auto version_time = MakeTimestamp(now - absl::Hours(7)).value();
   Backup backup_name(dbase.instance(), backup_id);
   EXPECT_CALL(*mock, CreateBackup(_))
       .WillOnce([&dbase, &expire_time, &version_time, &backup_id, &backup_name](
                     DatabaseAdminConnection::CreateBackupParams const& p) {
         EXPECT_EQ(p.database, dbase);
-        EXPECT_EQ(p.expire_time, expire_time);
+        EXPECT_EQ(MakeTimestamp(p.expire_time).value(),
+                  MakeTimestamp(
+                      expire_time.get<std::chrono::system_clock::time_point>()
+                          .value())
+                      .value());
+        EXPECT_EQ(p.expire_timestamp, expire_time);
         EXPECT_EQ(p.version_time, version_time);
+        EXPECT_EQ(p.backup_id, backup_id);
+        gcsa::Backup backup;
+        backup.set_name(backup_name.FullName());
+        backup.set_state(gcsa::Backup::CREATING);
+        return make_ready_future(make_status_or(backup));
+      })
+      .WillOnce([&dbase, &expire_time, &backup_id, &backup_name](
+                    DatabaseAdminConnection::CreateBackupParams const& p) {
+        EXPECT_EQ(p.database, dbase);
+        EXPECT_EQ(MakeTimestamp(p.expire_time).value(),
+                  MakeTimestamp(
+                      expire_time.get<std::chrono::system_clock::time_point>()
+                          .value())
+                      .value());
+        EXPECT_EQ(p.expire_timestamp,
+                  MakeTimestamp(
+                      expire_time.get<std::chrono::system_clock::time_point>()
+                          .value())
+                      .value());  // loss of precision
+        EXPECT_FALSE(p.version_time.has_value());
         EXPECT_EQ(p.backup_id, backup_id);
         gcsa::Backup backup;
         backup.set_name(backup_name.FullName());
@@ -369,7 +394,16 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
+  EXPECT_EQ(backup_name.FullName(), backup->name());
+  EXPECT_EQ(gcsa::Backup::CREATING, backup->state());
 
+  // Exercise the old interface with just a `time_point` expiration parameter.
+  fut = client.CreateBackup(
+      dbase, backup_id,
+      expire_time.get<std::chrono::system_clock::time_point>().value());
+  ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  backup = fut.get();
+  EXPECT_STATUS_OK(backup);
   EXPECT_EQ(backup_name.FullName(), backup->name());
   EXPECT_EQ(gcsa::Backup::CREATING, backup->state());
 }
@@ -519,17 +553,29 @@ TEST(DatabaseAdminClientTest, ListBackups) {
 TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
-  std::chrono::system_clock::time_point expire_time =
-      std::chrono::system_clock::now() + std::chrono::hours(7);
-  auto proto_expire_time =
-      google::cloud::internal::ToProtoTimestamp(expire_time);
+  auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
 
   EXPECT_CALL(*mock, UpdateBackup(_))
-      .WillOnce([&backup, &proto_expire_time](
+      .WillOnce([&backup, &expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup.FullName(), p.request.backup().name());
-        EXPECT_THAT(proto_expire_time,
-                    IsProtoEqual(p.request.backup().expire_time()));
+        EXPECT_THAT(expire_time, internal::TimestampFromProto(
+                                     p.request.backup().expire_time()));
+        gcsa::Backup response;
+        response.set_name(p.request.backup().name());
+        *response.mutable_expire_time() = p.request.backup().expire_time();
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      })
+      .WillOnce([&backup, &expire_time](
+                    DatabaseAdminConnection::UpdateBackupParams const& p) {
+        EXPECT_EQ(backup.FullName(), p.request.backup().name());
+        EXPECT_THAT(
+            MakeTimestamp(
+                expire_time.get<std::chrono::system_clock::time_point>()
+                    .value())
+                .value(),  // loss of precision
+            internal::TimestampFromProto(p.request.backup().expire_time()));
         gcsa::Backup response;
         response.set_name(p.request.backup().name());
         *response.mutable_expire_time() = p.request.backup().expire_time();
@@ -542,7 +588,20 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(gcsa::Backup::READY, response->state());
   EXPECT_EQ(backup.FullName(), response->name());
-  EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
+  EXPECT_THAT(expire_time,
+              internal::TimestampFromProto(response->expire_time()));
+
+  // Exercise the old interface with a `time_point` expiration parameter.
+  response = client.UpdateBackupExpireTime(
+      backup, expire_time.get<std::chrono::system_clock::time_point>().value());
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(backup.FullName(), response->name());
+  EXPECT_THAT(
+      MakeTimestamp(
+          expire_time.get<std::chrono::system_clock::time_point>().value())
+          .value(),  // loss of precision
+      internal::TimestampFromProto(response->expire_time()));
 }
 
 /// @test Verify DatabaseAdminClient uses GetBackup() correctly.
@@ -551,17 +610,29 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   Backup backup_name(Instance("test-project", "test-instance"), "test-backup");
   gcsa::Backup backup;
   backup.set_name(backup_name.FullName());
-  std::chrono::system_clock::time_point expire_time =
-      std::chrono::system_clock::now() + std::chrono::hours(7);
-  auto proto_expire_time =
-      google::cloud::internal::ToProtoTimestamp(expire_time);
+  auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
 
   EXPECT_CALL(*mock, UpdateBackup(_))
-      .WillOnce([&backup_name, &proto_expire_time](
+      .WillOnce([&backup_name, &expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup_name.FullName(), p.request.backup().name());
-        EXPECT_THAT(proto_expire_time,
-                    IsProtoEqual(p.request.backup().expire_time()));
+        EXPECT_THAT(expire_time, internal::TimestampFromProto(
+                                     p.request.backup().expire_time()));
+        gcsa::Backup response;
+        response.set_name(p.request.backup().name());
+        *response.mutable_expire_time() = p.request.backup().expire_time();
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      })
+      .WillOnce([&backup_name, &expire_time](
+                    DatabaseAdminConnection::UpdateBackupParams const& p) {
+        EXPECT_EQ(backup_name.FullName(), p.request.backup().name());
+        EXPECT_THAT(
+            MakeTimestamp(
+                expire_time.get<std::chrono::system_clock::time_point>()
+                    .value())
+                .value(),  // loss of precision
+            internal::TimestampFromProto(p.request.backup().expire_time()));
         gcsa::Backup response;
         response.set_name(p.request.backup().name());
         *response.mutable_expire_time() = p.request.backup().expire_time();
@@ -574,7 +645,20 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(gcsa::Backup::READY, response->state());
   EXPECT_EQ(backup_name.FullName(), response->name());
-  EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
+  EXPECT_THAT(expire_time,
+              internal::TimestampFromProto(response->expire_time()));
+
+  // Exercise the old interface with a `time_point` expiration parameter.
+  response = client.UpdateBackupExpireTime(
+      backup, expire_time.get<std::chrono::system_clock::time_point>().value());
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(backup_name.FullName(), response->name());
+  EXPECT_THAT(
+      MakeTimestamp(
+          expire_time.get<std::chrono::system_clock::time_point>().value())
+          .value(),  // loss of precision
+      internal::TimestampFromProto(response->expire_time()));
 }
 
 TEST(DatabaseAdminClientTest, ListBackupOperations) {

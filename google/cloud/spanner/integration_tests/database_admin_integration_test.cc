@@ -272,8 +272,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
   // Verify that earliest_version_time doesn't go past database create_time.
   EXPECT_TRUE(get->has_create_time());
   EXPECT_TRUE(get->has_earliest_version_time());
-  EXPECT_LE(internal::TimestampFromProto(get->create_time()).value(),
-            internal::TimestampFromProto(get->earliest_version_time()).value());
+  EXPECT_LE(internal::TimestampFromProto(get->create_time()),
+            internal::TimestampFromProto(get->earliest_version_time()));
 
   auto drop = client_.DropDatabase(database_);
   EXPECT_THAT(drop, IsOk());

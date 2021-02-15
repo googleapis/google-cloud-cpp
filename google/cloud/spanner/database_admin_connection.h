@@ -21,12 +21,14 @@
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/kms_key_name.h"
 #include "absl/types/optional.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -174,11 +176,15 @@ class DatabaseAdminConnection {
     /// The name of the database.
     Database database;
     std::string backup_id;
+    // `expire_time` is deprecated. `DatabaseAdminClient::CreateBackup()`
+    // initializes it, but `DatabaseAdminConnection::CreateBackup()` now
+    // ignores it. Use `expire_timestamp` instead.
     std::chrono::system_clock::time_point expire_time;
+    Timestamp expire_timestamp;
     // The backup will contain an externally consistent copy of the database
     // at `version_time`. If `version_time` is not specified, the system will
     // set `version_time` to the `create_time` of the backup.
-    absl::optional<std::chrono::system_clock::time_point> version_time;
+    absl::optional<Timestamp> version_time;
     /// The KMS key that was used to encrypt and decrypt the database.
     absl::optional<KmsKeyName> encryption_key;
   };

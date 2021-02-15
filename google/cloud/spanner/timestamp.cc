@@ -90,8 +90,9 @@ std::string TimestampToRFC3339(Timestamp ts) {
   return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
 }
 
-StatusOr<Timestamp> TimestampFromProto(protobuf::Timestamp const& proto) {
-  return MakeTimestamp(google::cloud::internal::ToAbslTime(proto));
+Timestamp TimestampFromProto(protobuf::Timestamp const& proto) {
+  auto const t = google::cloud::internal::ToAbslTime(proto);
+  return MakeTimestamp(t).value();  // Cannot fail.
 }
 
 protobuf::Timestamp TimestampToProto(Timestamp ts) {

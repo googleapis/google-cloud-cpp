@@ -31,9 +31,8 @@ absl::optional<Timestamp> GetReadTimestamp(
   absl::optional<Timestamp> timestamp;
   if (metadata.has_value() && metadata->has_transaction() &&
       metadata->transaction().has_read_timestamp()) {
-    auto ts =
-        internal::TimestampFromProto(metadata->transaction().read_timestamp());
-    if (ts) timestamp = *std::move(ts);
+    timestamp.emplace(
+        internal::TimestampFromProto(metadata->transaction().read_timestamp()));
   }
   return timestamp;
 }

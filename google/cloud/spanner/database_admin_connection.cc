@@ -360,11 +360,12 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_backup_id(p.backup_id);
     auto& backup = *request.mutable_backup();
     backup.set_database(p.database.FullName());
+    // `p.expire_time` is deprecated and ignored here.
     *backup.mutable_expire_time() =
-        google::cloud::internal::ToProtoTimestamp(p.expire_time);
+        internal::TimestampToProto(p.expire_timestamp);
     if (p.version_time) {
       *backup.mutable_version_time() =
-          google::cloud::internal::ToProtoTimestamp(*p.version_time);
+          internal::TimestampToProto(*p.version_time);
     }
     if (p.encryption_key) {
       auto& encryption = *request.mutable_encryption_config();
