@@ -50,33 +50,30 @@ the KOKORO_JOB_NAME environment variable.
 # TODO(#4896): Enable generator integration tests for windows.
 $env:GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS = "no"
 
+$env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg-binary-cache/windows/${BuildName}/"
 $DependencyScriptArgs=@()
 if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Debug/x64-windows-static/cmake.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
 } elseif ($BuildName -eq "cmake-release") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x64-windows-static/cmake.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
 } elseif ($BuildName -eq "cmake-debug-x86") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x86-windows-static/cmake-debug.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
 } elseif ($BuildName -eq "cmake-release-x86") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Release/x86-windows-static/cmake-release.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
     $BuildScript = "build-cmake.ps1"
 } elseif (($BuildName -eq "bazel-debug") -or ($BuildName -eq "bazel")) {
@@ -98,17 +95,15 @@ if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Debug/x64-windows-static/quickstart.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp")
+    $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "build-quickstart-cmake.ps1"
 } elseif ($BuildName -eq "quickstart-cmake-dll") {
     $env:CONFIG = "Debug"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows"
-    $env:BUILD_CACHE = "gs://cloud-cpp-kokoro-results/build-cache/google-cloud-cpp/master/vcpkg/Debug/x64-windows/quickstart.zip"
     $DependencyScript = "build-cmake-dependencies.ps1"
-    $DependencyScriptArgs=@("cmake-out/vcpkg-quickstart", "google-cloud-cpp")
+    $DependencyScriptArgs=@("vcpkg-quickstart", "google-cloud-cpp")
     $BuildScript = "build-quickstart-cmake.ps1"
 }
 

@@ -36,7 +36,7 @@ $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
 
-$vcpkg_dir = "cmake-out\vcpkg"
+$vcpkg_base = "vcpkg"
 $packages = @("zlib", "openssl",
               "protobuf", "c-ares", "benchmark",
               "grpc", "gtest", "crc32c", "curl",
@@ -44,38 +44,73 @@ $packages = @("zlib", "openssl",
 $vcpkg_flags=@(
     "--triplet", "${env:VCPKG_TRIPLET}")
 if ($args.count -ge 1) {
-    $vcpkg_dir, $packages = $args
+    $vcpkg_base, $packages = $args
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
 }
+$vcpkg_dir = "cmake-out\${vcpkg_base}"
 
-# Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
-# but it works well on your workstation where you may want to run this script
-# multiple times while debugging vcpkg installs.  It also works on Kokoro
-# where we cache the vcpkg installation, but it might be empty on the first
-# build.
-if ($RunningCI -and (Test-Path "${vcpkg_dir}")) {
-    Remove-Item -LiteralPath "${vcpkg_dir}" -Force -Recurse
-}
-if (-not (Test-Path ${vcpkg_dir})) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
-    git clone --quiet --shallow-since 2020-10-20 `
-        https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
-    git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red `
-            "vcpkg git setup failed with exit code $LastExitCode"
-        Exit ${LastExitCode}
-    }
+$vcpkg_version = "5214a247018b3bf2d793cea188ea2f2c150daddd"
+$vcpkg_tool_version = "2021-01-13-768d8f95c9e752603d2c5901c7a7c7fbdb08af35"
+
+New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
+# Download the right version of `vcpkg`
+if (Test-Path "${vcpkg_dir}") {
+    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) vcpkg directory already exists."
 } else {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating vcpkg repository."
-    git -C "${vcpkg_dir}" pull
-    git -C "${vcpkg_dir}" checkout 5214a247018b3bf2d793cea188ea2f2c150daddd
+    ForEach($_ in (1, 2, 3)) {
+        if ( $_ -ne 1) {
+            Start-Sleep -Seconds (60 * $_)
+        }
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "Downloading vcpkg ports archive [$_]"
+        try {
+            (New-Object System.Net.WebClient).Downloadfile(
+                    "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
+                    "cmake-out\${vcpkg_version}.zip")
+            break
+        } catch {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+        }
+    }
+    7z x -ocmake-out "cmake-out\${vcpkg_version}.zip" -aoa -bsp0
+    if ($LastExitCode) {
+        # Ignore errors, caching failures should not break the build.
+        Write-Host -ForegroundColor Red "`n$(Get-Date -Format o) " `
+            "extracting vcpkg from archive failed with exit code ${LastExitCode}."
+        Exit 1
+    }
+    Set-Location "cmake-out"
+    Rename-Item "vcpkg-${vcpkg_version}" "${vcpkg_base}"
+    Set-Location ".."
 }
 if (-not (Test-Path "${vcpkg_dir}")) {
     Write-Host -ForegroundColor Red "Missing vcpkg directory (${vcpkg_dir})."
     Exit 1
 }
-Set-Location "${vcpkg_dir}"
+
+if (Test-Path "${vcpkg_dir}\vcpkg.exe") {
+    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) vcpkg executable already exists."
+} else {
+    ForEach($_ in (1, 2, 3)) {
+        if ( $_ -ne 1) {
+            Start-Sleep -Seconds (60 * $_)
+        }
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "Downloading vcpkg executable [$_]"
+        try {
+            (New-Object System.Net.WebClient).Downloadfile(
+                    "https://github.com/microsoft/vcpkg-tool/releases/download/${vcpkg_tool_version}/vcpkg.exe",
+                    "${vcpkg_dir}\vcpkg.exe")
+            break
+        } catch {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
+        }
+    }
+}
+if (-not (Test-Path "${vcpkg_dir}\vcpkg.exe")) {
+    Write-Host -ForegroundColor Red "Missing vcpkg executable (${vcpkg_dir}\vcpkg.exe)."
+    Exit 1
+}
 
 # If BUILD_CACHE is set (which typically is on Kokoro builds), try
 # to download and extract the build cache.
@@ -83,34 +118,18 @@ if ($RunningCI -and $HasBuildCache) {
     gcloud auth activate-service-account `
         --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "downloading build cache."
-    gsutil -q cp ${env:BUILD_CACHE} vcpkg-installed.zip
+        "rsync vcpkg binary cache from GCS."
+    New-Item "${env:LOCALAPPDATA}\vcpkg" -ItemType Directory -ErrorAction SilentlyContinue
+    New-Item "${env:LOCALAPPDATA}\vcpkg\archives" -ItemType Directory -ErrorAction SilentlyContinue
+    gsutil -m -q rsync -r ${env:BUILD_CACHE} "${env:LOCALAPPDATA}\vcpkg\archives"
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
         Write-Host "gsutil download failed with exit code $LastExitCode"
-    } else {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "extracting build cache."
-        7z x vcpkg-installed.zip -aoa -bsp0
-        if ($LastExitCode) {
-            # Ignore errors, caching failures should not break the build.
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "extracting build cache failed with exit code ${LastExitCode}."
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "build will continue without a cache."
-        }
     }
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bootstrap vcpkg."
-powershell -exec bypass scripts\bootstrap.ps1
-if ($LastExitCode) {
-  Write-Host -ForegroundColor Red "Error bootstrapping vcpkg: $LastExitCode"
-  Exit ${LastExitCode}
-}
-
 # Integrate installed packages into the build environment.
-.\vcpkg.exe integrate install
+&"${vcpkg_dir}\vcpkg.exe" integrate install
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg integrate failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -118,7 +137,7 @@ if ($LastExitCode) {
 
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup old vcpkg package versions."
-.\vcpkg.exe remove ${vcpkg_flags} --outdated --recurse
+&"${vcpkg_dir}\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
     Exit ${LastExitCode}
@@ -126,7 +145,7 @@ if ($LastExitCode) {
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg package versions."
 foreach ($pkg in $packages) {
-    .\vcpkg.exe install ${vcpkg_flags} "${pkg}"
+    &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "vcpkg install $pkg failed with exit code $LastExitCode"
         Exit ${LastExitCode}
@@ -134,7 +153,7 @@ foreach ($pkg in $packages) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
-.\vcpkg.exe list
+&"${vcpkg_dir}\vcpkg.exe" list
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup vcpkg buildtrees"
 Get-ChildItem -Recurse -File `
@@ -151,25 +170,11 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and spa
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
 if ($RunningCI -and $IsCI -and $HasBuildCache) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-      "zip vcpkg cache for upload."
-    7z a vcpkg-installed.zip installed\ -bsp0
-    if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "zip failed with exit code ${LastExitCode}."
-    } else {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "upload zip with vcpkg cache."
-        gcloud auth activate-service-account `
-           --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-        gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
-        if ($LastExitCode) {
-            # Ignore errors, caching failures should not break the build.
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "continue despite upload failure with code ${LastExitCode}".
-        }
-    }
+    "rsync vcpkg binary cache to GCS."
+    gcloud auth activate-service-account `
+        --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    gsutil -m -q rsync -r "${env:LOCALAPPDATA}\vcpkg\archives" ${env:BUILD_CACHE}
 } else {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "vcpkg not updated IsCI = $IsCI, IsPR = $IsPR, " `
