@@ -169,9 +169,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Disk(s) size and spa
 
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
-# TODO(coryan) - DO NOT MERGE warm up the cache in PR
-#     if (RunningCI -and $IsCI -and $HasBuildCache) {
-if ($RunningCI -and $HasBuildCache) {
+if ($RunningCI -and $IsCI -and $HasBuildCache) {
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
     "rsync vcpkg binary cache to GCS."
     gcloud auth activate-service-account `
