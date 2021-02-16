@@ -168,7 +168,7 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 spanner_proto::CommitResponse MakeCommitResponse(Timestamp commit_timestamp) {
   spanner_proto::CommitResponse response;
   *response.mutable_commit_timestamp() =
-      internal::TimestampToProto(commit_timestamp);
+      commit_timestamp.get<protobuf::Timestamp>().value();
   return response;
 }
 

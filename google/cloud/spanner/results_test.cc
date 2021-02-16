@@ -144,7 +144,7 @@ TEST(RowStream, TimestampPresent) {
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
-      internal::TimestampToProto(timestamp);
+      timestamp.get<protobuf::Timestamp>().value();
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 
@@ -158,7 +158,7 @@ TEST(ProfileQueryResult, TimestampPresent) {
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
-      internal::TimestampToProto(timestamp);
+      timestamp.get<protobuf::Timestamp>().value();
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 

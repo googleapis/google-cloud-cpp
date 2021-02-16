@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status.h"
+#include <google/protobuf/util/time_util.h>
 #include <string>
 
 namespace google {
@@ -42,10 +42,25 @@ Status NegativeOverflow(std::string const& type) {
 
 }  // namespace
 
+StatusOr<protobuf::Timestamp> Timestamp::ConvertTo(
+    protobuf::Timestamp const&) const {
+  auto constexpr kDestType = "google::protobuf::Timestamp";
+  auto const s = absl::ToUnixSeconds(t_);
+  if (s > protobuf::util::TimeUtil::kTimestampMaxSeconds)
+    return PositiveOverflow(kDestType);
+  if (s < protobuf::util::TimeUtil::kTimestampMinSeconds)
+    return NegativeOverflow(kDestType);
+  auto const ns = absl::ToInt64Nanoseconds(t_ - absl::FromUnixSeconds(s));
+  google::protobuf::Timestamp proto;
+  proto.set_seconds(s);
+  proto.set_nanos(static_cast<std::int32_t>(ns));
+  return proto;
+}
+
 StatusOr<std::int64_t> Timestamp::ToRatio(std::int64_t min, std::int64_t max,
                                           std::int64_t num,
                                           std::int64_t den) const {
-  constexpr auto kDestType = "std::chrono::time_point";
+  auto constexpr kDestType = "std::chrono::time_point";
   auto const period = absl::Seconds(num) / den;
   auto const duration = absl::Floor(t_ - absl::UnixEpoch(), period);
   if (duration > max * period) return PositiveOverflow(kDestType);
@@ -54,16 +69,19 @@ StatusOr<std::int64_t> Timestamp::ToRatio(std::int64_t min, std::int64_t max,
 }
 
 StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
-  constexpr auto kDestType = "google::cloud::spanner::Timestamp";
-  // The min/max values that are allowed to in a Timestamp:
-  // ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]
-  // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
-  auto constexpr kMinTime = absl::FromUnixSeconds(-62135596800);
-  auto const kMaxTime =  // NOLINT(readability-identifier-naming)
-      absl::FromUnixSeconds(253402300799) + absl::Nanoseconds(999999999);
-  if (t > kMaxTime) return PositiveOverflow(kDestType);
+  auto constexpr kDestType = "google::cloud::spanner::Timestamp";
+  auto constexpr kMinTime =
+      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMinSeconds);
+  auto constexpr kMaxTime =
+      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);
+  if (t >= kMaxTime) return PositiveOverflow(kDestType);
   if (t < kMinTime) return NegativeOverflow(kDestType);
   return Timestamp(t);
+}
+
+StatusOr<Timestamp> MakeTimestamp(protobuf::Timestamp const& proto) {
+  return MakeTimestamp(absl::FromUnixSeconds(proto.seconds()) +
+                       absl::Nanoseconds(proto.nanos()));
 }
 
 std::ostream& operator<<(std::ostream& os, Timestamp ts) {
@@ -88,16 +106,6 @@ StatusOr<Timestamp> TimestampFromRFC3339(std::string const& s) {
 std::string TimestampToRFC3339(Timestamp ts) {
   auto const t = ts.get<absl::Time>().value();  // Cannot fail.
   return absl::FormatTime(kFormatSpec, t, absl::UTCTimeZone());
-}
-
-Timestamp TimestampFromProto(protobuf::Timestamp const& proto) {
-  auto const t = google::cloud::internal::ToAbslTime(proto);
-  return MakeTimestamp(t).value();  // Cannot fail.
-}
-
-protobuf::Timestamp TimestampToProto(Timestamp ts) {
-  auto const t = ts.get<absl::Time>().value();  // Cannot fail.
-  return google::cloud::internal::ToProtoTimestamp(t);
 }
 
 }  // namespace internal

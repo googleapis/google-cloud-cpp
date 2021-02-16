@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/time_utils.h"
 #include <chrono>
 
 namespace google {
@@ -362,10 +361,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     backup.set_database(p.database.FullName());
     // `p.expire_time` is deprecated and ignored here.
     *backup.mutable_expire_time() =
-        internal::TimestampToProto(p.expire_timestamp);
+        p.expire_timestamp.get<protobuf::Timestamp>().value();
     if (p.version_time) {
       *backup.mutable_version_time() =
-          internal::TimestampToProto(*p.version_time);
+          p.version_time->get<protobuf::Timestamp>().value();
     }
     if (p.encryption_key) {
       auto& encryption = *request.mutable_encryption_config();

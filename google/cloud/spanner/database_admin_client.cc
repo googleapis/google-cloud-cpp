@@ -179,7 +179,7 @@ StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.name());
   *request.mutable_backup()->mutable_expire_time() =
-      internal::TimestampToProto(expire_time);
+      expire_time.get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
 }
@@ -189,7 +189,7 @@ StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.FullName());
   *request.mutable_backup()->mutable_expire_time() =
-      internal::TimestampToProto(expire_time);
+      expire_time.get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
 }

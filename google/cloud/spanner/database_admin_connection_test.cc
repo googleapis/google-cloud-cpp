@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -804,10 +803,8 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
         EXPECT_EQ("test-backup", r.backup_id());
         auto const& backup = r.backup();
         EXPECT_EQ(dbase.FullName(), backup.database());
-        EXPECT_EQ(internal::TimestampFromProto(backup.expire_time()),
-                  expire_time);
-        EXPECT_EQ(internal::TimestampFromProto(backup.version_time()),
-                  version_time);
+        EXPECT_EQ(MakeTimestamp(backup.expire_time()).value(), expire_time);
+        EXPECT_EQ(MakeTimestamp(backup.version_time()).value(), version_time);
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -823,11 +820,14 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
         op.set_done(true);
         gcsa::Backup backup;
         backup.set_name("test-backup");
-        *backup.mutable_expire_time() = internal::TimestampToProto(expire_time);
+        *backup.mutable_expire_time() =
+            expire_time.get<protobuf::Timestamp>().value();
         *backup.mutable_version_time() =
-            internal::TimestampToProto(version_time);
-        *backup.mutable_create_time() =
-            google::cloud::internal::ToProtoTimestamp(absl::Now());
+            version_time.get<protobuf::Timestamp>().value();
+        *backup.mutable_create_time() = MakeTimestamp(absl::Now())
+                                            .value()
+                                            .get<protobuf::Timestamp>()
+                                            .value();
         op.mutable_response()->PackFrom(backup);
         return make_status_or(op);
       });
@@ -840,9 +840,9 @@ TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
   EXPECT_STATUS_OK(backup);
 
   EXPECT_EQ("test-backup", backup->name());
-  EXPECT_EQ(internal::TimestampFromProto(backup->expire_time()), expire_time);
-  EXPECT_EQ(internal::TimestampFromProto(backup->version_time()), version_time);
-  EXPECT_GT(internal::TimestampFromProto(backup->create_time()), version_time);
+  EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+  EXPECT_EQ(MakeTimestamp(backup->version_time()).value(), version_time);
+  EXPECT_GT(MakeTimestamp(backup->create_time()).value(), version_time);
 }
 
 /// @test Verify that using an encryption key works.

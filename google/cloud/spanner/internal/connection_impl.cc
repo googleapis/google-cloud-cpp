@@ -23,6 +23,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
+#include <google/protobuf/util/time_util.h>
 
 namespace google {
 namespace cloud {
@@ -940,8 +941,17 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     return status;
   }
   CommitResult r;
-  r.commit_timestamp =
-      internal::TimestampFromProto(response->commit_timestamp());
+  auto timestamp = MakeTimestamp(response->commit_timestamp());
+  if (!timestamp) {
+    // The response commit_timestamp is out of range, but the commit was
+    // successful so we cannot indicate an error. This should not happen,
+    // but if it does we set r.commit_timestamp to its maximal value.
+    protobuf::Timestamp proto;
+    proto.set_seconds(protobuf::util::TimeUtil::kTimestampMaxSeconds);
+    proto.set_nanos(999999999);
+    timestamp = MakeTimestamp(proto);
+  }
+  r.commit_timestamp = *std::move(timestamp);
   return r;
 }
 

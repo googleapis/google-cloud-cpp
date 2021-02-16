@@ -25,7 +25,6 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
@@ -40,7 +39,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::internal::ToAbslTime;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -139,7 +137,8 @@ TEST_F(BackupTest, BackupTest) {
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
   auto database = database_admin_client_.CreateDatabase(db).get();
   ASSERT_STATUS_OK(database);
-  auto create_time = ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
   auto backup_future =
@@ -176,10 +175,10 @@ TEST_F(BackupTest, BackupTest) {
   auto backup = backup_future.get();
   EXPECT_STATUS_OK(backup);
   if (backup) {
-    EXPECT_EQ(internal::TimestampFromProto(backup->expire_time()), expire_time);
+    EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
     // Verify that the version_time is the same as the creation_time.
-    EXPECT_EQ(internal::TimestampFromProto(backup->version_time()),
-              internal::TimestampFromProto(backup->create_time()));
+    EXPECT_EQ(MakeTimestamp(backup->version_time()).value(),
+              MakeTimestamp(backup->create_time()).value());
   }
 
   Backup backup_name(in, db.database_id());
@@ -226,7 +225,7 @@ TEST_F(BackupTest, BackupTest) {
   auto updated_backup =
       database_admin_client_.UpdateBackupExpireTime(*backup, new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
-  EXPECT_EQ(internal::TimestampFromProto(updated_backup->expire_time()),
+  EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
             new_expire_time);
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
@@ -258,7 +257,8 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
     return;
   }
   ASSERT_THAT(database, IsOk()) << database.status();
-  auto create_time = ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
   std::string const version_key = "version";
   std::vector<Timestamp> version_times;
@@ -296,12 +296,9 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
             .get();
     EXPECT_THAT(backup, IsOk()) << backup.status();
     if (backup) {
-      EXPECT_EQ(internal::TimestampFromProto(backup->expire_time()),
-                expire_time);
-      EXPECT_EQ(internal::TimestampFromProto(backup->version_time()),
-                version_time);
-      EXPECT_GT(internal::TimestampFromProto(backup->create_time()),
-                version_time);
+      EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+      EXPECT_EQ(MakeTimestamp(backup->version_time()).value(), version_time);
+      EXPECT_GT(MakeTimestamp(backup->create_time()).value(), version_time);
 
       Database rdb(in, spanner_testing::RandomDatabaseName(generator_));
       auto restored =
@@ -315,10 +312,10 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
             google::spanner::admin::database::v1::BACKUP) {
           auto const& backup_info = restore_info.backup_info();
           EXPECT_EQ(backup_info.backup(), backup->name());
-          EXPECT_EQ(internal::TimestampFromProto(backup_info.version_time()),
+          EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
                     version_time);
-          EXPECT_LT(internal::TimestampFromProto(backup_info.version_time()),
-                    internal::TimestampFromProto(backup_info.create_time()));
+          EXPECT_LT(MakeTimestamp(backup_info.version_time()).value(),
+                    MakeTimestamp(backup_info.create_time()).value());
           EXPECT_EQ(backup_info.source_database(), db.FullName());
         }
         auto database = database_admin_client_.GetDatabase(rdb);
@@ -330,7 +327,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
           if (restore_info.source_type() ==
               google::spanner::admin::database::v1::BACKUP) {
             auto const& backup_info = restore_info.backup_info();
-            EXPECT_EQ(internal::TimestampFromProto(backup_info.version_time()),
+            EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
                       version_time);
           }
         }
@@ -347,9 +344,8 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
             if (restore_info.source_type() ==
                 google::spanner::admin::database::v1::BACKUP) {
               auto const& backup_info = restore_info.backup_info();
-              EXPECT_EQ(
-                  internal::TimestampFromProto(backup_info.version_time()),
-                  version_time);
+              EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
+                        version_time);
             }
           }
         }
@@ -396,7 +392,8 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
   }
   ASSERT_THAT(database, IsOk()) << database.status();
 
-  auto create_time = ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time too far in the past (outside the version_retention_period).
   auto version_time = MakeTimestamp(create_time - absl::Hours(2)).value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
@@ -435,7 +432,8 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
   }
   ASSERT_THAT(database, IsOk()) << database.status();
 
-  auto create_time = ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   // version_time in the future.
   auto version_time = MakeTimestamp(create_time + absl::Hours(2)).value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
@@ -477,7 +475,8 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
           .get();
   ASSERT_STATUS_OK(database);
 
-  auto create_time = ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
   auto backup = database_admin_client_
                     .CreateBackup(db, db.database_id(), expire_time,
