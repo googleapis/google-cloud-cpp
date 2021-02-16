@@ -16,35 +16,35 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
-    database_admin_client.gcpcxx.pb.cc
-    database_admin_client.gcpcxx.pb.h
-    database_admin_connection.gcpcxx.pb.cc
-    database_admin_connection.gcpcxx.pb.h
-    database_admin_connection_idempotency_policy.gcpcxx.pb.cc
-    database_admin_connection_idempotency_policy.gcpcxx.pb.h
-    iam_credentials_client.gcpcxx.pb.cc
-    iam_credentials_client.gcpcxx.pb.h
-    iam_credentials_connection.gcpcxx.pb.cc
-    iam_credentials_connection.gcpcxx.pb.h
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
-    internal/database_admin_logging_decorator.gcpcxx.pb.cc
-    internal/database_admin_logging_decorator.gcpcxx.pb.h
-    internal/database_admin_metadata_decorator.gcpcxx.pb.cc
-    internal/database_admin_metadata_decorator.gcpcxx.pb.h
-    internal/database_admin_stub.gcpcxx.pb.cc
-    internal/database_admin_stub.gcpcxx.pb.h
-    internal/database_admin_stub_factory.gcpcxx.pb.cc
-    internal/database_admin_stub_factory.gcpcxx.pb.h
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.h
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
-    internal/iam_credentials_stub.gcpcxx.pb.cc
-    internal/iam_credentials_stub.gcpcxx.pb.h
-    internal/iam_credentials_stub_factory.gcpcxx.pb.cc
-    internal/iam_credentials_stub_factory.gcpcxx.pb.h
-    mocks/mock_database_admin_connection.gcpcxx.pb.h
+    golden_kitchen_sink_client.gcpcxx.pb.cc
+    golden_kitchen_sink_client.gcpcxx.pb.h
+    golden_kitchen_sink_connection.gcpcxx.pb.cc
+    golden_kitchen_sink_connection.gcpcxx.pb.h
+    golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
+    golden_thing_admin_client.gcpcxx.pb.cc
+    golden_thing_admin_client.gcpcxx.pb.h
+    golden_thing_admin_connection.gcpcxx.pb.cc
+    golden_thing_admin_connection.gcpcxx.pb.h
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
+    internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_stub.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_stub.gcpcxx.pb.h
+    internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.h
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_stub.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub.gcpcxx.pb.h
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.h
+    mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h
     retry_traits.h
     streaming.cc)
 
@@ -55,45 +55,45 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 
 # Create a library from the where the golden code was copied to.
 add_library(
-    google_cloud_cpp_generator_golden_lib # cmake-format: sort
-    database_admin_client.gcpcxx.pb.cc
-    database_admin_client.gcpcxx.pb.h
-    database_admin_connection.gcpcxx.pb.cc
-    database_admin_connection.gcpcxx.pb.h
-    database_admin_connection_idempotency_policy.gcpcxx.pb.cc
-    database_admin_connection_idempotency_policy.gcpcxx.pb.h
-    iam_credentials_client.gcpcxx.pb.cc
-    iam_credentials_client.gcpcxx.pb.h
-    iam_credentials_connection.gcpcxx.pb.cc
-    iam_credentials_connection.gcpcxx.pb.h
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
-    internal/database_admin_logging_decorator.gcpcxx.pb.cc
-    internal/database_admin_logging_decorator.gcpcxx.pb.h
-    internal/database_admin_metadata_decorator.gcpcxx.pb.cc
-    internal/database_admin_metadata_decorator.gcpcxx.pb.h
-    internal/database_admin_stub.gcpcxx.pb.cc
-    internal/database_admin_stub.gcpcxx.pb.h
-    internal/database_admin_stub_factory.gcpcxx.pb.cc
-    internal/database_admin_stub_factory.gcpcxx.pb.h
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.h
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
-    internal/iam_credentials_stub.gcpcxx.pb.cc
-    internal/iam_credentials_stub.gcpcxx.pb.h
-    internal/iam_credentials_stub_factory.gcpcxx.pb.cc
-    internal/iam_credentials_stub_factory.gcpcxx.pb.h
-    mocks/mock_database_admin_connection.gcpcxx.pb.h
+    google_cloud_cpp_generator_golden # cmake-format: sort
+    golden_kitchen_sink_client.gcpcxx.pb.cc
+    golden_kitchen_sink_client.gcpcxx.pb.h
+    golden_kitchen_sink_connection.gcpcxx.pb.cc
+    golden_kitchen_sink_connection.gcpcxx.pb.h
+    golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
+    golden_thing_admin_client.gcpcxx.pb.cc
+    golden_thing_admin_client.gcpcxx.pb.h
+    golden_thing_admin_connection.gcpcxx.pb.cc
+    golden_thing_admin_connection.gcpcxx.pb.h
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
+    internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_stub.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_stub.gcpcxx.pb.h
+    internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.h
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_stub.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub.gcpcxx.pb.h
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.h
+    mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h
     retry_traits.h
     streaming.cc)
 
 target_include_directories(
-    google_cloud_cpp_generator_golden_lib
+    google_cloud_cpp_generator_golden
     PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
            ${PROJECT_BINARY_DIR}/generator/integration_tests)
 target_link_libraries(
-    google_cloud_cpp_generator_golden_lib
+    google_cloud_cpp_generator_golden
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::common
@@ -101,8 +101,8 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc)
-google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden_lib)
-target_compile_options(google_cloud_cpp_generator_golden_lib
+google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden)
+target_compile_options(google_cloud_cpp_generator_golden
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 function (google_cloud_cpp_generator_define_golden_tests)
@@ -114,20 +114,20 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
-        tests/golden_client_test.cc
-        tests/golden_connection_test.cc
-        tests/golden_idempotency_policy_test.cc
-        tests/golden_logging_decorator_test.cc
-        tests/golden_metadata_decorator_test.cc
-        tests/golden_stub_factory_test.cc
-        tests/golden_stub_test.cc
-        tests/iam_credentials_client_test.cc
-        tests/iam_credentials_connection_test.cc
-        tests/iam_credentials_idempotency_policy_test.cc
-        tests/iam_credentials_logging_decorator_test.cc
-        tests/iam_credentials_metadata_decorator_test.cc
-        tests/iam_credentials_stub_factory_test.cc
-        tests/iam_credentials_stub_test.cc)
+        tests/golden_kitchen_sink_client_test.cc
+        tests/golden_kitchen_sink_connection_test.cc
+        tests/golden_kitchen_sink_idempotency_policy_test.cc
+        tests/golden_kitchen_sink_logging_decorator_test.cc
+        tests/golden_kitchen_sink_metadata_decorator_test.cc
+        tests/golden_kitchen_sink_stub_factory_test.cc
+        tests/golden_kitchen_sink_stub_test.cc
+        tests/golden_thing_admin_client_test.cc
+        tests/golden_thing_admin_connection_test.cc
+        tests/golden_thing_admin_idempotency_policy_test.cc
+        tests/golden_thing_admin_logging_decorator_test.cc
+        tests/golden_thing_admin_metadata_decorator_test.cc
+        tests/golden_thing_admin_stub_factory_test.cc
+        tests/golden_thing_admin_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -142,7 +142,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
             target "google_cloud_cpp_generator_golden" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_generator_golden_lib
+            PRIVATE google_cloud_cpp_generator_golden
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     GTest::gmock_main

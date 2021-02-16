@@ -573,7 +573,7 @@ Status ConnectionGenerator::GenerateCc() {
    {IsLongrunningMetadataTypeUsedAsResponse,
     "        google::cloud::internal::PollingLoopMetadataExtractor,\n",
     "        google::cloud::internal::PollingLoopResponseExtractor,\n"},
-   {"        golden_internal::DatabaseAdminStub>(std::move(operation));\n"
+   {"        golden_internal::$stub_class_name$>(std::move(operation));\n"
     "  }\n\n"}
                 // clang-format on
             },

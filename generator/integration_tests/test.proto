@@ -49,7 +49,7 @@ option (google.api.resource_definition) = {
 // list databases. It also enables updating the schema of pre-existing
 // databases. It can be also used to create, delete and list backups for a
 // database and to restore from an existing backup.
-service DatabaseAdmin {
+service GoldenThingAdmin {
   option (google.api.default_host) = "test.googleapis.com";
   option (google.api.oauth_scopes) =
       "https://www.googleapis.com/auth/cloud-platform,"
@@ -738,7 +738,7 @@ enum RestoreSourceType {
 // of the service account. Supported credential types include OAuth 2.0 access
 // tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
 // more.
-service IAMCredentials {
+service GoldenKitchenSink {
   option (google.api.default_host) = "iamcredentials.googleapis.com";
   option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
 
