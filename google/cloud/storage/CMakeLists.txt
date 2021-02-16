@@ -282,14 +282,10 @@ create_bazel_config(google_cloud_cpp_storage)
 
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
-    # We need to disable clang tidy for the generated CC files.
-    set(saved_tidy "${CMAKE_CXX_CLANG_TIDY}")
-    set(CMAKE_CXX_CLANG_TIDY "")
     google_cloud_cpp_proto_library(
         google_cloud_cpp_storage_internal_protos
         internal/grpc_resumable_upload_session_url.proto PROTO_PATH_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR}/internal LOCAL_INCLUDE)
-    set(CMAKE_CXX_CLANG_TIDY "${saved_tidy}")
     add_library(google-cloud-cpp::internal-storage-protos ALIAS
                 google_cloud_cpp_storage_internal_protos)
     set_target_properties(
