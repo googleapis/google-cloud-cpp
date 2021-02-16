@@ -107,6 +107,16 @@ class Options {
   }
 
   /**
+   * Gets a pointer to the option specified by `T`, else nullptr.
+   */
+  template <typename T>
+  T* get_pointer() {
+    auto it = m_.find(typeid(T));
+    if (it == m_.end()) return nullptr;
+    return absl::any_cast<T>(&it->second);
+  }
+
+  /**
    * Gets the option of type `T` if set, else a newly constructed default `T`.
    *
    * If the specified option `T` is not set, a new `T` will be constructed with

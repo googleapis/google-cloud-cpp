@@ -140,6 +140,24 @@ TEST(Options, BasicOperations) {
   EXPECT_EQ(opts.get<StringOption>()->value, "foo");
 }
 
+TEST(Options, GetPointer) {
+  Options opts{};
+  opts.set<IntOption>(42);
+
+  auto* p1 = opts.get_pointer<IntOption>();
+  EXPECT_EQ(p1->value, 42);
+
+  auto* p2 = opts.get_pointer<IntOption>();
+  EXPECT_EQ(p2->value, 42);
+
+  EXPECT_EQ(p1, p2);
+
+  p1->value = 123;
+  EXPECT_EQ(p1->value, 123);
+  EXPECT_EQ(p2->value, 123);
+  EXPECT_EQ(p1, p2);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
