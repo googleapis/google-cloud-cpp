@@ -120,7 +120,17 @@ class Options {
   }
 
   /**
-   * Gets a pointer to the option specified by `T`, else nullptr.
+   * Gets a const pointer to the option specified by `T`, else nullptr.
+   */
+  template <typename T>
+  T const* get_pointer() const {
+    auto it = m_.find(typeid(T));
+    if (it == m_.end()) return nullptr;
+    return absl::any_cast<T>(&it->second);
+  }
+
+  /**
+   * Gets a non-const pointer to the option specified by `T`, else nullptr.
    */
   template <typename T>
   T* get_pointer() {
