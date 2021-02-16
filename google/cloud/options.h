@@ -102,7 +102,7 @@ class Options {
   template <typename T>
   absl::optional<T> get() const {
     auto it = m_.find(typeid(T));
-    if (it == m_.end()) return {};
+    if (it == m_.end()) return absl::nullopt;
     return absl::any_cast<T>(it->second);
   }
 
@@ -116,7 +116,7 @@ class Options {
   T get_or(U&&... u) const {
     auto v = get<T>();
     if (v) return *v;
-    return {std::forward<U>(u)...};
+    return T{std::forward<U>(u)...};
   }
 
  private:

@@ -33,7 +33,14 @@ struct StringOption {
   std::string value;
 };
 
+// Let's test an option struct that has a default value. In this case, the
+// struct will no longer support aggregate initialization [1], so we'll need to
+// add back a 1-arg and default constructors.
+//
+// [1]: https://en.cppreference.com/w/cpp/language/aggregate_initialization
 struct DefaultedOption {
+  explicit DefaultedOption(int v) : value(v) {}
+  DefaultedOption() = default;
   int value = 123;
 };
 
@@ -58,6 +65,7 @@ TEST(Options, DefaultedOption) {
 
   opts.unset<DefaultedOption>();
   EXPECT_EQ(123, opts.get_or<DefaultedOption>().value);
+  EXPECT_EQ(42, opts.get_or<DefaultedOption>(42).value);
 }
 
 TEST(Options, MutateOption) {
