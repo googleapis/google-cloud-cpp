@@ -32,6 +32,17 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  */
 class TracingOptions {
  public:
+  TracingOptions() = default;
+  TracingOptions(TracingOptions const&) = default;
+  TracingOptions& operator=(TracingOptions const&) = default;
+  TracingOptions(TracingOptions&&) = default;
+  TracingOptions& operator=(TracingOptions&&) = default;
+
+  friend bool operator==(TracingOptions const& a, TracingOptions const& b);
+  friend bool operator!=(TracingOptions const& a, TracingOptions const& b) {
+    return !(a == b);
+  }
+
   /// Override the default options with values from @p `str`.
   TracingOptions& SetOptions(std::string const& str);
 
