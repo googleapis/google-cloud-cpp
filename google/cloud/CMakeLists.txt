@@ -366,6 +366,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         connection_options.h
         grpc_error_delegate.cc
         grpc_error_delegate.h
+        grpc_options.cc
+        grpc_options.h
         grpc_utils/async_operation.h
         grpc_utils/completion_queue.h
         grpc_utils/grpc_error_delegate.h
@@ -460,6 +462,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
+            grpc_options_test.cc
             internal/async_connection_ready_test.cc
             internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
