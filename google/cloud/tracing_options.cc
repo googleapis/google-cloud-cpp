@@ -42,6 +42,13 @@ absl::optional<std::int64_t> ParseInteger(std::string const& str) {
 
 }  // namespace
 
+bool operator==(TracingOptions const& a, TracingOptions const& b) {
+  return a.single_line_mode_ == b.single_line_mode_ &&
+         a.use_short_repeated_primitives_ == b.use_short_repeated_primitives_ &&
+         a.truncate_string_field_longer_than_ ==
+             b.truncate_string_field_longer_than_;
+}
+
 TracingOptions& TracingOptions::SetOptions(std::string const& str) {
   auto const beg = str.begin();
   auto const end = str.end();
