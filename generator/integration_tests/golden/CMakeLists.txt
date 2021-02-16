@@ -55,7 +55,7 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 
 # Create a library from the where the golden code was copied to.
 add_library(
-    google_cloud_cpp_generator_golden_lib # cmake-format: sort
+    google_cloud_cpp_generator_golden # cmake-format: sort
     golden_database_admin_client.gcpcxx.pb.cc
     golden_database_admin_client.gcpcxx.pb.h
     golden_database_admin_connection.gcpcxx.pb.cc
@@ -89,11 +89,11 @@ add_library(
     streaming.cc)
 
 target_include_directories(
-    google_cloud_cpp_generator_golden_lib
+    google_cloud_cpp_generator_golden
     PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR}
            ${PROJECT_BINARY_DIR}/generator/integration_tests)
 target_link_libraries(
-    google_cloud_cpp_generator_golden_lib
+    google_cloud_cpp_generator_golden
     PUBLIC google_cloud_cpp_generator_testing_grpc_lib
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::common
@@ -101,8 +101,8 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc)
-google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden_lib)
-target_compile_options(google_cloud_cpp_generator_golden_lib
+google_cloud_cpp_add_common_options(google_cloud_cpp_generator_golden)
+target_compile_options(google_cloud_cpp_generator_golden
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 function (google_cloud_cpp_generator_define_golden_tests)
@@ -142,7 +142,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
             target "google_cloud_cpp_generator_golden" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_generator_golden_lib
+            PRIVATE google_cloud_cpp_generator_golden
                     google_cloud_cpp_testing
                     google_cloud_cpp_testing_grpc
                     GTest::gmock_main
