@@ -18,6 +18,11 @@ cmake_minimum_required(VERSION 3.5)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
+
+# Enable support for SelectMSVCRuntime
+if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
+    cmake_policy(SET CMP0091 NEW)
+endif ()
 project(
     google-cloud-cpp
     VERSION 1.25.0
@@ -39,6 +44,9 @@ if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
         WARNING
             "GOOGLE_CLOUD_CPP_CXX_STANDARD is retired, use CMAKE_CXX_STANDARD")
 endif ()
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include(SelectMSVCRuntime)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
@@ -125,7 +133,6 @@ option(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 include(CMakeDependentOption)
 
