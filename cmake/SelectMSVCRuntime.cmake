@@ -27,13 +27,33 @@
 # runtime is needed. In the future we may need to use a more complex expression
 # to determine this, but this is a good start.
 #
-if (MSVC AND VCPKG_TARGET_TRIPLET MATCHES "-static$")
-    foreach (flag_var
-             CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
-             CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-        if (${flag_var} MATCHES "/MD")
-            string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+
+if (MSVC)
+    # TODO(#5852) - if we require CMake >= 3.15 we can remove this conditional
+    # and the hacks below.
+    if ((${CMAKE_VERSION} VERSION_GREATER 3.15) OR (${CMAKE_VERSION}
+                                                    VERSION_EQUAL 3.14))
+        if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
+            set(CMAKE_MSVC_RUNTIME_LIBRARY
+                "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+        else ()
+            set(CMAKE_MSVC_RUNTIME_LIBRARY
+                "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
         endif ()
-    endforeach (flag_var)
-    unset(flag_var)
+    elseif (VCPKG_TARGET_TRIPLET MATCHES "-static$")
+        message(
+            WARNING
+                [===[
+CMake is too old to use CMAKE_MSVC_RUNTIME_LIBRARY.
+Attempting to set CMAKE_CXX_FLAGS* to get consistent CRT versions.
+]===])
+        foreach (flag_var
+                 CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
+                 CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+            if (${flag_var} MATCHES "/MD")
+                string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+            endif ()
+        endforeach (flag_var)
+        unset(flag_var)
+    endif ()
 endif ()
