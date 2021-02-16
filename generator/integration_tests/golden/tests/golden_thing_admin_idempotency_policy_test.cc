@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_database_admin_connection_idempotency_policy.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -28,12 +28,10 @@ namespace gtab = ::google::test::admin::database::v1;
 class GoldenIdempotencyPolicyTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    policy_ =
-        golden::MakeDefaultGoldenDatabaseAdminConnectionIdempotencyPolicy();
+    policy_ = golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy();
   }
 
-  std::unique_ptr<golden::GoldenDatabaseAdminConnectionIdempotencyPolicy>
-      policy_;
+  std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> policy_;
 };
 
 TEST_F(GoldenIdempotencyPolicyTest, ListDatabases) {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/golden_database_admin_stub.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -25,11 +25,10 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
 namespace {
 
-class MockGrpcGoldenDatabaseAdminStub
-    : public ::google::test::admin::database::v1::GoldenDatabaseAdmin::
-          StubInterface {
+class MockGrpcGoldenThingAdminStub : public ::google::test::admin::database::
+                                         v1::GoldenThingAdmin::StubInterface {
  public:
-  ~MockGrpcGoldenDatabaseAdminStub() override = default;
+  ~MockGrpcGoldenThingAdminStub() override = default;
   MOCK_METHOD(
       ::grpc::Status, ListDatabases,
       (::grpc::ClientContext * context,
@@ -513,8 +512,8 @@ class MockLongrunningOperationsStub
 class GoldenStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    grpc_stub_ = std::unique_ptr<MockGrpcGoldenDatabaseAdminStub>(
-        new MockGrpcGoldenDatabaseAdminStub());
+    grpc_stub_ = std::unique_ptr<MockGrpcGoldenThingAdminStub>(
+        new MockGrpcGoldenThingAdminStub());
     longrunning_stub_ = std::unique_ptr<MockLongrunningOperationsStub>(
         new MockLongrunningOperationsStub());
   }
@@ -527,7 +526,7 @@ class GoldenStubTest : public ::testing::Test {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::unique_ptr<MockGrpcGoldenDatabaseAdminStub> grpc_stub_;
+  std::unique_ptr<MockGrpcGoldenThingAdminStub> grpc_stub_;
   std::unique_ptr<MockLongrunningOperationsStub> longrunning_stub_;
 };
 
@@ -539,8 +538,8 @@ TEST_F(GoldenStubTest, ListDatabases) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
 
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.ListDatabases(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.ListDatabases(context, request);
@@ -554,8 +553,8 @@ TEST_F(GoldenStubTest, CreateDatabase) {
   EXPECT_CALL(*grpc_stub_, CreateDatabase(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.CreateDatabase(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.CreateDatabase(context, request);
@@ -569,8 +568,8 @@ TEST_F(GoldenStubTest, GetDatabase) {
   EXPECT_CALL(*grpc_stub_, GetDatabase(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.GetDatabase(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GetDatabase(context, request);
@@ -584,8 +583,8 @@ TEST_F(GoldenStubTest, UpdateDatabaseDdl) {
   EXPECT_CALL(*grpc_stub_, UpdateDatabaseDdl(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.UpdateDatabaseDdl(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.UpdateDatabaseDdl(context, request);
@@ -599,8 +598,8 @@ TEST_F(GoldenStubTest, DropDatabase) {
   EXPECT_CALL(*grpc_stub_, DropDatabase(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.DropDatabase(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.DropDatabase(context, request);
@@ -614,8 +613,8 @@ TEST_F(GoldenStubTest, GetDatabaseDdl) {
   EXPECT_CALL(*grpc_stub_, GetDatabaseDdl(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.GetDatabaseDdl(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GetDatabaseDdl(context, request);
@@ -629,8 +628,8 @@ TEST_F(GoldenStubTest, SetIamPolicy) {
   EXPECT_CALL(*grpc_stub_, SetIamPolicy(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.SetIamPolicy(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.SetIamPolicy(context, request);
@@ -644,8 +643,8 @@ TEST_F(GoldenStubTest, GetIamPolicy) {
   EXPECT_CALL(*grpc_stub_, GetIamPolicy(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.GetIamPolicy(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GetIamPolicy(context, request);
@@ -659,8 +658,8 @@ TEST_F(GoldenStubTest, TestIamPermissions) {
   EXPECT_CALL(*grpc_stub_, TestIamPermissions(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.TestIamPermissions(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.TestIamPermissions(context, request);
@@ -674,8 +673,8 @@ TEST_F(GoldenStubTest, CreateBackup) {
   EXPECT_CALL(*grpc_stub_, CreateBackup(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.CreateBackup(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.CreateBackup(context, request);
@@ -689,8 +688,8 @@ TEST_F(GoldenStubTest, GetBackup) {
   EXPECT_CALL(*grpc_stub_, GetBackup(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.GetBackup(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GetBackup(context, request);
@@ -704,8 +703,8 @@ TEST_F(GoldenStubTest, UpdateBackup) {
   EXPECT_CALL(*grpc_stub_, UpdateBackup(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.UpdateBackup(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.UpdateBackup(context, request);
@@ -719,8 +718,8 @@ TEST_F(GoldenStubTest, DeleteBackup) {
   EXPECT_CALL(*grpc_stub_, DeleteBackup(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.DeleteBackup(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.DeleteBackup(context, request);
@@ -734,8 +733,8 @@ TEST_F(GoldenStubTest, ListBackups) {
   EXPECT_CALL(*grpc_stub_, ListBackups(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.ListBackups(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.ListBackups(context, request);
@@ -749,8 +748,8 @@ TEST_F(GoldenStubTest, RestoreDatabase) {
   EXPECT_CALL(*grpc_stub_, RestoreDatabase(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.RestoreDatabase(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.RestoreDatabase(context, request);
@@ -764,8 +763,8 @@ TEST_F(GoldenStubTest, ListDatabaseOperations) {
   EXPECT_CALL(*grpc_stub_, ListDatabaseOperations(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.ListDatabaseOperations(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.ListDatabaseOperations(context, request);
@@ -779,8 +778,8 @@ TEST_F(GoldenStubTest, ListBackupOperations) {
   EXPECT_CALL(*grpc_stub_, ListBackupOperations(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.ListBackupOperations(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.ListBackupOperations(context, request);
@@ -794,8 +793,8 @@ TEST_F(GoldenStubTest, GetOperation) {
   EXPECT_CALL(*longrunning_stub_, GetOperation(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.GetOperation(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.GetOperation(context, request);
@@ -809,8 +808,8 @@ TEST_F(GoldenStubTest, CancelOperation) {
   EXPECT_CALL(*longrunning_stub_, CancelOperation(&context, _, _))
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
-  DefaultGoldenDatabaseAdminStub stub(std::move(grpc_stub_),
-                                      std::move(longrunning_stub_));
+  DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
+                                   std::move(longrunning_stub_));
   auto success = stub.CancelOperation(context, request);
   EXPECT_TRUE(success.ok());
   auto failure = stub.CancelOperation(context, request);

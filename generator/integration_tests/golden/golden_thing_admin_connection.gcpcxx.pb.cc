@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "generator/integration_tests/golden/golden_database_admin_connection.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/internal/golden_database_admin_stub_factory.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -29,19 +29,19 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
 
-std::string GoldenDatabaseAdminConnectionOptionsTraits::default_endpoint() {
+std::string GoldenThingAdminConnectionOptionsTraits::default_endpoint() {
   return "test.googleapis.com";
 }
 
-std::string GoldenDatabaseAdminConnectionOptionsTraits::user_agent_prefix() {
+std::string GoldenThingAdminConnectionOptionsTraits::user_agent_prefix() {
   return google::cloud::internal::UserAgentPrefix();
 }
 
-int GoldenDatabaseAdminConnectionOptionsTraits::default_num_channels() { return 4; }
+int GoldenThingAdminConnectionOptionsTraits::default_num_channels() { return 4; }
 
-GoldenDatabaseAdminConnection::~GoldenDatabaseAdminConnection() = default;
+GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
-StreamRange<::google::test::admin::database::v1::Database> GoldenDatabaseAdminConnection::ListDatabases(
+StreamRange<::google::test::admin::database::v1::Database> GoldenThingAdminConnection::ListDatabases(
     ::google::test::admin::database::v1::ListDatabasesRequest request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<
     ::google::test::admin::database::v1::Database>>(
@@ -55,7 +55,7 @@ StreamRange<::google::test::admin::database::v1::Database> GoldenDatabaseAdminCo
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminConnection::CreateDatabase(
+GoldenThingAdminConnection::CreateDatabase(
     ::google::test::admin::database::v1::CreateDatabaseRequest const&) {
   return google::cloud::make_ready_future<
     StatusOr<::google::test::admin::database::v1::Database>>(
@@ -63,13 +63,13 @@ GoldenDatabaseAdminConnection::CreateDatabase(
 }
 
 StatusOr<::google::test::admin::database::v1::Database>
-GoldenDatabaseAdminConnection::GetDatabase(
+GoldenThingAdminConnection::GetDatabase(
     ::google::test::admin::database::v1::GetDatabaseRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenDatabaseAdminConnection::UpdateDatabaseDdl(
+GoldenThingAdminConnection::UpdateDatabaseDdl(
     ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) {
   return google::cloud::make_ready_future<
     StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>(
@@ -77,37 +77,37 @@ GoldenDatabaseAdminConnection::UpdateDatabaseDdl(
 }
 
 Status
-GoldenDatabaseAdminConnection::DropDatabase(
+GoldenThingAdminConnection::DropDatabase(
     ::google::test::admin::database::v1::DropDatabaseRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
-GoldenDatabaseAdminConnection::GetDatabaseDdl(
+GoldenThingAdminConnection::GetDatabaseDdl(
     ::google::test::admin::database::v1::GetDatabaseDdlRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminConnection::SetIamPolicy(
+GoldenThingAdminConnection::SetIamPolicy(
     ::google::iam::v1::SetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminConnection::GetIamPolicy(
+GoldenThingAdminConnection::GetIamPolicy(
     ::google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-GoldenDatabaseAdminConnection::TestIamPermissions(
+GoldenThingAdminConnection::TestIamPermissions(
     ::google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<::google::test::admin::database::v1::Backup>>
-GoldenDatabaseAdminConnection::CreateBackup(
+GoldenThingAdminConnection::CreateBackup(
     ::google::test::admin::database::v1::CreateBackupRequest const&) {
   return google::cloud::make_ready_future<
     StatusOr<::google::test::admin::database::v1::Backup>>(
@@ -115,24 +115,24 @@ GoldenDatabaseAdminConnection::CreateBackup(
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminConnection::GetBackup(
+GoldenThingAdminConnection::GetBackup(
     ::google::test::admin::database::v1::GetBackupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminConnection::UpdateBackup(
+GoldenThingAdminConnection::UpdateBackup(
     ::google::test::admin::database::v1::UpdateBackupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 Status
-GoldenDatabaseAdminConnection::DeleteBackup(
+GoldenThingAdminConnection::DeleteBackup(
     ::google::test::admin::database::v1::DeleteBackupRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<::google::test::admin::database::v1::Backup> GoldenDatabaseAdminConnection::ListBackups(
+StreamRange<::google::test::admin::database::v1::Backup> GoldenThingAdminConnection::ListBackups(
     ::google::test::admin::database::v1::ListBackupsRequest request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<
     ::google::test::admin::database::v1::Backup>>(
@@ -146,14 +146,14 @@ StreamRange<::google::test::admin::database::v1::Backup> GoldenDatabaseAdminConn
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminConnection::RestoreDatabase(
+GoldenThingAdminConnection::RestoreDatabase(
     ::google::test::admin::database::v1::RestoreDatabaseRequest const&) {
   return google::cloud::make_ready_future<
     StatusOr<::google::test::admin::database::v1::Database>>(
     Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StreamRange<::google::longrunning::Operation> GoldenDatabaseAdminConnection::ListDatabaseOperations(
+StreamRange<::google::longrunning::Operation> GoldenThingAdminConnection::ListDatabaseOperations(
     ::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<
     ::google::longrunning::Operation>>(
@@ -166,7 +166,7 @@ StreamRange<::google::longrunning::Operation> GoldenDatabaseAdminConnection::Lis
     });
 }
 
-StreamRange<::google::longrunning::Operation> GoldenDatabaseAdminConnection::ListBackupOperations(
+StreamRange<::google::longrunning::Operation> GoldenThingAdminConnection::ListBackupOperations(
     ::google::test::admin::database::v1::ListBackupOperationsRequest request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<
     ::google::longrunning::Operation>>(
@@ -180,8 +180,8 @@ StreamRange<::google::longrunning::Operation> GoldenDatabaseAdminConnection::Lis
 }
 
 namespace {
-std::unique_ptr<GoldenDatabaseAdminRetryPolicy> DefaultRetryPolicy() {
-  return GoldenDatabaseAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
+std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultRetryPolicy() {
+  return GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
 }
 
 std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
@@ -193,44 +193,44 @@ std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
 
 std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return GenericPollingPolicy<GoldenDatabaseAdminLimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
-             GoldenDatabaseAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)),
+  return GenericPollingPolicy<GoldenThingAdminLimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
+             GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)),
              ExponentialBackoffPolicy(std::chrono::seconds(10),
                                       std::chrono::minutes(5), kBackoffScaling))
       .clone();
 }
 
-class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
+class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
  public:
-  explicit GoldenDatabaseAdminConnectionImpl(
-      std::shared_ptr<golden_internal::GoldenDatabaseAdminStub> stub,
-      std::unique_ptr<GoldenDatabaseAdminRetryPolicy> retry_policy,
+  explicit GoldenThingAdminConnectionImpl(
+      std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
+      std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::unique_ptr<PollingPolicy> polling_policy,
-      std::unique_ptr<GoldenDatabaseAdminConnectionIdempotencyPolicy> idempotency_policy)
+      std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy)
       : stub_(std::move(stub)),
         retry_policy_prototype_(std::move(retry_policy)),
         backoff_policy_prototype_(std::move(backoff_policy)),
         polling_policy_prototype_(std::move(polling_policy)),
         idempotency_policy_(std::move(idempotency_policy)) {}
 
-  explicit GoldenDatabaseAdminConnectionImpl(
-      std::shared_ptr<golden_internal::GoldenDatabaseAdminStub> stub)
-      : GoldenDatabaseAdminConnectionImpl(
+  explicit GoldenThingAdminConnectionImpl(
+      std::shared_ptr<golden_internal::GoldenThingAdminStub> stub)
+      : GoldenThingAdminConnectionImpl(
           std::move(stub),
           DefaultRetryPolicy(),
           DefaultBackoffPolicy(),
           DefaultPollingPolicy(),
-          MakeDefaultGoldenDatabaseAdminConnectionIdempotencyPolicy()) {}
+          MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy()) {}
 
-  ~GoldenDatabaseAdminConnectionImpl() override = default;
+  ~GoldenThingAdminConnectionImpl() override = default;
 
   StreamRange<::google::test::admin::database::v1::Database> ListDatabases(
       ::google::test::admin::database::v1::ListDatabasesRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<GoldenDatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<GoldenThingAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabases(request);
@@ -435,7 +435,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<GoldenDatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<GoldenThingAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackups(request);
@@ -485,7 +485,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<GoldenDatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<GoldenThingAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListDatabaseOperations(request);
@@ -516,7 +516,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
-        std::shared_ptr<GoldenDatabaseAdminRetryPolicy const>(retry_policy_prototype_->clone());
+        std::shared_ptr<GoldenThingAdminRetryPolicy const>(retry_policy_prototype_->clone());
     auto backoff = std::shared_ptr<BackoffPolicy const>(
         backoff_policy_prototype_->clone());
     auto idempotency = idempotency_policy_->ListBackupOperations(request);
@@ -589,7 +589,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     return AwaitLongrunningOperation<
         ::google::test::admin::database::v1::Database,
         google::cloud::internal::PollingLoopResponseExtractor,
-        golden_internal::GoldenDatabaseAdminStub>(std::move(operation));
+        golden_internal::GoldenThingAdminStub>(std::move(operation));
   }
 
   future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -598,7 +598,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     return AwaitLongrunningOperation<
         ::google::test::admin::database::v1::UpdateDatabaseDdlMetadata,
         google::cloud::internal::PollingLoopMetadataExtractor,
-        golden_internal::GoldenDatabaseAdminStub>(std::move(operation));
+        golden_internal::GoldenThingAdminStub>(std::move(operation));
   }
 
   future<StatusOr<::google::test::admin::database::v1::Backup>>
@@ -607,7 +607,7 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     return AwaitLongrunningOperation<
         ::google::test::admin::database::v1::Backup,
         google::cloud::internal::PollingLoopResponseExtractor,
-        golden_internal::GoldenDatabaseAdminStub>(std::move(operation));
+        golden_internal::GoldenThingAdminStub>(std::move(operation));
   }
 
   future<StatusOr<::google::test::admin::database::v1::Database>>
@@ -616,42 +616,42 @@ class GoldenDatabaseAdminConnectionImpl : public GoldenDatabaseAdminConnection {
     return AwaitLongrunningOperation<
         ::google::test::admin::database::v1::Database,
         google::cloud::internal::PollingLoopResponseExtractor,
-        golden_internal::GoldenDatabaseAdminStub>(std::move(operation));
+        golden_internal::GoldenThingAdminStub>(std::move(operation));
   }
 
-  std::shared_ptr<golden_internal::GoldenDatabaseAdminStub> stub_;
-  std::unique_ptr<GoldenDatabaseAdminRetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<golden_internal::GoldenThingAdminStub> stub_;
+  std::unique_ptr<GoldenThingAdminRetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
-  std::unique_ptr<GoldenDatabaseAdminConnectionIdempotencyPolicy> idempotency_policy_;
+  std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy_;
 };
 }  // namespace
 
-std::shared_ptr<GoldenDatabaseAdminConnection> MakeGoldenDatabaseAdminConnection(
-    GoldenDatabaseAdminConnectionOptions const& options) {
-  return std::make_shared<GoldenDatabaseAdminConnectionImpl>(
-      golden_internal::CreateDefaultGoldenDatabaseAdminStub(options));
+std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
+    GoldenThingAdminConnectionOptions const& options) {
+  return std::make_shared<GoldenThingAdminConnectionImpl>(
+      golden_internal::CreateDefaultGoldenThingAdminStub(options));
 }
 
-std::shared_ptr<GoldenDatabaseAdminConnection> MakeGoldenDatabaseAdminConnection(
-    GoldenDatabaseAdminConnectionOptions const& options,
-    std::unique_ptr<GoldenDatabaseAdminRetryPolicy> retry_policy,
+std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
+    GoldenThingAdminConnectionOptions const& options,
+    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenDatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {
-  return std::make_shared<GoldenDatabaseAdminConnectionImpl>(
-      golden_internal::CreateDefaultGoldenDatabaseAdminStub(options),
+    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy) {
+  return std::make_shared<GoldenThingAdminConnectionImpl>(
+      golden_internal::CreateDefaultGoldenThingAdminStub(options),
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy), std::move(idempotency_policy));
 }
 
-std::shared_ptr<GoldenDatabaseAdminConnection> MakeGoldenDatabaseAdminConnection(
-    std::shared_ptr<golden_internal::GoldenDatabaseAdminStub> stub,
-    std::unique_ptr<GoldenDatabaseAdminRetryPolicy> retry_policy,
+std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
+    std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
+    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenDatabaseAdminConnectionIdempotencyPolicy> idempotency_policy) {
-  return std::make_shared<GoldenDatabaseAdminConnectionImpl>(
+    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy) {
+  return std::make_shared<GoldenThingAdminConnectionImpl>(
       std::move(stub), std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy), std::move(idempotency_policy));
 }

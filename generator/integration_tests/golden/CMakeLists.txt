@@ -16,26 +16,18 @@
 
 set(google_cloud_cpp_generator_golden_files
     # cmake-format: sort
-    golden_database_admin_client.gcpcxx.pb.cc
-    golden_database_admin_client.gcpcxx.pb.h
-    golden_database_admin_connection.gcpcxx.pb.cc
-    golden_database_admin_connection.gcpcxx.pb.h
-    golden_database_admin_connection_idempotency_policy.gcpcxx.pb.cc
-    golden_database_admin_connection_idempotency_policy.gcpcxx.pb.h
     golden_kitchen_sink_client.gcpcxx.pb.cc
     golden_kitchen_sink_client.gcpcxx.pb.h
     golden_kitchen_sink_connection.gcpcxx.pb.cc
     golden_kitchen_sink_connection.gcpcxx.pb.h
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
-    internal/golden_database_admin_logging_decorator.gcpcxx.pb.cc
-    internal/golden_database_admin_logging_decorator.gcpcxx.pb.h
-    internal/golden_database_admin_metadata_decorator.gcpcxx.pb.cc
-    internal/golden_database_admin_metadata_decorator.gcpcxx.pb.h
-    internal/golden_database_admin_stub.gcpcxx.pb.cc
-    internal/golden_database_admin_stub.gcpcxx.pb.h
-    internal/golden_database_admin_stub_factory.gcpcxx.pb.cc
-    internal/golden_database_admin_stub_factory.gcpcxx.pb.h
+    golden_thing_admin_client.gcpcxx.pb.cc
+    golden_thing_admin_client.gcpcxx.pb.h
+    golden_thing_admin_connection.gcpcxx.pb.cc
+    golden_thing_admin_connection.gcpcxx.pb.h
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
@@ -44,7 +36,15 @@ set(google_cloud_cpp_generator_golden_files
     internal/golden_kitchen_sink_stub.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.h
-    mocks/mock_golden_database_admin_connection.gcpcxx.pb.h
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_stub.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub.gcpcxx.pb.h
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.h
+    mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h
     retry_traits.h
     streaming.cc)
 
@@ -56,26 +56,18 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_files.bzl"
 # Create a library from the where the golden code was copied to.
 add_library(
     google_cloud_cpp_generator_golden # cmake-format: sort
-    golden_database_admin_client.gcpcxx.pb.cc
-    golden_database_admin_client.gcpcxx.pb.h
-    golden_database_admin_connection.gcpcxx.pb.cc
-    golden_database_admin_connection.gcpcxx.pb.h
-    golden_database_admin_connection_idempotency_policy.gcpcxx.pb.cc
-    golden_database_admin_connection_idempotency_policy.gcpcxx.pb.h
     golden_kitchen_sink_client.gcpcxx.pb.cc
     golden_kitchen_sink_client.gcpcxx.pb.h
     golden_kitchen_sink_connection.gcpcxx.pb.cc
     golden_kitchen_sink_connection.gcpcxx.pb.h
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
-    internal/golden_database_admin_logging_decorator.gcpcxx.pb.cc
-    internal/golden_database_admin_logging_decorator.gcpcxx.pb.h
-    internal/golden_database_admin_metadata_decorator.gcpcxx.pb.cc
-    internal/golden_database_admin_metadata_decorator.gcpcxx.pb.h
-    internal/golden_database_admin_stub.gcpcxx.pb.cc
-    internal/golden_database_admin_stub.gcpcxx.pb.h
-    internal/golden_database_admin_stub_factory.gcpcxx.pb.cc
-    internal/golden_database_admin_stub_factory.gcpcxx.pb.h
+    golden_thing_admin_client.gcpcxx.pb.cc
+    golden_thing_admin_client.gcpcxx.pb.h
+    golden_thing_admin_connection.gcpcxx.pb.cc
+    golden_thing_admin_connection.gcpcxx.pb.h
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
+    golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
@@ -84,7 +76,15 @@ add_library(
     internal/golden_kitchen_sink_stub.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.h
-    mocks/mock_golden_database_admin_connection.gcpcxx.pb.h
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
+    internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_stub.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub.gcpcxx.pb.h
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
+    internal/golden_thing_admin_stub_factory.gcpcxx.pb.h
+    mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h
     retry_traits.h
     streaming.cc)
 
@@ -114,20 +114,20 @@ function (google_cloud_cpp_generator_define_golden_tests)
 
     set(google_cloud_cpp_generator_golden_tests
         # cmake-format: sort
-        tests/golden_database_admin_client_test.cc
-        tests/golden_database_admin_connection_test.cc
-        tests/golden_database_admin_idempotency_policy_test.cc
-        tests/golden_database_admin_logging_decorator_test.cc
-        tests/golden_database_admin_metadata_decorator_test.cc
-        tests/golden_database_admin_stub_factory_test.cc
-        tests/golden_database_admin_stub_test.cc
         tests/golden_kitchen_sink_client_test.cc
         tests/golden_kitchen_sink_connection_test.cc
         tests/golden_kitchen_sink_idempotency_policy_test.cc
         tests/golden_kitchen_sink_logging_decorator_test.cc
         tests/golden_kitchen_sink_metadata_decorator_test.cc
         tests/golden_kitchen_sink_stub_factory_test.cc
-        tests/golden_kitchen_sink_stub_test.cc)
+        tests/golden_kitchen_sink_stub_test.cc
+        tests/golden_thing_admin_client_test.cc
+        tests/golden_thing_admin_connection_test.cc
+        tests/golden_thing_admin_idempotency_policy_test.cc
+        tests/golden_thing_admin_logging_decorator_test.cc
+        tests/golden_thing_admin_metadata_decorator_test.cc
+        tests/golden_thing_admin_stub_factory_test.cc
+        tests/golden_thing_admin_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

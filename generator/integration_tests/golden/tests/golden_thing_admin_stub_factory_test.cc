@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
-#include "generator/integration_tests/golden/internal/golden_database_admin_stub_factory.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -50,15 +50,15 @@ class GoldenStubFactoryTest : public ::testing::Test {
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
-  auto default_stub = CreateDefaultGoldenDatabaseAdminStub({});
+  auto default_stub = CreateDefaultGoldenThingAdminStub({});
   auto const log_lines = ClearLogLines();
   EXPECT_EQ(log_lines.size(), 0);
 }
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
-  golden::GoldenDatabaseAdminConnectionOptions options;
+  golden::GoldenThingAdminConnectionOptions options;
   options.enable_tracing("rpc");
-  auto default_stub = CreateDefaultGoldenDatabaseAdminStub(options);
+  auto default_stub = CreateDefaultGoldenThingAdminStub(options);
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }

@@ -17,8 +17,8 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_database_admin_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_database_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>
@@ -35,18 +35,16 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
-TEST(GoldenDatabaseAdminClientTest, CopyMoveEquality) {
-  auto conn1 =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
-  auto conn2 =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, CopyMoveEquality) {
+  auto conn1 = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto conn2 = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
 
-  GoldenDatabaseAdminClient c1(conn1);
-  GoldenDatabaseAdminClient c2(conn2);
+  GoldenThingAdminClient c1(conn1);
+  GoldenThingAdminClient c2(conn2);
   EXPECT_NE(c1, c2);
 
   // Copy construction
-  GoldenDatabaseAdminClient c3 = c1;
+  GoldenThingAdminClient c3 = c1;
   EXPECT_EQ(c3, c1);
   EXPECT_NE(c3, c2);
 
@@ -55,7 +53,7 @@ TEST(GoldenDatabaseAdminClientTest, CopyMoveEquality) {
   EXPECT_EQ(c3, c2);
 
   // Move construction
-  GoldenDatabaseAdminClient c4 = std::move(c3);
+  GoldenThingAdminClient c4 = std::move(c3);
   EXPECT_EQ(c4, c2);
 
   // Move assignment
@@ -63,9 +61,8 @@ TEST(GoldenDatabaseAdminClientTest, CopyMoveEquality) {
   EXPECT_EQ(c1, c2);
 }
 
-TEST(GoldenDatabaseAdminClientTest, ListDatabases) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, ListDatabases) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabases)
@@ -90,7 +87,7 @@ TEST(GoldenDatabaseAdminClientTest, ListDatabases) {
             });
       });
 
-  GoldenDatabaseAdminClient client(mock);
+  GoldenThingAdminClient client(mock);
   auto range = client.ListDatabases(expected_instance);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -103,9 +100,8 @@ TEST(GoldenDatabaseAdminClientTest, ListDatabases) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenDatabaseAdminClientTest, CreateDatabase) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, CreateDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -125,7 +121,7 @@ TEST(GoldenDatabaseAdminClientTest, CreateDatabase) {
                 ::google::test::admin::database::v1::Database::CREATING);
             return make_ready_future(make_status_or(database));
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto fut =
       client.CreateDatabase(expected_instance, "create database test-db");
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -146,9 +142,8 @@ TEST(GoldenDatabaseAdminClientTest, CreateDatabase) {
             db->state());
 }
 
-TEST(GoldenDatabaseAdminClientTest, GetDatabase) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, GetDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabase)
@@ -162,7 +157,7 @@ TEST(GoldenDatabaseAdminClientTest, GetDatabase) {
             response.set_name(request.name());
             return response;
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.GetDatabase(expected_database);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(response->name(), expected_database);
@@ -173,9 +168,8 @@ TEST(GoldenDatabaseAdminClientTest, GetDatabase) {
   EXPECT_EQ(response->name(), expected_database);
 }
 
-TEST(GoldenDatabaseAdminClientTest, UpdateDatabase) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, UpdateDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
@@ -189,7 +183,7 @@ TEST(GoldenDatabaseAdminClientTest, UpdateDatabase) {
         metadata.add_statements("-- test only: NOT SQL");
         return make_ready_future(make_status_or(metadata));
       });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto fut =
       client.UpdateDatabaseDdl(expected_database, {"-- test only: NOT SQL"});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -206,9 +200,8 @@ TEST(GoldenDatabaseAdminClientTest, UpdateDatabase) {
   EXPECT_THAT(db->statements(), ElementsAre("-- test only: NOT SQL"));
 }
 
-TEST(GoldenDatabaseAdminClientTest, DropDatabase) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, DropDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, DropDatabase)
@@ -220,7 +213,7 @@ TEST(GoldenDatabaseAdminClientTest, DropDatabase) {
             EXPECT_EQ(expected_database, request.database());
             return Status();
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.DropDatabase(expected_database);
   EXPECT_STATUS_OK(response);
   ::google::test::admin::database::v1::DropDatabaseRequest request;
@@ -229,9 +222,8 @@ TEST(GoldenDatabaseAdminClientTest, DropDatabase) {
   EXPECT_STATUS_OK(response);
 }
 
-TEST(GoldenDatabaseAdminClientTest, GetDatabaseDdl) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, GetDatabaseDdl) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, GetDatabaseDdl)
@@ -243,7 +235,7 @@ TEST(GoldenDatabaseAdminClientTest, GetDatabaseDdl) {
         response.add_statements("CREATE DATABASE test-db");
         return response;
       });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.GetDatabaseDdl(expected_database);
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->statements_size());
@@ -256,9 +248,8 @@ TEST(GoldenDatabaseAdminClientTest, GetDatabaseDdl) {
   ASSERT_EQ("CREATE DATABASE test-db", response->statements(0));
 }
 
-TEST(GoldenDatabaseAdminClientTest, SetIamPolicy) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, SetIamPolicy) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, SetIamPolicy)
@@ -268,7 +259,7 @@ TEST(GoldenDatabaseAdminClientTest, SetIamPolicy) {
             EXPECT_EQ(expected_database, r.resource());
             return r.policy();
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response =
       client.SetIamPolicy(expected_database, google::iam::v1::Policy{});
   EXPECT_STATUS_OK(response);
@@ -279,9 +270,8 @@ TEST(GoldenDatabaseAdminClientTest, SetIamPolicy) {
   EXPECT_STATUS_OK(response);
 }
 
-TEST(GoldenDatabaseAdminClientTest, GetIamPolicy) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, GetIamPolicy) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string const expected_role = "roles/spanner.databaseReader";
@@ -297,7 +287,7 @@ TEST(GoldenDatabaseAdminClientTest, GetIamPolicy) {
         *binding.add_members() = expected_member;
         return response;
       });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.GetIamPolicy(expected_database);
   EXPECT_STATUS_OK(response);
   ASSERT_EQ(1, response->bindings().size());
@@ -314,9 +304,8 @@ TEST(GoldenDatabaseAdminClientTest, GetIamPolicy) {
   ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
 }
 
-TEST(GoldenDatabaseAdminClientTest, TestIamPermissions) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, TestIamPermissions) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string expected_permission = "spanner.databases.read";
@@ -332,7 +321,7 @@ TEST(GoldenDatabaseAdminClientTest, TestIamPermissions) {
             response.add_permissions(expected_permission);
             return response;
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response =
       client.TestIamPermissions(expected_database, {expected_permission});
   EXPECT_STATUS_OK(response);
@@ -347,9 +336,8 @@ TEST(GoldenDatabaseAdminClientTest, TestIamPermissions) {
   EXPECT_EQ(expected_permission, response->permissions(0));
 }
 
-TEST(GoldenDatabaseAdminClientTest, CreateBackup) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, CreateBackup) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -374,7 +362,7 @@ TEST(GoldenDatabaseAdminClientTest, CreateBackup) {
                 ::google::test::admin::database::v1::Backup::CREATING);
             return make_ready_future(make_status_or(backup));
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   ::google::test::admin::database::v1::Backup backup;
   backup.set_database(expected_database);
   *backup.mutable_expire_time() =
@@ -399,9 +387,8 @@ TEST(GoldenDatabaseAdminClientTest, CreateBackup) {
             response->state());
 }
 
-TEST(GoldenDatabaseAdminClientTest, GetBackup) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, GetBackup) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, GetBackup)
@@ -416,7 +403,7 @@ TEST(GoldenDatabaseAdminClientTest, GetBackup) {
                 ::google::test::admin::database::v1::Backup::READY);
             return response;
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.GetBackup(expected_backup_name);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
@@ -431,9 +418,8 @@ TEST(GoldenDatabaseAdminClientTest, GetBackup) {
   EXPECT_EQ(expected_backup_name, response->name());
 }
 
-TEST(GoldenDatabaseAdminClientTest, UpdateBackupExpireTime) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, UpdateBackupExpireTime) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   std::chrono::system_clock::time_point expire_time =
@@ -464,7 +450,7 @@ TEST(GoldenDatabaseAdminClientTest, UpdateBackupExpireTime) {
   *backup.mutable_expire_time() = proto_expire_time;
   google::protobuf::FieldMask update_mask;
   update_mask.add_paths("expire_time");
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.UpdateBackup(backup, update_mask);
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(::google::test::admin::database::v1::Backup::READY,
@@ -482,9 +468,8 @@ TEST(GoldenDatabaseAdminClientTest, UpdateBackupExpireTime) {
   EXPECT_THAT(proto_expire_time, IsProtoEqual(response->expire_time()));
 }
 
-TEST(GoldenDatabaseAdminClientTest, DeleteBackup) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, DeleteBackup) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, DeleteBackup)
@@ -496,7 +481,7 @@ TEST(GoldenDatabaseAdminClientTest, DeleteBackup) {
             EXPECT_EQ(expected_backup_name, r.name());
             return Status();
           });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto response = client.DeleteBackup(expected_backup_name);
   EXPECT_STATUS_OK(response);
   ::google::test::admin::database::v1::DeleteBackupRequest request;
@@ -505,9 +490,8 @@ TEST(GoldenDatabaseAdminClientTest, DeleteBackup) {
   EXPECT_STATUS_OK(response);
 }
 
-TEST(GoldenDatabaseAdminClientTest, ListBackups) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, ListBackups) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackups)
@@ -528,7 +512,7 @@ TEST(GoldenDatabaseAdminClientTest, ListBackups) {
               return std::vector<::google::test::admin::database::v1::Backup>{};
             });
       });
-  GoldenDatabaseAdminClient client(mock);
+  GoldenThingAdminClient client(mock);
   auto range = client.ListBackups(expected_instance);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -541,9 +525,8 @@ TEST(GoldenDatabaseAdminClientTest, ListBackups) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenDatabaseAdminClientTest, RestoreDatabase) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, RestoreDatabase) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -564,7 +547,7 @@ TEST(GoldenDatabaseAdminClientTest, RestoreDatabase) {
             ::google::test::admin::database::v1::Database::READY_OPTIMIZING);
         return make_ready_future(make_status_or(database));
       });
-  GoldenDatabaseAdminClient client(std::move(mock));
+  GoldenThingAdminClient client(std::move(mock));
   auto fut = client.RestoreDatabase(expected_instance, expected_database,
                                     expected_backup_name);
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -586,9 +569,8 @@ TEST(GoldenDatabaseAdminClientTest, RestoreDatabase) {
             database->state());
 }
 
-TEST(GoldenDatabaseAdminClientTest, ListDatabaseOperations) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, ListDatabaseOperations) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabaseOperations)
@@ -612,7 +594,7 @@ TEST(GoldenDatabaseAdminClientTest, ListDatabaseOperations) {
                   return std::vector<google::longrunning::Operation>{};
                 });
           });
-  GoldenDatabaseAdminClient client(mock);
+  GoldenThingAdminClient client(mock);
   auto range = client.ListDatabaseOperations(expected_instance);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -625,9 +607,8 @@ TEST(GoldenDatabaseAdminClientTest, ListDatabaseOperations) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(GoldenDatabaseAdminClientTest, ListBackupOperations) {
-  auto mock =
-      std::make_shared<golden_mocks::MockGoldenDatabaseAdminConnection>();
+TEST(GoldenThingAdminClientTest, ListBackupOperations) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackupOperations)
@@ -650,7 +631,7 @@ TEST(GoldenDatabaseAdminClientTest, ListBackupOperations) {
               return std::vector<google::longrunning::Operation>{};
             });
       });
-  GoldenDatabaseAdminClient client(mock);
+  GoldenThingAdminClient client(mock);
   auto range = client.ListBackupOperations(expected_instance);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());

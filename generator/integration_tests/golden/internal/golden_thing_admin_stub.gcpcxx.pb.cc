@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "generator/integration_tests/golden/internal/golden_database_admin_stub.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -28,10 +28,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
 
-GoldenDatabaseAdminStub::~GoldenDatabaseAdminStub() = default;
+GoldenThingAdminStub::~GoldenThingAdminStub() = default;
 
 StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>
-DefaultGoldenDatabaseAdminStub::ListDatabases(
+DefaultGoldenThingAdminStub::ListDatabases(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::ListDatabasesRequest const& request) {
     ::google::test::admin::database::v1::ListDatabasesResponse response;
@@ -44,7 +44,7 @@ DefaultGoldenDatabaseAdminStub::ListDatabases(
 }
 
 StatusOr<::google::longrunning::Operation>
-DefaultGoldenDatabaseAdminStub::CreateDatabase(
+DefaultGoldenThingAdminStub::CreateDatabase(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
     ::google::longrunning::Operation response;
@@ -57,7 +57,7 @@ DefaultGoldenDatabaseAdminStub::CreateDatabase(
 }
 
 StatusOr<::google::test::admin::database::v1::Database>
-DefaultGoldenDatabaseAdminStub::GetDatabase(
+DefaultGoldenThingAdminStub::GetDatabase(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::GetDatabaseRequest const& request) {
     ::google::test::admin::database::v1::Database response;
@@ -70,7 +70,7 @@ DefaultGoldenDatabaseAdminStub::GetDatabase(
 }
 
 StatusOr<::google::longrunning::Operation>
-DefaultGoldenDatabaseAdminStub::UpdateDatabaseDdl(
+DefaultGoldenThingAdminStub::UpdateDatabaseDdl(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
     ::google::longrunning::Operation response;
@@ -83,7 +83,7 @@ DefaultGoldenDatabaseAdminStub::UpdateDatabaseDdl(
 }
 
 Status
-DefaultGoldenDatabaseAdminStub::DropDatabase(
+DefaultGoldenThingAdminStub::DropDatabase(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::DropDatabaseRequest const& request) {
     ::google::protobuf::Empty response;
@@ -96,7 +96,7 @@ DefaultGoldenDatabaseAdminStub::DropDatabase(
 }
 
 StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
-DefaultGoldenDatabaseAdminStub::GetDatabaseDdl(
+DefaultGoldenThingAdminStub::GetDatabaseDdl(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
     ::google::test::admin::database::v1::GetDatabaseDdlResponse response;
@@ -109,7 +109,7 @@ DefaultGoldenDatabaseAdminStub::GetDatabaseDdl(
 }
 
 StatusOr<::google::iam::v1::Policy>
-DefaultGoldenDatabaseAdminStub::SetIamPolicy(
+DefaultGoldenThingAdminStub::SetIamPolicy(
   grpc::ClientContext& client_context,
   ::google::iam::v1::SetIamPolicyRequest const& request) {
     ::google::iam::v1::Policy response;
@@ -122,7 +122,7 @@ DefaultGoldenDatabaseAdminStub::SetIamPolicy(
 }
 
 StatusOr<::google::iam::v1::Policy>
-DefaultGoldenDatabaseAdminStub::GetIamPolicy(
+DefaultGoldenThingAdminStub::GetIamPolicy(
   grpc::ClientContext& client_context,
   ::google::iam::v1::GetIamPolicyRequest const& request) {
     ::google::iam::v1::Policy response;
@@ -135,7 +135,7 @@ DefaultGoldenDatabaseAdminStub::GetIamPolicy(
 }
 
 StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-DefaultGoldenDatabaseAdminStub::TestIamPermissions(
+DefaultGoldenThingAdminStub::TestIamPermissions(
   grpc::ClientContext& client_context,
   ::google::iam::v1::TestIamPermissionsRequest const& request) {
     ::google::iam::v1::TestIamPermissionsResponse response;
@@ -148,7 +148,7 @@ DefaultGoldenDatabaseAdminStub::TestIamPermissions(
 }
 
 StatusOr<::google::longrunning::Operation>
-DefaultGoldenDatabaseAdminStub::CreateBackup(
+DefaultGoldenThingAdminStub::CreateBackup(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::CreateBackupRequest const& request) {
     ::google::longrunning::Operation response;
@@ -161,7 +161,7 @@ DefaultGoldenDatabaseAdminStub::CreateBackup(
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-DefaultGoldenDatabaseAdminStub::GetBackup(
+DefaultGoldenThingAdminStub::GetBackup(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::GetBackupRequest const& request) {
     ::google::test::admin::database::v1::Backup response;
@@ -174,7 +174,7 @@ DefaultGoldenDatabaseAdminStub::GetBackup(
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-DefaultGoldenDatabaseAdminStub::UpdateBackup(
+DefaultGoldenThingAdminStub::UpdateBackup(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::UpdateBackupRequest const& request) {
     ::google::test::admin::database::v1::Backup response;
@@ -187,7 +187,7 @@ DefaultGoldenDatabaseAdminStub::UpdateBackup(
 }
 
 Status
-DefaultGoldenDatabaseAdminStub::DeleteBackup(
+DefaultGoldenThingAdminStub::DeleteBackup(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::DeleteBackupRequest const& request) {
     ::google::protobuf::Empty response;
@@ -200,7 +200,7 @@ DefaultGoldenDatabaseAdminStub::DeleteBackup(
 }
 
 StatusOr<::google::test::admin::database::v1::ListBackupsResponse>
-DefaultGoldenDatabaseAdminStub::ListBackups(
+DefaultGoldenThingAdminStub::ListBackups(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::ListBackupsRequest const& request) {
     ::google::test::admin::database::v1::ListBackupsResponse response;
@@ -213,7 +213,7 @@ DefaultGoldenDatabaseAdminStub::ListBackups(
 }
 
 StatusOr<::google::longrunning::Operation>
-DefaultGoldenDatabaseAdminStub::RestoreDatabase(
+DefaultGoldenThingAdminStub::RestoreDatabase(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
     ::google::longrunning::Operation response;
@@ -226,7 +226,7 @@ DefaultGoldenDatabaseAdminStub::RestoreDatabase(
 }
 
 StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>
-DefaultGoldenDatabaseAdminStub::ListDatabaseOperations(
+DefaultGoldenThingAdminStub::ListDatabaseOperations(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
     ::google::test::admin::database::v1::ListDatabaseOperationsResponse response;
@@ -239,7 +239,7 @@ DefaultGoldenDatabaseAdminStub::ListDatabaseOperations(
 }
 
 StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>
-DefaultGoldenDatabaseAdminStub::ListBackupOperations(
+DefaultGoldenThingAdminStub::ListBackupOperations(
   grpc::ClientContext& client_context,
   ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
     ::google::test::admin::database::v1::ListBackupOperationsResponse response;
@@ -253,7 +253,7 @@ DefaultGoldenDatabaseAdminStub::ListBackupOperations(
 
 /// Poll a long-running operation.
 StatusOr<google::longrunning::Operation>
-DefaultGoldenDatabaseAdminStub::GetOperation(
+DefaultGoldenThingAdminStub::GetOperation(
     grpc::ClientContext& client_context,
     google::longrunning::GetOperationRequest const& request) {
   google::longrunning::Operation response;
@@ -265,7 +265,7 @@ DefaultGoldenDatabaseAdminStub::GetOperation(
   return response;
 }
 /// Cancel a long-running operation.
-Status DefaultGoldenDatabaseAdminStub::CancelOperation(
+Status DefaultGoldenThingAdminStub::CancelOperation(
     grpc::ClientContext& client_context,
     google::longrunning::CancelOperationRequest const& request) {
   google::protobuf::Empty response;

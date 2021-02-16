@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "generator/integration_tests/golden/golden_database_admin_client.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_client.gcpcxx.pb.h"
 #include <memory>
 
 namespace google {
@@ -24,18 +24,18 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
 
-GoldenDatabaseAdminClient::GoldenDatabaseAdminClient(std::shared_ptr<GoldenDatabaseAdminConnection> connection) : connection_(std::move(connection)) {}
-GoldenDatabaseAdminClient::~GoldenDatabaseAdminClient() = default;
+GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection) : connection_(std::move(connection)) {}
+GoldenThingAdminClient::~GoldenThingAdminClient() = default;
 
 StreamRange<::google::test::admin::database::v1::Database>
-GoldenDatabaseAdminClient::ListDatabases(std::string const& parent) {
+GoldenThingAdminClient::ListDatabases(std::string const& parent) {
   ::google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent(parent);
   return connection_->ListDatabases(request);
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminClient::CreateDatabase(std::string const& parent, std::string const& create_statement) {
+GoldenThingAdminClient::CreateDatabase(std::string const& parent, std::string const& create_statement) {
   ::google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
   request.set_create_statement(create_statement);
@@ -43,14 +43,14 @@ GoldenDatabaseAdminClient::CreateDatabase(std::string const& parent, std::string
 }
 
 StatusOr<::google::test::admin::database::v1::Database>
-GoldenDatabaseAdminClient::GetDatabase(std::string const& name) {
+GoldenThingAdminClient::GetDatabase(std::string const& name) {
   ::google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(name);
   return connection_->GetDatabase(request);
 }
 
 future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenDatabaseAdminClient::UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements) {
+GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements) {
   ::google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
@@ -58,21 +58,21 @@ GoldenDatabaseAdminClient::UpdateDatabaseDdl(std::string const& database, std::v
 }
 
 Status
-GoldenDatabaseAdminClient::DropDatabase(std::string const& database) {
+GoldenThingAdminClient::DropDatabase(std::string const& database) {
   ::google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(database);
   return connection_->DropDatabase(request);
 }
 
 StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
-GoldenDatabaseAdminClient::GetDatabaseDdl(std::string const& database) {
+GoldenThingAdminClient::GetDatabaseDdl(std::string const& database) {
   ::google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(database);
   return connection_->GetDatabaseDdl(request);
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminClient::SetIamPolicy(std::string const& resource, ::google::iam::v1::Policy const& policy) {
+GoldenThingAdminClient::SetIamPolicy(std::string const& resource, ::google::iam::v1::Policy const& policy) {
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(resource);
   *request.mutable_policy() = policy;
@@ -80,14 +80,14 @@ GoldenDatabaseAdminClient::SetIamPolicy(std::string const& resource, ::google::i
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminClient::GetIamPolicy(std::string const& resource) {
+GoldenThingAdminClient::GetIamPolicy(std::string const& resource) {
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(resource);
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-GoldenDatabaseAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions) {
+GoldenThingAdminClient::TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions) {
   ::google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(resource);
   *request.mutable_permissions() = {permissions.begin(), permissions.end()};
@@ -95,7 +95,7 @@ GoldenDatabaseAdminClient::TestIamPermissions(std::string const& resource, std::
 }
 
 future<StatusOr<::google::test::admin::database::v1::Backup>>
-GoldenDatabaseAdminClient::CreateBackup(std::string const& parent, ::google::test::admin::database::v1::Backup const& backup, std::string const& backup_id) {
+GoldenThingAdminClient::CreateBackup(std::string const& parent, ::google::test::admin::database::v1::Backup const& backup, std::string const& backup_id) {
   ::google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent(parent);
   *request.mutable_backup() = backup;
@@ -104,14 +104,14 @@ GoldenDatabaseAdminClient::CreateBackup(std::string const& parent, ::google::tes
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::GetBackup(std::string const& name) {
+GoldenThingAdminClient::GetBackup(std::string const& name) {
   ::google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(name);
   return connection_->GetBackup(request);
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::UpdateBackup(::google::test::admin::database::v1::Backup const& backup, ::google::protobuf::FieldMask const& update_mask) {
+GoldenThingAdminClient::UpdateBackup(::google::test::admin::database::v1::Backup const& backup, ::google::protobuf::FieldMask const& update_mask) {
   ::google::test::admin::database::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
@@ -119,21 +119,21 @@ GoldenDatabaseAdminClient::UpdateBackup(::google::test::admin::database::v1::Bac
 }
 
 Status
-GoldenDatabaseAdminClient::DeleteBackup(std::string const& name) {
+GoldenThingAdminClient::DeleteBackup(std::string const& name) {
   ::google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(name);
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::ListBackups(std::string const& parent) {
+GoldenThingAdminClient::ListBackups(std::string const& parent) {
   ::google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent(parent);
   return connection_->ListBackups(request);
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminClient::RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup) {
+GoldenThingAdminClient::RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup) {
   ::google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent(parent);
   request.set_database_id(database_id);
@@ -142,101 +142,101 @@ GoldenDatabaseAdminClient::RestoreDatabase(std::string const& parent, std::strin
 }
 
 StreamRange<::google::longrunning::Operation>
-GoldenDatabaseAdminClient::ListDatabaseOperations(std::string const& parent) {
+GoldenThingAdminClient::ListDatabaseOperations(std::string const& parent) {
   ::google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListDatabaseOperations(request);
 }
 
 StreamRange<::google::longrunning::Operation>
-GoldenDatabaseAdminClient::ListBackupOperations(std::string const& parent) {
+GoldenThingAdminClient::ListBackupOperations(std::string const& parent) {
   ::google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(parent);
   return connection_->ListBackupOperations(request);
 }
 
 StreamRange<::google::test::admin::database::v1::Database>
-GoldenDatabaseAdminClient::ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request) {
+GoldenThingAdminClient::ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request) {
   return connection_->ListDatabases(std::move(request));
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminClient::CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+GoldenThingAdminClient::CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return connection_->CreateDatabase(request);
 }
 
 StatusOr<::google::test::admin::database::v1::Database>
-GoldenDatabaseAdminClient::GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request) {
+GoldenThingAdminClient::GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return connection_->GetDatabase(request);
 }
 
 future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenDatabaseAdminClient::UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+GoldenThingAdminClient::UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return connection_->UpdateDatabaseDdl(request);
 }
 
 Status
-GoldenDatabaseAdminClient::DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request) {
+GoldenThingAdminClient::DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return connection_->DropDatabase(request);
 }
 
 StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
-GoldenDatabaseAdminClient::GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+GoldenThingAdminClient::GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return connection_->GetDatabaseDdl(request);
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminClient::SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const& request) {
+GoldenThingAdminClient::SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const& request) {
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<::google::iam::v1::Policy>
-GoldenDatabaseAdminClient::GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const& request) {
+GoldenThingAdminClient::GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const& request) {
   return connection_->GetIamPolicy(request);
 }
 
 StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-GoldenDatabaseAdminClient::TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const& request) {
+GoldenThingAdminClient::TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const& request) {
   return connection_->TestIamPermissions(request);
 }
 
 future<StatusOr<::google::test::admin::database::v1::Backup>>
-GoldenDatabaseAdminClient::CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const& request) {
+GoldenThingAdminClient::CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const& request) {
   return connection_->CreateBackup(request);
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::GetBackup(::google::test::admin::database::v1::GetBackupRequest const& request) {
+GoldenThingAdminClient::GetBackup(::google::test::admin::database::v1::GetBackupRequest const& request) {
   return connection_->GetBackup(request);
 }
 
 StatusOr<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const& request) {
+GoldenThingAdminClient::UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return connection_->UpdateBackup(request);
 }
 
 Status
-GoldenDatabaseAdminClient::DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request) {
+GoldenThingAdminClient::DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request) {
   return connection_->DeleteBackup(request);
 }
 
 StreamRange<::google::test::admin::database::v1::Backup>
-GoldenDatabaseAdminClient::ListBackups(::google::test::admin::database::v1::ListBackupsRequest request) {
+GoldenThingAdminClient::ListBackups(::google::test::admin::database::v1::ListBackupsRequest request) {
   return connection_->ListBackups(std::move(request));
 }
 
 future<StatusOr<::google::test::admin::database::v1::Database>>
-GoldenDatabaseAdminClient::RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+GoldenThingAdminClient::RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return connection_->RestoreDatabase(request);
 }
 
 StreamRange<::google::longrunning::Operation>
-GoldenDatabaseAdminClient::ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
+GoldenThingAdminClient::ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
   return connection_->ListDatabaseOperations(std::move(request));
 }
 
 StreamRange<::google::longrunning::Operation>
-GoldenDatabaseAdminClient::ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request) {
+GoldenThingAdminClient::ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request) {
   return connection_->ListBackupOperations(std::move(request));
 }
 
