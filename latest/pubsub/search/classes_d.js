@@ -1,17 +1,5 @@
 var searchData=
 [
-  ['seekparams_574',['SeekParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1SeekParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['snapshot_575',['Snapshot',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html',1,'google::cloud::pubsub::v1::Snapshot'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Snapshot.html',1,'google::cloud::pubsub::v1::Snapshot']]],
-  ['snapshotbuilder_576',['SnapshotBuilder',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SnapshotBuilder.html',1,'google::cloud::pubsub::v1::SnapshotBuilder'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SnapshotBuilder.html',1,'google::cloud::pubsub::v1::SnapshotBuilder']]],
-  ['status_577',['Status',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1']]],
-  ['statusor_578',['StatusOr',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1']]],
-  ['streamrange_579',['StreamRange',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1']]],
-  ['subscribeparams_580',['SubscribeParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection_1_1SubscribeParams.html',1,'google::cloud::pubsub::v1::SubscriberConnection']]],
-  ['subscriber_581',['Subscriber',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html',1,'google::cloud::pubsub::v1::Subscriber'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html',1,'google::cloud::pubsub::v1::Subscriber']]],
-  ['subscriberconnection_582',['SubscriberConnection',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html',1,'google::cloud::pubsub::v1::SubscriberConnection'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberConnection.html',1,'google::cloud::pubsub::v1::SubscriberConnection']]],
-  ['subscriberoptions_583',['SubscriberOptions',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html',1,'google::cloud::pubsub::v1::SubscriberOptions'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html',1,'google::cloud::pubsub::v1::SubscriberOptions']]],
-  ['subscription_584',['Subscription',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html',1,'google::cloud::pubsub::v1::Subscription'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscription.html',1,'google::cloud::pubsub::v1::Subscription']]],
-  ['subscriptionadminclient_585',['SubscriptionAdminClient',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html',1,'google::cloud::pubsub::v1::SubscriptionAdminClient'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminClient.html',1,'google::cloud::pubsub::v1::SubscriptionAdminClient']]],
-  ['subscriptionadminconnection_586',['SubscriptionAdminConnection',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['subscriptionbuilder_587',['SubscriptionBuilder',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html',1,'google::cloud::pubsub::v1::SubscriptionBuilder'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionBuilder.html',1,'google::cloud::pubsub::v1::SubscriptionBuilder']]]
+  ['resumepublishparams_578',['ResumePublishParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1PublisherConnection_1_1ResumePublishParams.html',1,'google::cloud::pubsub::v1::PublisherConnection']]],
+  ['runtimestatuserror_579',['RuntimeStatusError',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1RuntimeStatusError.html',1,'google::cloud::v1']]]
 ];
