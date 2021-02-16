@@ -18,8 +18,11 @@ cmake_minimum_required(VERSION 3.5)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
+
 # Enable support for SelectMSVCRuntime
-cmake_policy(SET CMP0091 NEW)
+if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
+    cmake_policy(SET CMP0091 NEW)
+endif ()
 project(
     google-cloud-cpp
     VERSION 1.25.0
