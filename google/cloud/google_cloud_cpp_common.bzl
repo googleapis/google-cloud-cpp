@@ -61,6 +61,7 @@ google_cloud_cpp_common_hdrs = [
     "kms_key_name.h",
     "log.h",
     "optional.h",
+    "options.h",
     "polling_policy.h",
     "status.h",
     "status_or.h",
