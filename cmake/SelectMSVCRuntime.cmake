@@ -31,8 +31,7 @@
 if (MSVC)
     # TODO(#5852) - if we require CMake >= 3.15 we can remove this conditional
     # and the hacks below.
-    if ((${CMAKE_VERSION} VERSION_GREATER 3.15) OR (${CMAKE_VERSION}
-                                                    VERSION_EQUAL 3.14))
+    if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
         if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
             set(CMAKE_MSVC_RUNTIME_LIBRARY
                 "MultiThreaded$<$<CONFIG:Debug>:Debug>")
