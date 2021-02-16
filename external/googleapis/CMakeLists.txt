@@ -149,8 +149,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/quaternion.proto"
     "google/type/timeofday.proto")
 
-# Always disable clang-tidy for this generated code.
-set(CMAKE_CXX_CLANG_TIDY "")
+include(EnableWerror)
 
 set(EXTERNAL_GOOGLEAPIS_BYPRODUCTS)
 foreach (proto ${EXTERNAL_GOOGLEAPIS_PROTO_FILES})
@@ -181,10 +180,6 @@ find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
-
-# Add flags to this library to automatically include them in all the libraries
-# in this directory.
-add_library(external_googleapis_common_flags INTERFACE)
 
 include(SelectMSVCRuntime)
 
@@ -221,13 +216,10 @@ function (external_googleapis_add_library proto)
     endforeach ()
     list(LENGTH public_deps public_deps_length)
     if (public_deps_length EQUAL 0)
-        target_link_libraries("google_cloud_cpp_${short_name}"
-                              PRIVATE external_googleapis_common_flags)
+        target_link_libraries("google_cloud_cpp_${short_name}")
     else ()
-        target_link_libraries(
-            "google_cloud_cpp_${short_name}"
-            PUBLIC ${public_deps}
-            PRIVATE external_googleapis_common_flags)
+        target_link_libraries("google_cloud_cpp_${short_name}"
+                              PUBLIC ${public_deps})
     endif ()
 endfunction ()
 
@@ -380,8 +372,7 @@ target_link_libraries(
            google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::api_http_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::api_http_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_bigtable_protos
@@ -406,8 +397,7 @@ target_link_libraries(
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::api_auth_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::api_auth_protos)
 
 # TODO(#5660) - protobuf + gcc<6 + deprecated enums do not compile
 if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -437,8 +427,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                google-cloud-cpp::api_resource_protos
                google-cloud-cpp::longrunning_operations_protos
                google-cloud-cpp::rpc_status_protos
-               google-cloud-cpp::type_latlng_protos
-        PRIVATE external_googleapis_common_flags)
+               google-cloud-cpp::type_latlng_protos)
 
     google_cloud_cpp_grpcpp_library(
         google_cloud_cpp_cloud_dialogflow_v2beta1_protos
@@ -467,8 +456,7 @@ if (NOT (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                google-cloud-cpp::api_resource_protos
                google-cloud-cpp::longrunning_operations_protos
                google-cloud-cpp::rpc_status_protos
-               google-cloud-cpp::type_latlng_protos
-        PRIVATE external_googleapis_common_flags)
+               google-cloud-cpp::type_latlng_protos)
 
     list(APPEND external_googleapis_installed_libraries_list
          google_cloud_cpp_cloud_dialogflow_v2_protos
@@ -488,8 +476,7 @@ target_link_libraries(
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
            google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::rpc_status_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_cloud_texttospeech_protos
@@ -502,8 +489,7 @@ target_link_libraries(
     google_cloud_cpp_cloud_texttospeech_protos
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::api_field_behavior_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_iam_protos
@@ -518,8 +504,7 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::api_resource_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_logging_type_protos
@@ -529,10 +514,8 @@ google_cloud_cpp_grpcpp_library(
     "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(logging_type_protos)
-target_link_libraries(
-    google_cloud_cpp_logging_type_protos
-    PUBLIC google-cloud-cpp::api_annotations_protos
-    PRIVATE external_googleapis_common_flags)
+target_link_libraries(google_cloud_cpp_logging_type_protos
+                      PUBLIC google-cloud-cpp::api_annotations_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_logging_protos
@@ -554,8 +537,7 @@ target_link_libraries(
            google-cloud-cpp::api_monitored_resource_protos
            google-cloud-cpp::api_resource_protos
            google-cloud-cpp::logging_type_protos
-           google-cloud-cpp::rpc_status_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::rpc_status_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_monitoring_protos
@@ -591,8 +573,7 @@ target_link_libraries(
            google-cloud-cpp::api_monitored_resource_protos
            google-cloud-cpp::api_resource_protos
            google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_calendar_period_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::type_calendar_period_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_pubsub_protos
@@ -607,8 +588,7 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::api_resource_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_spanner_protos
@@ -636,8 +616,7 @@ target_link_libraries(
            google-cloud-cpp::iam_v1_iam_policy_protos
            google-cloud-cpp::iam_v1_policy_protos
            google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::rpc_status_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_storage_protos
@@ -653,8 +632,7 @@ target_link_libraries(
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
            google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_policy_protos
-    PRIVATE external_googleapis_common_flags)
+           google-cloud-cpp::iam_v1_policy_protos)
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
@@ -662,7 +640,6 @@ include(GNUInstallDirs)
 
 install(
     TARGETS ${external_googleapis_installed_libraries_list}
-            external_googleapis_common_flags
     EXPORT googleapis-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -675,7 +652,6 @@ install(
 # duplication).
 install(
     TARGETS ${external_googleapis_installed_libraries_list}
-            external_googleapis_common_flags
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY

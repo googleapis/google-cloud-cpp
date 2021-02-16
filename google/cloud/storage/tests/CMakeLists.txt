@@ -58,18 +58,6 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         google_cloud_cpp_storage_tests_conformance_protos
         conformance_tests.proto PROTO_PATH_DIRECTORIES
         ${CMAKE_CURRENT_SOURCE_DIR} LOCAL_INCLUDE)
-    if (CMAKE_VERSION VERSION_GREATER 3.6)
-        # This works because we're not using clang-tidy with older cmake
-        # versions.
-        set_target_properties(google_cloud_cpp_storage_tests_conformance_protos
-                              PROPERTIES CXX_CLANG_TIDY "")
-    endif ()
-    if (MSVC)
-        # We're compiling generated code, so there's no use in MSVC failing on
-        # warnings.
-        target_compile_options(google_cloud_cpp_storage_tests_conformance_protos
-                               PUBLIC "/wd4244")
-    endif ()
 endif ()
 
 foreach (fname ${storage_client_integration_tests})
