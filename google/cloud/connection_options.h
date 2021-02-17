@@ -17,6 +17,7 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/options.h"
 #include "google/cloud/status_or.h"
@@ -259,14 +260,14 @@ template <typename ConnectionTraits>
 Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
   Options opts;
   opts.set<GrpcCredentialOption>(std::move(old.credentials_));
-  opts.set<GrpcEndpointOption>(std::move(old.endpoint_));
+  opts.set<EndpointOption>(std::move(old.endpoint_));
   opts.set<GrpcNumChannelsOption>(old.num_channels_);
-  opts.set<GrpcUserAgentPrefixOption>(
+  opts.set<UserAgentPrefixOption>(
       std::set<std::string>{std::move(old.user_agent_prefix_)});
   opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
   opts.set<GrpcBackgroundThreadsOption>(old.background_threads_factory());
   if (!old.tracing_components_.empty()) {
-    opts.set<GrpcTracingComponentsOption>(std::move(old.tracing_components_));
+    opts.set<TracingComponentsOption>(std::move(old.tracing_components_));
   }
   if (!old.channel_pool_domain_.empty()) {
     // To get a different channel pool one just needs to set any channel

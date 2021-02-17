@@ -21,6 +21,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 
 namespace {
 
@@ -36,11 +37,8 @@ void TestGrpcOption(ValueType const& expected) {
 
 TEST(GrpcOptions, RegularOptions) {
   TestGrpcOption<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-  TestGrpcOption<GrpcEndpointOption>("foo.googleapis.com");
   TestGrpcOption<GrpcNumChannelsOption>(42);
-  TestGrpcOption<GrpcUserAgentPrefixOption>({"foo", "bar"});
   TestGrpcOption<GrpcChannelArgumentsOption>({{"foo", "bar"}, {"baz", "quux"}});
-  TestGrpcOption<GrpcTracingComponentsOption>({"foo", "bar", "baz"});
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
 }
 
@@ -59,6 +57,7 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
   EXPECT_TRUE(invoked);
 }
 
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

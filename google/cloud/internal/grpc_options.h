@@ -36,17 +36,6 @@ struct GrpcCredentialOption {
 };
 
 /**
- * Change the gRPC endpoint.
- *
- * In almost all cases the default is the correct endpoint to use. Applications
- * may need to be changed to (1) test against a fake or simulator, or (2) to
- * use a beta or EAP version of the service.
- */
-struct GrpcEndpointOption {
-  std::string value;
-};
-
-/**
  * The number of transport channels to create.
  *
  * gRPC limits the number of simultaneous calls in progress on a channel to
@@ -55,17 +44,6 @@ struct GrpcEndpointOption {
  */
 struct GrpcNumChannelsOption {
   int value;
-};
-
-/**
- * User-agent strings to include with each request.
- *
- * Libraries or services that use Cloud C++ clients may want to set their own
- * user-agent prefix. This can help them develop telemetry information about
- * number of users running particular versions of their system or library.
- */
-struct GrpcUserAgentPrefixOption {
-  std::set<std::string> value;
 };
 
 /**
@@ -80,21 +58,6 @@ struct GrpcUserAgentPrefixOption {
  */
 struct GrpcChannelArgumentsOption {
   std::map<std::string, std::string> value;
-};
-
-/**
- * Return whether tracing is enabled for the given @p component.
- *
- * The C++ clients can log interesting events to help library and application
- * developers troubleshoot problems. To see log messages (maybe lots) you can
- * enable tracing for the component that interests you. Valid components are
- * currently:
- *
- * - rpc
- * - rpc-streams
- */
-struct GrpcTracingComponentsOption {
-  std::set<std::string> value;
 };
 
 /**

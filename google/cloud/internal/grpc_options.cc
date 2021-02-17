@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/common_options.h"
 
 namespace google {
 namespace cloud {
@@ -29,7 +30,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
       channel_arguments.SetString(p.first, p.second);
     }
   }
-  auto const user_agent_prefix = opts.get<GrpcUserAgentPrefixOption>();
+  auto const user_agent_prefix = opts.get<UserAgentPrefixOption>();
   if (user_agent_prefix) {
     channel_arguments.SetUserAgentPrefix(
         absl::StrJoin(user_agent_prefix->value, " "));

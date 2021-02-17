@@ -62,12 +62,12 @@ TEST(ConnectionOptionsTest, AdminEndpoint) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ(TestTraits::default_endpoint(), options.endpoint());
   EXPECT_EQ(options.endpoint(),
-            ToOptions(options).get<GrpcEndpointOption>()->value);
+            ToOptions(options).get<EndpointOption>()->value);
 
   options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", options.endpoint());
   EXPECT_EQ(options.endpoint(),
-            ToOptions(options).get<GrpcEndpointOption>()->value);
+            ToOptions(options).get<EndpointOption>()->value);
 }
 
 TEST(ConnectionOptionsTest, NumChannels) {
@@ -89,18 +89,18 @@ TEST(ConnectionOptionsTest, Tracing) {
   options.enable_tracing("fake-component");
   EXPECT_TRUE(options.tracing_enabled("fake-component"));
   EXPECT_EQ(options.components(),
-            ToOptions(options).get<GrpcTracingComponentsOption>()->value);
+            ToOptions(options).get<TracingComponentsOption>()->value);
 
   options.disable_tracing("fake-component");
   EXPECT_FALSE(options.tracing_enabled("fake-component"));
-  EXPECT_FALSE(ToOptions(options).get<GrpcTracingComponentsOption>());
+  EXPECT_FALSE(ToOptions(options).get<TracingComponentsOption>());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_FALSE(options.tracing_enabled("rpc"));
-  EXPECT_FALSE(ToOptions(options).get<GrpcTracingComponentsOption>());
+  EXPECT_FALSE(ToOptions(options).get<TracingComponentsOption>());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingSet) {
@@ -111,7 +111,7 @@ TEST(ConnectionOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(options.tracing_enabled("foo"));
   EXPECT_TRUE(options.tracing_enabled("bar"));
   EXPECT_TRUE(options.tracing_enabled("baz"));
-  EXPECT_THAT(ToOptions(options).get<GrpcTracingComponentsOption>()->value,
+  EXPECT_THAT(ToOptions(options).get<TracingComponentsOption>()->value,
               testing::UnorderedElementsAre("foo", "bar", "baz"));
 }
 
@@ -144,13 +144,13 @@ TEST(ConnectionOptionsTest, ChannelPoolName) {
 TEST(ConnectionOptionsTest, UserAgentPrefix) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ(TestTraits::user_agent_prefix(), options.user_agent_prefix());
-  EXPECT_THAT(ToOptions(options).get<GrpcUserAgentPrefixOption>()->value,
+  EXPECT_THAT(ToOptions(options).get<UserAgentPrefixOption>()->value,
               testing::ElementsAre(options.user_agent_prefix()));
 
   options.add_user_agent_prefix("test-prefix/1.2.3");
   EXPECT_EQ("test-prefix/1.2.3 " + TestTraits::user_agent_prefix(),
             options.user_agent_prefix());
-  EXPECT_THAT(ToOptions(options).get<GrpcUserAgentPrefixOption>()->value,
+  EXPECT_THAT(ToOptions(options).get<UserAgentPrefixOption>()->value,
               testing::ElementsAre(options.user_agent_prefix()));
 }
 
