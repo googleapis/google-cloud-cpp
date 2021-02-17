@@ -120,36 +120,6 @@ struct GrpcBackgroundThreadsOption {
   BackgroundThreadsFactory value;
 };
 
-/**
- * Set the number of background threads.
- *
- * @note this value is not used if `DisableBackgroundThreads()` is called.
- */
-/* ConnectionOptions& set_background_thread_pool_size(std::size_t s) { */
-/*   background_thread_pool_size_ = s; */
-/*   return *this; */
-/* } */
-/* std::size_t background_thread_pool_size() const { */
-/*   return background_thread_pool_size_; */
-/* } */
-
-/* ConnectionOptions& DisableBackgroundThreads( */
-/*     google::cloud::CompletionQueue const& cq) { */
-/*   background_threads_factory_ = [cq] { */
-/*     return
- * absl::make_unique<internal::CustomerSuppliedBackgroundThreads>(cq); */
-/*   }; */
-/*   return *this; */
-/* } */
-
-/* using BackgroundThreadsFactory = */
-/*     std::function<std::unique_ptr<BackgroundThreads>()>; */
-/* BackgroundThreadsFactory background_threads_factory() const { */
-/*   if (background_threads_factory_) return background_threads_factory_; */
-/*   auto const s = background_thread_pool_size_; */
-/*   return [s] { return internal::DefaultBackgroundThreads(s); }; */
-/* } */
-
 namespace internal {
 
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
