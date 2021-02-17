@@ -112,14 +112,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab0af3db4ad67354e3d80f9ef7bfaab37"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Options.html#ab0af3db4ad67354e3d80f9ef7bfaab37">get_or</a> (U &amp;&amp;... u) const</td></tr>
 <tr class="memdesc:ab0af3db4ad67354e3d80f9ef7bfaab37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the option of type <code>T</code> if set, else a newly constructed default <code>T</code>.  <a href="classgoogle_1_1cloud_1_1v1_1_1Options.html#ab0af3db4ad67354e3d80f9ef7bfaab37">More...</a><br /></td></tr>
 <tr class="separator:ab0af3db4ad67354e3d80f9ef7bfaab37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab446f1e46c8be5b81c1208ce22521e7b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab446f1e46c8be5b81c1208ce22521e7b"><td class="memTemplItemLeft" align="right" valign="top">T const  *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Options.html#ab446f1e46c8be5b81c1208ce22521e7b">get_pointer</a> () const</td></tr>
-<tr class="memdesc:ab446f1e46c8be5b81c1208ce22521e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a const pointer to the option specified by <code>T</code>, else nullptr.  <a href="classgoogle_1_1cloud_1_1v1_1_1Options.html#ab446f1e46c8be5b81c1208ce22521e7b">More...</a><br /></td></tr>
-<tr class="separator:ab446f1e46c8be5b81c1208ce22521e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c12aa623ffd5c37b9897d1734fc1874"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a6c12aa623ffd5c37b9897d1734fc1874"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1Options.html#a6c12aa623ffd5c37b9897d1734fc1874">get_pointer</a> ()</td></tr>
-<tr class="memdesc:a6c12aa623ffd5c37b9897d1734fc1874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a non-const pointer to the option specified by <code>T</code>, else nullptr.  <a href="classgoogle_1_1cloud_1_1v1_1_1Options.html#a6c12aa623ffd5c37b9897d1734fc1874">More...</a><br /></td></tr>
-<tr class="separator:a6c12aa623ffd5c37b9897d1734fc1874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that holds option structs indexed by their type. </p>
@@ -318,68 +310,6 @@ template&lt;typename T , typename... U&gt; </div>
 <p>If the specified option <code>T</code> is not set, a new <code>T</code> will be constructed with the optional arguments <code>u</code>. </p>
 
 <p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00116">116</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
-
-</div>
-</div>
-<a id="a6c12aa623ffd5c37b9897d1734fc1874"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c12aa623ffd5c37b9897d1734fc1874">&#9670;&nbsp;</a></span>get_pointer() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T* google::cloud::v1::Options::get_pointer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a non-const pointer to the option specified by <code>T</code>, else nullptr. </p>
-
-<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00136">136</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
-
-</div>
-</div>
-<a id="ab446f1e46c8be5b81c1208ce22521e7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab446f1e46c8be5b81c1208ce22521e7b">&#9670;&nbsp;</a></span>get_pointer() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T const* google::cloud::v1::Options::get_pointer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a const pointer to the option specified by <code>T</code>, else nullptr. </p>
-
-<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00126">126</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
 
 </div>
 </div>

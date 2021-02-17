@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['topic_595',['Topic',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html',1,'google::cloud::pubsub::v1::Topic'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html',1,'google::cloud::pubsub::v1::Topic']]],
-  ['topicadminclient_596',['TopicAdminClient',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html',1,'google::cloud::pubsub::v1::TopicAdminClient'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html',1,'google::cloud::pubsub::v1::TopicAdminClient']]],
-  ['topicadminconnection_597',['TopicAdminConnection',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html',1,'google::cloud::pubsub::v1::TopicAdminConnection'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]],
-  ['topicbuilder_598',['TopicBuilder',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html',1,'google::cloud::pubsub::v1::TopicBuilder'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html',1,'google::cloud::pubsub::v1::TopicBuilder']]],
-  ['tracingoptions_599',['TracingOptions',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html',1,'google::cloud::v1']]]
+  ['topic_594',['Topic',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html',1,'google::cloud::pubsub::v1::Topic'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Topic.html',1,'google::cloud::pubsub::v1::Topic']]],
+  ['topicadminclient_595',['TopicAdminClient',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html',1,'google::cloud::pubsub::v1::TopicAdminClient'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html',1,'google::cloud::pubsub::v1::TopicAdminClient']]],
+  ['topicadminconnection_596',['TopicAdminConnection',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html',1,'google::cloud::pubsub::v1::TopicAdminConnection'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]],
+  ['topicbuilder_597',['TopicBuilder',['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html',1,'google::cloud::pubsub::v1::TopicBuilder'],['../classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicBuilder.html',1,'google::cloud::pubsub::v1::TopicBuilder']]],
+  ['tracingoptions_598',['TracingOptions',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html',1,'google::cloud::v1']]]
 ];
