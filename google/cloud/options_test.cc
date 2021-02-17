@@ -143,10 +143,10 @@ TEST(Options, BasicOperations) {
 TEST(Options, GetPointerConst) {
   auto const opts = Options{}.set<IntOption>(42);
 
-  auto* p1 = opts.get_pointer<IntOption>();
+  auto const* p1 = opts.get_pointer<IntOption>();
   EXPECT_EQ(p1->value, 42);
 
-  auto* p2 = opts.get_pointer<IntOption>();
+  auto const* p2 = opts.get_pointer<IntOption>();
   EXPECT_EQ(p2->value, 42);
 
   EXPECT_EQ(p1, p2);
