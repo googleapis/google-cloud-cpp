@@ -27,7 +27,7 @@ fi
 source "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.sh"
 
 cd "${PROJECT_ROOT}"
-readarray -d '' current_golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -z)
+readarray -d '' current_golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -dz)
 
 if [ "${#current_golden_files[@]}" -gt "${#GOLDEN_FILE_MD5_HASHES[@]}" ]; then
   io::log_red "New golden files have been added."

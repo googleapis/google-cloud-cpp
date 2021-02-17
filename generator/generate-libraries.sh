@@ -83,7 +83,7 @@ GOOGLEAPIS_HASH_LAST_USED=$BAZEL_DEPS_GOOGLEAPIS_HASH
 readonly GOOGLEAPIS_HASH_LAST_USED
 EOF
 
-readarray -d '' golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -z)
+readarray -d '' golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -dz)
 
 io::log_yellow "Update ci/etc/generator-golden-md5-hashes.sh."
 cat >"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.sh <<EOF
