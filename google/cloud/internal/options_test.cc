@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/options.h"
+#include "google/cloud/internal/options.h"
 #include <gmock/gmock.h>
 #include <string>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 namespace {
 
 struct IntOption {
@@ -141,6 +142,7 @@ TEST(Options, BasicOperations) {
 }
 
 }  // namespace
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
