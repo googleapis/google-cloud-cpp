@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['genericpollingpolicy_540',['GenericPollingPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html',1,'google::cloud::v1']]],
-  ['getsnapshotparams_541',['GetSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['getsubscriptionparams_542',['GetSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['gettopicparams_543',['GetTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1GetTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
+  ['genericpollingpolicy_541',['GenericPollingPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1GenericPollingPolicy.html',1,'google::cloud::v1']]],
+  ['getsnapshotparams_542',['GetSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['getsubscriptionparams_543',['GetSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1GetSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['gettopicparams_544',['GetTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1GetTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
 ];

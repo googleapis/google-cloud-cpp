@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['deletesnapshotparams_533',['DeleteSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['deletesubscriptionparams_534',['DeleteSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['deletetopicparams_535',['DeleteTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1DeleteTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]],
-  ['detachsubscriptionparams_536',['DetachSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1DetachSubscriptionParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
+  ['deletesnapshotparams_534',['DeleteSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['deletesubscriptionparams_535',['DeleteSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1DeleteSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['deletetopicparams_536',['DeleteTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1DeleteTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]],
+  ['detachsubscriptionparams_537',['DetachSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1DetachSubscriptionParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
 ];

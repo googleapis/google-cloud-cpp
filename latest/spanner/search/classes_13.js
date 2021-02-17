@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['value_756',['Value',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html',1,'google::cloud::spanner::v1::Value'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html',1,'google::cloud::spanner::v1::Value']]],
-  ['valueinternals_757',['ValueInternals',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ValueInternals.html',1,'google::cloud::spanner_internal::v1::ValueInternals'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ValueInternals.html',1,'google::cloud::spanner_internal::v1::ValueInternals']]]
+  ['value_757',['Value',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html',1,'google::cloud::spanner::v1::Value'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html',1,'google::cloud::spanner::v1::Value']]],
+  ['valueinternals_758',['ValueInternals',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ValueInternals.html',1,'google::cloud::spanner_internal::v1::ValueInternals'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1ValueInternals.html',1,'google::cloud::spanner_internal::v1::ValueInternals']]]
 ];
