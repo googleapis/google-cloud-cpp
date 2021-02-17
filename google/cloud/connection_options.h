@@ -31,10 +31,16 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+template <typename ConnectionTraits>
+class ConnectionOptions;
+
 namespace internal {
 std::set<std::string> DefaultTracingComponents();
 TracingOptions DefaultTracingOptions();
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(std::size_t);
+template <typename ConnectionTraits>
+Options MakeOptions(ConnectionOptions<ConnectionTraits>&&);
 }  // namespace internal
 
 /**
@@ -55,29 +61,6 @@ class ConnectionOptions {
         tracing_components_(internal::DefaultTracingComponents()),
         tracing_options_(internal::DefaultTracingOptions()),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
-
-  /// Moves all the settings in this class into an `google::cloud::Options`.
-  Options ToOptions() && {
-    Options opts;
-    opts.set<GrpcCredentialOption>(std::move(credentials_));
-    opts.set<GrpcEndpointOption>(std::move(endpoint_));
-    opts.set<GrpcNumChannelsOption>(num_channels_);
-    opts.set<GrpcUserAgentPrefixOption>(
-        std::set<std::string>{std::move(user_agent_prefix_)});
-    opts.set<GrpcTracingOptionsOption>(std::move(tracing_options_));
-    opts.set<GrpcBackgroundThreadsOption>(background_threads_factory());
-    if (!tracing_components_.empty()) {
-      opts.set<GrpcTracingComponentsOption>(std::move(tracing_components_));
-    }
-    if (!channel_pool_domain_.empty()) {
-      opts.set<GrpcChannelArgumentsOption>(std::map<std::string, std::string>{
-          {GRPC_ARG_CHANNEL_POOL_DOMAIN, std::move(channel_pool_domain_)}});
-    }
-    return opts;
-  }
-
-  /// Copies all the settings in this class into an `google::cloud::Options`.
-  Options ToOptions() const& { return ConnectionOptions{*this}.ToOptions(); }
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(
@@ -254,6 +237,9 @@ class ConnectionOptions {
   }
 
  private:
+  template <typename T>
+  friend Options internal::MakeOptions(ConnectionOptions<T>&&);
+
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
   int num_channels_;
@@ -265,6 +251,33 @@ class ConnectionOptions {
   std::size_t background_thread_pool_size_ = 0;
   BackgroundThreadsFactory background_threads_factory_;
 };
+
+namespace internal {
+
+template <typename ConnectionTraits>
+Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
+  Options opts;
+  opts.set<GrpcCredentialOption>(std::move(old.credentials_));
+  opts.set<GrpcEndpointOption>(std::move(old.endpoint_));
+  opts.set<GrpcNumChannelsOption>(old.num_channels_);
+  opts.set<GrpcUserAgentPrefixOption>(
+      GrpcUserAgentPrefixOption{std::move(old.user_agent_prefix_)});
+  opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
+  opts.set<GrpcBackgroundThreadsOption>(old.background_threads_factory());
+  if (!old.tracing_components_.empty()) {
+    opts.set<GrpcTracingComponentsOption>(std::move(old.tracing_components_));
+  }
+  if (!old.channel_pool_domain_.empty()) {
+    opts.set<GrpcChannelArgumentsOption>(std::map<std::string, std::string>{
+        {GRPC_ARG_CHANNEL_POOL_DOMAIN, std::move(old.channel_pool_domain_)}});
+  }
+  return opts;
+}
+
+template <typename ConnectionTraits>
+Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
+
+}  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
@@ -131,4 +131,4 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
