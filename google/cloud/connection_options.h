@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H
 
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -194,7 +194,8 @@ class ConnectionOptions {
    * `grpc::CreateCustomChannel` and create one more more gRPC channels.
    */
   grpc::ChannelArguments CreateChannelArguments() const {
-    return internal::MakeChannelArguments(ToOptions());
+    return internal::MakeChannelArguments(
+        internal::MakeOptions(ConnectionOptions(*this)));
   }
 
   /**
@@ -238,7 +239,7 @@ class ConnectionOptions {
 
  private:
   template <typename T>
-  friend Options internal::MakeOptions(ConnectionOptions<T>&&);
+  friend internal::Options internal::MakeOptions(ConnectionOptions<T>&&);
 
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
@@ -261,21 +262,22 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
   opts.set<GrpcEndpointOption>(std::move(old.endpoint_));
   opts.set<GrpcNumChannelsOption>(old.num_channels_);
   opts.set<GrpcUserAgentPrefixOption>(
-      GrpcUserAgentPrefixOption{std::move(old.user_agent_prefix_)});
+      std::set<std::string>{std::move(old.user_agent_prefix_)});
   opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
   opts.set<GrpcBackgroundThreadsOption>(old.background_threads_factory());
   if (!old.tracing_components_.empty()) {
     opts.set<GrpcTracingComponentsOption>(std::move(old.tracing_components_));
   }
   if (!old.channel_pool_domain_.empty()) {
+    // To get a different channel pool one just needs to set any channel
+    // parameter to a different value. Newer versions of gRPC include a macro
+    // for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling
+    // against older versions in some cases, we use the actual value.
     opts.set<GrpcChannelArgumentsOption>(std::map<std::string, std::string>{
-        {GRPC_ARG_CHANNEL_POOL_DOMAIN, std::move(old.channel_pool_domain_)}});
+        {"grpc.channel_pooling_domain", std::move(old.channel_pool_domain_)}});
   }
   return opts;
 }
-
-template <typename ConnectionTraits>
-Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
 
 }  // namespace internal
 
