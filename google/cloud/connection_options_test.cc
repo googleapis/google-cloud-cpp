@@ -43,41 +43,59 @@ TEST(ConnectionOptionsTest, Credentials) {
   auto expected = grpc::InsecureChannelCredentials();
   TestConnectionOptions options(expected);
   EXPECT_EQ(expected.get(), options.credentials().get());
+  EXPECT_EQ(expected, options.ToOptions().get<GrpcCredentialOption>()->value);
 
   auto other_credentials = grpc::InsecureChannelCredentials();
   EXPECT_NE(expected, other_credentials);
   options.set_credentials(other_credentials);
   EXPECT_EQ(other_credentials, options.credentials());
+  EXPECT_EQ(other_credentials,
+            options.ToOptions().get<GrpcCredentialOption>()->value);
 }
 
 TEST(ConnectionOptionsTest, AdminEndpoint) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ(TestTraits::default_endpoint(), options.endpoint());
+  EXPECT_EQ(options.endpoint(),
+            options.ToOptions().get<GrpcEndpointOption>()->value);
+
   options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", options.endpoint());
+  EXPECT_EQ(options.endpoint(),
+            options.ToOptions().get<GrpcEndpointOption>()->value);
 }
 
 TEST(ConnectionOptionsTest, NumChannels) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   int num_channels = options.num_channels();
   EXPECT_EQ(TestTraits::default_num_channels(), num_channels);
+  EXPECT_EQ(options.num_channels(),
+            options.ToOptions().get<GrpcNumChannelsOption>()->value);
+
   num_channels *= 2;  // ensure we change it from the default value.
   options.set_num_channels(num_channels);
   EXPECT_EQ(num_channels, options.num_channels());
+  EXPECT_EQ(options.num_channels(),
+            options.ToOptions().get<GrpcNumChannelsOption>()->value);
 }
 
 TEST(ConnectionOptionsTest, Tracing) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   options.enable_tracing("fake-component");
   EXPECT_TRUE(options.tracing_enabled("fake-component"));
+  EXPECT_EQ(options.components(),
+            options.ToOptions().get<GrpcTracingComponentsOption>()->value);
+
   options.disable_tracing("fake-component");
   EXPECT_FALSE(options.tracing_enabled("fake-component"));
+  EXPECT_FALSE(options.ToOptions().get<GrpcTracingComponentsOption>());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_FALSE(options.tracing_enabled("rpc"));
+  EXPECT_FALSE(options.ToOptions().get<GrpcTracingComponentsOption>());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingSet) {
@@ -88,6 +106,8 @@ TEST(ConnectionOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(options.tracing_enabled("foo"));
   EXPECT_TRUE(options.tracing_enabled("bar"));
   EXPECT_TRUE(options.tracing_enabled("baz"));
+  EXPECT_THAT(options.ToOptions().get<GrpcTracingComponentsOption>()->value,
+              testing::UnorderedElementsAre("foo", "bar", "baz"));
 }
 
 TEST(ConnectionOptionsTest, TracingOptions) {
@@ -100,21 +120,33 @@ TEST(ConnectionOptionsTest, TracingOptions) {
   EXPECT_FALSE(tracing_options.single_line_mode());
   EXPECT_FALSE(tracing_options.use_short_repeated_primitives());
   EXPECT_EQ(32, tracing_options.truncate_string_field_longer_than());
+  EXPECT_EQ(options.tracing_options(),
+            options.ToOptions().get<GrpcTracingOptionsOption>()->value);
 }
 
 TEST(ConnectionOptionsTest, ChannelPoolName) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_TRUE(options.channel_pool_domain().empty());
+  EXPECT_FALSE(options.ToOptions().get<GrpcChannelArgumentsOption>());
+
   options.set_channel_pool_domain("test-channel-pool");
   EXPECT_EQ("test-channel-pool", options.channel_pool_domain());
+  auto opts = options.ToOptions().get<GrpcChannelArgumentsOption>();
+  EXPECT_TRUE(opts);
+  EXPECT_EQ(opts->value[GRPC_ARG_CHANNEL_POOL_DOMAIN], "test-channel-pool");
 }
 
 TEST(ConnectionOptionsTest, UserAgentPrefix) {
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ(TestTraits::user_agent_prefix(), options.user_agent_prefix());
+  EXPECT_THAT(options.ToOptions().get<GrpcUserAgentPrefixOption>()->value,
+              testing::ElementsAre(options.user_agent_prefix()));
+
   options.add_user_agent_prefix("test-prefix/1.2.3");
   EXPECT_EQ("test-prefix/1.2.3 " + TestTraits::user_agent_prefix(),
             options.user_agent_prefix());
+  EXPECT_THAT(options.ToOptions().get<GrpcUserAgentPrefixOption>()->value,
+              testing::ElementsAre(options.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {

@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -53,6 +55,29 @@ class ConnectionOptions {
         tracing_components_(internal::DefaultTracingComponents()),
         tracing_options_(internal::DefaultTracingOptions()),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
+
+  /// Moves all the settings in this class into an `google::cloud::Options`.
+  Options ToOptions() && {
+    Options opts;
+    opts.set<GrpcCredentialOption>(std::move(credentials_));
+    opts.set<GrpcEndpointOption>(std::move(endpoint_));
+    opts.set<GrpcNumChannelsOption>(num_channels_);
+    opts.set<GrpcUserAgentPrefixOption>(
+        std::set<std::string>{std::move(user_agent_prefix_)});
+    opts.set<GrpcTracingOptionsOption>(std::move(tracing_options_));
+    opts.set<GrpcBackgroundThreadsOption>(background_threads_factory());
+    if (!tracing_components_.empty()) {
+      opts.set<GrpcTracingComponentsOption>(std::move(tracing_components_));
+    }
+    if (!channel_pool_domain_.empty()) {
+      opts.set<GrpcChannelArgumentsOption>(std::map<std::string, std::string>{
+          {GRPC_ARG_CHANNEL_POOL_DOMAIN, std::move(channel_pool_domain_)}});
+    }
+    return opts;
+  }
+
+  /// Copies all the settings in this class into an `google::cloud::Options`.
+  Options ToOptions() const& { return ConnectionOptions{*this}.ToOptions(); }
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(
@@ -186,18 +211,7 @@ class ConnectionOptions {
    * `grpc::CreateCustomChannel` and create one more more gRPC channels.
    */
   grpc::ChannelArguments CreateChannelArguments() const {
-    grpc::ChannelArguments channel_arguments;
-
-    if (!channel_pool_domain().empty()) {
-      // To get a different channel pool one just needs to set any channel
-      // parameter to a different value. Newer versions of gRPC include a macro
-      // for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling
-      // against older versions in some cases, we use the actual value.
-      channel_arguments.SetString("grpc.channel_pooling_domain",
-                                  channel_pool_domain());
-    }
-    channel_arguments.SetUserAgentPrefix(user_agent_prefix());
-    return channel_arguments;
+    return internal::MakeChannelArguments(ToOptions());
   }
 
   /**

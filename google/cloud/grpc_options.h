@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
+#include <map>
 #include <set>
 #include <string>
 
