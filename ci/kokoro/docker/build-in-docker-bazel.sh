@@ -107,6 +107,13 @@ io::log_yellow "Verify googleapis commit hash for generated code"
 )
 
 echo "================================================================"
+io::log_yellow "Verify generator golden file md5 hashes"
+(
+  cd "${PROJECT_ROOT}"
+  ./ci/check-golden-md5-hashes.sh
+)
+
+echo "================================================================"
 io::log "Compiling and running unit tests"
 echo "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
 "${BAZEL_BIN}" ${BAZEL_VERB} \
