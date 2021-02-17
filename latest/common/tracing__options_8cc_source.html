@@ -111,33 +111,41 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html#aade1d4d45dfdc3a9bfc4bbb94ba9a3c6">   45</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html">TracingOptions</a>&amp; TracingOptions::SetOptions(std::string <span class="keyword">const</span>&amp; str) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> beg = str.begin();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> end = str.end();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> pos = beg;;) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> comma = std::find(pos, end, <span class="charliteral">&#39;,&#39;</span>);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> equal = std::find(pos, comma, <span class="charliteral">&#39;=&#39;</span>);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::string <span class="keyword">const</span> opt{pos, equal};</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::string <span class="keyword">const</span> val{equal + (equal == comma ? 0 : 1), comma};</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;single_line_mode&quot;</span>) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseBoolean(val)) single_line_mode_ = *v;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;use_short_repeated_primitives&quot;</span>) {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseBoolean(val)) use_short_repeated_primitives_ = *v;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;truncate_string_field_longer_than&quot;</span>) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseInteger(val)) truncate_string_field_longer_than_ = *v;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (comma == end) <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    pos = comma + 1;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_NS</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1v1.html#ac80f1a9b95c517297f9f6f61d4631e4b">   45</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespacegoogle_1_1cloud_1_1v1.html#a7fd862af37e9d326fe7d03e84132a429">operator==</a>(<a class="code" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html">TracingOptions</a> <span class="keyword">const</span>&amp; a, <a class="code" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html">TracingOptions</a> <span class="keyword">const</span>&amp; b) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> a.single_line_mode_ == b.single_line_mode_ &amp;&amp;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;         a.use_short_repeated_primitives_ == b.use_short_repeated_primitives_ &amp;&amp;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;         a.truncate_string_field_longer_than_ ==</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;             b.truncate_string_field_longer_than_;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html#aade1d4d45dfdc3a9bfc4bbb94ba9a3c6">   52</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html">TracingOptions</a>&amp; TracingOptions::SetOptions(std::string <span class="keyword">const</span>&amp; str) {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> beg = str.begin();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> end = str.end();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> pos = beg;;) {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> comma = std::find(pos, end, <span class="charliteral">&#39;,&#39;</span>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">auto</span> <span class="keyword">const</span> equal = std::find(pos, comma, <span class="charliteral">&#39;=&#39;</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    std::string <span class="keyword">const</span> opt{pos, equal};</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    std::string <span class="keyword">const</span> val{equal + (equal == comma ? 0 : 1), comma};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;single_line_mode&quot;</span>) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseBoolean(val)) single_line_mode_ = *v;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;use_short_repeated_primitives&quot;</span>) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseBoolean(val)) use_short_repeated_primitives_ = *v;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (opt == <span class="stringliteral">&quot;truncate_string_field_longer_than&quot;</span>) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <span class="keywordflow">if</span> (<span class="keyword">auto</span> v = ParseInteger(val)) truncate_string_field_longer_than_ = *v;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span> (comma == end) <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    pos = comma + 1;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_NS</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aversion_8h_html_a134d5cda4ccfbd57b121a419f1608142"><div class="ttname"><a href="version_8h.html#a134d5cda4ccfbd57b121a419f1608142">GOOGLE_CLOUD_CPP_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00024">version.h:24</a></div></div>
 <div class="ttc" id="alog_8cc_html_abc5627fb346314b5f14b10bdb6542da7"><div class="ttname"><a href="log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a></div><div class="ttdeci">absl::Time t</div><div class="ttdef"><b>Definition:</b> <a href="log_8cc_source.html#l00036">log.cc:36</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1v1_html_a7fd862af37e9d326fe7d03e84132a429"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1v1.html#a7fd862af37e9d326fe7d03e84132a429">google::cloud::v1::operator==</a></div><div class="ttdeci">bool operator==(IamBindings const &amp;lhs, IamBindings const &amp;rhs)</div><div class="ttdef"><b>Definition:</b> <a href="iam__bindings_8h_source.html#l00159">iam_bindings.h:159</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1TracingOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html">google::cloud::v1::TracingOptions</a></div><div class="ttdoc">The configuration parameters for RPC/protobuf tracing.</div><div class="ttdef"><b>Definition:</b> <a href="tracing__options_8h_source.html#l00033">tracing_options.h:33</a></div></div>
 <div class="ttc" id="atracing__options_8h_html"><div class="ttname"><a href="tracing__options_8h.html">tracing_options.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div><div class="ttdef"><b>Definition:</b> <a href="async__operation_8h_source.html#l00022">async_operation.h:22</a></div></div>
