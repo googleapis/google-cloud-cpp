@@ -143,6 +143,7 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
+    internal/options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -166,7 +167,6 @@ add_library(
     log.cc
     log.h
     optional.h
-    options.h
     polling_policy.h
     status.cc
     status.h
@@ -250,6 +250,7 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/options_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
@@ -261,7 +262,6 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
-        options_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc
