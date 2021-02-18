@@ -46,7 +46,12 @@ else
 fi
 
 "${vcpkg_bin}" remove --outdated --recurse
-"${vcpkg_bin}" install google-cloud-cpp
+if ! "${vcpkg_bin}" install google-cloud-cpp; then
+  # We have seen download errors here, so make a single retry after a
+  # short pause. See https://github.com/microsoft/vcpkg/issues/11073.
+  sleep 5
+  "${vcpkg_bin}" install google-cloud-cpp
+fi
 
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
