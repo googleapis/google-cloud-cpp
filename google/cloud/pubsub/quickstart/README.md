@@ -140,6 +140,14 @@ To correctly configure the MSVC runtime you should change the CMake minimum
 required version to 3.15 or add `-DCMAKE_POLICY_DEFAULT_CMP0091=NEW` to the
 CMake configuration step.
 
+Bazel tends to create very long file names and paths, you may need to use a
+short directory to store the build output, such as `c:\b`, and instruct Bazel
+to use it via:
+
+```shell
+bazel --output_user_root=c:\b build ...
+```
+
 gRPC [requires][grpc-roots-pem-bug] an environment variable to configure the
 trust store for SSL certificates, you can download and configure this using:
 
