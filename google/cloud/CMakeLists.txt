@@ -124,6 +124,7 @@ add_library(
     internal/backoff_policy.h
     internal/big_endian.h
     internal/build_info.h
+    internal/common_options.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/diagnostics_pop.inc
@@ -244,6 +245,7 @@ if (BUILD_TESTING)
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
+        internal/common_options_test.cc
         internal/compiler_info_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc
@@ -382,6 +384,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h
+        internal/grpc_options.cc
+        internal/grpc_options.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/polling_loop.h
@@ -465,6 +469,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
+            internal/grpc_options_test.cc
             internal/log_wrapper_test.cc
             internal/polling_loop_test.cc
             internal/resumable_streaming_read_rpc_test.cc
