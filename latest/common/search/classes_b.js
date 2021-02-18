@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['runtimestatuserror_268',['RuntimeStatusError',['../classgoogle_1_1cloud_1_1v1_1_1RuntimeStatusError.html',1,'google::cloud::v1::RuntimeStatusError'],['../classgoogle_1_1cloud_1_1v1_1_1RuntimeStatusError.html',1,'google::cloud::v1::RuntimeStatusError']]]
+  ['status_263',['Status',['../classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1::Status'],['../classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1::Status']]],
+  ['statusor_264',['StatusOr',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1::StatusOr&lt; T &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1::StatusOr&lt; T &gt;']]],
+  ['streamrange_265',['StreamRange',['../classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1::StreamRange&lt; T &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1::StreamRange&lt; T &gt;']]]
 ];
