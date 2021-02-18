@@ -136,10 +136,6 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 /**
  * Configure if only the IAM policies are used for access control.
  *
- * @warning Uniform Bucket Level Access is currently protected by an access list
- *     and not available to all users. Please consult your support team if you
- *     intend to use this feature.
- *
  * @see Before enabling Uniform Bucket Level Access please
  *     review the [feature documentation][ubla-link], as well as
  *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
