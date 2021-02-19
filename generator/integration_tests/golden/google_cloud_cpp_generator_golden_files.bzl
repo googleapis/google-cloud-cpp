@@ -45,6 +45,7 @@ google_cloud_cpp_generator_golden_files = [
     "internal/golden_thing_admin_stub.gcpcxx.pb.h",
     "internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc",
     "internal/golden_thing_admin_stub_factory.gcpcxx.pb.h",
+    "mocks/mock_golden_kitchen_sink_connection.gcpcxx.pb.h",
     "mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h",
     "retry_traits.h",
     "streaming.cc",

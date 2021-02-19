@@ -101,10 +101,11 @@ fi
 
 echo "================================================================"
 io::log_yellow "Verify googleapis commit hash for generated code"
-(
-  cd "${PROJECT_ROOT}"
-  ./ci/check-generated-code-hash.sh
-)
+"${PROJECT_ROOT}"/ci/check-generated-code-hash.sh
+
+echo "================================================================"
+io::log_yellow "Verify generator golden file md5 hashes"
+"${PROJECT_ROOT}"/ci/check-golden-md5-hashes.sh
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
