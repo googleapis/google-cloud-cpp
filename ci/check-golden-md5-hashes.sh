@@ -25,7 +25,7 @@ fi
 
 cd "${PROJECT_ROOT}"
 num_current_files=$(find generator/integration_tests/golden -name '*.gcpcxx.*' | wc -l)
-num_hashed_files=$(wc -l < "${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5)
+num_hashed_files=$(wc -l <"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5)
 
 if [ "${num_current_files}" -gt "${num_hashed_files}" ]; then
   io::log_red "New golden files have been added."
