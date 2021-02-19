@@ -34,6 +34,7 @@ readonly PROGRAM=${1}
 shift
 
 "${PROGRAM}" "$@" && exit 0
+status=${?}
 
 while (((retries--) > 0)); do
   # apply +/- 50% jitter to min_wait
@@ -42,6 +43,7 @@ while (((retries--) > 0)); do
   sleep ${period}s
   min_wait=$((min_wait * 2))
   "${PROGRAM}" "$@" && exit 0
+  status=${?}
 done
 
-exit 1
+exit "${status}"

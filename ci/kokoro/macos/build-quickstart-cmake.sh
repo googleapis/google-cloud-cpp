@@ -47,7 +47,7 @@ fi
 
 "${vcpkg_bin}" remove --outdated --recurse
 "${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
-    "${vcpkg_bin}" install google-cloud-cpp
+  "${vcpkg_bin}" install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
