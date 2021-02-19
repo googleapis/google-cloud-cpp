@@ -30,6 +30,8 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
@@ -673,11 +675,15 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& backup_id) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  auto backup = client
-                    .CreateBackup(database, backup_id,
-                                  std::chrono::system_clock::now() +
-                                      std::chrono::hours(7))
-                    .get();
+  auto expire_time =
+      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
+          .value();
+  auto backup =
+      client
+          .CreateBackup(
+              database, backup_id,
+              expire_time.get<std::chrono::system_clock::time_point>().value())
+          .get();
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout << "Backup '" << backup->name() << "' of '" << database.FullName()
             << "' of size " << backup->size_bytes() << " bytes"
@@ -755,8 +761,13 @@ void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& backup_id) {
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto expire_time =
+      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
+          .value();
+
   auto backup = client.UpdateBackupExpireTime(
-      backup_name, std::chrono::system_clock::now() + std::chrono::hours(7));
+      backup_name,
+      expire_time.get<std::chrono::system_clock::time_point>().value());
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout << "Backup '" << backup->name() << "' updated to expire at "
             << google::protobuf::util::TimeUtil::ToString(backup->expire_time())
@@ -803,9 +814,12 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
                            std::string const& backup_id) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
+  auto expire_time =
+      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
+          .value();
   auto f = client.CreateBackup(
       database, backup_id,
-      std::chrono::system_clock::now() + std::chrono::hours(7));
+      expire_time.get<std::chrono::system_clock::time_point>().value());
   f.cancel();
   auto backup = f.get();
   if (backup) {
@@ -1319,8 +1333,7 @@ void QueryWithStringParameter(google::cloud::spanner::Client client) {
 //! [START spanner_query_with_timestamp_parameter]
 void QueryWithTimestampParameter(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto example_timestamp =
-      spanner::MakeTimestamp(std::chrono::system_clock::now()).value();
+  auto example_timestamp = spanner::MakeTimestamp(absl::Now()).value();
   spanner::SqlStatement select(
       "SELECT VenueId, VenueName, LastUpdateTime FROM Venues"
       " WHERE LastUpdateTime <= @last_update_time",

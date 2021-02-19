@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/time_utils.h"
 #include <chrono>
 
 namespace google {
@@ -351,8 +351,12 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_backup_id(p.backup_id);
     auto& backup = *request.mutable_backup();
     backup.set_database(p.database.FullName());
-    *backup.mutable_expire_time() =
-        google::cloud::internal::ToProtoTimestamp(p.expire_time);
+    auto ts = MakeTimestamp(p.expire_time);
+    if (!ts) {
+      return google::cloud::make_ready_future(
+          StatusOr<gcsa::Backup>(ts.status()));
+    }
+    *backup.mutable_expire_time() = ts->get<protobuf::Timestamp>().value();
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,

@@ -48,9 +48,12 @@ google::protobuf::Timestamp MakeProtoTimestamp(std::int64_t seconds,
   return proto;
 }
 
+Timestamp MakeSpannerTimestamp(std::int64_t seconds, std::int32_t nanos) {
+  return MakeTimestamp(MakeProtoTimestamp(seconds, nanos)).value();
+}
+
 TEST(Timestamp, RegularSemantics) {
-  Timestamp const ts =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(0, 0)).value();
+  Timestamp const ts = MakeSpannerTimestamp(0, 0);
 
   Timestamp const copy1(ts);
   EXPECT_EQ(copy1, ts);
@@ -64,198 +67,115 @@ TEST(Timestamp, RegularSemantics) {
 }
 
 TEST(Timestamp, RelationalOperators) {
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
-  EXPECT_LE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
-  EXPECT_GE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
+  EXPECT_EQ(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422667));
+  EXPECT_LE(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422667));
+  EXPECT_GE(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422667));
 
-  EXPECT_NE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422668))
-                .value());
-  EXPECT_LT(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422668))
-                .value());
-  EXPECT_NE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030525, 611422667))
-                .value());
-  EXPECT_LT(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030525, 611422667))
-                .value());
+  EXPECT_NE(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422668));
+  EXPECT_LT(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422668));
+  EXPECT_NE(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030525, 611422667));
+  EXPECT_LT(MakeSpannerTimestamp(1576030524, 611422667),
+            MakeSpannerTimestamp(1576030525, 611422667));
 
-  EXPECT_NE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422668))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
-  EXPECT_GT(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422668))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
-  EXPECT_NE(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030525, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
-  EXPECT_GT(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030525, 611422667))
-                .value(),
-            spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1576030524, 611422667))
-                .value());
+  EXPECT_NE(MakeSpannerTimestamp(1576030524, 611422668),
+            MakeSpannerTimestamp(1576030524, 611422667));
+  EXPECT_GT(MakeSpannerTimestamp(1576030524, 611422668),
+            MakeSpannerTimestamp(1576030524, 611422667));
+  EXPECT_NE(MakeSpannerTimestamp(1576030525, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422667));
+  EXPECT_GT(MakeSpannerTimestamp(1576030525, 611422667),
+            MakeSpannerTimestamp(1576030524, 611422667));
 }
 
 TEST(Timestamp, OutputStreaming) {
   std::ostringstream os;
-  os << spanner_internal::TimestampFromProto(
-            MakeProtoTimestamp(1561135942, 123456789))
-            .value();
+  os << MakeSpannerTimestamp(1561135942, 123456789);
   EXPECT_EQ("2019-06-21T16:52:22.123456789Z", os.str());
 }
 
 TEST(Timestamp, FromRFC3339) {
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 0))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 0),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22Z").value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 9))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 9),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000000009Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 89))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 89),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000000089Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000000789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 6789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 6789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000006789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 56789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 56789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000056789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 456789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 456789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.000456789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 3456789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 3456789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.003456789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 23456789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 23456789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.023456789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 123456789))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 123456789),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.123456789Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 123456780))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 123456780),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.12345678Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 123456700))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 123456700),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.1234567Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 123456000))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 123456000),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.123456Z")
           .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1561135942, 123450000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1561135942, 123450000),
             spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.12345Z")
                 .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1561135942, 123400000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1561135942, 123400000),
             spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.1234Z")
                 .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1561135942, 123000000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1561135942, 123000000),
             spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.123Z")
                 .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1561135942, 120000000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1561135942, 120000000),
             spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.12Z")
                 .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(1561135942, 100000000))
-          .value(),
+      MakeSpannerTimestamp(1561135942, 100000000),
       spanner_internal::TimestampFromRFC3339("2019-06-21T16:52:22.1Z").value());
 }
 
 TEST(Timestamp, FromRFC3339Offset) {
-  EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(1546398245, 0))
-          .value(),
-      spanner_internal::TimestampFromRFC3339("2019-01-02T03:04:05+00:00")
-          .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1546398245 + 3600 + 120, 0))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1546398245, 0),
+            spanner_internal::TimestampFromRFC3339("2019-01-02T03:04:05+00:00")
+                .value());
+  EXPECT_EQ(MakeSpannerTimestamp(1546398245 + 3600 + 120, 0),
             spanner_internal::TimestampFromRFC3339("2019-01-02T03:04:05-01:02")
                 .value());
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(1546398245 - 3600 - 120, 0))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(1546398245 - 3600 - 120, 0),
             spanner_internal::TimestampFromRFC3339("2019-01-02T03:04:05+01:02")
                 .value());
 }
@@ -286,14 +206,11 @@ TEST(Timestamp, FromRFC3339Failure) {
 TEST(Timestamp, FromRFC3339Limit) {
   // Verify Spanner range requirements.
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(-62135596800, 0))
-          .value(),
+      MakeSpannerTimestamp(-62135596800, 0),
       spanner_internal::TimestampFromRFC3339("0001-01-01T00:00:00.000000000Z")
           .value());
   EXPECT_EQ(
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(253402300799, 999999999))
-          .value(),
+      MakeSpannerTimestamp(253402300799, 999999999),
       spanner_internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z")
           .value());
 
@@ -307,129 +224,85 @@ TEST(Timestamp, FromRFC3339Limit) {
 
 TEST(Timestamp, ToRFC3339) {
   EXPECT_EQ("2019-06-21T16:52:22Z", spanner_internal::TimestampToRFC3339(
-                                        spanner_internal::TimestampFromProto(
-                                            MakeProtoTimestamp(1561135942, 0))
-                                            .value()));
+                                        MakeSpannerTimestamp(1561135942, 0)));
   EXPECT_EQ("2019-06-21T16:52:22.000000009Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 9))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 9)));
   EXPECT_EQ("2019-06-21T16:52:22.000000089Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 89))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 89)));
   EXPECT_EQ("2019-06-21T16:52:22.000000789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 789)));
   EXPECT_EQ("2019-06-21T16:52:22.000006789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 6789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 6789)));
   EXPECT_EQ("2019-06-21T16:52:22.000056789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 56789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 56789)));
   EXPECT_EQ("2019-06-21T16:52:22.000456789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 456789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 456789)));
   EXPECT_EQ("2019-06-21T16:52:22.003456789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 3456789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 3456789)));
   EXPECT_EQ("2019-06-21T16:52:22.023456789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 23456789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 23456789)));
   EXPECT_EQ("2019-06-21T16:52:22.123456789Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123456789))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123456789)));
   EXPECT_EQ("2019-06-21T16:52:22.12345678Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123456780))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123456780)));
   EXPECT_EQ("2019-06-21T16:52:22.1234567Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123456700))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123456700)));
   EXPECT_EQ("2019-06-21T16:52:22.123456Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123456000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123456000)));
   EXPECT_EQ("2019-06-21T16:52:22.12345Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123450000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123450000)));
   EXPECT_EQ("2019-06-21T16:52:22.1234Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123400000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123400000)));
   EXPECT_EQ("2019-06-21T16:52:22.123Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 123000000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 123000000)));
   EXPECT_EQ("2019-06-21T16:52:22.12Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 120000000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 120000000)));
   EXPECT_EQ("2019-06-21T16:52:22.1Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(1561135942, 100000000))
-                    .value()));
+                MakeSpannerTimestamp(1561135942, 100000000)));
 }
 
 TEST(Timestamp, ToRFC3339Limit) {
   // Spanner range requirements.
   EXPECT_EQ("0001-01-01T00:00:00Z", spanner_internal::TimestampToRFC3339(
-                                        spanner_internal::TimestampFromProto(
-                                            MakeProtoTimestamp(-62135596800, 0))
-                                            .value()));
+                                        MakeSpannerTimestamp(-62135596800, 0)));
   EXPECT_EQ("9999-12-31T23:59:59.999999999Z",
             spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(
-                    MakeProtoTimestamp(253402300799, 999999999))
-                    .value()));
+                MakeSpannerTimestamp(253402300799, 999999999)));
 }
 
 TEST(Timestamp, FromProto) {
   auto proto = MakeProtoTimestamp(0, 0);
   EXPECT_EQ("1970-01-01T00:00:00Z",
-            spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(proto).value()));
+            spanner_internal::TimestampToRFC3339(MakeTimestamp(proto).value()));
 
   proto = MakeProtoTimestamp(1576030524, 611422667);
   EXPECT_EQ("2019-12-11T02:15:24.611422667Z",
-            spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(proto).value()));
+            spanner_internal::TimestampToRFC3339(MakeTimestamp(proto).value()));
 
   proto = MakeProtoTimestamp(-62135596800, 0);
   EXPECT_EQ("0001-01-01T00:00:00Z",
-            spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(proto).value()));
+            spanner_internal::TimestampToRFC3339(MakeTimestamp(proto).value()));
 
   proto = MakeProtoTimestamp(253402300799, 999999999);
   EXPECT_EQ("9999-12-31T23:59:59.999999999Z",
-            spanner_internal::TimestampToRFC3339(
-                spanner_internal::TimestampFromProto(proto).value()));
+            spanner_internal::TimestampToRFC3339(MakeTimestamp(proto).value()));
 }
 
 TEST(Timestamp, FromProtoLimit) {
@@ -438,38 +311,43 @@ TEST(Timestamp, FromProtoLimit) {
   // Note: These values can be computed with `date +%s --date="YYYY-MM-...Z"`
   EXPECT_EQ(
       spanner_internal::TimestampFromRFC3339("0001-01-01T00:00:00Z").value(),
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(-62135596800, 0))
-          .value());
+      MakeSpannerTimestamp(-62135596800, 0));
   EXPECT_EQ(
       spanner_internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z")
           .value(),
-      spanner_internal::TimestampFromProto(
-          MakeProtoTimestamp(253402300799, 999999999))
-          .value());
+      MakeSpannerTimestamp(253402300799, 999999999));
 }
 
 TEST(Timestamp, ToProto) {
-  auto proto = spanner_internal::TimestampToProto(
+  auto proto =
       spanner_internal::TimestampFromRFC3339("1970-01-01T00:00:00.000000000Z")
-          .value());
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   EXPECT_EQ(0, proto.seconds());
   EXPECT_EQ(0, proto.nanos());
 
-  proto = spanner_internal::TimestampToProto(
+  proto =
       spanner_internal::TimestampFromRFC3339("2019-12-11T02:15:24.611422667Z")
-          .value());
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   EXPECT_EQ(1576030524, proto.seconds());
   EXPECT_EQ(611422667, proto.nanos());
 
-  proto = spanner_internal::TimestampToProto(
+  proto =
       spanner_internal::TimestampFromRFC3339("0001-01-01T00:00:00.000000000Z")
-          .value());
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   EXPECT_EQ(-62135596800, proto.seconds());
   EXPECT_EQ(0, proto.nanos());
 
-  proto = spanner_internal::TimestampToProto(
+  proto =
       spanner_internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z")
-          .value());
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   EXPECT_EQ(253402300799, proto.seconds());
   EXPECT_EQ(999999999, proto.nanos());
 }
@@ -477,50 +355,36 @@ TEST(Timestamp, ToProto) {
 TEST(Timestamp, FromChrono) {  // i.e., MakeTimestamp(sys_time<Duration>)
   auto const tp1 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(2123456789, 123456789))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(2123456789, 123456789),
             MakeTimestamp(tp1).value());
 
   auto const tp2 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(2123456789, 123456000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(2123456789, 123456000),
             MakeTimestamp(tp2).value());
 
   auto const tp3 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::milliseconds(123);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(2123456789, 123000000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(2123456789, 123000000),
             MakeTimestamp(tp3).value());
 
   auto const tp4 = kUnixEpoch + std::chrono::minutes(2123456789);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(2123456789LL * 60, 0))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(2123456789LL * 60, 0),
             MakeTimestamp(tp4).value());
 
   auto const tp5 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(-2123456789, 123456789))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(-2123456789, 123456789),
             MakeTimestamp(tp5).value());
 
   auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(-2123456789, 123456000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(-2123456789, 123456000),
             MakeTimestamp(tp6).value());
 
   auto const tp7 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::milliseconds(123);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(
-                MakeProtoTimestamp(-2123456789, 123000000))
-                .value(),
+  EXPECT_EQ(MakeSpannerTimestamp(-2123456789, 123000000),
             MakeTimestamp(tp7).value());
 }
 
@@ -540,9 +404,7 @@ TEST(Timestamp, FromChronoOverflow) {
 }
 
 TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
-  auto const ts_pos = spanner_internal::TimestampFromProto(
-                          MakeProtoTimestamp(2123456789, 123456789))
-                          .value();
+  auto const ts_pos = MakeSpannerTimestamp(2123456789, 123456789);
 
   auto const tp1 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
@@ -562,9 +424,7 @@ TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
   auto const tp5 = kUnixEpoch + std::chrono::hours(2123456789 / 60 / 60);
   EXPECT_EQ(tp5, ts_pos.get<sys_time<std::chrono::hours>>().value());
 
-  auto const ts_neg = spanner_internal::TimestampFromProto(
-                          MakeProtoTimestamp(-2123456789, 123456789))
-                          .value();
+  auto const ts_neg = MakeSpannerTimestamp(-2123456789, 123456789);
 
   auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
@@ -589,25 +449,19 @@ TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
 
   // The limit of a 64-bit count of nanoseconds (assuming the system_clock
   // epoch is the Unix epoch).
-  auto const ts11 = spanner_internal::TimestampFromProto(
-                        MakeProtoTimestamp(9223372036, 854775807))
-                        .value();
+  auto const ts11 = MakeSpannerTimestamp(9223372036, 854775807);
   auto const tp11 = kUnixEpoch + std::chrono::seconds(9223372036) +
                     std::chrono::nanoseconds(854775807);
   EXPECT_EQ(tp11, ts11.get<sys_time<std::chrono::nanoseconds>>().value());
 }
 
 TEST(Timestamp, ToChronoOverflow) {
-  auto const ts1 =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(20000000000, 0))
-          .value();
+  auto const ts1 = MakeSpannerTimestamp(20000000000, 0);
   auto const tp1 = ts1.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_THAT(tp1,
               StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
-  auto const ts2 =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(-20000000000, 0))
-          .value();
+  auto const ts2 = MakeSpannerTimestamp(-20000000000, 0);
   auto const tp2 = ts2.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_THAT(tp2,
               StatusIs(Not(StatusCode::kOk), HasSubstr("negative overflow")));
@@ -615,9 +469,7 @@ TEST(Timestamp, ToChronoOverflow) {
   // One beyond the limit of a 64-bit count of nanoseconds (assuming the
   // system_clock epoch is the Unix epoch). This overflow is detected in a
   // different code path to the "positive overflow" above.
-  auto const ts3 = spanner_internal::TimestampFromProto(
-                       MakeProtoTimestamp(9223372036, 854775808))
-                       .value();
+  auto const ts3 = MakeSpannerTimestamp(9223372036, 854775808);
   auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_THAT(tp3,
               StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
@@ -625,21 +477,18 @@ TEST(Timestamp, ToChronoOverflow) {
   // Uses a small duration (8-bits of seconds) to clearly demonstrate that we
   // detect potential overflow into the Duration's rep.
   using Sec8Bit = std::chrono::duration<std::int8_t, std::ratio<1>>;
-  auto const ts4 =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(127, 0)).value();
+  auto const ts4 = MakeSpannerTimestamp(127, 0);
   auto const tp4 = ts4.get<sys_time<Sec8Bit>>();
   EXPECT_TRUE(tp4);  // An in-range value succeeds.
 
   // One beyond the capacity for (signed) 8-bits of seconds would overflow.
-  auto const ts5 =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(128, 0)).value();
+  auto const ts5 = MakeSpannerTimestamp(128, 0);
   auto const tp5 = ts5.get<sys_time<Sec8Bit>>();
   EXPECT_THAT(tp5,
               StatusIs(Not(StatusCode::kOk), HasSubstr("positive overflow")));
 
   // One less than the capacity for (signed) 8-bits of seconds would overflow.
-  auto const ts6 =
-      spanner_internal::TimestampFromProto(MakeProtoTimestamp(-129, 0)).value();
+  auto const ts6 = MakeSpannerTimestamp(-129, 0);
   auto const tp6 = ts6.get<sys_time<Sec8Bit>>();
   EXPECT_THAT(tp6,
               StatusIs(Not(StatusCode::kOk), HasSubstr("negative overflow")));
@@ -673,7 +522,7 @@ TEST(Timestamp, AbslTimeRoundTrip) {  // i.e., `MakeTimestamp(absl::Time)`
   for (auto const& tc : round_trip_cases) {
     SCOPED_TRACE("Time: " + absl::FormatTime(tc.t));
     auto const ts = MakeTimestamp(tc.t).value();
-    EXPECT_EQ(ts, spanner_internal::TimestampFromProto(tc.proto).value());
+    EXPECT_EQ(ts, MakeTimestamp(tc.proto).value());
     auto const t = ts.get<absl::Time>().value();
     EXPECT_EQ(t, tc.t);
   }

@@ -21,8 +21,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
-#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -32,10 +32,8 @@ namespace {
 
 using ::testing::UnorderedElementsAreArray;
 
-std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
-MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
-  return std::chrono::system_clock::from_time_t(sec) +
-         std::chrono::nanoseconds(nanos);
+absl::Time MakeTime(std::time_t sec, int nanos) {
+  return absl::FromTimeT(sec) + absl::Nanoseconds(nanos);
 }
 
 // A helper function used in the test fixtures below. This function writes the
@@ -189,11 +187,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
 
   std::vector<Timestamp> const data = {
       *min,
-      MakeTimestamp(MakeTimePoint(-1, 0)).value(),
-      MakeTimestamp(MakeTimePoint(0, -1)).value(),
-      MakeTimestamp(MakeTimePoint(0, 0)).value(),
-      MakeTimestamp(MakeTimePoint(0, 1)).value(),
-      MakeTimestamp(MakeTimePoint(1, 0)).value(),
+      MakeTimestamp(MakeTime(-1, 0)).value(),
+      MakeTimestamp(MakeTime(0, -1)).value(),
+      MakeTimestamp(MakeTime(0, 0)).value(),
+      MakeTimestamp(MakeTime(0, 1)).value(),
+      MakeTimestamp(MakeTime(1, 0)).value(),
       *now,
       *max,
   };
@@ -299,11 +297,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
 TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
   std::vector<std::vector<Timestamp>> const data = {
       std::vector<Timestamp>{},
-      std::vector<Timestamp>{MakeTimestamp(MakeTimePoint(-1, 0)).value()},
+      std::vector<Timestamp>{MakeTimestamp(MakeTime(-1, 0)).value()},
       std::vector<Timestamp>{
-          MakeTimestamp(MakeTimePoint(-1, 0)).value(),
-          MakeTimestamp(MakeTimePoint(0, 0)).value(),
-          MakeTimestamp(MakeTimePoint(1, 0)).value(),
+          MakeTimestamp(MakeTime(-1, 0)).value(),
+          MakeTimestamp(MakeTime(0, 0)).value(),
+          MakeTimestamp(MakeTime(1, 0)).value(),
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");

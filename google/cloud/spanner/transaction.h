@@ -33,6 +33,7 @@ struct TransactionInternals;
 
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * The representation of a Cloud Spanner transaction.
  *

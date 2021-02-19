@@ -17,13 +17,13 @@
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
@@ -124,7 +124,8 @@ TEST_F(BackupTest, BackupTest) {
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
   auto database = database_admin_client_.CreateDatabase(db).get();
   ASSERT_STATUS_OK(database);
-  auto create_time = internal::ToAbslTime(database->create_time());
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
   auto backup_future = database_admin_client_.CreateBackup(
@@ -163,9 +164,7 @@ TEST_F(BackupTest, BackupTest) {
   auto backup = backup_future.get();
   EXPECT_STATUS_OK(backup);
   if (backup) {
-    EXPECT_EQ(
-        spanner_internal::TimestampFromProto(backup->expire_time()).value(),
-        expire_time);
+    EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
   }
 
   Backup backup_name(in, db.database_id());
@@ -213,8 +212,7 @@ TEST_F(BackupTest, BackupTest) {
       *backup,
       new_expire_time.get<std::chrono::system_clock::time_point>().value());
   EXPECT_STATUS_OK(updated_backup);
-  EXPECT_EQ(spanner_internal::TimestampFromProto(updated_backup->expire_time())
-                .value(),
+  EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
             new_expire_time);
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
