@@ -303,8 +303,6 @@ Public Member Functions</h2></td></tr>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; database_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">  using ::google::cloud::future;</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::Database</a> database(project_id, instance_id,</div>
 <div class="line">                                            database_id);</div>
 <div class="line">  <span class="keyword">auto</span> backup = client</div>
@@ -312,9 +310,10 @@ Public Member Functions</h2></td></tr>
 <div class="line">                                  std::chrono::system_clock::now() +</div>
 <div class="line">                                      std::chrono::hours(7))</div>
 <div class="line">                    .get();</div>
-<div class="line">  <span class="keywordflow">if</span> (!backup.ok()) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span></div>
-<div class="line">            &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes was created at &quot;</span></div>
+<div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of &#39;&quot;</span> &lt;&lt; database.FullName()</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span> &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; was created at &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;create_time())</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
@@ -413,10 +412,9 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a027a862edaa6297b5136746620a054a9">DeleteBackup</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">  using ::google::cloud::Status;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::Backup</a> backup(</div>
 <div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::Instance</a>(project_id, instance_id), backup_id);</div>
-<div class="line">  Status status = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a027a862edaa6297b5136746620a054a9">DeleteBackup</a>(backup);</div>
+<div class="line">  <span class="keyword">auto</span> status = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a027a862edaa6297b5136746620a054a9">DeleteBackup</a>(backup);</div>
 <div class="line">  <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup.FullName() &lt;&lt; <span class="stringliteral">&quot;&#39; was deleted.\n&quot;</span>;</div>
 <div class="line">}</div>
@@ -503,11 +501,10 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a013c48b7b10a72e698520a12e2122fac">GetBackup</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">               std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">               std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::Backup</a> backup_name(</div>
 <div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::Instance</a>(project_id, instance_id), backup_id);</div>
 <div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a013c48b7b10a72e698520a12e2122fac">GetBackup</a>(backup_name);</div>
-<div class="line">  <span class="keywordflow">if</span> (!backup.ok()) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
+<div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span></div>
 <div class="line">            &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes was created at &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;create_time())</div>
@@ -672,7 +669,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &quot;</span> &lt;&lt; metadata.name() &lt;&lt; <span class="stringliteral">&quot; on database &quot;</span></div>
 <div class="line">              &lt;&lt; metadata.database()</div>
 <div class="line">              &lt;&lt; <span class="stringliteral">&quot; progress: &quot;</span> &lt;&lt; metadata.progress().progress_percent()</div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;% complete.&quot;</span>;</div>
+<div class="line">              &lt;&lt; <span class="stringliteral">&quot;% complete.\n&quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
@@ -782,7 +779,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">        metadata;</div>
 <div class="line">    operation-&gt;metadata().UnpackTo(&amp;metadata);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Database &quot;</span> &lt;&lt; metadata.name() &lt;&lt; <span class="stringliteral">&quot; restored from backup is &quot;</span></div>
-<div class="line">              &lt;&lt; metadata.progress().progress_percent() &lt;&lt; <span class="stringliteral">&quot;% optimized.&quot;</span>;</div>
+<div class="line">              &lt;&lt; metadata.progress().progress_percent() &lt;&lt; <span class="stringliteral">&quot;% optimized.\n&quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
@@ -866,15 +863,13 @@ Public Member Functions</h2></td></tr>
 <div class="line">                     std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                     std::string <span class="keyword">const</span>&amp; database_id,</div>
 <div class="line">                     std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">  using ::google::cloud::future;</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::Database</a> database(project_id, instance_id,</div>
 <div class="line">                                            database_id);</div>
-<div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::Backup</a> backup(</div>
-<div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::Instance</a>(project_id, instance_id), backup_id);</div>
+<div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::Backup</a> backup(database.instance(), backup_id);</div>
 <div class="line">  <span class="keyword">auto</span> restored_db = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2e3021d7e5f34f5ca62cce5a40b9ffdb">RestoreDatabase</a>(database, backup).get();</div>
-<div class="line">  <span class="keywordflow">if</span> (!restored_db.ok())</div>
+<div class="line">  <span class="keywordflow">if</span> (!restored_db) {</div>
 <div class="line">    <span class="keywordflow">throw</span> std::runtime_error(restored_db.status().message());</div>
+<div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Database &#39;&quot;</span> &lt;&lt; restored_db-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; was restored from &quot;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; backup &#39;&quot;</span> &lt;&lt; backup.FullName() &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
 <div class="line">}</div>
@@ -1227,13 +1222,12 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> UpdateBackup(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::Backup</a> backup_name(</div>
 <div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::Instance</a>(project_id, instance_id), backup_id);</div>
 <div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">UpdateBackupExpireTime</a>(</div>
 <div class="line">      backup_name, std::chrono::system_clock::now() + std::chrono::hours(7));</div>
-<div class="line">  <span class="keywordflow">if</span> (!backup.ok()) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; updated to new expire_time &quot;</span></div>
+<div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; updated to expire at &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;expire_time())</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
