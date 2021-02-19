@@ -60,7 +60,7 @@ for proto in "${product_path_proto_path_to_generate[@]}"; do
   find "${product_path}" \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
 done
 
-io::log_yellow "Update generator-googlapis-commit-hash.sh file."
+io::log_yellow "Update generator-googlapis-commit-hash. file."
 cat >"${PROJECT_ROOT}"/ci/etc/generator-googleapis-commit-hash.sh <<EOF
 #!/usr/bin/env bash
 # Copyright 2021 Google LLC
@@ -83,7 +83,7 @@ GOOGLEAPIS_HASH_LAST_USED=$BAZEL_DEPS_GOOGLEAPIS_HASH
 readonly GOOGLEAPIS_HASH_LAST_USED
 EOF
 
-io::log_yellow "Update ci/etc/generator-golden-md5-hashes.sh."
-find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -z | xargs -0 md5sum >>"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5
-
+io::log_yellow "Update ci/etc/generator-golden-md5-hashes.md5."
+find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -z |
+  xargs -0 md5sum >"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5
 exit 0
