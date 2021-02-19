@@ -112,6 +112,9 @@ class Timestamp {
    */
   template <typename T>
   StatusOr<T> get() const {
+    // All `ConvertTo()` overloads return a `StatusOr<T>` even when they
+    // cannot actually fail (e.g., when the destination type can represent
+    // all `Timestamp` values). See individual comments below.
     return ConvertTo(T{});
   }
 
