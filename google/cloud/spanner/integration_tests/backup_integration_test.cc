@@ -17,7 +17,6 @@
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
-#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
