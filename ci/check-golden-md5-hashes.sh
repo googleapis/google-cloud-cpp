@@ -25,7 +25,7 @@ fi
 
 cd "${PROJECT_ROOT}"
 num_current_files=$(find generator/integration_tests/golden -name '*.gcpcxx.*' | wc -l)
-num_hashed_files=$(cat "${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5 | wc -l)
+num_hashed_files=$(wc -l < "${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5)
 
 if [ "${num_current_files}" -gt "${num_hashed_files}" ]; then
   io::log_red "New golden files have been added."
@@ -33,7 +33,7 @@ if [ "${num_current_files}" -gt "${num_hashed_files}" ]; then
   exit 1
 fi
 
-hash_check_result=$(md5sum --check --quiet "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.sh") || true
+hash_check_result=$(md5sum --check --quiet "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.md5") || true
 
 if [[ ${hash_check_result} != "" ]]; then
   io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
