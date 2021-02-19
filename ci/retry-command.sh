@@ -16,17 +16,13 @@
 
 set -eu
 
-# Make three attempts to install the dependencies. It is rare, but from time to
-# time the downloading the packages, building the Docker images, or an installer
-# Bazel, or the Google Cloud SDK fails. To make the CI build more robust, try
-# again when that happens.
-
 if (($# < 3)); then
   cat <<EOM
-Usage: $(basename "$0") attempts initial-interval program [arguments]
+Usage: $(basename "$0") retries initial-interval program [arguments]
 
-  Retries <program> up to <attempts> times, with exponential backoff.
-  The initial retry interval is <initial-interval> seconds.
+  Runs <program> [arguments], and then retries up to <retries> times,
+  with jittered exponential backoff between failures. The initial backoff
+  interval is <initial-interval> seconds.
 EOM
   exit 1
 fi
@@ -37,18 +33,17 @@ shift
 readonly PROGRAM=${1}
 shift
 
-# Do not exit on failures for this loop.
-set +e
-while (((--retries) > 0)); do
-  "${PROGRAM}" "$@"
-  if [[ $? -eq 0 ]]; then
-    exit 0
-  fi
+"${PROGRAM}" "$@" && exit 0
+status=${?}
+
+while (((retries--) > 0)); do
   # apply +/- 50% jitter to min_wait
   period=$((min_wait * (50 + (RANDOM % 100)) / 100))
   echo "${PROGRAM} failed; trying again in ${period} seconds."
   sleep ${period}s
   min_wait=$((min_wait * 2))
+  "${PROGRAM}" "$@" && exit 0
+  status=${?}
 done
 
-exit 1
+exit "${status}"

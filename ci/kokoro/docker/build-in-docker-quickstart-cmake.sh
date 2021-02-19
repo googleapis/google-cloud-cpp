@@ -63,7 +63,8 @@ else
 fi
 
 "${vcpkg_bin}" remove --outdated --recurse
-"${vcpkg_bin}" install google-cloud-cpp
+"${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
+  "${vcpkg_bin}" install google-cloud-cpp
 
 run_quickstart="false"
 readonly CONFIG_DIR="/c"
