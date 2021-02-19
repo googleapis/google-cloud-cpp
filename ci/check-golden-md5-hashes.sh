@@ -23,39 +23,20 @@ if [[ "${CHECK_GENERATED_CODE_HASH}" != "yes" ]]; then
   exit 0
 fi
 
-# defines array GOLDEN_FILE_MD5_HASHES=("hash filepath")
-source "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.sh"
-
 cd "${PROJECT_ROOT}"
-readarray -d '' current_golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -dz)
+num_current_files=$(find generator/integration_tests/golden -name '*.gcpcxx.*' | wc -l)
+num_hashed_files=$(cat "${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5 | wc -l)
 
-if [ "${#current_golden_files[@]}" -gt "${#GOLDEN_FILE_MD5_HASHES[@]}" ]; then
+if [ "${num_current_files}" -gt "${num_hashed_files}" ]; then
   io::log_red "New golden files have been added."
   io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
   exit 1
 fi
 
-for i in "${!current_golden_files[@]}"; do
-  read -r -a tuple <<<"${GOLDEN_FILE_MD5_HASHES[i]}"
-  md5_hash=${tuple[0]}
-  golden_file=${tuple[1]}
+hash_check_result=$(md5sum --check --quiet "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.sh") || true
 
-  current_md5_hash_output=$(md5sum "${current_golden_files[i]}")
-  read -r -a current_tuple <<<"${current_md5_hash_output}"
-  current_md5_hash=${current_tuple[0]}
-  current_golden_file=${current_tuple[1]}
-
-  if [ "${current_golden_file}" == "${golden_file}" ]; then
-    if [ "${current_md5_hash}" != "${md5_hash}" ]; then
-      io::log_red "${current_golden_file} md5 hash has changed."
-      io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
-      exit 1
-    fi
-  else
-    io::log_red "Unexpected file ${current_golden_file}"
-    io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
-    exit 1
-  fi
-done
+if [[ ${hash_check_result} != "" ]]; then
+  io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
+fi
 
 exit 0

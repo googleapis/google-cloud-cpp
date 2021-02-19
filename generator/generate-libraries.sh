@@ -83,43 +83,8 @@ GOOGLEAPIS_HASH_LAST_USED=$BAZEL_DEPS_GOOGLEAPIS_HASH
 readonly GOOGLEAPIS_HASH_LAST_USED
 EOF
 
-readarray -d '' golden_files < <(find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -dz)
 
 io::log_yellow "Update ci/etc/generator-golden-md5-hashes.sh."
-cat >"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.sh <<EOF
-#!/usr/bin/env bash
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-set -eu
-
-GOLDEN_FILE_MD5_HASHES=(
-EOF
-
-cd "${PROJECT_ROOT}"
-for golden_file in "${golden_files[@]}"; do
-  echo "Compute md5 hash for ${golden_file}"
-  golden_md5_hash_output=$(md5sum "${golden_file}")
-  cat >>"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.sh <<EOF
-  "$golden_md5_hash_output"
-EOF
-done
-
-cat >>"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.sh <<EOF
-)
-
-readonly GOLDEN_FILE_MD5_HASHES
-EOF
+find generator/integration_tests/golden -name '*.gcpcxx.*' -print0 | sort -z | xargs -0 md5sum >> "${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5
 
 exit 0
