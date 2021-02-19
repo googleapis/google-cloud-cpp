@@ -354,7 +354,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     auto ts = MakeTimestamp(p.expire_time);
     if (!ts) {
       return google::cloud::make_ready_future(
-          StatusOr<gcsa::Backup>(ts.status()));
+          StatusOr<gcsa::Backup>(std::move(ts).status()));
     }
     *backup.mutable_expire_time() = ts->get<protobuf::Timestamp>().value();
     auto operation = RetryLoop(
