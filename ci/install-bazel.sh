@@ -31,13 +31,14 @@ readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" |
 readonly BAZEL_VERSION="${GOOGLE_CLOUD_CPP_BAZEL_VERSION}"
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
 readonly SCRIPT_NAME="bazel-${BAZEL_VERSION}-installer-${PLATFORM}.sh"
-wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}"
-wget -q "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}.sha256"
+readonly SCRIPT_HASH="${SCRIPT_NAME}.sha256"
+curl -L "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_NAME}" -o "${SCRIPT_NAME}"
+curl -L "${GITHUB_DL}/${BAZEL_VERSION}/${SCRIPT_HASH}" -o "${SCRIPT_HASH}"
 
 # We want to protect against accidents (i.e., we don't want to download and
 # execute a 404 page), not malice, so downloading the checksum and the file
 # from the same source is Okay.
-sha256sum --check "${SCRIPT_NAME}.sha256"
+sha256sum --check "${SCRIPT_HASH}"
 
 chmod +x "${SCRIPT_NAME}"
 if [[ "${USER:-}" = "root" ]] || [[ "${USER+x}" = "" ]]; then

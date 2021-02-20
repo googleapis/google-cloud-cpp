@@ -20,7 +20,7 @@ source "$(dirname "$0")/etc/install-config.sh"
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
 readonly TARBALL="google-cloud-sdk-${GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION}-linux-x86_64.tar.gz"
-wget -q "${SITE}/${TARBALL}"
+curl -L "${SITE}/${TARBALL}" -o "${TARBALL}"
 
 echo "${GOOGLE_CLOUD_CPP_SDK_SHA256} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f "${TARBALL}"
