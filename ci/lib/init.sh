@@ -42,7 +42,10 @@ function init::repo_root() {
   echo "${dir}"
 }
 
-PROGRAM_PATH="$(realpath "$0")"
+# Gets the absolute path to $0, which is the currently executing script that
+# sourced this library. realpath(1) would work here, but it's not available by
+# default on macOS
+PROGRAM_PATH="$(cd "$(dirname "$0")" && pwd -P)/$(basename "$0")"
 PROGRAM_NAME="$(basename "${PROGRAM_PATH}")"
 PROGRAM_DIR="$(dirname "${PROGRAM_PATH}")"
 PROJECT_ROOT="$(init::repo_root "${PROGRAM_DIR}")"
