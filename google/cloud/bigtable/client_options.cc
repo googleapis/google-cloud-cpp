@@ -95,11 +95,15 @@ inline std::size_t CalculateDefaultConnectionPoolSize() {
   // to calculate the default pool size based on cores(CPU) available. However,
   // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
   // fully rely upon, it is only a hint and the value can be 0 if it is not
-  // well defined or not computable. Apart from CPU count, multiple channels can
-  // be opened for each CPU to increase throughput.
+  // well defined or not computable. Apart from CPU count, multiple channels
+  // can be opened for each CPU to increase throughput. The pool size is also
+  // capped so that servers with many cores do not create too many channels.
   std::size_t cpu_count = std::thread::hardware_concurrency();
-  return (cpu_count > 0) ? cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU
-                         : BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+  if (cpu_count == 0) return BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+  return (
+      std::min<std::size_t>)(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
+                             cpu_count *
+                                 BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
 }
 
 ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
