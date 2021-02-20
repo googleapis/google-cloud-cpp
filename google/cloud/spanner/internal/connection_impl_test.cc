@@ -173,7 +173,8 @@ spanner_proto::CommitResponse MakeCommitResponse(
     spanner::Timestamp commit_timestamp,
     absl::optional<spanner::CommitStats> commit_stats = absl::nullopt) {
   spanner_proto::CommitResponse response;
-  *response.mutable_commit_timestamp() = TimestampToProto(commit_timestamp);
+  *response.mutable_commit_timestamp() =
+      commit_timestamp.get<protobuf::Timestamp>().value();
   if (commit_stats.has_value()) {
     auto* proto_stats = response.mutable_commit_stats();
     proto_stats->set_mutation_count(commit_stats->mutation_count);

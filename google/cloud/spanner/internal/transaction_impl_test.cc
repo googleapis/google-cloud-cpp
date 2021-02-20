@@ -133,8 +133,7 @@ ResultSet Client::Read(SessionHolder& session,
     if (selector->begin().has_read_only() &&
         selector->begin().read_only().has_read_timestamp()) {
       auto const& proto = selector->begin().read_only().read_timestamp();
-      if (spanner_internal::TimestampFromProto(proto).value() ==
-              read_timestamp_ &&
+      if (spanner::MakeTimestamp(proto).value() == read_timestamp_ &&
           seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {

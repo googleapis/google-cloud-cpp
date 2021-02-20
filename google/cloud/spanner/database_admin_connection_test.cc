@@ -14,9 +14,12 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -666,35 +669,52 @@ TEST(DatabaseAdminConnectionTest, TestIamPermissionsTooManyTransients) {
 /// @test Verify that successful case works.
 TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Database dbase("test-project", "test-instance", "test-db");
+  auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
 
   EXPECT_CALL(*mock, CreateBackup(_, _))
-      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
+      .WillOnce([&dbase, &expire_time](grpc::ClientContext&,
+                                       gcsa::CreateBackupRequest const& r) {
+        EXPECT_EQ(dbase.instance().FullName(), r.parent());
+        EXPECT_EQ("test-backup", r.backup_id());
+        auto const& backup = r.backup();
+        EXPECT_EQ(dbase.FullName(), backup.database());
+        EXPECT_EQ(MakeTimestamp(backup.expire_time()).value(),
+                  MakeTimestamp(
+                      expire_time.get<std::chrono::system_clock::time_point>()
+                          .value())
+                      .value());  // loss of precision
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
         return make_status_or(op);
       });
   EXPECT_CALL(*mock, GetOperation(_, _))
-      .WillOnce([](grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const& r) {
-        EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_name(r.name());
-        op.set_done(true);
-        gcsa::Backup backup;
-        backup.set_name("test-backup");
-        op.mutable_response()->PackFrom(backup);
-        return make_status_or(op);
-      });
+      .WillOnce(
+          [&expire_time](grpc::ClientContext&,
+                         google::longrunning::GetOperationRequest const& r) {
+            EXPECT_EQ("test-operation-name", r.name());
+            google::longrunning::Operation op;
+            op.set_name(r.name());
+            op.set_done(true);
+            gcsa::Backup backup;
+            backup.set_name("test-backup");
+            *backup.mutable_expire_time() =
+                expire_time.get<protobuf::Timestamp>().value();
+            op.mutable_response()->PackFrom(backup);
+            return make_status_or(op);
+          });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  Database dbase("test-project", "test-instance", "test-db");
-  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  auto fut = conn->CreateBackup(
+      {dbase, "test-backup",
+       expire_time.get<std::chrono::system_clock::time_point>().value()});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
 
   EXPECT_EQ("test-backup", backup->name());
+  EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
 }
 
 /// @test Verify cancellation.

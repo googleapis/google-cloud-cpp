@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/spanner/timestamp.h"
 #include <algorithm>
 
 namespace google {
@@ -156,11 +156,12 @@ ListBackupsRange DatabaseAdminClient::ListBackups(Instance in,
 StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     google::spanner::admin::database::v1::Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
-  auto proto_expire_time =
-      google::cloud::internal::ToProtoTimestamp(expire_time);
+  auto expire_timestamp = MakeTimestamp(expire_time);
+  if (!expire_timestamp) return expire_timestamp.status();
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.name());
-  *request.mutable_backup()->mutable_expire_time() = proto_expire_time;
+  *request.mutable_backup()->mutable_expire_time() =
+      expire_timestamp->get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
 }
@@ -168,11 +169,12 @@ StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
 StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     Backup const& backup,
     std::chrono::system_clock::time_point const& expire_time) {
-  auto proto_expire_time =
-      google::cloud::internal::ToProtoTimestamp(expire_time);
+  auto expire_timestamp = MakeTimestamp(expire_time);
+  if (!expire_timestamp) return expire_timestamp.status();
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.FullName());
-  *request.mutable_backup()->mutable_expire_time() = proto_expire_time;
+  *request.mutable_backup()->mutable_expire_time() =
+      expire_timestamp->get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
 }

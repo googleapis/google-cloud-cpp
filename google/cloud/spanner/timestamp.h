@@ -94,11 +94,13 @@ class Timestamp {
    * `*this` cannot be represented as a `T`.
    *
    * Supported destination types are:
-   *   - `google::cloud::spanner::sys_time<Duration>` - `Duration::rep` may not
-   *      be wider than `std::int64_t`, and `Duration::period` may be no more
-   *      precise than `std::nano`.
    *   - `absl::Time` - Since `absl::Time` can represent all possible
    *     `Timestamp` values, `get<absl::Time>()` never returns an error.
+   *   - `google::protobuf::Timestamp` - Never returns an error, but any
+   *     sub-nanosecond precision will be lost.
+   *   - `google::cloud::spanner::sys_time<Duration>` - `Duration::rep` may
+   *     not be wider than `std::int64_t`, and `Duration::period` may be no
+   *     more precise than `std::nano`.
    *
    * @par Example
    *
@@ -110,6 +112,9 @@ class Timestamp {
    */
   template <typename T>
   StatusOr<T> get() const {
+    // All `ConvertTo()` overloads return a `StatusOr<T>` even when they
+    // cannot actually fail (e.g., when the destination type can represent
+    // all `Timestamp` values). See individual comments below.
     return ConvertTo(T{});
   }
 
@@ -140,6 +145,10 @@ class Timestamp {
   // Conversion to an `absl::Time`. Can never fail.
   StatusOr<absl::Time> ConvertTo(absl::Time) const { return t_; }
 
+  // Conversion to a `google::protobuf::Timestamp`. Can never fail, but
+  // any sub-nanosecond precision will be lost.
+  StatusOr<protobuf::Timestamp> ConvertTo(protobuf::Timestamp const&) const;
+
   explicit Timestamp(absl::Time t) : t_(t) {}
 
   absl::Time t_;
@@ -151,6 +160,13 @@ class Timestamp {
  * class comments above).
  */
 StatusOr<Timestamp> MakeTimestamp(absl::Time);
+
+/**
+ * Construct a `Timestamp` from a `google::protobuf::Timestamp`. May produce
+ * out-of-range errors if the given protobuf is beyond the range supported by
+ * `Timestamp` (which a valid protobuf never will).
+ */
+StatusOr<Timestamp> MakeTimestamp(protobuf::Timestamp const&);
 
 /**
  * Construct a `Timestamp` from a `std::chrono::time_point` on the system
@@ -188,8 +204,6 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 StatusOr<spanner::Timestamp> TimestampFromRFC3339(std::string const&);
 std::string TimestampToRFC3339(spanner::Timestamp);
-StatusOr<spanner::Timestamp> TimestampFromProto(protobuf::Timestamp const&);
-protobuf::Timestamp TimestampToProto(spanner::Timestamp);
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
