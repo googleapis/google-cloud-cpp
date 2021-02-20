@@ -12,14 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
-#include "google/cloud/spanner/testing/cleanup_stale_instances.h"
-#include "google/cloud/spanner/testing/pick_instance_config.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
-#include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -57,32 +54,6 @@ bool Emulator() {
   return emulator;
 }
 
-class CleanupStaleInstances : public ::testing::Environment {
- public:
-  void SetUp() override {
-    std::regex instance_name_regex(
-        R"(projects/.+/instances/)"
-        R"((temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
-
-    // Make sure we're using a correct regex.
-    EXPECT_EQ(2, instance_name_regex.mark_count());
-    auto generator = google::cloud::internal::MakeDefaultPRNG();
-    Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator));
-    auto fq_instance_name = in.FullName();
-    std::smatch m;
-    EXPECT_TRUE(std::regex_match(fq_instance_name, m, instance_name_regex));
-    EXPECT_EQ(3, m.size());
-
-    if (RunSlowBackupTests()) {
-      EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
-          in.project_id(), instance_name_regex));
-    }
-  }
-};
-
-::testing::Environment* const kCleanupEnv =
-    ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
-
 class BackupTest : public ::testing::Test {
  public:
   BackupTest()
@@ -90,9 +61,7 @@ class BackupTest : public ::testing::Test {
         database_admin_client_(MakeDatabaseAdminConnection(
             ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
             spanner_testing::TestBackoffPolicy(),
-            spanner_testing::TestPollingPolicy())) {
-    static_cast<void>(kCleanupEnv);
-  }
+            spanner_testing::TestPollingPolicy())) {}
 
  protected:
   google::cloud::internal::DefaultPRNG generator_;
@@ -103,24 +72,12 @@ class BackupTest : public ::testing::Test {
 TEST_F(BackupTest, BackupTest) {
   if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
 
-  InstanceAdminClient instance_admin_client(MakeInstanceAdminConnection(
-      ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
-      spanner_testing::TestBackoffPolicy(),
-      spanner_testing::TestPollingPolicy()));
-
-  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
-  auto instance_config = spanner_testing::PickInstanceConfig(
-      in.project_id(), std::regex(".*us-west.*"), generator_);
-  ASSERT_FALSE(instance_config.empty()) << "could not get an instance config";
-  EXPECT_STATUS_OK(
-      instance_admin_client
-          .CreateInstance(CreateInstanceRequestBuilder(in, instance_config)
-                              .SetDisplayName("test-display-name")
-                              .SetNodeCount(1)
-                              .Build())
-          .get());
-
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_STATUS_OK(instance_id);
+  Instance in(ProjectId(), *instance_id);
   Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
   auto database = database_admin_client_.CreateDatabase(db).get();
   ASSERT_STATUS_OK(database);
   auto create_time =
@@ -147,7 +104,6 @@ TEST_F(BackupTest, BackupTest) {
   auto filter = std::string("(metadata.database:") + db.database_id() +
                 ") AND " + "(metadata.@type:type.googleapis.com/" +
                 "google.spanner.admin.database.v1.CreateBackupMetadata)";
-
   std::vector<std::string> db_names;
   for (auto const& operation :
        database_admin_client_.ListBackupOperations(in, filter)) {
@@ -165,6 +121,8 @@ TEST_F(BackupTest, BackupTest) {
   if (backup) {
     EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
   }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
 
   Backup backup_name(in, db.database_id());
   auto backup_get = database_admin_client_.GetBackup(backup_name);
@@ -215,7 +173,6 @@ TEST_F(BackupTest, BackupTest) {
             new_expire_time);
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
-  EXPECT_STATUS_OK(instance_admin_client.DeleteInstance(in));
 }
 
 }  // namespace
