@@ -42,9 +42,9 @@ StatusOr<protobuf::Timestamp> Timestamp::ConvertTo(
     protobuf::Timestamp const&) const {
   auto constexpr kDestType = "google::protobuf::Timestamp";
   auto const s = absl::ToUnixSeconds(t_);
-  if (s > protobuf::util::TimeUtil::kTimestampMaxSeconds)
+  if (s > google::protobuf::util::TimeUtil::kTimestampMaxSeconds)
     return PositiveOverflow(kDestType);
-  if (s < protobuf::util::TimeUtil::kTimestampMinSeconds)
+  if (s < google::protobuf::util::TimeUtil::kTimestampMinSeconds)
     return NegativeOverflow(kDestType);
   auto const ns = absl::ToInt64Nanoseconds(t_ - absl::FromUnixSeconds(s));
   google::protobuf::Timestamp proto;
@@ -66,10 +66,10 @@ StatusOr<std::int64_t> Timestamp::ToRatio(std::int64_t min, std::int64_t max,
 
 StatusOr<Timestamp> MakeTimestamp(absl::Time t) {
   auto constexpr kDestType = "google::cloud::spanner::Timestamp";
-  auto constexpr kMinTime =
-      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMinSeconds);
-  auto constexpr kMaxTime =
-      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);
+  auto constexpr kMinTime = absl::FromUnixSeconds(
+      google::protobuf::util::TimeUtil::kTimestampMinSeconds);
+  auto constexpr kMaxTime = absl::FromUnixSeconds(
+      google::protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);
   if (t >= kMaxTime) return PositiveOverflow(kDestType);
   if (t < kMinTime) return NegativeOverflow(kDestType);
   return Timestamp(t);
