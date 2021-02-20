@@ -270,6 +270,17 @@ TEST(ClientOptionsTest, ResetToDefaultConnectionPoolSize) {
   EXPECT_LE(1UL, returned.connection_pool_size());
 }
 
+TEST(ClientOptionsTest, ConnectionPoolSizeDoesNotExceedMax) {
+  bigtable::ClientOptions client_options_object;
+  auto& returned = client_options_object.set_connection_pool_size(
+      BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX + 1);
+  EXPECT_EQ(&returned, &client_options_object);
+  // The number of connections should be >= 1, we "know" what the actual value
+  // is, but we do not want a change-detection-test.
+  EXPECT_LE(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
+            returned.connection_pool_size());
+}
+
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   // Test milliseconds are set properly to channel_arguments
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
