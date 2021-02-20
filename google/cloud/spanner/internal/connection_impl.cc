@@ -943,7 +943,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     // successful so we cannot indicate an error. This should not happen,
     // but if it does we set r.commit_timestamp to its maximal value.
     protobuf::Timestamp proto;
-    proto.set_seconds(protobuf::util::TimeUtil::kTimestampMaxSeconds);
+    proto.set_seconds(google::protobuf::util::TimeUtil::kTimestampMaxSeconds);
     proto.set_nanos(999999999);
     timestamp = spanner::MakeTimestamp(proto);
   }
