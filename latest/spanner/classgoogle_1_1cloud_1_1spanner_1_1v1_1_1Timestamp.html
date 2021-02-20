@@ -243,15 +243,16 @@ template&lt;typename T &gt; </div>
 <p>Convert the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> to the user-specified template type. </p>
 <p>Fails if <code>*this</code> cannot be represented as a <code>T</code>.</p>
 <p>Supported destination types are:</p><ul>
-<li><code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a7c4710c3947e498043bd11dfd9d3a70c" title="Convenience alias.">google::cloud::spanner::sys_time</a>&lt;Duration&gt;</code> - <code>Duration::rep</code> may not be wider than <code>std::int64_t</code>, and <code>Duration::period</code> may be no more precise than <code>std::nano</code>.</li>
 <li><code>absl::Time</code> - Since <code>absl::Time</code> can represent all possible <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> values, <code>get&lt;absl::Time&gt;()</code> never returns an error.</li>
+<li><code>google::protobuf::Timestamp</code> - Never returns an error, but any sub-nanosecond precision will be lost.</li>
+<li><code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a7c4710c3947e498043bd11dfd9d3a70c" title="Convenience alias.">google::cloud::spanner::sys_time</a>&lt;Duration&gt;</code> - <code>Duration::rep</code> may not be wider than <code>std::int64_t</code>, and <code>Duration::period</code> may be no more precise than <code>std::nano</code>.</li>
 </ul>
 <dl class="section user"><dt>Example</dt><dd></dd></dl>
 <div class="fragment"><div class="line">sys_time&lt;std::chrono::nanoseconds&gt; tp = ...;</div>
 <div class="line"><a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a37c6d40ea22d5fc16e75e570f1f25a10">Timestamp</a> ts = <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a1235f438dd6414e6a10c63106df9305c">MakeTimestamp</a>(tp).value();</div>
 <div class="line">assert(tp == ts.get&lt;sys_time&lt;std::chrono::nanoseconds&gt;&gt;().value());</div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="timestamp_8h_source.html#l00112">112</a> of file <a class="el" href="timestamp_8h_source.html">timestamp.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timestamp_8h_source.html#l00114">114</a> of file <a class="el" href="timestamp_8h_source.html">timestamp.h</a>.</p>
 
 </div>
 </div>
@@ -335,7 +336,7 @@ template&lt;typename T &gt; </div>
 <p>Construct a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> from an <code>absl::Time</code>. </p>
 <p>May produce out-of-range errors if the given time is beyond the range supported by <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> (see class comments above). </p>
 
-<p class="definition">Definition at line <a class="el" href="timestamp_8cc_source.html#l00052">52</a> of file <a class="el" href="timestamp_8cc_source.html">timestamp.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timestamp_8cc_source.html#l00067">67</a> of file <a class="el" href="timestamp_8cc_source.html">timestamp.cc</a>.</p>
 
 </div>
 </div>
@@ -452,15 +453,16 @@ template&lt;typename T &gt; </div>
 <p>Convert the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> to the user-specified template type. </p>
 <p>Fails if <code>*this</code> cannot be represented as a <code>T</code>.</p>
 <p>Supported destination types are:</p><ul>
-<li><code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a7c4710c3947e498043bd11dfd9d3a70c" title="Convenience alias.">google::cloud::spanner::sys_time</a>&lt;Duration&gt;</code> - <code>Duration::rep</code> may not be wider than <code>std::int64_t</code>, and <code>Duration::period</code> may be no more precise than <code>std::nano</code>.</li>
 <li><code>absl::Time</code> - Since <code>absl::Time</code> can represent all possible <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> values, <code>get&lt;absl::Time&gt;()</code> never returns an error.</li>
+<li><code>google::protobuf::Timestamp</code> - Never returns an error, but any sub-nanosecond precision will be lost.</li>
+<li><code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a7c4710c3947e498043bd11dfd9d3a70c" title="Convenience alias.">google::cloud::spanner::sys_time</a>&lt;Duration&gt;</code> - <code>Duration::rep</code> may not be wider than <code>std::int64_t</code>, and <code>Duration::period</code> may be no more precise than <code>std::nano</code>.</li>
 </ul>
 <dl class="section user"><dt>Example</dt><dd></dd></dl>
 <div class="fragment"><div class="line">sys_time&lt;std::chrono::nanoseconds&gt; tp = ...;</div>
 <div class="line"><a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a37c6d40ea22d5fc16e75e570f1f25a10">Timestamp</a> ts = <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a1235f438dd6414e6a10c63106df9305c">MakeTimestamp</a>(tp).value();</div>
 <div class="line">assert(tp == ts.get&lt;sys_time&lt;std::chrono::nanoseconds&gt;&gt;().value());</div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="timestamp_8cc_source.html#l00065">65</a> of file <a class="el" href="timestamp_8cc_source.html">timestamp.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="timestamp_8cc_source.html#l00083">83</a> of file <a class="el" href="timestamp_8cc_source.html">timestamp.cc</a>.</p>
 
 </div>
 </div>
@@ -618,7 +620,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp_html_a37c6d40ea22d5fc16e75e570f1f25a10"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a37c6d40ea22d5fc16e75e570f1f25a10">google::cloud::spanner::v1::Timestamp::Timestamp</a></div><div class="ttdeci">Timestamp()</div><div class="ttdoc">Default construction yields 1970-01-01T00:00:00Z.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8h_source.html#l00057">timestamp.h:57</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp_html_a1235f438dd6414e6a10c63106df9305c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a1235f438dd6414e6a10c63106df9305c">google::cloud::spanner::v1::Timestamp::MakeTimestamp</a></div><div class="ttdeci">friend StatusOr&lt; Timestamp &gt; MakeTimestamp(absl::Time)</div><div class="ttdoc">Construct a Timestamp from an absl::Time.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cc_source.html#l00052">timestamp.cc:52</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp_html_a1235f438dd6414e6a10c63106df9305c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html#a1235f438dd6414e6a10c63106df9305c">google::cloud::spanner::v1::Timestamp::MakeTimestamp</a></div><div class="ttdeci">friend StatusOr&lt; Timestamp &gt; MakeTimestamp(absl::Time)</div><div class="ttdoc">Construct a Timestamp from an absl::Time.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cc_source.html#l00067">timestamp.cc:67</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

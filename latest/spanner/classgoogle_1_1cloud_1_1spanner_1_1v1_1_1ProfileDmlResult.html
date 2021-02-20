@@ -230,7 +230,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the plan of execution for the SQL statement. </p>
 
-<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00101">101</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00100">100</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
 
 </div>
 </div>
@@ -252,7 +252,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns a collection of key value pair statistics for the SQL statement execution. </p>
 <dl class="section note"><dt>Note</dt><dd>Only available when the SQL statement is executed. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00097">97</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00096">96</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
 
 </div>
 </div>
@@ -300,7 +300,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the number of rows modified by the DML statement. </p>
 <dl class="section note"><dt>Note</dt><dd>Partitioned DML only provides a lower bound of the rows modified, all other DML statements provide an exact count. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00082">82</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="results_8cc_source.html#l00081">81</a> of file <a class="el" href="results_8cc_source.html">results.cc</a>.</p>
 
 </div>
 </div>
@@ -308,9 +308,9 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_ad21455de67af4f689627a95c9d2d641a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#ad21455de67af4f689627a95c9d2d641a">google::cloud::spanner::v1::Client::ProfileDml</a></div><div class="ttdeci">StatusOr&lt; ProfileDmlResult &gt; ProfileDml(Transaction transaction, SqlStatement statement, QueryOptions const &amp;opts={})</div><div class="ttdoc">Profiles a SQL DML statement.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00164">client.cc:164</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ae374cb411ab9c8e4d7cdc18400fa6070"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">google::cloud::spanner::v1::Mutations</a></div><div class="ttdeci">std::vector&lt; Mutation &gt; Mutations</div><div class="ttdoc">An ordered sequence of mutations to pass to Client::Commit() or return from the Client::Commit() muta...</div><div class="ttdef"><b>Definition:</b> <a href="mutations_8h_source.html#l00098">mutations.h:98</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html">google::cloud::spanner::v1::ProfileDmlResult</a></div><div class="ttdoc">Represents the result and profile stats of a data modifying operation using spanner::Client::ProfileD...</div><div class="ttdef"><b>Definition:</b> <a href="results_8h_source.html#l00216">results.h:216</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">google::cloud::spanner::v1::Transaction</a></div><div class="ttdoc">The representation of a Cloud Spanner transaction.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00056">transaction.h:56</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult_html_afb0fcfd1ac4f08eb466a86bec6791951"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html#afb0fcfd1ac4f08eb466a86bec6791951">google::cloud::spanner::v1::ProfileDmlResult::ExecutionStats</a></div><div class="ttdeci">absl::optional&lt; std::unordered_map&lt; std::string, std::string &gt; &gt; ExecutionStats() const</div><div class="ttdoc">Returns a collection of key value pair statistics for the SQL statement execution.</div><div class="ttdef"><b>Definition:</b> <a href="results_8cc_source.html#l00097">results.cc:97</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult_html_ad05ff814f533ca88bf2833e65384863a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html#ad05ff814f533ca88bf2833e65384863a">google::cloud::spanner::v1::ProfileDmlResult::RowsModified</a></div><div class="ttdeci">std::int64_t RowsModified() const</div><div class="ttdoc">Returns the number of rows modified by the DML statement.</div><div class="ttdef"><b>Definition:</b> <a href="results_8cc_source.html#l00082">results.cc:82</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Transaction.html">google::cloud::spanner::v1::Transaction</a></div><div class="ttdoc">The representation of a Cloud Spanner transaction.</div><div class="ttdef"><b>Definition:</b> <a href="transaction_8h_source.html#l00057">transaction.h:57</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult_html_afb0fcfd1ac4f08eb466a86bec6791951"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html#afb0fcfd1ac4f08eb466a86bec6791951">google::cloud::spanner::v1::ProfileDmlResult::ExecutionStats</a></div><div class="ttdeci">absl::optional&lt; std::unordered_map&lt; std::string, std::string &gt; &gt; ExecutionStats() const</div><div class="ttdoc">Returns a collection of key value pair statistics for the SQL statement execution.</div><div class="ttdef"><b>Definition:</b> <a href="results_8cc_source.html#l00096">results.cc:96</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult_html_ad05ff814f533ca88bf2833e65384863a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1ProfileDmlResult.html#ad05ff814f533ca88bf2833e65384863a">google::cloud::spanner::v1::ProfileDmlResult::RowsModified</a></div><div class="ttdeci">std::int64_t RowsModified() const</div><div class="ttdoc">Returns the number of rows modified by the DML statement.</div><div class="ttdef"><b>Definition:</b> <a href="results_8cc_source.html#l00081">results.cc:81</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html">google::cloud::spanner::v1::SqlStatement</a></div><div class="ttdoc">Represents a potentially parameterized SQL statement.</div><div class="ttdef"><b>Definition:</b> <a href="sql__statement_8h_source.html#l00050">sql_statement.h:50</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a9796d8bf838966aafbdbcbf974b9e0a6"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a9796d8bf838966aafbdbcbf974b9e0a6">google::cloud::spanner::v1::Client::Commit</a></div><div class="ttdeci">StatusOr&lt; CommitResult &gt; Commit(std::function&lt; StatusOr&lt; Mutations &gt;(Transaction)&gt; const &amp;mutator, std::unique_ptr&lt; TransactionRerunPolicy &gt; rerun_policy, std::unique_ptr&lt; BackoffPolicy &gt; backoff_policy, CommitOptions const &amp;options={})</div><div class="ttdoc">Commits a read-write transaction.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00188">client.cc:188</a></div></div>
 <!-- start footer part -->

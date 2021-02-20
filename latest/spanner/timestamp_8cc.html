@@ -65,15 +65,14 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">timestamp.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="timestamp_8h_source.html">google/cloud/spanner/timestamp.h</a>&quot;</code><br />
-<code>#include &quot;google/cloud/internal/time_utils.h&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/status_8h.html">google/cloud/status.h</a>&quot;</code><br />
+<code>#include &lt;google/protobuf/util/time_util.h&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
 <p><a href="timestamp_8cc_source.html">Go to the source code of this file.</a></p>
@@ -101,23 +100,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a338381056187f3ddff0bd76a96085101"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; Timestamp &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::v1::MakeTimestamp</a> (absl::Time)</td></tr>
 <tr class="memdesc:a338381056187f3ddff0bd76a96085101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> from an <code>absl::Time</code>.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">More...</a><br /></td></tr>
 <tr class="separator:a338381056187f3ddff0bd76a96085101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55ef418b685af78fab957f54d82c07f4"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; Timestamp &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a55ef418b685af78fab957f54d82c07f4">google::cloud::spanner::v1::MakeTimestamp</a> (protobuf::Timestamp const  &amp;)</td></tr>
+<tr class="memdesc:a55ef418b685af78fab957f54d82c07f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> from a <code>google::protobuf::Timestamp</code>.  <a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a55ef418b685af78fab957f54d82c07f4">More...</a><br /></td></tr>
+<tr class="separator:a55ef418b685af78fab957f54d82c07f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad41a7eda1f7dc855fba7ebecb2a939ba"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ad41a7eda1f7dc855fba7ebecb2a939ba">google::cloud::spanner::v1::operator&lt;&lt;</a> (std::ostream &amp;os, Timestamp ts)</td></tr>
 <tr class="separator:ad41a7eda1f7dc855fba7ebecb2a939ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a56156ae6054cea3993374d7c454535"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">spanner::Timestamp</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a9a56156ae6054cea3993374d7c454535">google::cloud::spanner_internal::v1::TimestampFromRFC3339</a> (std::string const &amp;s)</td></tr>
 <tr class="separator:a9a56156ae6054cea3993374d7c454535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40fc7a60c9971e4e77cbaae05cdc4fe8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a40fc7a60c9971e4e77cbaae05cdc4fe8">google::cloud::spanner_internal::v1::TimestampToRFC3339</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">spanner::Timestamp</a> ts)</td></tr>
 <tr class="separator:a40fc7a60c9971e4e77cbaae05cdc4fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a261cf31a67e91167f6cd2707e3fc7f70"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">spanner::Timestamp</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a261cf31a67e91167f6cd2707e3fc7f70">google::cloud::spanner_internal::v1::TimestampFromProto</a> (protobuf::Timestamp const &amp;proto)</td></tr>
-<tr class="separator:a261cf31a67e91167f6cd2707e3fc7f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706859c5407e293d64ba418922897bba"><td class="memItemLeft" align="right" valign="top">protobuf::Timestamp&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a706859c5407e293d64ba418922897bba">google::cloud::spanner_internal::v1::TimestampToProto</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">spanner::Timestamp</a> ts)</td></tr>
-<tr class="separator:a706859c5407e293d64ba418922897bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ae221e957c632f7bebe67470edbdc28f6"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ae221e957c632f7bebe67470edbdc28f6">google::cloud::spanner_internal::v1::kFormatSpec</a> = &quot;%E4Y-%m-%dT%H:%M:%E*SZ&quot;</td></tr>
-<tr class="separator:ae221e957c632f7bebe67470edbdc28f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43664186b5d18731425123a472bf2141"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a43664186b5d18731425123a472bf2141">google::cloud::spanner_internal::v1::kParseSpec</a> = &quot;%Y-%m-%dT%H:%M:%E*S%Ez&quot;</td></tr>
-<tr class="separator:a43664186b5d18731425123a472bf2141"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
