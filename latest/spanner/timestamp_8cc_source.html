@@ -111,9 +111,9 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    protobuf::Timestamp <span class="keyword">const</span>&amp;)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">auto</span> constexpr kDestType = <span class="stringliteral">&quot;google::protobuf::Timestamp&quot;</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> s = absl::ToUnixSeconds(t_);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">if</span> (s &gt; protobuf::util::TimeUtil::kTimestampMaxSeconds)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">if</span> (s &gt; google::protobuf::util::TimeUtil::kTimestampMaxSeconds)</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">return</span> PositiveOverflow(kDestType);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> (s &lt; protobuf::util::TimeUtil::kTimestampMinSeconds)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> (s &lt; google::protobuf::util::TimeUtil::kTimestampMinSeconds)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> NegativeOverflow(kDestType);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> ns = absl::ToInt64Nanoseconds(t_ - absl::FromUnixSeconds(s));</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  google::protobuf::Timestamp proto;</div>
@@ -135,10 +135,10 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">   67</a></span>&#160;StatusOr&lt;Timestamp&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">MakeTimestamp</a>(absl::Time t) {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keyword">auto</span> constexpr kDestType = <span class="stringliteral">&quot;google::cloud::spanner::Timestamp&quot;</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">auto</span> constexpr kMinTime =</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMinSeconds);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">auto</span> constexpr kMaxTime =</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      absl::FromUnixSeconds(protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">auto</span> constexpr kMinTime = absl::FromUnixSeconds(</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      google::protobuf::util::TimeUtil::kTimestampMinSeconds);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keyword">auto</span> constexpr kMaxTime = absl::FromUnixSeconds(</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      google::protobuf::util::TimeUtil::kTimestampMaxSeconds + 1);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">if</span> (<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a> &gt;= kMaxTime) <span class="keywordflow">return</span> PositiveOverflow(kDestType);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keywordflow">if</span> (<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a> &lt; kMinTime) <span class="keywordflow">return</span> NegativeOverflow(kDestType);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>(<a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>);</div>
