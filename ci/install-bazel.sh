@@ -25,8 +25,15 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/etc/install-config.sh"
 
-readonly PLATFORM=$(printf "%s-%s" "$(uname -s)" "$(uname -m)" |
-  tr '[:upper:]' '[:lower:]')
+readonly KERNEL="$(uname -s | tr '[:upper:]' '[:lower:]')"
+MACHINE="$(uname -m)"
+if [[ "${KERNEL}" = "darwin" ]]; then
+  # Bazel currently doesn't offer a darwin + arm package, but the x86_64
+  # package works.
+  MACHINE="x86_64"
+fi
+readonly MACHINE
+readonly PLATFORM="${KERNEL}-${MACHINE}"
 
 readonly BAZEL_VERSION="${GOOGLE_CLOUD_CPP_BAZEL_VERSION}"
 readonly GITHUB_DL="https://github.com/bazelbuild/bazel/releases/download"
