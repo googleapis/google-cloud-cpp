@@ -27,6 +27,10 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
+using InstancePredicate = std::function<bool(
+    google::spanner::admin::instance::v1::Instance const&,
+    google::spanner::admin::instance::v1::InstanceConfig const&)>;
+
 /**
  * Select one of the instances in @p project_id to run tests on.
  *
@@ -36,10 +40,7 @@ inline namespace SPANNER_CLIENT_NS {
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& project_id, std::string const& filter = "",
-    std::function<bool(
-        google::spanner::admin::instance::v1::Instance const&,
-        google::spanner::admin::instance::v1::InstanceConfig const&)> const&
-        predicate = nullptr);
+    InstancePredicate predicate = nullptr);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing

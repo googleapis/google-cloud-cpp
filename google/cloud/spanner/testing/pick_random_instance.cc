@@ -26,19 +26,22 @@ inline namespace SPANNER_CLIENT_NS {
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
     std::string const& project_id, std::string const& filter,
-    std::function<bool(
-        google::spanner::admin::instance::v1::Instance const&,
-        google::spanner::admin::instance::v1::InstanceConfig const&)> const&
-        predicate) {
+    InstancePredicate predicate) {
+  if (!predicate) {
+    predicate =
+        [](google::spanner::admin::instance::v1::Instance const&,
+           google::spanner::admin::instance::v1::InstanceConfig const&) {
+          return true;
+        };
+  }
+
   spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
 
+  // Fetch the instance configurations for use in the predicate.
   std::vector<google::spanner::admin::instance::v1::InstanceConfig> configs;
-  if (predicate) {
-    // Fetch the instance configurations for use in the callback.
-    for (auto& config : client.ListInstanceConfigs(project_id)) {
-      if (!config) return std::move(config).status();
-      configs.push_back(*std::move(config));
-    }
+  for (auto& config : client.ListInstanceConfigs(project_id)) {
+    if (!config) return std::move(config).status();
+    configs.push_back(*std::move(config));
   }
 
   // We only pick instance IDs starting with "test-instance-" for isolation
@@ -51,17 +54,13 @@ StatusOr<std::string> PickRandomInstance(
   for (auto& instance :
        client.ListInstances(project_id, filter + name_filter)) {
     if (!instance) return std::move(instance).status();
-    auto instance_id = instance->name().substr(instance_prefix.size());
-    if (!predicate) {
-      instance_ids.push_back(instance_id);
-    } else {
-      for (auto const& config : configs) {
-        if (instance->config() == config.name()) {
-          if (predicate(*instance, config)) {
-            instance_ids.push_back(instance_id);
-          }
-          break;
+    for (auto const& config : configs) {
+      if (instance->config() == config.name()) {
+        if (predicate(*instance, config)) {
+          auto instance_id = instance->name().substr(instance_prefix.size());
+          instance_ids.push_back(std::move(instance_id));
         }
+        break;
       }
     }
   }
