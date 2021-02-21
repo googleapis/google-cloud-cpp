@@ -13,37 +13,55 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_random_instance.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/internal/getenv.h"
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
-    std::string const& project_id) {
+    std::string const& project_id, std::string const& filter,
+    InstancePredicate predicate) {
+  if (!predicate) {
+    predicate =
+        [](google::spanner::admin::instance::v1::Instance const&,
+           google::spanner::admin::instance::v1::InstanceConfig const&) {
+          return true;
+        };
+  }
+
   spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
 
-  /**
-   * We started to have integration tests for InstanceAdminClient which creates
-   * and deletes temporary instances. If we pick one of those instances here,
-   * the following tests will fail after the deletion.
-   * InstanceAdminClient's integration tests are using instances prefixed with
-   * "temporary-instances-", so we only pick instances prefixed with
-   * "test-instance-" here for isolation.
-   */
+  // Fetch the instance configurations for use in the predicate.
+  std::vector<google::spanner::admin::instance::v1::InstanceConfig> configs;
+  for (auto& config : client.ListInstanceConfigs(project_id)) {
+    if (!config) return std::move(config).status();
+    configs.push_back(*std::move(config));
+  }
+
+  // We only pick instance IDs starting with "test-instance-" for isolation
+  // from tests that create/delete their own instances (in particular from
+  // tests calling `RandomInstanceName()`, which uses "temporary-instance-").
+  auto const instance_prefix = "projects/" + project_id + "/instances/";
+  auto const name_filter = " name:" + instance_prefix + "test-instance-";
+
   std::vector<std::string> instance_ids;
-  for (auto& instance : client.ListInstances(project_id, "")) {
+  for (auto& instance :
+       client.ListInstances(project_id, filter + name_filter)) {
     if (!instance) return std::move(instance).status();
-    auto name = instance->name();
-    std::string const sep = "/instances/";
-    std::string const valid_instance_name = sep + "test-instance-";
-    auto pos = name.rfind(valid_instance_name);
-    if (pos != std::string::npos) {
-      instance_ids.push_back(name.substr(pos + sep.size()));
+    for (auto const& config : configs) {
+      if (instance->config() == config.name()) {
+        if (predicate(*instance, config)) {
+          auto instance_id = instance->name().substr(instance_prefix.size());
+          instance_ids.push_back(std::move(instance_id));
+        }
+        break;
+      }
     }
   }
 
@@ -65,8 +83,9 @@ StatusOr<std::string> PickRandomInstance(
       }
     }
   }
+
   if (instance_ids.empty()) {
-    return Status(StatusCode::kInternal, "No available instances for test");
+    return Status(StatusCode::kUnavailable, "No available instances");
   }
 
   auto random_index =

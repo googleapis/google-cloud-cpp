@@ -18,16 +18,29 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
+#include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
+#include <functional>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
-/// Select one of the instances in @p project_id to run the tests on.
+
+using InstancePredicate = std::function<bool(
+    google::spanner::admin::instance::v1::Instance const&,
+    google::spanner::admin::instance::v1::InstanceConfig const&)>;
+
+/**
+ * Select one of the instances in @p project_id to run tests on.
+ *
+ * Only returns instances that match the @p filter and satisfy the
+ * @p predicate.
+ */
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
-    std::string const& project_id);
+    std::string const& project_id, std::string const& filter = "",
+    InstancePredicate predicate = nullptr);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
