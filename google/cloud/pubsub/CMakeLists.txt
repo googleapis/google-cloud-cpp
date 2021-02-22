@@ -41,6 +41,8 @@ add_library(
     connection_options.h
     experimental/schema.cc
     experimental/schema.h
+    experimental/schema_admin_connection.cc
+    experimental/schema_admin_connection.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
