@@ -70,7 +70,7 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
 
-enum class MethodParameterStyle { kApiMethodSignature, kProtobufReqeust };
+enum class MethodParameterStyle { kApiMethodSignature, kProtobufRequest };
 /**
  * Formats comments from the source .proto file into Doxygen compatible
  * function headers, including param and return lines as necessary.
