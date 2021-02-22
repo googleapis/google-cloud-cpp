@@ -25,8 +25,8 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Not;
 
 bool UsingEmulator() {
