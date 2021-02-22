@@ -361,8 +361,6 @@ Public Member Functions</h2></td></tr>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; project_id,</div>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; database_id) {</div>
-<div class="line">  using ::google::cloud::future;</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::Database</a> database(project_id, instance_id,</div>
 <div class="line">                                            database_id);</div>
 <div class="line">  std::vector&lt;std::string&gt; extra_statements;</div>
@@ -380,10 +378,8 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="stringliteral">          AlbumTitle   STRING(MAX)</span></div>
 <div class="line"><span class="stringliteral">      ) PRIMARY KEY (SingerId, AlbumId),</span></div>
 <div class="line"><span class="stringliteral">          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)&quot;&quot;&quot;);</span></div>
-<div class="line"><span class="stringliteral">  future&lt;StatusOr&lt;google::spanner::admin::database::v1::Database&gt;&gt; f =</span></div>
-<div class="line"><span class="stringliteral">      client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aba7e5d741747dc661e8686724381bc18">CreateDatabase</a>(database, std::move(extra_statements));</span></div>
-<div class="line"><span class="stringliteral">  StatusOr&lt;google::spanner::admin::database::v1::Database&gt; db = f.get();</span></div>
-<div class="line"><span class="stringliteral">  </span><span class="keywordflow">if</span> (!db) <span class="keywordflow">throw</span> std::runtime_error(db.status().message());</div>
+<div class="line"><span class="stringliteral">  </span><span class="keyword">auto</span> db = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aba7e5d741747dc661e8686724381bc18">CreateDatabase</a>(database, std::move(extra_statements)).get();</div>
+<div class="line">  <span class="keywordflow">if</span> (!db) <span class="keywordflow">throw</span> std::runtime_error(db.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Created database [&quot;</span> &lt;&lt; database &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
@@ -1231,7 +1227,6 @@ Public Member Functions</h2></td></tr>
 <div class="line">  <span class="keyword">auto</span> expire_time =</div>
 <div class="line">      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(absl::Now() + absl::Hours(7))</div>
 <div class="line">          .value();</div>
-<div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">UpdateBackupExpireTime</a>(</div>
 <div class="line">      backup_name,</div>
 <div class="line">      expire_time.get&lt;std::chrono::system_clock::time_point&gt;().value());</div>
@@ -1311,16 +1306,13 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> AddColumn(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">               std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">               std::string <span class="keyword">const</span>&amp; database_id) {</div>
-<div class="line">  using ::google::cloud::future;</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::Database</a> database(project_id, instance_id,</div>
 <div class="line">                                            database_id);</div>
-<div class="line">  future&lt;</div>
-<div class="line">      StatusOr&lt;google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata&gt;&gt;</div>
-<div class="line">      f = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a49253dde4e0c0c2901b53f2826e567c9">UpdateDatabase</a>(</div>
-<div class="line">          database, {<span class="stringliteral">&quot;ALTER TABLE Albums ADD COLUMN MarketingBudget INT64&quot;</span>});</div>
-<div class="line">  StatusOr&lt;google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata&gt;</div>
-<div class="line">      metadata = f.get();</div>
+<div class="line">  <span class="keyword">auto</span> metadata =</div>
+<div class="line">      client</div>
+<div class="line">          .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a49253dde4e0c0c2901b53f2826e567c9">UpdateDatabase</a>(</div>
+<div class="line">              database, {<span class="stringliteral">&quot;ALTER TABLE Albums ADD COLUMN MarketingBudget INT64&quot;</span>})</div>
+<div class="line">          .get();</div>
 <div class="line">  <span class="keywordflow">if</span> (!metadata) <span class="keywordflow">throw</span> std::runtime_error(metadata.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Added MarketingBudget column\n&quot;</span>;</div>
 <div class="line">}</div>

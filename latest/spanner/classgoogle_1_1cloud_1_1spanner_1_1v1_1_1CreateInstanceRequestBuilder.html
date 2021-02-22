@@ -118,22 +118,21 @@ Public Member Functions</h2></td></tr>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; display_name,</div>
 <div class="line">                    std::string <span class="keyword">const</span>&amp; region) {</div>
-<div class="line">  using ::google::cloud::future;</div>
-<div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a>;</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">spanner::Instance</a> in(project_id, instance_id);</div>
 <div class="line"> </div>
 <div class="line">  std::string region_id = region.empty() ? <span class="stringliteral">&quot;us-central1&quot;</span> : region;</div>
 <div class="line">  std::string instance_config =</div>
 <div class="line">      <span class="stringliteral">&quot;projects/&quot;</span> + project_id + <span class="stringliteral">&quot;/instanceConfigs/regional-&quot;</span> + region_id;</div>
-<div class="line">  future&lt;StatusOr&lt;google::spanner::admin::instance::v1::Instance&gt;&gt; f =</div>
-<div class="line">      client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html#a6acee9433cf4ff2b0516f275b639fcb4">CreateInstance</a>(</div>
-<div class="line">          <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html">spanner::CreateInstanceRequestBuilder</a>(in, instance_config)</div>
-<div class="line">              .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a6aa472756206ab833a7f6285b78c2894">SetDisplayName</a>(display_name)</div>
-<div class="line">              .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#ab96d675aeec20c4ecbf90514d66145a4">SetNodeCount</a>(1)</div>
-<div class="line">              .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a4efb161570da37b793f25e45dbcd460f">SetLabels</a>({{<span class="stringliteral">&quot;cloud_spanner_samples&quot;</span>, <span class="stringliteral">&quot;true&quot;</span>}})</div>
-<div class="line">              .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a8dfb29650fff06bbbfa3eff53e9de8a2">Build</a>());</div>
-<div class="line">  <span class="keyword">auto</span> instance = f.get();</div>
+<div class="line">  <span class="keyword">auto</span> instance =</div>
+<div class="line">      client</div>
+<div class="line">          .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html#a6acee9433cf4ff2b0516f275b639fcb4">CreateInstance</a>(</div>
+<div class="line">              <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html">spanner::CreateInstanceRequestBuilder</a>(in, instance_config)</div>
+<div class="line">                  .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a6aa472756206ab833a7f6285b78c2894">SetDisplayName</a>(display_name)</div>
+<div class="line">                  .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#ab96d675aeec20c4ecbf90514d66145a4">SetNodeCount</a>(1)</div>
+<div class="line">                  .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a4efb161570da37b793f25e45dbcd460f">SetLabels</a>({{<span class="stringliteral">&quot;cloud_spanner_samples&quot;</span>, <span class="stringliteral">&quot;true&quot;</span>}})</div>
+<div class="line">                  .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CreateInstanceRequestBuilder.html#a8dfb29650fff06bbbfa3eff53e9de8a2">Build</a>())</div>
+<div class="line">          .get();</div>
 <div class="line">  <span class="keywordflow">if</span> (!instance) <span class="keywordflow">throw</span> std::runtime_error(instance.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Created instance [&quot;</span> &lt;&lt; in &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
 <div class="line">}</div>
