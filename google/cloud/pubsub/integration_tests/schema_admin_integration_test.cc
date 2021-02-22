@@ -26,7 +26,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Not;
 
 bool UsingEmulator() {
@@ -34,7 +34,7 @@ bool UsingEmulator() {
 }
 
 // TODO(#5706) - use the user-facing SchemaClient class. For now, as we
-//      bootstrap the classes just use the stub.
+//      bootstrap the classes, just use the stub.
 TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   if (!UsingEmulator()) GTEST_SKIP();  // TODO(#5706)
   auto project_id =
@@ -65,7 +65,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kTestAvroSchema);
     auto schema = schema_admin->CreateSchema(context, request);
-    ASSERT_THAT(schema, StatusIs(StatusCode::kOk));
+    ASSERT_THAT(schema, IsOk());
   }
 
   {
@@ -73,7 +73,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     google::pubsub::v1::GetSchemaRequest request;
     request.set_name("projects/" + project_id + "/schemas/" + schema_id);
     auto schema = schema_admin->GetSchema(context, request);
-    EXPECT_THAT(schema, StatusIs(StatusCode::kOk));
+    EXPECT_THAT(schema, IsOk());
   }
 
   {
@@ -81,7 +81,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     google::pubsub::v1::ListSchemasRequest request;
     request.set_parent("projects/" + project_id);
     auto response = schema_admin->ListSchemas(context, request);
-    EXPECT_THAT(response, StatusIs(StatusCode::kOk));
+    EXPECT_THAT(response, IsOk());
   }
 
   {
@@ -91,7 +91,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kTestAvroSchema);
     auto result = schema_admin->ValidateSchema(context, request);
-    EXPECT_THAT(result, StatusIs(StatusCode::kOk));
+    EXPECT_THAT(result, IsOk());
   }
 
   {
@@ -104,7 +104,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     request.set_message(kTestMessage);
     (void)schema_admin->ValidateMessage(context, request);
     // TODO(#5706) - still don't know how to create a valid message.
-    // EXPECT_THAT(result, StatusIs(StatusCode::kOk));
+    // EXPECT_THAT(result, IsOk());
   }
 
   {
@@ -112,7 +112,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name("projects/" + project_id + "/schemas/" + schema_id);
     auto result = schema_admin->DeleteSchema(context, request);
-    EXPECT_THAT(result, StatusIs(StatusCode::kOk));
+    EXPECT_THAT(result, IsOk());
   }
 }
 
@@ -122,7 +122,7 @@ TEST(SchemaAdminIntegrationTest, CreateSchema) {
   grpc::ClientContext context;
   google::pubsub::v1::CreateSchemaRequest request;
   auto response = schema_admin->CreateSchema(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, GetSchema) {
@@ -131,7 +131,7 @@ TEST(SchemaAdminIntegrationTest, GetSchema) {
   grpc::ClientContext context;
   google::pubsub::v1::GetSchemaRequest request;
   auto response = schema_admin->GetSchema(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ListSchema) {
@@ -140,7 +140,7 @@ TEST(SchemaAdminIntegrationTest, ListSchema) {
   grpc::ClientContext context;
   google::pubsub::v1::ListSchemasRequest request;
   auto response = schema_admin->ListSchemas(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, DeleteSchema) {
@@ -149,7 +149,7 @@ TEST(SchemaAdminIntegrationTest, DeleteSchema) {
   grpc::ClientContext context;
   google::pubsub::v1::DeleteSchemaRequest request;
   auto response = schema_admin->DeleteSchema(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ValidateSchema) {
@@ -158,7 +158,7 @@ TEST(SchemaAdminIntegrationTest, ValidateSchema) {
   grpc::ClientContext context;
   google::pubsub::v1::DeleteSchemaRequest request;
   auto response = schema_admin->DeleteSchema(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ValidateMessage) {
@@ -167,7 +167,7 @@ TEST(SchemaAdminIntegrationTest, ValidateMessage) {
   grpc::ClientContext context;
   google::pubsub::v1::ValidateMessageRequest request;
   auto response = schema_admin->ValidateMessage(context, request);
-  EXPECT_THAT(response, Not(StatusIs(StatusCode::kOk)));
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 }  // namespace
