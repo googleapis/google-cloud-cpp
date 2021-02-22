@@ -80,7 +80,7 @@ your own projects using `find_package()` in your `CMakeLists.txt` file:
 ```CMake
 cmake_minimum_required(VERSION 3.5)
 
-find_package(google_cloud_storage REQUIRED)
+find_package(google_cloud_cpp_storage REQUIRED)
 
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program google-cloud-cpp::storage)
@@ -91,7 +91,7 @@ You can use a similar `CMakeLists.txt` to use the Cloud Bigtable C++ client:
 ```CMake
 cmake_minimum_required(VERSION 3.5)
 
-find_package(google_cloud_bigtable REQUIRED)
+find_package(google_cloud_cpp_bigtable REQUIRED)
 
 add_executable(my_program my_program.cc)
 target_link_libraries(my_program google-cloud-cpp::bigtable)
