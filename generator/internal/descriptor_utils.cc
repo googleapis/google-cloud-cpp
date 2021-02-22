@@ -261,18 +261,21 @@ std::string ChompByValue(std::string const& s) {
   return (!s.empty() && s.back() == '\n') ? s.substr(0, s.size() - 1) : s;
 }
 
+std::string EscapePrinterDelimiter(std::string const& text) {
+  return absl::StrReplaceAll(text, {{"$", "$$"}});
+}
+
 std::string FormatClassCommentsFromServiceComments(
     google::protobuf::ServiceDescriptor const& service) {
   google::protobuf::SourceLocation service_source_location;
   if (service.GetSourceLocation(&service_source_location) &&
       !service_source_location.leading_comments.empty()) {
-    std::string chomped_leading_comments =
-        ChompByValue(service_source_location.leading_comments);
-    std::string doxygen_formatted_comments = absl::StrCat(
-        "/**\n *",
-        absl::StrReplaceAll(chomped_leading_comments,
-                            {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
-        "\n */");
+    std::string doxygen_formatted_comments =
+        absl::StrCat("/**\n *",
+                     absl::StrReplaceAll(
+                         ChompByValue(service_source_location.leading_comments),
+                         {{"\n\n", "\n *\n * "}, {"\n", "\n * "}}),
+                     "\n */");
     return absl::StrReplaceAll(doxygen_formatted_comments, {{"*  ", "* "}});
   }
   GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
@@ -293,11 +296,11 @@ std::string FormatApiMethodSignatureParameters(
           input_type->FindFieldByName(parameter);
       google::protobuf::SourceLocation loc;
       parameter_descriptor->GetSourceLocation(&loc);
-      std::string chomped_parameter = ChompByValue(loc.leading_comments);
       parameter_comments.emplace_back(
           parameter,
-          absl::StrReplaceAll(chomped_parameter,
-                              {{"\n\n", "\n   * "}, {"\n", "\n   * "}}));
+          absl::StrReplaceAll(
+              EscapePrinterDelimiter(ChompByValue(loc.leading_comments)),
+              {{"\n\n", "\n   * "}, {"\n", "\n   * "}}));
     }
   }
   std::string parameter_comment_string;
@@ -383,7 +386,8 @@ std::string FormatMethodCommentsFromRpcComments(
     }
 
     std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
-        method_source_location.leading_comments, {{"\n", "\n   *"}});
+        EscapePrinterDelimiter(method_source_location.leading_comments),
+        {{"\n", "\n   *"}});
 
     std::string return_comment_string;
     if (IsLongrunningOperation(method)) {

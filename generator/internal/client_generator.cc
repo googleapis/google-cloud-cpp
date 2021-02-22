@@ -149,7 +149,7 @@ Status ClientGenerator::GenerateHeader() {
         {MethodPattern(
              {
                  {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kProtobufReqeust)},
+                     method, MethodParameterStyle::kProtobufRequest)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -163,7 +163,7 @@ Status ClientGenerator::GenerateHeader() {
          MethodPattern(
              {
                  {FormatMethodCommentsFromRpcComments(
-                     method, MethodParameterStyle::kProtobufReqeust)},
+                     method, MethodParameterStyle::kProtobufRequest)},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -177,7 +177,7 @@ Status ClientGenerator::GenerateHeader() {
              {
                  // clang-format off
                  {FormatMethodCommentsFromRpcComments(
-        method, MethodParameterStyle::kProtobufReqeust)},
+        method, MethodParameterStyle::kProtobufRequest)},
    {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on
@@ -187,7 +187,7 @@ Status ClientGenerator::GenerateHeader() {
              {
                  // clang-format off
                  {FormatMethodCommentsFromRpcComments(
-        method, MethodParameterStyle::kProtobufReqeust)},
+        method, MethodParameterStyle::kProtobufRequest)},
    {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ request);\n\n"},
                  // clang-format on

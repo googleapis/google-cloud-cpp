@@ -909,7 +909,7 @@ message WriteLogEntriesRequest {
   // The permission `logging.logEntries.create` is needed on each project,
   // organization, billing account, or folder that is receiving new log
   // entries, whether the resource is specified in `logName` or in an
-  // individual log entry.
+  // individual log entry. $Test delimiter.
   string log_name = 1 [
     (google.api.field_behavior) = OPTIONAL,
     (google.api.resource_reference) = {
@@ -920,7 +920,7 @@ message WriteLogEntriesRequest {
   // Optional. Default labels that are added to the `labels` field of all log
   // entries in `entries`. If a log entry already has a label with the same key
   // as a label in this parameter, then the log entry's label is not changed.
-  // See [LogEntry][google.logging.v2.LogEntry].
+  // See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
   map<string, string> labels = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 

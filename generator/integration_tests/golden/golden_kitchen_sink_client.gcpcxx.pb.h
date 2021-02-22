@@ -140,11 +140,11 @@ class GoldenKitchenSinkClient {
    *  The permission `logging.logEntries.create` is needed on each project,
    *  organization, billing account, or folder that is receiving new log
    *  entries, whether the resource is specified in `logName` or in an
-   *  individual log entry.
+   *  individual log entry. $Test delimiter.
    * @param labels  Optional. Default labels that are added to the `labels` field of all log
    *  entries in `entries`. If a log entry already has a label with the same key
    *  as a label in this parameter, then the log entry's label is not changed.
-   *  See [LogEntry][google.logging.v2.LogEntry].
+   *  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
    * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L928)
    */
   StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
