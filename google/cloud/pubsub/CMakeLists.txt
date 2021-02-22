@@ -62,6 +62,8 @@ add_library(
     internal/publisher_stub.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
+    internal/schema_stub.cc
+    internal/schema_stub.h
     internal/sequential_batch_sink.cc
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
