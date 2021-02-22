@@ -99,6 +99,8 @@ add_library(
     publisher_options.cc
     publisher_options.h
     retry_policy.h
+    schema.cc
+    schema.h
     snapshot.cc
     snapshot.h
     snapshot_builder.cc
@@ -237,6 +239,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_connection_test.cc
         publisher_option_test.cc
         publisher_test.cc
+        schema_test.cc
         snapshot_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc

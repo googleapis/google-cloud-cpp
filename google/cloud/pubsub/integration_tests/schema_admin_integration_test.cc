@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -71,7 +72,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   {
     grpc::ClientContext context;
     google::pubsub::v1::GetSchemaRequest request;
-    request.set_name("projects/" + project_id + "/schemas/" + schema_id);
+    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
     auto schema = schema_admin->GetSchema(context, request);
     EXPECT_THAT(schema, IsOk());
   }
@@ -110,7 +111,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   {
     grpc::ClientContext context;
     google::pubsub::v1::DeleteSchemaRequest request;
-    request.set_name("projects/" + project_id + "/schemas/" + schema_id);
+    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
     auto result = schema_admin->DeleteSchema(context, request);
     EXPECT_THAT(result, IsOk());
   }
