@@ -41,6 +41,8 @@ add_library(
     connection_options.h
     experimental/schema.cc
     experimental/schema.h
+    experimental/schema_admin_client.cc
+    experimental/schema_admin_client.h
     experimental/schema_admin_connection.cc
     experimental/schema_admin_connection.h
     internal/batch_sink.h
@@ -167,6 +169,7 @@ add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsub_mocks
     INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/experimental/mock_schema_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscription_admin_connection.h
@@ -223,6 +226,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
+        experimental/schema_admin_client_test.cc
         experimental/schema_admin_connection_test.cc
         experimental/schema_test.cc
         internal/batching_publisher_connection_test.cc
