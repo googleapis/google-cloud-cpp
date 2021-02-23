@@ -82,54 +82,53 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// limitations under the License.</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="app__profile__config_8h.html">google/cloud/bigtable/app_profile_config.h</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>cloud {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>bigtable {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a> {</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html#a2161ccd073748281cd968e17d5ee4235">   21</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> AppProfileConfig::MultiClusterUseAny(std::string profile_id) {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> tmp;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  tmp.proto_.set_app_profile_id(std::move(profile_id));</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  tmp.proto_.mutable_app_profile()</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;      -&gt;mutable_multi_cluster_routing_use_any()</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;      -&gt;Clear();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keywordflow">return</span> tmp;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html#a821831dc7549066e4f99c651be99db85">   30</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> AppProfileConfig::SingleClusterRouting(</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string profile_id, std::string cluster_id,</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">bool</span> allow_transactional_writes) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> tmp;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  tmp.proto_.set_app_profile_id(std::move(profile_id));</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">auto</span>&amp; routing =</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      *tmp.proto_.mutable_app_profile()-&gt;mutable_single_cluster_routing();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  routing.set_cluster_id(std::move(cluster_id));</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  routing.set_allow_transactional_writes(allow_transactional_writes);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">return</span> tmp;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">void</span> AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span>&amp; paths = proto_.update_mask().paths();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">auto</span> is_present =</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;      paths.end() != std::find(paths.begin(), paths.end(), field_name);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">if</span> (!is_present) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    proto_.mutable_update_mask()-&gt;add_paths(std::move(field_name));</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keywordtype">void</span> AppProfileUpdateConfig::RemoveIfPresent(std::string <span class="keyword">const</span>&amp; field_name) {</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">auto</span>&amp; paths = *proto_.mutable_update_mask()-&gt;mutable_paths();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">auto</span> i = std::find(paths.begin(), paths.end(), field_name);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span> (paths.end() == i) {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  paths.erase(i);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;google/cloud/internal/algorithm.h&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>cloud {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>bigtable {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html#a2161ccd073748281cd968e17d5ee4235">   22</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> AppProfileConfig::MultiClusterUseAny(std::string profile_id) {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> tmp;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  tmp.proto_.set_app_profile_id(std::move(profile_id));</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  tmp.proto_.mutable_app_profile()</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;      -&gt;mutable_multi_cluster_routing_use_any()</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;      -&gt;Clear();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  <span class="keywordflow">return</span> tmp;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html#a821831dc7549066e4f99c651be99db85">   31</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> AppProfileConfig::SingleClusterRouting(</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string profile_id, std::string cluster_id,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">bool</span> allow_transactional_writes) {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">AppProfileConfig</a> tmp;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  tmp.proto_.set_app_profile_id(std::move(profile_id));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">auto</span>&amp; routing =</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;      *tmp.proto_.mutable_app_profile()-&gt;mutable_single_cluster_routing();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  routing.set_cluster_id(std::move(cluster_id));</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  routing.set_allow_transactional_writes(allow_transactional_writes);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keywordflow">return</span> tmp;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">void</span> AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">if</span> (!google::cloud::internal::Contains(proto_.update_mask().paths(),</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                         field_name)) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    proto_.mutable_update_mask()-&gt;add_paths(std::move(field_name));</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> AppProfileUpdateConfig::RemoveIfPresent(std::string <span class="keyword">const</span>&amp; field_name) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keyword">auto</span>&amp; paths = *proto_.mutable_update_mask()-&gt;mutable_paths();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">auto</span> i = std::find(paths.begin(), paths.end(), field_name);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">if</span> (paths.end() == i) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  paths.erase(i);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}  <span class="comment">// namespace BIGTABLE_CLIENT_NS</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}  <span class="comment">// namespace bigtable</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aversion_8h_html_aebb4d9f586ac64a412e3302f8a4b1c37"><div class="ttname"><a href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
 <div class="ttc" id="aapp__profile__config_8h_html"><div class="ttname"><a href="app__profile__config_8h.html">app_profile_config.h</a></div></div>
