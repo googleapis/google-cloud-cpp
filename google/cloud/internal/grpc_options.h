@@ -27,6 +27,8 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 
+namespace internal {
+
 /**
  * The gRPC credentials used by clients configured with this object.
  */
@@ -81,6 +83,8 @@ using BackgroundThreadsFactory =
 struct GrpcBackgroundThreadsOption {
   BackgroundThreadsFactory value;
 };
+
+}  // namespace internal
 
 namespace internal {
 
