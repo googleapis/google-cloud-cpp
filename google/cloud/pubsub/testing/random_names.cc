@@ -51,8 +51,20 @@ std::string RandomSubscriptionId(
 
 std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator,
                              std::string const& prefix) {
-  // The documentation does not explicitly say how long this can be, but 32
-  // seems to work.
+  // The documentation says that all relative resource ids can be between 3 and
+  // 255 characters long, 32 is good enough in our tests.
+  //    https://cloud.google.com/pubsub/docs/admin#resource_names
+  auto constexpr kMaxRandomSnapshotSuffixLength = 32;
+  auto suffix = google::cloud::internal::Sample(
+      generator, kMaxRandomSnapshotSuffixLength, "abcdefghijklmnopqrstuvwxyz");
+  auto p = prefix.empty() ? "cloud-cpp" : prefix;
+  return p + "-" + suffix;
+}
+
+std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator,
+                           std::string const& prefix) {
+  // The documentation says that all relative resource ids can be between 3 and
+  // 255 characters long, 32 is good enough in our tests.
   //    https://cloud.google.com/pubsub/docs/admin#resource_names
   auto constexpr kMaxRandomSnapshotSuffixLength = 32;
   auto suffix = google::cloud::internal::Sample(
