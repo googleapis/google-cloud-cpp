@@ -29,9 +29,8 @@ namespace internal {
  */
 template <typename C, typename V>
 bool Contains(C&& c, V&& v) {
-  auto end = std::end(std::forward<C>(c));
-  auto it = std::find(std::begin(std::forward<C>(c)), end, std::forward<V>(v));
-  return it != end;
+  auto const e = std::end(std::forward<C>(c));
+  return e != std::find(std::begin(std::forward<C>(c)), e, std::forward<V>(v));
 }
 
 /**
@@ -39,10 +38,9 @@ bool Contains(C&& c, V&& v) {
  */
 template <typename C, typename UnaryPredicate>
 bool ContainsIf(C&& c, UnaryPredicate&& p) {
-  auto end = std::end(std::forward<C>(c));
-  auto it = std::find_if(std::begin(std::forward<C>(c)), end,
-                         std::forward<UnaryPredicate>(p));
-  return it != end;
+  auto const e = std::end(std::forward<C>(c));
+  return e != std::find_if(std::begin(std::forward<C>(c)), e,
+                           std::forward<UnaryPredicate>(p));
 }
 
 }  // namespace internal
