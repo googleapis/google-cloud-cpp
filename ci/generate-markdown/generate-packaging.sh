@@ -223,19 +223,6 @@ these libraries and their dependencies. In some cases the packages do not exist,
 or the package versions are too old to support `google-cloud-cpp`. If this is
 the case, the instructions describe how you can manually download and install
 these dependencies.
-
-## Table of Contents
-
-- [Fedora 33](#fedora-33)
-- [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
-- [openSUSE (Leap)](#opensuse-leap)
-- [Ubuntu (20.04 LTS - Focal Fossa)](#ubuntu-2004-lts---focal-fossa)
-- [Ubuntu (18.04 LTS - Bionic Beaver)](#ubuntu-1804-lts---bionic-beaver)
-- [Ubuntu (16.04 LTS - Xenial Xerus)](#ubuntu-1604-lts---xenial-xerus)
-- [Debian (Buster)](#debian-buster)
-- [Debian (Stretch)](#debian-stretch)
-- [CentOS 8](#centos-8)
-- [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
 readonly DOCKERFILES_DIR="${BINDIR}/../kokoro/install"
