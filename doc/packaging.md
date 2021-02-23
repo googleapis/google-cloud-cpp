@@ -216,7 +216,9 @@ these dependencies.
 - [CentOS 8](#centos-8)
 - [CentOS 7](#centos-7)
 
-### Fedora (33)
+<details>
+<summary>Fedora (33)</summary>
+<br>
 
 Install the minimal development tools:
 
@@ -318,8 +320,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### openSUSE (Tumbleweed)
+<details>
+<summary>openSUSE (Tumbleweed)</summary>
+<br>
 
 Install the minimal development tools, libcurl and OpenSSL:
 
@@ -449,8 +454,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### openSUSE (Leap)
+<details>
+<summary>openSUSE (Leap)</summary>
+<br>
 
 Install the minimal development tools, libcurl and OpenSSL. The gRPC Makefile
 uses `which` to determine whether the compiler is available. Install this
@@ -611,8 +619,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### Ubuntu (20.04 LTS - Focal Fossa)
+<details>
+<summary>Ubuntu (20.04 LTS - Focal Fossa)</summary>
+<br>
 
 Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 
@@ -746,8 +757,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### Ubuntu (18.04 LTS - Bionic Beaver)
+<details>
+<summary>Ubuntu (18.04 LTS - Bionic Beaver)</summary>
+<br>
 
 Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 
@@ -898,8 +912,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### Ubuntu (16.04 LTS - Xenial Xerus)
+<details>
+<summary>Ubuntu (16.04 LTS - Xenial Xerus)</summary>
+<br>
 
 Install the minimal development tools, OpenSSL and libcurl:
 
@@ -1069,8 +1086,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### Debian (Buster)
+<details>
+<summary>Debian (Buster)</summary>
+<br>
 
 Install the minimal development tools, libcurl, and OpenSSL:
 
@@ -1166,8 +1186,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### Debian (Stretch)
+<details>
+<summary>Debian (Stretch)</summary>
+<br>
 
 First install the development tools and libcurl.
 On Debian 9, libcurl links against openssl-1.0.2, and one must link
@@ -1344,8 +1367,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### CentOS (8)
+<details>
+<summary>CentOS (8)</summary>
+<br>
 
 Install the minimal development tools, libcurl, OpenSSL, and the c-ares
 library (required by gRPC):
@@ -1491,8 +1517,11 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
 
-### CentOS (7)
+<details>
+<summary>CentOS (7)</summary>
+<br>
 
 First install the development tools and OpenSSL. The development tools
 distributed with CentOS 7 are too old to build the project. In these
@@ -1665,3 +1694,4 @@ cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```
 
+</details>
