@@ -36,6 +36,7 @@ hash_check_result=$(md5sum --check --quiet "${PROJECT_ROOT}/ci/etc/generator-gol
 
 if [[ ${hash_check_result} != "" ]]; then
   io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
+  exit 1
 fi
 
 exit 0
