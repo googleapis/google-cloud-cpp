@@ -118,6 +118,7 @@ add_library(
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
+    internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/backoff_policy.cc
@@ -242,6 +243,7 @@ if (BUILD_TESTING)
         future_void_test.cc
         future_void_then_test.cc
         iam_bindings_test.cc
+        internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc

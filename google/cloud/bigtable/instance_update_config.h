@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/algorithm.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>
 #include <map>
@@ -117,10 +118,8 @@ class InstanceUpdateConfig {
 
  private:
   void AddPathIfNotPresent(std::string const& field_name) {
-    auto is_present = proto_.update_mask().paths().end() !=
-                      std::find(proto_.update_mask().paths().begin(),
-                                proto_.update_mask().paths().end(), field_name);
-    if (!is_present) {
+    if (!google::cloud::internal::Contains(proto_.update_mask().paths(),
+                                           field_name)) {
       proto_.mutable_update_mask()->add_paths(field_name);
     }
   }
