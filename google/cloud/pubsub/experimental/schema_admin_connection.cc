@@ -15,10 +15,10 @@
 #include "google/cloud/pubsub/experimental/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/schema_logging.h"
+#include "google/cloud/pubsub/internal/schema_metadata.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
-#include "absl/strings/str_split.h"
 #include <memory>
 
 namespace google {
@@ -145,7 +145,7 @@ MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options, std::shared_ptr<SchemaStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  // TODO(#5706) - stub = std::make_shared<SchemaMetadata>(std::move(stub));
+  stub = std::make_shared<SchemaMetadata>(std::move(stub));
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SchemaLogging>(std::move(stub),
