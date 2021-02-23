@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/instance_admin.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -65,12 +66,11 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   }
   auto instance_name =
       instance_admin.project_name() + "/instances/" + instance_id;
-  auto instance_name_it = std::find_if(
-      instances->instances.begin(), instances->instances.end(),
+  bool instance_exists = google::cloud::internal::ContainsIf(
+      instances->instances,
       [&instance_name](google::bigtable::admin::v2::Instance const& i) {
         return i.name() == instance_name;
       });
-  bool instance_exists = instance_name_it != instances->instances.end();
   std::cout << "The instance " << instance_id
             << (instance_exists ? " already exists" : " does not exist")
             << "\n";

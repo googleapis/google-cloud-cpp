@@ -742,11 +742,10 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   ASSERT_STATUS_OK(policy);
   auto const& bindings = policy->bindings();
   // There must always be at least an OWNER for the Bucket.
-  auto owner_it = std::find_if(
-      bindings.begin(), bindings.end(), [](NativeIamBinding const& binding) {
+  ASSERT_TRUE(google::cloud::internal::ContainsIf(
+      bindings, [](NativeIamBinding const& binding) {
         return binding.role() == "roles/storage.legacyBucketOwner";
-      });
-  ASSERT_NE(bindings.end(), owner_it);
+      }));
 
   StatusOr<std::vector<BucketAccessControl>> acl =
       client->ListBucketAcl(bucket_name);
@@ -1113,11 +1112,10 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 
   auto const& bindings = policy->bindings();
   // There must always be at least an OWNER for the Bucket.
-  auto owner_it = std::find_if(
-      bindings.begin(), bindings.end(), [](NativeIamBinding const& binding) {
+  ASSERT_TRUE(google::cloud::internal::ContainsIf(
+      bindings, [](NativeIamBinding const& binding) {
         return binding.role() == "roles/storage.legacyBucketOwner";
-      });
-  ASSERT_NE(bindings.end(), owner_it);
+      }));
 
   NativeIamPolicy update = *policy;
   bool role_updated = false;

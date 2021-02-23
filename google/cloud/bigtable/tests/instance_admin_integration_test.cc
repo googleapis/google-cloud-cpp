@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -77,20 +78,18 @@ class InstanceAdminIntegrationTest : public ::testing::Test {
 
 bool IsInstancePresent(std::vector<btadmin::Instance> const& instances,
                        std::string const& instance_name) {
-  return instances.end() !=
-         std::find_if(instances.begin(), instances.end(),
-                      [&instance_name](btadmin::Instance const& i) {
-                        return i.name() == instance_name;
-                      });
+  return google::cloud::internal::ContainsIf(
+      instances, [&instance_name](btadmin::Instance const& i) {
+        return i.name() == instance_name;
+      });
 }
 
 bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
                       std::string const& cluster_name) {
-  return clusters.end() !=
-         std::find_if(clusters.begin(), clusters.end(),
-                      [&cluster_name](btadmin::Cluster const& i) {
-                        return i.name() == cluster_name;
-                      });
+  return google::cloud::internal::ContainsIf(
+      clusters, [&cluster_name](btadmin::Cluster const& i) {
+        return i.name() == cluster_name;
+      });
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
