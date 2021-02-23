@@ -124,8 +124,8 @@ $(function() {
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG&amp; generator,</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                             std::string <span class="keyword">const</span>&amp; prefix) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// The documentation does not explicitly say how long this can be, but 32</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// seems to work.</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// The documentation says that all relative resource ids can be between 3 and</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// 255 characters long, 32 is good enough in our tests.</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">//    https://cloud.google.com/pubsub/docs/admin#resource_names</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keyword">auto</span> constexpr kMaxRandomSnapshotSuffixLength = 32;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keyword">auto</span> suffix = google::cloud::internal::Sample(</div>
@@ -134,10 +134,22 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">return</span> p + <span class="stringliteral">&quot;-&quot;</span> + suffix;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}  <span class="comment">// namespace pubsub_testing</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;std::string RandomSchemaId(google::cloud::internal::DefaultPRNG&amp; generator,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                           std::string <span class="keyword">const</span>&amp; prefix) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="comment">// The documentation says that all relative resource ids can be between 3 and</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="comment">// 255 characters long, 32 is good enough in our tests.</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="comment">//    https://cloud.google.com/pubsub/docs/admin#resource_names</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">auto</span> constexpr kMaxRandomSnapshotSuffixLength = 32;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keyword">auto</span> suffix = google::cloud::internal::Sample(</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      generator, kMaxRandomSnapshotSuffixLength, <span class="stringliteral">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keyword">auto</span> p = prefix.empty() ? <span class="stringliteral">&quot;cloud-cpp&quot;</span> : prefix;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">return</span> p + <span class="stringliteral">&quot;-&quot;</span> + suffix;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}  <span class="comment">// namespace pubsub_testing</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="arandom__names_8h_html"><div class="ttname"><a href="random__names_8h.html">random_names.h</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
