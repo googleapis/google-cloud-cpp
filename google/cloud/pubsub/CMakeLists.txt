@@ -39,6 +39,8 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
+    experimental/schema.cc
+    experimental/schema.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
@@ -214,6 +216,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
+        experimental/schema_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/emulator_overrides_test.cc

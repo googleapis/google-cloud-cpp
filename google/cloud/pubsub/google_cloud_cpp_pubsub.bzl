@@ -21,6 +21,7 @@ google_cloud_cpp_pubsub_hdrs = [
     "application_callback.h",
     "backoff_policy.h",
     "connection_options.h",
+    "experimental/schema.h",
     "internal/batch_sink.h",
     "internal/batching_publisher_connection.h",
     "internal/create_channel.h",
@@ -73,6 +74,7 @@ google_cloud_cpp_pubsub_hdrs = [
 google_cloud_cpp_pubsub_srcs = [
     "ack_handler.cc",
     "connection_options.cc",
+    "experimental/schema.cc",
     "internal/batching_publisher_connection.cc",
     "internal/create_channel.cc",
     "internal/default_batch_sink.cc",
