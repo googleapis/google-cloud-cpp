@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/version.h"
 #include <grpcpp/grpcpp.h>
+#include <iosfwd>
 #include <string>
 
 namespace google {
