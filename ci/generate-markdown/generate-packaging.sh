@@ -223,59 +223,76 @@ these libraries and their dependencies. In some cases the packages do not exist,
 or the package versions are too old to support `google-cloud-cpp`. If this is
 the case, the instructions describe how you can manually download and install
 these dependencies.
-
-## Table of Contents
-
-- [Fedora 33](#fedora-33)
-- [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
-- [openSUSE (Leap)](#opensuse-leap)
-- [Ubuntu (20.04 LTS - Focal Fossa)](#ubuntu-2004-lts---focal-fossa)
-- [Ubuntu (18.04 LTS - Bionic Beaver)](#ubuntu-1804-lts---bionic-beaver)
-- [Ubuntu (16.04 LTS - Xenial Xerus)](#ubuntu-1604-lts---xenial-xerus)
-- [Debian (Buster)](#debian-buster)
-- [Debian (Stretch)](#debian-stretch)
-- [CentOS 8](#centos-8)
-- [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
 readonly DOCKERFILES_DIR="${BINDIR}/../kokoro/install"
 
 echo
-echo "### Fedora (33)"
+echo "<details>"
+echo "<summary>Fedora (33)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
+echo "</details>"
 
 echo
-echo "### openSUSE (Tumbleweed)"
+echo "<details>"
+echo "<summary>openSUSE (Tumbleweed)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-tumbleweed"
+echo "</details>"
 
 echo
-echo "### openSUSE (Leap)"
+echo "<details>"
+echo "<summary>openSUSE (Leap)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
+echo "</details>"
 
 echo
-echo "### Ubuntu (20.04 LTS - Focal Fossa)"
+echo "<details>"
+echo "<summary>Ubuntu (20.04 LTS - Focal Fossa)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-focal"
+echo "</details>"
 
 echo
-echo "### Ubuntu (18.04 LTS - Bionic Beaver)"
+echo "<details>"
+echo "<summary>Ubuntu (18.04 LTS - Bionic Beaver)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-bionic"
+echo "</details>"
 
 echo
-echo "### Ubuntu (16.04 LTS - Xenial Xerus)"
+echo "<details>"
+echo "<summary>Ubuntu (16.04 LTS - Xenial Xerus)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
+echo "</details>"
 
 echo
-echo "### Debian (Buster)"
+echo "<details>"
+echo "<summary>Debian (Buster)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-buster"
+echo "</details>"
 
 echo
-echo "### Debian (Stretch)"
+echo "<details>"
+echo "<summary>Debian (Stretch)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-stretch"
+echo "</details>"
 
 echo
-echo "### CentOS (8)"
+echo "<details>"
+echo "<summary>CentOS (8)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-8"
+echo "</details>"
 
 echo
-echo "### CentOS (7)"
+echo "<details>"
+echo "<summary>CentOS (7)</summary>"
+echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-7"
+echo "</details>"
