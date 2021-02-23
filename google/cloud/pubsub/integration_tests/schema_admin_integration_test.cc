@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/experimental/schema.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
-#include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -26,6 +26,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::pubsub_experimental::Schema;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Not;
@@ -72,7 +73,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   {
     grpc::ClientContext context;
     google::pubsub::v1::GetSchemaRequest request;
-    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
+    request.set_name(Schema(project_id, schema_id).FullName());
     auto schema = schema_admin->GetSchema(context, request);
     EXPECT_THAT(schema, IsOk());
   }
@@ -111,7 +112,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   {
     grpc::ClientContext context;
     google::pubsub::v1::DeleteSchemaRequest request;
-    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
+    request.set_name(Schema(project_id, schema_id).FullName());
     auto result = schema_admin->DeleteSchema(context, request);
     EXPECT_THAT(result, IsOk());
   }

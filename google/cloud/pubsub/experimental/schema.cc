@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/schema.h"
+#include "google/cloud/pubsub/experimental/schema.h"
 
 namespace google {
 namespace cloud {
-namespace pubsub {
+namespace pubsub_experimental {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::string Schema::FullName() const {
@@ -32,6 +32,6 @@ std::ostream& operator<<(std::ostream& os, Schema const& rhs) {
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub
+}  // namespace pubsub_experimental
 }  // namespace cloud
 }  // namespace google
