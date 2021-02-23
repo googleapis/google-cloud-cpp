@@ -302,9 +302,11 @@ echo "================================================================"
 io::log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
 
-echo "================================================================"
-io::log_yellow "Capture Docker version to troubleshoot."
-sudo docker version
+if [[ "${RUNNING_CI:-}" == "yes" ]]; then
+  echo "================================================================"
+  io::log_yellow "Capture Docker version to troubleshoot."
+  sudo docker version
+fi
 
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
   echo "================================================================"
@@ -318,9 +320,9 @@ source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 echo "================================================================"
 io::log_yellow "Building with ${NCPU} cores on ${PWD}."
 
-echo "================================================================"
-io::log_yellow "Setup Google Container Registry access."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
+  echo "================================================================"
+  io::log_yellow "Setup Google Container Registry access."
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
 fi
@@ -329,10 +331,10 @@ if [[ "${RUNNING_CI:-}" == "yes" ]]; then
   gcloud auth configure-docker
 fi
 
-echo "================================================================"
-io::log_yellow "Download existing image (if available) for ${DISTRO}."
 has_cache="false"
 if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
+  echo "================================================================"
+  io::log_yellow "Download existing image (if available) for ${DISTRO}."
   echo "Existing image successfully downloaded."
   has_cache="true"
 fi

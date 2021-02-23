@@ -50,7 +50,7 @@ io::log_yellow "Verify markdown"
   ./ci/check-markdown.sh
 )
 
-if command -v ccache; then
+if command -v ccache >/dev/null 2>&1; then
   echo "================================================================"
   io::log_yellow "ccache stats"
   ccache --show-stats
@@ -91,7 +91,9 @@ if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
 fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
-  cmake_extra_flags+=("-DCMAKE_INSTALL_PREFIX=/var/tmp/staging")
+  cmake_extra_flags+=(
+    "-DCMAKE_INSTALL_PREFIX=/var/tmp/staging"
+    "-DCMAKE_INSTALL_MESSAGE=NEVER")
 fi
 
 if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
@@ -120,11 +122,6 @@ ${CMAKE_COMMAND} \
   "-H${SOURCE_DIR}" \
   "-B${BINARY_DIR}"
 io::log_yellow "Finished CMake config"
-
-if [[ "${CLANG_TIDY:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
-  io::log_yellow "clang-tidy config:"
-  clang-tidy -dump-config
-fi
 
 if [[ "${CLANG_TIDY:-}" == "yes" && ("${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
   # For presubmit builds we only run clang-tidy on the files that have changed
