@@ -48,8 +48,8 @@ TEST(Algorithm, ContainsIf) {
       ContainsIf(a, [](char const* s) { return std::string(s) == "OOPS"; }));
 
   std::vector<std::string> v = {"foo", "bar", "baz"};
-  EXPECT_TRUE(ContainsIf(v, [](std::string s) { return s == "foo"; }));
-  EXPECT_FALSE(ContainsIf(v, [](std::string s) { return s == "OOPS"; }));
+  EXPECT_TRUE(ContainsIf(v, [](std::string const& s) { return s == "foo"; }));
+  EXPECT_FALSE(ContainsIf(v, [](std::string const& s) { return s == "OOPS"; }));
 }
 
 }  // namespace internal
