@@ -34,8 +34,10 @@ fi
 
 hash_check_result=$(md5sum --check --quiet "${PROJECT_ROOT}/ci/etc/generator-golden-md5-hashes.md5") || true
 
-if [[ ${hash_check_result} != "" ]]; then
+if [[ "${hash_check_result}" != "" ]]; then
+  io::log_red "${hash_check_result}"
   io::log_yellow "Run 'ci/kokoro/docker/build.sh generate-libraries' to update."
+  exit 1
 fi
 
 exit 0
