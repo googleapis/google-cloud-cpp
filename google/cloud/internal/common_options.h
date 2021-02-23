@@ -23,6 +23,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace internal {
 
 /**
  * Change the endpoint.
@@ -61,6 +62,7 @@ struct TracingComponentsOption {
   std::set<std::string> value;
 };
 
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
