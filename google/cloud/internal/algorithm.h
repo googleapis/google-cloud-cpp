@@ -34,6 +34,17 @@ bool Contains(C&& c, V&& v) {
   return it != end;
 }
 
+/**
+ * Returns true if the container @p c contains a value for which @p p is true.
+ */
+template <typename C, typename UnaryPredicate>
+bool ContainsIf(C&& c, UnaryPredicate&& p) {
+  auto end = std::end(std::forward<C>(c));
+  auto it = std::find_if(std::begin(std::forward<C>(c)), end,
+                         std::forward<UnaryPredicate>(p));
+  return it != end;
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

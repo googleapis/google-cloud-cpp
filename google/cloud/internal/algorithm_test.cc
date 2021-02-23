@@ -22,22 +22,32 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-TEST(Algorithm, StringContains) {
-  std::string v = "abcde";
-  EXPECT_TRUE(Contains(v, 'c'));
-  EXPECT_FALSE(Contains(v, 'z'));
-}
+TEST(Algorithm, Contains) {
+  std::string s = "abcde";
+  EXPECT_TRUE(Contains(s, 'c'));
+  EXPECT_FALSE(Contains(s, 'z'));
 
-TEST(Algorithm, ArrayContains) {
-  std::string v[] = {"foo", "bar", "baz"};
-  EXPECT_TRUE(Contains(v, "foo"));
-  EXPECT_FALSE(Contains(v, "OOPS"));
-}
+  std::string a[] = {"foo", "bar", "baz"};
+  EXPECT_TRUE(Contains(a, "foo"));
+  EXPECT_FALSE(Contains(a, "OOPS"));
 
-TEST(Algorithm, VectorContains) {
   std::vector<std::string> v = {"foo", "bar", "baz"};
   EXPECT_TRUE(Contains(v, "foo"));
   EXPECT_FALSE(Contains(v, "OOPS"));
+}
+
+TEST(Algorithm, ContainsIf) {
+  std::string s = "abcde";
+  EXPECT_TRUE(ContainsIf(s, [](char c) { return c == 'a'; }));
+  EXPECT_FALSE(ContainsIf(s, [](char c) { return c == 'z'; }));
+
+  char const* a[] = {"foo", "bar", "baz"};
+  EXPECT_TRUE(ContainsIf(a, [](std::string s) { return s == "foo"; }));
+  EXPECT_FALSE(ContainsIf(a, [](std::string s) { return s == "OOPS"; }));
+
+  std::vector<std::string> v = {"foo", "bar", "baz"};
+  EXPECT_TRUE(ContainsIf(v, [](std::string s) { return s == "foo"; }));
+  EXPECT_FALSE(ContainsIf(v, [](std::string s) { return s == "OOPS"; }));
 }
 
 }  // namespace internal
