@@ -232,9 +232,8 @@ void SetResourceRoutingMethodVars(
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__
-                   << ": google::api::http extension not found" << std::endl;
-    std::exit(1);
+    // if no http option exists, opt for more conservative.
+    return "kNonIdempotent";
   }
 
   google::api::HttpRule http_rule =
