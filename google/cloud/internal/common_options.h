@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-
 namespace internal {
 
 /**
@@ -64,7 +63,6 @@ struct TracingComponentsOption {
 };
 
 }  // namespace internal
-
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
