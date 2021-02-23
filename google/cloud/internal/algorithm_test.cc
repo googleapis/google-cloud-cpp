@@ -42,8 +42,10 @@ TEST(Algorithm, ContainsIf) {
   EXPECT_FALSE(ContainsIf(s, [](char c) { return c == 'z'; }));
 
   char const* a[] = {"foo", "bar", "baz"};
-  EXPECT_TRUE(ContainsIf(a, [](std::string s) { return s == "foo"; }));
-  EXPECT_FALSE(ContainsIf(a, [](std::string s) { return s == "OOPS"; }));
+  EXPECT_TRUE(
+      ContainsIf(a, [](char const* s) { return std::string(s) == "foo"; }));
+  EXPECT_FALSE(
+      ContainsIf(a, [](char const* s) { return std::string(s) == "OOPS"; }));
 
   std::vector<std::string> v = {"foo", "bar", "baz"};
   EXPECT_TRUE(ContainsIf(v, [](std::string s) { return s == "foo"; }));
