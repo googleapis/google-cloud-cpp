@@ -66,6 +66,8 @@ add_library(
     internal/rejects_with_ordering_key.h
     internal/schema_logging.cc
     internal/schema_logging.h
+    internal/schema_metadata.cc
+    internal/schema_metadata.h
     internal/schema_stub.cc
     internal/schema_stub.h
     internal/sequential_batch_sink.cc
@@ -229,6 +231,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/publisher_round_robin_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/schema_logging_test.cc
+        internal/schema_metadata_test.cc
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
