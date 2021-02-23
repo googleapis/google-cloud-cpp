@@ -16,6 +16,7 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
@@ -778,8 +779,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
     }
     role_updated = true;
     auto& members = binding.members();
-    if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
-        members.end()) {
+    if (!google::cloud::internal::Contains(members, "allAuthenticatedUsers")) {
       members.emplace_back("allAuthenticatedUsers");
     }
   }
@@ -1128,8 +1128,7 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
     role_updated = true;
 
     auto& members = binding.members();
-    if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
-        members.end()) {
+    if (!google::cloud::internal::Contains(members, "allAuthenticatedUsers")) {
       members.emplace_back("serviceAccount:" + service_account_);
     }
   }

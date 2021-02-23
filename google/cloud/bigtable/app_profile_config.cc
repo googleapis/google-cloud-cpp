@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/app_profile_config.h"
+#include "google/cloud/internal/algorithm.h"
 
 namespace google {
 namespace cloud {
@@ -40,10 +41,8 @@ AppProfileConfig AppProfileConfig::SingleClusterRouting(
 }
 
 void AppProfileUpdateConfig::AddPathIfNotPresent(std::string field_name) {
-  auto const& paths = proto_.update_mask().paths();
-  auto is_present =
-      paths.end() != std::find(paths.begin(), paths.end(), field_name);
-  if (!is_present) {
+  if (!google::cloud::internal::Contains(proto_.update_mask().paths(),
+                                         field_name)) {
     proto_.mutable_update_mask()->add_paths(std::move(field_name));
   }
 }
