@@ -93,6 +93,51 @@ SchemaAdminClient::ValidateSchema(std::string const& project_id,
   return connection_->ValidateSchema(request);
 }
 
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+SchemaAdminClient::ValidateMessageWithNamedSchema(
+    google::pubsub::v1::Encoding encoding, std::string message,
+    Schema const& named_schema) {
+  google::pubsub::v1::ValidateMessageRequest request;
+  request.set_parent("projects/" + named_schema.project_id());
+  request.set_message(std::move(message));
+  request.set_encoding(encoding);
+  request.set_name(named_schema.FullName());
+  return ValidateMessage(request);
+}
+
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+SchemaAdminClient::ValidateMessageWithAvro(
+    google::pubsub::v1::Encoding encoding, std::string message,
+    std::string project_id, std::string schema_definition) {
+  google::pubsub::v1::ValidateMessageRequest request;
+  request.set_parent("projects/" + std::move(project_id));
+  request.set_message(std::move(message));
+  request.set_encoding(encoding);
+  request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
+  request.mutable_schema()->set_definition(std::move(schema_definition));
+  return ValidateMessage(request);
+}
+
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+SchemaAdminClient::ValidateMessageWithProtobuf(
+    google::pubsub::v1::Encoding encoding, std::string message,
+    std::string project_id, std::string schema_definition) {
+  google::pubsub::v1::ValidateMessageRequest request;
+  request.set_parent("projects/" + std::move(project_id));
+  request.set_message(std::move(message));
+  request.set_encoding(encoding);
+  request.mutable_schema()->set_type(
+      google::pubsub::v1::Schema::PROTOCOL_BUFFER);
+  request.mutable_schema()->set_definition(std::move(schema_definition));
+  return ValidateMessage(request);
+}
+
+StatusOr<google::pubsub::v1::ValidateMessageResponse>
+SchemaAdminClient::ValidateMessage(
+    google::pubsub::v1::ValidateMessageRequest const& request) {
+  return connection_->ValidateMessage(request);
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_experimental
 }  // namespace cloud

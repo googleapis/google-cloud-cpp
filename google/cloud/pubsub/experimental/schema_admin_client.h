@@ -183,10 +183,63 @@ class SchemaAdminClient {
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
       std::string const& project_id, google::pubsub::v1::Schema schema);
 
-  // TODO(#5706) - ValidateMessageProtobufSchema()
-  // TODO(#5706) - ValidateMessageAvroSchema()
-  // TODO(#5706) - ValidateMessageNamedSchema()
-  // TODO(#5706) - ValidateMessage()
+  /**
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   *
+   * @par Example
+   * TODO(#5706) - snippet samples.cc validate-message-named
+   *
+   * @param encoding the message encoding, note that some schemas may not
+   * support some encodings.
+   * @param message the message to validate
+   * @param named_schema the name of an existing schema to validate against
+   */
+  StatusOr<google::pubsub::v1::ValidateMessageResponse>
+  ValidateMessageWithNamedSchema(google::pubsub::v1::Encoding encoding,
+                                 std::string message,
+                                 Schema const& named_schema);
+
+  /**
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   *
+   * @par Example
+   * TODO(#5706) - snippet samples.cc validate-message-avro
+   *
+   * @param encoding the message encoding, note that some schemas may not
+   * support some encodings.
+   * @param message the message to validate
+   * @param project_id the project used to perform the validation
+   * @param schema_definition the schema definition, in AVRO format
+   */
+  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessageWithAvro(
+      google::pubsub::v1::Encoding encoding, std::string message,
+      std::string project_id, std::string schema_definition);
+
+  /**
+   * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
+   *
+   * @par Example
+   * TODO(#5706) - snippet samples.cc validate-message-protobuf
+   *
+   * @param encoding the message encoding, note that some schemas may not
+   *     support some encodings.
+   * @param message the message to validate
+   * @param project_id the project used to perform the validation
+   * @param schema_definition the schema definition, in protocol buffers format
+   */
+  StatusOr<google::pubsub::v1::ValidateMessageResponse>
+  ValidateMessageWithProtobuf(google::pubsub::v1::Encoding encoding,
+                              std::string message, std::string project_id,
+                              std::string schema_definition);
+
+  /**
+   * Validates a message against a schema.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent and retried.
+   */
+  StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
+      google::pubsub::v1::ValidateMessageRequest const& request);
 
  private:
   std::shared_ptr<SchemaAdminConnection> connection_;
