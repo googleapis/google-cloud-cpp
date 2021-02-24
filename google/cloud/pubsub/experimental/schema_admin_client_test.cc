@@ -280,6 +280,84 @@ TEST(SchemaAdminClient, ValidateSchemaProtobuf) {
   EXPECT_THAT(response, IsOk());
 }
 
+TEST(SchemaAdminClient, ValidateMessageWithNamedSchema) {
+  auto mock =
+      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+
+  auto constexpr kExpectedText = R"pb(
+    parent: "projects/test-project"
+    name: "projects/test-project/schemas/test-schema"
+    encoding: BINARY
+    message: "test-only-invalid-message"
+  )pb";
+  google::pubsub::v1::ValidateMessageRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedText, &expected));
+
+  EXPECT_CALL(*mock, ValidateMessage)
+      .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_THAT(r, IsProtoEqual(expected));
+        google::pubsub::v1::ValidateMessageResponse response;
+        return make_status_or(response);
+      });
+  SchemaAdminClient client(mock);
+  auto const response = client.ValidateMessageWithNamedSchema(
+      google::pubsub::v1::BINARY, "test-only-invalid-message",
+      Schema("test-project", "test-schema"));
+  EXPECT_THAT(response, IsOk());
+}
+
+TEST(SchemaAdminClient, ValidateMessageWithAvro) {
+  auto mock =
+      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+
+  auto constexpr kExpectedText = R"pb(
+    parent: "projects/test-project"
+    encoding: BINARY
+    message: "test-only-invalid-message"
+    schema { type: AVRO definition: "test-only-invalid-schema" }
+  )pb";
+  google::pubsub::v1::ValidateMessageRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedText, &expected));
+
+  EXPECT_CALL(*mock, ValidateMessage)
+      .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_THAT(r, IsProtoEqual(expected));
+        google::pubsub::v1::ValidateMessageResponse response;
+        return make_status_or(response);
+      });
+  SchemaAdminClient client(mock);
+  auto const response = client.ValidateMessageWithAvro(
+      google::pubsub::v1::BINARY, "test-only-invalid-message", "test-project",
+      "test-only-invalid-schema");
+  EXPECT_THAT(response, IsOk());
+}
+
+TEST(SchemaAdminClient, ValidateMessageWithProtobuf) {
+  auto mock =
+      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+
+  auto constexpr kExpectedText = R"pb(
+    parent: "projects/test-project"
+    encoding: BINARY
+    message: "test-only-invalid-message"
+    schema { type: PROTOCOL_BUFFER definition: "test-only-invalid-schema" }
+  )pb";
+  google::pubsub::v1::ValidateMessageRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedText, &expected));
+
+  EXPECT_CALL(*mock, ValidateMessage)
+      .WillOnce([&](google::pubsub::v1::ValidateMessageRequest const& r) {
+        EXPECT_THAT(r, IsProtoEqual(expected));
+        google::pubsub::v1::ValidateMessageResponse response;
+        return make_status_or(response);
+      });
+  SchemaAdminClient client(mock);
+  auto const response = client.ValidateMessageWithProtobuf(
+      google::pubsub::v1::BINARY, "test-only-invalid-message", "test-project",
+      "test-only-invalid-schema");
+  EXPECT_THAT(response, IsOk());
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_experimental
