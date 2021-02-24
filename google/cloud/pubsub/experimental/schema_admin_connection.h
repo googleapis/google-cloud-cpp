@@ -34,7 +34,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  * An input range to stream Cloud Pub/Sub schemas.
  *
  * This type models an [input range][cppref-input-range] of
- * `google::pubsub::v1::schema` objects. Applications can make a
+ * `google::pubsub::v1::Schema` objects. Applications can make a
  * single pass through the results.
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
