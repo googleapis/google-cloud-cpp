@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/experimental/schema.h"
-#include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/experimental/schema_admin_connection.h"
 #include "google/cloud/pubsub/testing/random_names.h"
+#include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -27,8 +28,12 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::pubsub_experimental::Schema;
+using ::google::cloud::pubsub_testing::TestBackoffPolicy;
+using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Contains;
 using ::testing::Not;
 
 bool UsingEmulator() {
@@ -43,7 +48,8 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{});
 
   auto constexpr kTestAvroSchema = R"js({
      "type": "record",
@@ -54,121 +60,119 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
        { "name": "value", "type": "double" }
      ]
   })js";
-  auto constexpr kTestMessage =
-      R"js({ {"sensorId", "temp0"}, {"value", "42"})js";
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const schema_id = pubsub_testing::RandomSchemaId(generator);
   {
-    grpc::ClientContext context;
     google::pubsub::v1::CreateSchemaRequest request;
     request.set_parent("projects/" + project_id);
     request.set_schema_id(schema_id);
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kTestAvroSchema);
-    auto schema = schema_admin->CreateSchema(context, request);
+    auto schema = schema_admin->CreateSchema(request);
     ASSERT_THAT(schema, IsOk());
   }
 
   {
-    grpc::ClientContext context;
     google::pubsub::v1::GetSchemaRequest request;
     request.set_name(Schema(project_id, schema_id).FullName());
-    auto schema = schema_admin->GetSchema(context, request);
+    auto schema = schema_admin->GetSchema(request);
     EXPECT_THAT(schema, IsOk());
   }
 
   {
-    grpc::ClientContext context;
     google::pubsub::v1::ListSchemasRequest request;
     request.set_parent("projects/" + project_id);
-    auto response = schema_admin->ListSchemas(context, request);
-    EXPECT_THAT(response, IsOk());
+    std::vector<std::string> names;
+    for (auto&& r : schema_admin->ListSchemas(request)) {
+      EXPECT_THAT(r, IsOk());
+      if (!r.ok()) break;
+      names.push_back(std::move(*r->mutable_name()));
+    }
+    EXPECT_THAT(names, Contains(Schema(project_id, schema_id).FullName()));
   }
 
   {
-    grpc::ClientContext context;
     google::pubsub::v1::ValidateSchemaRequest request;
     request.set_parent("projects/" + project_id);
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kTestAvroSchema);
-    auto result = schema_admin->ValidateSchema(context, request);
+    auto result = schema_admin->ValidateSchema(request);
     EXPECT_THAT(result, IsOk());
   }
 
   {
-    grpc::ClientContext context;
     google::pubsub::v1::ValidateMessageRequest request;
     request.set_parent("projects/" + project_id);
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kTestAvroSchema);
     request.set_encoding(google::pubsub::v1::JSON);
-    request.set_message(kTestMessage);
-    (void)schema_admin->ValidateMessage(context, request);
-    // TODO(#5706) - still don't know how to create a valid message.
-    // EXPECT_THAT(result, IsOk());
+    request.set_message("not-a-valid-message");
+    auto result = schema_admin->ValidateMessage(request);
+    EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument));
   }
 
   {
-    grpc::ClientContext context;
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name(Schema(project_id, schema_id).FullName());
-    auto result = schema_admin->DeleteSchema(context, request);
+    auto result = schema_admin->DeleteSchema(request);
     EXPECT_THAT(result, IsOk());
   }
 }
 
 TEST(SchemaAdminIntegrationTest, CreateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::CreateSchemaRequest request;
-  auto response = schema_admin->CreateSchema(context, request);
+  auto response = schema_admin->CreateSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, GetSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::GetSchemaRequest request;
-  auto response = schema_admin->GetSchema(context, request);
+  auto response = schema_admin->GetSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ListSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::ListSchemasRequest request;
-  auto response = schema_admin->ListSchemas(context, request);
-  EXPECT_THAT(response, Not(IsOk()));
+  auto response = schema_admin->ListSchemas(request);
+  auto i = response.begin();
+  ASSERT_FALSE(i == response.end());
+  EXPECT_THAT(*i, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, DeleteSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::DeleteSchemaRequest request;
-  auto response = schema_admin->DeleteSchema(context, request);
+  auto response = schema_admin->DeleteSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ValidateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
-  google::pubsub::v1::DeleteSchemaRequest request;
-  auto response = schema_admin->DeleteSchema(context, request);
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
+  google::pubsub::v1::ValidateSchemaRequest request;
+  auto response = schema_admin->ValidateSchema(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(SchemaAdminIntegrationTest, ValidateMessage) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
-  auto schema_admin = CreateDefaultSchemaStub(pubsub::ConnectionOptions{}, 0);
-  grpc::ClientContext context;
+  auto schema_admin = pubsub_experimental::MakeSchemaAdminConnection(
+      pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy());
   google::pubsub::v1::ValidateMessageRequest request;
-  auto response = schema_admin->ValidateMessage(context, request);
+  auto response = schema_admin->ValidateMessage(request);
   EXPECT_THAT(response, Not(IsOk()));
 }
 
