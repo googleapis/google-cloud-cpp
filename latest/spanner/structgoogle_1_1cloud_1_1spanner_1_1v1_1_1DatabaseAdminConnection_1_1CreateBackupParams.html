@@ -89,11 +89,16 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a7c6957447ce07900068609df2639312d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ab4c534b4cb45a03ed5eabc454ba030"><td class="memItemLeft" align="right" valign="top">std::chrono::system_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1CreateBackupParams.html#a5ab4c534b4cb45a03ed5eabc454ba030">expire_time</a></td></tr>
 <tr class="separator:a5ab4c534b4cb45a03ed5eabc454ba030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade848468b5866bdf89394433e79ab753"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1CreateBackupParams.html#ade848468b5866bdf89394433e79ab753">expire_timestamp</a></td></tr>
+<tr class="separator:ade848468b5866bdf89394433e79ab753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00d24906ce32bc8f4cf01ba04b437132"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1CreateBackupParams.html#a00d24906ce32bc8f4cf01ba04b437132">version_time</a></td></tr>
+<tr class="memdesc:a00d24906ce32bc8f4cf01ba04b437132"><td class="mdescLeft">&#160;</td><td class="mdescRight">The backup will contain an externally consistent copy of the database at <code>version_time</code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1CreateBackupParams.html#a00d24906ce32bc8f4cf01ba04b437132">More...</a><br /></td></tr>
+<tr class="separator:a00d24906ce32bc8f4cf01ba04b437132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#af42e0b0eccf2f9b1add53464963ca374" title="Define the interface for a google.spanner.v1.DatabaseAdmin.CreateBackup RPC.">CreateBackup()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00171">171</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00173">173</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a7c6957447ce07900068609df2639312d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c6957447ce07900068609df2639312d">&#9670;&nbsp;</a></span>backup_id</h2>
@@ -107,7 +112,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00174">174</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00176">176</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
 
 </div>
 </div>
@@ -125,7 +130,7 @@ Public Attributes</h2></td></tr>
 
 <p>The name of the database. </p>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00173">173</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00175">175</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
 
 </div>
 </div>
@@ -140,8 +145,44 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd><code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a" title="Creates a new Cloud Spanner backup for the given database.">DatabaseAdminClient::CreateBackup()</a></code> initializes <code>expire_time</code>, but <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#af42e0b0eccf2f9b1add53464963ca374" title="Define the interface for a google.spanner.v1.DatabaseAdmin.CreateBackup RPC.">DatabaseAdminConnection::CreateBackup()</a></code> now ignores it. Use <code>expire_timestamp</code> instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00175">175</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00180">180</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+
+</div>
+</div>
+<a id="ade848468b5866bdf89394433e79ab753"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade848468b5866bdf89394433e79ab753">&#9670;&nbsp;</a></span>expire_timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> google::cloud::spanner::v1::DatabaseAdminConnection::CreateBackupParams::expire_timestamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00181">181</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
+
+</div>
+</div>
+<a id="a00d24906ce32bc8f4cf01ba04b437132"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00d24906ce32bc8f4cf01ba04b437132">&#9670;&nbsp;</a></span>version_time</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>&gt; google::cloud::spanner::v1::DatabaseAdminConnection::CreateBackupParams::version_time</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The backup will contain an externally consistent copy of the database at <code>version_time</code>. </p>
+<p>If <code>version_time</code> is not specified, the system will set <code>version_time</code> to the <code>create_time</code> of the backup. </p>
+
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8h_source.html#l00185">185</a> of file <a class="el" href="database__admin__connection_8h_source.html">database_admin_connection.h</a>.</p>
 
 </div>
 </div>

@@ -123,6 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab9946fdbba22847a506bc000524cadca"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::TestIamPermissionsResponse &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ab9946fdbba22847a506bc000524cadca">TestIamPermissions</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> db, std::vector&lt; std::string &gt; permissions)</td></tr>
 <tr class="memdesc:ab9946fdbba22847a506bc000524cadca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subset of the permissions the caller has on the given database.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ab9946fdbba22847a506bc000524cadca">More...</a><br /></td></tr>
 <tr class="separator:ab9946fdbba22847a506bc000524cadca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf938cd9459fc263d9f8f1e6328ae7a"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">CreateBackup</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> db, std::string backup_id, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> expire_time, <a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> &gt; version_time=absl::nullopt)</td></tr>
+<tr class="memdesc:aadf938cd9459fc263d9f8f1e6328ae7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Cloud Spanner backup for the given database.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">More...</a><br /></td></tr>
+<tr class="separator:aadf938cd9459fc263d9f8f1e6328ae7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad79cb8a943fdf211f80929e399edddc"><td class="memItemLeft" align="right" valign="top">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc">CreateBackup</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a> db, std::string backup_id, std::chrono::system_clock::time_point expire_time)</td></tr>
 <tr class="memdesc:aad79cb8a943fdf211f80929e399edddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new Cloud Spanner backup for the given database.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc">More...</a><br /></td></tr>
 <tr class="separator:aad79cb8a943fdf211f80929e399edddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,6 +141,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a42ef165c0b4771f720187c06c9865f00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a470673850838757d7472024bc8f9a199">ListBackupsRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a42ef165c0b4771f720187c06c9865f00">ListBackups</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">Instance</a> in, std::string filter={})</td></tr>
 <tr class="memdesc:a42ef165c0b4771f720187c06c9865f00"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all the backups in a given project and instance that match the filter.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a42ef165c0b4771f720187c06c9865f00">More...</a><br /></td></tr>
 <tr class="separator:a42ef165c0b4771f720187c06c9865f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39e733e359fdaa7cf0cd1b1026a30d0a"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">UpdateBackupExpireTime</a> (google::spanner::admin::database::v1::Backup const &amp;backup, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> expire_time)</td></tr>
+<tr class="memdesc:a39e733e359fdaa7cf0cd1b1026a30d0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update backup's <code>expire_time</code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">More...</a><br /></td></tr>
+<tr class="separator:a39e733e359fdaa7cf0cd1b1026a30d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59c59c563d8500cbe1704d8822bd234"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#af59c59c563d8500cbe1704d8822bd234">UpdateBackupExpireTime</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">Backup</a> const &amp;backup, <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> expire_time)</td></tr>
+<tr class="memdesc:af59c59c563d8500cbe1704d8822bd234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update backup's <code>expire_time</code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#af59c59c563d8500cbe1704d8822bd234">More...</a><br /></td></tr>
+<tr class="separator:af59c59c563d8500cbe1704d8822bd234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7dcdc3e5bb7ded1d648bc0708b62704"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">UpdateBackupExpireTime</a> (google::spanner::admin::database::v1::Backup const &amp;backup, std::chrono::system_clock::time_point const &amp;expire_time)</td></tr>
 <tr class="memdesc:ad7dcdc3e5bb7ded1d648bc0708b62704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update backup's <code>expire_time</code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">More...</a><br /></td></tr>
 <tr class="separator:ad7dcdc3e5bb7ded1d648bc0708b62704"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,7 +209,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Database created!\n&quot;</span>;</div>
 <div class="line">});</div>
 </div><!-- fragment --> 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8h_source.html#l00112">112</a> of file <a class="el" href="database__admin__client_8h_source.html">database_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8h_source.html#l00114">114</a> of file <a class="el" href="database__admin__client_8h_source.html">database_admin_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5ba21aafe7e6b0a752d3789346c34773"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5ba21aafe7e6b0a752d3789346c34773">&#9670;&nbsp;</a></span>DatabaseAdminClient() <span class="overload">[1/2]</span></h2>
@@ -256,13 +265,13 @@ Public Member Functions</h2></td></tr>
 
 <p>Create a new client with the given stub. For testing only. </p>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8h_source.html#l00507">507</a> of file <a class="el" href="database__admin__client_8h_source.html">database_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8h_source.html#l00573">573</a> of file <a class="el" href="database__admin__client_8h_source.html">database_admin_client.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aad79cb8a943fdf211f80929e399edddc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad79cb8a943fdf211f80929e399edddc">&#9670;&nbsp;</a></span>CreateBackup()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aad79cb8a943fdf211f80929e399edddc">&#9670;&nbsp;</a></span>CreateBackup() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -294,26 +303,78 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a new Cloud Spanner backup for the given database. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this overload is deprecated; use the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> overload instead.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation. Transient failures are not retried.</dd></dl>
 <p>This function creates a database backup for the given Google Cloud Spanner database.</p>
-<p>Note that the backup id must be unique within the same instance, it must be between 2 and 60 characters long, it must start with a lowercase letter (<code>[a-z]</code>), it must end with a lowercase letter or a number (<code>[a-z0-9]</code>) and any characters between the beginning and ending characters must be lower case letters, numbers, underscore (<code>_</code>) or dashes (<code>-</code>), that is, they must belong to the <code>[a-z0-9_-]</code> character set.</p>
-<p>The <code>expire_time</code> must be at least 6 hours and at most 366 days from the time the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc" title="Creates a new Cloud Spanner backup for the given database.">CreateBackup()</a></code> request is processed.</p>
+<p>Note that the <code>backup_id</code> must be unique within the same instance, it must be between 2 and 60 characters long, it must start with a lowercase letter (<code>[a-z]</code>), it must end with a lowercase letter or a number (<code>[a-z0-9]</code>) and any characters between the beginning and ending characters must be lower case letters, numbers, underscore (<code>_</code>) or dashes (<code>-</code>), that is, they must belong to the <code>[a-z0-9_-]</code> character set.</p>
+<p>The <code>expire_time</code> must be at least 6 hours and at most 366 days from the time the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a" title="Creates a new Cloud Spanner backup for the given database.">CreateBackup()</a></code> request is processed.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>google::cloud::future</code> that becomes satisfied when the operation completes on the service. Note that this can take minutes in some cases. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00144">144</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+
+</div>
+</div>
+<a id="aadf938cd9459fc263d9f8f1e6328ae7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadf938cd9459fc263d9f8f1e6328ae7a">&#9670;&nbsp;</a></span>CreateBackup() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">future&lt; StatusOr&lt; gcsa::Backup &gt; &gt; google::cloud::spanner::v1::DatabaseAdminClient::CreateBackup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">Database</a>&#160;</td>
+          <td class="paramname"><em>db</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>backup_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>&#160;</td>
+          <td class="paramname"><em>expire_time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a> &gt;&#160;</td>
+          <td class="paramname"><em>version_time</em> = <code>absl::nullopt</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new Cloud Spanner backup for the given database. </p>
+<dl class="section user"><dt>Idempotency</dt><dd>This is not an idempotent operation. Transient failures are not retried.</dd></dl>
+<p>This function creates a database backup for the given Google Cloud Spanner database.</p>
+<p>Note that the <code>backup_id</code> must be unique within the same instance, it must be between 2 and 60 characters long, it must start with a lowercase letter (<code>[a-z]</code>), it must end with a lowercase letter or a number (<code>[a-z0-9]</code>) and any characters between the beginning and ending characters must be lower case letters, numbers, underscore (<code>_</code>) or dashes (<code>-</code>), that is, they must belong to the <code>[a-z0-9_-]</code> character set.</p>
+<p>The <code>expire_time</code> must be at least 6 hours and at most 366 days from the time the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a" title="Creates a new Cloud Spanner backup for the given database.">CreateBackup()</a></code> request is processed.</p>
+<p>The backup will contain an externally consistent copy of the database at <code>version_time</code>, if set. Otherwise, the version_time will be the create_time of the backup.</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>google::cloud::future</code> that becomes satisfied when the operation completes on the service. Note that this can take minutes in some cases.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc">CreateBackup</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">CreateBackup</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; database_id,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; backup_id) {</div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::Database</a> database(project_id, instance_id,</div>
 <div class="line">                                            database_id);</div>
+<div class="line">  <span class="keyword">auto</span> db = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ac7f0f542aac6bbe179aa495a1ea9fa42">GetDatabase</a>(database);</div>
+<div class="line">  <span class="keywordflow">if</span> (!db) <span class="keywordflow">throw</span> std::runtime_error(db.status().message());</div>
 <div class="line">  <span class="keyword">auto</span> expire_time =</div>
 <div class="line">      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(absl::Now() + absl::Hours(7))</div>
 <div class="line">          .value();</div>
+<div class="line">  <span class="keyword">auto</span> version_time =</div>
+<div class="line">      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(db-&gt;earliest_version_time())</div>
+<div class="line">          .value();</div>
 <div class="line">  <span class="keyword">auto</span> backup =</div>
-<div class="line">      client</div>
-<div class="line">          .<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc">CreateBackup</a>(</div>
-<div class="line">              database, backup_id,</div>
-<div class="line">              expire_time.get&lt;std::chrono::system_clock::time_point&gt;().value())</div>
-<div class="line">          .get();</div>
+<div class="line">      client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">CreateBackup</a>(database, backup_id, expire_time, version_time).get();</div>
 <div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of &#39;&quot;</span> &lt;&lt; database.FullName()</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span> &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span></div>
@@ -420,7 +481,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00147">147</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00161">161</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -443,7 +504,7 @@ Public Member Functions</h2></td></tr>
 <p>Deletes a pending or completed <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html" title="This class identifies a Cloud Spanner Backup.">Backup</a>. </p>
 <dl class="section user"><dt>Idempotency</dt><dd>We treat this operation as idempotent. Transient failures are automatically retried. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00142">142</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00156">156</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -512,7 +573,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00138">138</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00152">152</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -674,7 +735,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00182">182</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00207">207</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -727,7 +788,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00151">151</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00165">165</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -784,7 +845,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00187">187</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00212">212</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -870,8 +931,16 @@ Public Member Functions</h2></td></tr>
 <div class="line">  <span class="keywordflow">if</span> (!restored_db) {</div>
 <div class="line">    <span class="keywordflow">throw</span> std::runtime_error(restored_db.status().message());</div>
 <div class="line">  }</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Database &#39;&quot;</span> &lt;&lt; restored_db-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; was restored from &quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; backup &#39;&quot;</span> &lt;&lt; backup.FullName() &lt;&lt; <span class="stringliteral">&quot;&#39;.\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Database &#39;&quot;</span> &lt;&lt; restored_db-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; was restored from&quot;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; backup &#39;&quot;</span> &lt;&lt; backup.FullName() &lt;&lt; <span class="stringliteral">&quot;&#39;&quot;</span>;</div>
+<div class="line">  <span class="keywordflow">if</span> (restored_db-&gt;restore_info().source_type() ==</div>
+<div class="line">      google::spanner::admin::database::v1::BACKUP) {</div>
+<div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; backup_info = restored_db-&gt;restore_info().backup_info();</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot; of &#39;&quot;</span> &lt;&lt; backup_info.source_database() &lt;&lt; <span class="stringliteral">&quot;&#39; as of &quot;</span></div>
+<div class="line">              &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(</div>
+<div class="line">                     backup_info.version_time());</div>
+<div class="line">  }</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -1192,7 +1261,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a00c3480ae499f2d2a95bb47414304f74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00c3480ae499f2d2a95bb47414304f74">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a00c3480ae499f2d2a95bb47414304f74">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1218,6 +1287,40 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update backup's <code>expire_time</code>. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>this overload is deprecated; use the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> overload instead.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent as its result does not depend on the previous state of the backup. Note that, as is the case with all operations, it is subject to race conditions if multiple tasks are attempting to change the expire time in the same backup. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00199">199</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+
+</div>
+</div>
+<a id="af59c59c563d8500cbe1704d8822bd234"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af59c59c563d8500cbe1704d8822bd234">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; gcsa::Backup &gt; google::cloud::spanner::v1::DatabaseAdminClient::UpdateBackupExpireTime </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">Backup</a> const &amp;&#160;</td>
+          <td class="paramname"><em>backup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>&#160;</td>
+          <td class="paramname"><em>expire_time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update backup's <code>expire_time</code>. </p>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent as its result does not depend on the previous state of the backup. Note that, as is the case with all operations, it is subject to race conditions if multiple tasks are attempting to change the expire time in the same backup.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line"><span class="keywordtype">void</span> UpdateBackup(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::DatabaseAdminClient</a> client,</div>
 <div class="line">                  std::string <span class="keyword">const</span>&amp; project_id, std::string <span class="keyword">const</span>&amp; instance_id,</div>
@@ -1227,9 +1330,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">  <span class="keyword">auto</span> expire_time =</div>
 <div class="line">      <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(absl::Now() + absl::Hours(7))</div>
 <div class="line">          .value();</div>
-<div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">UpdateBackupExpireTime</a>(</div>
-<div class="line">      backup_name,</div>
-<div class="line">      expire_time.get&lt;std::chrono::system_clock::time_point&gt;().value());</div>
+<div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">UpdateBackupExpireTime</a>(backup_name, expire_time);</div>
 <div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; updated to expire at &quot;</span></div>
 <div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;expire_time())</div>
@@ -1237,12 +1338,12 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00169">169</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00181">181</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
 <a id="ad7dcdc3e5bb7ded1d648bc0708b62704"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7dcdc3e5bb7ded1d648bc0708b62704">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7dcdc3e5bb7ded1d648bc0708b62704">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1268,9 +1369,43 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Update backup's <code>expire_time</code>. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>this overload is deprecated; use the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html" title="A representation of the Spanner TIMESTAMP type: An instant in time.">Timestamp</a></code> overload instead.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent as its result does not depend on the previous state of the backup. Note that, as is the case with all operations, it is subject to race conditions if multiple tasks are attempting to change the expire time in the same backup. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00156">156</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00191">191</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
+
+</div>
+</div>
+<a id="a39e733e359fdaa7cf0cd1b1026a30d0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39e733e359fdaa7cf0cd1b1026a30d0a">&#9670;&nbsp;</a></span>UpdateBackupExpireTime() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; gcsa::Backup &gt; google::cloud::spanner::v1::DatabaseAdminClient::UpdateBackupExpireTime </td>
+          <td>(</td>
+          <td class="paramtype">google::spanner::admin::database::v1::Backup const &amp;&#160;</td>
+          <td class="paramname"><em>backup</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Timestamp.html">Timestamp</a>&#160;</td>
+          <td class="paramname"><em>expire_time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update backup's <code>expire_time</code>. </p>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is idempotent as its result does not depend on the previous state of the backup. Note that, as is the case with all operations, it is subject to race conditions if multiple tasks are attempting to change the expire time in the same backup. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="database__admin__client_8cc_source.html#l00170">170</a> of file <a class="el" href="database__admin__client_8cc_source.html">database_admin_client.cc</a>.</p>
 
 </div>
 </div>
@@ -1324,28 +1459,28 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::v1::DatabaseAdminClient</a></div><div class="ttdoc">Performs database administration operations on Spanner.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8h_source.html#l00112">database_admin_client.h:112</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html">google::cloud::spanner::v1::DatabaseAdminClient</a></div><div class="ttdoc">Performs database administration operations on Spanner.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8h_source.html#l00114">database_admin_client.h:114</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Backup.html">google::cloud::spanner::v1::Backup</a></div><div class="ttdoc">This class identifies a Cloud Spanner Backup.</div><div class="ttdef"><b>Definition:</b> <a href="backup_8h_source.html#l00038">backup.h:38</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a013c48b7b10a72e698520a12e2122fac"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a013c48b7b10a72e698520a12e2122fac">google::cloud::spanner::v1::DatabaseAdminClient::GetBackup</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; GetBackup(Backup const &amp;backup)</div><div class="ttdoc">Retrieve metadata information about a Backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00138">database_admin_client.cc:138</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a2bc7c33f08f64b088399a593e8aaad64"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2bc7c33f08f64b088399a593e8aaad64">google::cloud::spanner::v1::DatabaseAdminClient::ListBackupOperations</a></div><div class="ttdeci">ListBackupOperationsRange ListBackupOperations(Instance in, std::string filter={})</div><div class="ttdoc">List all the backup operations in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00182">database_admin_client.cc:182</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a013c48b7b10a72e698520a12e2122fac"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a013c48b7b10a72e698520a12e2122fac">google::cloud::spanner::v1::DatabaseAdminClient::GetBackup</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; GetBackup(Backup const &amp;backup)</div><div class="ttdoc">Retrieve metadata information about a Backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00152">database_admin_client.cc:152</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a2bc7c33f08f64b088399a593e8aaad64"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2bc7c33f08f64b088399a593e8aaad64">google::cloud::spanner::v1::DatabaseAdminClient::ListBackupOperations</a></div><div class="ttdeci">ListBackupOperationsRange ListBackupOperations(Instance in, std::string filter={})</div><div class="ttdoc">List all the backup operations in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00207">database_admin_client.cc:207</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_ab9946fdbba22847a506bc000524cadca"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ab9946fdbba22847a506bc000524cadca">google::cloud::spanner::v1::DatabaseAdminClient::TestIamPermissions</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::TestIamPermissionsResponse &gt; TestIamPermissions(Database db, std::vector&lt; std::string &gt; permissions)</div><div class="ttdoc">Get the subset of the permissions the caller has on the given database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00126">database_admin_client.cc:126</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a2478b6fd1e1d11594c027ba6ae3cf7de"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2478b6fd1e1d11594c027ba6ae3cf7de">google::cloud::spanner::v1::DatabaseAdminClient::DropDatabase</a></div><div class="ttdeci">Status DropDatabase(Database db)</div><div class="ttdoc">Drops (deletes) an existing Cloud Spanner database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00053">database_admin_client.cc:53</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a323085764885a3994d741a0be7cb5b28"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a323085764885a3994d741a0be7cb5b28">google::cloud::spanner::v1::DatabaseAdminClient::SetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; SetIamPolicy(Database db, google::iam::v1::Policy policy)</div><div class="ttdoc">Set the IAM policy for the given database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00072">database_admin_client.cc:72</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_ad5be24c25239c5b63fef397e806e525a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad5be24c25239c5b63fef397e806e525a">google::cloud::spanner::v1::DatabaseAdminClient::ListDatabases</a></div><div class="ttdeci">ListDatabaseRange ListDatabases(Instance in)</div><div class="ttdoc">List all the databases in a give project and instance.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00049">database_admin_client.cc:49</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_ad7dcdc3e5bb7ded1d648bc0708b62704"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ad7dcdc3e5bb7ded1d648bc0708b62704">google::cloud::spanner::v1::DatabaseAdminClient::UpdateBackupExpireTime</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; UpdateBackupExpireTime(google::spanner::admin::database::v1::Backup const &amp;backup, std::chrono::system_clock::time_point const &amp;expire_time)</div><div class="ttdoc">Update backup's expire_time.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00156">database_admin_client.cc:156</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::v1::Database</a></div><div class="ttdoc">This class identifies a Cloud Spanner Database.</div><div class="ttdef"><b>Definition:</b> <a href="database_8h_source.html#l00043">database.h:43</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a39e733e359fdaa7cf0cd1b1026a30d0a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">google::cloud::spanner::v1::DatabaseAdminClient::UpdateBackupExpireTime</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; UpdateBackupExpireTime(google::spanner::admin::database::v1::Backup const &amp;backup, Timestamp expire_time)</div><div class="ttdoc">Update backup's expire_time.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00170">database_admin_client.cc:170</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a791b4751559a07df3db729ea7b26fa04"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::cloud::spanner_internal::v1::ToString</a></div><div class="ttdeci">std::string ToString(absl::int128 value)</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8cc_source.html#l00108">numeric.cc:108</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a49253dde4e0c0c2901b53f2826e567c9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a49253dde4e0c0c2901b53f2826e567c9">google::cloud::spanner::v1::DatabaseAdminClient::UpdateDatabase</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata &gt; &gt; UpdateDatabase(Database db, std::vector&lt; std::string &gt; statements)</div><div class="ttdoc">Updates the database using a series of DDL statements.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00044">database_admin_client.cc:44</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a2e3021d7e5f34f5ca62cce5a40b9ffdb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2e3021d7e5f34f5ca62cce5a40b9ffdb">google::cloud::spanner::v1::DatabaseAdminClient::RestoreDatabase</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Database &gt; &gt; RestoreDatabase(Database db, Backup const &amp;backup)</div><div class="ttdoc">Create a new database by restoring from a completed backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00057">database_admin_client.cc:57</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_aad79cb8a943fdf211f80929e399edddc"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aad79cb8a943fdf211f80929e399edddc">google::cloud::spanner::v1::DatabaseAdminClient::CreateBackup</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; &gt; CreateBackup(Database db, std::string backup_id, std::chrono::system_clock::time_point expire_time)</div><div class="ttdoc">Creates a new Cloud Spanner backup for the given database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00131">database_admin_client.cc:131</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a42ef165c0b4771f720187c06c9865f00"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a42ef165c0b4771f720187c06c9865f00">google::cloud::spanner::v1::DatabaseAdminClient::ListBackups</a></div><div class="ttdeci">ListBackupsRange ListBackups(Instance in, std::string filter={})</div><div class="ttdoc">List all the backups in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00151">database_admin_client.cc:151</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a42ef165c0b4771f720187c06c9865f00"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a42ef165c0b4771f720187c06c9865f00">google::cloud::spanner::v1::DatabaseAdminClient::ListBackups</a></div><div class="ttdeci">ListBackupsRange ListBackups(Instance in, std::string filter={})</div><div class="ttdoc">List all the backups in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00165">database_admin_client.cc:165</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a338381056187f3ddff0bd76a96085101"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::v1::MakeTimestamp</a></div><div class="ttdeci">StatusOr&lt; Timestamp &gt; MakeTimestamp(absl::Time t)</div><div class="ttdoc">Construct a Timestamp from an absl::Time.</div><div class="ttdef"><b>Definition:</b> <a href="timestamp_8cc_source.html#l00067">timestamp.cc:67</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::v1::Instance</a></div><div class="ttdoc">This class identifies a Cloud Spanner Instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance_8h_source.html#l00041">instance.h:41</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_aadf938cd9459fc263d9f8f1e6328ae7a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">google::cloud::spanner::v1::DatabaseAdminClient::CreateBackup</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; &gt; CreateBackup(Database db, std::string backup_id, Timestamp expire_time, absl::optional&lt; Timestamp &gt; version_time=absl::nullopt)</div><div class="ttdoc">Creates a new Cloud Spanner backup for the given database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00131">database_admin_client.cc:131</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_aee0744330840569e253ce38f8bcd1435"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aee0744330840569e253ce38f8bcd1435">google::cloud::spanner::v1::DatabaseAdminClient::GetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; GetIamPolicy(Database db)</div><div class="ttdoc">Gets the IAM policy for a database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00067">database_admin_client.cc:67</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a1834f37cac8f350d0f853ca313a5da8e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a1834f37cac8f350d0f853ca313a5da8e">google::cloud::spanner::v1::DatabaseAdminClient::ListDatabaseOperations</a></div><div class="ttdeci">ListDatabaseOperationsRange ListDatabaseOperations(Instance in, std::string filter={})</div><div class="ttdoc">List all the database operations in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00187">database_admin_client.cc:187</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a1834f37cac8f350d0f853ca313a5da8e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a1834f37cac8f350d0f853ca313a5da8e">google::cloud::spanner::v1::DatabaseAdminClient::ListDatabaseOperations</a></div><div class="ttdeci">ListDatabaseOperationsRange ListDatabaseOperations(Instance in, std::string filter={})</div><div class="ttdoc">List all the database operations in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00212">database_admin_client.cc:212</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_aa84d1e582eb4f39e72cd2b936e5ac9dd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aa84d1e582eb4f39e72cd2b936e5ac9dd">google::cloud::spanner::v1::DatabaseAdminClient::GetDatabaseDdl</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::GetDatabaseDdlResponse &gt; GetDatabaseDdl(Database db)</div><div class="ttdoc">Retrieve a database schema.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00038">database_admin_client.cc:38</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a027a862edaa6297b5136746620a054a9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a027a862edaa6297b5136746620a054a9">google::cloud::spanner::v1::DatabaseAdminClient::DeleteBackup</a></div><div class="ttdeci">Status DeleteBackup(google::spanner::admin::database::v1::Backup const &amp;backup)</div><div class="ttdoc">Deletes a pending or completed Backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00142">database_admin_client.cc:142</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a027a862edaa6297b5136746620a054a9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a027a862edaa6297b5136746620a054a9">google::cloud::spanner::v1::DatabaseAdminClient::DeleteBackup</a></div><div class="ttdeci">Status DeleteBackup(google::spanner::admin::database::v1::Backup const &amp;backup)</div><div class="ttdoc">Deletes a pending or completed Backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00156">database_admin_client.cc:156</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_ac7f0f542aac6bbe179aa495a1ea9fa42"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#ac7f0f542aac6bbe179aa495a1ea9fa42">google::cloud::spanner::v1::DatabaseAdminClient::GetDatabase</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Database &gt; GetDatabase(Database db)</div><div class="ttdoc">Retrieve metadata information about a database.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00034">database_admin_client.cc:34</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_aba7e5d741747dc661e8686724381bc18"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aba7e5d741747dc661e8686724381bc18">google::cloud::spanner::v1::DatabaseAdminClient::CreateDatabase</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Database &gt; &gt; CreateDatabase(Database db, std::vector&lt; std::string &gt; extra_statements={})</div><div class="ttdoc">Creates a new Cloud Spanner database in the given project and instance.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00029">database_admin_client.cc:29</a></div></div>
 <!-- start footer part -->

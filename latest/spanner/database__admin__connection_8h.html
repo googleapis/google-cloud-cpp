@@ -79,9 +79,11 @@ $(function() {
 <code>#include &quot;google/cloud/spanner/internal/database_admin_stub.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="polling__policy_8h_source.html">google/cloud/spanner/polling_policy.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="retry__policy_8h_source.html">google/cloud/spanner/retry_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timestamp_8h_source.html">google/cloud/spanner/timestamp.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/spanner/version.h</a>&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/backoff__policy_8h.html">google/cloud/backoff_policy.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/internal/pagination_range.h&quot;</code><br />
+<code>#include &quot;absl/types/optional.h&quot;</code><br />
 <code>#include &lt;google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
@@ -104,7 +106,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#a1996686a752c8b47130fff1789690171" title="Define the interface for a google.spanner.v1.DatabaseAdmin.GetDatabaseDdl RPC.">GetDatabaseDdl()</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1GetDatabaseDdlParams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateDatabaseParams.html">google::cloud::spanner::v1::DatabaseAdminConnection::UpdateDatabaseParams</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#ac732f3769a02eb30cb01e95b66ec0175" title="Define the interface for a google.spanner.v1.DatabaseAdmin.CreateDatabase RPC.">CreateDatabase()</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateDatabaseParams.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#a8dc752426efcf6d5e54092590837fae7" title="Define the interface for a google.spanner.v1.DatabaseAdmin.UpdateDatabase RPC.">UpdateDatabase()</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateDatabaseParams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1DropDatabaseParams.html">google::cloud::spanner::v1::DatabaseAdminConnection::DropDatabaseParams</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrap the arguments for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html#ab725ba131308fa07cd5320f929553d94" title="Define the interface for a google.spanner.v1.DatabaseAdmin.DropDatabase RPC.">DropDatabase()</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1DropDatabaseParams.html#details">More...</a><br /></td></tr>
