@@ -110,51 +110,60 @@ $(function() {
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  StatusOr&lt;google::pubsub::v1::Schema&gt; CreateProtobufSchema(</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; schema, std::string schema_definition);</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient.html#a4fd5c0b75af1648680cf36bd9f78ff94">   98</a></span>&#160;  StatusOr&lt;google::pubsub::v1::Schema&gt; <a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient.html#a4fd5c0b75af1648680cf36bd9f78ff94">CreateSchema</a>(</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      google::pubsub::v1::CreateSchemaRequest <span class="keyword">const</span>&amp; request) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordflow">return</span> connection_-&gt;CreateSchema(request);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  StatusOr&lt;google::pubsub::v1::Schema&gt; GetSchema(</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; schema,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html#a73afb7742dc1c372ffd8f3346d3abad5">ListSchemasRange</a> ListSchemas(</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id,</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  Status DeleteSchema(<a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; schema);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateAvroSchema(</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, std::string schema_definition);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateProtobufSchema(</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, std::string schema_definition);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateSchema(</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, google::pubsub::v1::Schema schema);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="comment">// TODO(#5706) - ValidateMessageProtobufSchema()</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  <span class="comment">// TODO(#5706) - ValidateMessageAvroSchema()</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">// TODO(#5706) - ValidateMessageNamedSchema()</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="comment">// TODO(#5706) - ValidateMessage()</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  std::shared_ptr&lt;SchemaAdminConnection&gt; connection_;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;};</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}  <span class="comment">// namespace pubsub_experimental</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  StatusOr&lt;google::pubsub::v1::Schema&gt; CreateSchema(</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      google::pubsub::v1::CreateSchemaRequest <span class="keyword">const</span>&amp; request);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  StatusOr&lt;google::pubsub::v1::Schema&gt; GetSchema(</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; schema,</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html#a73afb7742dc1c372ffd8f3346d3abad5">ListSchemasRange</a> ListSchemas(</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      google::pubsub::v1::SchemaView view = google::pubsub::v1::BASIC);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  Status DeleteSchema(<a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; schema);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateAvroSchema(</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, std::string schema_definition);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateProtobufSchema(</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, std::string schema_definition);</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateSchemaResponse&gt; ValidateSchema(</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      std::string <span class="keyword">const</span>&amp; project_id, google::pubsub::v1::Schema schema);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateMessageResponse&gt;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  ValidateMessageWithNamedSchema(google::pubsub::v1::Encoding encoding,</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                                 std::string message,</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                                 <a class="code" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">Schema</a> <span class="keyword">const</span>&amp; named_schema);</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CLIENT_H</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateMessageResponse&gt; ValidateMessageWithAvro(</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      google::pubsub::v1::Encoding encoding, std::string message,</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      std::string project_id, std::string schema_definition);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateMessageResponse&gt;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  ValidateMessageWithProtobuf(google::pubsub::v1::Encoding encoding,</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                              std::string message, std::string project_id,</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                              std::string schema_definition);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  StatusOr&lt;google::pubsub::v1::ValidateMessageResponse&gt; ValidateMessage(</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      google::pubsub::v1::ValidateMessageRequest <span class="keyword">const</span>&amp; request);</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  std::shared_ptr&lt;SchemaAdminConnection&gt; connection_;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;};</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;}  <span class="comment">// namespace pubsub_experimental</span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CLIENT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient.html">google::cloud::pubsub_experimental::v1::SchemaAdminClient</a></div><div class="ttdoc">Performs schema admin operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="schema__admin__client_8h_source.html#l00061">schema_admin_client.h:61</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1_html_a73afb7742dc1c372ffd8f3346d3abad5"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html#a73afb7742dc1c372ffd8f3346d3abad5">google::cloud::pubsub_experimental::v1::ListSchemasRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::pubsub::v1::Schema &gt; ListSchemasRange</div><div class="ttdoc">An input range to stream Cloud Pub/Sub schemas.</div><div class="ttdef"><b>Definition:</b> <a href="schema__admin__connection_8h_source.html#l00042">schema_admin_connection.h:43</a></div></div>
 <div class="ttc" id="aschema_8h_html"><div class="ttname"><a href="schema_8h.html">schema.h</a></div></div>
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient_html_a4fd5c0b75af1648680cf36bd9f78ff94"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient.html#a4fd5c0b75af1648680cf36bd9f78ff94">google::cloud::pubsub_experimental::v1::SchemaAdminClient::CreateSchema</a></div><div class="ttdeci">StatusOr&lt; google::pubsub::v1::Schema &gt; CreateSchema(google::pubsub::v1::CreateSchemaRequest const &amp;request)</div><div class="ttdoc">Creates a new Cloud Pub/Sub schema.</div><div class="ttdef"><b>Definition:</b> <a href="schema__admin__client_8h_source.html#l00098">schema_admin_client.h:98</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1Schema.html">google::cloud::pubsub_experimental::v1::Schema</a></div><div class="ttdoc">Objects of this class identify a Cloud Pub/Sub schema.</div><div class="ttdef"><b>Definition:</b> <a href="schema_8h_source.html#l00038">schema.h:38</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00022">version.h:22</a></div></div>
 <div class="ttc" id="aschema__admin__connection_8h_html"><div class="ttname"><a href="schema__admin__connection_8h.html">schema_admin_connection.h</a></div></div>
