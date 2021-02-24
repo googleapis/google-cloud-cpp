@@ -386,6 +386,9 @@ class DatabaseAdminClient {
   /**
    * Creates a new Cloud Spanner backup for the given database.
    *
+   * @deprecated this overload is deprecated; use the `Timestamp` overload
+   * instead.
+   *
    * @par Idempotency
    * This is not an idempotent operation. Transient failures are not retried.
    *
@@ -495,6 +498,9 @@ class DatabaseAdminClient {
   /**
    * Update backup's @p expire_time.
    *
+   * @deprecated this overload is deprecated; use the `Timestamp` overload
+   * instead.
+   *
    * @par Idempotency
    * This operation is idempotent as its result does not depend on the previous
    * state of the backup. Note that, as is the case with all operations, it is
@@ -507,6 +513,9 @@ class DatabaseAdminClient {
 
   /**
    * Update backup's @p expire_time.
+   *
+   * @deprecated this overload is deprecated; use the `Timestamp` overload
+   * instead.
    *
    * @par Idempotency
    * This operation is idempotent as its result does not depend on the previous
