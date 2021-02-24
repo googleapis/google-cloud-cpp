@@ -122,7 +122,7 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc list-schemas
+   * @snippet samples.cc list-schemas
    *
    * @param project_id lists the schemas in this project
    * @param view Use `BASIC` to include the name and type of each schema, but
@@ -155,7 +155,7 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc validate-avro-schema
+   * @snippet samples.cc validate-avro-schema
    */
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateAvroSchema(
       std::string const& project_id, std::string schema_definition);
@@ -167,7 +167,7 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc validate-protobuf-schema
+   * @snippet samples.cc validate-protobuf-schema
    */
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateProtobufSchema(
       std::string const& project_id, std::string schema_definition);
@@ -185,7 +185,7 @@ class SchemaAdminClient {
    * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc validate-message-named
+   * @snippet samples.cc validate-message-named-schema
    *
    * @param encoding the message encoding, note that some schemas may not
    * support some encodings.
@@ -201,7 +201,7 @@ class SchemaAdminClient {
    * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc validate-message-avro
+   * @snippet samples.cc validate-message-avro
    *
    * @param encoding the message encoding, note that some schemas may not
    * support some encodings.
@@ -217,7 +217,7 @@ class SchemaAdminClient {
    * @copydoc ValidateMessage(google::pubsub::v1::ValidateMessageRequest const&)
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc validate-message-protobuf
+   * @snippet samples.cc validate-message-protobuf
    *
    * @param encoding the message encoding, note that some schemas may not
    *     support some encodings.

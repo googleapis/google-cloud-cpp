@@ -22,6 +22,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <google/cloud/pubsub/samples/samples.pb.h>
 #include <condition_variable>
 #include <mutex>
 #include <tuple>
@@ -851,6 +852,92 @@ void ValidateProtobufSchema(
   }
   //! [validate-protobuf-schema]
   (std::move(client), argv.at(0));
+}
+
+void ValidateMessageAvro(
+    google::cloud::pubsub_experimental::SchemaAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [validate-message-avro]
+  namespace experimental = google::cloud::pubsub_experimental;
+  [](experimental::SchemaAdminClient client, std::string const& project_id) {
+    auto constexpr kDefinition = R"js({
+      "type": "record",
+      "name": "State",
+      "namespace": "google.cloud.pubsub.samples",
+      "doc": "A list of states in the United States of America.",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The common name of the state."
+        },
+        {
+          "name": "post_abbr",
+          "type": "string",
+          "doc": "The postal code abbreviation of the state."
+        }
+      ]
+    })js";
+    auto constexpr kMessage = R"js({
+          "name": "New York",
+          "post_abbr": "NY"
+    })js";
+    auto schema = client.ValidateMessageWithAvro(
+        google::pubsub::v1::JSON, kMessage, project_id, kDefinition);
+    if (!schema) throw std::runtime_error(schema.status().message());
+    std::cout << "Message is valid\n";
+  }
+  //! [validate-message-avro]
+  (std::move(client), argv.at(0));
+}
+
+void ValidateMessageProtobuf(
+    google::cloud::pubsub_experimental::SchemaAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [validate-message-protobuf]
+  namespace experimental = google::cloud::pubsub_experimental;
+  [](experimental::SchemaAdminClient client, std::string const& project_id) {
+    google::cloud::pubsub::samples::State data;
+    data.set_name("New York");
+    data.set_post_abbr("NY");
+    auto const message = data.SerializeAsString();
+    auto constexpr kDefinition = R"pfile(
+        syntax = "proto3";
+        package google.cloud.pubsub.samples;
+
+        message State {
+          string name = 1;
+          string post_abbr = 2;
+        }
+    )pfile";
+    auto schema = client.ValidateMessageWithProtobuf(
+        google::pubsub::v1::BINARY, message, project_id, kDefinition);
+    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    std::cout << "Schema is valid\n";
+  }
+  //! [validate-message-protobuf]
+  (std::move(client), argv.at(0));
+}
+
+void ValidateMessageNamedSchema(
+    google::cloud::pubsub_experimental::SchemaAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [validate-message-named-schema]
+  namespace experimental = google::cloud::pubsub_experimental;
+  [](experimental::SchemaAdminClient client, std::string const& project_id,
+     std::string const& schema_id) {
+    google::cloud::pubsub::samples::State data;
+    data.set_name("New York");
+    data.set_post_abbr("NY");
+    auto const message = data.SerializeAsString();
+    auto schema = client.ValidateMessageWithNamedSchema(
+        google::pubsub::v1::BINARY, message,
+        experimental::Schema(project_id, schema_id));
+    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    std::cout << "Schema is valid\n";
+  }
+  //! [validate-message-named-schema]
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void Publish(google::cloud::pubsub::Publisher publisher,
@@ -1732,6 +1819,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ValidateProtobufSchema()" << std::endl;
   ValidateProtobufSchema(schema_admin, {project_id});
 
+  std::cout << "\nRunning ValidateAvroMessage()" << std::endl;
+  ValidateMessageAvro(schema_admin, {project_id});
+
+  std::cout << "\nRunning ValidateProtobufMessage()" << std::endl;
+  ValidateMessageProtobuf(schema_admin, {project_id});
+
+  std::cout << "\nRunning ValidateProtobufMessage()" << std::endl;
+  ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
+
   if (!UsingEmulator()) {
     // TODO(#4792) - the CreateSchema() operation would have failed
     std::cout << "\nRunning DeleteSchema() sample [2]" << std::endl;
@@ -1974,6 +2070,13 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                                ValidateAvroSchema),
       CreateSchemaAdminCommand("validate-protobuf-schema", {"project-id"},
                                ValidateProtobufSchema),
+      CreateSchemaAdminCommand("validate-message-avro", {"project-id"},
+                               ValidateMessageAvro),
+      CreateSchemaAdminCommand("validate-message-protobuf", {"project-id"},
+                               ValidateMessageProtobuf),
+      CreateSchemaAdminCommand("validate-message-named-schema",
+                               {"project-id", "schema-id"},
+                               ValidateMessageNamedSchema),
 
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},
