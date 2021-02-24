@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -32,6 +35,11 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+using ::testing::Not;
 
 std::string const& ProjectId() {
   static std::string project_id =
@@ -84,9 +92,8 @@ TEST_F(BackupTest, BackupTest) {
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
 
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
-  auto backup_future = database_admin_client_.CreateBackup(
-      db, db.database_id(),
-      expire_time.get<std::chrono::system_clock::time_point>().value());
+  auto backup_future =
+      database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
   // Cancel the CreateBackup operation.
   backup_future.cancel();
@@ -96,9 +103,8 @@ TEST_F(BackupTest, BackupTest) {
   }
 
   // Then create a Backup without cancelling
-  backup_future = database_admin_client_.CreateBackup(
-      db, db.database_id(),
-      expire_time.get<std::chrono::system_clock::time_point>().value());
+  backup_future =
+      database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
   // List the backup operations
   auto filter = std::string("(metadata.database:") + db.database_id() +
@@ -120,6 +126,9 @@ TEST_F(BackupTest, BackupTest) {
   EXPECT_STATUS_OK(backup);
   if (backup) {
     EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+    // Verify that the version_time is the same as the creation_time.
+    EXPECT_EQ(MakeTimestamp(backup->version_time()).value(),
+              MakeTimestamp(backup->create_time()).value());
   }
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
@@ -165,14 +174,233 @@ TEST_F(BackupTest, BackupTest) {
       << "Backup " << backup->name() << " not found in the backup list.";
 
   auto new_expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
-  auto updated_backup = database_admin_client_.UpdateBackupExpireTime(
-      *backup,
-      new_expire_time.get<std::chrono::system_clock::time_point>().value());
+  auto updated_backup =
+      database_admin_client_.UpdateBackupExpireTime(*backup, new_expire_time);
   EXPECT_STATUS_OK(updated_backup);
   EXPECT_EQ(MakeTimestamp(updated_backup->expire_time()).value(),
             new_expire_time);
 
   EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+}
+
+/// @test Verify creating/restoring a backup with a valid version_time.
+TEST_F(BackupTest, CreateBackupWithVersionTime) {
+  if (!RunSlowBackupTests()) GTEST_SKIP();
+
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')"),
+      "CREATE TABLE Counters ("
+      "  Name   STRING(64) NOT NULL,"
+      "  Value  INT64 NOT NULL"
+      ") PRIMARY KEY (Name)"};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
+
+  std::string const version_key = "version";
+  std::vector<Timestamp> version_times;
+  {
+    spanner::Client client(spanner::MakeConnection(db));
+    auto commit = client.Commit(spanner::Mutations{
+        spanner::InsertMutationBuilder("Counters", {"Name", "Value"})
+            .EmplaceRow(version_key, 0)  // the version we'll backup/restore
+            .Build()});
+    EXPECT_STATUS_OK(commit);
+    if (commit) {
+      // version_times[0]: when Counters[version_key] == 0
+      version_times.push_back(commit->commit_timestamp);
+      commit = client.Commit(spanner::Mutations{
+          spanner::UpdateMutationBuilder("Counters", {"Name", "Value"})
+              .EmplaceRow(version_key, 1)  // latest version
+              .Build()});
+      EXPECT_STATUS_OK(commit);
+      if (commit) {
+        // version_times[1]: when Counters[version_key] == 1
+        version_times.push_back(commit->commit_timestamp);
+      }
+    }
+  }
+
+  if (version_times.size() == 2) {
+    EXPECT_LT(MakeTimestamp(create_time).value(), version_times[0]);
+    EXPECT_LT(version_times[0], version_times[1]);
+    // Create a backup when Counters[version_key] == 0.
+    auto version_time = version_times[0];
+    auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+    auto backup =
+        database_admin_client_
+            .CreateBackup(db, db.database_id(), expire_time, version_time)
+            .get();
+    EXPECT_THAT(backup, IsOk()) << backup.status();
+    if (backup) {
+      EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+      EXPECT_EQ(MakeTimestamp(backup->version_time()).value(), version_time);
+      EXPECT_GT(MakeTimestamp(backup->create_time()).value(), version_time);
+
+      Database rdb(in, spanner_testing::RandomDatabaseName(generator_));
+      auto restored =
+          database_admin_client_.RestoreDatabase(rdb, *backup).get();
+      EXPECT_THAT(restored, IsOk()) << restored.status();
+      if (restored) {
+        auto const& restore_info = restored->restore_info();
+        EXPECT_EQ(restore_info.source_type(),
+                  google::spanner::admin::database::v1::BACKUP);
+        if (restore_info.source_type() ==
+            google::spanner::admin::database::v1::BACKUP) {
+          auto const& backup_info = restore_info.backup_info();
+          EXPECT_EQ(backup_info.backup(), backup->name());
+          EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
+                    version_time);
+          EXPECT_LT(MakeTimestamp(backup_info.version_time()).value(),
+                    MakeTimestamp(backup_info.create_time()).value());
+          EXPECT_EQ(backup_info.source_database(), db.FullName());
+        }
+        auto database = database_admin_client_.GetDatabase(rdb);
+        EXPECT_THAT(database, IsOk()) << database.status();
+        if (database) {
+          auto const& restore_info = database->restore_info();
+          EXPECT_EQ(restore_info.source_type(),
+                    google::spanner::admin::database::v1::BACKUP);
+          if (restore_info.source_type() ==
+              google::spanner::admin::database::v1::BACKUP) {
+            auto const& backup_info = restore_info.backup_info();
+            EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
+                      version_time);
+          }
+        }
+        bool found_restored = false;
+        for (auto const& database : database_admin_client_.ListDatabases(in)) {
+          EXPECT_THAT(database, IsOk()) << database.status();
+          if (!database) continue;
+          if (database->name() == rdb.FullName()) {
+            EXPECT_FALSE(found_restored);
+            found_restored = true;
+            auto const& restore_info = database->restore_info();
+            EXPECT_EQ(restore_info.source_type(),
+                      google::spanner::admin::database::v1::BACKUP);
+            if (restore_info.source_type() ==
+                google::spanner::admin::database::v1::BACKUP) {
+              auto const& backup_info = restore_info.backup_info();
+              EXPECT_EQ(MakeTimestamp(backup_info.version_time()).value(),
+                        version_time);
+            }
+          }
+        }
+        EXPECT_TRUE(found_restored);
+        {
+          spanner::Client client(spanner::MakeConnection(rdb));
+          auto keys = spanner::KeySet().AddKey(spanner::MakeKey(version_key));
+          auto rows = client.Read("Counters", std::move(keys), {"Value"});
+          using RowType = std::tuple<std::int64_t>;
+          auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
+          EXPECT_THAT(row, IsOk()) << row.status();
+          if (row) {
+            // Expect to see the state of the table at version_time.
+            EXPECT_EQ(std::get<0>(*std::move(row)), 0);
+          }
+        }
+        EXPECT_STATUS_OK(database_admin_client_.DropDatabase(rdb));
+      }
+
+      EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+    }
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+}
+
+/// @test Verify creating a backup with an expired version_time fails.
+TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')")};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
+  // version_time too far in the past (outside the version_retention_period).
+  auto version_time = MakeTimestamp(create_time - absl::Hours(2)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto backup =
+      database_admin_client_
+          .CreateBackup(db, db.database_id(), expire_time, version_time)
+          .get();
+  EXPECT_THAT(backup, Not(IsOk()));
+  EXPECT_THAT(backup.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("earlier than the creation time")));
+  if (backup) {
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+}
+
+/// @test Verify creating a backup with a future version_time fails.
+TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_THAT(instance_id, IsOk()) << instance_id.status();
+  Instance in(ProjectId(), *instance_id);
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+
+  std::vector<std::string> extra_statements = {
+      absl::StrCat("ALTER DATABASE `", db.database_id(),
+                   "` SET OPTIONS (version_retention_period='1h')")};
+  auto database =
+      database_admin_client_.CreateDatabase(db, extra_statements).get();
+  if (Emulator()) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk()) << database.status();
+
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
+  // version_time in the future.
+  auto version_time = MakeTimestamp(create_time + absl::Hours(2)).value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(8)).value();
+  auto backup =
+      database_admin_client_
+          .CreateBackup(db, db.database_id(), expire_time, version_time)
+          .get();
+  EXPECT_THAT(backup, Not(IsOk()));
+  EXPECT_THAT(backup.status(),
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("with a future version time")));
+  if (backup) {
+    EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
 }
 
 }  // namespace

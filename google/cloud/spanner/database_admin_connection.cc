@@ -351,12 +351,13 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_backup_id(p.backup_id);
     auto& backup = *request.mutable_backup();
     backup.set_database(p.database.FullName());
-    auto ts = MakeTimestamp(p.expire_time);
-    if (!ts) {
-      return google::cloud::make_ready_future(
-          StatusOr<gcsa::Backup>(std::move(ts).status()));
+    // `p.expire_time` is deprecated and ignored here.
+    *backup.mutable_expire_time() =
+        p.expire_timestamp.get<protobuf::Timestamp>().value();
+    if (p.version_time) {
+      *backup.mutable_version_time() =
+          p.version_time->get<protobuf::Timestamp>().value();
     }
-    *backup.mutable_expire_time() = ts->get<protobuf::Timestamp>().value();
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,

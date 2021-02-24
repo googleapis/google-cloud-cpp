@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -29,6 +30,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
@@ -880,6 +883,27 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   if (!emulator_ || plan) {
     EXPECT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
+  }
+}
+
+/// @test Verify version_retention_period is returned in information schema.
+TEST_F(ClientIntegrationTest, InformationSchema) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.SCHEMA_NAME = ""
+          AND s.OPTION_NAME = "version_retention_period"
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (emulator_) {
+      // TODO(#5479): Awaiting emulator support for version_retention_period.
+      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    EXPECT_EQ("2h", std::get<0>(*row));
   }
 }
 

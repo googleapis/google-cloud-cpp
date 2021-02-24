@@ -468,6 +468,40 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [create-database] [END spanner_create_database]
 
+// [START spanner_create_database_with_version_retention_period]
+void CreateDatabaseWithVersionRetentionPeriod(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> extra_statements;
+  extra_statements.push_back("ALTER DATABASE `" + database_id + "` " +
+                             "SET OPTIONS (version_retention_period='2h')");
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Singers (
+          SingerId   INT64 NOT NULL,
+          FirstName  STRING(1024),
+          LastName   STRING(1024),
+          SingerInfo BYTES(MAX)
+      ) PRIMARY KEY (SingerId))""");
+  extra_statements.emplace_back(R"""(
+      CREATE TABLE Albums (
+          SingerId     INT64 NOT NULL,
+          AlbumId      INT64 NOT NULL,
+          AlbumTitle   STRING(MAX)
+      ) PRIMARY KEY (SingerId, AlbumId),
+          INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
+  auto db = client.CreateDatabase(database, std::move(extra_statements)).get();
+  if (!db) throw std::runtime_error(db.status().message());
+  std::cout << "Created database [" << database << "]:\n" << db->DebugString();
+
+  auto ddl = client.GetDatabaseDdl(database);
+  if (!ddl) throw std::runtime_error(ddl.status().message());
+  std::cout << "Database DDL is:\n" << ddl->DebugString();
+}
+// [END spanner_create_database_with_version_retention_period]
+
 // [START spanner_create_table_with_datatypes]
 void CreateTableWithDatatypes(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -651,15 +685,16 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& backup_id) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
+  auto db = client.GetDatabase(database);
+  if (!db) throw std::runtime_error(db.status().message());
   auto expire_time =
       google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
           .value();
+  auto version_time =
+      google::cloud::spanner::MakeTimestamp(db->earliest_version_time())
+          .value();
   auto backup =
-      client
-          .CreateBackup(
-              database, backup_id,
-              expire_time.get<std::chrono::system_clock::time_point>().value())
-          .get();
+      client.CreateBackup(database, backup_id, expire_time, version_time).get();
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout << "Backup '" << backup->name() << "' of '" << database.FullName()
             << "' of size " << backup->size_bytes() << " bytes"
@@ -692,8 +727,16 @@ void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
   if (!restored_db) {
     throw std::runtime_error(restored_db.status().message());
   }
-  std::cout << "Database '" << restored_db->name() << "' was restored from "
-            << " backup '" << backup.FullName() << "'.\n";
+  std::cout << "Database '" << restored_db->name() << "' was restored from"
+            << " backup '" << backup.FullName() << "'";
+  if (restored_db->restore_info().source_type() ==
+      google::spanner::admin::database::v1::BACKUP) {
+    auto const& backup_info = restored_db->restore_info().backup_info();
+    std::cout << " of '" << backup_info.source_database() << "' as of "
+              << google::protobuf::util::TimeUtil::ToString(
+                     backup_info.version_time());
+  }
+  std::cout << ".\n";
 }
 //! [restore-database] [END spanner_restore_backup]
 
@@ -740,9 +783,7 @@ void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
   auto expire_time =
       google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
           .value();
-  auto backup = client.UpdateBackupExpireTime(
-      backup_name,
-      expire_time.get<std::chrono::system_clock::time_point>().value());
+  auto backup = client.UpdateBackupExpireTime(backup_name, expire_time);
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout << "Backup '" << backup->name() << "' updated to expire at "
             << google::protobuf::util::TimeUtil::ToString(backup->expire_time())
@@ -792,9 +833,7 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
   auto expire_time =
       google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
           .value();
-  auto f = client.CreateBackup(
-      database, backup_id,
-      expire_time.get<std::chrono::system_clock::time_point>().value());
+  auto f = client.CreateBackup(database, backup_id, expire_time);
   f.cancel();
   auto backup = f.get();
   if (backup) {
@@ -2916,6 +2955,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"remove-database-reader", RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", InstanceTestIamPermissionsCommand},
       make_database_command_entry("create-database", CreateDatabase),
+      make_database_command_entry("create-database-with-retention-period",
+                                  CreateDatabaseWithVersionRetentionPeriod),
       make_database_command_entry("create-table-with-datatypes",
                                   CreateTableWithDatatypes),
       make_database_command_entry("create-table-with-timestamp",
@@ -3228,6 +3269,18 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_create_database sample" << std::endl;
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
+
+  // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (!emulator) {
+    std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+    DropDatabase(database_admin_client, project_id, instance_id, database_id);
+
+    std::cout << "\nRunning "
+              << "spanner_create_database_with_version_retention_period sample"
+              << std::endl;
+    CreateDatabaseWithVersionRetentionPeriod(database_admin_client, project_id,
+                                             instance_id, database_id);
+  }
 
   std::cout << "\nRunning spanner_create_table_with_datatypes sample"
             << std::endl;
