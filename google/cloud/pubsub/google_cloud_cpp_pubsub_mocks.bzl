@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_pubsub_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_pubsub_mocks_hdrs = [
+    "experimental/mock_schema_admin_connection.h",
     "mocks/mock_ack_handler.h",
     "mocks/mock_publisher_connection.h",
     "mocks/mock_subscription_admin_connection.h",

@@ -18,6 +18,7 @@
 
 pubsub_client_unit_tests = [
     "ack_handler_test.cc",
+    "experimental/schema_admin_client_test.cc",
     "experimental/schema_admin_connection_test.cc",
     "experimental/schema_test.cc",
     "internal/batching_publisher_connection_test.cc",
