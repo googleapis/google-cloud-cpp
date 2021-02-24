@@ -670,51 +670,57 @@ TEST(DatabaseAdminConnectionTest, TestIamPermissionsTooManyTransients) {
 TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   Database dbase("test-project", "test-instance", "test-db");
-  auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
+  auto now = absl::Now();
+  auto expire_time = MakeTimestamp(now + absl::Hours(7)).value();
+  auto version_time = MakeTimestamp(now - absl::Hours(7)).value();
 
   EXPECT_CALL(*mock, CreateBackup(_, _))
-      .WillOnce([&dbase, &expire_time](grpc::ClientContext&,
-                                       gcsa::CreateBackupRequest const& r) {
+      .WillOnce([&dbase, &expire_time, &version_time](
+                    grpc::ClientContext&, gcsa::CreateBackupRequest const& r) {
         EXPECT_EQ(dbase.instance().FullName(), r.parent());
         EXPECT_EQ("test-backup", r.backup_id());
         auto const& backup = r.backup();
         EXPECT_EQ(dbase.FullName(), backup.database());
-        EXPECT_EQ(MakeTimestamp(backup.expire_time()).value(),
-                  MakeTimestamp(
-                      expire_time.get<std::chrono::system_clock::time_point>()
-                          .value())
-                      .value());  // loss of precision
+        EXPECT_EQ(MakeTimestamp(backup.expire_time()).value(), expire_time);
+        EXPECT_EQ(MakeTimestamp(backup.version_time()).value(), version_time);
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
         return make_status_or(op);
       });
   EXPECT_CALL(*mock, GetOperation(_, _))
-      .WillOnce(
-          [&expire_time](grpc::ClientContext&,
-                         google::longrunning::GetOperationRequest const& r) {
-            EXPECT_EQ("test-operation-name", r.name());
-            google::longrunning::Operation op;
-            op.set_name(r.name());
-            op.set_done(true);
-            gcsa::Backup backup;
-            backup.set_name("test-backup");
-            *backup.mutable_expire_time() =
-                expire_time.get<protobuf::Timestamp>().value();
-            op.mutable_response()->PackFrom(backup);
-            return make_status_or(op);
-          });
+      .WillOnce([&expire_time, &version_time](
+                    grpc::ClientContext&,
+                    google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Backup backup;
+        backup.set_name("test-backup");
+        *backup.mutable_expire_time() =
+            expire_time.get<protobuf::Timestamp>().value();
+        *backup.mutable_version_time() =
+            version_time.get<protobuf::Timestamp>().value();
+        *backup.mutable_create_time() = MakeTimestamp(absl::Now())
+                                            .value()
+                                            .get<protobuf::Timestamp>()
+                                            .value();
+        op.mutable_response()->PackFrom(backup);
+        return make_status_or(op);
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  auto fut = conn->CreateBackup(
-      {dbase, "test-backup",
-       expire_time.get<std::chrono::system_clock::time_point>().value()});
+  auto fut =
+      conn->CreateBackup({dbase, "test-backup", {}, expire_time, version_time});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto backup = fut.get();
   EXPECT_STATUS_OK(backup);
 
   EXPECT_EQ("test-backup", backup->name());
   EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
+  EXPECT_EQ(MakeTimestamp(backup->version_time()).value(), version_time);
+  EXPECT_GT(MakeTimestamp(backup->create_time()).value(), version_time);
 }
 
 /// @test Verify cancellation.
@@ -764,7 +770,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
-  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  auto fut = conn->CreateBackup({dbase, "test-backup", {}, {}, absl::nullopt});
   fut.cancel();
   p.set_value();
   auto backup = fut.get();
@@ -787,7 +793,7 @@ TEST(DatabaseAdminConnectionTest, HandleCreateBackupError) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
-  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  auto fut = conn->CreateBackup({dbase, "test-backup", {}, {}, absl::nullopt});
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto backup = fut.get();
   EXPECT_THAT(backup, StatusIs(StatusCode::kPermissionDenied));

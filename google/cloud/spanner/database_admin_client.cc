@@ -129,10 +129,24 @@ DatabaseAdminClient::TestIamPermissions(Database db,
 }
 
 future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
+    Database db, std::string backup_id, Timestamp expire_time,
+    absl::optional<Timestamp> version_time) {
+  auto expire_time_point =
+      expire_time.get<std::chrono::system_clock::time_point>();
+  if (!expire_time_point) {
+    expire_time_point = std::chrono::system_clock::time_point::max();
+  }
+  return conn_->CreateBackup({std::move(db), std::move(backup_id),
+                              *std::move(expire_time_point), expire_time,
+                              std::move(version_time)});
+}
+
+future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id,
     std::chrono::system_clock::time_point expire_time) {
-  return conn_->CreateBackup(
-      {std::move(db), std::move(backup_id), expire_time});
+  auto ts = MakeTimestamp(expire_time);
+  if (!ts) return make_ready_future(StatusOr<gcsa::Backup>(ts.status()));
+  return CreateBackup(std::move(db), std::move(backup_id), *ts);
 }
 
 StatusOr<gcsa::Backup> DatabaseAdminClient::GetBackup(Backup const& backup) {
@@ -155,28 +169,39 @@ ListBackupsRange DatabaseAdminClient::ListBackups(Instance in,
 
 StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
     google::spanner::admin::database::v1::Backup const& backup,
-    std::chrono::system_clock::time_point const& expire_time) {
-  auto expire_timestamp = MakeTimestamp(expire_time);
-  if (!expire_timestamp) return expire_timestamp.status();
+    Timestamp expire_time) {
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.name());
   *request.mutable_backup()->mutable_expire_time() =
-      expire_timestamp->get<protobuf::Timestamp>().value();
+      expire_time.get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
 }
 
 StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
-    Backup const& backup,
-    std::chrono::system_clock::time_point const& expire_time) {
-  auto expire_timestamp = MakeTimestamp(expire_time);
-  if (!expire_timestamp) return expire_timestamp.status();
+    Backup const& backup, Timestamp expire_time) {
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup.FullName());
   *request.mutable_backup()->mutable_expire_time() =
-      expire_timestamp->get<protobuf::Timestamp>().value();
+      expire_time.get<protobuf::Timestamp>().value();
   request.mutable_update_mask()->add_paths("expire_time");
   return conn_->UpdateBackup({request});
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+    google::spanner::admin::database::v1::Backup const& backup,
+    std::chrono::system_clock::time_point const& expire_time) {
+  auto ts = MakeTimestamp(expire_time);
+  if (!ts) return ts.status();
+  return UpdateBackupExpireTime(backup, *ts);
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+    Backup const& backup,
+    std::chrono::system_clock::time_point const& expire_time) {
+  auto ts = MakeTimestamp(expire_time);
+  if (!ts) return ts.status();
+  return UpdateBackupExpireTime(backup, *ts);
 }
 
 ListBackupOperationsRange DatabaseAdminClient::ListBackupOperations(

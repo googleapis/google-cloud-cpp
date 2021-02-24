@@ -16,6 +16,8 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -29,12 +31,15 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
+using ::testing::ContainsRegex;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class DatabaseAdminClientTest : public ::testing::Test {
  protected:
@@ -163,6 +168,11 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
   std::vector<std::string> statements;
+  if (!emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    statements.push_back("ALTER DATABASE `" + database_.database_id() +
+                         "` SET OPTIONS (version_retention_period='7d')");
+  }
   statements.emplace_back(R"""(
         CREATE TABLE Singers (
           SingerId   INT64 NOT NULL,
@@ -180,12 +190,187 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   if (metadata->statements_size() >= 1) {
     EXPECT_THAT(metadata->statements(), Contains(HasSubstr("CREATE TABLE")));
   }
+  if (metadata->statements_size() >= 2) {
+    EXPECT_THAT(metadata->statements(), Contains(HasSubstr("ALTER DATABASE")));
+  }
   EXPECT_FALSE(metadata->throttled());
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);
   EXPECT_STATUS_OK(drop_status);
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
+/// @test Verify setting version_retention_period via CreateDatabase().
+TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
+  // Set the version_retention_period via CreateDatabase().
+  auto database =
+      client_
+          .CreateDatabase(
+              database_,
+              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                            "` SET OPTIONS (version_retention_period='7d')")})
+          .get();
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(database, Not(IsOk()));
+    return;
+  }
+  ASSERT_THAT(database, IsOk());
+  EXPECT_EQ(database_.FullName(), database->name());
+  EXPECT_EQ("7d", database->version_retention_period());
+
+  // Verify that version_retention_period is returned from GetDatabase().
+  auto get = client_.GetDatabase(database_);
+  ASSERT_THAT(get, IsOk());
+  EXPECT_EQ(database->name(), get->name());
+  EXPECT_EQ("7d", get->version_retention_period());
+
+  // Verify that earliest_version_time doesn't go past database create_time.
+  EXPECT_TRUE(get->has_create_time());
+  EXPECT_TRUE(get->has_earliest_version_time());
+  EXPECT_LE(MakeTimestamp(get->create_time()).value(),
+            MakeTimestamp(get->earliest_version_time()).value());
+
+  auto drop = client_.DropDatabase(database_);
+  EXPECT_THAT(drop, IsOk());
+}
+
+/// @test Verify setting bad version_retention_period via CreateDatabase().
+TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreateFailure) {
+  // Set an invalid version_retention_period (zero) via CreateDatabase(),
+  // and verify that an error is returned.
+  auto database =
+      client_
+          .CreateDatabase(
+              database_,
+              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                            "` SET OPTIONS (version_retention_period='0')")})
+          .get();
+  EXPECT_THAT(database, Not(IsOk()));
+}
+
+/// @test Verify setting version_retention_period via UpdateDatabase().
+TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
+  // Create the database.
+  auto database = client_
+                      .CreateDatabase(database_,
+                                      /*extra_statements=*/{})
+                      .get();
+  ASSERT_THAT(database, IsOk());
+  EXPECT_EQ(database_.FullName(), database->name());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", database->version_retention_period());
+  } else {
+    EXPECT_NE("", database->version_retention_period());  // default value
+  }
+
+  // Set the version_retention_period via UpdateDatabase().
+  auto update =
+      client_
+          .UpdateDatabase(
+              database_,
+              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                            "` SET OPTIONS (version_retention_period='7d')")})
+          .get();
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_THAT(update, Not(IsOk()));
+  } else {
+    ASSERT_THAT(update, IsOk());
+    EXPECT_EQ(database->name(), update->database());
+    EXPECT_THAT(update->statements(),
+                Contains(ContainsRegex("version_retention_period *= *'7d'")));
+  }
+
+  // Verify that version_retention_period is returned from GetDatabase().
+  auto get = client_.GetDatabase(database_);
+  ASSERT_THAT(get, IsOk());
+  EXPECT_EQ(database->name(), get->name());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", get->version_retention_period());
+  } else {
+    EXPECT_EQ("7d", get->version_retention_period());
+  }
+
+  // Verify that version_retention_period is returned via ListDatabases().
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(instance_)) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_EQ(database->name(), list_db->name());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", list_db->version_retention_period());
+  } else {
+    EXPECT_EQ("7d", list_db->version_retention_period());
+  }
+
+  // Verify that version_retention_period is returned from GetDatabaseDdl().
+  auto ddl = client_.GetDatabaseDdl(database_);
+  ASSERT_THAT(ddl, IsOk());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  } else {
+    EXPECT_THAT(ddl->statements(),
+                Contains(ContainsRegex("version_retention_period *= *'7d'")));
+  }
+
+  auto drop = client_.DropDatabase(database_);
+  EXPECT_THAT(drop, IsOk());
+}
+
+/// @test Verify setting bad version_retention_period via UpdateDatabase().
+TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
+  // Create the database.
+  auto database = client_
+                      .CreateDatabase(database_,
+                                      /*extra_statements=*/{})
+                      .get();
+  ASSERT_THAT(database, IsOk());
+  EXPECT_EQ(database_.FullName(), database->name());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", database->version_retention_period());
+  } else {
+    EXPECT_NE("", database->version_retention_period());  // default value
+  }
+
+  auto get0 = client_.GetDatabase(database_);
+  ASSERT_THAT(get0, IsOk());
+  EXPECT_EQ(database->name(), get0->name());
+  if (emulator_) {
+    // TODO(#5479): Awaiting emulator support for version_retention_period.
+    EXPECT_EQ("", get0->version_retention_period());
+  } else {
+    EXPECT_NE("", get0->version_retention_period());  // default value
+  }
+
+  // Set an invalid version_retention_period (zero) via UpdateDatabase(),
+  // and verify that an error is returned.
+  auto update =
+      client_
+          .UpdateDatabase(
+              database_,
+              {absl::StrCat("ALTER DATABASE `", database_.database_id(),
+                            "` SET OPTIONS (version_retention_period='0')")})
+          .get();
+  EXPECT_THAT(update, Not(IsOk()));
+
+  // Also verify that version_retention_period was NOT changed.
+  auto get = client_.GetDatabase(database_);
+  ASSERT_THAT(get, IsOk());
+  EXPECT_EQ(database->name(), get->name());
+  EXPECT_EQ(get0->version_retention_period(), get->version_retention_period());
+
+  auto drop = client_.DropDatabase(database_);
+  EXPECT_THAT(drop, IsOk());
 }
 
 }  // namespace
