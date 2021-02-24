@@ -73,7 +73,7 @@ class SchemaAdminClient {
    * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&)
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc create-avro-schema
+   * @snippet samples.cc create-avro-schema
    */
   StatusOr<google::pubsub::v1::Schema> CreateAvroSchema(
       Schema const& schema, std::string schema_definition);
@@ -82,7 +82,7 @@ class SchemaAdminClient {
    * @copydoc CreateSchema(google::pubsub::v1::CreateSchemaRequest const&)
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc create-protobuf-schema
+   * @snippet samples.cc create-protobuf-schema
    */
   StatusOr<google::pubsub::v1::Schema> CreateProtobufSchema(
       Schema const& schema, std::string schema_definition);
@@ -107,7 +107,7 @@ class SchemaAdminClient {
    * This is a read-only operation and therefore always idempotent and retried.
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc get-schema
+   * @snippet samples.cc get-schema
    *
    * @param schema the full name of the schema
    * @param view Use `BASIC` to include the name and type of the schema, but not
@@ -144,7 +144,7 @@ class SchemaAdminClient {
    * (but reported as failed) request.
    *
    * @par Example
-   * TODO(#5706) - snippet samples.cc delete-schema
+   * @snippet samples.cc delete-schema
    *
    * @param schema the name of the schema to be deleted.
    */
