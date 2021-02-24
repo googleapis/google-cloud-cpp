@@ -223,6 +223,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
+        experimental/schema_admin_connection_test.cc
         experimental/schema_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
