@@ -702,6 +702,10 @@ void CreateAvroSchema(
     })js";
     auto schema = client.CreateAvroSchema(
         experimental::Schema(project_id, schema_id), kDefinition);
+    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The schema already exists\n";
+      return;
+    }
     if (!schema) throw std::runtime_error(schema.status().message());
 
     std::cout << "Schema successfully created: " << schema->DebugString()
@@ -719,16 +723,20 @@ void CreateProtobufSchema(
   [](experimental::SchemaAdminClient client, std::string const& project_id,
      std::string const& schema_id) {
     auto constexpr kDefinition = R"pfile(
-syntax = "proto3";
-package google.cloud.pubsub.samples;
+        syntax = "proto3";
+        package google.cloud.pubsub.samples;
 
-message State {
-  string name = 1;
-  string post_abbr = 2;
-}
-)pfile";
+        message State {
+          string name = 1;
+          string post_abbr = 2;
+        }
+        )pfile";
     auto schema = client.CreateProtobufSchema(
         experimental::Schema(project_id, schema_id), kDefinition);
+    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The schema already exists\n";
+      return;
+    }
     if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
@@ -777,6 +785,11 @@ void DeleteSchema(google::cloud::pubsub_experimental::SchemaAdminClient client,
      std::string const& schema_id) {
     auto status =
         client.DeleteSchema(experimental::Schema(project_id, schema_id));
+    // Note that kNotFound is a possible result when the library retries.
+    if (status.code() == google::cloud::StatusCode::kNotFound) {
+      std::cout << "The schema was not found\n";
+      return;
+    }
     if (!status.ok()) throw std::runtime_error(status.message());
 
     std::cout << "Schema successfully deleted\n";
@@ -824,14 +837,14 @@ void ValidateProtobufSchema(
   namespace experimental = google::cloud::pubsub_experimental;
   [](experimental::SchemaAdminClient client, std::string const& project_id) {
     auto constexpr kDefinition = R"pfile(
-syntax = "proto3";
-package google.cloud.pubsub.samples;
+        syntax = "proto3";
+        package google.cloud.pubsub.samples;
 
-message State {
-  string name = 1;
-  string post_abbr = 2;
-}
-)pfile";
+        message State {
+          string name = 1;
+          string post_abbr = 2;
+        }
+        )pfile";
     auto schema = client.ValidateProtobufSchema(project_id, kDefinition);
     if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
     std::cout << "Schema is valid\n";
