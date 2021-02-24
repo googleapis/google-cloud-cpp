@@ -96,9 +96,7 @@ class SchemaAdminClient {
    * as a consequence of retrying a successful (but reported as failed) request.
    */
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const& request) {
-    return connection_->CreateSchema(request);
-  }
+      google::pubsub::v1::CreateSchemaRequest const& request);
 
   /**
    * Gets information about an existing Cloud Pub/Sub schema.

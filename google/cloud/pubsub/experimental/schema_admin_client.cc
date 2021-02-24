@@ -44,6 +44,11 @@ StatusOr<google::pubsub::v1::Schema> SchemaAdminClient::CreateProtobufSchema(
   return CreateSchema(request);
 }
 
+StatusOr<google::pubsub::v1::Schema> SchemaAdminClient::CreateSchema(
+    google::pubsub::v1::CreateSchemaRequest const& request) {
+  return connection_->CreateSchema(request);
+}
+
 StatusOr<google::pubsub::v1::Schema> SchemaAdminClient::GetSchema(
     Schema const& schema, google::pubsub::v1::SchemaView view) {
   google::pubsub::v1::GetSchemaRequest request;
