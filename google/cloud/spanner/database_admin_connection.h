@@ -174,14 +174,14 @@ class DatabaseAdminConnection {
     /// The name of the database.
     Database database;
     std::string backup_id;
-    // `expire_time` is deprecated. `DatabaseAdminClient::CreateBackup()`
-    // initializes it, but `DatabaseAdminConnection::CreateBackup()` now
-    // ignores it. Use `expire_timestamp` instead.
+    /// @deprecated `DatabaseAdminClient::CreateBackup()` initializes
+    /// `expire_time`, but `DatabaseAdminConnection::CreateBackup()` now
+    /// ignores it. Use `expire_timestamp` instead.
     std::chrono::system_clock::time_point expire_time;
     Timestamp expire_timestamp;
-    // The backup will contain an externally consistent copy of the database
-    // at `version_time`. If `version_time` is not specified, the system will
-    // set `version_time` to the `create_time` of the backup.
+    /// The backup will contain an externally consistent copy of the database
+    /// at `version_time`. If `version_time` is not specified, the system will
+    /// set `version_time` to the `create_time` of the backup.
     absl::optional<Timestamp> version_time;
   };
 
