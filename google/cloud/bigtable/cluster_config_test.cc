@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/cluster_config.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,6 +22,9 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::protobuf::TextFormat;
 
 TEST(ClusterConfigTest, Constructor) {
   ClusterConfig config("somewhere", 7, ClusterConfig::SSD);
@@ -40,6 +45,23 @@ TEST(ClusterConfigTest, Move) {
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());
   EXPECT_EQ(ClusterConfig::HDD, proto.default_storage_type());
+}
+
+TEST(ClusterConfigTest, SetEncryptionConfig) {
+  google::bigtable::admin::v2::Cluster::EncryptionConfig encryption;
+  encryption.set_kms_key_name("test-only-invalid-kms-key-name");
+  auto const actual = ClusterConfig("somewhere", 7, ClusterConfig::HDD)
+                          .SetEncryptionConfig(std::move(encryption))
+                          .as_proto();
+  auto constexpr kText = R"pb(
+    location: "somewhere"
+    serve_nodes: 7
+    default_storage_type: HDD
+    encryption_config { kms_key_name: "test-only-invalid-kms-key-name" }
+  )pb";
+  google::bigtable::admin::v2::Cluster expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace

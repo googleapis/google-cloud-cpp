@@ -46,6 +46,16 @@ class ClusterConfig {
     proto_.set_default_storage_type(storage);
   }
 
+  ClusterConfig& SetEncryptionConfig(
+      google::bigtable::admin::v2::Cluster::EncryptionConfig encryption) & {
+    *proto_.mutable_encryption_config() = std::move(encryption);
+    return *this;
+  }
+  ClusterConfig&& SetEncryptionConfig(
+      google::bigtable::admin::v2::Cluster::EncryptionConfig encryption) && {
+    return std::move(SetEncryptionConfig(std::move(encryption)));
+  }
+
   std::string const& GetName() { return proto_.name(); }
 
   google::bigtable::admin::v2::Cluster const& as_proto() const& {

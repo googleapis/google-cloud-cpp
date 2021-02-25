@@ -36,15 +36,17 @@ static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
+constexpr TableAdmin::TableView TableAdmin::ENCRYPTION_VIEW;
+// NOLINTNEXTLINE(readability-identifier-naming)
+constexpr TableAdmin::TableView TableAdmin::FULL;
 // NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::NAME_ONLY;
 // NOLINTNEXTLINE(readability-identifier-naming)
-constexpr TableAdmin::TableView TableAdmin::SCHEMA_VIEW;
-// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::REPLICATION_VIEW;
 // NOLINTNEXTLINE(readability-identifier-naming)
-constexpr TableAdmin::TableView TableAdmin::FULL;
+constexpr TableAdmin::TableView TableAdmin::SCHEMA_VIEW;
+// NOLINTNEXTLINE(readability-identifier-naming)
+constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
 
 /// Shortcuts to avoid typing long names over and over.
 using ClientUtils = bigtable::internal::UnaryClientUtils<AdminClient>;
