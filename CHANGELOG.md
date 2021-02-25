@@ -3,15 +3,16 @@
 ## FUTURE BREAKING CHANGES:
 
 <details>
-<summary>2021-06-01: retiring experimental Bigtable Admin Async APIS</summary>
+<summary>2021-06-01: retiring experimental Bigtable Admin Async APIs</summary>
 
 * In 2021-06-01 (or shortly after) we are planning to remove all the functions
-  named `Async*` in `bigtable::TableAdmin` and `bigtable::InstanceAdmin`.
+  matching `Async*` in `bigtable::TableAdmin` and `bigtable::InstanceAdmin`.
   These functions were already marked as **experimental**, they allow
   applications to perform administrative operations in a non-blocking manner.
-  We do not think these functions are sufficiently useful. Depending on your
-  compiler settings, using these functions may issue a deprecation warning
-  at the call site.
+  We do not think these functions are sufficiently useful to justify the
+  additional maintenance and API clutter. Starting with the v1.25.0 release,
+  and depending on your compiler settings, using these functions may issue a
+  deprecation warning at the call site.
 
 </details>
 
