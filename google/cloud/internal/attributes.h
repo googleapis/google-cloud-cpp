@@ -40,7 +40,7 @@
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) [[deprecated(message)]]
 #elif defined(_MSC_VER)
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) __declspec(deprecated(message))
-#elif defined(__clag__) || defined(__GNUC__)
+#elif defined(__clang__) || defined(__GNUC__)
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) \
   __attribute__((deprecated(message)))
 #endif  // C++ <= 11

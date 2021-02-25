@@ -15,7 +15,7 @@
 #include "google/cloud/internal/diagnostics_push.inc"
 #if _MSC_VER
 #pragma warning(disable : 4996)
-#elif __clag__
+#elif __clang__
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #elif __GNUC__
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
