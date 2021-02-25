@@ -1066,7 +1066,7 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
         });
     return session;
   }
-  //! [END pubsub_subscribe_avro_records]
+  //! [END pubsub_subscribe_protobuf_records]
   (std::move(subscriber));
 }
 
