@@ -239,8 +239,8 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
 }
 
 namespace {
-Status ValidateIamBinding(nlohmann::json const& binding, std::string const& name,
-                          std::string const& payload) {
+Status ValidateIamBinding(nlohmann::json const& binding,
+                          std::string const& name, std::string const& payload) {
   if (!binding.is_object()) {
     std::ostringstream os;
     os << "Invalid IamPolicy payload, expected objects for 'bindings' "
