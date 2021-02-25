@@ -31,6 +31,7 @@
 #include "absl/time/time.h"
 #include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
+#include <nlohmann/json.hpp>
 #include <algorithm>
 #include <cinttypes>
 
@@ -205,8 +206,14 @@ StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
 }
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    SetBucketIamPolicyRequest const& request) {
+  grpc::ClientContext context;
+  google::iam::v1::Policy response;
+  auto proto_request = ToProto(request);
+  auto status = stub_->SetBucketIamPolicy(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
@@ -1336,6 +1343,20 @@ Owner GrpcClient::FromProto(google::storage::v1::Owner rhs) {
   return result;
 }
 
+IamPolicy GrpcClient::FromProto(google::iam::v1::Policy rhs) {
+  IamPolicy result;
+  result.etag = std::move(rhs.etag());
+  result.version = std::move(rhs.version());
+  for (auto& binding : *rhs.mutable_bindings()) {
+    std::set<std::string> members;
+    for (auto& member : *binding.mutable_members()) {
+      members.insert(std::move(member));
+    }
+    result.bindings.AddMembers(std::move(binding.role()), std::move(members));
+  }
+  return result;
+}
+
 google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
     Projection const& p) {
   if (p.value() == Projection::NoAcl().value()) {
@@ -1536,6 +1557,26 @@ google::storage::v1::UpdateBucketRequest GrpcClient::ToProto(
   SetPredefinedAcl(r, request);
   SetPredefinedDefaultObjectAcl(r, request);
   SetProjection(r, request);
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::SetIamPolicyRequest GrpcClient::ToProto(
+    SetBucketIamPolicyRequest const& request) {
+  google::storage::v1::SetIamPolicyRequest r;
+  google::iam::v1::Policy p;
+  auto payload_policy = NativeIamPolicy::CreateFromJson(request.json_payload());
+  r.mutable_iam_request()->set_resource(request.bucket_name());
+  p.set_etag(payload_policy->etag());
+  p.set_version(payload_policy->version());
+  for (auto const& b : payload_policy->bindings()) {
+    auto& new_binding = *p.add_bindings();
+    new_binding.set_role(b.role());
+    for (auto const& m : b.members()) {
+      *new_binding.add_members() = std::move(m);
+    }
+  }
+  *r.mutable_iam_request()->mutable_policy() = std::move(p);
   SetCommonParameters(r, request);
   return r;
 }

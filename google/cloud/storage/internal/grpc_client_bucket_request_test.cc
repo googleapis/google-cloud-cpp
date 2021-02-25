@@ -800,6 +800,30 @@ TEST(GrpcClientBucketRequest, DeleteNotificationRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, SetBucketIamPolicyRequestSimple) {
+  storage_proto::SetIamPolicyRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    iam_request: {
+      resource: "test-bucket-name"
+      policy: {
+        bindings: {
+          role: "test-role"
+          members: "user:test@example.com"
+        }
+        etag: "test-etag"
+        version: 3
+      }
+    }
+)""",
+                                                            &expected));
+  IamBindings bindings;
+  bindings.AddMember("test-role", "user:test@example.com");
+  SetBucketIamPolicyRequest request(
+      "test-bucket-name", IamPolicy{3, std::move(bindings), "test-etag"});
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

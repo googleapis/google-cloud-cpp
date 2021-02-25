@@ -116,13 +116,6 @@ TEST_P(GrpcClientFailuresTest, GetNativeBucketIamPolicy) {
                                      StatusCode::kUnimplemented)));
 }
 
-TEST_P(GrpcClientFailuresTest, SetBucketIamPolicy) {
-  auto actual = client_->SetBucketIamPolicy(
-      SetBucketIamPolicyRequest("bkt", google::cloud::IamPolicy{}));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
-}
-
 TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
   auto actual =
       client_->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(

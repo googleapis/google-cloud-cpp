@@ -238,6 +238,8 @@ class GrpcClient : public RawClient,
   static google::storage::v1::Owner ToProto(Owner);
   static Owner FromProto(google::storage::v1::Owner);
 
+  static IamPolicy FromProto(google::iam::v1::Policy rhs);
+
   static google::storage::v1::CommonEnums::Projection ToProto(
       Projection const& p);
   static google::storage::v1::CommonEnums::PredefinedBucketAcl ToProtoBucket(
@@ -257,6 +259,9 @@ class GrpcClient : public RawClient,
       UpdateBucketRequest const& request);
   static google::storage::v1::DeleteBucketRequest ToProto(
       DeleteBucketRequest const& request);
+
+  static google::storage::v1::SetIamPolicyRequest ToProto(
+      SetBucketIamPolicyRequest const& request);
 
   static google::storage::v1::InsertBucketAccessControlRequest ToProto(
       CreateBucketAclRequest const& request);
