@@ -351,17 +351,18 @@ TEST_P(GrpcIntegrationTest, IamCRUD) {
                                              BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
-  NativeIamBinding binding{"test-role", {"test@test.example.com"}};
+  IamBindings bindings;
+  bindings.AddMember("test-role", "test@test.example.com");
 
-  NativeIamPolicy policy({binding}, "test-etag", 3);
-
-  auto set = client->SetNativeBucketIamPolicy(bucket_name, std::move(policy));
+  auto set = client->SetBucketIamPolicy(
+      bucket_name, IamPolicy{3, std::move(bindings), "test-etag"});
   ASSERT_STATUS_OK(set);
 
-  EXPECT_EQ(set->bindings()[0].role(), "test-role");
-  EXPECT_THAT(set->bindings()[0].members(), Contains("test@test.example.com"));
-  EXPECT_EQ(set->version(), 3);
-  EXPECT_EQ(set->etag(), "test-etag");
+  EXPECT_NE(set->bindings.find("test-role"), set->bindings.end());
+  EXPECT_THAT(set->bindings.find("test-role")->second,
+              Contains("test@test.example.com"));
+  EXPECT_EQ(set->version, 3);
+  EXPECT_EQ(set->etag, "test-etag");
 
   // TODO(#4161): test GetBucketIamPolicy when it's implemented.
 
