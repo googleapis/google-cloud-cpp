@@ -123,6 +123,37 @@ TEST(TopicBuilder, SetKmsKeyName) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(TopicBuilder, SetSchema) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
+                          .experimental_set_schema(pubsub_experimental::Schema(
+                              "test-project", "test-schema"))
+                          .BuildUpdateRequest();
+  google::pubsub::v1::UpdateTopicRequest expected;
+  std::string const text = R"pb(
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      schema_settings { schema: "projects/test-project/schemas/test-schema" }
+    }
+    update_mask { paths: "schema_settings.schema" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(TopicBuilder, SetEncoding) {
+  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
+                          .experimental_set_encoding(google::pubsub::v1::JSON)
+                          .BuildUpdateRequest();
+  google::pubsub::v1::UpdateTopicRequest expected;
+  std::string const text = R"pb(
+    topic {
+      name: "projects/test-project/topics/test-topic"
+      schema_settings { encoding: JSON }
+    }
+    update_mask { paths: "schema_settings.encoding" })pb";
+  ASSERT_TRUE(TextFormat::ParseFromString(text, &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(TopicBuilder, MultipleChanges) {
   auto builder = TopicBuilder(Topic("test-project", "test-topic"))
                      .add_label("key0", "label0")
