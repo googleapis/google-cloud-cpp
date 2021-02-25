@@ -188,26 +188,25 @@ class TableAdmin {
   //@{
   /// @name Convenience shorthands for the schema views.
   using TableView = google::bigtable::admin::v2::Table::View;
-  /// Use the default view as defined for each function.
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr static TableView VIEW_UNSPECIFIED =
-      google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
+  /// Only populate 'name' and fields related to the table's encryption state.
+  static auto constexpr ENCRYPTION_VIEW =  // NOLINT(readability-identifier-naming)
+      google::bigtable::admin::v2::Table::ENCRYPTION_VIEW;
+  /// Populate all the fields in the response.
+  static auto constexpr FULL =  // NOLINT(readability-identifier-naming)
+      google::bigtable::admin::v2::Table::FULL;
   /// Populate only the name in the responses.
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr static TableView NAME_ONLY =
+  static auto constexpr NAME_ONLY =  // NOLINT(readability-identifier-naming)
       google::bigtable::admin::v2::Table::NAME_ONLY;
-  /// Populate only the name and the fields related to the table schema.
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr static TableView SCHEMA_VIEW =
-      google::bigtable::admin::v2::Table::SCHEMA_VIEW;
   /// Populate only the name and the fields related to the table replication
   /// state.
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr static TableView REPLICATION_VIEW =
+  static auto constexpr REPLICATION_VIEW =  // NOLINT(readability-identifier-naming)
       google::bigtable::admin::v2::Table::REPLICATION_VIEW;
-  /// Populate all the fields in the response.
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr static TableView FULL = google::bigtable::admin::v2::Table::FULL;
+  /// Populate only the name and the fields related to the table schema.
+  static auto constexpr SCHEMA_VIEW =  // NOLINT(readability-identifier-naming)
+      google::bigtable::admin::v2::Table::SCHEMA_VIEW;
+  /// Use the default view as defined for each function.
+  static auto constexpr VIEW_UNSPECIFIED =  // NOLINT(readability-identifier-naming)
+      google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
   //@}
 
   std::string const& project() const { return client_->project(); }
