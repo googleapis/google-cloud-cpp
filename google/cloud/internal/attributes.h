@@ -24,11 +24,19 @@
  * This macro injects an attribute equivalent to C++14's `[[deprecated(msg)]]`.
  * On C++11 it uses compiler extensions to implement equivalent behavior.
  *
+ * @note If you need to temporarily disable the deprecation warnings in your
+ *     application, consider adding a pre-processor flag to define
+ *     `GOOGLE_CLOUD_CPP_DISABLE_DEPRECATION_WARNINGS`.
+ *
  * @note Any unit test, example, or integration test that uses deprecated
- *     symbols would break in our CI builds unless the warnings are disabled
- *     using `internal/disable_deprecation_warnings.inc`
+ *     symbols would break in the `google-cloud-cpp` CI builds unless the
+ *     warnings are disabled using `internal/disable_deprecation_warnings.inc`.
  */
-#if GOOGLE_CLOUD_CPP_CPP_VERSION >= 201402L
+#if defined(GOOGLE_CLOUD_CPP_DEPRECATED)
+#error "Applications should not define GOOGLE_CLOUD_CPP_DEPRECATED"
+#elif GOOGLE_CLOUD_CPP_DISABLE_DEPRECATION_WARNINGS
+// Do nothing, the default definition effectively
+#elif GOOGLE_CLOUD_CPP_CPP_VERSION >= 201402L
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) [[deprecated(message)]]
 #elif defined(_MSC_VER)
 #define GOOGLE_CLOUD_CPP_DEPRECATED(message) __declspec(deprecated(message))

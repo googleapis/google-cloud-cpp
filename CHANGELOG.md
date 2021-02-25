@@ -12,7 +12,8 @@
   We do not think these functions are sufficiently useful to justify the
   additional maintenance and API clutter. Starting with the v1.25.0 release,
   and depending on your compiler settings, using these functions may issue a
-  deprecation warning at the call site.
+  deprecation warning at the call site. More information in
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
 
 </details>
 
@@ -58,7 +59,8 @@
 * We have marked the asynchronous versions of the administrative functions as
   deprecated. These functions were experimental and we do not think they add
   value to our customers. Removing them would simplify the code and free
-  development time for further features and cleanups.
+  development time for further features and cleanups.  More information in
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
 
 ## v1.24.0 - 2021-02
 
