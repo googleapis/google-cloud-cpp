@@ -20,7 +20,7 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
-    timeout = "long",
+    timeout = "eternal",
     srcs = [test],
     tags = [
         "integration-test",
