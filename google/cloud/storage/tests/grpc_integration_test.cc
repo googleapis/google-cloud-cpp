@@ -339,6 +339,36 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
+TEST_P(GrpcIntegrationTest, IamCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(bucket_name, project_id(),
+                                             BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  NativeIamBinding binding{"test-role", {"test@test.example.com"}};
+
+  NativeIamPolicy policy({binding}, "test-etag", 3);
+
+  auto set = client->SetNativeBucketIamPolicy(bucket_name, std::move(policy));
+  ASSERT_STATUS_OK(set);
+
+  EXPECT_EQ(set->bindings()[0].role(), "test-role");
+  EXPECT_THAT(set->bindings()[0].members(), Contains("test@test.example.com"));
+  EXPECT_EQ(set->version(), 3);
+  EXPECT_EQ(set->etag(), "test-etag");
+
+  // TODO(#4161): test GetBucketIamPolicy when it's implemented.
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_P(GrpcIntegrationTest, WriteResume) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
