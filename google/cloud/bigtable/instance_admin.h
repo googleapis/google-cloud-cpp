@@ -244,6 +244,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create instance
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncCreateInstance(
       CompletionQueue& cq, bigtable::InstanceConfig instance_config);
 
@@ -300,6 +301,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create cluster
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateCluster(
       CompletionQueue& cq, ClusterConfig cluster_config,
       std::string const& instance_id, std::string const& cluster_id);
@@ -361,6 +363,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update instance
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncUpdateInstance(
       CompletionQueue& cq, InstanceUpdateConfig instance_update_config);
 
@@ -420,6 +423,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async list instances
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<InstanceList>> AsyncListInstances(CompletionQueue& cq);
 
   /**
@@ -469,6 +473,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get instance
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncGetInstance(
       CompletionQueue& cq, std::string const& instance_id);
 
@@ -514,6 +519,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async-delete-instance
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteInstance(std::string const& instance_id,
                                      CompletionQueue& cq);
 
@@ -596,6 +602,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<ClusterList>> AsyncListClusters(CompletionQueue& cq);
 
   /**
@@ -628,6 +635,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<ClusterList>> AsyncListClusters(
       CompletionQueue& cq, std::string const& instance_id);
 
@@ -688,6 +696,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update cluster
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncUpdateCluster(
       CompletionQueue& cq, ClusterConfig cluster_config);
 
@@ -740,6 +749,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async delete cluster
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteCluster(CompletionQueue& cq,
                                     std::string const& instance_id,
                                     std::string const& cluster_id);
@@ -797,6 +807,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get cluster
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncGetCluster(
       CompletionQueue& cq, std::string const& instance_id,
       std::string const& cluster_id);
@@ -846,6 +857,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async create app profile
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncCreateAppProfile(CompletionQueue& cq, std::string const& instance_id,
                         AppProfileConfig config);
@@ -893,6 +905,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get app profile
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> AsyncGetAppProfile(
       CompletionQueue& cq, std::string const& instance_id,
       std::string const& profile_id);
@@ -955,6 +968,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async update app profile
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncUpdateAppProfile(CompletionQueue& cq, std::string const& instance_id,
                         std::string const& profile_id,
@@ -1000,6 +1014,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc list clusters
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<google::bigtable::admin::v2::AppProfile>>>
   AsyncListAppProfiles(CompletionQueue& cq, std::string const& instance_id);
 
@@ -1056,6 +1071,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async delete app profile
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
                                        std::string const& instance_id,
                                        std::string const& profile_id,
@@ -1136,6 +1152,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::cloud::IamPolicy>> AsyncGetIamPolicy(
       CompletionQueue& cq, std::string const& instance_id);
 
@@ -1164,6 +1181,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get native iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncGetNativeIamPolicy(
       CompletionQueue& cq, std::string const& instance_id);
 
@@ -1266,6 +1284,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async set iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::cloud::IamPolicy>> AsyncSetIamPolicy(
       CompletionQueue& cq, std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings,
@@ -1297,6 +1316,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async set native iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
       CompletionQueue& cq, std::string const& instance_id,
       google::iam::v1::Policy const& iam_policy);
@@ -1349,6 +1369,7 @@ class InstanceAdmin {
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
       CompletionQueue& cq, std::string const& instance_id,
       std::vector<std::string> const& permissions);

@@ -27,6 +27,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/iam_policy.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <future>
@@ -273,6 +274,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async create table
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncCreateTable(
       CompletionQueue& cq, std::string table_id, TableConfig config);
 
@@ -331,6 +333,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async list tables
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<::google::bigtable::admin::v2::Table>>>
   AsyncListTables(CompletionQueue& cq,
                   google::bigtable::admin::v2::Table::View view);
@@ -397,6 +400,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async get table
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncGetTable(
       CompletionQueue& cq, std::string const& table_id,
       google::bigtable::admin::v2::Table::View view);
@@ -450,6 +454,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async delete table
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteTable(CompletionQueue& cq,
                                   std::string const& table_id);
 
@@ -542,6 +547,7 @@ class TableAdmin {
    * @snippet bigtable_table_admin_backup_async_snippets.cc async create backup
    *
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
       CompletionQueue& cq, CreateBackupParams const& params);
 
@@ -613,6 +619,7 @@ class TableAdmin {
    * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
    */
   // clang-format on
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
       CompletionQueue& cq, std::string const& cluster_id,
       std::string const& backup_id);
@@ -698,6 +705,7 @@ class TableAdmin {
    * @snippet bigtable_table_admin_backup_async_snippets.cc async update backup
    *
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
       CompletionQueue& cq, UpdateBackupParams const& params);
 
@@ -785,6 +793,7 @@ class TableAdmin {
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteBackup(CompletionQueue& cq,
                                    std::string const& cluster_id,
                                    std::string const& backup_id);
@@ -817,6 +826,7 @@ class TableAdmin {
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteBackup(
       CompletionQueue& cq, google::bigtable::admin::v2::Backup const& backup);
 
@@ -968,6 +978,7 @@ class TableAdmin {
    * @snippet bigtable_table_admin_backup_async_snippets.cc async list backups
    *
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
   AsyncListBackups(CompletionQueue& cq, ListBackupsParams const& params);
 
@@ -1072,6 +1083,7 @@ class TableAdmin {
    * @snippet bigtable_table_admin_backup_async_snippets.cc async restore table
    *
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
       CompletionQueue& cq, RestoreTableParams const& params);
 
@@ -1123,6 +1135,7 @@ class TableAdmin {
    * @par Example
    * @snippet bigtable_table_admin_backup_async_snippets.cc async restore2
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
       CompletionQueue& cq, RestoreTableFromInstanceParams params);
 
@@ -1178,6 +1191,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async modify table
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<::google::bigtable::admin::v2::Table>>
   AsyncModifyColumnFamilies(
       CompletionQueue& cq, std::string const& table_id,
@@ -1233,6 +1247,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop rows by prefix
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDropRowsByPrefix(CompletionQueue& cq,
                                        std::string const& table_id,
                                        std::string row_key_prefix);
@@ -1283,6 +1298,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async generate consistency token
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::string>> AsyncGenerateConsistencyToken(
       CompletionQueue& cq, std::string const& table_id);
 
@@ -1334,6 +1350,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async check consistency
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<Consistency>> AsyncCheckConsistency(
       CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token);
@@ -1386,6 +1403,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async wait for consistency
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
       CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token);
@@ -1435,6 +1453,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async drop all rows
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDropAllRows(CompletionQueue& cq,
                                   std::string const& table_id);
 
@@ -1500,6 +1519,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc async get iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
       CompletionQueue& cq, std::string const& table_id);
 
@@ -1587,6 +1607,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_iam_policy_snippets.cc async set iam policy
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
       CompletionQueue& cq, std::string const& table_id,
       google::iam::v1::Policy const& iam_policy);
@@ -1663,6 +1684,7 @@ class TableAdmin {
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<std::string>>> AsyncTestIamPermissions(
       CompletionQueue& cq, std::string const& table_id,
       std::vector<std::string> const& permissions);

@@ -20,6 +20,8 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <algorithm>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace {
 
