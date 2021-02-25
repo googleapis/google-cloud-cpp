@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['completionqueue_559',['CompletionQueue',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html',1,'google::cloud::v1']]],
-  ['connectionoptions_560',['ConnectionOptions',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html',1,'google::cloud::v1']]],
-  ['connectionoptionstraits_561',['ConnectionOptionsTraits',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits'],['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits']]],
-  ['createsnapshotparams_562',['CreateSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['createsubscriptionparams_563',['CreateSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
-  ['createtopicparams_564',['CreateTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1CreateTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
+  ['completionqueue_561',['CompletionQueue',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1CompletionQueue.html',1,'google::cloud::v1']]],
+  ['connectionoptions_562',['ConnectionOptions',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html',1,'google::cloud::v1']]],
+  ['connectionoptionstraits_563',['ConnectionOptionsTraits',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits'],['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1ConnectionOptionsTraits.html',1,'google::cloud::pubsub::v1::ConnectionOptionsTraits']]],
+  ['createsnapshotparams_564',['CreateSnapshotParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSnapshotParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['createsubscriptionparams_565',['CreateSubscriptionParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriptionAdminConnection_1_1CreateSubscriptionParams.html',1,'google::cloud::pubsub::v1::SubscriptionAdminConnection']]],
+  ['createtopicparams_566',['CreateTopicParams',['../structgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminConnection_1_1CreateTopicParams.html',1,'google::cloud::pubsub::v1::TopicAdminConnection']]]
 ];

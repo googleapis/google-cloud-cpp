@@ -105,15 +105,15 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Parameters for <code>CreateBackup</code> and <code>AsyncCreateBackup</code>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cluster_id</td><td>the name of the cluster relative to the instance managed by the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. The full cluster name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;cluster_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Use the default view as defined for each function.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
-    <tr><td class="paramname">backup_id</td><td>the name of the backup relative to the cluster specified. The full backup name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;CLUSTER_ID&gt;/backups/&lt;backup_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a>, INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Use the default view as defined for each function.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object, and CLUSTER_ID is the cluster_id specified for this object. </td></tr>
-    <tr><td class="paramname">table_id</td><td>the id of the table within the instance to be backed up. The full name of the table is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/tables/&lt;table_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Use the default view as defined for each function.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
+    <tr><td class="paramname">cluster_id</td><td>the name of the cluster relative to the instance managed by the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. The full cluster name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;cluster_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Only populate &#39;name&#39; and fields related to the table&#39;s encryption state.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
+    <tr><td class="paramname">backup_id</td><td>the name of the backup relative to the cluster specified. The full backup name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;CLUSTER_ID&gt;/backups/&lt;backup_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a>, INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Only populate &#39;name&#39; and fields related to the table&#39;s encryption state.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object, and CLUSTER_ID is the cluster_id specified for this object. </td></tr>
+    <tr><td class="paramname">table_id</td><td>the id of the table within the instance to be backed up. The full name of the table is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/tables/&lt;table_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Only populate &#39;name&#39; and fields related to the table&#39;s encryption state.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
     <tr><td class="paramname">expire_time</td><td>the date and time when the created backup will expire. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00478">478</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00477">477</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adf70c8bbc2dc4f4e0d6b62860f37ffcc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf70c8bbc2dc4f4e0d6b62860f37ffcc">&#9670;&nbsp;</a></span>CreateBackupParams() <span class="overload">[1/2]</span></h2>
@@ -186,7 +186,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00480">480</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00479">479</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -207,7 +207,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00241">241</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00243">243</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00492">492</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00491">491</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +240,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00491">491</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00490">490</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -256,7 +256,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00494">494</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00493">493</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +272,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00493">493</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l00492">492</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
