@@ -110,6 +110,7 @@ TEST_P(GrpcClientFailuresTest, GetBucketIamPolicy) {
 }
 
 TEST_P(GrpcClientFailuresTest, SetBucketIamPolicy) {
+  GTEST_SKIP();
   auto actual = client_->SetBucketIamPolicy(
       SetBucketIamPolicyRequest("bkt", google::cloud::IamPolicy{}));
   EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
