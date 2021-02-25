@@ -940,6 +940,136 @@ void ValidateMessageNamedSchema(
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
+                           std::vector<std::string> const& argv) {
+  //! [START pubsub_create_topic_with_schema]
+  namespace pubsub = google::cloud::pubsub;
+  namespace experimental = google::cloud::pubsub_experimental;
+  [](pubsub::TopicAdminClient client, std::string project_id,
+     std::string topic_id, std::string schema_id, std::string const& encoding) {
+    auto const& schema = experimental::Schema(project_id, std::move(schema_id));
+    auto topic = client.CreateTopic(
+        pubsub::TopicBuilder(
+            pubsub::Topic(std::move(project_id), std::move(topic_id)))
+            .experimental_set_schema(schema)
+            .experimental_set_encoding(encoding == "JSON"
+                                           ? google::pubsub::v1::JSON
+                                           : google::pubsub::v1::BINARY));
+    // Note that kAlreadyExists is a possible error when the library retries.
+    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The topic already exists\n";
+      return;
+    }
+    if (!topic) throw std::runtime_error(topic.status().message());
+
+    std::cout << "The topic was successfully created: " << topic->DebugString()
+              << "\n";
+  }
+  //! [END pubsub_create_topic_with_schema]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
+                        std::vector<std::string> const&) {
+  //! [START pubsub_publish_avro_records]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    auto constexpr kNewYork =
+        R"js({ "name": "New York", "post_abbr": "NY" })js";
+    auto constexpr kPennsylvania =
+        R"js({ "name": "Pennsylvania", "post_abbr": "PA" })js";
+    std::vector<future<void>> done;
+    auto handler = [](future<StatusOr<std::string>> f) {
+      auto id = f.get();
+      if (!id) throw std::runtime_error(id.status().message());
+    };
+    for (auto const* data : {kNewYork, kPennsylvania}) {
+      done.push_back(
+          publisher.Publish(pubsub::MessageBuilder{}.SetData(data).Build())
+              .then(handler));
+    }
+    // Block until all messages are published.
+    for (auto& d : done) d.get();
+  }
+  //! [END pubsub_publish_avro_records]
+  (std::move(publisher));
+}
+
+google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
+    google::cloud::pubsub::Subscriber subscriber,
+    std::vector<std::string> const&) {
+  //! [START pubsub_subscribe_avro_records]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  return [](pubsub::Subscriber subscriber) {
+    auto session = subscriber.Subscribe(
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::cout << "Message contents: " << m.data() << "\n";
+          std::move(h).ack();
+        });
+    return session;
+  }
+  //! [END pubsub_subscribe_avro_records]
+  (std::move(subscriber));
+}
+
+void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
+                            std::vector<std::string> const&) {
+  //! [START pubsub_publish_proto_records]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](pubsub::Publisher publisher) {
+    std::vector<std::pair<std::string, std::string>> states{
+        {"New York", "NY"},
+        {"Pennsylvania", "PA"},
+    };
+    std::vector<future<void>> done;
+    auto handler = [](future<StatusOr<std::string>> f) {
+      auto id = f.get();
+      if (!id) throw std::runtime_error(id.status().message());
+    };
+    for (auto const& data : states) {
+      google::cloud::pubsub::samples::State state;
+      state.set_name(data.first);
+      state.set_post_abbr(data.second);
+      done.push_back(publisher
+                         .Publish(pubsub::MessageBuilder{}
+                                      .SetData(state.SerializeAsString())
+                                      .Build())
+                         .then(handler));
+    }
+    // Block until all messages are published.
+    for (auto& d : done) d.get();
+  }
+  //! [END pubsub_publish_proto_records]
+  (std::move(publisher));
+}
+
+google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
+    google::cloud::pubsub::Subscriber subscriber,
+    std::vector<std::string> const&) {
+  //! [START pubsub_subscribe_protobuf_records]
+  namespace pubsub = google::cloud::pubsub;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  return [](pubsub::Subscriber subscriber) {
+    auto session = subscriber.Subscribe(
+        [&](pubsub::Message const& m, pubsub::AckHandler h) {
+          google::cloud::pubsub::samples::State state;
+          state.ParseFromString(m.data());
+          std::cout << "Message contents: " << state.DebugString() << "\n";
+          std::move(h).ack();
+        });
+    return session;
+  }
+  //! [END pubsub_subscribe_protobuf_records]
+  (std::move(subscriber));
+}
+
 void Publish(google::cloud::pubsub::Publisher publisher,
              std::vector<std::string> const&) {
   //! [START pubsub_publish_messages_error_handler]
@@ -1639,6 +1769,134 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void AutoRunAvro(
+    std::string const& project_id,
+    google::cloud::internal::DefaultPRNG& generator,
+    google::cloud::pubsub::TopicAdminClient& topic_admin_client,
+    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+  auto schema_admin = google::cloud::pubsub_experimental::SchemaAdminClient(
+      google::cloud::pubsub_experimental::MakeSchemaAdminConnection());
+  auto avro_schema_id = RandomSchemaId(generator);
+  std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
+  CreateAvroSchema(schema_admin, {project_id, avro_schema_id});
+
+  std::cout << "\nRunning GetSchema sample" << std::endl;
+  GetSchema(schema_admin, {project_id, avro_schema_id});
+  std::cout << "\nRunning ListSchemas() sample" << std::endl;
+  ListSchemas(schema_admin, {project_id});
+
+  std::cout << "\nRunning ValidateAvroMessage() sample" << std::endl;
+  ValidateMessageAvro(schema_admin, {project_id});
+
+  std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
+  auto const avro_topic_id = RandomTopicId(generator);
+  CreateTopicWithSchema(topic_admin_client,
+                        {project_id, avro_topic_id, avro_schema_id, "JSON"});
+
+  auto topic = google::cloud::pubsub::Topic(project_id, avro_topic_id);
+  auto publisher = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_batch_message_count(1)));
+
+  auto const subscription_id = RandomSubscriptionId(generator);
+  auto subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
+  auto subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(subscription));
+
+  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, avro_topic_id, subscription_id});
+
+  std::cout << "\nRunning SubscribeAvroRecords() sample" << std::endl;
+  auto session = SubscribeAvroRecords(subscriber, {});
+
+  std::cout << "\nRunning PublishAvroRecords() sample" << std::endl;
+  PublishAvroRecords(publisher, {});
+
+  session.cancel();
+  session.get();
+
+  std::cout << "\nRunning DeleteSubscription() sample [avro]" << std::endl;
+  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [avro]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, avro_topic_id});
+
+  std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
+  DeleteSchema(schema_admin, {project_id, avro_schema_id});
+}
+
+void AutoRunProtobuf(
+    std::string const& project_id,
+    google::cloud::internal::DefaultPRNG& generator,
+    google::cloud::pubsub::TopicAdminClient& topic_admin_client,
+    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+  auto schema_admin = google::cloud::pubsub_experimental::SchemaAdminClient(
+      google::cloud::pubsub_experimental::MakeSchemaAdminConnection());
+
+  std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
+  ValidateProtobufSchema(schema_admin, {project_id});
+
+  std::cout << "\nRunning ValidateProtobufMessage() sample" << std::endl;
+  ValidateMessageProtobuf(schema_admin, {project_id});
+
+  auto proto_schema_id = RandomSchemaId(generator);
+  std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
+  CreateProtobufSchema(schema_admin, {project_id, proto_schema_id});
+
+  std::cout << "\nRunning ValidateMessageNamed() sample" << std::endl;
+  ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
+
+  // TODO(#4792) - the CreateSchema() operation would have failed, what follows
+  //    would fail and stop all the other examples.
+  if (google::cloud::pubsub::examples::UsingEmulator()) return;
+
+  std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
+  auto const proto_topic_id = RandomTopicId(generator);
+  CreateTopicWithSchema(topic_admin_client, {project_id, proto_topic_id,
+                                             proto_schema_id, "BINARY"});
+
+  auto topic = google::cloud::pubsub::Topic(project_id, proto_topic_id);
+  auto publisher = google::cloud::pubsub::Publisher(
+      google::cloud::pubsub::MakePublisherConnection(
+          topic, google::cloud::pubsub::PublisherOptions{}
+                     .set_maximum_batch_message_count(1)));
+
+  auto const subscription_id = RandomSubscriptionId(generator);
+  auto subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
+  auto subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(subscription));
+
+  std::cout << "\nRunning CreateSubscription sample [proto]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, proto_topic_id, subscription_id});
+
+  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
+  CreateSubscription(subscription_admin_client,
+                     {project_id, proto_topic_id, subscription_id});
+
+  std::cout << "\nRunning SubscribeProtobufRecords() sample" << std::endl;
+  auto session = SubscribeProtobufRecords(subscriber, {});
+
+  std::cout << "\nRunning PublishProtobufRecords() sample" << std::endl;
+  PublishProtobufRecords(publisher, {});
+
+  session.cancel();
+  session.get();
+
+  std::cout << "\nRunning DeleteSubscription sample [proto]" << std::endl;
+  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteTopic() sample [proto]" << std::endl;
+  DeleteTopic(topic_admin_client, {project_id, proto_topic_id});
+
+  std::cout << "\nRunning DeleteSchema() sample [proto]" << std::endl;
+  DeleteSchema(schema_admin, {project_id, proto_schema_id});
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   using ::google::cloud::pubsub::examples::UsingEmulator;
@@ -1797,42 +2055,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   SeekWithTimestamp(subscription_admin_client,
                     {project_id, subscription_id, "2"});
 
-  auto schema_admin = google::cloud::pubsub_experimental::SchemaAdminClient(
-      google::cloud::pubsub_experimental::MakeSchemaAdminConnection());
-  auto avro_schema_id = RandomSchemaId(generator);
-  std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
-  CreateAvroSchema(schema_admin, {project_id, avro_schema_id});
-
-  auto proto_schema_id = RandomSchemaId(generator);
-  std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
-  CreateProtobufSchema(schema_admin, {project_id, proto_schema_id});
-
-  std::cout << "\nRunning GetSchema sample" << std::endl;
-  GetSchema(schema_admin, {project_id, avro_schema_id});
-
-  std::cout << "\nRunning ListSchemas() sample" << std::endl;
-  ListSchemas(schema_admin, {project_id});
-
-  std::cout << "\nRunning DeleteSchema() sample [1]" << std::endl;
-  DeleteSchema(schema_admin, {project_id, avro_schema_id});
-
-  std::cout << "\nRunning ValidateProtobufSchema()" << std::endl;
-  ValidateProtobufSchema(schema_admin, {project_id});
-
-  std::cout << "\nRunning ValidateAvroMessage()" << std::endl;
-  ValidateMessageAvro(schema_admin, {project_id});
-
-  std::cout << "\nRunning ValidateProtobufMessage()" << std::endl;
-  ValidateMessageProtobuf(schema_admin, {project_id});
-
-  std::cout << "\nRunning ValidateProtobufMessage()" << std::endl;
-  ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
-
-  if (!UsingEmulator()) {
-    // TODO(#4792) - the CreateSchema() operation would have failed
-    std::cout << "\nRunning DeleteSchema() sample [2]" << std::endl;
-    DeleteSchema(schema_admin, {project_id, proto_schema_id});
-  }
+  AutoRunAvro(project_id, generator, topic_admin_client,
+              subscription_admin_client);
+  AutoRunProtobuf(project_id, generator, topic_admin_client,
+                  subscription_admin_client);
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
@@ -2077,6 +2303,17 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSchemaAdminCommand("validate-message-named-schema",
                                {"project-id", "schema-id"},
                                ValidateMessageNamedSchema),
+      CreateTopicAdminCommand(
+          "create-topic-with-schema",
+          {"project-id", "topic-id", "schema-id", "encoding"},
+          CreateTopicWithSchema),
+      CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
+      CreateSubscriberCommand("subscribe-avro-records", {},
+                              SubscribeAvroRecords),
+      CreatePublisherCommand("publish-protobuf-records", {},
+                             PublishProtobufRecords),
+      CreateSubscriberCommand("subscribe-protobuf-records", {},
+                              SubscribeProtobufRecords),
 
       CreatePublisherCommand("publish", {}, Publish),
       CreatePublisherCommand("publish-custom-attributes", {},

@@ -27,18 +27,18 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Performs publisher operations in Cloud Pub/Sub.
+ * Performs topic admin operations in Cloud Pub/Sub.
  *
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
  *
  * @par Performance
- * `PublisherClient` objects are cheap to create, copy, and move. However,
- * each `PublisherClient` object must be created with a
- * `std::shared_ptr<PublisherConnection>`, which itself is relatively
+ * `TopicAdminClient` objects are cheap to create, copy, and move. However,
+ * each `TopicAdminClient` object must be created with a
+ * `std::shared_ptr<TopicAdminConnection>`, which itself is relatively
  * expensive to create. Therefore, connection instances should be shared when
  * possible. See the `MakeTopicAdminConnection()` function and the
- * `PublisherConnection` interface for more details.
+ * `TopicAdminConnection` interface for more details.
  *
  * @par Thread Safety
  * Instances of this class created via copy-construction or copy-assignment
@@ -81,7 +81,13 @@ class TopicAdminClient {
    * @param builder the configuration for the new topic, includes the name.
    */
   StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder) {
-    return connection_->CreateTopic({std::move(builder).BuildCreateRequest()});
+    return CreateTopic(std::move(builder).BuildCreateRequest());
+  }
+
+  /// Create a new topic in Cloud Pub/Sub.
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      google::pubsub::v1::Topic request) {
+    return connection_->CreateTopic({std::move(request)});
   }
 
   /**
