@@ -49,15 +49,31 @@ load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
 load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
+proto_library(
+    name = "samples_proto",
+    srcs = [
+        "samples.proto",
+    ],
+    visibility = ["//:__pkg__"],
+)
+
+cc_proto_library(
+    name = "samples_cc_proto",
+    visibility = ["//:__pkg__"],
+    deps = [":samples_proto"],
+)
+
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
+    copts = ["-I$(GENDIR)"],
     tags = [
         "integration-test",
     ],
     deps = [
         ":pubsub_samples_common",
+        ":samples_cc_proto",
         "//:pubsub",
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest_main",
