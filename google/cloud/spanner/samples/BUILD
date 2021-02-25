@@ -23,7 +23,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
-    timeout = "long",
+    timeout = "eternal",
     srcs = [test],
     tags = [
         "integration-test",
