@@ -238,6 +238,41 @@ std::ostream& operator<<(std::ostream& os, GetBucketIamPolicyRequest const& r) {
   return os << "}";
 }
 
+namespace {
+Status ValidateIamBinding(nlohmann::json const& binding, std::string const& name,
+                          std::string const& payload) {
+  if (!binding.is_object()) {
+    std::ostringstream os;
+    os << "Invalid IamPolicy payload, expected objects for 'bindings' "
+          "entries. Consider using the *NativeIamPolicy() member functions."
+       << "  payload=" << payload;
+    return Status(StatusCode::kInvalidArgument, os.str());
+  }
+  for (auto const& binding_kv : binding.items()) {
+    auto const& key = binding_kv.key();
+    if (key != "members" && key != "role") {
+      std::ostringstream os;
+      os << "Invalid IamPolicy payload, unexpected member '" << key
+         << "' in element #" << name << ". payload=" << payload;
+      return Status(StatusCode::kInvalidArgument, os.str());
+    }
+  }
+  if (binding.count("role") == 0 or binding.count("members") == 0) {
+    std::ostringstream os;
+    os << "Invalid IamPolicy payload, expected 'role' and 'members'"
+       << " fields for element #" << name << ". payload=" << payload;
+    return Status(StatusCode::kInvalidArgument, os.str());
+  }
+  if (!binding["members"].is_array()) {
+    std::ostringstream os;
+    os << "Invalid IamPolicy payload, expected array for 'members'"
+       << " fields for element #" << name << ". payload=" << payload;
+    return Status(StatusCode::kInvalidArgument, os.str());
+  }
+  return Status{};
+}
+}  // namespace
+
 StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
@@ -254,36 +289,10 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
       return Status(StatusCode::kInvalidArgument, os.str());
     }
     for (auto const& kv : json["bindings"].items()) {
-      auto binding = kv.value();
-      if (!binding.is_object()) {
-        std::ostringstream os;
-        // TODO(#2732): Advise alternative API after it's implemented.
-        os << "Invalid IamPolicy payload, expected objects for 'bindings' "
-              "entries."
-           << "  payload=" << payload;
-        return Status(StatusCode::kInvalidArgument, os.str());
-      }
-      for (auto const& binding_kv : binding.items()) {
-        auto const& key = binding_kv.key();
-        if (key != "members" && key != "role") {
-          std::ostringstream os;
-          os << "Invalid IamPolicy payload, unexpected member '" << key
-             << "' in element #" << kv.key() << ". payload=" << payload;
-          return Status(StatusCode::kInvalidArgument, os.str());
-        }
-      }
-      if (binding.count("role") == 0 or binding.count("members") == 0) {
-        std::ostringstream os;
-        os << "Invalid IamPolicy payload, expected 'role' and 'members'"
-           << " fields for element #" << kv.key() << ". payload=" << payload;
-        return Status(StatusCode::kInvalidArgument, os.str());
-      }
-      if (!binding["members"].is_array()) {
-        std::ostringstream os;
-        os << "Invalid IamPolicy payload, expected array for 'members'"
-           << " fields for element #" << kv.key() << ". payload=" << payload;
-        return Status(StatusCode::kInvalidArgument, os.str());
-      }
+      auto const& binding = kv.value();
+      auto valid = ValidateIamBinding(binding, kv.key(), payload);
+      if (!valid.ok()) return valid;
+
       std::string role = binding.value("role", "");
       for (auto const& member : binding["members"].items()) {
         policy.bindings.AddMember(role, member.value());
@@ -291,7 +300,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
     }
   }
   return policy;
-}  // namespace internal
+}
 
 SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
     std::string bucket_name, google::cloud::IamPolicy const& policy)
@@ -373,7 +382,7 @@ std::ostream& operator<<(std::ostream& os,
      << ", metageneration=" << r.metageneration();
   r.DumpOptions(os, ", ");
   return os << "}";
-};
+}
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
