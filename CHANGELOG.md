@@ -2,6 +2,8 @@
 
 ## FUTURE BREAKING CHANGES:
 
+<!-- Keep these sorted by estimated date -->
+
 <details>
 <summary>2021-06-01: retiring experimental Bigtable Admin Async APIs</summary>
 
@@ -12,8 +14,7 @@
   We do not think these functions are sufficiently useful to justify the
   additional maintenance and API clutter. Starting with the v1.25.0 release,
   and depending on your compiler settings, using these functions may issue a
-  deprecation warning at the call site. More information in
-  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
+  deprecation warning at the call site. More information in [#5923].
 
 </details>
 
@@ -52,6 +53,19 @@
     [#5726](https://github.com/googleapis/google-cloud-cpp/issues/5726)
 </details>
 
+<details>
+<summary>2022-04-01: retiring legacy IAM functions</summary>
+<br>
+
+* On 2022-04-01 (or shortly after) we are planning to remove a number of
+  IAM functions designed before [IAM conditions][iam-conditions-link]. These
+  functions do not work with IAM policies that include IAM conditions, and
+  have been marked as deprecated since before 2019-08-01, albeit in Doxygen
+  comments only. Starting with the v1.25.0 release, and depending on your
+  compiler settings, using these functions may issue a deprecation warning at
+  the call site. See [#5929] for more details.
+</details>
+
 ## v1.25.0 - TBD
 
 ### Bigtable:
@@ -60,7 +74,21 @@
   deprecated. These functions were experimental and we do not think they add
   value to our customers. Removing them would simplify the code and free
   development time for further features and cleanups.  More information in
-  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
+  [#5923].
+
+* The legacy IAM functions were marked as deprecated via doxygen comments.
+  Now they should generate warnings at the call site, depending on your
+  compiler settings. See [#5929] for more information.
+
+### Storage:
+
+* The legacy IAM functions were marked as deprecated via doxygen comments.
+  Now they should generate warnings at the call site, depending on your
+  compiler settings. See [#5929] for more information.
+
+[iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
+[#5923]: https://github.com/googleapis/google-cloud-cpp/issues/5923
+[#5929]: https://github.com/googleapis/google-cloud-cpp/issues/5929
 
 ## v1.24.0 - 2021-02
 

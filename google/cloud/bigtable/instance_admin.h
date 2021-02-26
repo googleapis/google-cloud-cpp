@@ -1086,7 +1086,6 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `GetNativeIamPolicy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1097,8 +1096,9 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_instance_admin_snippets.cc get iam policy
+   * Use #GetNativeIamPolicy() instead.
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED("GetNativeIamPolicy")
   StatusOr<google::cloud::IamPolicy> GetIamPolicy(
       std::string const& instance_id);
 
@@ -1139,7 +1139,6 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `AsyncGetNativeIamPolicy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -1200,7 +1199,6 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     the overload for `google::iam::v1::Policy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *
@@ -1213,8 +1211,11 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_instance_admin_snippets.cc set iam policy
+   * Use #SetIamPolicy(std::string const&, google::iam::v1::Policy const&)
+   * instead.
    */
+  GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(
+      "SetIamPolicy(std::string const&, google::iam::v1::Policy const&)")
   StatusOr<google::cloud::IamPolicy> SetIamPolicy(
       std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings,
@@ -1269,7 +1270,6 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     the overload for `google::iam::v1::Policy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *

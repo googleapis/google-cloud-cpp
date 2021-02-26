@@ -839,7 +839,7 @@ class TableAdmin {
     /**
      * Sets the cluster_id.
      *
-     * @param cluster_id the name of the cluster relative to the instance
+     * @param c the name of the cluster relative to the instance
      *     managed by the `TableAdmin` object. If no cluster_id is specified,
      *     the all backups in all clusters are listed. The full cluster name is
      *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -854,7 +854,7 @@ class TableAdmin {
     /**
      * Sets the filtering expression.
      *
-     * @param filter expression that filters backups listed in the response.
+     * @param f expression that filters backups listed in the response.
      *     The expression must specify the field name, a comparison operator,
      *     and the value that you want to use for filtering. The value must be a
      *     string, a number, or a boolean. The comparison operator must be
@@ -897,7 +897,7 @@ class TableAdmin {
     /**
      * Sets the ordering expression.
      *
-     * @param order_by expression for specifying the sort order of the results
+     * @param o expression for specifying the sort order of the results
      *     of the request. The string value should specify only one field in
      *     `google::bigtable::admin::v2::Backup`.
      *     The following field names are supported:
@@ -1493,7 +1493,8 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc get iam policy backup
+   * TODO(#5931) - example is missing:
+   *     snippet table_admin_iam_policy_snippets.cc get iam policy backup
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& cluster_id,
                                                  std::string const& backup_id);
@@ -1575,7 +1576,8 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc set iam policy backup
+   * TODO(#5931) - example is missing:
+   *     snippet table_admin_iam_policy_snippets.cc set iam policy backup
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& cluster_id, std::string const& backup_id,

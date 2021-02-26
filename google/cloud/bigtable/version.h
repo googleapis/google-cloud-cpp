@@ -25,6 +25,13 @@
       "this experimental function will be removed on or shortly after " \
       "2021-06-01. See GitHub issue #5923 for more information.")
 
+#define GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(alternative)                  \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
+      "this function predates IAM conditions and does not work with policies " \
+      "that include IAM conditions. Please use " alternative                   \
+      " instead. The function will be removed on 2022-04-01 or shortly "       \
+      "after. See GitHub issue #5929 for more information.")
+
 #define BIGTABLE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
                          BIGTABLE_CLIENT_VERSION_MINOR)

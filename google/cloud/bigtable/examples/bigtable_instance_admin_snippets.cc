@@ -589,52 +589,6 @@ void DeleteAppProfile(std::vector<std::string> const& argv) {
   (std::move(instance), argv[1], argv[2], ignore_warnings);
 }
 
-void GetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
-                  std::vector<std::string> const& argv) {
-  //! [get iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::InstanceAdmin instance_admin, std::string const& instance_id) {
-    StatusOr<google::cloud::IamPolicy> policy =
-        instance_admin.GetIamPolicy(instance_id);
-    if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy for " << instance_id << " is\n";
-    for (auto const& kv : policy->bindings) {
-      std::cout << "role " << kv.first << " includes [";
-      std::cout << absl::StrJoin(kv.second, ", ");
-      std::cout << "]\n";
-    }
-  }
-  //! [get iam policy]
-  (std::move(instance_admin), argv.at(0));
-}
-
-void SetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
-                  std::vector<std::string> const& argv) {
-  //! [set iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::InstanceAdmin instance_admin, std::string const& instance_id,
-     std::string const& role, std::string const& member) {
-    StatusOr<google::cloud::IamPolicy> current =
-        instance_admin.GetIamPolicy(instance_id);
-    if (!current) throw std::runtime_error(current.status().message());
-    auto bindings = current->bindings;
-    bindings.AddMember(role, member);
-    StatusOr<google::cloud::IamPolicy> policy =
-        instance_admin.SetIamPolicy(instance_id, bindings, current->etag);
-    if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy for " << instance_id << " is\n";
-    for (auto const& kv : policy->bindings) {
-      std::cout << "role " << kv.first << " includes [";
-      std::cout << absl::StrJoin(kv.second, ", ");
-      std::cout << "]\n";
-    }
-  }
-  //! [set iam policy]
-  (std::move(instance_admin), argv.at(0), argv.at(1), argv.at(2));
-}
-
 void GetNativeIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                         std::vector<std::string> const& argv) {
   //! [get native iam policy]
@@ -854,13 +808,6 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteCluster() example" << std::endl;
   DeleteCluster(admin, {instance_id, instance_id + "-c2"});
 
-  std::cout << "\nRunning GetIamPolicy() example" << std::endl;
-  GetIamPolicy(admin, {instance_id});
-
-  std::cout << "\nRunning SetIamPolicy() example" << std::endl;
-  SetIamPolicy(admin, {instance_id, "roles/bigtable.user",
-                       "serviceAccount:" + service_account});
-
   std::cout << "\nRunning GetNativeIamPolicy() example" << std::endl;
   GetNativeIamPolicy(admin, {instance_id});
 
@@ -937,11 +884,6 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry("list-app-profiles", {"<instance-id>"},
                                  ListAppProfiles),
       {"delete-app-profile", DeleteAppProfile},
-      examples::MakeCommandEntry("get-iam-policy", {"<instance-id>"},
-                                 GetIamPolicy),
-      examples::MakeCommandEntry("set-iam-policy",
-                                 {"<instance-id>", "<role>", "<member>"},
-                                 SetIamPolicy),
       examples::MakeCommandEntry("get-native-iam-policy", {"<instance-id>"},
                                  GetNativeIamPolicy),
       examples::MakeCommandEntry("set-native-iam-policy",

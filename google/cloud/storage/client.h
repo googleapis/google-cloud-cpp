@@ -594,17 +594,17 @@ class Client {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `GetNativeBucketIamPolicy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_bucket_iam_samples.cc get bucket iam policy
+   * Use #GetNativeBucketIamPolicy() instead.
    *
    * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
+  GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("GetNativeBucketIamPolicy")
   StatusOr<IamPolicy> GetBucketIamPolicy(std::string const& bucket_name,
                                          Options&&... options) {
     internal::GetBucketIamPolicyRequest request(bucket_name);
@@ -691,17 +691,14 @@ class Client {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `SetNativeBucketIamPolicy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Example: adding a new member
-   * @snippet storage_bucket_iam_samples.cc add bucket iam member
-   *
-   * @par Example: removing a IAM member
-   * @snippet storage_bucket_iam_samples.cc remove bucket iam member
+   * Use #GetNativeBucketIamPolicy() instead.
    *
    * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
   template <typename... Options>
+  GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED("SetNativeBucketIamPolicy")
   StatusOr<IamPolicy> SetBucketIamPolicy(std::string const& bucket_name,
                                          IamPolicy const& iam_policy,
                                          Options&&... options) {
