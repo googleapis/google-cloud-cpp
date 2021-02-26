@@ -23,6 +23,8 @@
 #include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/duration.pb.h>
 #include <sstream>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace btadmin = ::google::bigtable::admin::v2;
 

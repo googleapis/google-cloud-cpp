@@ -16,8 +16,14 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VERSION_H
 
 #include "google/cloud/bigtable/version_info.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
+
+#define GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED                \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                          \
+      "this experimental function will be removed on or shortly after " \
+      "2021-06-01. See GitHub issue #5923 for more information.")
 
 #define BIGTABLE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \

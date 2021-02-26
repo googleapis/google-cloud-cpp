@@ -20,6 +20,8 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
 #include <sstream>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace {
 

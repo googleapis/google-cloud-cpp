@@ -1,6 +1,25 @@
 # Changelog
 
-**FUTURE CHANGES:**
+## FUTURE BREAKING CHANGES:
+
+<details>
+<summary>2021-06-01: retiring experimental Bigtable Admin Async APIs</summary>
+
+* In 2021-06-01 (or shortly after) we are planning to remove all the functions
+  matching `Async*` in `bigtable::TableAdmin` and `bigtable::InstanceAdmin`.
+  These functions were already marked as **experimental**, they allow
+  applications to perform administrative operations in a non-blocking manner.
+  We do not think these functions are sufficiently useful to justify the
+  additional maintenance and API clutter. Starting with the v1.25.0 release,
+  and depending on your compiler settings, using these functions may issue a
+  deprecation warning at the call site. More information in
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
+
+</details>
+
+<details>
+<summary>2022-02-15: retiring legacy targets and rules</summary>
+<br>
 
 * In 2022-02-15 (or around that time) we are planning to remove a number of
   backwards compatibility targets names for Bazel and CMake.  Specifically:
@@ -31,8 +50,17 @@
     flags.
   - If you have any feedback about this change please add comments in
     [#5726](https://github.com/googleapis/google-cloud-cpp/issues/5726)
+</details>
 
 ## v1.25.0 - TBD
+
+### Bigtable:
+
+* We have marked the asynchronous versions of the administrative functions as
+  deprecated. These functions were experimental and we do not think they add
+  value to our customers. Removing them would simplify the code and free
+  development time for further features and cleanups.  More information in
+  [#5923](https://github.com/googleapis/google-cloud-cpp/issues/5923).
 
 ## v1.24.0 - 2021-02
 

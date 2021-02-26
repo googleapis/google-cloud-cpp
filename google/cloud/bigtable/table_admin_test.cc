@@ -29,6 +29,8 @@
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <chrono>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

@@ -24,6 +24,8 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <thread>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

@@ -21,6 +21,8 @@
 #include "google/cloud/testing_util/contains_once.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
+// TODO(#5923) - remove after deprecation is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

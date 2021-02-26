@@ -121,6 +121,7 @@ add_library(
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
+    internal/attributes.h
     internal/backoff_policy.cc
     internal/backoff_policy.h
     internal/big_endian.h
@@ -130,6 +131,7 @@ add_library(
     internal/compiler_info.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
+    internal/disable_deprecation_warnings.inc
     internal/disable_msvc_crt_secure_warnings.inc
     internal/filesystem.cc
     internal/filesystem.h
