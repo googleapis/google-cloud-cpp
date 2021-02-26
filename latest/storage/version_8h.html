@@ -72,6 +72,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="version__info_8h_source.html">google/cloud/storage/version_info.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/internal/attributes.h&quot;</code><br />
 <code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/version_8h.html">google/cloud/version.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
@@ -92,6 +93,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a94a43e77dcf9178d0640f236917e0e0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a94a43e77dcf9178d0640f236917e0e0c">GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED</a>(alternative)</td></tr>
+<tr class="separator:a94a43e77dcf9178d0640f236917e0e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dee12cbe749461e34aef0e0f9b3fe28"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28">STORAGE_CLIENT_NS</a></td></tr>
 <tr class="separator:a6dee12cbe749461e34aef0e0f9b3fe28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -117,6 +120,31 @@ Functions</h2></td></tr>
 <tr class="separator:a15aefe7667fadbd43eb62b22642c9102"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a94a43e77dcf9178d0640f236917e0e0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94a43e77dcf9178d0640f236917e0e0c">&#9670;&nbsp;</a></span>GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">alternative</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \</div>
+<div class="line">      <span class="stringliteral">&quot;this function predates IAM conditions and does not work with policies &quot;</span> \</div>
+<div class="line">      <span class="stringliteral">&quot;that include IAM conditions. Please use &quot;</span> alternative                   \</div>
+<div class="line">      <span class="stringliteral">&quot; instead. The function will be removed on 2022-04-01 or shortly &quot;</span>       \</div>
+<div class="line">      <span class="stringliteral">&quot;after. See GitHub issue #5929 for more information.&quot;</span>)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00023">23</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+
+</div>
+</div>
 <a id="a6dee12cbe749461e34aef0e0f9b3fe28"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6dee12cbe749461e34aef0e0f9b3fe28">&#9670;&nbsp;</a></span>STORAGE_CLIENT_NS</h2>
 
@@ -131,7 +159,7 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a>(<a class="code" href="version__info_8h.html#a4b1466d418e20b7cecfb6574fb90bf06">STORAGE_CLIENT_VERSION_MAJOR</a>, \</div>
 <div class="line">                         <a class="code" href="version__info_8h.html#a2e4a4b745105c58e18afc5d62599a7bb">STORAGE_CLIENT_VERSION_MINOR</a>)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00022">22</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00030">30</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>

@@ -184,7 +184,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the cluster_id. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cluster_id</td><td>the name of the cluster relative to the instance managed by the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. If no cluster_id is specified, the all backups in all clusters are listed. The full cluster name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;cluster_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Only populate &#39;name&#39; and fields related to the table&#39;s encryption state.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
+    <tr><td class="paramname">c</td><td>the name of the cluster relative to the instance managed by the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. If no cluster_id is specified, the all backups in all clusters are listed. The full cluster name is <code>projects/&lt;PROJECT_ID&gt;/instances/&lt;INSTANCE_ID&gt;/clusters/&lt;cluster_id&gt;</code> where PROJECT_ID is obtained from the associated <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html" title="Connects to Cloud Bigtable&#39;s table administration APIs.">AdminClient</a> and INSTANCE_ID is the <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a827cfb5975d92b4daba87c66a0f9bdfb" title="Only populate &#39;name&#39; and fields related to the table&#39;s encryption state.">instance_id()</a> of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html" title="Implements the API to administer tables in a Cloud Bigtable instance.">TableAdmin</a></code> object. </td></tr>
   </table>
   </dd>
 </dl>
@@ -220,7 +220,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the filtering expression. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filter</td><td>expression that filters backups listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be &lt;, &gt;, &lt;=, &gt;=, !=, =, or :. Colon ‘:’ represents a HAS operator which is roughly synonymous with equality. <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Filter.html" title="Define the interfaces to create filter expressions.">Filter</a> rules are case insensitive.</td></tr>
+    <tr><td class="paramname">f</td><td>expression that filters backups listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be &lt;, &gt;, &lt;=, &gt;=, !=, =, or :. Colon ‘:’ represents a HAS operator which is roughly synonymous with equality. <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Filter.html" title="Define the interfaces to create filter expressions.">Filter</a> rules are case insensitive.</td></tr>
   </table>
   </dd>
 </dl>
@@ -275,7 +275,7 @@ Public Attributes</h2></td></tr>
 <p>Sets the ordering expression. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">order_by</td><td>expression for specifying the sort order of the results of the request. The string value should specify only one field in <code>google::bigtable::admin::v2::Backup</code>. The following field names are supported:<ul>
+    <tr><td class="paramname">o</td><td>expression for specifying the sort order of the results of the request. The string value should specify only one field in <code>google::bigtable::admin::v2::Backup</code>. The following field names are supported:<ul>
 <li>name</li>
 <li>table</li>
 <li>expire_time</li>

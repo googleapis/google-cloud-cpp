@@ -951,7 +951,7 @@ $(function() {
 <div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      std::move(request));</div>
 <div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;}</div>
 <div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160; </div>
-<div class="line"><a name="l00885"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">  885</a></span>&#160;StatusOr&lt;google::cloud::IamPolicy&gt; InstanceAdmin::SetIamPolicy(</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;StatusOr&lt;google::cloud::IamPolicy&gt; InstanceAdmin::SetIamPolicy(</div>
 <div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;    std::string <span class="keyword">const</span>&amp; instance_id,</div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;    google::cloud::IamBindings <span class="keyword">const</span>&amp; iam_bindings, std::string <span class="keyword">const</span>&amp; etag) {</div>
 <div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;  grpc::Status status;</div>
@@ -974,7 +974,7 @@ $(function() {
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;  request.set_resource(resource);</div>
 <div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;  *request.mutable_policy() = std::move(policy);</div>
 <div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160; </div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy.html">MetadataUpdatePolicy</a> metadata_update_policy(resource,</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;  MetadataUpdatePolicy metadata_update_policy(resource,</div>
 <div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;                                              MetadataParamTypes::RESOURCE);</div>
 <div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160; </div>
 <div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;  <span class="keyword">auto</span> proto = ClientUtils::MakeCall(</div>
@@ -989,7 +989,7 @@ $(function() {
 <div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;  <span class="keywordflow">return</span> ProtoToWrapper(std::move(proto));</div>
 <div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;}</div>
 <div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160; </div>
-<div class="line"><a name="l00923"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">  923</a></span>&#160;StatusOr&lt;google::iam::v1::Policy&gt; InstanceAdmin::SetIamPolicy(</div>
+<div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;StatusOr&lt;google::iam::v1::Policy&gt; InstanceAdmin::SetIamPolicy(</div>
 <div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;    std::string <span class="keyword">const</span>&amp; instance_id, google::iam::v1::Policy <span class="keyword">const</span>&amp; iam_policy) {</div>
 <div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;  grpc::Status status;</div>
 <div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;  <span class="keyword">auto</span> rpc_policy = clone_rpc_retry_policy();</div>
@@ -1000,7 +1000,7 @@ $(function() {
 <div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;  request.set_resource(resource);</div>
 <div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;  *request.mutable_policy() = iam_policy;</div>
 <div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160; </div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy.html">MetadataUpdatePolicy</a> metadata_update_policy(resource,</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;  MetadataUpdatePolicy metadata_update_policy(resource,</div>
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;                                              MetadataParamTypes::RESOURCE);</div>
 <div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160; </div>
 <div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;  <span class="keyword">auto</span> proto = ClientUtils::MakeCall(</div>
@@ -1208,7 +1208,7 @@ $(function() {
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a07a8a1dbcbf52047c6d4e48df9fb7ec2"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a07a8a1dbcbf52047c6d4e48df9fb7ec2">google::cloud::bigtable::v1::InstanceName</a></div><div class="ttdeci">std::string InstanceName(std::shared_ptr&lt; DataClient &gt; const &amp;client)</div><div class="ttdoc">Return the fully qualified instance name for the client.</div><div class="ttdef"><b>Definition:</b> <a href="data__client_8h_source.html#l00191">data_client.h:191</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceList_html_a2a172f54ba55381cafe6c0e4917f6637"><div class="ttname"><a href="structgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceList.html#a2a172f54ba55381cafe6c0e4917f6637">google::cloud::bigtable::v1::InstanceList::failed_locations</a></div><div class="ttdeci">std::vector&lt; std::string &gt; failed_locations</div><div class="ttdoc">The list of Google Cloud Platform locations where the request could not get a response from.</div><div class="ttdef"><b>Definition:</b> <a href="instance__list__responses_8h_source.html#l00040">instance_list_responses.h:40</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy_html_a27ec9437138d1b30c0eb059c49500f97"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1MetadataUpdatePolicy.html#a27ec9437138d1b30c0eb059c49500f97">google::cloud::bigtable::v1::MetadataUpdatePolicy::Setup</a></div><div class="ttdeci">void Setup(grpc::ClientContext &amp;context) const</div><div class="ttdef"><b>Definition:</b> <a href="metadata__update__policy_8cc_source.html#l00046">metadata_update_policy.cc:46</a></div></div>
-<div class="ttc" id="aversion_8h_html_aebb4d9f586ac64a412e3302f8a4b1c37"><div class="ttname"><a href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00028">version.h:28</a></div></div>
+<div class="ttc" id="aversion_8h_html_aebb4d9f586ac64a412e3302f8a4b1c37"><div class="ttname"><a href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a></div><div class="ttdeci">#define BIGTABLE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00035">version.h:35</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClusterConfig.html">google::cloud::bigtable::v1::ClusterConfig</a></div><div class="ttdoc">Specify the initial configuration for a new cluster.</div><div class="ttdef"><b>Definition:</b> <a href="cluster__config_8h_source.html#l00027">cluster_config.h:27</a></div></div>
 <div class="ttc" id="agrpc__error__delegate_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/grpc__error__delegate_8h.html">grpc_error_delegate.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceConfig.html">google::cloud::bigtable::v1::InstanceConfig</a></div><div class="ttdoc">Specify the initial configuration for a new instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__config_8h_source.html#l00030">instance_config.h:30</a></div></div>

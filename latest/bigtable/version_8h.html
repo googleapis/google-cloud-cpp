@@ -95,6 +95,8 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:ac2ce442e58775bb701c04df88146712b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#ac2ce442e58775bb701c04df88146712b">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED</a></td></tr>
 <tr class="separator:ac2ce442e58775bb701c04df88146712b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307979bf37a9a91be6791794fd5797db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a307979bf37a9a91be6791794fd5797db">GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED</a>(alternative)</td></tr>
+<tr class="separator:a307979bf37a9a91be6791794fd5797db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebb4d9f586ac64a412e3302f8a4b1c37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#aebb4d9f586ac64a412e3302f8a4b1c37">BIGTABLE_CLIENT_NS</a></td></tr>
 <tr class="separator:aebb4d9f586ac64a412e3302f8a4b1c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -131,7 +133,7 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a>(<a class="code" href="version__info_8h.html#a2727e6827d809df63f4deacfd817455f">BIGTABLE_CLIENT_VERSION_MAJOR</a>, \</div>
 <div class="line">                         <a class="code" href="version__info_8h.html#adc2a6c16f5b60d39118fb2e05862e80b">BIGTABLE_CLIENT_VERSION_MINOR</a>)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00028">28</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00035">35</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -151,6 +153,31 @@ Functions</h2></td></tr>
 <div class="line">      <span class="stringliteral">&quot;2021-06-01. See GitHub issue #5923 for more information.&quot;</span>)</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00023">23</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+
+</div>
+</div>
+<a id="a307979bf37a9a91be6791794fd5797db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a307979bf37a9a91be6791794fd5797db">&#9670;&nbsp;</a></span>GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">alternative</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \</div>
+<div class="line">      <span class="stringliteral">&quot;this function predates IAM conditions and does not work with policies &quot;</span> \</div>
+<div class="line">      <span class="stringliteral">&quot;that include IAM conditions. Please use &quot;</span> alternative                   \</div>
+<div class="line">      <span class="stringliteral">&quot; instead. The function will be removed on 2022-04-01 or shortly &quot;</span>       \</div>
+<div class="line">      <span class="stringliteral">&quot;after. See GitHub issue #5929 for more information.&quot;</span>)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00028">28</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>

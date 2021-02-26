@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::bigtable::v1::InstanceAdmin Class Reference</div>  </div>
@@ -210,12 +211,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a37538eab822ae149ddf22ebc0a105067"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ac2ce442e58775bb701c04df88146712b">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED</a> future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a37538eab822ae149ddf22ebc0a105067">AsyncGetNativeIamPolicy</a> (CompletionQueue &amp;cq, std::string const &amp;instance_id)</td></tr>
 <tr class="memdesc:a37538eab822ae149ddf22ebc0a105067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously gets the native IAM policy for <code>instance_id</code>.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a37538eab822ae149ddf22ebc0a105067">More...</a><br /></td></tr>
 <tr class="separator:a37538eab822ae149ddf22ebc0a105067"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a017a3f14072c8b96b473f281167b15b0"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::cloud::IamPolicy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">SetIamPolicy</a> (std::string const &amp;instance_id, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag=std::string{})</td></tr>
-<tr class="memdesc:a017a3f14072c8b96b473f281167b15b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for an instance.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">More...</a><br /></td></tr>
-<tr class="separator:a017a3f14072c8b96b473f281167b15b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">SetIamPolicy</a> (std::string const &amp;instance_id, google::iam::v1::Policy const &amp;iam_policy)</td></tr>
-<tr class="memdesc:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for an instance.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">More...</a><br /></td></tr>
-<tr class="separator:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af98706bfd0b652b58224f74cf41b5d5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ac2ce442e58775bb701c04df88146712b">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED</a> future&lt; StatusOr&lt; google::cloud::IamPolicy &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#af98706bfd0b652b58224f74cf41b5d5a">AsyncSetIamPolicy</a> (CompletionQueue &amp;cq, std::string const &amp;instance_id, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag=std::string{})</td></tr>
 <tr class="memdesc:af98706bfd0b652b58224f74cf41b5d5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously sets the IAM policy for an instance.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#af98706bfd0b652b58224f74cf41b5d5a">More...</a><br /></td></tr>
 <tr class="separator:af98706bfd0b652b58224f74cf41b5d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,6 +223,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abb23adb5d79de1e41528c1d621b3fe7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ac2ce442e58775bb701c04df88146712b">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED</a> future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#abb23adb5d79de1e41528c1d621b3fe7b">AsyncTestIamPermissions</a> (CompletionQueue &amp;cq, std::string const &amp;instance_id, std::vector&lt; std::string &gt; const &amp;permissions)</td></tr>
 <tr class="memdesc:abb23adb5d79de1e41528c1d621b3fe7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously obtains a permission set that the caller has on the specified instance.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#abb23adb5d79de1e41528c1d621b3fe7b">More...</a><br /></td></tr>
 <tr class="separator:abb23adb5d79de1e41528c1d621b3fe7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#a307979bf37a9a91be6791794fd5797db">GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED</a>(&quot;SetIamPolicy(std::string const&amp;, google::iam::v1::Policy const&amp;)&quot;) StatusOr&lt; google StatusOr&lt; google::iam::v1::Policy &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">SetIamPolicy</a> (std::string const &amp;instance_id, google::iam::v1::Policy const &amp;iam_policy)</td></tr>
+<tr class="memdesc:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IAM policy for an instance.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">More...</a><br /></td></tr>
+<tr class="separator:ab8fb71752cecbb9ea9a4135f1ac4e55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the APIs to administer Cloud Bigtable instances. </p>
@@ -975,7 +976,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when either (a) the policy is fetched or (b) a non-retryable error occurs or (c) retry policy has been exhausted.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use <code>AsyncGetNativeIamPolicy</code> instead. TODO(#2857): Use proper deprecation attributes.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use <code>AsyncGetNativeIamPolicy</code> instead.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
@@ -1419,7 +1420,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when either (a) the policy is created or (b) a non-retryable error occurs or (c) retry policy has been exhausted.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use the overload for <code>google::iam::v1::Policy</code> instead. TODO(#2857): Use proper deprecation attributes.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use the overload for <code>google::iam::v1::Policy</code> instead.</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
@@ -2361,23 +2362,10 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Policy the full IAM policy for the instance.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use <code>GetNativeIamPolicy</code> instead. TODO(#2857): Use proper deprecation attributes.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use <code>GetNativeIamPolicy</code> instead.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">cbt::InstanceAdmin</a> instance_admin, std::string <span class="keyword">const</span>&amp; instance_id) {</div>
-<div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; policy =</div>
-<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a3b0c6da3d4afa4c638f46965515e518f">GetIamPolicy</a>(instance_id);</div>
-<div class="line">    <span class="keywordflow">if</span> (!policy) <span class="keywordflow">throw</span> std::runtime_error(policy.status().message());</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span>;</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; kv : policy-&gt;bindings) {</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;role &quot;</span> &lt;&lt; kv.first &lt;&lt; <span class="stringliteral">&quot; includes [&quot;</span>;</div>
-<div class="line">      std::cout &lt;&lt; absl::StrJoin(kv.second, <span class="stringliteral">&quot;, &quot;</span>);</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a90e641fea08b9dbfecc160173d98b5ab" title="Gets the native policy for instance_id.">GetNativeIamPolicy()</a> instead. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="instance__admin_8cc_source.html#l00784">784</a> of file <a class="el" href="instance__admin_8cc_source.html">instance_admin.cc</a>.</p>
 
@@ -2721,149 +2709,6 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
-<a id="a017a3f14072c8b96b473f281167b15b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a017a3f14072c8b96b473f281167b15b0">&#9670;&nbsp;</a></span>SetIamPolicy() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; google::cloud::IamPolicy &gt; google::cloud::bigtable::v1::InstanceAdmin::SetIamPolicy </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>instance_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">google::cloud::IamBindings const &amp;&#160;</td>
-          <td class="paramname"><em>iam_bindings</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>etag</em> = <code>std::string{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the IAM policy for an instance. </p>
-<p>Applications can provide the <code>etag</code> to implement optimistic concurrency control. If <code>etag</code> is not empty, the server will reject calls where the provided ETag does not match the ETag value stored in the server.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance_id</td><td>which instance to set the IAM policy for. </td></tr>
-    <tr><td class="paramname">iam_bindings</td><td>IamBindings object containing role and members. </td></tr>
-    <tr><td class="paramname">etag</td><td>the expected ETag value for the current policy. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Policy the current IAM bindings for the instance.</dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use the overload for <code>google::iam::v1::Policy</code> instead. TODO(#2857): Use proper deprecation attributes.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
-<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">cbt::InstanceAdmin</a> instance_admin, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; role, std::string <span class="keyword">const</span>&amp; member) {</div>
-<div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; current =</div>
-<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a3b0c6da3d4afa4c638f46965515e518f">GetIamPolicy</a>(instance_id);</div>
-<div class="line">    <span class="keywordflow">if</span> (!current) <span class="keywordflow">throw</span> std::runtime_error(current.status().message());</div>
-<div class="line">    <span class="keyword">auto</span> bindings = current-&gt;bindings;</div>
-<div class="line">    bindings.AddMember(role, member);</div>
-<div class="line">    StatusOr&lt;google::cloud::IamPolicy&gt; policy =</div>
-<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">SetIamPolicy</a>(instance_id, bindings, current-&gt;etag);</div>
-<div class="line">    <span class="keywordflow">if</span> (!policy) <span class="keywordflow">throw</span> std::runtime_error(policy.status().message());</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span>;</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; kv : policy-&gt;bindings) {</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;role &quot;</span> &lt;&lt; kv.first &lt;&lt; <span class="stringliteral">&quot; includes [&quot;</span>;</div>
-<div class="line">      std::cout &lt;&lt; absl::StrJoin(kv.second, <span class="stringliteral">&quot;, &quot;</span>);</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="instance__admin_8cc_source.html#l00885">885</a> of file <a class="el" href="instance__admin_8cc_source.html">instance_admin.cc</a>.</p>
-
-</div>
-</div>
-<a id="ab8fb71752cecbb9ea9a4135f1ac4e55e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8fb71752cecbb9ea9a4135f1ac4e55e">&#9670;&nbsp;</a></span>SetIamPolicy() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">StatusOr&lt; google::iam::v1::Policy &gt; google::cloud::bigtable::v1::InstanceAdmin::SetIamPolicy </td>
-          <td>(</td>
-          <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>instance_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">google::iam::v1::Policy const &amp;&#160;</td>
-          <td class="paramname"><em>iam_policy</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the IAM policy for an instance. </p>
-<p>This is the preferred way to the overload for <code>IamBindings</code>. This is more closely coupled to the underlying protocol, enable more actions and is more likely to tolerate future protocol changes.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance_id</td><td>which instance to set the IAM policy for. </td></tr>
-    <tr><td class="paramname">iam_policy</td><td>google::iam::v1::Policy object containing role and members. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the current IAM policy for the instance.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
-<dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
-<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">cbt::InstanceAdmin</a> instance_admin, std::string <span class="keyword">const</span>&amp; instance_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; role, std::string <span class="keyword">const</span>&amp; member) {</div>
-<div class="line">    StatusOr&lt;google::iam::v1::Policy&gt; current =</div>
-<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a90e641fea08b9dbfecc160173d98b5ab">GetNativeIamPolicy</a>(instance_id);</div>
-<div class="line">    <span class="keywordflow">if</span> (!current) <span class="keywordflow">throw</span> std::runtime_error(current.status().message());</div>
-<div class="line">    <span class="comment">// This example adds the member to all existing bindings for that role. If</span></div>
-<div class="line">    <span class="comment">// there are no such bindgs, it adds a new one. This might not be what the</span></div>
-<div class="line">    <span class="comment">// user wants, e.g. in case of conditional bindings.</span></div>
-<div class="line">    <span class="keywordtype">size_t</span> num_added = 0;</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; binding : *current-&gt;mutable_bindings()) {</div>
-<div class="line">      <span class="keywordflow">if</span> (binding.role() == role) {</div>
-<div class="line">        binding.add_members(member);</div>
-<div class="line">        ++num_added;</div>
-<div class="line">      }</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (num_added == 0) {</div>
-<div class="line">      *current-&gt;add_bindings() = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a97d1cefbc6bd7f002a83344476bd4dc3">cbt::IamBinding</a>(role, {member});</div>
-<div class="line">    }</div>
-<div class="line">    StatusOr&lt;google::iam::v1::Policy&gt; policy =</div>
-<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">SetIamPolicy</a>(instance_id, *current);</div>
-<div class="line">    <span class="keywordflow">if</span> (!policy) <span class="keywordflow">throw</span> std::runtime_error(policy.status().message());</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span></div>
-<div class="line">              &lt;&lt; policy-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="instance__admin_8cc_source.html#l00923">923</a> of file <a class="el" href="instance__admin_8cc_source.html">instance_admin.cc</a>.</p>
-
-</div>
-</div>
 <a id="a3da026ac64422a6d31417155f641a739"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3da026ac64422a6d31417155f641a739">&#9670;&nbsp;</a></span>TestIamPermissions()</h2>
 
@@ -3123,15 +2968,88 @@ template&lt;typename... Policies&gt; </div>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ab8fb71752cecbb9ea9a4135f1ac4e55e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8fb71752cecbb9ea9a4135f1ac4e55e">&#9670;&nbsp;</a></span>SetIamPolicy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; google::iam::v1::Policy &gt; google::cloud::bigtable::v1::InstanceAdmin::SetIamPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the IAM policy for an instance. </p>
+<p>Applications can provide the <code>etag</code> to implement optimistic concurrency control. If <code>etag</code> is not empty, the server will reject calls where the provided ETag does not match the ETag value stored in the server.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance_id</td><td>which instance to set the IAM policy for. </td></tr>
+    <tr><td class="paramname">iam_bindings</td><td>IamBindings object containing role and members. </td></tr>
+    <tr><td class="paramname">etag</td><td>the expected ETag value for the current policy. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Policy the current IAM bindings for the instance.</dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>this function is deprecated; it doesn't support conditional bindings and will not support any other features to come; please use the overload for <code>google::iam::v1::Policy</code> instead.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use #SetIamPolicy(std::string const&amp;, google::iam::v1::Policy const&amp;) instead. Sets the IAM policy for an instance.</dd></dl>
+<p>This is the preferred way to the overload for <code>IamBindings</code>. This is more closely coupled to the underlying protocol, enable more actions and is more likely to tolerate future protocol changes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance_id</td><td>which instance to set the IAM policy for. </td></tr>
+    <tr><td class="paramname">iam_policy</td><td>google::iam::v1::Policy object containing role and members. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>google::iam::v1::Policy the current IAM policy for the instance.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
+<dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
+<dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
+<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
+<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">cbt::InstanceAdmin</a> instance_admin, std::string <span class="keyword">const</span>&amp; instance_id,</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; role, std::string <span class="keyword">const</span>&amp; member) {</div>
+<div class="line">    StatusOr&lt;google::iam::v1::Policy&gt; current =</div>
+<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a90e641fea08b9dbfecc160173d98b5ab">GetNativeIamPolicy</a>(instance_id);</div>
+<div class="line">    <span class="keywordflow">if</span> (!current) <span class="keywordflow">throw</span> std::runtime_error(current.status().message());</div>
+<div class="line">    <span class="comment">// This example adds the member to all existing bindings for that role. If</span></div>
+<div class="line">    <span class="comment">// there are no such bindgs, it adds a new one. This might not be what the</span></div>
+<div class="line">    <span class="comment">// user wants, e.g. in case of conditional bindings.</span></div>
+<div class="line">    <span class="keywordtype">size_t</span> num_added = 0;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; binding : *current-&gt;mutable_bindings()) {</div>
+<div class="line">      <span class="keywordflow">if</span> (binding.role() == role) {</div>
+<div class="line">        binding.add_members(member);</div>
+<div class="line">        ++num_added;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (num_added == 0) {</div>
+<div class="line">      *current-&gt;add_bindings() = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a97d1cefbc6bd7f002a83344476bd4dc3">cbt::IamBinding</a>(role, {member});</div>
+<div class="line">    }</div>
+<div class="line">    StatusOr&lt;google::iam::v1::Policy&gt; policy =</div>
+<div class="line">        instance_admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">SetIamPolicy</a>(instance_id, *current);</div>
+<div class="line">    <span class="keywordflow">if</span> (!policy) <span class="keywordflow">throw</span> std::runtime_error(policy.status().message());</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM Policy for &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span></div>
+<div class="line">              &lt;&lt; policy-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  }</div>
+</div><!-- fragment --></dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="instance__admin_8h_source.html#l01249">1249</a> of file <a class="el" href="instance__admin_8h_source.html">instance_admin.h</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_aba9f0face63f15e1fa3c741c01ae47b9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aba9f0face63f15e1fa3c741c01ae47b9">google::cloud::bigtable::v1::InstanceAdmin::GetCluster</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Cluster &gt; GetCluster(std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdoc">Gets the specified cluster of an instance in the project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00359">instance_admin.cc:359</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a421351a3a87888a58db5afa09fdb872e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a421351a3a87888a58db5afa09fdb872e">google::cloud::bigtable::v1::InstanceAdmin::GetAppProfile</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::AppProfile &gt; GetAppProfile(std::string const &amp;instance_id, std::string const &amp;profile_id)</div><div class="ttdoc">Fetch the detailed information about an existing application profile.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00596">instance_admin.cc:596</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">google::cloud::bigtable::v1::InstanceAdmin</a></div><div class="ttdoc">Implements the APIs to administer Cloud Bigtable instances.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00122">instance_admin.h:122</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_ab8fb71752cecbb9ea9a4135f1ac4e55e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab8fb71752cecbb9ea9a4135f1ac4e55e">google::cloud::bigtable::v1::InstanceAdmin::SetIamPolicy</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(&quot;SetIamPolicy(std::string const&amp;, google::iam::v1::Policy const&amp;)&quot;) StatusOr&lt; google StatusOr&lt; google::iam::v1::Policy &gt; SetIamPolicy(std::string const &amp;instance_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Sets the IAM policy for an instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l01249">instance_admin.h:1249</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a3cf099d530d38e4732726b2df733e81a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a3cf099d530d38e4732726b2df733e81a">google::cloud::bigtable::v1::InstanceAdmin::AsyncDeleteCluster</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; Status &gt; AsyncDeleteCluster(CompletionQueue &amp;cq, std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdoc">Sends an asynchronous request to delete a cluster.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00306">instance_admin.cc:306</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig_html_ada0b9637db76737158dff3db48a290ec"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileUpdateConfig.html#ada0b9637db76737158dff3db48a290ec">google::cloud::bigtable::v1::AppProfileUpdateConfig::set_description</a></div><div class="ttdeci">AppProfileUpdateConfig &amp; set_description(std::string description)</div><div class="ttdef"><b>Definition:</b> <a href="app__profile__config_8h_source.html#l00076">app_profile_config.h:76</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a486006fc1866998ac8c9ae4d808572b1"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a486006fc1866998ac8c9ae4d808572b1">google::cloud::bigtable::v1::InstanceAdmin::DeleteInstance</a></div><div class="ttdeci">Status DeleteInstance(std::string const &amp;instance_id)</div><div class="ttdoc">Deletes the instances in the project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00291">instance_admin.cc:291</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_acb8b58ec1eee4ce18246f34a8e4d09da"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#acb8b58ec1eee4ce18246f34a8e4d09da">google::cloud::bigtable::v1::InstanceAdmin::AsyncCreateAppProfile</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::AppProfile &gt; &gt; AsyncCreateAppProfile(CompletionQueue &amp;cq, std::string const &amp;instance_id, AppProfileConfig config)</div><div class="ttdoc">Asynchronously create a new application profile.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00575">instance_admin.cc:575</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a3b0c6da3d4afa4c638f46965515e518f"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a3b0c6da3d4afa4c638f46965515e518f">google::cloud::bigtable::v1::InstanceAdmin::GetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::cloud::IamPolicy &gt; GetIamPolicy(std::string const &amp;instance_id)</div><div class="ttdoc">Gets the policy for instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00784">instance_admin.cc:784</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_ac50920c09a6f964085bb86b14f53d75b"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ac50920c09a6f964085bb86b14f53d75b">google::cloud::bigtable::v1::InstanceAdmin::CreateInstance</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::Instance &gt; &gt; CreateInstance(InstanceConfig instance_config)</div><div class="ttdoc">Create a new instance of Cloud Bigtable.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00135">instance_admin.cc:135</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a37538eab822ae149ddf22ebc0a105067"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a37538eab822ae149ddf22ebc0a105067">google::cloud::bigtable::v1::InstanceAdmin::AsyncGetNativeIamPolicy</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncGetNativeIamPolicy(CompletionQueue &amp;cq, std::string const &amp;instance_id)</div><div class="ttdoc">Asynchronously gets the native IAM policy for instance_id.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00865">instance_admin.cc:865</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_ab70ab7a12c9e8c3f8fb405b9fbba3d15"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#ab70ab7a12c9e8c3f8fb405b9fbba3d15">google::cloud::bigtable::v1::InstanceAdmin::UpdateAppProfile</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::AppProfile &gt; &gt; UpdateAppProfile(std::string const &amp;instance_id, std::string const &amp;profile_id, AppProfileUpdateConfig config)</div><div class="ttdoc">Updates an existing application profile.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00636">instance_admin.cc:636</a></div></div>
@@ -3162,7 +3080,6 @@ template&lt;typename... Policies&gt; </div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a8edb03b4ff9817f9cb4c34760eb878f4"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a8edb03b4ff9817f9cb4c34760eb878f4">google::cloud::bigtable::v1::InstanceAdmin::AsyncGetInstance</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Instance &gt; &gt; AsyncGetInstance(CompletionQueue &amp;cq, std::string const &amp;instance_id)</div><div class="ttdoc">Sends an asynchronous request to get information about an existing instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00272">instance_admin.cc:272</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a4ef5f7d5ad7e675efa2ed7d1a359d226"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a4ef5f7d5ad7e675efa2ed7d1a359d226">google::cloud::bigtable::v1::InstanceAdmin::AsyncCreateInstance</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Instance &gt; &gt; AsyncCreateInstance(CompletionQueue &amp;cq, bigtable::InstanceConfig instance_config)</div><div class="ttdoc">Create an instance (asynchronously).</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00148">instance_admin.cc:148</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a213dd25989a612adf21074ecb8a05d24"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a213dd25989a612adf21074ecb8a05d24">google::cloud::bigtable::v1::InstanceAdmin::CreateCluster</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::bigtable::admin::v2::Cluster &gt; &gt; CreateCluster(ClusterConfig cluster_config, std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdoc">Create a new Cluster of Cloud Bigtable.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00172">instance_admin.cc:172</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a017a3f14072c8b96b473f281167b15b0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a017a3f14072c8b96b473f281167b15b0">google::cloud::bigtable::v1::InstanceAdmin::SetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::cloud::IamPolicy &gt; SetIamPolicy(std::string const &amp;instance_id, google::cloud::IamBindings const &amp;iam_bindings, std::string const &amp;etag=std::string{})</div><div class="ttdoc">Sets the IAM policy for an instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00885">instance_admin.cc:885</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AppProfileConfig.html">google::cloud::bigtable::v1::AppProfileConfig</a></div><div class="ttdoc">Specify the initial configuration for an application profile.</div><div class="ttdef"><b>Definition:</b> <a href="app__profile__config_8h_source.html#l00026">app_profile_config.h:26</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_aea90d64bae3359a851541cbbab4b38f2"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#aea90d64bae3359a851541cbbab4b38f2">google::cloud::bigtable::v1::InstanceAdmin::AsyncGetCluster</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Cluster &gt; &gt; AsyncGetCluster(CompletionQueue &amp;cq, std::string const &amp;instance_id, std::string const &amp;cluster_id)</div><div class="ttdoc">Sends an asynchronous request to get information about existing cluster of an instance.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00380">instance_admin.cc:380</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html_a497b7b67b0682ecf37fbf16e7f85dd12"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html#a497b7b67b0682ecf37fbf16e7f85dd12">google::cloud::bigtable::v1::InstanceAdmin::AsyncListInstances</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; InstanceList &gt; &gt; AsyncListInstances(CompletionQueue &amp;cq)</div><div class="ttdoc">Query (asynchronously) the list of instances in the project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8cc_source.html#l00087">instance_admin.cc:87</a></div></div>
