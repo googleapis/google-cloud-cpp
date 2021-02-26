@@ -554,16 +554,13 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
                     .set_enable_http_tracing(true));
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta =
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), QuotaUser("test-quota-user"));
   ASSERT_STATUS_OK(insert_meta);
 
-  LogSink::Instance().RemoveBackend(id);
-
-  EXPECT_THAT(backend->ClearLogLines(),
+  EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("quotaUser=test-quota-user"))));
@@ -589,16 +586,13 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
                     .set_enable_http_tracing(true));
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta =
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), UserIp("127.0.0.1"));
   ASSERT_STATUS_OK(insert_meta);
 
-  LogSink::Instance().RemoveBackend(id);
-
-  EXPECT_THAT(backend->ClearLogLines(),
+  EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp=127.0.0.1"))));
@@ -636,16 +630,13 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
     ASSERT_STATUS_OK(status);
   }
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta =
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), UserIp(""));
   ASSERT_STATUS_OK(insert_meta);
 
-  LogSink::Instance().RemoveBackend(id);
-
-  EXPECT_THAT(backend->ClearLogLines(),
+  EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" POST "),
                              HasSubstr("/b/" + bucket_name_ + "/o"),
                              HasSubstr("userIp="))));

@@ -145,9 +145,7 @@ TEST(SchemaAdminConnectionTest, List) {
  */
 TEST(SchemaAdminConnectionTest, DeleteWithLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   std::string const text = R"pb(
     name: "projects/test-project/schemas/test-schema"
@@ -165,8 +163,7 @@ TEST(SchemaAdminConnectionTest, DeleteWithLogging) {
   auto response = schema_admin->DeleteSchema(request);
   ASSERT_THAT(response, IsOk());
 
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("DeleteSchema")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("DeleteSchema")));
 }
 
 TEST(SchemaAdminConnectionTest, ValidateSchema) {

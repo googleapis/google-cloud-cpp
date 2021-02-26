@@ -33,22 +33,7 @@ namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(LoggingResultSetReaderTest, TryCancel) {
@@ -57,7 +42,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   reader.TryCancel();
 
-  EXPECT_THAT(ClearLogLines(), Contains(HasSubstr("TryCancel")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("TryCancel")));
 }
 
 TEST_F(LoggingResultSetReaderTest, Read) {
@@ -75,13 +60,13 @@ TEST_F(LoggingResultSetReaderTest, Read) {
   ASSERT_TRUE(result.has_value());
   EXPECT_EQ("test-token", result->resume_token());
 
-  auto log_lines = ClearLogLines();
+  auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("test-token")));
 
   result = reader.Read();
   ASSERT_FALSE(result.has_value());
-  log_lines = ClearLogLines();
+  log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("(optional-with-no-value)")));
 }
 
@@ -95,7 +80,7 @@ TEST_F(LoggingResultSetReaderTest, Finish) {
   auto status = reader.Finish();
   EXPECT_EQ(expected_status, status);
 
-  auto log_lines = ClearLogLines();
+  auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Finish")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("weird")));
 }

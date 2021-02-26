@@ -35,28 +35,15 @@ namespace gcsa = ::google::spanner::admin::instance::v1;
 class InstanceAdminLoggingTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
     mock_ = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
   }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
   std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock_;
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(InstanceAdminLoggingTest, GetInstance) {
@@ -68,7 +55,7 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
   auto response = stub.GetInstance(context, gcsa::GetInstanceRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -82,7 +69,7 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
   auto response = stub.CreateInstance(context, gcsa::CreateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -96,7 +83,7 @@ TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
   auto response = stub.UpdateInstance(context, gcsa::UpdateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -110,7 +97,7 @@ TEST_F(InstanceAdminLoggingTest, DeleteInstance) {
   auto status = stub.DeleteInstance(context, gcsa::DeleteInstanceRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -126,7 +113,7 @@ TEST_F(InstanceAdminLoggingTest, GetInstanceConfig) {
       stub.GetInstanceConfig(context, gcsa::GetInstanceConfigRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstanceConfig")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -142,7 +129,7 @@ TEST_F(InstanceAdminLoggingTest, ListInstanceConfigs) {
       stub.ListInstanceConfigs(context, gcsa::ListInstanceConfigsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstanceConfigs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -156,7 +143,7 @@ TEST_F(InstanceAdminLoggingTest, ListInstances) {
   auto response = stub.ListInstances(context, gcsa::ListInstancesRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstances")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -171,7 +158,7 @@ TEST_F(InstanceAdminLoggingTest, GetIamPolicy) {
       stub.GetIamPolicy(context, google::iam::v1::GetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetIamPolicy")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -186,7 +173,7 @@ TEST_F(InstanceAdminLoggingTest, SetIamPolicy) {
       stub.SetIamPolicy(context, google::iam::v1::SetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SetIamPolicy")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -202,7 +189,7 @@ TEST_F(InstanceAdminLoggingTest, TestIamPermissions) {
       context, google::iam::v1::TestIamPermissionsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TestIamPermissions")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }

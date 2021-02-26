@@ -122,9 +122,7 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
 
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   CompletionQueue cq;
   auto subscriber = pubsub_internal::MakeSubscriberConnection(
@@ -153,13 +151,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   cq.Shutdown();
   t.join();
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncStreamingPull")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Start")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Write")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Finish")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test Verify the metadata decorator is configured

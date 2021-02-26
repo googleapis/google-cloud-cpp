@@ -162,17 +162,13 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
                     .set_enable_http_tracing(true));
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta =
       client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
 
-  LogSink::Instance().RemoveBackend(id);
-
-  EXPECT_THAT(backend->ClearLogLines(),
-              Contains(StartsWith("x-goog-hash: crc32c=")));
+  EXPECT_THAT(log.ExtractLines(), Contains(StartsWith("x-goog-hash: crc32c=")));
 
   auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -187,20 +183,17 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
                     .set_enable_http_tracing(true));
   auto object_name = MakeRandomObjectName();
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert_meta);
-
-  LogSink::Instance().RemoveBackend(id);
 
   // This is a big indirect, we detect if the upload changed to
   // multipart/related, and if so, we assume the hash value is being used.
   // Unfortunately I (@coryan) cannot think of a way to examine the upload
   // contents.
   EXPECT_THAT(
-      backend->ClearLogLines(),
+      log.ExtractLines(),
       Contains(StartsWith("content-type: multipart/related; boundary=")));
 
   if (insert_meta->has_metadata("x_emulator_upload")) {

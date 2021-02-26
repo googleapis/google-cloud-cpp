@@ -23,21 +23,45 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
-/**
- * A log backend that stores all the log lines.
- *
- * This is useful in tests that want to verify specific messages are logged.
- */
-class CaptureLogLinesBackend : public LogBackend {
- public:
-  std::vector<std::string> ClearLogLines();
 
-  void Process(LogRecord const& lr) override;
-  void ProcessWithOwnership(LogRecord lr) override;
+/**
+ * Captures log lines within the current scope.
+ *
+ * Captured lines are exposed via the `ScopedLog::ExtractLines` method.
+ *
+ * @par Example
+ * 
+ * @code
+ * TEST(Foo, Bar) {
+ *   ScopedLog log;
+ *   ... call code that should log
+ *   EXPECT_THAT(log.ExtractLines(), testing::Contains("foo"));
+ * }
+ * @endcode
+ */
+class ScopedLog {
+ public:
+  ScopedLog()
+      : backend_(std::make_shared<Backend>()),
+        id_(LogSink::Instance().AddBackend(backend_)) {}
+  ~ScopedLog() { LogSink::Instance().RemoveBackend(id_); }
+
+  std::vector<std::string> ExtractLines() { return backend_->ExtractLines(); }
 
  private:
-  std::mutex mu_;
-  std::vector<std::string> log_lines_;
+  class Backend : public LogBackend {
+   public:
+    std::vector<std::string> ExtractLines();
+    void Process(LogRecord const& lr) override;
+    void ProcessWithOwnership(LogRecord lr) override;
+
+   private:
+    std::mutex mu_;
+    std::vector<std::string> log_lines_;
+  };
+
+  std::shared_ptr<Backend> backend_;
+  long id_;  // NOLINT(google-runtime-int)
 };
 
 }  // namespace testing_util

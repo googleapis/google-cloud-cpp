@@ -90,9 +90,7 @@ TEST(PublisherConnectionTest, Metadata) {
 TEST(PublisherConnectionTest, Logging) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
@@ -114,8 +112,7 @@ TEST(PublisherConnectionTest, Logging) {
           .get();
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("AsyncPublish")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncPublish")));
 }
 
 TEST(PublisherConnectionTest, OrderingKey) {

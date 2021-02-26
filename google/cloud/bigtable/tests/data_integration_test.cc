@@ -562,10 +562,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
 }
 
 TEST_F(DataIntegrationTest, TableApplyWithLogging) {
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
-
+  testing_util::ScopedLog log;
   std::string const table_id = RandomTableId();
 
   auto constexpr kTestMaxVersions = 10;
@@ -595,9 +592,7 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
 
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("MutateRow")));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
 }
 
 TEST(ConnectionRefresh, Disabled) {

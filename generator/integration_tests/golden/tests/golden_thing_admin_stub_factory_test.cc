@@ -27,31 +27,16 @@ using ::testing::HasSubstr;
 
 class GoldenStubFactoryTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
   auto default_stub = CreateDefaultGoldenThingAdminStub({});
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_EQ(log_lines.size(), 0);
 }
 
@@ -59,7 +44,7 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
   golden::GoldenThingAdminConnectionOptions options;
   options.enable_tracing("rpc");
   auto default_stub = CreateDefaultGoldenThingAdminStub(options);
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));
 }
 

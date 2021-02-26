@@ -702,9 +702,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
 }
 
 TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
@@ -723,10 +721,8 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   // error.
   reader.reset();
 
-  google::cloud::LogSink::Instance().RemoveBackend(id);
-
   EXPECT_THAT(
-      backend->ClearLogLines(),
+      log.ExtractLines(),
       Not(Contains(HasSubstr(
           "RowReader has an error, and the error status was not retrieved"))));
 }

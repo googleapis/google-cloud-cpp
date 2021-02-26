@@ -33,25 +33,11 @@ namespace btadmin = google::bigtable::admin::v2;
 
 class LoggingAdminClientTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(LoggingAdminClientTest, CreateTable) {
@@ -69,7 +55,7 @@ TEST_F(LoggingAdminClientTest, CreateTable) {
   auto status = stub.CreateTable(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateTable")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateTable")));
 }
 
 TEST_F(LoggingAdminClientTest, ListTables) {
@@ -87,7 +73,7 @@ TEST_F(LoggingAdminClientTest, ListTables) {
   auto status = stub.ListTables(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ListTable")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListTable")));
 }
 
 TEST_F(LoggingAdminClientTest, GetTable) {
@@ -105,7 +91,7 @@ TEST_F(LoggingAdminClientTest, GetTable) {
   auto status = stub.GetTable(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetTable")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetTable")));
 }
 
 TEST_F(LoggingAdminClientTest, DeleteTable) {
@@ -123,7 +109,7 @@ TEST_F(LoggingAdminClientTest, DeleteTable) {
   auto status = stub.DeleteTable(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteTable")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteTable")));
 }
 
 TEST_F(LoggingAdminClientTest, CreateBackup) {
@@ -141,7 +127,7 @@ TEST_F(LoggingAdminClientTest, CreateBackup) {
   auto status = stub.CreateBackup(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateBackup")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateBackup")));
 }
 
 TEST_F(LoggingAdminClientTest, GetBackup) {
@@ -159,7 +145,7 @@ TEST_F(LoggingAdminClientTest, GetBackup) {
   auto status = stub.GetBackup(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetBackup")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetBackup")));
 }
 
 TEST_F(LoggingAdminClientTest, UpdateBackup) {
@@ -177,7 +163,7 @@ TEST_F(LoggingAdminClientTest, UpdateBackup) {
   auto status = stub.UpdateBackup(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateBackup")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateBackup")));
 }
 
 TEST_F(LoggingAdminClientTest, DeleteBackup) {
@@ -195,7 +181,7 @@ TEST_F(LoggingAdminClientTest, DeleteBackup) {
   auto status = stub.DeleteBackup(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteBackup")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteBackup")));
 }
 
 TEST_F(LoggingAdminClientTest, ListBackups) {
@@ -213,7 +199,7 @@ TEST_F(LoggingAdminClientTest, ListBackups) {
   auto status = stub.ListBackups(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ListBackups")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListBackups")));
 }
 
 TEST_F(LoggingAdminClientTest, RestoreTable) {
@@ -231,7 +217,7 @@ TEST_F(LoggingAdminClientTest, RestoreTable) {
   auto status = stub.RestoreTable(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("RestoreTable")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("RestoreTable")));
 }
 
 TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
@@ -249,7 +235,7 @@ TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
   auto status = stub.ModifyColumnFamilies(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("ModifyColumnFamilies")));
 }
 
@@ -268,7 +254,7 @@ TEST_F(LoggingAdminClientTest, DropRowRange) {
   auto status = stub.DropRowRange(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DropRowRange")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DropRowRange")));
 }
 
 TEST_F(LoggingAdminClientTest, GenerateConsistencyToken) {
@@ -286,7 +272,7 @@ TEST_F(LoggingAdminClientTest, GenerateConsistencyToken) {
   auto status = stub.GenerateConsistencyToken(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("GenerateConsistencyToken")));
 }
 
@@ -305,7 +291,7 @@ TEST_F(LoggingAdminClientTest, CheckConsistency) {
   auto status = stub.CheckConsistency(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("CheckConsistency")));
 }
 
@@ -324,7 +310,7 @@ TEST_F(LoggingAdminClientTest, GetOperation) {
   auto status = stub.GetOperation(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetOperation")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetOperation")));
 }
 
 TEST_F(LoggingAdminClientTest, GetIamPolicy) {
@@ -342,7 +328,7 @@ TEST_F(LoggingAdminClientTest, GetIamPolicy) {
   auto status = stub.GetIamPolicy(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetIamPolicy")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetIamPolicy")));
 }
 
 TEST_F(LoggingAdminClientTest, SetIamPolicy) {
@@ -360,7 +346,7 @@ TEST_F(LoggingAdminClientTest, SetIamPolicy) {
   auto status = stub.SetIamPolicy(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("SetIamPolicy")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("SetIamPolicy")));
 }
 
 TEST_F(LoggingAdminClientTest, TestIamPermissions) {
@@ -378,7 +364,7 @@ TEST_F(LoggingAdminClientTest, TestIamPermissions) {
   auto status = stub.TestIamPermissions(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("TestIamPermissions")));
 }
 

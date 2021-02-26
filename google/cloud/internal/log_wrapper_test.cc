@@ -155,20 +155,17 @@ TEST(LogWrapper, FutureStatusOrValue) {
     return make_ready_future(make_status_or(std::move(m)));
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   LogWrapper(mock, MakeMutation(), "in-test", {});
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> response="))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning FutureStatusOr
@@ -178,12 +175,11 @@ TEST(LogWrapper, FutureStatusOrError) {
         Status(StatusCode::kPermissionDenied, "uh-oh")));
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   LogWrapper(mock, MakeMutation(), "in-test", {});
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
@@ -192,8 +188,6 @@ TEST(LogWrapper, FutureStatusOrError) {
               Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning FutureStatusOr and using
@@ -205,22 +199,19 @@ TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
     return make_ready_future(make_status_or(std::move(m)));
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   CompletionQueue cq;
   std::unique_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> response="))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning FutureStatusOr and using
@@ -233,14 +224,13 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
         Status(StatusCode::kPermissionDenied, "uh-oh")));
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   CompletionQueue cq;
   std::unique_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
@@ -249,8 +239,6 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
               Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning FutureStatus and using
@@ -263,8 +251,7 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
     return make_ready_future(status);
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   CompletionQueue cq;
   std::unique_ptr<grpc::ClientContext> context;
@@ -274,7 +261,7 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
   os << status;
   auto status_as_string = std::move(os).str();
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
@@ -282,8 +269,6 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
                              HasSubstr(" >> response=" + status_as_string))));
   EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
                                         HasSubstr(" >> future_status="))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning Status
@@ -291,20 +276,17 @@ TEST(LogWrapper, StatusValue) {
   auto mock = [](grpc::ClientContext*, btproto::MutateRowRequest const&,
                  btproto::MutateRowResponse*) { return grpc::Status(); };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   grpc::ClientContext context;
   btproto::MutateRowRequest request;
   btproto::MutateRowResponse response;
   auto const r = LogWrapper(mock, &context, request, &response, "in-test", {});
   EXPECT_TRUE(r.ok());
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
 
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning erroneous Status
@@ -313,8 +295,7 @@ TEST(LogWrapper, StatusValueError) {
   auto mock = [&status](grpc::ClientContext*, btproto::MutateRowRequest const&,
                         btproto::MutateRowResponse*) { return status; };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   grpc::ClientContext context;
   btproto::MutateRowRequest request;
   btproto::MutateRowResponse response;
@@ -326,15 +307,13 @@ TEST(LogWrapper, StatusValueError) {
   os << status.error_message();
   auto status_as_string = std::move(os).str();
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
 
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("),
                              HasSubstr(" >> status=" + status_as_string))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 /// @test the overload for functions returning ClientReaderInterface
@@ -344,18 +323,15 @@ TEST(LogWrapper, UniquePointerClientReaderInterface) {
         grpc::ClientReaderInterface<btproto::ReadRowsResponse>>{};
   };
 
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
   grpc::ClientContext context;
   btproto::ReadRowsRequest request;
   LogWrapper(mock, &context, request, "in-test", {});
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
 
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 }  // namespace

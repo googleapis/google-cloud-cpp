@@ -29,7 +29,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::CaptureLogLinesBackend;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
@@ -39,19 +38,7 @@ using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    log_backend_ = std::make_shared<CaptureLogLinesBackend>();
-    log_backend_id_ =
-        google::cloud::LogSink::Instance().AddBackend(log_backend_);
-  }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(log_backend_id_);
-    log_backend_id_ = 0;
-    log_backend_.reset();
-  }
-
-  std::shared_ptr<CaptureLogLinesBackend> log_backend_ = nullptr;
-  long log_backend_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_backend_;
 };
 
 TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
@@ -70,7 +57,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   auto result = session.UploadChunk({{payload}});
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
-  EXPECT_THAT(log_backend_->ClearLogLines(),
+  EXPECT_THAT(log_backend_.ExtractLines(),
               ContainsOnce(HasSubstr("[UNAVAILABLE]")));
 }
 
@@ -91,7 +78,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   auto result = session.UploadFinalChunk({{payload}}, 513 * 1024);
   EXPECT_THAT(result, StatusIs(StatusCode::kUnavailable, "uh oh"));
 
-  auto const log_lines = log_backend_->ClearLogLines();
+  auto const log_lines = log_backend_.ExtractLines();
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload_size=" +
                                                 std::to_string(513 * 1024))));
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("[UNAVAILABLE]")));
@@ -110,7 +97,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   auto result = session.ResetSession();
   EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition, "uh oh"));
 
-  EXPECT_THAT(log_backend_->ClearLogLines(),
+  EXPECT_THAT(log_backend_.ExtractLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 
@@ -126,7 +113,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   auto result = session.next_expected_byte();
   EXPECT_EQ(512 * 1024, result);
 
-  EXPECT_THAT(log_backend_->ClearLogLines(),
+  EXPECT_THAT(log_backend_.ExtractLines(),
               ContainsOnce(HasSubstr(std::to_string(512 * 1024))));
 }
 
@@ -142,7 +129,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto result = session.last_response();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result.value(), last_response.value());
-  auto const log_lines = log_backend_->ClearLogLines();
+  auto const log_lines = log_backend_.ExtractLines();
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("upload url")));
   EXPECT_THAT(log_lines, ContainsOnce(HasSubstr("payload={}")));
 }
@@ -159,7 +146,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   EXPECT_THAT(session.last_response(),
               StatusIs(StatusCode::kFailedPrecondition, "something bad"));
 
-  EXPECT_THAT(log_backend_->ClearLogLines(),
+  EXPECT_THAT(log_backend_.ExtractLines(),
               ContainsOnce(HasSubstr("[FAILED_PRECONDITION]")));
 }
 

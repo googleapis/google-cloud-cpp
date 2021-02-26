@@ -32,25 +32,11 @@ using ::testing::Return;
 
 class SubscriberLoggingTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(SubscriberLoggingTest, CreateSubscription) {
@@ -63,7 +49,7 @@ TEST_F(SubscriberLoggingTest, CreateSubscription) {
   google::pubsub::v1::Subscription subscription;
   auto status = stub.CreateSubscription(context, subscription);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("CreateSubscription")));
 }
 
@@ -77,7 +63,7 @@ TEST_F(SubscriberLoggingTest, GetSubscription) {
   google::pubsub::v1::GetSubscriptionRequest request;
   auto status = stub.GetSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("GetSubscription")));
 }
 
@@ -91,7 +77,7 @@ TEST_F(SubscriberLoggingTest, UpdateSubscription) {
   google::pubsub::v1::UpdateSubscriptionRequest request;
   auto status = stub.UpdateSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("UpdateSubscription")));
 }
 
@@ -107,7 +93,7 @@ TEST_F(SubscriberLoggingTest, ListSubscriptions) {
   request.set_project("test-project-name");
   auto status = stub.ListSubscriptions(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("ListSubscriptions"),
                              HasSubstr("test-project-name"))));
 }
@@ -122,7 +108,7 @@ TEST_F(SubscriberLoggingTest, DeleteSubscription) {
   request.set_subscription("test-subscription-name");
   auto status = stub.DeleteSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("DeleteSubscription"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -137,7 +123,7 @@ TEST_F(SubscriberLoggingTest, ModifyPushConfig) {
   request.set_subscription("test-subscription-name");
   auto status = stub.ModifyPushConfig(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("ModifyPushConfig"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -183,32 +169,32 @@ TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
   request.set_subscription("test-subscription-name");
   auto stream = stub.AsyncStreamingPull(
       cq, absl::make_unique<grpc::ClientContext>(), request);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("AsyncStreamingPull")));
 
   EXPECT_TRUE(stream->Start().get());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Start")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Start")));
 
   EXPECT_TRUE(
       stream->Write(request, grpc::WriteOptions{}.set_write_through()).get());
   EXPECT_THAT(
-      backend_->ClearLogLines(),
+      log_.ExtractLines(),
       Contains(AllOf(HasSubstr("Write"), HasSubstr("test-subscription-name"))));
 
   EXPECT_TRUE(stream->Read().get().has_value());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Read")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Read")));
 
   EXPECT_FALSE(stream->Read().get().has_value());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Read")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Read")));
 
   EXPECT_TRUE(stream->WritesDone().get());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("WritesDone")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("WritesDone")));
 
   EXPECT_STATUS_OK(stream->Finish().get());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Finish")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Finish")));
 
   stream->Cancel();
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("Cancel")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Cancel")));
 }
 
 TEST_F(SubscriberLoggingTest, CreateSnapshot) {
@@ -221,7 +207,7 @@ TEST_F(SubscriberLoggingTest, CreateSnapshot) {
   google::pubsub::v1::CreateSnapshotRequest request;
   auto status = stub.CreateSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateSnapshot")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, GetSnapshot) {
@@ -234,7 +220,7 @@ TEST_F(SubscriberLoggingTest, GetSnapshot) {
   google::pubsub::v1::GetSnapshotRequest request;
   auto status = stub.GetSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetSnapshot")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, ListSnapshots) {
@@ -249,7 +235,7 @@ TEST_F(SubscriberLoggingTest, ListSnapshots) {
   request.set_project("test-project-name");
   auto status = stub.ListSnapshots(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("ListSnapshots"),
                              HasSubstr("test-project-name"))));
 }
@@ -264,7 +250,7 @@ TEST_F(SubscriberLoggingTest, UpdateSnapshot) {
   google::pubsub::v1::UpdateSnapshotRequest request;
   auto status = stub.UpdateSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateSnapshot")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
@@ -276,7 +262,7 @@ TEST_F(SubscriberLoggingTest, DeleteSnapshot) {
   google::pubsub::v1::DeleteSnapshotRequest request;
   auto status = stub.DeleteSnapshot(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteSnapshot")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteSnapshot")));
 }
 
 TEST_F(SubscriberLoggingTest, Seek) {
@@ -291,7 +277,7 @@ TEST_F(SubscriberLoggingTest, Seek) {
   auto status = stub.Seek(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->ClearLogLines(),
+      log_.ExtractLines(),
       Contains(AllOf(HasSubstr("Seek"), HasSubstr("test-subscription-name"))));
 }
 

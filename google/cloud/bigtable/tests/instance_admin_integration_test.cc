@@ -430,10 +430,7 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
 /// @test Verify that Instance CRUD operations with logging work as expected.
 TEST_F(InstanceAdminIntegrationTest,
        CreateListGetDeleteInstanceTestWithLogging) {
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
-
+  testing_util::ScopedLog log;
   std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
@@ -492,13 +489,12 @@ TEST_F(InstanceAdminIntegrationTest,
   EXPECT_FALSE(
       IsInstancePresent(instances_after_delete->instances, instance->name()));
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListInstances")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncCreateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("AsyncUpdateInstance")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteInstance")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS

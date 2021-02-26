@@ -75,28 +75,15 @@ class MockGoldenKitchenSinkStub
 class LoggingDecoratorTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
     mock_ = std::make_shared<MockGoldenKitchenSinkStub>();
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
   }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
   std::shared_ptr<MockGoldenKitchenSinkStub> mock_;
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
@@ -108,7 +95,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
@@ -121,7 +108,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -135,7 +122,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdToken) {
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
@@ -147,7 +134,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -161,7 +148,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntries) {
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
 }
 
@@ -173,7 +160,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -187,7 +174,7 @@ TEST_F(LoggingDecoratorTest, ListLogs) {
       context, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
 }
 
@@ -199,7 +186,7 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
       context, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -229,7 +216,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
       context, google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
   EXPECT_THAT(log_lines, Not(Contains(HasSubstr("Read"))));
@@ -249,7 +236,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
       context, google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));

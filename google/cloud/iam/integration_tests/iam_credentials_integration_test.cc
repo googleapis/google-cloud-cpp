@@ -32,9 +32,6 @@ using ::testing::HasSubstr;
 class IamCredentialsIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
     rpc_tracing_options_.enable_tracing("rpc");
 
     iam_service_account_ = google::cloud::internal::GetEnv(
@@ -48,18 +45,13 @@ class IamCredentialsIntegrationTest : public ::testing::Test {
     ASSERT_FALSE(iam_service_account_.empty());
     ASSERT_FALSE(invalid_iam_service_account_.empty());
   }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
+  std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
   IAMCredentialsConnectionOptions rpc_tracing_options_;
   std::string iam_service_account_;
   std::string invalid_iam_service_account_;
 
  private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {

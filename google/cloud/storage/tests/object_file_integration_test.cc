@@ -347,17 +347,12 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
     os << expected;
     os.close();
   });
-  auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
-  auto id = LogSink::Instance().AddBackend(backend);
-
+  testing_util::ScopedLog log;
   StatusOr<ObjectMetadata> meta =
       client->UploadFile(file_name, bucket_name_, object_name,
                          IfGenerationMatch(0), DisableMD5Hash(true));
-  ASSERT_STATUS_OK(meta);
-  LogSink::Instance().RemoveBackend(id);
 
-  EXPECT_THAT(backend->ClearLogLines(),
-              Contains(HasSubstr("not a regular file")));
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("not a regular file")));
 
   t.join();
   auto status = client->DeleteObject(bucket_name_, object_name);

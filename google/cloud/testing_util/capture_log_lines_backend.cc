@@ -20,7 +20,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-std::vector<std::string> CaptureLogLinesBackend::ClearLogLines() {
+std::vector<std::string> ScopedLog::Backend::ExtractLines() {
   std::vector<std::string> result;
   {
     std::lock_guard<std::mutex> lk(mu_);
@@ -29,14 +29,14 @@ std::vector<std::string> CaptureLogLinesBackend::ClearLogLines() {
   return result;
 }
 
-void CaptureLogLinesBackend::Process(LogRecord const& lr) {
+void ScopedLog::Backend::Process(LogRecord const& lr) {
   // Break the records in lines, it is easier to analyze them as such.
   std::lock_guard<std::mutex> lk(mu_);
   std::vector<std::string> result = absl::StrSplit(lr.message, '\n');
   log_lines_.insert(log_lines_.end(), result.begin(), result.end());
 }
 
-void CaptureLogLinesBackend::ProcessWithOwnership(LogRecord lr) { Process(lr); }
+void ScopedLog::Backend::ProcessWithOwnership(LogRecord lr) { Process(lr); }
 
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS

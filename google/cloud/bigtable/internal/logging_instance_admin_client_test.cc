@@ -38,25 +38,11 @@ namespace btadmin = google::bigtable::admin::v2;
 
 class LoggingInstanceAdminClientTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(LoggingInstanceAdminClientTest, ListInstances) {
@@ -74,7 +60,7 @@ TEST_F(LoggingInstanceAdminClientTest, ListInstances) {
   auto status = stub.ListInstances(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ListInstances")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListInstances")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateInstance) {
@@ -92,7 +78,7 @@ TEST_F(LoggingInstanceAdminClientTest, CreateInstance) {
   auto status = stub.CreateInstance(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateInstance")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateInstance) {
@@ -110,7 +96,7 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateInstance) {
   auto status = stub.UpdateInstance(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateInstance")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetOperation) {
@@ -128,7 +114,7 @@ TEST_F(LoggingInstanceAdminClientTest, GetOperation) {
   auto status = stub.GetOperation(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetOperation")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetOperation")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetInstance) {
@@ -146,7 +132,7 @@ TEST_F(LoggingInstanceAdminClientTest, GetInstance) {
   auto status = stub.GetInstance(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetInstance")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteInstance) {
@@ -164,7 +150,7 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteInstance) {
   auto status = stub.DeleteInstance(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteInstance")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, ListClusters) {
@@ -182,7 +168,7 @@ TEST_F(LoggingInstanceAdminClientTest, ListClusters) {
   auto status = stub.ListClusters(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ListClusters")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListClusters")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetCluster) {
@@ -200,7 +186,7 @@ TEST_F(LoggingInstanceAdminClientTest, GetCluster) {
   auto status = stub.GetCluster(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetCluster")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetCluster")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteCluster) {
@@ -218,7 +204,7 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteCluster) {
   auto status = stub.DeleteCluster(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteCluster")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteCluster")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateCluster) {
@@ -236,7 +222,7 @@ TEST_F(LoggingInstanceAdminClientTest, CreateCluster) {
   auto status = stub.CreateCluster(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateCluster")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateCluster")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateCluster) {
@@ -254,7 +240,7 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateCluster) {
   auto status = stub.UpdateCluster(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateCluster")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateCluster")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, CreateAppProfile) {
@@ -272,7 +258,7 @@ TEST_F(LoggingInstanceAdminClientTest, CreateAppProfile) {
   auto status = stub.CreateAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("CreateAppProfile")));
 }
 
@@ -291,7 +277,7 @@ TEST_F(LoggingInstanceAdminClientTest, GetAppProfile) {
   auto status = stub.GetAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetAppProfile")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetAppProfile")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, ListAppProfiles) {
@@ -309,7 +295,7 @@ TEST_F(LoggingInstanceAdminClientTest, ListAppProfiles) {
   auto status = stub.ListAppProfiles(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("ListAppProfiles")));
 }
 
@@ -328,7 +314,7 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateAppProfile) {
   auto status = stub.UpdateAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("UpdateAppProfile")));
 }
 
@@ -347,7 +333,7 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteAppProfile) {
   auto status = stub.DeleteAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("DeleteAppProfile")));
 }
 
@@ -366,7 +352,7 @@ TEST_F(LoggingInstanceAdminClientTest, GetIamPolicy) {
   auto status = stub.GetIamPolicy(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetIamPolicy")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetIamPolicy")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, SetIamPolicy) {
@@ -384,7 +370,7 @@ TEST_F(LoggingInstanceAdminClientTest, SetIamPolicy) {
   auto status = stub.SetIamPolicy(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("SetIamPolicy")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("SetIamPolicy")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, TestIamPermissions) {
@@ -402,7 +388,7 @@ TEST_F(LoggingInstanceAdminClientTest, TestIamPermissions) {
   auto status = stub.TestIamPermissions(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("TestIamPermissions")));
 }
 
@@ -427,7 +413,7 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncCreateInstance) {
 
   stub.AsyncCreateInstance(&context, request, &cq);
 
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("AsyncCreateInstance")));
 }
 
@@ -452,7 +438,7 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncUpdateInstance) {
 
   stub.AsyncUpdateInstance(&context, request, &cq);
 
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(HasSubstr("AsyncUpdateInstance")));
 }
 

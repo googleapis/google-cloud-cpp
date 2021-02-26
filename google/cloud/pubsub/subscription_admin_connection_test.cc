@@ -177,9 +177,7 @@ TEST(SubscriptionAdminConnectionTest, Update) {
 TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   EXPECT_CALL(*mock, DeleteSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -196,17 +194,13 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
   auto response = subscription_admin->DeleteSubscription({subscription});
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->ClearLogLines(),
-              Contains(HasSubstr("DeleteSubscription")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("DeleteSubscription")));
 }
 
 TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   EXPECT_CALL(*mock, ModifyPushConfig)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -225,9 +219,7 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
   auto response = subscription_admin->ModifyPushConfig({request});
   ASSERT_STATUS_OK(response);
 
-  EXPECT_THAT(backend->ClearLogLines(),
-              Contains(HasSubstr("ModifyPushConfig")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("ModifyPushConfig")));
 }
 
 TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
