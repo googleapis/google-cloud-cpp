@@ -13,7 +13,7 @@
 // limitations under the License.
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>

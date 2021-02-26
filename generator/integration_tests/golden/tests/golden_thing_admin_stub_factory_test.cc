@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>

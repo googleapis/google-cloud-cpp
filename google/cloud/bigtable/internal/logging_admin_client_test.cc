@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -235,8 +235,7 @@ TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
   auto status = stub.ModifyColumnFamilies(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("ModifyColumnFamilies")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ModifyColumnFamilies")));
 }
 
 TEST_F(LoggingAdminClientTest, DropRowRange) {
@@ -291,8 +290,7 @@ TEST_F(LoggingAdminClientTest, CheckConsistency) {
   auto status = stub.CheckConsistency(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("CheckConsistency")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CheckConsistency")));
 }
 
 TEST_F(LoggingAdminClientTest, GetOperation) {
@@ -364,8 +362,7 @@ TEST_F(LoggingAdminClientTest, TestIamPermissions) {
   auto status = stub.TestIamPermissions(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("TestIamPermissions")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("TestIamPermissions")));
 }
 
 }  // namespace

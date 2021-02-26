@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_wrapper.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <google/protobuf/text_format.h>

@@ -13,7 +13,7 @@
 // limitations under the License.
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -161,9 +161,7 @@ class MockGoldenStub
 
 class LoggingDecoratorTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    mock_ = std::make_shared<MockGoldenStub>();
-  }
+  void SetUp() override { mock_ = std::make_shared<MockGoldenStub>(); }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");

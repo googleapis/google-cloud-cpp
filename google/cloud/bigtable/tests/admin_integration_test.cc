@@ -17,9 +17,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>

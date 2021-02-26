@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -109,8 +109,7 @@ TEST_F(SchemaLoggingTest, ValidateMessage) {
   google::pubsub::v1::ValidateMessageRequest request;
   auto status = stub.ValidateMessage(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("ValidateMessage")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ValidateMessage")));
 }
 
 }  // namespace

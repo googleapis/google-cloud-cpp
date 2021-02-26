@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/subscriber_logging.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -49,8 +49,7 @@ TEST_F(SubscriberLoggingTest, CreateSubscription) {
   google::pubsub::v1::Subscription subscription;
   auto status = stub.CreateSubscription(context, subscription);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("CreateSubscription")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, GetSubscription) {
@@ -63,8 +62,7 @@ TEST_F(SubscriberLoggingTest, GetSubscription) {
   google::pubsub::v1::GetSubscriptionRequest request;
   auto status = stub.GetSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("GetSubscription")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, UpdateSubscription) {
@@ -77,8 +75,7 @@ TEST_F(SubscriberLoggingTest, UpdateSubscription) {
   google::pubsub::v1::UpdateSubscriptionRequest request;
   auto status = stub.UpdateSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("UpdateSubscription")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateSubscription")));
 }
 
 TEST_F(SubscriberLoggingTest, ListSubscriptions) {
@@ -169,8 +166,7 @@ TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
   request.set_subscription("test-subscription-name");
   auto stream = stub.AsyncStreamingPull(
       cq, absl::make_unique<grpc::ClientContext>(), request);
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("AsyncStreamingPull")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("AsyncStreamingPull")));
 
   EXPECT_TRUE(stream->Start().get());
   EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Start")));

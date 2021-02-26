@@ -16,8 +16,8 @@
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>

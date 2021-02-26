@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -73,8 +73,7 @@ TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
   auto status = stub.CheckAndMutateRow(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("CheckAndMutateRow")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CheckAndMutateRow")));
 }
 
 TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
@@ -92,8 +91,7 @@ TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
   auto status = stub.ReadModifyWriteRow(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("ReadModifyWriteRow")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ReadModifyWriteRow")));
 }
 
 TEST_F(LoggingDataClientTest, ReadRows) {

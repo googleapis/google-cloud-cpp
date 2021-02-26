@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_LOG_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_LOG_H
 
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
@@ -30,7 +30,6 @@ namespace testing_util {
  * Captured lines are exposed via the `ScopedLog::ExtractLines` method.
  *
  * @par Example
- * 
  * @code
  * TEST(Foo, Bar) {
  *   ScopedLog log;
@@ -69,4 +68,4 @@ class ScopedLog {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_SCOPED_LOG_H

@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 

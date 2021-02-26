@@ -19,8 +19,8 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <regex>
 

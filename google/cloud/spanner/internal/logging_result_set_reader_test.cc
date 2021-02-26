@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 

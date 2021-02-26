@@ -17,7 +17,7 @@
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -258,8 +258,7 @@ TEST_F(LoggingInstanceAdminClientTest, CreateAppProfile) {
   auto status = stub.CreateAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("CreateAppProfile")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateAppProfile")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetAppProfile) {
@@ -295,8 +294,7 @@ TEST_F(LoggingInstanceAdminClientTest, ListAppProfiles) {
   auto status = stub.ListAppProfiles(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("ListAppProfiles")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListAppProfiles")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, UpdateAppProfile) {
@@ -314,8 +312,7 @@ TEST_F(LoggingInstanceAdminClientTest, UpdateAppProfile) {
   auto status = stub.UpdateAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("UpdateAppProfile")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateAppProfile")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, DeleteAppProfile) {
@@ -333,8 +330,7 @@ TEST_F(LoggingInstanceAdminClientTest, DeleteAppProfile) {
   auto status = stub.DeleteAppProfile(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("DeleteAppProfile")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteAppProfile")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, GetIamPolicy) {
@@ -388,8 +384,7 @@ TEST_F(LoggingInstanceAdminClientTest, TestIamPermissions) {
   auto status = stub.TestIamPermissions(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("TestIamPermissions")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("TestIamPermissions")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, AsyncCreateInstance) {
@@ -413,8 +408,7 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncCreateInstance) {
 
   stub.AsyncCreateInstance(&context, request, &cq);
 
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("AsyncCreateInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("AsyncCreateInstance")));
 }
 
 TEST_F(LoggingInstanceAdminClientTest, AsyncUpdateInstance) {
@@ -438,8 +432,7 @@ TEST_F(LoggingInstanceAdminClientTest, AsyncUpdateInstance) {
 
   stub.AsyncUpdateInstance(&context, request, &cq);
 
-  EXPECT_THAT(log_.ExtractLines(),
-              Contains(HasSubstr("AsyncUpdateInstance")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("AsyncUpdateInstance")));
 }
 
 }  // namespace
