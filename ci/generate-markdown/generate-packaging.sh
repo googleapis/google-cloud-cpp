@@ -236,13 +236,6 @@ echo "</details>"
 
 echo
 echo "<details>"
-echo "<summary>openSUSE (Tumbleweed)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-tumbleweed"
-echo "</details>"
-
-echo
-echo "<details>"
 echo "<summary>openSUSE (Leap)</summary>"
 echo "<br>"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
