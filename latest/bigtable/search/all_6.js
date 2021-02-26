@@ -32,9 +32,10 @@ var searchData=
   ['gettable_305',['GetTable',['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultAdminClient.html#a1ecf3ea5547b8ed2332a4779e4cb6666',1,'google::cloud::bigtable::v1::DefaultAdminClient::GetTable()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a31ff02b64b5513a2654555d102ad2a30',1,'google::cloud::bigtable::v1::AdminClient::GetTable()'],['../classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ac1cfe6f071cf6e91aa7da5e6cd63467c',1,'google::cloud::bigtable::v1::TableAdmin::GetTable()']]],
   ['getterminatehandler_306',['GetTerminateHandler',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#aea065cc498ea3ef9b4d2d6f424a7c91d',1,'google::cloud::GetTerminateHandler()'],['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#aea065cc498ea3ef9b4d2d6f424a7c91d',1,'google::cloud::v1::GetTerminateHandler()']]],
   ['google_307',['google',['../namespacegoogle.html',1,'']]],
-  ['grpc_5ferror_5fdelegate_2ecc_308',['grpc_error_delegate.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/grpc__error__delegate_8cc.html',1,'']]],
-  ['grpc_5ferror_5fdelegate_2eh_309',['grpc_error_delegate.h',['https://googleapis.dev/cpp/google-cloud-common/latest/grpc__error__delegate_8h.html',1,'']]],
-  ['google_20cloud_20platform_20bigtable_20c_2b_2b_20client_20library_310',['Google Cloud Platform Bigtable C++ Client Library',['../index.html',1,'']]],
-  ['streamrange_311',['StreamRange',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html',1,'google::cloud::v1']]],
-  ['v1_312',['v1',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html',1,'google::cloud::bigtable::v1'],['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html',1,'google::cloud::v1']]]
+  ['google_5fcloud_5fcpp_5fbigtable_5fadmin_5fasync_5fdeprecated_308',['GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED',['../version_8h.html#ac2ce442e58775bb701c04df88146712b',1,'version.h']]],
+  ['grpc_5ferror_5fdelegate_2ecc_309',['grpc_error_delegate.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/grpc__error__delegate_8cc.html',1,'']]],
+  ['grpc_5ferror_5fdelegate_2eh_310',['grpc_error_delegate.h',['https://googleapis.dev/cpp/google-cloud-common/latest/grpc__error__delegate_8h.html',1,'']]],
+  ['google_20cloud_20platform_20bigtable_20c_2b_2b_20client_20library_311',['Google Cloud Platform Bigtable C++ Client Library',['../index.html',1,'']]],
+  ['streamrange_312',['StreamRange',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html',1,'google::cloud::v1']]],
+  ['v1_313',['v1',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html',1,'google::cloud::bigtable::v1'],['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html',1,'google::cloud::v1']]]
 ];
