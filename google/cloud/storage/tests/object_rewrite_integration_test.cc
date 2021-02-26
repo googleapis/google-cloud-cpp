@@ -18,7 +18,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/expect_exception.h"
-#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <regex>
 
