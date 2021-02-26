@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/options.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -21,6 +22,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
+
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::ContainsRegex;
 
 struct IntOption {
   int value;
@@ -139,6 +144,66 @@ TEST(Options, BasicOperations) {
   EXPECT_TRUE(opts.get<StringOption>().has_value());
   EXPECT_EQ(opts.get<BoolOption>()->value, true);
   EXPECT_EQ(opts.get<StringOption>()->value, "foo");
+}
+
+// 
+class ScopedLog {
+  public:
+   ScopedLog()
+       : backend_(std::make_shared<testing_util::CaptureLogLinesBackend>()),
+         id_(LogSink::Instance().AddBackend(backend_)) {}
+   ~ScopedLog() { LogSink::Instance().RemoveBackend(id_); }
+
+   std::vector<std::string> ExtractLines() { return backend_->ClearLogLines(); }
+
+  private:
+   std::shared_ptr<testing_util::CaptureLogLinesBackend> backend_;
+   long id_;  // NOLINT(google-runtime-int)
+};
+
+TEST(CheckUnexpectedOptions, Empty) {
+  ScopedLog log;
+  Options opts;
+  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(CheckUnexpectedOptions, OneExpected) {
+  ScopedLog log;
+  Options opts;
+  opts.set<BoolOption>();
+  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(CheckUnexpectedOptions, TwoExpected) {
+  ScopedLog log;
+  Options opts;
+  opts.set<BoolOption>();
+  opts.set<IntOption>();
+  internal::WarnUnexpectedOptions<BoolOption, IntOption>(opts);
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(CheckUnexpectedOptions, OneUnexpected) {
+  ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(ContainsRegex("Unexpected option.+IntOption")));
+}
+
+TEST(CheckUnexpectedOptions, TwoUnexpected) {
+  ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  opts.set<StringOption>();
+  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  EXPECT_THAT(
+      log.ExtractLines(),
+      AllOf(Contains(ContainsRegex("Unexpected option.+IntOption")),
+            Contains(ContainsRegex("Unexpected option.+StringOption"))));
 }
 
 }  // namespace

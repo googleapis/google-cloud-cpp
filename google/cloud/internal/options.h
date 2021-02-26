@@ -18,6 +18,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
 #include "absl/types/optional.h"
+#include <set>
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
@@ -25,6 +26,13 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+class Options;
+namespace internal {
+void WarnUnexpectedOptionsImpl(std::set<std::type_index> const& expected,
+                               Options const& opts);
+}  // namespace internal
+
 namespace internal {
 
 /**
@@ -121,10 +129,25 @@ class Options {
   }
 
  private:
+  friend void WarnUnexpectedOptionsImpl(std::set<std::type_index> const&,
+                                        Options const&);
+
   std::unordered_map<std::type_index, absl::any> m_;
 };
 
 }  // namespace internal
+
+namespace internal {
+
+// Checks that `Options` only contains the given expected options or a subset
+// of them. If any unexpected options exist, LOGS them
+template <typename... Expected>
+void WarnUnexpectedOptions(Options const& opts) {
+  WarnUnexpectedOptionsImpl({typeid(Expected)...}, opts);
+}
+
+}  // namespace internal
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
