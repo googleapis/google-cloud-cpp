@@ -25,6 +25,12 @@
       "this experimental function will be removed on or shortly after " \
       "2021-06-01. See GitHub issue #5923 for more information.")
 
+#define GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(alternative)                  \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
+      "this function predates conditional bindings. It does not support such " \
+      "bindings and will not support newer IAM features. Please "              \
+      "use " alternative " instead")
+
 #define BIGTABLE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
                          BIGTABLE_CLIENT_VERSION_MINOR)

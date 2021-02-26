@@ -16,8 +16,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_VERSION_H
 
 #include "google/cloud/storage/version_info.h"
+#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
+
+#define GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED(alternative)                   \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
+      "this function predates conditional bindings. It does not support such " \
+      "bindings and will not support newer IAM features. Please "              \
+      "use " alternative " instead")
 
 #define STORAGE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
