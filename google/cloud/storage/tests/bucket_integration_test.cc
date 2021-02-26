@@ -23,6 +23,8 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
+// TODO(#5929) - remove once deprecated functions are removed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

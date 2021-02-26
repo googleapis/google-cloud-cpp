@@ -21,6 +21,8 @@
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+// TODO(#5929) - remove once deprecated functions are removed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

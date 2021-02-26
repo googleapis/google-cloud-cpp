@@ -599,7 +599,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_bucket_iam_samples.cc get bucket iam policy
+   * Use #GetNativeBucketIamPolicy() instead.
    *
    * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */
@@ -693,10 +693,7 @@ class Client {
    *     `SetNativeBucketIamPolicy` instead.
    *
    * @par Example: adding a new member
-   * @snippet storage_bucket_iam_samples.cc add bucket iam member
-   *
-   * @par Example: removing a IAM member
-   * @snippet storage_bucket_iam_samples.cc remove bucket iam member
+   * Use #GetNativeBucketIamPolicy() instead.
    *
    * @see #google::cloud::v1::IamPolicy for details about the `IamPolicy` class.
    */

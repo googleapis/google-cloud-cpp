@@ -1096,7 +1096,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_instance_admin_snippets.cc get iam policy
+   * Use #GetNativeIamPolicy() instead.
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED("GetNativeIamPolicy")
   StatusOr<google::cloud::IamPolicy> GetIamPolicy(
@@ -1211,7 +1211,8 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_instance_admin_snippets.cc set iam policy
+   * Use #SetIamPolicy(std::string const&, google::iam::v1::Policy const&)
+   * instead.
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED("SetNativeIamPolicy")
   StatusOr<google::cloud::IamPolicy> SetIamPolicy(
