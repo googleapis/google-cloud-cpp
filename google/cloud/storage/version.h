@@ -22,9 +22,10 @@
 
 #define GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED(alternative)                   \
   GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function predates conditional bindings. It does not support such " \
-      "bindings and will not support newer IAM features. Please "              \
-      "use " alternative " instead")
+      "this function predates IAM conditions and does not work with policies " \
+      "that include IAM conditions. Please use " alternative                   \
+      " instead. The function will be removed on 2022-04-01 or shortly "       \
+      "after. See GitHub issue #5929 for more information.")
 
 #define STORAGE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(STORAGE_CLIENT_VERSION_MAJOR, \
