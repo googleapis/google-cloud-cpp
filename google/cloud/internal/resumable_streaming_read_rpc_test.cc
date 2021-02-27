@@ -15,7 +15,6 @@
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>

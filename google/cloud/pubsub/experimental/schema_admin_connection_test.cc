@@ -16,8 +16,8 @@
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
@@ -145,9 +145,7 @@ TEST(SchemaAdminConnectionTest, List) {
  */
 TEST(SchemaAdminConnectionTest, DeleteWithLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSchemaStub>();
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   std::string const text = R"pb(
     name: "projects/test-project/schemas/test-schema"
@@ -165,8 +163,7 @@ TEST(SchemaAdminConnectionTest, DeleteWithLogging) {
   auto response = schema_admin->DeleteSchema(request);
   ASSERT_THAT(response, IsOk());
 
-  EXPECT_THAT(backend->ClearLogLines(), Contains(HasSubstr("DeleteSchema")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
+  EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("DeleteSchema")));
 }
 
 TEST(SchemaAdminConnectionTest, ValidateSchema) {

@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -32,25 +32,11 @@ using ::testing::Return;
 
 class PublisherLoggingTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(PublisherLoggingTest, CreateTopic) {
@@ -63,7 +49,7 @@ TEST_F(PublisherLoggingTest, CreateTopic) {
   topic.set_name("test-topic-name");
   auto status = stub.CreateTopic(context, topic);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateTopic")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateTopic")));
 }
 
 TEST_F(PublisherLoggingTest, GetTopic) {
@@ -76,7 +62,7 @@ TEST_F(PublisherLoggingTest, GetTopic) {
   request.set_topic("test-topic-name");
   auto status = stub.GetTopic(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetTopic")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetTopic")));
 }
 
 TEST_F(PublisherLoggingTest, UpdateTopic) {
@@ -89,7 +75,7 @@ TEST_F(PublisherLoggingTest, UpdateTopic) {
   request.mutable_topic()->set_name("test-topic-name");
   auto status = stub.UpdateTopic(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("UpdateTopic")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("UpdateTopic")));
 }
 
 TEST_F(PublisherLoggingTest, ListTopics) {
@@ -104,7 +90,7 @@ TEST_F(PublisherLoggingTest, ListTopics) {
   auto status = stub.ListTopics(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->ClearLogLines(),
+      log_.ExtractLines(),
       Contains(AllOf(HasSubstr("ListTopics"), HasSubstr("test-project-name"))));
 }
 
@@ -118,7 +104,7 @@ TEST_F(PublisherLoggingTest, DeleteTopic) {
   auto status = stub.DeleteTopic(context, request);
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->ClearLogLines(),
+      log_.ExtractLines(),
       Contains(AllOf(HasSubstr("DeleteTopic"), HasSubstr("test-topic-name"))));
 }
 
@@ -133,7 +119,7 @@ TEST_F(PublisherLoggingTest, DetachSubscription) {
   request.set_subscription("test-subscription-name");
   auto status = stub.DetachSubscription(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("DetachSubscription"),
                              HasSubstr("test-subscription-name"))));
 }
@@ -149,7 +135,7 @@ TEST_F(PublisherLoggingTest, ListTopicSubscriptions) {
   request.set_topic("test-topic-name");
   auto status = stub.ListTopicSubscriptions(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("ListTopicSubscriptions"),
                              HasSubstr("test-topic-name"))));
 }
@@ -165,7 +151,7 @@ TEST_F(PublisherLoggingTest, ListTopicSnapshots) {
   request.set_topic("test-topic-name");
   auto status = stub.ListTopicSnapshots(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
+  EXPECT_THAT(log_.ExtractLines(),
               Contains(AllOf(HasSubstr("ListTopicSnapshots"),
                              HasSubstr("test-topic-name"))));
 }
@@ -188,7 +174,7 @@ TEST_F(PublisherLoggingTest, AsyncPublish) {
           .get();
   EXPECT_STATUS_OK(status);
   EXPECT_THAT(
-      backend_->ClearLogLines(),
+      log_.ExtractLines(),
       Contains(AllOf(HasSubstr("AsyncPublish"), HasSubstr("test-topic-name"))));
 }
 

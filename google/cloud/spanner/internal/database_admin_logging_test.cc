@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,28 +35,15 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 class DatabaseAdminLoggingTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
     mock_ = std::make_shared<spanner_testing::MockDatabaseAdminStub>();
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
   }
 
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
   std::shared_ptr<spanner_testing::MockDatabaseAdminStub> mock_;
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
@@ -68,7 +55,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   auto status = stub.CreateDatabase(context, gcsa::CreateDatabaseRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -82,7 +69,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
   auto response = stub.GetDatabase(context, gcsa::GetDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -96,7 +83,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
   auto response = stub.GetDatabaseDdl(context, gcsa::GetDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetDatabaseDdl")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -110,7 +97,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   auto status = stub.UpdateDatabase(context, gcsa::UpdateDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -124,7 +111,7 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
   auto status = stub.DropDatabase(context, gcsa::DropDatabaseRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DropDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -138,7 +125,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
   auto response = stub.ListDatabases(context, gcsa::ListDatabasesRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListDatabases")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -152,7 +139,7 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   auto status = stub.RestoreDatabase(context, gcsa::RestoreDatabaseRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -167,7 +154,7 @@ TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
       stub.GetIamPolicy(context, google::iam::v1::GetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetIamPolicy")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -182,7 +169,7 @@ TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
       stub.SetIamPolicy(context, google::iam::v1::SetIamPolicyRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SetIamPolicy")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -198,7 +185,7 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
       context, google::iam::v1::TestIamPermissionsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TestIamPermissions")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -212,7 +199,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   auto status = stub.CreateBackup(context, gcsa::CreateBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -226,7 +213,7 @@ TEST_F(DatabaseAdminLoggingTest, GetBackup) {
   auto status = stub.GetBackup(context, gcsa::GetBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -240,7 +227,7 @@ TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
   auto status = stub.DeleteBackup(context, gcsa::DeleteBackupRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -254,7 +241,7 @@ TEST_F(DatabaseAdminLoggingTest, ListBackups) {
   auto response = stub.ListBackups(context, gcsa::ListBackupsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListBackups")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -268,7 +255,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
   auto status = stub.UpdateBackup(context, gcsa::UpdateBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -284,7 +271,7 @@ TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
       stub.ListBackupOperations(context, gcsa::ListBackupOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListBackupOperations")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -300,7 +287,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
       context, gcsa::ListDatabaseOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListDatabaseOperations")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -315,7 +302,7 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
       stub.GetOperation(context, google::longrunning::GetOperationRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetOperation")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
@@ -330,7 +317,7 @@ TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
       context, google::longrunning::CancelOperationRequest{});
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = ClearLogLines();
+  auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CancelOperation")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }

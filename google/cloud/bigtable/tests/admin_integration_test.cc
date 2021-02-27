@@ -17,9 +17,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -319,9 +319,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 /// @test Verify rpc logging for `bigtable::TableAdmin`
 TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   using GC = bigtable::GcRule;
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   std::string const table_id = RandomTableId();
 
@@ -401,13 +399,12 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
       TableNames(*current_table_list),
       Not(Contains(table_admin->instance_name() + "/tables/" + table_id)));
 
-  auto const log_lines = backend->ClearLogLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListTables")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateTable")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetTable")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("ModifyColumnFamilies")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteTable")));
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS

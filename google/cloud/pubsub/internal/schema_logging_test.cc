@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
@@ -31,25 +31,11 @@ using ::testing::Return;
 
 class SchemaLoggingTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(SchemaLoggingTest, CreateSchema) {
@@ -61,7 +47,7 @@ TEST_F(SchemaLoggingTest, CreateSchema) {
   google::pubsub::v1::CreateSchemaRequest request;
   auto status = stub.CreateSchema(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("CreateSchema")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CreateSchema")));
 }
 
 TEST_F(SchemaLoggingTest, GetSchema) {
@@ -73,7 +59,7 @@ TEST_F(SchemaLoggingTest, GetSchema) {
   google::pubsub::v1::GetSchemaRequest request;
   auto status = stub.GetSchema(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("GetSchema")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("GetSchema")));
 }
 
 TEST_F(SchemaLoggingTest, ListSchemas) {
@@ -86,7 +72,7 @@ TEST_F(SchemaLoggingTest, ListSchemas) {
   google::pubsub::v1::ListSchemasRequest request;
   auto status = stub.ListSchemas(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ListSchemas")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ListSchemas")));
 }
 
 TEST_F(SchemaLoggingTest, DeleteSchema) {
@@ -97,7 +83,7 @@ TEST_F(SchemaLoggingTest, DeleteSchema) {
   google::pubsub::v1::DeleteSchemaRequest request;
   auto status = stub.DeleteSchema(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("DeleteSchema")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("DeleteSchema")));
 }
 
 TEST_F(SchemaLoggingTest, ValidateSchema) {
@@ -110,7 +96,7 @@ TEST_F(SchemaLoggingTest, ValidateSchema) {
   google::pubsub::v1::ValidateSchemaRequest request;
   auto status = stub.ValidateSchema(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ValidateSchema")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ValidateSchema")));
 }
 
 TEST_F(SchemaLoggingTest, ValidateMessage) {
@@ -123,8 +109,7 @@ TEST_F(SchemaLoggingTest, ValidateMessage) {
   google::pubsub::v1::ValidateMessageRequest request;
   auto status = stub.ValidateMessage(context, request);
   EXPECT_STATUS_OK(status);
-  EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(HasSubstr("ValidateMessage")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ValidateMessage")));
 }
 
 }  // namespace

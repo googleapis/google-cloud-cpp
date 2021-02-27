@@ -16,7 +16,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include "absl/memory/memory.h"
 #include "absl/types/variant.h"
@@ -43,21 +43,7 @@ class MockStreamingReadRpc : public StreamingReadRpc<ResponseType> {
 
 class StreamingReadRpcLoggingTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
-  std::vector<std::string> ClearLogLines() { return backend_->ClearLogLines(); }
-
- private:
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-  long logger_id_ = 0;  // NOLINT
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(StreamingReadRpcLoggingTest, Cancel) {
@@ -68,7 +54,7 @@ TEST_F(StreamingReadRpcLoggingTest, Cancel) {
       std::move(mock), TracingOptions{},
       google::cloud::internal::RequestIdForLogging());
   reader.Cancel();
-  EXPECT_THAT(ClearLogLines(), Contains(HasSubstr("Cancel")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Cancel")));
 }
 
 TEST_F(StreamingReadRpcLoggingTest, Read) {
@@ -99,14 +85,14 @@ TEST_F(StreamingReadRpcLoggingTest, Read) {
       google::cloud::internal::RequestIdForLogging());
   auto result = reader.Read();
   absl::visit(ResultVisitor(), result);
-  auto log_lines = ClearLogLines();
+  auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("seconds")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("42")));
 
   result = reader.Read();
   absl::visit(ResultVisitor(), result);
-  log_lines = ClearLogLines();
+  log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(
       log_lines,

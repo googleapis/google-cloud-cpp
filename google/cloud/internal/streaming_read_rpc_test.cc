@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/streaming_read_rpc.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -153,9 +153,7 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
 
-  auto backend =
-      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+  testing_util::ScopedLog log;
 
   {
     StreamingReadRpcImpl<FakeResponse> impl(
@@ -165,11 +163,9 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
     values.push_back(absl::get<FakeResponse>(impl.Read()).value);
     EXPECT_THAT(values, ElementsAre("value-0", "value-1"));
   }
-  EXPECT_THAT(backend->ClearLogLines(),
+  EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr("unhandled error"), HasSubstr("status="),
                              HasSubstr("uh-oh"))));
-
-  google::cloud::LogSink::Instance().RemoveBackend(id);
 }
 
 }  // namespace

@@ -16,7 +16,7 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -33,25 +33,11 @@ namespace btproto = google::bigtable::v2;
 
 class LoggingDataClientTest : public ::testing::Test {
  protected:
-  void SetUp() override {
-    backend_ =
-        std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
-    logger_id_ = google::cloud::LogSink::Instance().AddBackend(backend_);
-  }
-
-  void TearDown() override {
-    google::cloud::LogSink::Instance().RemoveBackend(logger_id_);
-    logger_id_ = 0;
-  }
-
   static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
-  std::shared_ptr<google::cloud::testing_util::CaptureLogLinesBackend> backend_;
-
- private:
-  long logger_id_ = 0;  // NOLINT(google-runtime-int)
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(LoggingDataClientTest, MutateRow) {
@@ -69,7 +55,7 @@ TEST_F(LoggingDataClientTest, MutateRow) {
   auto status = stub.MutateRow(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("MutateRow")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("MutateRow")));
 }
 
 TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
@@ -87,8 +73,7 @@ TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
   auto status = stub.CheckAndMutateRow(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(HasSubstr("CheckAndMutateRow")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("CheckAndMutateRow")));
 }
 
 TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
@@ -106,8 +91,7 @@ TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
   auto status = stub.ReadModifyWriteRow(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  EXPECT_THAT(backend_->ClearLogLines(),
-              Contains(HasSubstr("ReadModifyWriteRow")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ReadModifyWriteRow")));
 }
 
 TEST_F(LoggingDataClientTest, ReadRows) {
@@ -127,7 +111,7 @@ TEST_F(LoggingDataClientTest, ReadRows) {
 
   stub.ReadRows(&context, request);
 
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("ReadRows")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("ReadRows")));
 }
 
 TEST_F(LoggingDataClientTest, SampleRowKeys) {
@@ -147,7 +131,7 @@ TEST_F(LoggingDataClientTest, SampleRowKeys) {
 
   stub.SampleRowKeys(&context, request);
 
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("SampleRowKeys")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("SampleRowKeys")));
 }
 
 TEST_F(LoggingDataClientTest, MutateRows) {
@@ -167,7 +151,7 @@ TEST_F(LoggingDataClientTest, MutateRows) {
 
   stub.MutateRows(&context, request);
 
-  EXPECT_THAT(backend_->ClearLogLines(), Contains(HasSubstr("MutateRows")));
+  EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("MutateRows")));
 }
 
 }  // namespace

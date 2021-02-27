@@ -21,8 +21,6 @@ if (BUILD_TESTING)
         assert_ok.cc
         assert_ok.h
         async_sequencer.h
-        capture_log_lines_backend.cc
-        capture_log_lines_backend.h
         check_predicate_becomes_false.h
         chrono_literals.h
         command_line_parsing.cc
@@ -36,6 +34,8 @@ if (BUILD_TESTING)
         expect_future_error.h
         scoped_environment.cc
         scoped_environment.h
+        scoped_log.cc
+        scoped_log.h
         scoped_thread.h
         status_matchers.h
         testing_types.cc
