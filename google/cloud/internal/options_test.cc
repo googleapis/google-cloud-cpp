@@ -15,6 +15,7 @@
 #include "google/cloud/internal/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
+#include <set>
 #include <string>
 #include <tuple>
 
@@ -27,6 +28,7 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::UnorderedElementsAre;
 
 struct IntOption {
   int value;
@@ -44,7 +46,43 @@ struct DefaultedOption {
   int value = 123;
 };
 
-using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
+using TestOptionsTuple =
+    std::tuple<IntOption, BoolOption, StringOption, DefaultedOption>;
+
+// This is how customers should set a simple options.
+TEST(OptionsUseCase, CustomerSettingSimpleOptions) {
+  auto opts = Options{}.set<IntOption>(123).set<BoolOption>(true);
+
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<BoolOption>());
+}
+
+// This is how customers should append to an option.
+TEST(OptionsUseCase, CustomerSettingComplexOption) {
+  struct ComplexOption {
+    std::set<std::string> value;
+  };
+
+  Options opts;
+
+  EXPECT_FALSE(opts.has<ComplexOption>());
+  opts.lookup<ComplexOption>().insert("foo");
+  EXPECT_TRUE(opts.has<ComplexOption>());
+  opts.lookup<ComplexOption>().insert("bar");
+
+  EXPECT_THAT(opts.lookup<ComplexOption>(), UnorderedElementsAre("foo", "bar"));
+}
+
+// This is how our factory functions should get options.
+TEST(OptionsUseCase, FactoriesGettingOptions) {
+  auto factory = [](Options const& opts) {
+    EXPECT_EQ(123, opts.get_or<IntOption>(123));
+    EXPECT_EQ("set-by-customer", opts.get_or<StringOption>());
+  };
+
+  auto opts = Options{}.set<StringOption>("set-by-customer");
+  factory(opts);
+}
 
 TEST(Options, Has) {
   Options opts;
@@ -129,7 +167,7 @@ TEST(Options, Lookup) {
   int& x = opts.lookup<IntOption>();
   EXPECT_TRUE(opts.has<IntOption>());
   EXPECT_EQ(0, x);  // Value initialized int.
-  x = 42;  // Sets x within the Options
+  x = 42;           // Sets x within the Options
   EXPECT_EQ(42, opts.lookup<IntOption>());
 
   // Lookup with user-supplied default value.

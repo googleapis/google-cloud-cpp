@@ -30,8 +30,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   }
   auto const user_agent_prefix = opts.get_or<UserAgentPrefixOption>();
   if (!user_agent_prefix.empty()) {
-    channel_arguments.SetUserAgentPrefix(
-        absl::StrJoin(user_agent_prefix, " "));
+    channel_arguments.SetUserAgentPrefix(absl::StrJoin(user_agent_prefix, " "));
   }
   return channel_arguments;
 }

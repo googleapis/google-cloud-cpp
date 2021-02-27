@@ -55,12 +55,21 @@ namespace internal {
 /**
  * A class that holds option structs indexed by their type.
  *
- * An "Option" can be any unique struct, but by convention these structs tend
- * to have a single data member named "value" and a name like "FooOption".
- * Each library (e.g., spanner, storage) may define their own set of options.
- * Additionally, various common classes may define options. All these options
- * may be set in a single `Options` instance, and each library will look at the
- * options that it needs.
+ * An "Option" struct is any struct that has a public `.value` data member, and
+ * by convention they are named like "FooOption". Each library (e.g., spanner,
+ * storage) may define their own set of options. Additionally, various common
+ * classes may define options. All these options may be set in a single
+ * `Options` instance, and each library will look at the options that it needs.
+ *
+ * Here's an overview of this class's interface, but see the method
+ * documentation below for more details.
+ *
+ * - `.set<T>(x)`    -- Sets the option `T` to value `x`
+ * - `.has<T>()`     -- Returns true iff option `T` is set
+ * - `.unset<T>()`   -- Removes the option `T`
+ * - `.get_or<T>(x)` -- Gets the value of option `T`, or `x` if no value was set
+ * - `.lookup<T>(x)` -- Gets a reference to option `T`'s value, initializing it
+ *                      to `x` if it was no set.
  *
  * @par Example:
  *
@@ -79,12 +88,15 @@ namespace internal {
  * auto opts = Options{}
  *                 .set<EndpointOption>("blah.googleapis.com")
  *                 .set<FooOption>(42);
- * absl::optional<FooOption> foo = opts.get<FooOption>();
- * assert(foo.has_value());
- * assert(foo->value == 42);
+ * int foo = opts.get_or<FooOption>(123);
+ * assert(foo == 42);
  *
- * BarOption bar = opts.get_or<BarOption>(3.14);
- * assert(bar.value == 3.14);
+ * double bar = opts.get_or<BarOption>(3.14);
+ * assert(bar == 3.14);
+ *
+ * // Modifies the stored EndpointOption's value via a reference
+ * std::string& endpoint = opts.lookup<EndpointOption>();
+ * endpoint = "new.googleapis.com";
  * @endcode
  */
 class Options {
@@ -100,8 +112,15 @@ class Options {
   /**
    * Sets the specified option and returns a reference to `*this`.
    *
-   * The optional arguments to `set(...)` will be used to construct the `T`
-   * option.
+   * @code
+   * struct FooOption {
+   *   int value;
+   * };
+   * auto opts = Options{}.set<FooOption>(123);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param v the value to set the option T
    */
   template <typename T>
   Options& set(value_type_t<T> v) {
@@ -110,11 +129,33 @@ class Options {
     m_[typeid(T)] = std::move(t);
     return *this;
   }
+
+  /**
+   * Sets the specified option and returns a reference to `*this`.
+   *
+   * If the argument @p t is unspecified, the value will be value-initialized.
+   *
+   * @code
+   * struct FooOption {
+   *   int value;
+   * };
+   * FooOption default_foo = {123};
+   * auto opts = Options{}.set<FooOption>(default_foo);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param t an instance of `T` to set the option to
+   */
   template <typename T>
   Options& set(type_identity_t<T> t = {}) {
     return set<T>(std::move(t.value));
   }
 
+  /**
+   * Returns true IFF an option with type `T` exists.
+   *
+   * @tparam T the option type
+   */
   template <typename T>
   bool has() {
     return m_.find(typeid(T)) != m_.end();
@@ -122,6 +163,8 @@ class Options {
 
   /**
    * Erases the option specified by the type `T`.
+   *
+   * @tparam T the option type
    */
   template <typename T>
   void unset() {
@@ -129,10 +172,24 @@ class Options {
   }
 
   /**
-   * Gets the option of type `T` if set, else a newly constructed default `T`.
+   * Returns the value for the option of type `T`, else returns the @p
+   * default_value.
    *
-   * If the specified option `T` is not set, a new `T` will be constructed with
-   * the optional arguments @p u.
+   * @code
+   * struct FooOption {
+   *   int value;
+   * };
+   * Options opts;
+   * int x = opts.get_or<FooOption>(123);
+   * assert(x == 123);
+   *
+   * opts.set<FooOption>(42);
+   * x = opts.get_or<FooOption>(123);
+   * assert(x == 42);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param default_value the value to return if `T` is not set
    */
   template <typename T>
   value_type_t<T> get_or(value_type_t<T> default_value) const {
@@ -141,14 +198,55 @@ class Options {
     return std::move(default_value);
   }
 
+  /**
+   * Returns the value for the option of type `T`, else returns the @p t.value.
+   *
+   * If unspecified, the @p t argument will be value-initialized.
+   *
+   * @code
+   * struct FooOption {
+   *   int value;
+   * };
+   * FooOption default_foo = {123};
+   * Options opts;
+   * int x = opts.get_or<FooOption>(default_foo);
+   * assert(x == 123);
+   *
+   * x = opts.get_or<FooOption>();
+   * assert(x == 0);  // Value-initialized FooOption::value
+   *
+   * opts.set<FooOption>(42);
+   * x = opts.get_or<FooOption>(123);
+   * assert(x == 42);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param default_value the value to return if `T` is not set
+   */
   template <typename T>
   value_type_t<T> get_or(type_identity_t<T> t = {}) const {
     return get_or<T>(std::move(t.value));
   }
 
   /**
-   * Returns value for the option of type `T` or inserts a new one w/ the given
-   * default value.
+   * Returns a reference to the value for the option of type `T`, setting the
+   * value to @p init_value if necessary.
+   *
+   * @code
+   * struct BigOption {
+   *   std::set<std::string> value;
+   * };
+   * Options opts;
+   * std::set<std::string>& x = opts.lookup<BigOption>();
+   * assert(x.empty());
+   *
+   * x.insert("foo");
+   * opts.lookup<BigOption>().insert("bar");
+   * assert(x.size() == 2);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param init_value the value to return if `T` is not set
    */
   template <typename T>
   value_type_t<T>& lookup(value_type_t<T> init_value) {
@@ -158,6 +256,30 @@ class Options {
     return lookup<T>();  // Recursive call, but the value exists now.
   }
 
+  /**
+   * Returns a reference to the value for the option of type `T`, setting the
+   * value to @p t.init_value if necessary.
+   *
+   * @code
+   * struct BigOption {
+   *   std::set<std::string> value;
+   * };
+   *
+   * BigOption default_option = {
+   *   set::set<std::string>{"foo", "bar"}
+   * };
+   *
+   * Options opts;
+   * std::set<std::string>& x = opts.lookup<BigOption>(default_option);
+   * assert(x.size() == 2);
+   *
+   * x.insert("baz");
+   * assert(opts.lookup<BigOption>.size() == 3);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param t the option with the `.value` to use by default
+   */
   template <typename T>
   value_type_t<T>& lookup(type_identity_t<T> t = {}) {
     return lookup<T>(std::move(t.value));
