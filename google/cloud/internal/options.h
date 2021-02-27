@@ -55,14 +55,15 @@ namespace internal {
 /**
  * A class that holds option structs indexed by their type.
  *
- * An "Option" struct is any struct that has a public `.value` data member, and
- * by convention they are named like "FooOption". Each library (e.g., spanner,
- * storage) may define their own set of options. Additionally, various common
- * classes may define options. All these options may be set in a single
- * `Options` instance, and each library will look at the options that it needs.
+ * An "Option" struct is any struct that has a public `.value` data member. By
+ * convention they are named like "FooOption". Each library (e.g., spanner,
+ * storage) may define their own set of options. Additionally, there may be
+ * common options defined that many libraries may use. All these options may be
+ * set in a single `Options` instance, and each library will look at the
+ * options that it needs.
  *
  * Here's an overview of this class's interface, but see the method
- * documentation below for more details.
+ * documentation below for details.
  *
  * - `.set<T>(x)`    -- Sets the option `T` to value `x`
  * - `.has<T>()`     -- Returns true iff option `T` is set
