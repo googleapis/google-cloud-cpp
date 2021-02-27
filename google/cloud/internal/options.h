@@ -196,7 +196,7 @@ class Options {
   value_type_t<T> get_or(value_type_t<T> default_value) const {
     auto it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<T>(it->second).value;
-    return std::move(default_value);
+    return default_value;
   }
 
   /**
