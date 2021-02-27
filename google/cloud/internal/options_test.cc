@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/internal/options.h"
-#include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -49,6 +50,8 @@ struct DefaultedOption {
   DefaultedOption() = default;
   int value = 123;
 };
+
+using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
 
 TEST(Options, Empty) {
   Options opts{};
@@ -146,64 +149,82 @@ TEST(Options, BasicOperations) {
   EXPECT_EQ(opts.get<StringOption>()->value, "foo");
 }
 
-// 
-class ScopedLog {
-  public:
-   ScopedLog()
-       : backend_(std::make_shared<testing_util::CaptureLogLinesBackend>()),
-         id_(LogSink::Instance().AddBackend(backend_)) {}
-   ~ScopedLog() { LogSink::Instance().RemoveBackend(id_); }
-
-   std::vector<std::string> ExtractLines() { return backend_->ClearLogLines(); }
-
-  private:
-   std::shared_ptr<testing_util::CaptureLogLinesBackend> backend_;
-   long id_;  // NOLINT(google-runtime-int)
-};
-
 TEST(CheckUnexpectedOptions, Empty) {
-  ScopedLog log;
+  testing_util::ScopedLog log;
   Options opts;
-  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 TEST(CheckUnexpectedOptions, OneExpected) {
-  ScopedLog log;
+  testing_util::ScopedLog log;
   Options opts;
   opts.set<BoolOption>();
-  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 TEST(CheckUnexpectedOptions, TwoExpected) {
-  ScopedLog log;
+  testing_util::ScopedLog log;
   Options opts;
   opts.set<BoolOption>();
   opts.set<IntOption>();
-  internal::WarnUnexpectedOptions<BoolOption, IntOption>(opts);
+  internal::CheckExpectedOptions<BoolOption, IntOption>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 TEST(CheckUnexpectedOptions, OneUnexpected) {
-  ScopedLog log;
+  testing_util::ScopedLog log;
   Options opts;
   opts.set<IntOption>();
-  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_THAT(log.ExtractLines(),
-              Contains(ContainsRegex("Unexpected option.+IntOption")));
+              Contains(ContainsRegex("caller: Unexpected option.+IntOption")));
 }
 
 TEST(CheckUnexpectedOptions, TwoUnexpected) {
-  ScopedLog log;
+  testing_util::ScopedLog log;
   Options opts;
   opts.set<IntOption>();
   opts.set<StringOption>();
-  internal::WarnUnexpectedOptions<BoolOption>(opts);
+  internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
-      AllOf(Contains(ContainsRegex("Unexpected option.+IntOption")),
-            Contains(ContainsRegex("Unexpected option.+StringOption"))));
+      AllOf(
+          Contains(ContainsRegex("caller: Unexpected option.+IntOption")),
+          Contains(ContainsRegex("caller: Unexpected option.+StringOption"))));
+}
+
+TEST(CheckUnexpectedOptions, BasicOptionsList) {
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  opts.set<StringOption>();
+  internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
+  struct FooOption {};
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  opts.set<StringOption>();
+  opts.set<FooOption>();
+  internal::CheckExpectedOptions<FooOption, TestOptionsTuple>(opts, "caller");
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
+  struct FooOption {};
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  opts.set<StringOption>();
+  opts.set<FooOption>();
+  internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(ContainsRegex("caller: Unexpected option.+FooOption")));
 }
 
 }  // namespace

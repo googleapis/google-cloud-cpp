@@ -57,6 +57,25 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
   EXPECT_TRUE(invoked);
 }
 
+TEST(GrpcOptions, Expected) {
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<GrpcNumchannelsOption>(42);
+  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(GrpcOptions, Unexpected) {
+  struct UnexpectedOption {};
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<UnexpectedOption>();
+  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  EXPECT_THAT(
+      log.ExtractLines(),
+            Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption"));
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

@@ -23,11 +23,12 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-void WarnUnexpectedOptionsImpl(std::set<std::type_index> const& expected,
-                               Options const& opts) {
+void CheckExpectedOptionsImpl(std::set<std::type_index> const& expected,
+                              Options const& opts, char const* const caller) {
   for (auto const& p : opts.m_) {
     if (!Contains(expected, p.first)) {
-      GCP_LOG(WARNING) << "Unexpected option (mangled name): " << p.first.name();
+      GCP_LOG(WARNING) << caller << ": Unexpected option (mangled name): "
+                       << p.first.name();
     }
   }
 }
