@@ -116,7 +116,7 @@ class Options {
    * @param v the value to set the option T
    */
   template <typename T>
-  Options& set(ValueTypeT<T> v = T{}.value) {
+  Options& set(ValueTypeT<T> v) {
     T t;
     t.value = std::move(v);
     m_[typeid(T)] = std::move(t);
@@ -164,7 +164,7 @@ class Options {
    * @param default_value the value to return if `T` is not set
    */
   template <typename T>
-  ValueTypeT<T> get_or(ValueTypeT<T> default_value = T{}.value) const {
+  ValueTypeT<T> get_or(ValueTypeT<T> default_value) const {
     auto it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<T>(it->second).value;
     return default_value;
@@ -191,7 +191,7 @@ class Options {
    * @param init_value the value to return if `T` is not set
    */
   template <typename T>
-  ValueTypeT<T>& lookup(ValueTypeT<T> init_value = T{}.value) {
+  ValueTypeT<T>& lookup(ValueTypeT<T> init_value = {}) {
     auto it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<T>(&it->second)->value;
     set<T>(std::move(init_value));

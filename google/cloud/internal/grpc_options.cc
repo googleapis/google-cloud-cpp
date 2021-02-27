@@ -24,11 +24,10 @@ namespace internal {
 
 grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   grpc::ChannelArguments channel_arguments;
-  auto const channel_args = opts.get_or<GrpcChannelArgumentsOption>();
-  for (auto const& p : channel_args) {
+  for (auto const& p : opts.get_or<GrpcChannelArgumentsOption>({})) {
     channel_arguments.SetString(p.first, p.second);
   }
-  auto const user_agent_prefix = opts.get_or<UserAgentPrefixOption>();
+  auto const user_agent_prefix = opts.get_or<UserAgentPrefixOption>({});
   if (!user_agent_prefix.empty()) {
     channel_arguments.SetUserAgentPrefix(absl::StrJoin(user_agent_prefix, " "));
   }

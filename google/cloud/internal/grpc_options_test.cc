@@ -33,7 +33,7 @@ using ::testing::ContainsRegex;
 template <typename T, typename ValueType = decltype(std::declval<T>().value)>
 void TestGrpcOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
-  EXPECT_EQ(expected, opts.template get_or<T>())
+  EXPECT_EQ(expected, opts.template get_or<T>({}))
       << "Failed with type: " << typeid(T).name();
 }
 
@@ -57,7 +57,7 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
   };
   auto opts = Options{}.set<GrpcBackgroundThreadsOption>(factory);
   EXPECT_FALSE(invoked);
-  opts.get_or<GrpcBackgroundThreadsOption>()();
+  opts.get_or<GrpcBackgroundThreadsOption>({})();
   EXPECT_TRUE(invoked);
 }
 
@@ -75,7 +75,7 @@ TEST(GrpcOptions, Unexpected) {
   };
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<UnexpectedOption>();
+  opts.set<UnexpectedOption>({});
   internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
