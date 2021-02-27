@@ -22,6 +22,7 @@
 #include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -90,6 +91,24 @@ namespace internal {
 
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
+
+/**
+ * A list of all the options in this file.
+ *
+ * This is intended to be used with `internal::CheckExpectedOptions<T>()` to
+ * make it easy to specify groups of options as allowed/expected.
+ *
+ * @code
+ * Options opts;
+ * opts.set<GrpcCredentialOption>(...);
+ * internal::CheckExpectedOptions<internal::GrpcOptions>(
+ *     opts, "some factory function");
+ * @endcode
+ */
+using GrpcOptions =
+    std::tuple<GrpcCredentialOption, GrpcNumChannelsOption,
+               GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
+               GrpcBackgroundThreadsOption>;
 
 }  // namespace internal
 

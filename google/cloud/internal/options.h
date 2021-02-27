@@ -18,6 +18,7 @@
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
 #include "absl/types/optional.h"
+#include <set>
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
@@ -25,6 +26,13 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
+class Options;
+namespace internal {
+void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
+                              char const*);
+}  // namespace internal
+
 namespace internal {
 
 /**
@@ -121,10 +129,65 @@ class Options {
   }
 
  private:
+  friend void CheckExpectedOptionsImpl(std::set<std::type_index> const&,
+                                       Options const&, char const*);
+
   std::unordered_map<std::type_index, absl::any> m_;
 };
 
 }  // namespace internal
+
+namespace internal {
+
+// Wraps `T` in a `std::tuple`, unless it was already a tuple.
+template <typename T>
+struct FlatTuple {
+  using Type = std::tuple<T>;
+};
+template <typename... T>
+struct FlatTuple<std::tuple<T...>> {
+  using Type = std::tuple<T...>;  // Note: Doesn't work w/ nested tuples.
+};
+
+template <typename... T>
+void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
+                              char const* caller) {
+  CheckExpectedOptionsImpl({typeid(T)...}, opts, caller);
+}
+
+// Checks that `Options` only contains the given expected options or a subset
+// of them. Logs all unexpected options. Note that logging is not always shown
+// on the console. Set the environment variable
+// `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` to enable logging.
+//
+// Options may be specified directly or as a collection within a `std::tuple`.
+// For example,
+//
+// @code
+// struct FooOption { int value; };
+// struct BarOption { int value; };
+// using OptionTuple = std::tuple<FooOption, BarOption>;
+//
+// struct BazOption { int value; };
+//
+// // All valid ways to call this with varying expectations.
+// CheckExpectedOptions<FooOption>(opts, "test caller");
+// CheckExpectedOptions<FooOption, BarOption>(opts, "test caller");
+// CheckExpectedOptions<OptionTuple>(opts, "test caller");
+// CheckExpectedOptions<BazOption, OptionTuple>(opts, "test caller");
+// @endcode
+//
+// @param opts the `Options` to check.
+// @param caller some string indicating the callee function; logged IFF there's
+//        an unexpected option
+template <typename... T>
+void CheckExpectedOptions(Options const& opts, char const* caller) {
+  using Tuple = decltype(std::tuple_cat(typename FlatTuple<T>::Type{}...));
+  CheckExpectedOptionsImpl(Tuple{}, opts, caller);
+}
+
+}  // namespace internal
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

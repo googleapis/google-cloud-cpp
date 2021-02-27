@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
 
-#include "google/cloud/internal/options.h"
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -63,6 +63,26 @@ struct TracingComponentsOption {
 };
 
 }  // namespace internal
+
+namespace internal {
+
+/**
+ * A list of all the options in this file.
+ *
+ * This is intended to be used with `internal::CheckExpectedOptions<T>()` to
+ * make it easy to specify groups of options as allowed/expected.
+ *
+ * @code
+ * Options opts;
+ * opts.set<EndpointOption>("...");
+ * internal::CheckExpectedOptions<internal::CommonOptions>(
+ *     opts, "some factory function");
+ * @endcode
+ */
+using CommonOptions =
+    std::tuple<EndpointOption, UserAgentPrefixOption, TracingComponentsOption>;
+}  // namespace internal
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

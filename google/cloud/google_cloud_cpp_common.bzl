@@ -85,6 +85,7 @@ google_cloud_cpp_common_srcs = [
     "internal/format_time_point.cc",
     "internal/future_impl.cc",
     "internal/getenv.cc",
+    "internal/options.cc",
     "internal/parse_rfc3339.cc",
     "internal/random.cc",
     "internal/setenv.cc",

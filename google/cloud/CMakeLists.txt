@@ -147,6 +147,7 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
+    internal/options.cc
     internal/options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc

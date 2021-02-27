@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -24,6 +25,9 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 namespace {
+
+using ::testing::Contains;
+using ::testing::ContainsRegex;
 
 // Tests a generic option by setting it, then getting it.
 template <typename T, typename ValueType = decltype(std::declval<T>().value)>
@@ -55,6 +59,25 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
   EXPECT_FALSE(invoked);
   opts.get<GrpcBackgroundThreadsOption>()->value();
   EXPECT_TRUE(invoked);
+}
+
+TEST(GrpcOptions, Expected) {
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<GrpcNumChannelsOption>(42);
+  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  EXPECT_TRUE(log.ExtractLines().empty());
+}
+
+TEST(GrpcOptions, Unexpected) {
+  struct UnexpectedOption {};
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<UnexpectedOption>();
+  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  EXPECT_THAT(
+      log.ExtractLines(),
+      Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
 }  // namespace internal
