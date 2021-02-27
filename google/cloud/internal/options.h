@@ -29,15 +29,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class Options;
 namespace internal {
-
-// Extracts the type of `T`'s `.value` data member.
-template <typename T>
-struct ValueType {
-  using Type = decltype(std::declval<T>().value);
-};
-template <typename T>
-using ValueTypeT = typename ValueType<T>::Type;
-
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 }  // namespace internal
@@ -47,7 +38,7 @@ namespace internal {
 /**
  * A class that holds option structs indexed by their type.
  *
- * An "Option" struct is any struct that has a public `.value` data member. By
+ * An "Option" is any struct that has a public `Type` member typedef. By
  * convention they are named like "FooOption". Each library (e.g., spanner,
  * storage) may define their own set of options. Additionally, there may be
  * common options defined that many libraries may use. All these options may be
@@ -62,20 +53,20 @@ namespace internal {
  * - `.unset<T>()`   -- Removes the option `T`
  * - `.get_or<T>(x)` -- Gets the value of option `T`, or `x` if no value was set
  * - `.lookup<T>(x)` -- Gets a reference to option `T`'s value, initializing it
- *                      to `x` if it was no set.
+ *                      to `x` if it was no set (`x` is optional).
  *
  * @par Example:
  *
  * @code
  * // Given
  * struct EndpointOption {
- *   std::string value;
+ *   using Type = std::string;
  * };
  * struct FooOption {
- *   int value;
+ *   using Type = int;
  * };
  * struct BarOption {
- *   double value;
+ *   using Type = double;
  * };
  * ...
  * auto opts = Options{}
@@ -93,6 +84,10 @@ namespace internal {
  * @endcode
  */
 class Options {
+ private:
+  template <typename T>
+  using ValueTypeT = typename T::Type;
+
  public:
   /// Constructs an empty instance.
   Options() = default;
@@ -107,7 +102,7 @@ class Options {
    *
    * @code
    * struct FooOption {
-   *   int value;
+   *   using Type = int;
    * };
    * auto opts = Options{}.set<FooOption>(123);
    * @endcode
@@ -117,9 +112,7 @@ class Options {
    */
   template <typename T>
   Options& set(ValueTypeT<T> v) {
-    T t;
-    t.value = std::move(v);
-    m_[typeid(T)] = std::move(t);
+    m_[typeid(T)] = Data<T>{std::move(v)};
     return *this;
   }
 
@@ -149,7 +142,7 @@ class Options {
    *
    * @code
    * struct FooOption {
-   *   int value;
+   *   using Type = int;
    * };
    * Options opts;
    * int x = opts.get_or<FooOption>(123);
@@ -166,7 +159,7 @@ class Options {
   template <typename T>
   ValueTypeT<T> get_or(ValueTypeT<T> default_value) const {
     auto it = m_.find(typeid(T));
-    if (it != m_.end()) return absl::any_cast<T>(it->second).value;
+    if (it != m_.end()) return absl::any_cast<Data<T>>(it->second).value;
     return default_value;
   }
 
@@ -176,7 +169,7 @@ class Options {
    *
    * @code
    * struct BigOption {
-   *   std::set<std::string> value;
+   *   using Type = std::set<std::string>;
    * };
    * Options opts;
    * std::set<std::string>& x = opts.lookup<BigOption>();
@@ -188,20 +181,27 @@ class Options {
    * @endcode
    *
    * @tparam T the option type
-   * @param init_value the value to return if `T` is not set
+   * @param init_value the initial value to use if `T` is not set (optional)
    */
   template <typename T>
   ValueTypeT<T>& lookup(ValueTypeT<T> init_value = {}) {
     auto it = m_.find(typeid(T));
-    if (it != m_.end()) return absl::any_cast<T>(&it->second)->value;
+    if (it != m_.end()) return absl::any_cast<Data<T>>(&it->second)->value;
     set<T>(std::move(init_value));
-    return absl::any_cast<T>(&m_.find(typeid(T))->second)->value;
+    return absl::any_cast<Data<T>>(&m_.find(typeid(T))->second)->value;
   }
 
  private:
   friend void CheckExpectedOptionsImpl(std::set<std::type_index> const&,
                                        Options const&, char const*);
 
+  // The data holder for all the option values.
+  template <typename T>
+  struct Data {
+    ValueTypeT<T> value;
+  };
+
+  // The `absl::any` objects all hold a `Data<T>`
   std::unordered_map<std::type_index, absl::any> m_;
 };
 

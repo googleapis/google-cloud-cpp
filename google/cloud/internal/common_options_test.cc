@@ -30,7 +30,7 @@ using ::testing::Contains;
 using ::testing::ContainsRegex;
 
 // Tests a generic option by setting it, then getting it.
-template <typename T, typename ValueType = decltype(std::declval<T>().value)>
+template <typename T, typename ValueType = typename T::Type>
 void TestOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
   EXPECT_EQ(expected, opts.template get_or<T>({}))
@@ -55,7 +55,7 @@ TEST(CommonOptions, Expected) {
 
 TEST(CommonOptions, Unexpected) {
   struct UnexpectedOption {
-    int value;
+    using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;

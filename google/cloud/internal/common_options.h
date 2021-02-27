@@ -33,7 +33,7 @@ namespace internal {
  * or (2) use a beta or EAP version of the service.
  */
 struct EndpointOption {
-  std::string value;
+  using Type = std::string;
 };
 
 /**
@@ -44,7 +44,7 @@ struct EndpointOption {
  * number of users running particular versions of their system or library.
  */
 struct UserAgentPrefixOption {
-  std::set<std::string> value;
+  using Type = std::set<std::string>;
 };
 
 /**
@@ -59,7 +59,7 @@ struct UserAgentPrefixOption {
  * - rpc-streams
  */
 struct TracingComponentsOption {
-  std::set<std::string> value;
+  using Type = std::set<std::string>;
 };
 
 }  // namespace internal

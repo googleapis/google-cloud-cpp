@@ -34,7 +34,7 @@ namespace internal {
  * The gRPC credentials used by clients configured with this object.
  */
 struct GrpcCredentialOption {
-  std::shared_ptr<grpc::ChannelCredentials> value;
+  using Type = std::shared_ptr<grpc::ChannelCredentials>;
 };
 
 /**
@@ -45,7 +45,7 @@ struct GrpcCredentialOption {
  * operations that can be in progress in parallel.
  */
 struct GrpcNumChannelsOption {
-  int value;
+  using Type = int;
 };
 
 /**
@@ -59,14 +59,14 @@ struct GrpcNumChannelsOption {
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
  */
 struct GrpcChannelArgumentsOption {
-  std::map<std::string, std::string> value;
+  using Type = std::map<std::string, std::string>;
 };
 
 /**
  * The `TracingOptions` to use when printing grpc protocol buffer messages.
  */
 struct GrpcTracingOptionsOption {
-  TracingOptions value;
+  using Type = TracingOptions;
 };
 
 /**
@@ -82,7 +82,7 @@ struct GrpcTracingOptionsOption {
 using BackgroundThreadsFactory =
     std::function<std::unique_ptr<BackgroundThreads>()>;
 struct GrpcBackgroundThreadsOption {
-  BackgroundThreadsFactory value;
+  using Type = BackgroundThreadsFactory;
 };
 
 }  // namespace internal

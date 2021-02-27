@@ -31,15 +31,15 @@ using ::testing::ContainsRegex;
 using ::testing::UnorderedElementsAre;
 
 struct IntOption {
-  int value;
+  using Type = int;
 };
 
 struct BoolOption {
-  bool value;
+  using Type = bool;
 };
 
 struct StringOption {
-  std::string value;
+  using Type = std::string;
 };
 
 using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
@@ -55,7 +55,7 @@ TEST(OptionsUseCase, CustomerSettingSimpleOptions) {
 // This is how customers should append to an option.
 TEST(OptionsUseCase, CustomerSettingComplexOption) {
   struct ComplexOption {
-    std::set<std::string> value;
+    using Type = std::set<std::string>;
   };
 
   Options opts;
@@ -237,7 +237,7 @@ TEST(CheckUnexpectedOptions, BasicOptionsList) {
 
 TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
   struct FooOption {
-    int value;
+    using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;
@@ -250,7 +250,7 @@ TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
 
 TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
   struct FooOption {
-    int value;
+    using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;
