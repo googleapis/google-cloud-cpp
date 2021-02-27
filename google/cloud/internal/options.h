@@ -17,8 +17,8 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
-#include "absl/types/optional.h"
 #include <set>
+#include <type_traits>
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
@@ -29,6 +29,22 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class Options;
 namespace internal {
+// See https://en.cppreference.com/w/cpp/types/type_identity
+template <typename T>
+struct type_identity {
+  using type = T;
+};
+template <typename T>
+using type_identity_t = typename type_identity<T>::type;
+
+
+template <typename T>
+struct value_type {
+  using type = decltype(std::declval<T>().value);
+};
+template <typename T>
+using value_type_t = typename value_type<T>::type;
+
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 }  // namespace internal
@@ -81,20 +97,26 @@ class Options {
   Options& operator=(Options&&) = default;
 
   /**
-   * Returns true iff no options are currently set.
-   */
-  bool empty() const { return m_.empty(); }
-
-  /**
    * Sets the specified option and returns a reference to `*this`.
    *
    * The optional arguments to `set(...)` will be used to construct the `T`
    * option.
    */
-  template <typename T, typename... U>
-  Options& set(U&&... u) {
-    m_[typeid(T)] = T{std::forward<U>(u)...};
+  template <typename T>
+  Options& set(value_type_t<T> v) {
+    T t;
+    t.value = std::move(v);
+    m_[typeid(T)] = std::move(t);
     return *this;
+  }
+  template <typename T>
+  Options& set(type_identity_t<T> t = {}) {
+    return set<T>(std::move(t.value));
+  }
+
+  template <typename T>
+  bool has() {
+    return m_.find(typeid(T)) != m_.end();
   }
 
   /**
@@ -106,26 +128,38 @@ class Options {
   }
 
   /**
-   * Gets the option specified by its type `T`, if it was set.
-   */
-  template <typename T>
-  absl::optional<T> get() const {
-    auto it = m_.find(typeid(T));
-    if (it == m_.end()) return absl::nullopt;
-    return absl::any_cast<T>(it->second);
-  }
-
-  /**
    * Gets the option of type `T` if set, else a newly constructed default `T`.
    *
    * If the specified option `T` is not set, a new `T` will be constructed with
    * the optional arguments @p u.
    */
-  template <typename T, typename... U>
-  T get_or(U&&... u) const {
-    auto v = get<T>();
-    if (v) return *v;
-    return T{std::forward<U>(u)...};
+  template <typename T>
+  value_type_t<T> get_or(value_type_t<T> default_value) const {
+    auto it = m_.find(typeid(T));
+    if (it != m_.end()) return absl::any_cast<T>(it->second).value;
+    return std::move(default_value);
+  }
+
+  template <typename T>
+  value_type_t<T> get_or(type_identity_t<T> t = {}) const {
+    return get_or<T>(std::move(t.value));
+  }
+
+  /**
+   * Returns value for the option of type `T` or inserts a new one w/ the given
+   * default value.
+   */
+  template <typename T>
+  value_type_t<T>& lookup(value_type_t<T> init_value) {
+    auto it = m_.find(typeid(T));
+    if (it != m_.end()) return absl::any_cast<T>(&it->second)->value;
+    set<T>(std::move(init_value));
+    return lookup<T>();  // Recursive call, but the value exists now.
+  }
+
+  template <typename T>
+  value_type_t<T>& lookup(type_identity_t<T> t = {}) {
+    return lookup<T>(std::move(t.value));
   }
 
  private:

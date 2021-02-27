@@ -40,113 +40,148 @@ struct StringOption {
   std::string value;
 };
 
-// Let's test an option struct that has a default value. In this case, the
-// struct will no longer support aggregate initialization [1], so we'll need to
-// add back a 1-arg and default constructors.
-//
-// [1]: https://en.cppreference.com/w/cpp/language/aggregate_initialization
 struct DefaultedOption {
-  explicit DefaultedOption(int v) : value(v) {}
-  DefaultedOption() = default;
   int value = 123;
 };
 
 using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
 
-TEST(Options, Empty) {
-  Options opts{};
-  EXPECT_TRUE(opts.empty());
+TEST(Options, Has) {
+  Options opts;
+  EXPECT_FALSE(opts.has<IntOption>());
+  opts.set<IntOption>(42);
+  EXPECT_TRUE(opts.has<IntOption>());
 }
 
-TEST(Options, GetWithDefault) {
-  Options opts{};
+TEST(Options, Set) {
+  Options opts;
+  opts.set<IntOption>();
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_EQ(0, opts.get_or<IntOption>(-1));
+  opts.set<IntOption>(123);
+  EXPECT_EQ(123, opts.get_or<IntOption>(-1));
+  const IntOption default_int{42};
+  opts.set<IntOption>(default_int);
+  EXPECT_EQ(42, opts.get_or<IntOption>(-1));
 
-  // Get the specified default value.
-  EXPECT_EQ(opts.get_or<IntOption>(42).value, 42);
-}
+  opts = Options{};
+  opts.set<BoolOption>();
+  EXPECT_TRUE(opts.has<BoolOption>());
+  EXPECT_EQ(false, opts.get_or<BoolOption>(true));
+  opts.set<BoolOption>(true);
+  EXPECT_EQ(true, opts.get_or<BoolOption>(false));
+  const BoolOption default_bool{true};
+  opts.set<BoolOption>(default_bool);
+  EXPECT_EQ(true, opts.get_or<BoolOption>(false));
 
-TEST(Options, DefaultedOption) {
-  Options opts{};
+  opts = Options{};
+  opts.set<StringOption>();
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_EQ("", opts.get_or<StringOption>("default"));
+  opts.set<StringOption>("foo");
+  EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
+  const StringOption default_string{"foo"};
+  opts.set<StringOption>(default_string);
+  EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
 
-  // Set doesn't need an argument since a default constructed option is fine.
+  opts = Options{};
   opts.set<DefaultedOption>();
-  EXPECT_EQ(123, opts.get<DefaultedOption>()->value);
-
-  opts.unset<DefaultedOption>();
-  EXPECT_EQ(123, opts.get_or<DefaultedOption>().value);
-  EXPECT_EQ(42, opts.get_or<DefaultedOption>(42).value);
+  EXPECT_TRUE(opts.has<DefaultedOption>());
+  EXPECT_EQ(123, opts.get_or<DefaultedOption>(-1));
+  opts.set<DefaultedOption>(42);
+  EXPECT_EQ(42, opts.get_or<DefaultedOption>(-1));
+  DefaultedOption default_default;
+  default_default.value = 42;
+  opts.set<DefaultedOption>(default_default);
+  EXPECT_EQ(42, opts.get_or<DefaultedOption>(-1));
 }
 
-TEST(Options, MutateOption) {
-  Options opts{};
-  opts.set<StringOption>("test1");
-  EXPECT_EQ("test1", opts.get<StringOption>()->value);
+TEST(Options, GetOr) {
+  const IntOption default_int{42};
+  const BoolOption default_bool{true};
+  const StringOption default_string{"foo"};
+  DefaultedOption default_default;
+  default_default.value = 42;
 
-  auto v = opts.get_or<StringOption>("");
-  opts.set<StringOption>(v.value + ",test2");
+  Options opts;
+  EXPECT_EQ(opts.get_or<IntOption>(), 0);
+  EXPECT_EQ(opts.get_or<IntOption>(42), 42);
+  EXPECT_EQ(opts.get_or<IntOption>(default_int), 42);
 
-  EXPECT_EQ("test1,test2", opts.get<StringOption>()->value);
+  EXPECT_EQ(opts.get_or<BoolOption>(), false);
+  EXPECT_EQ(opts.get_or<BoolOption>(true), true);
+  EXPECT_EQ(opts.get_or<BoolOption>(default_bool), true);
+
+  EXPECT_EQ(opts.get_or<StringOption>(), "");
+  EXPECT_EQ(opts.get_or<StringOption>("foo"), "foo");
+  EXPECT_EQ(opts.get_or<StringOption>(default_string), "foo");
+
+  EXPECT_EQ(opts.get_or<DefaultedOption>(), 123);
+  EXPECT_EQ(opts.get_or<DefaultedOption>(42), 42);
+  EXPECT_EQ(opts.get_or<DefaultedOption>(default_default), 42);
+}
+
+TEST(Options, Lookup) {
+  Options opts;
+
+  // Lookup with value-initialized default.
+  EXPECT_FALSE(opts.has<IntOption>());
+  int& x = opts.lookup<IntOption>();
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_EQ(0, x);  // Value initialized int.
+  x = 42;  // Sets x within the Options
+  EXPECT_EQ(42, opts.lookup<IntOption>());
+
+  // Lookup with user-supplied default value.
+  opts.unset<IntOption>();
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_EQ(42, opts.lookup<IntOption>(42));
+  EXPECT_TRUE(opts.has<IntOption>());
+
+  // Lookup with user-supplied default IntOption
+  const IntOption default_int{42};
+  opts.unset<IntOption>();
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_EQ(42, opts.lookup<IntOption>(default_int));
+  EXPECT_TRUE(opts.has<IntOption>());
 }
 
 TEST(Options, Copy) {
-  auto a = Options{}.set<IntOption>(42).set<BoolOption>(true).set<StringOption>(
-      "foo");
+  auto a = Options{}
+               .set<IntOption>(42)
+               .set<BoolOption>(true)
+               .set<StringOption>("foo")
+               .set<DefaultedOption>();
 
   auto copy = a;  // NOLINT(performance-unnecessary-copy-initialization)
-  EXPECT_FALSE(copy.empty());
-  EXPECT_TRUE(copy.get<IntOption>().has_value());
-  EXPECT_TRUE(copy.get<BoolOption>().has_value());
-  EXPECT_TRUE(copy.get<StringOption>().has_value());
-  EXPECT_EQ(copy.get<IntOption>()->value, 42);
-  EXPECT_EQ(copy.get<BoolOption>()->value, true);
-  EXPECT_EQ(copy.get<StringOption>()->value, "foo");
+  EXPECT_TRUE(copy.has<IntOption>());
+  EXPECT_TRUE(copy.has<BoolOption>());
+  EXPECT_TRUE(copy.has<StringOption>());
+  EXPECT_TRUE(copy.has<DefaultedOption>());
+
+  EXPECT_EQ(42, copy.get_or<IntOption>());
+  EXPECT_EQ(true, copy.get_or<BoolOption>());
+  EXPECT_EQ("foo", copy.get_or<StringOption>());
+  EXPECT_EQ(123, copy.get_or<DefaultedOption>());
 }
 
 TEST(Options, Move) {
-  auto a = Options{}.set<IntOption>(42).set<BoolOption>(true).set<StringOption>(
-      "foo");
+  auto a = Options{}
+               .set<IntOption>(42)
+               .set<BoolOption>(true)
+               .set<StringOption>("foo")
+               .set<DefaultedOption>();
 
   auto moved = std::move(a);
-  EXPECT_FALSE(moved.empty());
-  EXPECT_TRUE(moved.get<IntOption>().has_value());
-  EXPECT_TRUE(moved.get<BoolOption>().has_value());
-  EXPECT_TRUE(moved.get<StringOption>().has_value());
-  EXPECT_EQ(moved.get<IntOption>()->value, 42);
-  EXPECT_EQ(moved.get<BoolOption>()->value, true);
-  EXPECT_EQ(moved.get<StringOption>()->value, "foo");
-}
+  EXPECT_TRUE(moved.has<IntOption>());
+  EXPECT_TRUE(moved.has<BoolOption>());
+  EXPECT_TRUE(moved.has<StringOption>());
+  EXPECT_TRUE(moved.has<DefaultedOption>());
 
-TEST(Options, BasicOperations) {
-  Options opts{};
-  EXPECT_TRUE(opts.empty());
-  EXPECT_FALSE(opts.get<IntOption>().has_value());
-
-  opts.set<IntOption>(42);
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 42);
-
-  opts.set<IntOption>(123);
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 123);
-
-  opts.set<BoolOption>(true).set<StringOption>("foo");
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_TRUE(opts.get<BoolOption>().has_value());
-  EXPECT_TRUE(opts.get<StringOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 123);
-  EXPECT_EQ(opts.get<BoolOption>()->value, true);
-  EXPECT_EQ(opts.get<StringOption>()->value, "foo");
-
-  opts.unset<IntOption>();
-  EXPECT_FALSE(opts.empty());
-  EXPECT_FALSE(opts.get<IntOption>().has_value());
-  EXPECT_TRUE(opts.get<BoolOption>().has_value());
-  EXPECT_TRUE(opts.get<StringOption>().has_value());
-  EXPECT_EQ(opts.get<BoolOption>()->value, true);
-  EXPECT_EQ(opts.get<StringOption>()->value, "foo");
+  EXPECT_EQ(42, moved.get_or<IntOption>());
+  EXPECT_EQ(true, moved.get_or<BoolOption>());
+  EXPECT_EQ("foo", moved.get_or<StringOption>());
+  EXPECT_EQ(123, moved.get_or<DefaultedOption>());
 }
 
 TEST(CheckUnexpectedOptions, Empty) {
