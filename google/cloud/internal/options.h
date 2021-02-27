@@ -151,7 +151,7 @@ struct FlatTuple<std::tuple<T...>> {
 
 template <typename... T>
 void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
-                              char const* const caller) {
+                              char const* caller) {
   CheckExpectedOptionsImpl({typeid(T)...}, opts, caller);
 }
 
@@ -181,7 +181,7 @@ void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
 // @param caller some string indicating the callee function; logged IFF there's
 //        an unexpected option
 template <typename... T>
-void CheckExpectedOptions(Options const& opts, char const* const caller) {
+void CheckExpectedOptions(Options const& opts, char const* caller) {
   using Tuple = decltype(std::tuple_cat(typename FlatTuple<T>::Type{}...));
   CheckExpectedOptionsImpl(Tuple{}, opts, caller);
 }
