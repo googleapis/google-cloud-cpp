@@ -30,21 +30,13 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 class Options;
 namespace internal {
 
-// See https://en.cppreference.com/w/cpp/types/type_identity
-template <typename T>
-struct type_identity {
-  using type = T;
-};
-template <typename T>
-using type_identity_t = typename type_identity<T>::type;
-
 // Extracts the type of `T`'s `.value` data member.
 template <typename T>
-struct value_type {
-  using type = decltype(std::declval<T>().value);
+struct ValueType {
+  using Type = decltype(std::declval<T>().value);
 };
 template <typename T>
-using value_type_t = typename value_type<T>::type;
+using ValueTypeT = typename ValueType<T>::Type;
 
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
@@ -124,32 +116,11 @@ class Options {
    * @param v the value to set the option T
    */
   template <typename T>
-  Options& set(value_type_t<T> v) {
+  Options& set(ValueTypeT<T> v = T{}.value) {
     T t;
     t.value = std::move(v);
     m_[typeid(T)] = std::move(t);
     return *this;
-  }
-
-  /**
-   * Sets the specified option and returns a reference to `*this`.
-   *
-   * If the argument @p t is unspecified, the value will be value-initialized.
-   *
-   * @code
-   * struct FooOption {
-   *   int value;
-   * };
-   * FooOption default_foo = {123};
-   * auto opts = Options{}.set<FooOption>(default_foo);
-   * @endcode
-   *
-   * @tparam T the option type
-   * @param t an instance of `T` to set the option to
-   */
-  template <typename T>
-  Options& set(type_identity_t<T> t = {}) {
-    return set<T>(std::move(t.value));
   }
 
   /**
@@ -193,40 +164,10 @@ class Options {
    * @param default_value the value to return if `T` is not set
    */
   template <typename T>
-  value_type_t<T> get_or(value_type_t<T> default_value) const {
+  ValueTypeT<T> get_or(ValueTypeT<T> default_value = T{}.value) const {
     auto it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<T>(it->second).value;
     return default_value;
-  }
-
-  /**
-   * Returns the value for the option of type `T`, else returns the @p t.value.
-   *
-   * If unspecified, the @p t argument will be value-initialized.
-   *
-   * @code
-   * struct FooOption {
-   *   int value;
-   * };
-   * FooOption default_foo = {123};
-   * Options opts;
-   * int x = opts.get_or<FooOption>(default_foo);
-   * assert(x == 123);
-   *
-   * x = opts.get_or<FooOption>();
-   * assert(x == 0);  // Value-initialized FooOption::value
-   *
-   * opts.set<FooOption>(42);
-   * x = opts.get_or<FooOption>(123);
-   * assert(x == 42);
-   * @endcode
-   *
-   * @tparam T the option type
-   * @param default_value the value to return if `T` is not set
-   */
-  template <typename T>
-  value_type_t<T> get_or(type_identity_t<T> t = {}) const {
-    return get_or<T>(std::move(t.value));
   }
 
   /**
@@ -250,40 +191,11 @@ class Options {
    * @param init_value the value to return if `T` is not set
    */
   template <typename T>
-  value_type_t<T>& lookup(value_type_t<T> init_value) {
+  ValueTypeT<T>& lookup(ValueTypeT<T> init_value = T{}.value) {
     auto it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<T>(&it->second)->value;
     set<T>(std::move(init_value));
-    return lookup<T>();  // Recursive call, but the value exists now.
-  }
-
-  /**
-   * Returns a reference to the value for the option of type `T`, setting the
-   * value to @p t.init_value if necessary.
-   *
-   * @code
-   * struct BigOption {
-   *   std::set<std::string> value;
-   * };
-   *
-   * BigOption default_option = {
-   *   set::set<std::string>{"foo", "bar"}
-   * };
-   *
-   * Options opts;
-   * std::set<std::string>& x = opts.lookup<BigOption>(default_option);
-   * assert(x.size() == 2);
-   *
-   * x.insert("baz");
-   * assert(opts.lookup<BigOption>.size() == 3);
-   * @endcode
-   *
-   * @tparam T the option type
-   * @param t the option with the `.value` to use by default
-   */
-  template <typename T>
-  value_type_t<T>& lookup(type_identity_t<T> t = {}) {
-    return lookup<T>(std::move(t.value));
+    return absl::any_cast<T>(&m_.find(typeid(T))->second)->value;
   }
 
  private:

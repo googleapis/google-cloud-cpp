@@ -98,18 +98,12 @@ TEST(Options, Set) {
   EXPECT_EQ(0, opts.get_or<IntOption>(-1));
   opts.set<IntOption>(123);
   EXPECT_EQ(123, opts.get_or<IntOption>(-1));
-  const IntOption default_int{42};
-  opts.set<IntOption>(default_int);
-  EXPECT_EQ(42, opts.get_or<IntOption>(-1));
 
   opts = Options{};
   opts.set<BoolOption>();
   EXPECT_TRUE(opts.has<BoolOption>());
   EXPECT_EQ(false, opts.get_or<BoolOption>(true));
   opts.set<BoolOption>(true);
-  EXPECT_EQ(true, opts.get_or<BoolOption>(false));
-  const BoolOption default_bool{true};
-  opts.set<BoolOption>(default_bool);
   EXPECT_EQ(true, opts.get_or<BoolOption>(false));
 
   opts = Options{};
@@ -118,9 +112,6 @@ TEST(Options, Set) {
   EXPECT_EQ("", opts.get_or<StringOption>("default"));
   opts.set<StringOption>("foo");
   EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
-  const StringOption default_string{"foo"};
-  opts.set<StringOption>(default_string);
-  EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
 
   opts = Options{};
   opts.set<DefaultedOption>();
@@ -128,35 +119,21 @@ TEST(Options, Set) {
   EXPECT_EQ(123, opts.get_or<DefaultedOption>(-1));
   opts.set<DefaultedOption>(42);
   EXPECT_EQ(42, opts.get_or<DefaultedOption>(-1));
-  DefaultedOption default_default;
-  default_default.value = 42;
-  opts.set<DefaultedOption>(default_default);
-  EXPECT_EQ(42, opts.get_or<DefaultedOption>(-1));
 }
 
 TEST(Options, GetOr) {
-  const IntOption default_int{42};
-  const BoolOption default_bool{true};
-  const StringOption default_string{"foo"};
-  DefaultedOption default_default;
-  default_default.value = 42;
-
   Options opts;
   EXPECT_EQ(opts.get_or<IntOption>(), 0);
   EXPECT_EQ(opts.get_or<IntOption>(42), 42);
-  EXPECT_EQ(opts.get_or<IntOption>(default_int), 42);
 
   EXPECT_EQ(opts.get_or<BoolOption>(), false);
   EXPECT_EQ(opts.get_or<BoolOption>(true), true);
-  EXPECT_EQ(opts.get_or<BoolOption>(default_bool), true);
 
   EXPECT_EQ(opts.get_or<StringOption>(), "");
   EXPECT_EQ(opts.get_or<StringOption>("foo"), "foo");
-  EXPECT_EQ(opts.get_or<StringOption>(default_string), "foo");
 
   EXPECT_EQ(opts.get_or<DefaultedOption>(), 123);
   EXPECT_EQ(opts.get_or<DefaultedOption>(42), 42);
-  EXPECT_EQ(opts.get_or<DefaultedOption>(default_default), 42);
 }
 
 TEST(Options, Lookup) {
@@ -174,13 +151,6 @@ TEST(Options, Lookup) {
   opts.unset<IntOption>();
   EXPECT_FALSE(opts.has<IntOption>());
   EXPECT_EQ(42, opts.lookup<IntOption>(42));
-  EXPECT_TRUE(opts.has<IntOption>());
-
-  // Lookup with user-supplied default IntOption
-  const IntOption default_int{42};
-  opts.unset<IntOption>();
-  EXPECT_FALSE(opts.has<IntOption>());
-  EXPECT_EQ(42, opts.lookup<IntOption>(default_int));
   EXPECT_TRUE(opts.has<IntOption>());
 }
 
