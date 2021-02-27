@@ -33,7 +33,7 @@ using ::testing::ContainsRegex;
 template <typename T, typename ValueType = decltype(std::declval<T>().value)>
 void TestOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
-  EXPECT_EQ(expected, opts.template get<T>()->value)
+  EXPECT_EQ(expected, opts.template get_or<T>())
       << "Failed with type: " << typeid(T).name();
 }
 
@@ -54,7 +54,9 @@ TEST(CommonOptions, Expected) {
 }
 
 TEST(CommonOptions, Unexpected) {
-  struct UnexpectedOption {};
+  struct UnexpectedOption {
+    int value;
+  };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<UnexpectedOption>();

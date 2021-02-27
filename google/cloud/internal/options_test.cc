@@ -253,7 +253,9 @@ TEST(CheckUnexpectedOptions, BasicOptionsList) {
 }
 
 TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
-  struct FooOption {};
+  struct FooOption {
+    int value;
+  };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<IntOption>();
@@ -264,7 +266,9 @@ TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
 }
 
 TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
-  struct FooOption {};
+  struct FooOption {
+    int value;
+  };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<IntOption>();

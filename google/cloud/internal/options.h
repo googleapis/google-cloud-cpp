@@ -29,6 +29,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class Options;
 namespace internal {
+
 // See https://en.cppreference.com/w/cpp/types/type_identity
 template <typename T>
 struct type_identity {
@@ -37,7 +38,7 @@ struct type_identity {
 template <typename T>
 using type_identity_t = typename type_identity<T>::type;
 
-
+// Extracts the type of `T`'s `.value` data member.
 template <typename T>
 struct value_type {
   using type = decltype(std::declval<T>().value);
