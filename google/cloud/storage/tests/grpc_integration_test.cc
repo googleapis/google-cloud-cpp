@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -339,6 +340,55 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
+TEST_P(GrpcIntegrationTest, IamCRUD) {
+  // TODO(#5673): Enable this.
+  if (!UsingEmulator()) GTEST_SKIP();
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  std::string bucket_name = MakeRandomBucketName();
+  auto meta = client->CreateBucketForProject(bucket_name, project_id(),
+                                             BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  auto set = client->SetNativeBucketIamPolicy(
+      bucket_name,
+      NativeIamPolicy{std::vector<NativeIamBinding>{NativeIamBinding{
+                          "test-role", {"user:test@example.com"}}},
+                      "test-etag", 3});
+  ASSERT_STATUS_OK(set);
+
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      set->bindings(), [](NativeIamBinding const& binding) {
+        return binding.role() == "test-role";
+      }));
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      set->bindings(), [](NativeIamBinding const& binding) {
+        return google::cloud::internal::Contains(binding.members(),
+                                                 "user@test.example.com");
+      }));
+  EXPECT_EQ(set->version(), 3);
+  EXPECT_EQ(set->etag(), "test-etag");
+
+  auto get = client->GetNativeBucketIamPolicy(bucket_name);
+  ASSERT_STATUS_OK(get);
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      get->bindings(), [](NativeIamBinding const& binding) {
+        return binding.role() == "test-role";
+      }));
+  EXPECT_TRUE(google::cloud::internal::ContainsIf(
+      get->bindings(), [](NativeIamBinding const& binding) {
+        return google::cloud::internal::Contains(binding.members(),
+                                                 "user@test.example.com");
+      }));
+  EXPECT_EQ(get->version(), set->version());
+  EXPECT_EQ(get->etag(), set->etag());
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_P(GrpcIntegrationTest, WriteResume) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -440,8 +490,8 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
-  // Insert an object that is larger than 4 MiB, and its size is not a multiple
-  // of 256 KiB.
+  // Insert an object that is larger than 4 MiB, and its size is not a
+  // multiple of 256 KiB.
   auto const desired_size = 8 * 1024 * 1024L + 253 * 1024 + 15;
   auto data = MakeRandomData(desired_size);
   auto metadata = client->InsertObject(bucket_name, object_name, data,

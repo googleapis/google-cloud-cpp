@@ -231,6 +231,9 @@ class Bucket:
             etag=datetime.datetime.now().isoformat().encode("utf-8"),
         )
 
+    def get_iam_policy(self, request, context):
+        return self.iam_policy
+
     def set_iam_policy(self, request, context):
         policy = None
         if context is not None:

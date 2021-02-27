@@ -800,6 +800,49 @@ TEST(GrpcClientBucketRequest, DeleteNotificationRequestAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, GetBucketIamPolicySimple) {
+  storage_proto::GetIamPolicyRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+      iam_request: {
+        resource: "test-bucket-name",
+        options: {
+          requested_policy_version: 3
+        }
+      }
+)""",
+                                                            &expected));
+
+  GetBucketIamPolicyRequest request("test-bucket-name");
+  request.set_option(RequestedPolicyVersion(3));
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcClientBucketRequest, SetBucketIamPolicySimple) {
+  storage_proto::SetIamPolicyRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    iam_request: {
+      resource: "test-bucket-name"
+      policy: {
+        bindings: {
+          role: "test-role"
+          members: "user:test@example.com"
+        }
+        etag: "test-etag"
+        version: 3
+      }
+    }
+)""",
+                                                            &expected));
+  SetNativeBucketIamPolicyRequest request(
+      "test-bucket-name",
+      NativeIamPolicy{std::vector<NativeIamBinding>{NativeIamBinding{
+                          "test-role", {"user:test@example.com"}}},
+                      "test-etag", 3});
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

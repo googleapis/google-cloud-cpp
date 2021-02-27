@@ -144,6 +144,16 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         bucket.delete_notification(notification_id, context)
         return Empty()
 
+    def GetIamPolicy(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.get_iam_policy(request, context)
+
+    def SetIamPolicy(self, request, context):
+        bucket_name = request.bucket
+        bucket = db.get_bucket(request, bucket_name, context)
+        return bucket.set_iam_policy(request, context)
+
     # === OBJECT === #
 
     def InsertObject(self, request_iterator, context):

@@ -207,7 +207,7 @@ StatusOr<google::cloud::IamPolicy> ParseIamPolicyFromString(
     std::string const& payload);
 
 /**
- * Represents a request to the `Buckets: getIamPolicy` API.
+ * Represents a request to the `Buckets: setIamPolicy` API.
  */
 class SetBucketIamPolicyRequest
     : public GenericRequest<SetBucketIamPolicyRequest, UserProject> {
@@ -227,7 +227,7 @@ class SetBucketIamPolicyRequest
 std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r);
 
 /**
- * Represents a request to the `Buckets: getIamPolicy` native API.
+ * Represents a request to the `Buckets: setIamPolicy` native API.
  */
 class SetNativeBucketIamPolicyRequest
     : public GenericRequest<SetNativeBucketIamPolicyRequest, UserProject> {
