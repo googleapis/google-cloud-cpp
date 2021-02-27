@@ -26,6 +26,9 @@ namespace internal {
 
 namespace {
 
+using ::testing::Contains;
+using ::testing::ContainsRegex;
+
 // Tests a generic option by setting it, then getting it.
 template <typename T, typename ValueType = decltype(std::declval<T>().value)>
 void TestOption(ValueType const& expected) {
@@ -58,7 +61,7 @@ TEST(CommonOptions, Unexpected) {
   internal::CheckExpectedOptions<CommonOptions>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
-            Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption"));
+      Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
 }  // namespace internal

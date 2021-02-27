@@ -173,6 +173,18 @@ TEST(CheckUnexpectedOptions, TwoExpected) {
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
+TEST(CheckUnexpectedOptions, FullishLogLine) {
+  testing_util::ScopedLog log;
+  Options opts;
+  opts.set<IntOption>();
+  internal::CheckExpectedOptions<BoolOption>(opts, "caller");
+  // This tests exists just to show us what a full log line may look like.
+  // The regex hides the nastiness of the actual mangled name.
+  EXPECT_THAT(log.ExtractLines(),
+              Contains(ContainsRegex(
+                  "caller: Unexpected option (mangled name): .+IntOption")));
+}
+
 TEST(CheckUnexpectedOptions, OneUnexpected) {
   testing_util::ScopedLog log;
   Options opts;

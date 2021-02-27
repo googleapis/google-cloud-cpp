@@ -146,7 +146,7 @@ struct FlatTuple {
 };
 template <typename... T>
 struct FlatTuple<std::tuple<T...>> {
-  using Type = std::tuple<T...>;
+  using Type = std::tuple<T...>;  // Note: Doesn't work w/ nested tuples.
 };
 
 template <typename... T>
