@@ -41,7 +41,7 @@ std::set<std::string> DefaultTracingComponents();
 TracingOptions DefaultTracingOptions();
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(std::size_t);
 template <typename ConnectionTraits>
-Options MakeOptions(ConnectionOptions<ConnectionTraits>&&);
+Options MakeOptions(ConnectionOptions<ConnectionTraits>);
 }  // namespace internal
 
 /**
@@ -195,8 +195,7 @@ class ConnectionOptions {
    * `grpc::CreateCustomChannel` and create one more more gRPC channels.
    */
   grpc::ChannelArguments CreateChannelArguments() const {
-    return internal::MakeChannelArguments(
-        internal::MakeOptions(ConnectionOptions(*this)));
+    return internal::MakeChannelArguments(internal::MakeOptions(*this));
   }
 
   /**
@@ -240,7 +239,7 @@ class ConnectionOptions {
 
  private:
   template <typename T>
-  friend internal::Options internal::MakeOptions(ConnectionOptions<T>&&);
+  friend internal::Options internal::MakeOptions(ConnectionOptions<T>);
 
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
@@ -257,7 +256,7 @@ class ConnectionOptions {
 namespace internal {
 
 template <typename ConnectionTraits>
-Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
+Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
   Options opts;
   opts.set<GrpcCredentialOption>(std::move(old.credentials_));
   opts.set<EndpointOption>(std::move(old.endpoint_));
