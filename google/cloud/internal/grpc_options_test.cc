@@ -30,10 +30,10 @@ using ::testing::Contains;
 using ::testing::ContainsRegex;
 
 // Tests a generic option by setting it, then getting it.
-template <typename T, typename ValueType = decltype(std::declval<T>().value)>
+template <typename T, typename ValueType = typename T::Type>
 void TestGrpcOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
-  EXPECT_EQ(expected, opts.template get<T>()->value)
+  EXPECT_EQ(expected, opts.template get_or<T>({}))
       << "Failed with type: " << typeid(T).name();
 }
 
@@ -57,7 +57,7 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
   };
   auto opts = Options{}.set<GrpcBackgroundThreadsOption>(factory);
   EXPECT_FALSE(invoked);
-  opts.get<GrpcBackgroundThreadsOption>()->value();
+  opts.get_or<GrpcBackgroundThreadsOption>({})();
   EXPECT_TRUE(invoked);
 }
 
@@ -70,10 +70,12 @@ TEST(GrpcOptions, Expected) {
 }
 
 TEST(GrpcOptions, Unexpected) {
-  struct UnexpectedOption {};
+  struct UnexpectedOption {
+    using Type = int;
+  };
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<UnexpectedOption>();
+  opts.set<UnexpectedOption>({});
   internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),

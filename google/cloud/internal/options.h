@@ -17,7 +17,6 @@
 
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
-#include "absl/types/optional.h"
 #include <set>
 #include <typeindex>
 #include <typeinfo>
@@ -38,39 +37,51 @@ namespace internal {
 /**
  * A class that holds option structs indexed by their type.
  *
- * An "Option" can be any unique struct, but by convention these structs tend
- * to have a single data member named "value" and a name like "FooOption".
- * Each library (e.g., spanner, storage) may define their own set of options.
- * Additionally, various common classes may define options. All these options
- * may be set in a single `Options` instance, and each library will look at the
- * options that it needs.
+ * An "Option" is any struct that has a public `Type` member typedef. By
+ * convention they are named like "FooOption". Each library (e.g., spanner,
+ * storage) may define their own set of options. Additionally, there are common
+ * options defined that many libraries may use. All these options may be set in
+ * a single `Options` instance, and each library will look at the options that
+ * it needs.
+ *
+ * Here's an overview of this class's interface, but see the method
+ * documentation below for details.
+ *
+ * - `.set<T>(x)`    -- Sets the option `T` to value `x`
+ * - `.has<T>()`     -- Returns true iff option `T` is set
+ * - `.unset<T>()`   -- Removes the option `T`
+ * - `.get_or<T>(x)` -- Gets the value of option `T`, or `x` if no value was set
+ * - `.lookup<T>(x)` -- Gets a reference to option `T`'s value, initializing it
+ *                      to `x` if it was no set (`x` is optional).
  *
  * @par Example:
  *
  * @code
- * // Given
- * struct EndpointOption {
- *   std::string value;
- * };
  * struct FooOption {
- *   int value;
+ *   using Type = int;
  * };
  * struct BarOption {
- *   double value;
+ *   using Type = std::set<std::string>;
  * };
  * ...
- * auto opts = Options{}
- *                 .set<EndpointOption>("blah.googleapis.com")
- *                 .set<FooOption>(42);
- * absl::optional<FooOption> foo = opts.get<FooOption>();
- * assert(foo.has_value());
- * assert(foo->value == 42);
+ * Options opts;
+ * opts.set<FooOption>(42);
+ * int foo = opts.get_or<FooOption>(123);
+ * assert(foo == 42);  // Option was set, so 123 is not used.
  *
- * BarOption bar = opts.get_or<BarOption>(3.14);
- * assert(bar.value == 3.14);
+ * // Inserts two elements directly into the BarOption's std::set.
+ * opts.lookup<BarOption>().insert("hello");
+ * opts.lookup<BarOption>().insert("world");
+ *
+ * auto bar = opts.get_or<BarOption>({});
+ * assert(bar == std::set<std::string>{"hello", "world"});
  * @endcode
  */
 class Options {
+ private:
+  template <typename T>
+  using ValueTypeT = typename T::Type;
+
  public:
   /// Constructs an empty instance.
   Options() = default;
@@ -81,24 +92,38 @@ class Options {
   Options& operator=(Options&&) = default;
 
   /**
-   * Returns true iff no options are currently set.
-   */
-  bool empty() const { return m_.empty(); }
-
-  /**
-   * Sets the specified option and returns a reference to `*this`.
+   * Sets option `T` to the value @p v and returns a reference to `*this`.
    *
-   * The optional arguments to `set(...)` will be used to construct the `T`
-   * option.
+   * @code
+   * struct FooOption {
+   *   using Type = int;
+   * };
+   * auto opts = Options{}.set<FooOption>(123);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param v the value to set the option T
    */
-  template <typename T, typename... U>
-  Options& set(U&&... u) {
-    m_[typeid(T)] = T{std::forward<U>(u)...};
+  template <typename T>
+  Options& set(ValueTypeT<T> v) {
+    m_[typeid(T)] = Data<T>{std::move(v)};
     return *this;
   }
 
   /**
+   * Returns true IFF an option with type `T` exists.
+   *
+   * @tparam T the option type
+   */
+  template <typename T>
+  bool has() {
+    return m_.find(typeid(T)) != m_.end();
+  }
+
+  /**
    * Erases the option specified by the type `T`.
+   *
+   * @tparam T the option type
    */
   template <typename T>
   void unset() {
@@ -106,32 +131,70 @@ class Options {
   }
 
   /**
-   * Gets the option specified by its type `T`, if it was set.
+   * Returns the value for the option `T`, else returns the @p default_value.
+   *
+   * @code
+   * struct FooOption {
+   *   using Type = int;
+   * };
+   * Options opts;
+   * int x = opts.get_or<FooOption>(123);
+   * assert(x == 123);
+   * assert(!x.has<FooOption>());
+   *
+   * opts.set<FooOption>(42);
+   * x = opts.get_or<FooOption>(123);
+   * assert(x == 42);
+   * assert(x.has<FooOption>());
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param default_value the value to return if `T` is not set
    */
   template <typename T>
-  absl::optional<T> get() const {
-    auto it = m_.find(typeid(T));
-    if (it == m_.end()) return absl::nullopt;
-    return absl::any_cast<T>(it->second);
+  ValueTypeT<T> get_or(ValueTypeT<T> default_value) const {
+    auto const it = m_.find(typeid(T));
+    if (it != m_.end()) return absl::any_cast<Data<T>>(it->second).value;
+    return default_value;
   }
 
   /**
-   * Gets the option of type `T` if set, else a newly constructed default `T`.
+   * Returns a reference to the value for option `T`, setting the value to @p
+   * init_value if necessary.
    *
-   * If the specified option `T` is not set, a new `T` will be constructed with
-   * the optional arguments @p u.
+   * @code
+   * struct BigOption {
+   *   using Type = std::set<std::string>;
+   * };
+   * Options opts;
+   * std::set<std::string>& x = opts.lookup<BigOption>();
+   * assert(x.empty());
+   *
+   * x.insert("foo");
+   * opts.lookup<BigOption>().insert("bar");
+   * assert(x.size() == 2);
+   * @endcode
+   *
+   * @tparam T the option type
+   * @param init_value the initial value to use if `T` is not set (optional)
    */
-  template <typename T, typename... U>
-  T get_or(U&&... u) const {
-    auto v = get<T>();
-    if (v) return *v;
-    return T{std::forward<U>(u)...};
+  template <typename T>
+  ValueTypeT<T>& lookup(ValueTypeT<T> init_value = {}) {
+    auto const p = m_.emplace(typeid(T), Data<T>{std::move(init_value)});
+    return absl::any_cast<Data<T>>(&p.first->second)->value;
   }
 
  private:
   friend void CheckExpectedOptionsImpl(std::set<std::type_index> const&,
                                        Options const&, char const*);
 
+  // The data holder for all the option values.
+  template <typename T>
+  struct Data {
+    ValueTypeT<T> value;
+  };
+
+  // The `absl::any` objects all hold a `Data<T>`
   std::unordered_map<std::type_index, absl::any> m_;
 };
 

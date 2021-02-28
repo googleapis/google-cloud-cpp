@@ -262,8 +262,7 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
   opts.set<GrpcCredentialOption>(std::move(old.credentials_));
   opts.set<EndpointOption>(std::move(old.endpoint_));
   opts.set<GrpcNumChannelsOption>(old.num_channels_);
-  opts.set<UserAgentPrefixOption>(
-      std::set<std::string>{std::move(old.user_agent_prefix_)});
+  opts.set<UserAgentPrefixOption>({std::move(old.user_agent_prefix_)});
   opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
   opts.set<GrpcBackgroundThreadsOption>(old.background_threads_factory());
   if (!old.tracing_components_.empty()) {
@@ -274,8 +273,8 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits>&& old) {
     // parameter to a different value. Newer versions of gRPC include a macro
     // for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling
     // against older versions in some cases, we use the actual value.
-    opts.set<GrpcChannelArgumentsOption>(std::map<std::string, std::string>{
-        {"grpc.channel_pooling_domain", std::move(old.channel_pool_domain_)}});
+    opts.set<GrpcChannelArgumentsOption>(
+        {{"grpc.channel_pooling_domain", std::move(old.channel_pool_domain_)}});
   }
   return opts;
 }

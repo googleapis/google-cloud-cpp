@@ -15,6 +15,7 @@
 #include "google/cloud/internal/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
+#include <set>
 #include <string>
 #include <tuple>
 
@@ -27,65 +28,115 @@ namespace {
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
+using ::testing::UnorderedElementsAre;
 
 struct IntOption {
-  int value;
+  using Type = int;
 };
 
 struct BoolOption {
-  bool value;
+  using Type = bool;
 };
 
 struct StringOption {
-  std::string value;
-};
-
-// Let's test an option struct that has a default value. In this case, the
-// struct will no longer support aggregate initialization [1], so we'll need to
-// add back a 1-arg and default constructors.
-//
-// [1]: https://en.cppreference.com/w/cpp/language/aggregate_initialization
-struct DefaultedOption {
-  explicit DefaultedOption(int v) : value(v) {}
-  DefaultedOption() = default;
-  int value = 123;
+  using Type = std::string;
 };
 
 using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
 
-TEST(Options, Empty) {
-  Options opts{};
-  EXPECT_TRUE(opts.empty());
+// This is how customers should set a simple options.
+TEST(OptionsUseCase, CustomerSettingSimpleOptions) {
+  auto opts = Options{}.set<IntOption>(123).set<BoolOption>(true);
+
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_TRUE(opts.has<BoolOption>());
 }
 
-TEST(Options, GetWithDefault) {
-  Options opts{};
+// This is how customers should append to an option.
+TEST(OptionsUseCase, CustomerSettingComplexOption) {
+  struct ComplexOption {
+    using Type = std::set<std::string>;
+  };
 
-  // Get the specified default value.
-  EXPECT_EQ(opts.get_or<IntOption>(42).value, 42);
+  Options opts;
+
+  EXPECT_FALSE(opts.has<ComplexOption>());
+  opts.lookup<ComplexOption>().insert("foo");
+  EXPECT_TRUE(opts.has<ComplexOption>());
+  opts.lookup<ComplexOption>().insert("bar");
+
+  EXPECT_THAT(opts.lookup<ComplexOption>(), UnorderedElementsAre("foo", "bar"));
 }
 
-TEST(Options, DefaultedOption) {
-  Options opts{};
+// This is how our factory functions should get options.
+TEST(OptionsUseCase, FactoriesGettingOptions) {
+  auto factory = [](Options const& opts) {
+    EXPECT_EQ(123, opts.get_or<IntOption>(123));
+    EXPECT_EQ("set-by-customer", opts.get_or<StringOption>({}));
+  };
 
-  // Set doesn't need an argument since a default constructed option is fine.
-  opts.set<DefaultedOption>();
-  EXPECT_EQ(123, opts.get<DefaultedOption>()->value);
-
-  opts.unset<DefaultedOption>();
-  EXPECT_EQ(123, opts.get_or<DefaultedOption>().value);
-  EXPECT_EQ(42, opts.get_or<DefaultedOption>(42).value);
+  auto opts = Options{}.set<StringOption>("set-by-customer");
+  factory(opts);
 }
 
-TEST(Options, MutateOption) {
-  Options opts{};
-  opts.set<StringOption>("test1");
-  EXPECT_EQ("test1", opts.get<StringOption>()->value);
+TEST(Options, Has) {
+  Options opts;
+  EXPECT_FALSE(opts.has<IntOption>());
+  opts.set<IntOption>(42);
+  EXPECT_TRUE(opts.has<IntOption>());
+}
 
-  auto v = opts.get_or<StringOption>("");
-  opts.set<StringOption>(v.value + ",test2");
+TEST(Options, Set) {
+  Options opts;
+  opts.set<IntOption>({});
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_EQ(0, opts.get_or<IntOption>(-1));
+  opts.set<IntOption>(123);
+  EXPECT_EQ(123, opts.get_or<IntOption>(-1));
 
-  EXPECT_EQ("test1,test2", opts.get<StringOption>()->value);
+  opts = Options{};
+  opts.set<BoolOption>({});
+  EXPECT_TRUE(opts.has<BoolOption>());
+  EXPECT_EQ(false, opts.get_or<BoolOption>(true));
+  opts.set<BoolOption>(true);
+  EXPECT_EQ(true, opts.get_or<BoolOption>(false));
+
+  opts = Options{};
+  opts.set<StringOption>({});
+  EXPECT_TRUE(opts.has<StringOption>());
+  EXPECT_EQ("", opts.get_or<StringOption>("default"));
+  opts.set<StringOption>("foo");
+  EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
+}
+
+TEST(Options, GetOr) {
+  Options opts;
+  EXPECT_EQ(opts.get_or<IntOption>({}), 0);
+  EXPECT_EQ(opts.get_or<IntOption>(42), 42);
+
+  EXPECT_EQ(opts.get_or<BoolOption>({}), false);
+  EXPECT_EQ(opts.get_or<BoolOption>(true), true);
+
+  EXPECT_EQ(opts.get_or<StringOption>({}), "");
+  EXPECT_EQ(opts.get_or<StringOption>("foo"), "foo");
+}
+
+TEST(Options, Lookup) {
+  Options opts;
+
+  // Lookup with value-initialized default.
+  EXPECT_FALSE(opts.has<IntOption>());
+  int& x = opts.lookup<IntOption>();
+  EXPECT_TRUE(opts.has<IntOption>());
+  EXPECT_EQ(0, x);  // Value initialized int.
+  x = 42;           // Sets x within the Options
+  EXPECT_EQ(42, opts.lookup<IntOption>());
+
+  // Lookup with user-supplied default value.
+  opts.unset<IntOption>();
+  EXPECT_FALSE(opts.has<IntOption>());
+  EXPECT_EQ(42, opts.lookup<IntOption>(42));
+  EXPECT_TRUE(opts.has<IntOption>());
 }
 
 TEST(Options, Copy) {
@@ -93,13 +144,13 @@ TEST(Options, Copy) {
       "foo");
 
   auto copy = a;  // NOLINT(performance-unnecessary-copy-initialization)
-  EXPECT_FALSE(copy.empty());
-  EXPECT_TRUE(copy.get<IntOption>().has_value());
-  EXPECT_TRUE(copy.get<BoolOption>().has_value());
-  EXPECT_TRUE(copy.get<StringOption>().has_value());
-  EXPECT_EQ(copy.get<IntOption>()->value, 42);
-  EXPECT_EQ(copy.get<BoolOption>()->value, true);
-  EXPECT_EQ(copy.get<StringOption>()->value, "foo");
+  EXPECT_TRUE(copy.has<IntOption>());
+  EXPECT_TRUE(copy.has<BoolOption>());
+  EXPECT_TRUE(copy.has<StringOption>());
+
+  EXPECT_EQ(42, copy.get_or<IntOption>({}));
+  EXPECT_EQ(true, copy.get_or<BoolOption>({}));
+  EXPECT_EQ("foo", copy.get_or<StringOption>({}));
 }
 
 TEST(Options, Move) {
@@ -107,46 +158,13 @@ TEST(Options, Move) {
       "foo");
 
   auto moved = std::move(a);
-  EXPECT_FALSE(moved.empty());
-  EXPECT_TRUE(moved.get<IntOption>().has_value());
-  EXPECT_TRUE(moved.get<BoolOption>().has_value());
-  EXPECT_TRUE(moved.get<StringOption>().has_value());
-  EXPECT_EQ(moved.get<IntOption>()->value, 42);
-  EXPECT_EQ(moved.get<BoolOption>()->value, true);
-  EXPECT_EQ(moved.get<StringOption>()->value, "foo");
-}
+  EXPECT_TRUE(moved.has<IntOption>());
+  EXPECT_TRUE(moved.has<BoolOption>());
+  EXPECT_TRUE(moved.has<StringOption>());
 
-TEST(Options, BasicOperations) {
-  Options opts{};
-  EXPECT_TRUE(opts.empty());
-  EXPECT_FALSE(opts.get<IntOption>().has_value());
-
-  opts.set<IntOption>(42);
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 42);
-
-  opts.set<IntOption>(123);
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 123);
-
-  opts.set<BoolOption>(true).set<StringOption>("foo");
-  EXPECT_FALSE(opts.empty());
-  EXPECT_TRUE(opts.get<IntOption>().has_value());
-  EXPECT_TRUE(opts.get<BoolOption>().has_value());
-  EXPECT_TRUE(opts.get<StringOption>().has_value());
-  EXPECT_EQ(opts.get<IntOption>()->value, 123);
-  EXPECT_EQ(opts.get<BoolOption>()->value, true);
-  EXPECT_EQ(opts.get<StringOption>()->value, "foo");
-
-  opts.unset<IntOption>();
-  EXPECT_FALSE(opts.empty());
-  EXPECT_FALSE(opts.get<IntOption>().has_value());
-  EXPECT_TRUE(opts.get<BoolOption>().has_value());
-  EXPECT_TRUE(opts.get<StringOption>().has_value());
-  EXPECT_EQ(opts.get<BoolOption>()->value, true);
-  EXPECT_EQ(opts.get<StringOption>()->value, "foo");
+  EXPECT_EQ(42, moved.get_or<IntOption>({}));
+  EXPECT_EQ(true, moved.get_or<BoolOption>({}));
+  EXPECT_EQ("foo", moved.get_or<StringOption>({}));
 }
 
 TEST(CheckUnexpectedOptions, Empty) {
@@ -159,7 +177,7 @@ TEST(CheckUnexpectedOptions, Empty) {
 TEST(CheckUnexpectedOptions, OneExpected) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<BoolOption>();
+  opts.set<BoolOption>({});
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
@@ -167,8 +185,8 @@ TEST(CheckUnexpectedOptions, OneExpected) {
 TEST(CheckUnexpectedOptions, TwoExpected) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<BoolOption>();
-  opts.set<IntOption>();
+  opts.set<BoolOption>({});
+  opts.set<IntOption>({});
   internal::CheckExpectedOptions<BoolOption, IntOption>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
@@ -176,7 +194,7 @@ TEST(CheckUnexpectedOptions, TwoExpected) {
 TEST(CheckUnexpectedOptions, FullishLogLine) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
+  opts.set<IntOption>({});
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   // This tests exists just to show us what a full log line may look like.
   // The regex hides the nastiness of the actual mangled name.
@@ -189,7 +207,7 @@ TEST(CheckUnexpectedOptions, FullishLogLine) {
 TEST(CheckUnexpectedOptions, OneUnexpected) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
+  opts.set<IntOption>({});
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("caller: Unexpected option.+IntOption")));
@@ -198,8 +216,8 @@ TEST(CheckUnexpectedOptions, OneUnexpected) {
 TEST(CheckUnexpectedOptions, TwoUnexpected) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
-  opts.set<StringOption>();
+  opts.set<IntOption>({});
+  opts.set<StringOption>({});
   internal::CheckExpectedOptions<BoolOption>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
@@ -211,30 +229,34 @@ TEST(CheckUnexpectedOptions, TwoUnexpected) {
 TEST(CheckUnexpectedOptions, BasicOptionsList) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
-  opts.set<StringOption>();
+  opts.set<IntOption>({});
+  opts.set<StringOption>({});
   internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
-  struct FooOption {};
+  struct FooOption {
+    using Type = int;
+  };
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
-  opts.set<StringOption>();
-  opts.set<FooOption>();
+  opts.set<IntOption>({});
+  opts.set<StringOption>({});
+  opts.set<FooOption>({});
   internal::CheckExpectedOptions<FooOption, TestOptionsTuple>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
 TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
-  struct FooOption {};
+  struct FooOption {
+    using Type = int;
+  };
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<IntOption>();
-  opts.set<StringOption>();
-  opts.set<FooOption>();
+  opts.set<IntOption>({});
+  opts.set<StringOption>({});
+  opts.set<FooOption>({});
   internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("caller: Unexpected option.+FooOption")));
