@@ -340,7 +340,7 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-TEST_P(GrpcIntegrationTest, IamCRUD) {
+TEST_P(GrpcIntegrationTest, NativeIamCRUD) {
   // TODO(#5673): Enable this.
   if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
@@ -353,10 +353,9 @@ TEST_P(GrpcIntegrationTest, IamCRUD) {
   ASSERT_STATUS_OK(meta);
 
   auto set = client->SetNativeBucketIamPolicy(
-      bucket_name,
-      NativeIamPolicy{std::vector<NativeIamBinding>{NativeIamBinding{
-                          "test-role", {"user:test@example.com"}}},
-                      "test-etag", 3});
+      bucket_name, NativeIamPolicy({NativeIamBinding(
+                                       "test-role", {"user@test.example.com"})},
+                                   "test-etag", 3));
   ASSERT_STATUS_OK(set);
 
   EXPECT_TRUE(google::cloud::internal::ContainsIf(
@@ -369,7 +368,6 @@ TEST_P(GrpcIntegrationTest, IamCRUD) {
                                                  "user@test.example.com");
       }));
   EXPECT_EQ(set->version(), 3);
-  EXPECT_EQ(set->etag(), "test-etag");
 
   auto get = client->GetNativeBucketIamPolicy(bucket_name);
   ASSERT_STATUS_OK(get);

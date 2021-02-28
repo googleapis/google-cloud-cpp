@@ -240,7 +240,10 @@ class Bucket:
             policy = request.iam_request.policy
         else:
             data = json.loads(request.data)
+            if "iam_request" in data:
+                data = data["iam_request"]["policy"]
             data.pop("kind", None)
+            data.pop("etag", None)
             policy = json_format.ParseDict(data, policy_pb2.Policy())
         self.iam_policy = policy
         self.iam_policy.etag = datetime.datetime.now().isoformat().encode("utf-8")

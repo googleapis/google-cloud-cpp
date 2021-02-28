@@ -218,8 +218,8 @@ StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
   grpc::ClientContext context;
-  google::iam::v1::Policy response;
   auto proto_request = ToProto(request);
+  google::iam::v1::Policy response;
   auto status = stub_->SetBucketIamPolicy(&context, proto_request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
 

@@ -322,6 +322,7 @@ def bucket_notification_delete(bucket_name, notification_id):
 
 @gcs.route("/b/<bucket_name>/iam")
 def bucket_get_iam_policy(bucket_name):
+    db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     response = json_format.MessageToDict(bucket.iam_policy)
     response["kind"] = "storage#policy"
@@ -330,6 +331,7 @@ def bucket_get_iam_policy(bucket_name):
 
 @gcs.route("/b/<bucket_name>/iam", methods=["PUT"])
 def bucket_set_iam_policy(bucket_name):
+    db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.set_iam_policy(flask.request, None)
     response = json_format.MessageToDict(bucket.iam_policy)

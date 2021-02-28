@@ -305,10 +305,9 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
 SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
     std::string bucket_name, google::cloud::IamPolicy const& policy)
     : bucket_name_(std::move(bucket_name)) {
-  nlohmann::json iam{
-      {"kind", "storage#policy"},
-      {"etag", policy.etag},
-  };
+  nlohmann::json iam{{"kind", "storage#policy"},
+                     {"etag", policy.etag},
+                     {"version", policy.version}};
   nlohmann::json bindings;
   for (auto const& binding : policy.bindings) {
     nlohmann::json b{
