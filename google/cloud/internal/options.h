@@ -18,7 +18,6 @@
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
 #include <set>
-#include <type_traits>
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
