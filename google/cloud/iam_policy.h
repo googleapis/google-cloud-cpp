@@ -28,7 +28,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  *
  * @see
  * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
- *     for more information about a AIM policies.
+ *     for more information about IAM policies.
  *
  * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
  *     about ETags.

@@ -112,8 +112,7 @@ TEST_P(GrpcClientFailuresTest, GetBucketIamPolicy) {
 TEST_P(GrpcClientFailuresTest, GetNativeBucketIamPolicy) {
   auto actual =
       client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, SetBucketIamPolicy) {
@@ -127,8 +126,7 @@ TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
   auto actual =
       client_->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
           "bkt", NativeIamPolicy(std::vector<NativeIamBinding>())));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, TestBucketIamPermissions) {

@@ -860,6 +860,7 @@ TEST(BucketRequestsTest, SetIamPolicy) {
   nlohmann::json expected_payload{
       {"kind", "storage#policy"},
       {"etag", "XYZ="},
+      {"version", 1},
       {"bindings",
        {
            // The order of these elements matters, SetBucketIamPolicyRequest

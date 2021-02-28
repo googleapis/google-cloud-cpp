@@ -200,8 +200,14 @@ StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
-    GetBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    GetBucketIamPolicyRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::iam::v1::Policy response;
+  auto status = stub_->GetBucketIamPolicy(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
@@ -210,8 +216,14 @@ StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
 }
 
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
-    SetNativeBucketIamPolicyRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    SetNativeBucketIamPolicyRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::iam::v1::Policy response;
+  auto status = stub_->SetBucketIamPolicy(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  return FromProto(std::move(response));
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
@@ -1336,6 +1348,20 @@ Owner GrpcClient::FromProto(google::storage::v1::Owner rhs) {
   return result;
 }
 
+NativeIamPolicy GrpcClient::FromProto(google::iam::v1::Policy rhs) {
+  auto etag = std::move(rhs.etag());
+  auto version = std::move(rhs.version());
+  std::vector<NativeIamBinding> bindings;
+  for (auto& binding : *rhs.mutable_bindings()) {
+    bindings.emplace_back(
+        std::move(binding.role()),
+        std::vector<std::string>{binding.mutable_members()->begin(),
+                                 binding.mutable_members()->end()});
+  }
+  return NativeIamPolicy{std::move(bindings), std::move(etag),
+                         std::move(version)};
+}
+
 google::storage::v1::CommonEnums::Projection GrpcClient::ToProto(
     Projection const& p) {
   if (p.value() == Projection::NoAcl().value()) {
@@ -1536,6 +1562,40 @@ google::storage::v1::UpdateBucketRequest GrpcClient::ToProto(
   SetPredefinedAcl(r, request);
   SetPredefinedDefaultObjectAcl(r, request);
   SetProjection(r, request);
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::GetIamPolicyRequest GrpcClient::ToProto(
+    GetBucketIamPolicyRequest const& request) {
+  google::storage::v1::GetIamPolicyRequest r;
+  auto& iam_request = *r.mutable_iam_request();
+  iam_request.set_resource(request.bucket_name());
+  if (request.HasOption<RequestedPolicyVersion>()) {
+    int policy_version = static_cast<int>(
+        request.template GetOption<RequestedPolicyVersion>().value());
+    iam_request.mutable_options()->set_requested_policy_version(policy_version);
+  }
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::SetIamPolicyRequest GrpcClient::ToProto(
+    SetNativeBucketIamPolicyRequest const& request) {
+  google::storage::v1::SetIamPolicyRequest r;
+  google::iam::v1::Policy p;
+  auto payload_policy = NativeIamPolicy::CreateFromJson(request.json_payload());
+  r.mutable_iam_request()->set_resource(request.bucket_name());
+  p.set_etag(payload_policy->etag());
+  p.set_version(payload_policy->version());
+  for (auto const& b : payload_policy->bindings()) {
+    auto& new_binding = *p.add_bindings();
+    new_binding.set_role(b.role());
+    for (auto const& m : b.members()) {
+      *new_binding.add_members() = std::move(m);
+    }
+  }
+  *r.mutable_iam_request()->mutable_policy() = std::move(p);
   SetCommonParameters(r, request);
   return r;
 }
