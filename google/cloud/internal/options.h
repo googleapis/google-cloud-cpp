@@ -58,29 +58,24 @@ namespace internal {
  * @par Example:
  *
  * @code
- * // Given
- * struct EndpointOption {
- *   using Type = std::string;
- * };
  * struct FooOption {
  *   using Type = int;
  * };
  * struct BarOption {
- *   using Type = double;
+ *   using Type = std::set<std::string>;
  * };
  * ...
- * auto opts = Options{}
- *                 .set<EndpointOption>("blah.googleapis.com")
- *                 .set<FooOption>(42);
+ * Options opts;
+ * opts.set<FooOption>(42);
  * int foo = opts.get_or<FooOption>(123);
- * assert(foo == 42);
+ * assert(foo == 42);  // Option was set, so 123 is not used.
  *
- * double bar = opts.get_or<BarOption>(3.14);
- * assert(bar == 3.14);
+ * // Inserts two elements directly into the BarOption's std::set.
+ * opts.lookup<BarOption>().insert("hello");
+ * opts.lookup<BarOption>().insert("world");
  *
- * // Modifies the stored EndpointOption's value via a reference
- * std::string& endpoint = opts.lookup<EndpointOption>();
- * endpoint = "new.googleapis.com";
+ * auto bar = opts.get_or<BarOption>({});
+ * assert(bar == std::set<std::string>{"hello", "world"});
  * @endcode
  */
 class Options {
@@ -98,7 +93,7 @@ class Options {
   Options& operator=(Options&&) = default;
 
   /**
-   * Sets the specified option and returns a reference to `*this`.
+   * Sets option `T` to the value @p v and returns a reference to `*this`.
    *
    * @code
    * struct FooOption {
@@ -137,8 +132,7 @@ class Options {
   }
 
   /**
-   * Returns the value for the option of type `T`, else returns the @p
-   * default_value.
+   * Returns the value for the option `T`, else returns the @p default_value.
    *
    * @code
    * struct FooOption {
@@ -147,10 +141,12 @@ class Options {
    * Options opts;
    * int x = opts.get_or<FooOption>(123);
    * assert(x == 123);
+   * assert(!x.has<FooOption>());
    *
    * opts.set<FooOption>(42);
    * x = opts.get_or<FooOption>(123);
    * assert(x == 42);
+   * assert(x.has<FooOption>());
    * @endcode
    *
    * @tparam T the option type
@@ -158,14 +154,14 @@ class Options {
    */
   template <typename T>
   ValueTypeT<T> get_or(ValueTypeT<T> default_value) const {
-    auto it = m_.find(typeid(T));
+    auto const it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<Data<T>>(it->second).value;
     return default_value;
   }
 
   /**
-   * Returns a reference to the value for the option of type `T`, setting the
-   * value to @p init_value if necessary.
+   * Returns a reference to the value for option `T`, setting the value to @p
+   * init_value if necessary.
    *
    * @code
    * struct BigOption {
@@ -185,10 +181,8 @@ class Options {
    */
   template <typename T>
   ValueTypeT<T>& lookup(ValueTypeT<T> init_value = {}) {
-    auto it = m_.find(typeid(T));
-    if (it != m_.end()) return absl::any_cast<Data<T>>(&it->second)->value;
-    set<T>(std::move(init_value));
-    return absl::any_cast<Data<T>>(&m_.find(typeid(T))->second)->value;
+    auto const p = m_.emplace(typeid(T), Data<T>{std::move(init_value)});
+    return absl::any_cast<Data<T>>(&p.first->second)->value;
   }
 
  private:
