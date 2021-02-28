@@ -40,10 +40,10 @@ namespace internal {
  *
  * An "Option" is any struct that has a public `Type` member typedef. By
  * convention they are named like "FooOption". Each library (e.g., spanner,
- * storage) may define their own set of options. Additionally, there may be
- * common options defined that many libraries may use. All these options may be
- * set in a single `Options` instance, and each library will look at the
- * options that it needs.
+ * storage) may define their own set of options. Additionally, there are common
+ * options defined that many libraries may use. All these options may be set in
+ * a single `Options` instance, and each library will look at the options that
+ * it needs.
  *
  * Here's an overview of this class's interface, but see the method
  * documentation below for details.
