@@ -246,28 +246,29 @@ $(function() {
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  opts.set&lt;GrpcNumChannelsOption&gt;(old.num_channels_);</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  opts.set&lt;UserAgentPrefixOption&gt;({std::move(old.user_agent_prefix_)});</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  opts.set&lt;GrpcTracingOptionsOption&gt;(std::move(old.tracing_options_));</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  opts.set&lt;GrpcBackgroundThreadsOption&gt;(old.<a class="code" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a43284354d8c932382f45510f42788541">background_threads_factory</a>());</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keywordflow">if</span> (!old.tracing_components_.empty()) {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    opts.set&lt;TracingComponentsOption&gt;(std::move(old.tracing_components_));</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  }</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  <span class="keywordflow">if</span> (!old.channel_pool_domain_.empty()) {</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="comment">// To get a different channel pool one just needs to set any channel</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">// parameter to a different value. Newer versions of gRPC include a macro</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="comment">// for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="comment">// against older versions in some cases, we use the actual value.</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    opts.set&lt;GrpcChannelArgumentsOption&gt;(</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        {{<span class="stringliteral">&quot;grpc.channel_pooling_domain&quot;</span>, std::move(old.channel_pool_domain_)}});</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keywordflow">return</span> opts;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}  <span class="comment">// namespace internal</span></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_NS</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  opts.set&lt;GrpcBackgroundThreadsFactoryOption&gt;(</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      old.<a class="code" href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a43284354d8c932382f45510f42788541">background_threads_factory</a>());</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keywordflow">if</span> (!old.tracing_components_.empty()) {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    opts.set&lt;TracingComponentsOption&gt;(std::move(old.tracing_components_));</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keywordflow">if</span> (!old.channel_pool_domain_.empty()) {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">// To get a different channel pool one just needs to set any channel</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="comment">// parameter to a different value. Newer versions of gRPC include a macro</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="comment">// for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling</span></div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="comment">// against older versions in some cases, we use the actual value.</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    opts.set&lt;GrpcChannelArgumentsOption&gt;(</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        {{<span class="stringliteral">&quot;grpc.channel_pooling_domain&quot;</span>, std::move(old.channel_pool_domain_)}});</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keywordflow">return</span> opts;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;}</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}  <span class="comment">// namespace internal</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_NS</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1ConnectionOptions_html_a2c7683c5c088bcbd44d18e8364783332"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a2c7683c5c088bcbd44d18e8364783332">google::cloud::v1::ConnectionOptions::num_channels</a></div><div class="ttdeci">int num_channels() const</div><div class="ttdoc">The number of transport channels to create.</div><div class="ttdef"><b>Definition:</b> <a href="connection__options_8h_source.html#l00107">connection_options.h:107</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1ConnectionOptions_html_a87660c2d2b7ce4c959f67a55e875fb6c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1ConnectionOptions.html#a87660c2d2b7ce4c959f67a55e875fb6c">google::cloud::v1::ConnectionOptions::set_num_channels</a></div><div class="ttdeci">ConnectionOptions &amp; set_num_channels(int num_channels)</div><div class="ttdoc">Set the value for num_channels().</div><div class="ttdef"><b>Definition:</b> <a href="connection__options_8h_source.html#l00110">connection_options.h:110</a></div></div>
