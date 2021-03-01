@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -59,6 +60,14 @@ TEST(GrpcOptions, GrpcBackgroundThreadsFactoryOption) {
   EXPECT_FALSE(invoked);
   opts.get_or<GrpcBackgroundThreadsFactoryOption>({})();
   EXPECT_TRUE(invoked);
+}
+
+TEST(GrpcOptions, DefaultBackgroundThreadsFactory) {
+  auto f = DefaultBackgroundThreadsFactory();
+  auto* tp =
+      dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(f.get());
+  ASSERT_NE(nullptr, tp);
+  EXPECT_EQ(1, tp->pool_size());
 }
 
 TEST(GrpcOptions, Expected) {
