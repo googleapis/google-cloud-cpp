@@ -197,6 +197,15 @@ class DeleteObjectRequest
                                   IfMetagenerationNotMatch, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
+
+  std::string const& upload_id() const { return upload_id_; }
+  DeleteObjectRequest& set_upload_id(std::string v) {
+    upload_id_ = std::move(v);
+    return *this;
+  }
+
+ private:
+  std::string upload_id_;
 };
 
 std::ostream& operator<<(std::ostream& os, DeleteObjectRequest const& r);

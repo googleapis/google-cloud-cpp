@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/setenv.h"
@@ -306,6 +307,13 @@ TEST_P(GrpcClientFailuresTest, CreateResumableSession) {
       ResumableUploadRequest("test-bucket", "test-object"));
   EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
                                      StatusCode::kUnimplemented)));
+}
+
+TEST_P(GrpcClientFailuresTest, DeleteResumableUpload) {
+  auto actual = client_->DeleteResumableUpload(DeleteResumableUploadRequest(
+      EncodeGrpcResumableUploadSessionUrl(ResumableUploadSessionGrpcParams{
+          "test-bucket", "test-object", "test-upload-id"})));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, ListDefaultObjectAcl) {
