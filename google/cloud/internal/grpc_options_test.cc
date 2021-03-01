@@ -46,7 +46,7 @@ TEST(GrpcOptions, RegularOptions) {
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
 }
 
-TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
+TEST(GrpcOptions, GrpcBackgroundThreadsFactoryOption) {
   struct Fake : BackgroundThreads {
     CompletionQueue cq() const override { return {}; }
   };
@@ -55,9 +55,9 @@ TEST(GrpcOptions, GrpcBackgroundThreadsOption) {
     invoked = true;
     return absl::make_unique<Fake>();
   };
-  auto opts = Options{}.set<GrpcBackgroundThreadsOption>(factory);
+  auto opts = Options{}.set<GrpcBackgroundThreadsFactoryOption>(factory);
   EXPECT_FALSE(invoked);
-  opts.get_or<GrpcBackgroundThreadsOption>({})();
+  opts.get_or<GrpcBackgroundThreadsFactoryOption>({})();
   EXPECT_TRUE(invoked);
 }
 
