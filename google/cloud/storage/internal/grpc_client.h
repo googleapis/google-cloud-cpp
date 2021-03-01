@@ -304,6 +304,9 @@ class GrpcClient : public RawClient,
       ResumableUploadRequest const& request);
   static google::storage::v1::QueryWriteStatusRequest ToProto(
       QueryResumableUploadRequest const& request);
+  static google::storage::v1::DeleteObjectRequest ToProto(
+      DeleteResumableUploadRequest const& request);
+
   static google::storage::v1::GetObjectMediaRequest ToProto(
       ReadObjectRangeRequest const& request);
 
