@@ -109,6 +109,20 @@ TEST(Options, Set) {
   EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
 }
 
+TEST(Options, Get) {
+  Options opts;
+
+  int const& i = opts.get<IntOption>();
+  EXPECT_EQ(0, i);
+  opts.set<IntOption>(42);
+  EXPECT_EQ(42, opts.get<IntOption>());
+
+  std::string const& s = opts.get<StringOption>();
+  EXPECT_TRUE(s.empty());
+  opts.set<StringOption>("test");
+  EXPECT_EQ("test", opts.get<StringOption>());
+}
+
 TEST(Options, GetOr) {
   Options opts;
   EXPECT_EQ(opts.get_or<IntOption>({}), 0);

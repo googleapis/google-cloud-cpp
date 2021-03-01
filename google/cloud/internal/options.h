@@ -50,9 +50,10 @@ namespace internal {
  * - `.set<T>(x)`    -- Sets the option `T` to value `x`
  * - `.has<T>()`     -- Returns true iff option `T` is set
  * - `.unset<T>()`   -- Removes the option `T`
+ * - `.get<T>()`     -- Gets a const-ref to the value of option `T`
  * - `.get_or<T>(x)` -- Gets the value of option `T`, or `x` if no value was set
- * - `.lookup<T>(x)` -- Gets a reference to option `T`'s value, initializing it
- *                      to `x` if it was no set (`x` is optional).
+ * - `.lookup<T>(x)` -- Gets a non-const-ref to option `T`'s value, initializing
+ *                      it to `x` if it was no set (`x` is optional).
  *
  * @par Example:
  *
@@ -65,15 +66,20 @@ namespace internal {
  * };
  * ...
  * Options opts;
+ *
+ * assert(opts.get<FooOption>() == 0);
+ * assert(opts.get_or<FooOption>(123) == 123);
+ *
  * opts.set<FooOption>(42);
- * int foo = opts.get_or<FooOption>(123);
- * assert(foo == 42);  // Option was set, so 123 is not used.
+ *
+ * assert(opts.get<FooOption>() == 42);
+ * assert(opts.get_or<FooOption>(123) == 42);
  *
  * // Inserts two elements directly into the BarOption's std::set.
  * opts.lookup<BarOption>().insert("hello");
  * opts.lookup<BarOption>().insert("world");
  *
- * auto bar = opts.get_or<BarOption>({});
+ * std::set<std::string> const& bar = opts.get<BarOption>();
  * assert(bar == std::set<std::string>{"hello", "world"});
  * @endcode
  */
@@ -128,6 +134,37 @@ class Options {
   template <typename T>
   void unset() {
     m_.erase(typeid(T));
+  }
+
+  /**
+   * Returns a reference to the value for `T`, or a value-initialized default
+   * if `T` was not set.
+   *
+   * This method will always return a reference to a valid value of the correct
+   * type for option `T`, whether or not `T` has actually been set. Use
+   * `has<T>()` to check whether or not the option has been set.
+   *
+   * @code
+   * struct FooOption {
+   *   using Type = std::set<std::string>;
+   * };
+   * Options opts;
+   * std::set<std::string> const& x = opts.get<FooOption>();
+   * assert(x.empty());
+   * assert(!x.has<FooOption>());
+   *
+   * opts.set<FooOption>({"foo"});
+   * assert(opts.get<FooOption>().size() == 1);
+   * @endcode
+   *
+   * @tparam T the option type
+   */
+  template <typename T>
+  ValueTypeT<T> const& get() const {
+    static auto const* const kDefaultValue = new ValueTypeT<T>{};
+    auto const it = m_.find(typeid(T));
+    if (it != m_.end()) return absl::any_cast<Data<T>>(&it->second)->value;
+    return *kDefaultValue;
   }
 
   /**
