@@ -72,7 +72,7 @@ TEST(OptionsUseCase, CustomerSettingComplexOption) {
 TEST(OptionsUseCase, FactoriesGettingOptions) {
   auto factory = [](Options const& opts) {
     EXPECT_EQ(123, opts.get_or<IntOption>(123));
-    EXPECT_EQ("set-by-customer", opts.get_or<StringOption>({}));
+    EXPECT_EQ("set-by-customer", opts.get<StringOption>());
   };
 
   auto opts = Options{}.set<StringOption>("set-by-customer");
@@ -107,6 +107,20 @@ TEST(Options, Set) {
   EXPECT_EQ("", opts.get_or<StringOption>("default"));
   opts.set<StringOption>("foo");
   EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
+}
+
+TEST(Options, Get) {
+  Options opts;
+
+  int const& i = opts.get<IntOption>();
+  EXPECT_EQ(0, i);
+  opts.set<IntOption>(42);
+  EXPECT_EQ(42, opts.get<IntOption>());
+
+  std::string const& s = opts.get<StringOption>();
+  EXPECT_TRUE(s.empty());
+  opts.set<StringOption>("test");
+  EXPECT_EQ("test", opts.get<StringOption>());
 }
 
 TEST(Options, GetOr) {
@@ -148,9 +162,9 @@ TEST(Options, Copy) {
   EXPECT_TRUE(copy.has<BoolOption>());
   EXPECT_TRUE(copy.has<StringOption>());
 
-  EXPECT_EQ(42, copy.get_or<IntOption>({}));
-  EXPECT_EQ(true, copy.get_or<BoolOption>({}));
-  EXPECT_EQ("foo", copy.get_or<StringOption>({}));
+  EXPECT_EQ(42, copy.get<IntOption>());
+  EXPECT_EQ(true, copy.get<BoolOption>());
+  EXPECT_EQ("foo", copy.get<StringOption>());
 }
 
 TEST(Options, Move) {
@@ -162,9 +176,9 @@ TEST(Options, Move) {
   EXPECT_TRUE(moved.has<BoolOption>());
   EXPECT_TRUE(moved.has<StringOption>());
 
-  EXPECT_EQ(42, moved.get_or<IntOption>({}));
-  EXPECT_EQ(true, moved.get_or<BoolOption>({}));
-  EXPECT_EQ("foo", moved.get_or<StringOption>({}));
+  EXPECT_EQ(42, moved.get<IntOption>());
+  EXPECT_EQ(true, moved.get<BoolOption>());
+  EXPECT_EQ("foo", moved.get<StringOption>());
 }
 
 TEST(CheckUnexpectedOptions, Empty) {
