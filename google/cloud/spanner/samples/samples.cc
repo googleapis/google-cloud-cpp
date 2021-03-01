@@ -685,14 +685,20 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& backup_id) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  auto db = client.GetDatabase(database);
-  if (!db) throw std::runtime_error(db.status().message());
   auto expire_time =
       google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
           .value();
-  auto version_time =
-      google::cloud::spanner::MakeTimestamp(db->earliest_version_time())
-          .value();
+  auto version_time = [&database]() {
+    auto client = google::cloud::spanner::Client(
+        google::cloud::spanner::MakeConnection(database));
+    auto rows = client.ExecuteQuery(
+        google::cloud::spanner::SqlStatement("SELECT CURRENT_TIMESTAMP()"));
+    using RowType = std::tuple<google::cloud::spanner::Timestamp>;
+    auto row = google::cloud::spanner::GetSingularRow(
+        google::cloud::spanner::StreamOf<RowType>(rows));
+    if (!row) throw std::runtime_error(row.status().message());
+    return std::get<0>(*row);
+  }();
   auto backup =
       client.CreateBackup(database, backup_id, expire_time, version_time).get();
   if (!backup) throw std::runtime_error(backup.status().message());
