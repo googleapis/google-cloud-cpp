@@ -101,22 +101,6 @@ Commands::value_type MakeCommandEntry(std::string const& name,
                                       std::vector<std::string> const& args,
                                       TableAsyncCommandType const& command);
 
-using InstanceAdminAsyncCommandType = std::function<void(
-    google::cloud::bigtable::InstanceAdmin, google::cloud::CompletionQueue,
-    std::vector<std::string>)>;
-
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    InstanceAdminAsyncCommandType const& command);
-
-using TableAdminAsyncCommandType = std::function<void(
-    google::cloud::bigtable::TableAdmin, google::cloud::CompletionQueue,
-    std::vector<std::string>)>;
-
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableAdminAsyncCommandType const& command);
-
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

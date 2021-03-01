@@ -272,7 +272,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async create table
+   * Use #CreateTable()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncCreateTable(
@@ -331,7 +331,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async list tables
+   * Use #ListTables()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<::google::bigtable::admin::v2::Table>>>
@@ -398,7 +398,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async get table
+   * Use #GetTable()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncGetTable(
@@ -452,7 +452,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async delete table
+   * Use #DeleteTable()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteTable(CompletionQueue& cq,
@@ -544,8 +544,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async create backup
-   *
+   * Use #CreateBackup()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
@@ -580,7 +579,6 @@ class TableAdmin {
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
       std::string const& cluster_id, std::string const& backup_id);
 
-  // clang-format off
   /**
    * Sends an asynchronous request to get information about a single backup.
    *
@@ -606,7 +604,7 @@ class TableAdmin {
    *   retry policy expires. In the first case, the future will contain the
    *   response from the service. In the second case, the future is satisfied
    *   with an exception.
-
+   *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
@@ -616,9 +614,8 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async get backup
+   * Use #GetBackup()
    */
-  // clang-format on
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
       CompletionQueue& cq, std::string const& cluster_id,
@@ -702,8 +699,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async update backup
-   *
+   * Use #UpdateBackup()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
@@ -791,7 +787,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
+   * Use #DeleteBackup()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteBackup(CompletionQueue& cq,
@@ -824,7 +820,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async delete backup
+   * Use #DeleteBackup()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteBackup(
@@ -975,8 +971,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async list backups
-   *
+   * Use #ListBackups()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
@@ -1080,8 +1075,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async restore table
-   *
+   * Use #RestoreTable()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
@@ -1133,7 +1127,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet bigtable_table_admin_backup_async_snippets.cc async restore2
+   * Use #RestoreTable()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
@@ -1189,7 +1183,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async modify table
+   * Use #ModifyColumnFamilies()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<::google::bigtable::admin::v2::Table>>
@@ -1245,7 +1239,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async drop rows by prefix
+   * Use #DropRowsByPrefix()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDropRowsByPrefix(CompletionQueue& cq,
@@ -1296,7 +1290,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async generate consistency token
+   * Use #AsyncGenerateConsistencyToken()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<std::string>> AsyncGenerateConsistencyToken(
@@ -1348,7 +1342,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async check consistency
+   * Use #CheckConsistency()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<Consistency>> AsyncCheckConsistency(
@@ -1401,7 +1395,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async wait for consistency
+   * Use #WaitForConsistency()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
@@ -1451,7 +1445,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_async_snippets.cc async drop all rows
+   * Use #DropAllRows()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDropAllRows(CompletionQueue& cq,
@@ -1518,7 +1512,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc async get iam policy
+   * Use #GetNativeIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
@@ -1607,7 +1601,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc async set iam policy
+   * Use #SetIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
@@ -1681,7 +1675,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet table_admin_iam_policy_snippets.cc async test iam permissions
+   * Use #TestIamPermissions()
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.

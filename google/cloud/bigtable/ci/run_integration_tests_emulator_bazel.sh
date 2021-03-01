@@ -43,7 +43,6 @@ production_only_targets=(
   "//google/cloud/bigtable/tests:admin_backup_integration_test"
   "//google/cloud/bigtable/tests:admin_backup_async_future_integration_test"
   "//google/cloud/bigtable/examples:bigtable_table_admin_backup_snippets"
-  "//google/cloud/bigtable/examples:bigtable_table_admin_backup_async_snippets"
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \

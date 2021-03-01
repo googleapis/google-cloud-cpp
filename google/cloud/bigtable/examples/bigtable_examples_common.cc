@@ -259,65 +259,6 @@ Commands::value_type MakeCommandEntry(std::string const& name,
   return Commands::value_type{name, std::move(adapter)};
 }
 
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    InstanceAdminAsyncCommandType const& command) {
-  auto adapter = [=](std::vector<std::string> argv) {
-    std::vector<std::string> const common{"<project-id>"};
-    if ((argv.size() == 1 && argv[0] == "--help") ||
-        argv.size() != common.size() + args.size()) {
-      std::ostringstream os;
-      os << name;
-      for (auto const& a : common) {
-        os << " " << a;
-      }
-      for (auto const& a : args) {
-        os << " " << a;
-      }
-      throw Usage{std::move(os).str()};
-    }
-    google::cloud::bigtable::InstanceAdmin admin(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()));
-    google::cloud::CompletionQueue cq;
-    std::thread t([&cq] { cq.Run(); });
-    AutoShutdownCQ shutdown(cq, std::move(t));
-    argv.erase(argv.begin(), argv.begin() + common.size());
-    command(std::move(admin), cq, std::move(argv));
-  };
-  return Commands::value_type{name, std::move(adapter)};
-}
-
-Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableAdminAsyncCommandType const& command) {
-  auto adapter = [=](std::vector<std::string> argv) {
-    std::vector<std::string> const common{"<project-id>", "<instance-id>"};
-    if ((argv.size() == 1 && argv[0] == "--help") ||
-        argv.size() != common.size() + args.size()) {
-      std::ostringstream os;
-      os << name;
-      for (auto const& a : common) {
-        os << " " << a;
-      }
-      for (auto const& a : args) {
-        os << " " << a;
-      }
-      throw Usage{std::move(os).str()};
-    }
-    google::cloud::bigtable::TableAdmin admin(
-        google::cloud::bigtable::CreateDefaultAdminClient(
-            argv[0], google::cloud::bigtable::ClientOptions()),
-        argv[1]);
-    google::cloud::CompletionQueue cq;
-    std::thread t([&cq] { cq.Run(); });
-    AutoShutdownCQ shutdown(cq, std::move(t));
-    argv.erase(argv.begin(), argv.begin() + common.size());
-    command(std::move(admin), cq, std::move(argv));
-  };
-  return Commands::value_type{name, std::move(adapter)};
-}
-
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

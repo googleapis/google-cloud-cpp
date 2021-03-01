@@ -108,133 +108,6 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   (std::move(admin), std::move(resource), std::move(permissions));
 }
 
-void AsyncGetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
-                       google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> const& argv) {
-  //! [async get iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  using google::iam::v1::Policy;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string const& table_id) {
-    future<StatusOr<google::iam::v1::Policy>> policy_future =
-        admin.AsyncGetIamPolicy(cq, table_id);
-
-    future<void> final =
-        policy_future.then([](future<StatusOr<google::iam::v1::Policy>> f) {
-          StatusOr<google::iam::v1::Policy> iam = f.get();
-          if (!iam) throw std::runtime_error(iam.status().message());
-          std::cout << "IamPolicy details : " << iam->DebugString() << "\n";
-        });
-
-    final.get();  // block to keep the example simple
-  }
-  //! [async get iam policy]
-  (std::move(admin), std::move(cq), argv.at(0));
-}
-
-void AsyncSetIamPolicy(google::cloud::bigtable::TableAdmin const& admin,
-                       google::cloud::bigtable::CompletionQueue cq,
-                       std::vector<std::string> const& argv) {
-  //! [async set iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  using google::iam::v1::Policy;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string const& table_id, std::string const& role,
-     std::string const& member) {
-    future<StatusOr<google::iam::v1::Policy>> updated_future =
-        admin.AsyncGetIamPolicy(cq, table_id)
-            .then([cq, admin, role, member,
-                   table_id](future<StatusOr<google::iam::v1::Policy>>
-                                 current_future) mutable {
-              auto current = current_future.get();
-              if (!current) {
-                return google::cloud::make_ready_future<
-                    StatusOr<google::iam::v1::Policy>>(current.status());
-              }
-              // This example adds the member to all existing bindings for
-              // that role. If there are no such bindgs, it adds a new one.
-              // This might not be what the user wants, e.g. in case of
-              // conditional bindings.
-              size_t num_added = 0;
-              for (auto& binding : *current->mutable_bindings()) {
-                if (binding.role() == role) {
-                  binding.add_members(member);
-                  ++num_added;
-                }
-              }
-              if (num_added == 0) {
-                *current->add_bindings() = cbt::IamBinding(role, {member});
-              }
-              return admin.AsyncSetIamPolicy(cq, table_id, *current);
-            });
-    // Show how to perform additional work while the long running operation
-    // completes. The application could use future.then() instead.
-    std::cout << "Waiting for IAM policy update to complete " << std::flush;
-    updated_future.wait_for(std::chrono::seconds(2));
-    auto result = updated_future.get();
-    std::cout << '.' << std::flush;
-    if (!result) throw std::runtime_error(result.status().message());
-    using cbt::operator<<;
-    std::cout << "DONE, the IAM Policy for " << table_id << " is\n"
-              << *result << "\n";
-  }
-  //! [async set iam policy]
-  (std::move(admin), std::move(cq), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void AsyncTestIamPermissions(google::cloud::bigtable::TableAdmin const& admin,
-                             google::cloud::bigtable::CompletionQueue cq,
-                             std::vector<std::string> const& argv) {
-  //! [async test iam permissions]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, cbt::CompletionQueue cq,
-     std::string const& resource, std::vector<std::string> const& permissions) {
-    future<StatusOr<std::vector<std::string>>> permissions_future =
-        admin.AsyncTestIamPermissions(cq, resource, permissions);
-    // Show how to perform additional work while the long running operation
-    // completes. The application could use permissions_future.then() instead.
-    std::cout << "Waiting for TestIamPermissions " << std::flush;
-    permissions_future.wait_for(std::chrono::seconds(2));
-    std::cout << '.' << std::flush;
-    auto result = permissions_future.get();
-    if (!result) throw std::runtime_error(result.status().message());
-    std::cout << "DONE, the current user has the following permissions [";
-    std::cout << absl::StrJoin(*result, ", ");
-    std::cout << "]\n";
-  }
-  //! [async test iam permissions]
-  (std::move(admin), std::move(cq), argv.at(0), {argv.begin() + 1, argv.end()});
-}
-
-void AsyncTestIamPermissionsCommand(std::vector<std::string> const& argv) {
-  if (argv.size() < 3) {
-    throw Usage{
-        "async-test-iam-permissions <project-id> <instance-id> <resource-id>"
-        "<permission> [permission ...]"};
-  }
-  auto it = argv.cbegin();
-  auto const project_id = *it++;
-  auto const instance_id = *it++;
-  std::vector<std::string> const extra_args(it, argv.cend());
-
-  google::cloud::CompletionQueue cq;
-  std::thread th([&cq] { cq.Run(); });
-  google::cloud::bigtable::examples::AutoShutdownCQ shutdown(cq, std::move(th));
-
-  google::cloud::bigtable::TableAdmin admin(
-      google::cloud::bigtable::CreateDefaultAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions{}),
-      instance_id);
-
-  AsyncTestIamPermissions(admin, cq, extra_args);
-}
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -295,21 +168,6 @@ void RunAll(std::vector<std::string> const& argv) {
   TestIamPermissions(
       {project_id, instance_id, table_id, "bigtable.tables.get"});
 
-  std::cout << "\nRunning AsyncGetIamPolicy() example" << std::endl;
-  AsyncGetIamPolicy(admin, cq, {table_id});
-
-  std::cout << "\nRunning AsyncSetIamPolicy() example" << std::endl;
-  AsyncSetIamPolicy(
-      admin, cq,
-      {table_id, "roles/bigtable.user", "serviceAccount:" + service_account});
-
-  std::cout << "\nRunning AsyncTestIamPermissions() example [1]" << std::endl;
-  AsyncTestIamPermissionsCommand(
-      {project_id, instance_id, table_id, "bigtable.tables.get"});
-
-  std::cout << "\nRunning AsyncTestIamPermissions() example [2]" << std::endl;
-  AsyncTestIamPermissions(admin, cq, {table_id, "bigtable.tables.get"});
-
   (void)admin.DeleteTable(table_id);
 }
 
@@ -325,12 +183,6 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry(
           "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
       {"test-iam-permissions", TestIamPermissions},
-      examples::MakeCommandEntry("async-get-iam-policy", {"<table-id>"},
-                                 AsyncGetIamPolicy),
-      examples::MakeCommandEntry("async-set-iam-policy",
-                                 {"<table-id>", "<role>", "<member>"},
-                                 AsyncSetIamPolicy),
-      {"async-test-iam-permissions", AsyncTestIamPermissionsCommand},
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
