@@ -532,29 +532,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>consistency status or status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; consistency_token) {</div>
-<div class="line">    future&lt;void&gt; <span class="keyword">final</span> =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4af107eddac704be27ced9cb30634031">AsyncCheckConsistency</a>(cq, table_id, consistency_token)</div>
-<div class="line">            .then([consistency_token](future&lt;StatusOr&lt;cbt::Consistency&gt;&gt; f) {</div>
-<div class="line">              <span class="keyword">auto</span> consistency = f.get();</div>
-<div class="line">              <span class="keywordflow">if</span> (!consistency) {</div>
-<div class="line">                <span class="keywordflow">throw</span> std::runtime_error(consistency.status().message());</div>
-<div class="line">              }</div>
-<div class="line">              <span class="keywordflow">if</span> (*consistency == cbt::Consistency::kConsistent) {</div>
-<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Table is consistent\n&quot;</span>;</div>
-<div class="line">              } <span class="keywordflow">else</span> {</div>
-<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please try again&quot;</span></div>
-<div class="line">                          &lt;&lt; <span class="stringliteral">&quot; later with the same token (&quot;</span> &lt;&lt; consistency_token</div>
-<div class="line">                          &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
-<div class="line">              }</div>
-<div class="line">            });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a03d7643fe920303003181a57d0e7faf5" title="Checks consistency of a table.">CheckConsistency()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00904">904</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -598,37 +576,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; backup_id, std::string <span class="keyword">const</span>&amp; expire_time_string) {</div>
-<div class="line">    absl::Time <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>;</div>
-<div class="line">    std::string err;</div>
-<div class="line">    <span class="keywordflow">if</span> (!absl::ParseTime(absl::RFC3339_full, expire_time_string, &amp;t, &amp;err)) {</div>
-<div class="line">      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Unable to parse expire_time:&quot;</span> + err);</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keyword">auto</span> expire_time = absl::ToChronoTime(t);</div>
-<div class="line"> </div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; backup_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a91690b5c14f4749f1ba2c6612984d778">AsyncCreateBackup</a>(</div>
-<div class="line">            cq, cbt::TableAdmin::CreateBackupParams(cluster_id, backup_id,</div>
-<div class="line">                                                    table_id, expire_time));</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = backup_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> backup = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!backup) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Backup successfully created: &quot;</span> &lt;&lt; backup-&gt;DebugString()</div>
-<div class="line">                    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a59425801ab9786a229c2cff2464e8ea7" title="Create a new backup of a table in the instance.">CreateBackup()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00271">271</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -679,29 +627,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception. Note that the service only fills out the <code>table_name</code> field for this request.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; table_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aeb5102a65ddaa25cb4716fb713c3f3cd">AsyncCreateTable</a>(</div>
-<div class="line">            cq, table_id,</div>
-<div class="line">            <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">cbt::TableConfig</a>(</div>
-<div class="line">                {{<span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::MaxNumVersions(10)},</div>
-<div class="line">                 {<span class="stringliteral">&quot;foo&quot;</span>, cbt::GcRule::MaxAge(std::chrono::hours(72))}},</div>
-<div class="line">                {}));</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = table_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> table = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!table) <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Table created as &quot;</span> &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify the example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714" title="Create a new table in the instance.">CreateTable()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00077">77</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -745,24 +671,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">    future&lt;google::cloud::Status&gt; status_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2c20901567b80750bbf82067ac434e9a">AsyncDeleteBackup</a>(cq, cluster_id, backup_id);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = status_future.then([](future&lt;google::cloud::Status&gt; f) {</div>
-<div class="line">      <span class="keyword">auto</span> status = f.get();</div>
-<div class="line"> </div>
-<div class="line">      <span class="keywordflow">if</span> (!status.ok()) {</div>
-<div class="line">        <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
-<div class="line">      }</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Backup successfully deleted\n&quot;</span>;</div>
-<div class="line">    });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a13f91e9a9a05f50d07cbde195003733c" title="Delete a backup.">DeleteBackup()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00406">406</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -813,24 +722,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">    future&lt;google::cloud::Status&gt; status_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2c20901567b80750bbf82067ac434e9a">AsyncDeleteBackup</a>(cq, cluster_id, backup_id);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = status_future.then([](future&lt;google::cloud::Status&gt; f) {</div>
-<div class="line">      <span class="keyword">auto</span> status = f.get();</div>
-<div class="line"> </div>
-<div class="line">      <span class="keywordflow">if</span> (!status.ok()) {</div>
-<div class="line">        <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
-<div class="line">      }</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Backup successfully deleted\n&quot;</span>;</div>
-<div class="line">    });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a13f91e9a9a05f50d07cbde195003733c" title="Delete a backup.">DeleteBackup()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00452">452</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -874,23 +766,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;google::cloud::Status&gt; status_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a1ba7b4053adeab78b1ea3f3b098d9dd6">AsyncDeleteTable</a>(cq, table_id);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> =</div>
-<div class="line">        status_future.then([table_id](future&lt;google::cloud::Status&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> status = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully deleted table: &quot;</span> &lt;&lt; table_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d" title="Delete a table.">DeleteTable()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00219">219</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -933,23 +809,7 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;google::cloud::Status&gt; status_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a34a99ebd8a55c43398a476d2f2bc7589">AsyncDropAllRows</a>(cq, table_id);</div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> =</div>
-<div class="line">        status_future.then([table_id](future&lt;google::cloud::Status&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> status = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully dropped all rows for table_id &quot;</span> &lt;&lt; table_id</div>
-<div class="line">                    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a23ee88d786cbeafec6ba92145c83fe6c" title="Delete all the rows in a table.">DropAllRows()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00809">809</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1000,22 +860,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; prefix) {</div>
-<div class="line">    future&lt;google::cloud::Status&gt; status_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a6688f11ca5d698c6408851c12d7118a4">AsyncDropRowsByPrefix</a>(cq, table_id, prefix);</div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = status_future.then([prefix](future&lt;google::cloud::Status&gt; f) {</div>
-<div class="line">      <span class="keyword">auto</span> status = f.get();</div>
-<div class="line">      <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully dropped rows with prefix &quot;</span> &lt;&lt; prefix &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">    });</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a20d5405420eaf5457b93f3fe674fa724" title="Delete all the rows that start with a given prefix.">DropRowsByPrefix()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00685">685</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1059,21 +904,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>consistency token or status of the operation.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;std::string&gt;&gt; token_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2fe3367aedbac605941fba5020808660">AsyncGenerateConsistencyToken</a>(cq, table_id);</div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = token_future.then([](future&lt;StatusOr&lt;std::string&gt;&gt; f) {</div>
-<div class="line">      <span class="keyword">auto</span> token = f.get();</div>
-<div class="line">      <span class="keywordflow">if</span> (!token) <span class="keywordflow">throw</span> std::runtime_error(token.status().message());</div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;generated token is : &quot;</span> &lt;&lt; *token &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">    });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2fe3367aedbac605941fba5020808660" title="Make an asynchronous request to generates consistency token for a table.">AsyncGenerateConsistencyToken()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00852">852</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1124,26 +955,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; backup_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a50c768c0bac14524ccf93a95216c51e5">AsyncGetBackup</a>(cq, cluster_id, backup_id);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = backup_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> backup = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!backup) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          std::cout &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot; details=\n&quot;</span></div>
-<div class="line">                    &lt;&lt; backup-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae86c6c5072e5c6c7477269b6f07f2197" title="Get information about a single backup.">GetBackup()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00313">313</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1186,25 +998,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future satisfied when either (a) the policy is fetched or (b) a non-retryable error occurs or (c) retry policy has been exhausted.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  <span class="keyword">using</span> google::iam::v1::Policy;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; policy_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">AsyncGetIamPolicy</a>(cq, table_id);</div>
-<div class="line"> </div>
-<div class="line">    future&lt;void&gt; <span class="keyword">final</span> =</div>
-<div class="line">        policy_future.then([](future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; f) {</div>
-<div class="line">          StatusOr&lt;google::iam::v1::Policy&gt; iam = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!iam) <span class="keywordflow">throw</span> std::runtime_error(iam.status().message());</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;IamPolicy details : &quot;</span> &lt;&lt; iam-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to keep the example simple</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use #GetNativeIamPolicy() </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00982">982</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1261,31 +1055,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; table_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a7ee348ae8014d0e1a3543649db2d61fd">AsyncGetTable</a>(cq, table_id,</div>
-<div class="line">                            google::bigtable::admin::v2::Table::FULL);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = table_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> table = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!table) <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div>
-<div class="line">          std::cout &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; family : table-&gt;column_families()) {</div>
-<div class="line">            std::string <span class="keyword">const</span>&amp; family_name = family.first;</div>
-<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\t&quot;</span> &lt;&lt; family_name &lt;&lt; <span class="stringliteral">&quot;\t\t&quot;</span></div>
-<div class="line">                      &lt;&lt; family.second.DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          }</div>
-<div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div>
-<div class="line">        });</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify the example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ac1cfe6f071cf6e91aa7da5e6cd63467c" title="Get information about a single table.">GetTable()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00098">98</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1329,35 +1099,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; filter,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; order_by) {</div>
-<div class="line">    cbt::TableAdmin::ListBackupsParams list_backups_params;</div>
-<div class="line">    list_backups_params.set_cluster(cluster_id);</div>
-<div class="line">    list_backups_params.set_filter(filter);</div>
-<div class="line">    list_backups_params.set_order_by(order_by);</div>
-<div class="line">    future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::Backup&gt;&gt;&gt;</div>
-<div class="line">        backups_future =</div>
-<div class="line">            admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ad84bb58b6e962b53023b3ba20b72029a">AsyncListBackups</a>(cq, std::move(list_backups_params));</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = backups_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::Backup&gt;&gt;&gt;</div>
-<div class="line">               f) {</div>
-<div class="line">          <span class="keyword">auto</span> backups = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!backups) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(backups.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; backup : *backups) {</div>
-<div class="line">            std::cout &lt;&lt; backup.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          }</div>
-<div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a61139256808dfaa73490bb06cac9cfbe" title="Retrieves a list of backups.">ListBackups()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00526">526</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1407,26 +1149,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq) {</div>
-<div class="line">    future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::Table&gt;&gt;&gt;</div>
-<div class="line">        tables_future = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab3f58ccb8fbf620d4a796557d858a8c3">AsyncListTables</a>(cq, cbt::TableAdmin::NAME_ONLY);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = tables_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;std::vector&lt;google::bigtable::admin::v2::Table&gt;&gt;&gt;</div>
-<div class="line">               f) {</div>
-<div class="line">          <span class="keyword">auto</span> tables = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!tables) <span class="keywordflow">throw</span> std::runtime_error(tables.status().message());</div>
-<div class="line">          <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; table : *tables) {</div>
-<div class="line">            std::cout &lt;&lt; table.name() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">          }</div>
-<div class="line">          <span class="keywordflow">return</span> google::cloud::Status();</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify the example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4726dfffeb6eb38e4015d292a3571e67" title="Return all the tables in the instance.">ListTables()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00156">156</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1477,35 +1200,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the information about table or status.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; table_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a055df7139a5ca93c885796116b4a99c7">AsyncModifyColumnFamilies</a>(</div>
-<div class="line">            cq, table_id,</div>
-<div class="line">            {cbt::ColumnFamilyModification::Drop(<span class="stringliteral">&quot;foo&quot;</span>),</div>
-<div class="line">             cbt::ColumnFamilyModification::Update(</div>
-<div class="line">                 <span class="stringliteral">&quot;fam&quot;</span>, cbt::GcRule::Union(</div>
-<div class="line">                            cbt::GcRule::MaxNumVersions(5),</div>
-<div class="line">                            cbt::GcRule::MaxAge(std::chrono::hours(24 * 7)))),</div>
-<div class="line">             cbt::ColumnFamilyModification::Create(</div>
-<div class="line">                 <span class="stringliteral">&quot;bar&quot;</span>, cbt::GcRule::Intersection(</div>
-<div class="line">                            cbt::GcRule::MaxNumVersions(3),</div>
-<div class="line">                            cbt::GcRule::MaxAge(std::chrono::hours(72))))});</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = table_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> table = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!table) <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div>
-<div class="line">          std::cout &lt;&lt; table-&gt;name() &lt;&lt; <span class="stringliteral">&quot;:\n&quot;</span>;</div>
-<div class="line">          std::cout &lt;&lt; table-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9bec54c71ffaab3326e0b6d4b263336b" title="Modify the schema for an existing table.">ModifyColumnFamilies()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00647">647</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1549,32 +1244,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; other_instance_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; table_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9c284302f78cd90c5e0c927404ede2c2">AsyncRestoreTable</a>(</div>
-<div class="line">            cq,</div>
-<div class="line">            cbt::TableAdmin::RestoreTableFromInstanceParams{</div>
-<div class="line">                table_id, <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a10e6e9a182b4d61a4f177e8d84994e59">cbt::BackupName</a>(admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">project</a>(), other_instance_id,</div>
-<div class="line">                                          cluster_id, backup_id)});</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = table_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> table = f.get();</div>
-<div class="line"> </div>
-<div class="line">          <span class="keywordflow">if</span> (!table) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Table successfully restored: &quot;</span> &lt;&lt; table-&gt;DebugString()</div>
-<div class="line">                    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a99e9c8c1874c8778b5d7f54755030e6a" title="Restore a backup into a new table in the instance.">RestoreTable()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00605">605</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1618,29 +1288,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; cluster_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; backup_id) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; table_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9c284302f78cd90c5e0c927404ede2c2">AsyncRestoreTable</a>(cq, cbt::TableAdmin::RestoreTableParams(</div>
-<div class="line">                                        table_id, cluster_id, backup_id));</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = table_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Table&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> table = f.get();</div>
-<div class="line"> </div>
-<div class="line">          <span class="keywordflow">if</span> (!table) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(table.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Table successfully restored: &quot;</span> &lt;&lt; table-&gt;DebugString()</div>
-<div class="line">                    &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a99e9c8c1874c8778b5d7f54755030e6a" title="Restore a backup into a new table in the instance.">RestoreTable()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00573">573</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1691,51 +1339,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section warning"><dt>Warning</dt><dd>ETags are currently not used by Cloud Bigtable.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  <span class="keyword">using</span> google::iam::v1::Policy;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; role,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; member) {</div>
-<div class="line">    future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt; updated_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">AsyncGetIamPolicy</a>(cq, table_id)</div>
-<div class="line">            .then([cq, admin, role, member,</div>
-<div class="line">                   table_id](future&lt;StatusOr&lt;google::iam::v1::Policy&gt;&gt;</div>
-<div class="line">                                 current_future) <span class="keyword">mutable</span> {</div>
-<div class="line">              <span class="keyword">auto</span> current = current_future.get();</div>
-<div class="line">              <span class="keywordflow">if</span> (!current) {</div>
-<div class="line">                <span class="keywordflow">return</span> google::cloud::make_ready_future&lt;</div>
-<div class="line">                    StatusOr&lt;google::iam::v1::Policy&gt;&gt;(current.status());</div>
-<div class="line">              }</div>
-<div class="line">              <span class="comment">// This example adds the member to all existing bindings for</span></div>
-<div class="line">              <span class="comment">// that role. If there are no such bindgs, it adds a new one.</span></div>
-<div class="line">              <span class="comment">// This might not be what the user wants, e.g. in case of</span></div>
-<div class="line">              <span class="comment">// conditional bindings.</span></div>
-<div class="line">              <span class="keywordtype">size_t</span> num_added = 0;</div>
-<div class="line">              <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; binding : *current-&gt;mutable_bindings()) {</div>
-<div class="line">                <span class="keywordflow">if</span> (binding.role() == role) {</div>
-<div class="line">                  binding.add_members(member);</div>
-<div class="line">                  ++num_added;</div>
-<div class="line">                }</div>
-<div class="line">              }</div>
-<div class="line">              <span class="keywordflow">if</span> (num_added == 0) {</div>
-<div class="line">                *current-&gt;add_bindings() = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a97d1cefbc6bd7f002a83344476bd4dc3">cbt::IamBinding</a>(role, {member});</div>
-<div class="line">              }</div>
-<div class="line">              <span class="keywordflow">return</span> admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">AsyncSetIamPolicy</a>(cq, table_id, *current);</div>
-<div class="line">            });</div>
-<div class="line">    <span class="comment">// Show how to perform additional work while the long running operation</span></div>
-<div class="line">    <span class="comment">// completes. The application could use future.then() instead.</span></div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Waiting for IAM policy update to complete &quot;</span> &lt;&lt; std::flush;</div>
-<div class="line">    updated_future.wait_for(std::chrono::seconds(2));</div>
-<div class="line">    <span class="keyword">auto</span> result = updated_future.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; std::flush;</div>
-<div class="line">    <span class="keywordflow">if</span> (!result) <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div>
-<div class="line">    <span class="keyword">using</span> cbt::operator&lt;&lt;;</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;DONE, the IAM Policy for &quot;</span> &lt;&lt; table_id &lt;&lt; <span class="stringliteral">&quot; is\n&quot;</span></div>
-<div class="line">              &lt;&lt; *result &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2" title="Sets the IAM policy for a table.">SetIamPolicy()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01051">1051</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1784,25 +1388,7 @@ template&lt;typename... Policies&gt; </div>
   </dd>
 </dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; resource, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; permissions) {</div>
-<div class="line">    future&lt;StatusOr&lt;std::vector&lt;std::string&gt;&gt;&gt; permissions_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">AsyncTestIamPermissions</a>(cq, resource, permissions);</div>
-<div class="line">    <span class="comment">// Show how to perform additional work while the long running operation</span></div>
-<div class="line">    <span class="comment">// completes. The application could use permissions_future.then() instead.</span></div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Waiting for TestIamPermissions &quot;</span> &lt;&lt; std::flush;</div>
-<div class="line">    permissions_future.wait_for(std::chrono::seconds(2));</div>
-<div class="line">    std::cout &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; std::flush;</div>
-<div class="line">    <span class="keyword">auto</span> result = permissions_future.get();</div>
-<div class="line">    <span class="keywordflow">if</span> (!result) <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;DONE, the current user has the following permissions [&quot;</span>;</div>
-<div class="line">    std::cout &lt;&lt; absl::StrJoin(*result, <span class="stringliteral">&quot;, &quot;</span>);</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;]\n&quot;</span>;</div>
-<div class="line">  }</div>
-</div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95" title="Returns a permission set that the caller has on the specified table.">TestIamPermissions()</a></dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/bigtable/docs/access-control">https://cloud.google.com/bigtable/docs/access-control</a> for a list of valid permissions on Google Cloud Bigtable. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l01138">1138</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
@@ -1847,35 +1433,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a future that will be satisfied when the request succeeds or the retry policy expires. In the first case, the future will contain the response from the service. In the second case, the future is satisfied with an exception.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; cluster_id, std::string <span class="keyword">const</span>&amp; backup_id,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; expire_time_string) {</div>
-<div class="line">    absl::Time <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a>;</div>
-<div class="line">    std::string err;</div>
-<div class="line">    <span class="keywordflow">if</span> (!absl::ParseTime(absl::RFC3339_full, expire_time_string, &amp;t, &amp;err)) {</div>
-<div class="line">      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Unable to parse expire_time:&quot;</span> + err);</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keyword">auto</span> expire_time = absl::ToChronoTime(t);</div>
-<div class="line"> </div>
-<div class="line">    future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; backup_future =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8d8b7d69108d10c7250409a43e5ef8cd">AsyncUpdateBackup</a>(cq, cbt::TableAdmin::UpdateBackupParams(</div>
-<div class="line">                                        cluster_id, backup_id, expire_time));</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = backup_future.then(</div>
-<div class="line">        [](future&lt;StatusOr&lt;google::bigtable::admin::v2::Backup&gt;&gt; f) {</div>
-<div class="line">          <span class="keyword">auto</span> backup = f.get();</div>
-<div class="line">          <span class="keywordflow">if</span> (!backup) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">          }</div>
-<div class="line">          std::cout &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot; details=\n&quot;</span></div>
-<div class="line">                    &lt;&lt; backup-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        });</div>
-<div class="line">    <span class="keyword">final</span>.get();</div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a5c4dee69e6b1aadedb26ee25731e5776" title="Updates a backup of a table in the instance.">UpdateBackup()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00368">368</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1926,29 +1484,7 @@ template&lt;typename... Policies&gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the consistency status for the table.</dd></dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is read-only and therefore it is always idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
-<div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, cbt::CompletionQueue cq,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; table_id, std::string <span class="keyword">const</span>&amp; consistency_token) {</div>
-<div class="line">    future&lt;StatusOr&lt;cbt::Consistency&gt;&gt; result =</div>
-<div class="line">        admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4bb89cf1781427195936947dfea09e25">AsyncWaitForConsistency</a>(cq, table_id, consistency_token);</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">final</span> = result.then([&amp;](future&lt;StatusOr&lt;cbt::Consistency&gt;&gt; f) {</div>
-<div class="line">      <span class="keyword">auto</span> consistent = f.get();</div>
-<div class="line">      <span class="keywordflow">if</span> (!consistent) <span class="keywordflow">throw</span> std::runtime_error(consistent.status().message());</div>
-<div class="line">      <span class="keywordflow">if</span> (*consistent == cbt::Consistency::kConsistent) {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;The table &quot;</span> &lt;&lt; table_id &lt;&lt; <span class="stringliteral">&quot; is now consistent with&quot;</span></div>
-<div class="line">                  &lt;&lt; <span class="stringliteral">&quot; the token &quot;</span> &lt;&lt; consistency_token &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">      } <span class="keywordflow">else</span> {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Table is not yet consistent, Please try again&quot;</span></div>
-<div class="line">                  &lt;&lt; <span class="stringliteral">&quot; later with the same token (&quot;</span> &lt;&lt; consistency_token</div>
-<div class="line">                  &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
-<div class="line">      }</div>
-<div class="line">    });</div>
-<div class="line">    <span class="keyword">final</span>.get();  <span class="comment">// block to simplify example.</span></div>
-<div class="line">  }</div>
-</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Example</dt><dd>Use <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a18c7e2dca7f878d239746d44acc347c5" title="Checks consistency of a table with multiple calls using a separate thread.">WaitForConsistency()</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00723">723</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
 
@@ -1990,7 +1526,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Backup. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01707">1707</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01701">1701</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -2079,7 +1615,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a Cluster. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01701">1701</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01695">1695</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -3133,7 +2669,7 @@ template&lt;typename... Policies&gt; </div>
 
 <p>Return the fully qualified name of a table in this object's instance. </p>
 
-<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01695">1695</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="table__admin_8h_source.html#l01689">1689</a> of file <a class="el" href="table__admin_8h_source.html">table_admin.h</a>.</p>
 
 </div>
 </div>
@@ -3547,49 +3083,30 @@ template&lt;typename... Policies&gt; </div>
 </div>
 </div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aa87b6d5dcffbb897e96657ed55671c95"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aa87b6d5dcffbb897e96657ed55671c95">google::cloud::bigtable::v1::TableAdmin::TestIamPermissions</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt; std::string &gt; &gt; TestIamPermissions(std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Returns a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01073">table_admin.cc:1073</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_af5fcf9c71cf25054efa82c7b633582e7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#af5fcf9c71cf25054efa82c7b633582e7">google::cloud::bigtable::v1::TableAdmin::AsyncTestIamPermissions</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; std::vector&lt; std::string &gt; &gt; &gt; AsyncTestIamPermissions(CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; std::string &gt; const &amp;permissions)</div><div class="ttdoc">Asynchronously obtains a permission set that the caller has on the specified table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01138">table_admin.cc:1138</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a18c7e2dca7f878d239746d44acc347c5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a18c7e2dca7f878d239746d44acc347c5">google::cloud::bigtable::v1::TableAdmin::WaitForConsistency</a></div><div class="ttdeci">google::cloud::future&lt; StatusOr&lt; Consistency &gt; &gt; WaitForConsistency(std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Checks consistency of a table with multiple calls using a separate thread.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00710">table_admin.cc:710</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a23ee88d786cbeafec6ba92145c83fe6c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a23ee88d786cbeafec6ba92145c83fe6c">google::cloud::bigtable::v1::TableAdmin::DropAllRows</a></div><div class="ttdeci">Status DropAllRows(std::string const &amp;table_id)</div><div class="ttdoc">Delete all the rows in a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00795">table_admin.cc:795</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ad84bb58b6e962b53023b3ba20b72029a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ad84bb58b6e962b53023b3ba20b72029a">google::cloud::bigtable::v1::TableAdmin::AsyncListBackups</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; std::vector&lt; google::bigtable::admin::v2::Backup &gt; &gt; &gt; AsyncListBackups(CompletionQueue &amp;cq, ListBackupsParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to retrieve a list of backups.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00526">table_admin.cc:526</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a03d7643fe920303003181a57d0e7faf5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a03d7643fe920303003181a57d0e7faf5">google::cloud::bigtable::v1::TableAdmin::CheckConsistency</a></div><div class="ttdeci">StatusOr&lt; Consistency &gt; CheckConsistency(std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Checks consistency of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00882">table_admin.cc:882</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a1ba7b4053adeab78b1ea3f3b098d9dd6"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a1ba7b4053adeab78b1ea3f3b098d9dd6">google::cloud::bigtable::v1::TableAdmin::AsyncDeleteTable</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; Status &gt; AsyncDeleteTable(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Start a request to asynchronously delete a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00219">table_admin.cc:219</a></div></div>
 <div class="ttc" id="alog_8cc_html_abc5627fb346314b5f14b10bdb6542da7"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html#abc5627fb346314b5f14b10bdb6542da7">t</a></div><div class="ttdeci">absl::Time t</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab0efb068aee5c1c84b63e05fdb6b0bc2"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab0efb068aee5c1c84b63e05fdb6b0bc2">google::cloud::bigtable::v1::TableAdmin::SetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; SetIamPolicy(std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01002">table_admin.cc:1002</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a4af107eddac704be27ced9cb30634031"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4af107eddac704be27ced9cb30634031">google::cloud::bigtable::v1::TableAdmin::AsyncCheckConsistency</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; Consistency &gt; &gt; AsyncCheckConsistency(CompletionQueue &amp;cq, std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Make an asynchronous request to check consistency of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00904">table_admin.cc:904</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a4bb89cf1781427195936947dfea09e25"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4bb89cf1781427195936947dfea09e25">google::cloud::bigtable::v1::TableAdmin::AsyncWaitForConsistency</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED google::cloud::future&lt; StatusOr&lt; Consistency &gt; &gt; AsyncWaitForConsistency(CompletionQueue &amp;cq, std::string const &amp;table_id, std::string const &amp;consistency_token)</div><div class="ttdoc">Asynchronously wait until a table is consistent with the given token.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00723">table_admin.cc:723</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_afa5f8ec06a168768ed965edc8d6539a0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#afa5f8ec06a168768ed965edc8d6539a0">google::cloud::bigtable::v1::TableAdmin::GenerateConsistencyToken</a></div><div class="ttdeci">StatusOr&lt; std::string &gt; GenerateConsistencyToken(std::string const &amp;table_id)</div><div class="ttdoc">Generates consistency token for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00833">table_admin.cc:833</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aeb5102a65ddaa25cb4716fb713c3f3cd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aeb5102a65ddaa25cb4716fb713c3f3cd">google::cloud::bigtable::v1::TableAdmin::AsyncCreateTable</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt; AsyncCreateTable(CompletionQueue &amp;cq, std::string table_id, TableConfig config)</div><div class="ttdoc">Sends an asynchronous request to create a new table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00077">table_admin.cc:77</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a99e9c8c1874c8778b5d7f54755030e6a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a99e9c8c1874c8778b5d7f54755030e6a">google::cloud::bigtable::v1::TableAdmin::RestoreTable</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Table &gt; RestoreTable(RestoreTableParams const &amp;params)</div><div class="ttdoc">Restore a backup into a new table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00559">table_admin.cc:559</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a20d5405420eaf5457b93f3fe674fa724"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a20d5405420eaf5457b93f3fe674fa724">google::cloud::bigtable::v1::TableAdmin::DropRowsByPrefix</a></div><div class="ttdeci">Status DropRowsByPrefix(std::string const &amp;table_id, std::string row_key_prefix)</div><div class="ttdoc">Delete all the rows that start with a given prefix.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00670">table_admin.cc:670</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a6688f11ca5d698c6408851c12d7118a4"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a6688f11ca5d698c6408851c12d7118a4">google::cloud::bigtable::v1::TableAdmin::AsyncDropRowsByPrefix</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; Status &gt; AsyncDropRowsByPrefix(CompletionQueue &amp;cq, std::string const &amp;table_id, std::string row_key_prefix)</div><div class="ttdoc">Make an asynchronous request to delete all the rows that start with a given prefix.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00685">table_admin.cc:685</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a75d12baaa70efed463c4ada1cb4a6bdb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a75d12baaa70efed463c4ada1cb4a6bdb">google::cloud::bigtable::v1::TableAdmin::project</a></div><div class="ttdeci">std::string const  &amp; project() const</div><div class="ttdoc">Only populate 'name' and fields related to the table's encryption state.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00213">table_admin.h:213</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a9bec54c71ffaab3326e0b6d4b263336b"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9bec54c71ffaab3326e0b6d4b263336b">google::cloud::bigtable::v1::TableAdmin::ModifyColumnFamilies</a></div><div class="ttdeci">StatusOr&lt;::google::bigtable::admin::v2::Table &gt; ModifyColumnFamilies(std::string const &amp;table_id, std::vector&lt; ColumnFamilyModification &gt; modifications)</div><div class="ttdoc">Modify the schema for an existing table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00624">table_admin.cc:624</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a10e6e9a182b4d61a4f177e8d84994e59"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a10e6e9a182b4d61a4f177e8d84994e59">google::cloud::bigtable::v1::BackupName</a></div><div class="ttdeci">std::string BackupName(std::string const &amp;project_id, std::string const &amp;instance_id, std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdef"><b>Definition:</b> <a href="resource__names_8cc_source.html#l00049">resource_names.cc:49</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a4726dfffeb6eb38e4015d292a3571e67"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a4726dfffeb6eb38e4015d292a3571e67">google::cloud::bigtable::v1::TableAdmin::ListTables</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Table &gt; &gt; ListTables(::google::bigtable::admin::v2::Table::View view)</div><div class="ttdoc">Return all the tables in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00122">table_admin.cc:122</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a59425801ab9786a229c2cff2464e8ea7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a59425801ab9786a229c2cff2464e8ea7">google::cloud::bigtable::v1::TableAdmin::CreateBackup</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Backup &gt; CreateBackup(CreateBackupParams const &amp;params)</div><div class="ttdoc">Create a new backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00256">table_admin.cc:256</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae86c6c5072e5c6c7477269b6f07f2197"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae86c6c5072e5c6c7477269b6f07f2197">google::cloud::bigtable::v1::TableAdmin::GetBackup</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Backup &gt; GetBackup(std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Get information about a single backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00291">table_admin.cc:291</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a2fe3367aedbac605941fba5020808660"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2fe3367aedbac605941fba5020808660">google::cloud::bigtable::v1::TableAdmin::AsyncGenerateConsistencyToken</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; std::string &gt; &gt; AsyncGenerateConsistencyToken(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Make an asynchronous request to generates consistency token for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00852">table_admin.cc:852</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a50c768c0bac14524ccf93a95216c51e5"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a50c768c0bac14524ccf93a95216c51e5">google::cloud::bigtable::v1::TableAdmin::AsyncGetBackup</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Backup &gt; &gt; AsyncGetBackup(CompletionQueue &amp;cq, std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Sends an asynchronous request to get information about a single backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00313">table_admin.cc:313</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a61139256808dfaa73490bb06cac9cfbe"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a61139256808dfaa73490bb06cac9cfbe">google::cloud::bigtable::v1::TableAdmin::ListBackups</a></div><div class="ttdeci">StatusOr&lt; std::vector&lt; google::bigtable::admin::v2::Backup &gt; &gt; ListBackups(ListBackupsParams const &amp;params)</div><div class="ttdoc">Retrieves a list of backups.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00490">table_admin.cc:490</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a9c284302f78cd90c5e0c927404ede2c2"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a9c284302f78cd90c5e0c927404ede2c2">google::cloud::bigtable::v1::TableAdmin::AsyncRestoreTable</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt; AsyncRestoreTable(CompletionQueue &amp;cq, RestoreTableParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to restore a backup into a new table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00573">table_admin.cc:573</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab05fd130c199d4863ebcec25699d518d"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab05fd130c199d4863ebcec25699d518d">google::cloud::bigtable::v1::TableAdmin::DeleteTable</a></div><div class="ttdeci">Status DeleteTable(std::string const &amp;table_id)</div><div class="ttdoc">Delete a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00202">table_admin.cc:202</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a97d1cefbc6bd7f002a83344476bd4dc3"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a97d1cefbc6bd7f002a83344476bd4dc3">google::cloud::bigtable::v1::IamBinding</a></div><div class="ttdeci">google::iam::v1::Binding IamBinding(std::string role, std::initializer_list&lt; std::string &gt; members)</div><div class="ttdoc">Create a google::iam::v1::Binding.</div><div class="ttdef"><b>Definition:</b> <a href="iam__binding_8cc_source.html#l00026">iam_binding.cc:26</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableConfig.html">google::cloud::bigtable::v1::TableConfig</a></div><div class="ttdoc">Specify the initial schema for a new table.</div><div class="ttdef"><b>Definition:</b> <a href="table__config_8h_source.html#l00029">table_config.h:29</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a0977844ed0903f37edfaa07210a76714"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a0977844ed0903f37edfaa07210a76714">google::cloud::bigtable::v1::TableAdmin::CreateTable</a></div><div class="ttdeci">StatusOr&lt;::google::bigtable::admin::v2::Table &gt; CreateTable(std::string table_id, TableConfig config)</div><div class="ttdoc">Create a new table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00057">table_admin.cc:57</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a91690b5c14f4749f1ba2c6612984d778"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a91690b5c14f4749f1ba2c6612984d778">google::cloud::bigtable::v1::TableAdmin::AsyncCreateBackup</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Backup &gt; &gt; AsyncCreateBackup(CompletionQueue &amp;cq, CreateBackupParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to create a new backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00271">table_admin.cc:271</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ae082d61868bb04568e90c06f8399488a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ae082d61868bb04568e90c06f8399488a">google::cloud::bigtable::v1::TableAdmin::AsyncGetIamPolicy</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncGetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Asynchronously gets the IAM policy for table_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00982">table_admin.cc:982</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a2c20901567b80750bbf82067ac434e9a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a2c20901567b80750bbf82067ac434e9a">google::cloud::bigtable::v1::TableAdmin::AsyncDeleteBackup</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; Status &gt; AsyncDeleteBackup(CompletionQueue &amp;cq, std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Sends an asynchronous request to delete a backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00452">table_admin.cc:452</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a7ee348ae8014d0e1a3543649db2d61fd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a7ee348ae8014d0e1a3543649db2d61fd">google::cloud::bigtable::v1::TableAdmin::AsyncGetTable</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Table &gt; &gt; AsyncGetTable(CompletionQueue &amp;cq, std::string const &amp;table_id, google::bigtable::admin::v2::Table::View view)</div><div class="ttdoc">Sends an asynchronous request to get information about an existing table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00098">table_admin.cc:98</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::v1::TableAdmin</a></div><div class="ttdoc">Implements the API to administer tables in a Cloud Bigtable instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00132">table_admin.h:132</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a13f91e9a9a05f50d07cbde195003733c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a13f91e9a9a05f50d07cbde195003733c">google::cloud::bigtable::v1::TableAdmin::DeleteBackup</a></div><div class="ttdeci">Status DeleteBackup(std::string const &amp;cluster_id, std::string const &amp;backup_id)</div><div class="ttdoc">Delete a backup.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00431">table_admin.cc:431</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a8d8b7d69108d10c7250409a43e5ef8cd"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a8d8b7d69108d10c7250409a43e5ef8cd">google::cloud::bigtable::v1::TableAdmin::AsyncUpdateBackup</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::bigtable::admin::v2::Backup &gt; &gt; AsyncUpdateBackup(CompletionQueue &amp;cq, UpdateBackupParams const &amp;params)</div><div class="ttdoc">Sends an asynchronous request to update a backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00368">table_admin.cc:368</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_aae444d46b9af25ca4b6799bdd3e14045"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#aae444d46b9af25ca4b6799bdd3e14045">google::cloud::bigtable::v1::TableAdmin::GetIamPolicy</a></div><div class="ttdeci">StatusOr&lt; google::iam::v1::Policy &gt; GetIamPolicy(std::string const &amp;table_id)</div><div class="ttdoc">Gets the policy for table_id.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00936">table_admin.cc:936</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_abaaef6e37df0b6df0b35fcee23a902ad"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#abaaef6e37df0b6df0b35fcee23a902ad">google::cloud::bigtable::v1::TableAdmin::AsyncSetIamPolicy</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; google::iam::v1::Policy &gt; &gt; AsyncSetIamPolicy(CompletionQueue &amp;cq, std::string const &amp;table_id, google::iam::v1::Policy const &amp;iam_policy)</div><div class="ttdoc">Asynchronously sets the IAM policy for a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l01051">table_admin.cc:1051</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a5c4dee69e6b1aadedb26ee25731e5776"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a5c4dee69e6b1aadedb26ee25731e5776">google::cloud::bigtable::v1::TableAdmin::UpdateBackup</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Backup &gt; UpdateBackup(UpdateBackupParams const &amp;params)</div><div class="ttdoc">Updates a backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00348">table_admin.cc:348</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a055df7139a5ca93c885796116b4a99c7"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a055df7139a5ca93c885796116b4a99c7">google::cloud::bigtable::v1::TableAdmin::AsyncModifyColumnFamilies</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt;::google::bigtable::admin::v2::Table &gt; &gt; AsyncModifyColumnFamilies(CompletionQueue &amp;cq, std::string const &amp;table_id, std::vector&lt; ColumnFamilyModification &gt; modifications)</div><div class="ttdoc">Make an asynchronous request to modify the column families of a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00647">table_admin.cc:647</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ab3f58ccb8fbf620d4a796557d858a8c3"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ab3f58ccb8fbf620d4a796557d858a8c3">google::cloud::bigtable::v1::TableAdmin::AsyncListTables</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; StatusOr&lt; std::vector&lt;::google::bigtable::admin::v2::Table &gt; &gt; &gt; AsyncListTables(CompletionQueue &amp;cq, google::bigtable::admin::v2::Table::View view)</div><div class="ttdoc">Sends an asynchronous request to get all the tables in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00156">table_admin.cc:156</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ac1cfe6f071cf6e91aa7da5e6cd63467c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ac1cfe6f071cf6e91aa7da5e6cd63467c">google::cloud::bigtable::v1::TableAdmin::GetTable</a></div><div class="ttdeci">StatusOr&lt;::google::bigtable::admin::v2::Table &gt; GetTable(std::string const &amp;table_id, TableView view=SCHEMA_VIEW)</div><div class="ttdoc">Get information about a single table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00181">table_admin.cc:181</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a34a99ebd8a55c43398a476d2f2bc7589"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a34a99ebd8a55c43398a476d2f2bc7589">google::cloud::bigtable::v1::TableAdmin::AsyncDropAllRows</a></div><div class="ttdeci">GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED future&lt; Status &gt; AsyncDropAllRows(CompletionQueue &amp;cq, std::string const &amp;table_id)</div><div class="ttdoc">Make an asynchronous request to delete all the rows in a table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00809">table_admin.cc:809</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a></div><div class="ttdoc">Contains all the Cloud Bigtable C++ client APIs.</div><div class="ttdef"><b>Definition:</b> <a href="admin__client_8cc_source.html#l00023">admin_client.cc:23</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

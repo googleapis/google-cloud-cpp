@@ -294,7 +294,7 @@ Putting it all together</h2>
 <div class="line">  <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
+<div class="line"><span class="keywordtype">void</span> RunAll(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
 <div class="line">  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
 <div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line"> </div>
@@ -329,7 +329,7 @@ Putting it all together</h2>
 <div class="line">  google::cloud::testing_util::InstallCrashHandler(argv[0]);</div>
 <div class="line"> </div>
 <div class="line">  google::cloud::bigtable::examples::Example example({</div>
-<div class="line">      {<span class="stringliteral">&quot;auto&quot;</span>, <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>},</div>
+<div class="line">      {<span class="stringliteral">&quot;auto&quot;</span>, RunAll},</div>
 <div class="line">      {<span class="stringliteral">&quot;hello-world&quot;</span>, BigtableHelloWorld},</div>
 <div class="line">  });</div>
 <div class="line">  <span class="keywordflow">return</span> example.Run(argc, argv);</div>
@@ -357,7 +357,6 @@ Putting it all together</h2>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_ac409cdf17f67843fc4279464cc240394"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#ac409cdf17f67843fc4279464cc240394">google::cloud::bigtable::v1::SetCell</a></div><div class="ttdeci">Mutation SetCell(Cell)</div><div class="ttdoc">Create a mutation to set a cell value based on a bigtable::Cell.</div><div class="ttdef"><b>Definition:</b> <a href="mutations_8cc_source.html#l00035">mutations.cc:35</a></div></div>
 <div class="ttc" id="atable__admin_8h_html"><div class="ttname"><a href="table__admin_8h.html">table_admin.h</a></div></div>
 <div class="ttc" id="abigtable__examples__common_8h_html"><div class="ttname"><a href="bigtable__examples__common_8h.html">bigtable_examples_common.h</a></div></div>
-<div class="ttc" id="abigtable__table__admin__backup__async__snippets_8cc_html_a648d494c891bac95d3e258aa567c9316"><div class="ttname"><a href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a></div><div class="ttdeci">void RunAll(std::vector&lt; std::string &gt; const &amp;argv)</div><div class="ttdef"><b>Definition:</b> <a href="bigtable__table__admin__backup__async__snippets_8cc_source.html#l00256">bigtable_table_admin_backup_async_snippets.cc:256</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a></div><div class="ttdoc">Contains all the Cloud Bigtable C++ client APIs.</div><div class="ttdef"><b>Definition:</b> <a href="admin__client_8cc_source.html#l00023">admin_client.cc:23</a></div></div>
 <div class="ttc" id="atable_8h_html"><div class="ttname"><a href="table_8h.html">table.h</a></div></div>
 <!-- start footer part -->

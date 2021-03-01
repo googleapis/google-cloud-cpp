@@ -223,7 +223,7 @@ $(function() {
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  (admin, argv.at(0), argv.at(1), argv.at(2), argv.at(3));</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keywordtype">void</span> RunAll(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
@@ -335,7 +335,7 @@ $(function() {
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;          <span class="stringliteral">&quot;restore-table-from-instance&quot;</span>,</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;          {<span class="stringliteral">&quot;&lt;table-id&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;other-instance-id&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;cluster-id&gt;&quot;</span>, <span class="stringliteral">&quot;&lt;backup-id&gt;&quot;</span>},</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;          RestoreTableFromInstance),</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>},</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, RunAll},</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  });</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  <span class="keywordflow">return</span> example.Run(argc, argv);</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}</div>
@@ -364,7 +364,6 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_a5c4dee69e6b1aadedb26ee25731e5776"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a5c4dee69e6b1aadedb26ee25731e5776">google::cloud::bigtable::v1::TableAdmin::UpdateBackup</a></div><div class="ttdeci">StatusOr&lt; google::bigtable::admin::v2::Backup &gt; UpdateBackup(UpdateBackupParams const &amp;params)</div><div class="ttdoc">Updates a backup of a table in the instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00348">table_admin.cc:348</a></div></div>
 <div class="ttc" id="atable__admin_8h_html"><div class="ttname"><a href="table__admin_8h.html">table_admin.h</a></div></div>
 <div class="ttc" id="abigtable__examples__common_8h_html"><div class="ttname"><a href="bigtable__examples__common_8h.html">bigtable_examples_common.h</a></div></div>
-<div class="ttc" id="abigtable__table__admin__backup__async__snippets_8cc_html_a648d494c891bac95d3e258aa567c9316"><div class="ttname"><a href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a></div><div class="ttdeci">void RunAll(std::vector&lt; std::string &gt; const &amp;argv)</div><div class="ttdef"><b>Definition:</b> <a href="bigtable__table__admin__backup__async__snippets_8cc_source.html#l00256">bigtable_table_admin_backup_async_snippets.cc:256</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a></div><div class="ttdoc">Contains all the Cloud Bigtable C++ client APIs.</div><div class="ttdef"><b>Definition:</b> <a href="admin__client_8cc_source.html#l00023">admin_client.cc:23</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

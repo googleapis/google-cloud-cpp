@@ -563,7 +563,7 @@ $(function() {
 <div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;  (std::move(admin), argv.at(0));</div>
 <div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;}</div>
 <div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="keywordtype">void</span> <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;<span class="keywordtype">void</span> RunAll(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; argv) {</div>
 <div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;  <span class="keyword">namespace </span>examples = ::google::cloud::bigtable::examples;</div>
 <div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160; </div>
@@ -745,7 +745,7 @@ $(function() {
 <div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;                                 CheckConsistency),</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1examples.html#adaae6602a225fed07363cd84a8227f61">examples::MakeCommandEntry</a>(<span class="stringliteral">&quot;generate-consistency-token&quot;</span>, {<span class="stringliteral">&quot;&lt;table-id&gt;&quot;</span>},</div>
 <div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;                                 GenerateConsistencyToken),</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, <a class="code" href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a>},</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;      {<span class="stringliteral">&quot;auto&quot;</span>, RunAll},</div>
 <div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;  });</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;  <span class="keywordflow">return</span> example.Run(argc, argv);</div>
 <div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;}</div>
@@ -771,7 +771,6 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">google::cloud::bigtable::v1::TableAdmin</a></div><div class="ttdoc">Implements the API to administer tables in a Cloud Bigtable instance.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8h_source.html#l00132">table_admin.h:132</a></div></div>
 <div class="ttc" id="atable__admin_8h_html"><div class="ttname"><a href="table__admin_8h.html">table_admin.h</a></div></div>
 <div class="ttc" id="abigtable__examples__common_8h_html"><div class="ttname"><a href="bigtable__examples__common_8h.html">bigtable_examples_common.h</a></div></div>
-<div class="ttc" id="abigtable__table__admin__backup__async__snippets_8cc_html_a648d494c891bac95d3e258aa567c9316"><div class="ttname"><a href="bigtable__table__admin__backup__async__snippets_8cc.html#a648d494c891bac95d3e258aa567c9316">RunAll</a></div><div class="ttdeci">void RunAll(std::vector&lt; std::string &gt; const &amp;argv)</div><div class="ttdef"><b>Definition:</b> <a href="bigtable__table__admin__backup__async__snippets_8cc_source.html#l00256">bigtable_table_admin_backup_async_snippets.cc:256</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin_html_ac1cfe6f071cf6e91aa7da5e6cd63467c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#ac1cfe6f071cf6e91aa7da5e6cd63467c">google::cloud::bigtable::v1::TableAdmin::GetTable</a></div><div class="ttdeci">StatusOr&lt;::google::bigtable::admin::v2::Table &gt; GetTable(std::string const &amp;table_id, TableView view=SCHEMA_VIEW)</div><div class="ttdoc">Get information about a single table.</div><div class="ttdef"><b>Definition:</b> <a href="table__admin_8cc_source.html#l00181">table_admin.cc:181</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a></div><div class="ttdoc">Contains all the Cloud Bigtable C++ client APIs.</div><div class="ttdef"><b>Definition:</b> <a href="admin__client_8cc_source.html#l00023">admin_client.cc:23</a></div></div>
 <!-- start footer part -->
