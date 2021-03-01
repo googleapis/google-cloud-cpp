@@ -92,6 +92,9 @@ namespace internal {
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 
+/// Returns a factory to use if `GrpcBackgroundThreadsOption` is unset.
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory();
+
 /**
  * A list of all the options in this file.
  *

@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/common_options.h"
 
 namespace google {
@@ -32,6 +33,10 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
     channel_arguments.SetUserAgentPrefix(absl::StrJoin(user_agent_prefix, " "));
   }
   return channel_arguments;
+}
+
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory() {
+  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>();
 }
 
 }  // namespace internal
