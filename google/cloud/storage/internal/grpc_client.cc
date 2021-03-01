@@ -380,14 +380,8 @@ GrpcClient::RestoreResumableSession(std::string const& upload_url) {
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  auto upload_session_params =
-      DecodeGrpcResumableUploadSessionUrl(request.upload_session_url());
   google::protobuf::Empty response;
-  DeleteObjectRequest delete_request;
-  delete_request.set_bucket_name(upload_session_params->bucket_name);
-  delete_request.set_object_name(upload_session_params->object_name);
-  delete_request.set_upload_id(upload_session_params->upload_id);
-  auto proto_request = ToProto(delete_request);
+  auto proto_request = ToProto(request);
   auto status = stub_->DeleteObject(&context, proto_request, &response);
   if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
 
@@ -1815,6 +1809,17 @@ google::storage::v1::QueryWriteStatusRequest GrpcClient::ToProto(
     QueryResumableUploadRequest const& request) {
   google::storage::v1::QueryWriteStatusRequest r;
   r.set_upload_id(request.upload_session_url());
+  return r;
+}
+
+google::storage::v1::DeleteObjectRequest GrpcClient::ToProto(
+    DeleteResumableUploadRequest const& request) {
+  auto upload_session_params =
+      DecodeGrpcResumableUploadSessionUrl(request.upload_session_url());
+  google::storage::v1::DeleteObjectRequest r;
+  r.set_bucket(upload_session_params->bucket_name);
+  r.set_object(upload_session_params->object_name);
+  r.set_upload_id(upload_session_params->upload_id);
   return r;
 }
 
