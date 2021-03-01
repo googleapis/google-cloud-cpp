@@ -66,7 +66,9 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.25.0 - TBD
+## v1.26.0 - TBD
+
+## v1.25.0 - 2021-03
 
 ### Bigtable:
 
@@ -80,11 +82,38 @@
   Now they should generate warnings at the call site, depending on your
   compiler settings. See [#5929] for more information.
 
+* feat(bigtable): add CMEK attributes to admin APIs (#5921)
+* feat(bigtable): limit default connection pool size (#5881)
+* doc: workarounds for Bazel and path length problems (#5869)
+* doc(bigtable): add configure_connection_pool sample (#5839)
+
+### Pub/Sub:
+
+* Implemented support for "schemas". This feature allows you to define the
+  schema of the messages accepted by a `Topic`. The schemas can be defined using
+  AVRO or Protocol Buffers. This is a public preview feature of Cloud Pub/Sub,
+  the APIs are found in the `::google::cloud::pubsub_experimental` namespace.
+
+### Spanner:
+
+* feat(spanner): Point-In-Time Recovery (PITR) (#5906)
+  This is a major new feature in Spanner, supporting backups and restores at
+  a given timestamp.
+* refactor(spanner): spanner::Timestamp/protobuf::Timestamp conversions… (#5876)
+* feat(spanner): statistics returned for a committed transaction (#5809)
+
 ### Storage:
 
 * The legacy IAM functions were marked as deprecated via doxygen comments.
   Now they should generate warnings at the call site, depending on your
   compiler settings. See [#5929] for more information.
+
+* doc(storage): Update UBLA documentation to reflect its current status (#5870)
+  It has been GA for a long time, but was still described as not in our
+  comments.
+* fix(storage): remove unneeded dependency (#5798)
+  The backwards compatibility target and package (`storage_client`) required
+  the googleapis protos.
 
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
 [#5923]: https://github.com/googleapis/google-cloud-cpp/issues/5923
