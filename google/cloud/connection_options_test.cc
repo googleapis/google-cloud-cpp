@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/connection_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/log.h"
@@ -39,87 +40,89 @@ using TestConnectionOptions = ConnectionOptions<TestTraits>;
 
 TEST(ConnectionOptionsTest, Credentials) {
   // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
-  // insecure credentials to initialize the options in any unit test.
+  // insecure credentials to initialize the conn_opts in any unit test.
   auto expected = grpc::InsecureChannelCredentials();
-  TestConnectionOptions options(expected);
-  EXPECT_EQ(expected.get(), options.credentials().get());
-  EXPECT_EQ(expected, internal::MakeOptions(options)
-                          .get_or<internal::GrpcCredentialOption>({}));
+  TestConnectionOptions conn_opts(expected);
+  EXPECT_EQ(expected.get(), conn_opts.credentials().get());
+  EXPECT_EQ(
+      expected,
+      internal::MakeOptions(conn_opts).get<internal::GrpcCredentialOption>());
 
   auto other_credentials = grpc::InsecureChannelCredentials();
   EXPECT_NE(expected, other_credentials);
-  options.set_credentials(other_credentials);
-  EXPECT_EQ(other_credentials, options.credentials());
-  EXPECT_EQ(other_credentials, internal::MakeOptions(options)
-                                   .get_or<internal::GrpcCredentialOption>({}));
+  conn_opts.set_credentials(other_credentials);
+  EXPECT_EQ(other_credentials, conn_opts.credentials());
+  EXPECT_EQ(
+      other_credentials,
+      internal::MakeOptions(conn_opts).get<internal::GrpcCredentialOption>());
 }
 
 TEST(ConnectionOptionsTest, AdminEndpoint) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ(TestTraits::default_endpoint(), options.endpoint());
-  EXPECT_EQ(
-      options.endpoint(),
-      internal::MakeOptions(options).get_or<internal::EndpointOption>({}));
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  EXPECT_EQ(TestTraits::default_endpoint(), conn_opts.endpoint());
+  EXPECT_EQ(conn_opts.endpoint(),
+            internal::MakeOptions(conn_opts).get<internal::EndpointOption>());
 
-  options.set_endpoint("invalid-endpoint");
-  EXPECT_EQ("invalid-endpoint", options.endpoint());
-  EXPECT_EQ(
-      options.endpoint(),
-      internal::MakeOptions(options).get_or<internal::EndpointOption>({}));
+  conn_opts.set_endpoint("invalid-endpoint");
+  EXPECT_EQ("invalid-endpoint", conn_opts.endpoint());
+  EXPECT_EQ(conn_opts.endpoint(),
+            internal::MakeOptions(conn_opts).get<internal::EndpointOption>());
 }
 
 TEST(ConnectionOptionsTest, NumChannels) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  int num_channels = options.num_channels();
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  int num_channels = conn_opts.num_channels();
   EXPECT_EQ(TestTraits::default_num_channels(), num_channels);
   EXPECT_EQ(
-      options.num_channels(),
-      internal::MakeOptions(options).get_or<internal::GrpcNumChannelsOption>(
-          {}));
+      conn_opts.num_channels(),
+      internal::MakeOptions(conn_opts).get<internal::GrpcNumChannelsOption>());
 
   num_channels *= 2;  // ensure we change it from the default value.
-  options.set_num_channels(num_channels);
-  EXPECT_EQ(num_channels, options.num_channels());
+  conn_opts.set_num_channels(num_channels);
+  EXPECT_EQ(num_channels, conn_opts.num_channels());
   EXPECT_EQ(
-      options.num_channels(),
-      internal::MakeOptions(options).get_or<internal::GrpcNumChannelsOption>(
-          {}));
+      conn_opts.num_channels(),
+      internal::MakeOptions(conn_opts).get<internal::GrpcNumChannelsOption>());
 }
 
 TEST(ConnectionOptionsTest, Tracing) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  options.enable_tracing("fake-component");
-  EXPECT_TRUE(options.tracing_enabled("fake-component"));
-  EXPECT_EQ(
-      options.components(),
-      internal::MakeOptions(options).get_or<internal::TracingComponentsOption>(
-          {}));
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  conn_opts.enable_tracing("fake-component");
+  EXPECT_TRUE(conn_opts.tracing_enabled("fake-component"));
 
-  options.disable_tracing("fake-component");
-  EXPECT_FALSE(options.tracing_enabled("fake-component"));
-  EXPECT_FALSE(
-      internal::MakeOptions(options).has<internal::TracingComponentsOption>());
+  internal::Options opts = internal::MakeOptions(conn_opts);
+  auto components = opts.get<internal::TracingComponentsOption>();
+  EXPECT_TRUE(internal::Contains(components, "fake-component"));
+  EXPECT_EQ(conn_opts.components(), components);
+
+  conn_opts.disable_tracing("fake-component");
+  opts = internal::MakeOptions(conn_opts);
+  components = opts.get<internal::TracingComponentsOption>();
+  EXPECT_FALSE(conn_opts.tracing_enabled("fake-component"));
+  EXPECT_FALSE(internal::Contains(components, "fake-component"));
+  EXPECT_EQ(conn_opts.components(), components);
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_FALSE(options.tracing_enabled("rpc"));
-  EXPECT_FALSE(
-      internal::MakeOptions(options).has<internal::TracingComponentsOption>());
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  EXPECT_FALSE(conn_opts.tracing_enabled("rpc"));
+
+  internal::Options opts = internal::MakeOptions(conn_opts);
+  auto const& components = opts.get<internal::TracingComponentsOption>();
+  EXPECT_EQ(conn_opts.components(), components);
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingSet) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                       "foo,bar,baz");
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_FALSE(options.tracing_enabled("rpc"));
-  EXPECT_TRUE(options.tracing_enabled("foo"));
-  EXPECT_TRUE(options.tracing_enabled("bar"));
-  EXPECT_TRUE(options.tracing_enabled("baz"));
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  EXPECT_FALSE(conn_opts.tracing_enabled("rpc"));
+  EXPECT_TRUE(conn_opts.tracing_enabled("foo"));
+  EXPECT_TRUE(conn_opts.tracing_enabled("bar"));
+  EXPECT_TRUE(conn_opts.tracing_enabled("baz"));
   EXPECT_THAT(
-      internal::MakeOptions(options).get_or<internal::TracingComponentsOption>(
-          {}),
+      internal::MakeOptions(conn_opts).get<internal::TracingComponentsOption>(),
       testing::UnorderedElementsAre("foo", "bar", "baz"));
 }
 
@@ -128,51 +131,48 @@ TEST(ConnectionOptionsTest, TracingOptions) {
                                       ",single_line_mode=off"
                                       ",use_short_repeated_primitives=off"
                                       ",truncate_string_field_longer_than=32");
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  TracingOptions tracing_options = options.tracing_options();
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  TracingOptions tracing_options = conn_opts.tracing_options();
   EXPECT_FALSE(tracing_options.single_line_mode());
   EXPECT_FALSE(tracing_options.use_short_repeated_primitives());
   EXPECT_EQ(32, tracing_options.truncate_string_field_longer_than());
-  EXPECT_EQ(
-      options.tracing_options(),
-      internal::MakeOptions(options).get_or<internal::GrpcTracingOptionsOption>(
-          {}));
+  EXPECT_EQ(conn_opts.tracing_options(),
+            internal::MakeOptions(conn_opts)
+                .get<internal::GrpcTracingOptionsOption>());
 }
 
 TEST(ConnectionOptionsTest, ChannelPoolName) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_TRUE(options.channel_pool_domain().empty());
-  EXPECT_FALSE(internal::MakeOptions(options)
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  EXPECT_TRUE(conn_opts.channel_pool_domain().empty());
+  EXPECT_FALSE(internal::MakeOptions(conn_opts)
                    .has<internal::GrpcChannelArgumentsOption>());
 
-  options.set_channel_pool_domain("test-channel-pool");
-  EXPECT_EQ("test-channel-pool", options.channel_pool_domain());
-  auto opts = internal::MakeOptions(options)
-                  .get_or<internal::GrpcChannelArgumentsOption>({});
+  conn_opts.set_channel_pool_domain("test-channel-pool");
+  EXPECT_EQ("test-channel-pool", conn_opts.channel_pool_domain());
+  auto opts = internal::MakeOptions(conn_opts)
+                  .get<internal::GrpcChannelArgumentsOption>();
   EXPECT_EQ(opts["grpc.channel_pooling_domain"], "test-channel-pool");
 }
 
 TEST(ConnectionOptionsTest, UserAgentPrefix) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ(TestTraits::user_agent_prefix(), options.user_agent_prefix());
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  EXPECT_EQ(TestTraits::user_agent_prefix(), conn_opts.user_agent_prefix());
   EXPECT_THAT(
-      internal::MakeOptions(options).get_or<internal::UserAgentPrefixOption>(
-          {}),
-      testing::ElementsAre(options.user_agent_prefix()));
+      internal::MakeOptions(conn_opts).get<internal::UserAgentPrefixOption>(),
+      testing::ElementsAre(conn_opts.user_agent_prefix()));
 
-  options.add_user_agent_prefix("test-prefix/1.2.3");
+  conn_opts.add_user_agent_prefix("test-prefix/1.2.3");
   EXPECT_EQ("test-prefix/1.2.3 " + TestTraits::user_agent_prefix(),
-            options.user_agent_prefix());
+            conn_opts.user_agent_prefix());
   EXPECT_THAT(
-      internal::MakeOptions(options).get_or<internal::UserAgentPrefixOption>(
-          {}),
-      testing::ElementsAre(options.user_agent_prefix()));
+      internal::MakeOptions(conn_opts).get<internal::UserAgentPrefixOption>(),
+      testing::ElementsAre(conn_opts.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
 
-  auto actual = options.CreateChannelArguments();
+  auto actual = conn_opts.CreateChannelArguments();
 
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
@@ -183,15 +183,15 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.
   EXPECT_THAT(std::string(test_args.args[0].value.string),
-              StartsWith(options.user_agent_prefix()));
+              StartsWith(conn_opts.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
-  TestConnectionOptions options(grpc::InsecureChannelCredentials());
-  options.set_channel_pool_domain("testing-pool");
-  options.add_user_agent_prefix("test-prefix/1.2.3");
+  TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
+  conn_opts.set_channel_pool_domain("testing-pool");
+  conn_opts.add_user_agent_prefix("test-prefix/1.2.3");
 
-  auto actual = options.CreateChannelArguments();
+  auto actual = conn_opts.CreateChannelArguments();
 
   // Use the low-level C API because grpc::ChannelArguments lacks high-level
   // accessors.
@@ -212,15 +212,15 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
   // The gRPC library adds its own version to the user-agent string, so we only
   // check that our component appears in it.
   EXPECT_THAT(args["grpc.primary_user_agent"],
-              StartsWith(options.user_agent_prefix()));
+              StartsWith(conn_opts.user_agent_prefix()));
 }
 
 TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
   CompletionQueue cq;
 
-  auto options = TestConnectionOptions(grpc::InsecureChannelCredentials())
-                     .DisableBackgroundThreads(cq);
-  auto background = options.background_threads_factory()();
+  auto conn_opts = TestConnectionOptions(grpc::InsecureChannelCredentials())
+                       .DisableBackgroundThreads(cq);
+  auto background = conn_opts.background_threads_factory()();
 
   using ms = std::chrono::milliseconds;
 
@@ -276,9 +276,9 @@ TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
 
 TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
   auto constexpr kThreadCount = 4;
-  auto options = TestConnectionOptions(grpc::InsecureChannelCredentials())
-                     .set_background_thread_pool_size(kThreadCount);
-  auto background = options.background_threads_factory()();
+  auto conn_opts = TestConnectionOptions(grpc::InsecureChannelCredentials())
+                       .set_background_thread_pool_size(kThreadCount);
+  auto background = conn_opts.background_threads_factory()();
   auto* tp = dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(
       background.get());
   ASSERT_NE(nullptr, tp);
