@@ -263,7 +263,8 @@ Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
   opts.set<GrpcNumChannelsOption>(old.num_channels_);
   opts.set<UserAgentPrefixOption>({std::move(old.user_agent_prefix_)});
   opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
-  opts.set<GrpcBackgroundThreadsOption>(old.background_threads_factory());
+  opts.set<GrpcBackgroundThreadsFactoryOption>(
+      old.background_threads_factory());
   if (!old.tracing_components_.empty()) {
     opts.set<TracingComponentsOption>(std::move(old.tracing_components_));
   }

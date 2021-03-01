@@ -81,7 +81,7 @@ struct GrpcTracingOptionsOption {
  */
 using BackgroundThreadsFactory =
     std::function<std::unique_ptr<BackgroundThreads>()>;
-struct GrpcBackgroundThreadsOption {
+struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;
 };
 
@@ -91,6 +91,9 @@ namespace internal {
 
 /// Creates a new `grpc::ChannelArguments` configured with @p opts.
 grpc::ChannelArguments MakeChannelArguments(Options const& opts);
+
+/// Returns a factory to use if `GrpcBackgroundThreadsFactoryOption` is unset.
+std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory();
 
 /**
  * A list of all the options in this file.
@@ -108,7 +111,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 using GrpcOptions =
     std::tuple<GrpcCredentialOption, GrpcNumChannelsOption,
                GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
-               GrpcBackgroundThreadsOption>;
+               GrpcBackgroundThreadsFactoryOption>;
 
 }  // namespace internal
 
