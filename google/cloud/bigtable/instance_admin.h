@@ -242,7 +242,7 @@ class InstanceAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async create instance
+   * Use #CreateInstance()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncCreateInstance(
@@ -299,7 +299,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async create cluster
+   * Use #CreateCluster()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateCluster(
@@ -361,7 +361,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async update instance
+   * Use #UpdateInstance()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncUpdateInstance(
@@ -421,7 +421,7 @@ class InstanceAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async list instances
+   * Use #ListInstances()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<InstanceList>> AsyncListInstances(CompletionQueue& cq);
@@ -471,7 +471,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async get instance
+   * Use #GetInstance()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Instance>> AsyncGetInstance(
@@ -517,7 +517,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async-delete-instance
+   * Use #DeleteInstance()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteInstance(std::string const& instance_id,
@@ -694,7 +694,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async update cluster
+   * Use #UpdateCluster()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncUpdateCluster(
@@ -747,7 +747,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async delete cluster
+   * Use #DeleteCluster()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteCluster(CompletionQueue& cq,
@@ -805,7 +805,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async get cluster
+   * Use #GetCluster()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncGetCluster(
@@ -855,7 +855,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async create app profile
+   * Use #CreateAppProfile()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -903,7 +903,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async get app profile
+   * Use #GetAppProfile()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> AsyncGetAppProfile(
@@ -966,7 +966,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async update app profile
+   * Use #UpdateAppProfile()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -1069,7 +1069,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async delete app profile
+   * Use #DeleteAppProfile()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
@@ -1149,7 +1149,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async get iam policy
+   * Use #GetNativeIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::cloud::IamPolicy>> AsyncGetIamPolicy(
@@ -1178,7 +1178,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async get native iam policy
+   * Use #GetNativeIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncGetNativeIamPolicy(
@@ -1282,7 +1282,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async set iam policy
+   * Use #SetNativeIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::cloud::IamPolicy>> AsyncSetIamPolicy(
@@ -1314,7 +1314,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async set native iam policy
+   * Use #SetIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
@@ -1364,7 +1364,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * @snippet instance_admin_async_snippets.cc async test iam permissions
+   * Use #TestIamPermissions()
    *
    * @see https://cloud.google.com/bigtable/docs/access-control for a list of
    *     valid permissions on Google Cloud Bigtable.
