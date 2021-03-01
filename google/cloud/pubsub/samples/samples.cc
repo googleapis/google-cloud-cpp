@@ -1018,7 +1018,7 @@ google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
 
 void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
                             std::vector<std::string> const&) {
-  //! [START pubsub_publish_proto_records]
+  //! [START pubsub_publish_proto_messages]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -1045,14 +1045,14 @@ void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
     // Block until all messages are published.
     for (auto& d : done) d.get();
   }
-  //! [END pubsub_publish_proto_records]
+  //! [END pubsub_publish_proto_messages]
   (std::move(publisher));
 }
 
 google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
     google::cloud::pubsub::Subscriber subscriber,
     std::vector<std::string> const&) {
-  //! [START pubsub_subscribe_protobuf_records]
+  //! [START pubsub_subscribe_proto_messages]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -1066,7 +1066,7 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
         });
     return session;
   }
-  //! [END pubsub_subscribe_protobuf_records]
+  //! [END pubsub_subscribe_proto_messages]
   (std::move(subscriber));
 }
 
