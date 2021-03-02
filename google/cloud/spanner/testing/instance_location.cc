@@ -23,9 +23,9 @@ inline namespace SPANNER_CLIENT_NS {
 StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
   spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
   auto instance = client.GetInstance(in);
-  if (!instance) return instance.status();
+  if (!instance) return std::move(instance).status();
   auto instance_config = client.GetInstanceConfig(instance->config());
-  if (!instance_config) return instance_config.status();
+  if (!instance_config) return std::move(instance_config).status();
   for (auto const& replica : instance_config->replicas()) {
     if (replica.default_leader_location()) return replica.location();
   }
