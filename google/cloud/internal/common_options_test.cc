@@ -33,7 +33,7 @@ using ::testing::ContainsRegex;
 template <typename T, typename ValueType = typename T::Type>
 void TestOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
-  EXPECT_EQ(expected, opts.template get_or<T>({}))
+  EXPECT_EQ(expected, opts.template get<T>())
       << "Failed with type: " << typeid(T).name();
 }
 

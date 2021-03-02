@@ -34,7 +34,7 @@ using ::testing::ContainsRegex;
 template <typename T, typename ValueType = typename T::Type>
 void TestGrpcOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
-  EXPECT_EQ(expected, opts.template get_or<T>({}))
+  EXPECT_EQ(expected, opts.template get<T>())
       << "Failed with type: " << typeid(T).name();
 }
 
@@ -58,7 +58,7 @@ TEST(GrpcOptions, GrpcBackgroundThreadsFactoryOption) {
   };
   auto opts = Options{}.set<GrpcBackgroundThreadsFactoryOption>(factory);
   EXPECT_FALSE(invoked);
-  opts.get_or<GrpcBackgroundThreadsFactoryOption>({})();
+  opts.get<GrpcBackgroundThreadsFactoryOption>()();
   EXPECT_TRUE(invoked);
 }
 
