@@ -44,9 +44,9 @@ namespace {
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::testing::Contains;
-using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::UnorderedElementsAre;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
@@ -388,9 +388,9 @@ TEST_P(GrpcIntegrationTest, NativeIamCRUD) {
       bucket_name, {"storage.buckets.get", "storage.buckets.setIamPolicy",
                     "storage.objects.update"});
   ASSERT_STATUS_OK(test);
-  EXPECT_THAT(*test,
-              ElementsAre("storage.buckets.get", "storage.buckets.setIamPolicy",
-                          "storage.objects.update"));
+  EXPECT_THAT(*test, UnorderedElementsAre("storage.buckets.get",
+                                          "storage.buckets.setIamPolicy",
+                                          "storage.objects.update"));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);

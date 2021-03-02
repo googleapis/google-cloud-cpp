@@ -240,7 +240,7 @@ StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
     res.permissions.emplace_back(std::move(permission));
   }
 
-  return std::move(res);
+  return res;
 }
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
