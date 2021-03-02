@@ -213,6 +213,8 @@ function (spanner_client_define_tests)
         testing/database_integration_test.cc
         testing/database_integration_test.h
         testing/fake_clock.h
+        testing/instance_location.cc
+        testing/instance_location.h
         testing/matchers.h
         testing/mock_database_admin_stub.h
         testing/mock_instance_admin_stub.h

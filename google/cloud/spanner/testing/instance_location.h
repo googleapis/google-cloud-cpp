@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_INSTANCE_LOCATION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_INSTANCE_LOCATION_H
 
+#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include <string>
 
@@ -26,17 +26,13 @@ namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * Select one of the instances in @p project_id to run tests on.
- *
- * Only returns instances that match the @p filter.
+ * Return the location for the instance @p in.
  */
-StatusOr<std::string> PickRandomInstance(
-    google::cloud::internal::DefaultPRNG& generator,
-    std::string const& project_id, std::string const& filter = "");
+StatusOr<std::string> InstanceLocation(spanner::Instance const& in);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_INSTANCE_LOCATION_H

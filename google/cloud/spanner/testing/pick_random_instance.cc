@@ -25,24 +25,8 @@ inline namespace SPANNER_CLIENT_NS {
 
 StatusOr<std::string> PickRandomInstance(
     google::cloud::internal::DefaultPRNG& generator,
-    std::string const& project_id, std::string const& filter,
-    InstancePredicate predicate) {
-  if (!predicate) {
-    predicate =
-        [](google::spanner::admin::instance::v1::Instance const&,
-           google::spanner::admin::instance::v1::InstanceConfig const&) {
-          return true;
-        };
-  }
-
+    std::string const& project_id, std::string const& filter) {
   spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
-
-  // Fetch the instance configurations for use in the predicate.
-  std::vector<google::spanner::admin::instance::v1::InstanceConfig> configs;
-  for (auto& config : client.ListInstanceConfigs(project_id)) {
-    if (!config) return std::move(config).status();
-    configs.push_back(*std::move(config));
-  }
 
   // We only pick instance IDs starting with "test-instance-" for isolation
   // from tests that create/delete their own instances (in particular from
@@ -54,15 +38,8 @@ StatusOr<std::string> PickRandomInstance(
   for (auto& instance :
        client.ListInstances(project_id, filter + name_filter)) {
     if (!instance) return std::move(instance).status();
-    for (auto const& config : configs) {
-      if (instance->config() == config.name()) {
-        if (predicate(*instance, config)) {
-          auto instance_id = instance->name().substr(instance_prefix.size());
-          instance_ids.push_back(std::move(instance_id));
-        }
-        break;
-      }
-    }
+    auto instance_id = instance->name().substr(instance_prefix.size());
+    instance_ids.push_back(std::move(instance_id));
   }
 
   if (instance_ids.empty()) {
