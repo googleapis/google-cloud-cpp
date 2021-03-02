@@ -156,7 +156,9 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         return bucket.set_iam_policy(request, context)
 
     def TestBucketIamPermissions(self, request, context):
-        return iam_policy_pb2.TestIamPermissionsResponse(permissions=request.iam_request.permissions)
+        return iam_policy_pb2.TestIamPermissionsResponse(
+            permissions=request.iam_request.permissions
+        )
 
     # === OBJECT === #
 

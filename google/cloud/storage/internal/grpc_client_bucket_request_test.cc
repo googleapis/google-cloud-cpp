@@ -843,6 +843,22 @@ TEST(GrpcClientBucketRequest, SetBucketIamPolicySimple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcClientBucketRequest, TestBucketIamPermissionsSimple) {
+  storage_proto::TestIamPermissionsRequest expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+    iam_request: {
+      resource: "test-bucket-name"
+      permissions: "storage.buckets.get"
+    }
+)""",
+                                                            &expected));
+
+  TestBucketIamPermissionsRequest request("test-bucket-name",
+                                          {"storage.buckets.get"});
+  auto actual = GrpcClient::ToProto(request);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
