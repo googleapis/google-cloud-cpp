@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
@@ -56,24 +57,29 @@ class ConnectionOptions {
   /// The default options, using an explicit credentials object.
   explicit ConnectionOptions(
       std::shared_ptr<grpc::ChannelCredentials> credentials)
-      : credentials_(std::move(credentials)),
-        endpoint_(ConnectionTraits::default_endpoint()),
-        num_channels_(ConnectionTraits::default_num_channels()),
-        tracing_components_(internal::DefaultTracingComponents()),
-        tracing_options_(internal::DefaultTracingOptions()),
+      : opts_(internal::Options{}
+                  .set<internal::GrpcCredentialOption>(std::move(credentials))
+                  .set<internal::TracingComponentsOption>(
+                      internal::DefaultTracingComponents())
+                  .set<internal::GrpcTracingOptionsOption>(
+                      internal::DefaultTracingOptions())
+                  .template set<internal::EndpointOption>(
+                      ConnectionTraits::default_endpoint())
+                  .template set<internal::GrpcNumChannelsOption>(
+                      ConnectionTraits::default_num_channels())),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(
       // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       std::shared_ptr<grpc::ChannelCredentials> v) {
-    credentials_ = std::move(v);
+    opts_.set<internal::GrpcCredentialOption>(std::move(v));
     return *this;
   }
 
   /// The gRPC credentials used by clients configured with this object.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
-    return credentials_;
+    return opts_.get<internal::GrpcCredentialOption>();
   }
 
   /**
@@ -87,12 +93,14 @@ class ConnectionOptions {
    */
   // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   ConnectionOptions& set_endpoint(std::string v) {
-    endpoint_ = std::move(v);
+    opts_.set<internal::EndpointOption>(std::move(v));
     return *this;
   }
 
   /// The endpoint used by clients configured with this object.
-  std::string const& endpoint() const { return endpoint_; }
+  std::string const& endpoint() const {
+    return opts_.get<internal::EndpointOption>();
+  }
 
   /**
    * The number of transport channels to create.
@@ -104,11 +112,13 @@ class ConnectionOptions {
    *
    * The default value is set by `ConnectionTraits::default_num_channels()`.
    */
-  int num_channels() const { return num_channels_; }
+  int num_channels() const {
+    return opts_.get<internal::GrpcNumChannelsOption>();
+  }
 
   /// Set the value for `num_channels()`.
   ConnectionOptions& set_num_channels(int num_channels) {
-    num_channels_ = num_channels;
+    opts_.set<internal::GrpcNumChannelsOption>(num_channels);
     return *this;
   }
 
@@ -120,28 +130,31 @@ class ConnectionOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return tracing_components_.find(component) != tracing_components_.end();
+    return internal::Contains(opts_.get<internal::TracingComponentsOption>(),
+                              component);
   }
 
   /// Enable tracing for @p component in clients configured with this object.
   ConnectionOptions& enable_tracing(std::string const& component) {
-    tracing_components_.insert(component);
+    opts_.lookup<internal::TracingComponentsOption>().insert(component);
     return *this;
   }
 
   /// Disable tracing for @p component in clients configured with this object.
   ConnectionOptions& disable_tracing(std::string const& component) {
-    tracing_components_.erase(component);
+    opts_.lookup<internal::TracingComponentsOption>().erase(component);
     return *this;
   }
 
   /// Return the set of tracing components.
   std::set<std::string> const& components() const {
-    return tracing_components_;
+    return opts_.get<internal::TracingComponentsOption>();
   }
 
   /// Return the options for use when tracing RPCs.
-  TracingOptions const& tracing_options() const { return tracing_options_; }
+  TracingOptions const& tracing_options() const {
+    return opts_.get<internal::GrpcTracingOptionsOption>();
+  }
 
   /**
    * Define the gRPC channel domain for clients configured with this object.
@@ -229,8 +242,7 @@ class ConnectionOptions {
     return *this;
   }
 
-  using BackgroundThreadsFactory =
-      std::function<std::unique_ptr<BackgroundThreads>()>;
+  using BackgroundThreadsFactory = internal::BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const {
     if (background_threads_factory_) return background_threads_factory_;
     auto const s = background_thread_pool_size_;
@@ -241,14 +253,12 @@ class ConnectionOptions {
   template <typename T>
   friend internal::Options internal::MakeOptions(ConnectionOptions<T>);
 
-  std::shared_ptr<grpc::ChannelCredentials> credentials_;
-  std::string endpoint_;
-  int num_channels_;
-  std::set<std::string> tracing_components_;
-  TracingOptions tracing_options_;
-  std::string channel_pool_domain_;
+  internal::Options opts_;
 
+  // These are fields that have different semantics than the equivalent ones in
+  // the new `Options` class.
   std::string user_agent_prefix_;
+  std::string channel_pool_domain_;
   std::size_t background_thread_pool_size_ = 0;
   BackgroundThreadsFactory background_threads_factory_;
 };
@@ -257,17 +267,10 @@ namespace internal {
 
 template <typename ConnectionTraits>
 Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
-  Options opts;
-  opts.set<GrpcCredentialOption>(std::move(old.credentials_));
-  opts.set<EndpointOption>(std::move(old.endpoint_));
-  opts.set<GrpcNumChannelsOption>(old.num_channels_);
+  Options opts = std::move(old.opts_);
   opts.set<UserAgentPrefixOption>({std::move(old.user_agent_prefix_)});
-  opts.set<GrpcTracingOptionsOption>(std::move(old.tracing_options_));
   opts.set<GrpcBackgroundThreadsFactoryOption>(
       old.background_threads_factory());
-  if (!old.tracing_components_.empty()) {
-    opts.set<TracingComponentsOption>(std::move(old.tracing_components_));
-  }
   if (!old.channel_pool_domain_.empty()) {
     // To get a different channel pool one just needs to set any channel
     // parameter to a different value. Newer versions of gRPC include a macro
