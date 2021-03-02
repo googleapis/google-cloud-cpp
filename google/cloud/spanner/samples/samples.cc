@@ -33,7 +33,6 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
-#include <google/protobuf/util/time_util.h>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -702,11 +701,12 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
   auto backup =
       client.CreateBackup(database, backup_id, expire_time, version_time).get();
   if (!backup) throw std::runtime_error(backup.status().message());
-  std::cout << "Backup '" << backup->name() << "' of '" << database.FullName()
-            << "' of size " << backup->size_bytes() << " bytes"
-            << " was created at "
-            << google::protobuf::util::TimeUtil::ToString(backup->create_time())
-            << ".\n";
+  std::cout
+      << "Backup '" << backup->name() << "' of '" << database.FullName()
+      << "' of size " << backup->size_bytes() << " bytes"
+      << " was created at "
+      << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
+      << ".\n";
 }
 //! [create-backup] [END spanner_create_backup]
 
@@ -739,8 +739,9 @@ void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
       google::spanner::admin::database::v1::BACKUP) {
     auto const& backup_info = restored_db->restore_info().backup_info();
     std::cout << " of '" << backup_info.source_database() << "' as of "
-              << google::protobuf::util::TimeUtil::ToString(
-                     backup_info.version_time());
+              << google::cloud::spanner::MakeTimestamp(
+                     backup_info.version_time())
+                     .value();
   }
   std::cout << ".\n";
 }
@@ -764,10 +765,11 @@ void GetBackup(google::cloud::spanner::DatabaseAdminClient client,
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
   auto backup = client.GetBackup(backup_name);
   if (!backup) throw std::runtime_error(backup.status().message());
-  std::cout << "Backup '" << backup->name() << "' of size "
-            << backup->size_bytes() << " bytes was created at "
-            << google::protobuf::util::TimeUtil::ToString(backup->create_time())
-            << ".\n";
+  std::cout
+      << "Backup '" << backup->name() << "' of size " << backup->size_bytes()
+      << " bytes was created at "
+      << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
+      << ".\n";
 }
 //! [get-backup] [END spanner_get_backup]
 
@@ -791,9 +793,10 @@ void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
           .value();
   auto backup = client.UpdateBackupExpireTime(backup_name, expire_time);
   if (!backup) throw std::runtime_error(backup.status().message());
-  std::cout << "Backup '" << backup->name() << "' updated to expire at "
-            << google::protobuf::util::TimeUtil::ToString(backup->expire_time())
-            << ".\n";
+  std::cout
+      << "Backup '" << backup->name() << "' updated to expire at "
+      << google::cloud::spanner::MakeTimestamp(backup->expire_time()).value()
+      << ".\n";
 }
 //! [update-backup] [END spanner_update_backup]
 
