@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,31 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
-
-#include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/random.h"
-#include "google/cloud/status_or.h"
-#include <string>
+#include "google/cloud/spanner/testing/instance_location.h"
+#include "google/cloud/spanner/instance_admin_client.h"
 
 namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-/**
- * Select one of the instances in @p project_id to run tests on.
- *
- * Only returns instances that match the @p filter.
- */
-StatusOr<std::string> PickRandomInstance(
-    google::cloud::internal::DefaultPRNG& generator,
-    std::string const& project_id, std::string const& filter = "");
+StatusOr<std::string> InstanceLocation(spanner::Instance const& in) {
+  spanner::InstanceAdminClient client(spanner::MakeInstanceAdminConnection());
+  auto instance = client.GetInstance(in);
+  if (!instance) return instance.status();
+  auto instance_config = client.GetInstanceConfig(instance->config());
+  if (!instance_config) return instance_config.status();
+  for (auto const& replica : instance_config->replicas()) {
+    if (replica.default_leader_location()) return replica.location();
+  }
+  return Status(StatusCode::kUnavailable,
+                in.FullName() + ": No default_leader_location for replicas");
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_testing
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
