@@ -382,11 +382,12 @@ Public Member Functions</h2></td></tr>
 <div class="line">  <span class="keyword">auto</span> backup =</div>
 <div class="line">      client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#aadf938cd9459fc263d9f8f1e6328ae7a">CreateBackup</a>(database, backup_id, expire_time, version_time).get();</div>
 <div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of &#39;&quot;</span> &lt;&lt; database.FullName()</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span> &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; was created at &quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;create_time())</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
+<div class="line">  std::cout</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of &#39;&quot;</span> &lt;&lt; database.FullName()</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span> &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span></div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot; was created at &quot;</span></div>
+<div class="line">      &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(backup-&gt;create_time()).value()</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -572,10 +573,11 @@ Public Member Functions</h2></td></tr>
 <div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html">google::cloud::spanner::Instance</a>(project_id, instance_id), backup_id);</div>
 <div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a013c48b7b10a72e698520a12e2122fac">GetBackup</a>(backup_name);</div>
 <div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span></div>
-<div class="line">            &lt;&lt; backup-&gt;size_bytes() &lt;&lt; <span class="stringliteral">&quot; bytes was created at &quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;create_time())</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
+<div class="line">  std::cout</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; of size &quot;</span> &lt;&lt; backup-&gt;size_bytes()</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot; bytes was created at &quot;</span></div>
+<div class="line">      &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(backup-&gt;create_time()).value()</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -943,8 +945,9 @@ Public Member Functions</h2></td></tr>
 <div class="line">      google::spanner::admin::database::v1::BACKUP) {</div>
 <div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; backup_info = restored_db-&gt;restore_info().backup_info();</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot; of &#39;&quot;</span> &lt;&lt; backup_info.source_database() &lt;&lt; <span class="stringliteral">&quot;&#39; as of &quot;</span></div>
-<div class="line">              &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(</div>
-<div class="line">                     backup_info.version_time());</div>
+<div class="line">              &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(</div>
+<div class="line">                     backup_info.version_time())</div>
+<div class="line">                     .value();</div>
 <div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
@@ -1338,9 +1341,10 @@ Public Member Functions</h2></td></tr>
 <div class="line">          .value();</div>
 <div class="line">  <span class="keyword">auto</span> backup = client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">UpdateBackupExpireTime</a>(backup_name, expire_time);</div>
 <div class="line">  <span class="keywordflow">if</span> (!backup) <span class="keywordflow">throw</span> std::runtime_error(backup.status().message());</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; updated to expire at &quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::protobuf::util::TimeUtil::ToString</a>(backup-&gt;expire_time())</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
+<div class="line">  std::cout</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;Backup &#39;&quot;</span> &lt;&lt; backup-&gt;name() &lt;&lt; <span class="stringliteral">&quot;&#39; updated to expire at &quot;</span></div>
+<div class="line">      &lt;&lt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a338381056187f3ddff0bd76a96085101">google::cloud::spanner::MakeTimestamp</a>(backup-&gt;expire_time()).value()</div>
+<div class="line">      &lt;&lt; <span class="stringliteral">&quot;.\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -1478,7 +1482,6 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">google::cloud::spanner::v1::Database</a></div><div class="ttdoc">This class identifies a Cloud Spanner Database.</div><div class="ttdef"><b>Definition:</b> <a href="database_8h_source.html#l00043">database.h:43</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a39e733e359fdaa7cf0cd1b1026a30d0a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a39e733e359fdaa7cf0cd1b1026a30d0a">google::cloud::spanner::v1::DatabaseAdminClient::UpdateBackupExpireTime</a></div><div class="ttdeci">StatusOr&lt; google::spanner::admin::database::v1::Backup &gt; UpdateBackupExpireTime(google::spanner::admin::database::v1::Backup const &amp;backup, Timestamp expire_time)</div><div class="ttdoc">Update backup's expire_time.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00170">database_admin_client.cc:170</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ab1053cc1aa67ac2023acfa04a64bb0f1"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab1053cc1aa67ac2023acfa04a64bb0f1">google::cloud::spanner::v1::GetSingularRow</a></div><div class="ttdeci">auto GetSingularRow(RowRange &amp;&amp;range) -&gt; typename std::decay&lt; decltype(*std::forward&lt; RowRange &gt;(range).begin())&gt;::type</div><div class="ttdoc">Returns the only row from a range that contains exactly one row.</div><div class="ttdef"><b>Definition:</b> <a href="row_8h_source.html#l00470">row.h:470</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner__internal_1_1v1_html_a791b4751559a07df3db729ea7b26fa04"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a791b4751559a07df3db729ea7b26fa04">google::cloud::spanner_internal::v1::ToString</a></div><div class="ttdeci">std::string ToString(absl::int128 value)</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8cc_source.html#l00108">numeric.cc:108</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a49253dde4e0c0c2901b53f2826e567c9"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a49253dde4e0c0c2901b53f2826e567c9">google::cloud::spanner::v1::DatabaseAdminClient::UpdateDatabase</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata &gt; &gt; UpdateDatabase(Database db, std::vector&lt; std::string &gt; statements)</div><div class="ttdoc">Updates the database using a series of DDL statements.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00044">database_admin_client.cc:44</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a2e3021d7e5f34f5ca62cce5a40b9ffdb"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a2e3021d7e5f34f5ca62cce5a40b9ffdb">google::cloud::spanner::v1::DatabaseAdminClient::RestoreDatabase</a></div><div class="ttdeci">future&lt; StatusOr&lt; google::spanner::admin::database::v1::Database &gt; &gt; RestoreDatabase(Database db, Backup const &amp;backup)</div><div class="ttdoc">Create a new database by restoring from a completed backup.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00057">database_admin_client.cc:57</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient_html_a42ef165c0b4771f720187c06c9865f00"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminClient.html#a42ef165c0b4771f720187c06c9865f00">google::cloud::spanner::v1::DatabaseAdminClient::ListBackups</a></div><div class="ttdeci">ListBackupsRange ListBackups(Instance in, std::string filter={})</div><div class="ttdoc">List all the backups in a given project and instance that match the filter.</div><div class="ttdef"><b>Definition:</b> <a href="database__admin__client_8cc_source.html#l00165">database_admin_client.cc:165</a></div></div>
