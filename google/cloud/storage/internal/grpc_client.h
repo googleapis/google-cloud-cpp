@@ -264,6 +264,8 @@ class GrpcClient : public RawClient,
       GetBucketIamPolicyRequest const& request);
   static google::storage::v1::SetIamPolicyRequest ToProto(
       SetNativeBucketIamPolicyRequest const& request);
+  static google::storage::v1::TestIamPermissionsRequest ToProto(
+      TestBucketIamPermissionsRequest const& request);
 
   static google::storage::v1::InsertBucketAccessControlRequest ToProto(
       CreateBucketAclRequest const& request);

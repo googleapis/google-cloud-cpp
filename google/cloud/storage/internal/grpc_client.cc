@@ -227,8 +227,20 @@ StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
-    TestBucketIamPermissionsRequest const&) {
-  return Status(StatusCode::kUnimplemented, __func__);
+    TestBucketIamPermissionsRequest const& request) {
+  grpc::ClientContext context;
+  auto proto_request = ToProto(request);
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      stub_->TestBucketIamPermissions(&context, proto_request, &response);
+  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+
+  TestBucketIamPermissionsResponse res;
+  for (auto const& permission : response.permissions()) {
+    res.permissions.emplace_back(std::move(permission));
+  }
+
+  return std::move(res);
 }
 
 StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
@@ -1602,6 +1614,17 @@ google::storage::v1::SetIamPolicyRequest GrpcClient::ToProto(
     }
   }
   *r.mutable_iam_request()->mutable_policy() = std::move(p);
+  SetCommonParameters(r, request);
+  return r;
+}
+
+google::storage::v1::TestIamPermissionsRequest GrpcClient::ToProto(
+    TestBucketIamPermissionsRequest const& request) {
+  google::storage::v1::TestIamPermissionsRequest r;
+  r.mutable_iam_request()->set_resource(request.bucket_name());
+  for (const auto& permission : request.permissions()) {
+    *r.mutable_iam_request()->add_permissions() = std::move(permission);
+  }
   SetCommonParameters(r, request);
   return r;
 }

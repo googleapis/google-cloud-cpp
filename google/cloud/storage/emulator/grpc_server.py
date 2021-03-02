@@ -21,6 +21,7 @@ import utils
 
 from google.cloud.storage_v1.proto import storage_pb2, storage_pb2_grpc
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
+from google.iam.v1 import iam_policy_pb2
 from google.protobuf.empty_pb2 import Empty
 
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
@@ -153,6 +154,9 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         bucket_name = request.iam_request.resource
         bucket = db.get_bucket(request, bucket_name, context)
         return bucket.set_iam_policy(request, context)
+
+    def TestBucketIamPermissions(self, request, context):
+        return iam_policy_pb2.TestIamPermissionsResponse(permissions=request.iam_request.permissions)
 
     # === OBJECT === #
 

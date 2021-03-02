@@ -133,8 +133,7 @@ TEST_P(GrpcClientFailuresTest, SetNativeBucketIamPolicy) {
 TEST_P(GrpcClientFailuresTest, TestBucketIamPermissions) {
   auto actual = client_->TestBucketIamPermissions(
       TestBucketIamPermissionsRequest("bkt", {}));
-  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable,
-                                     StatusCode::kUnimplemented)));
+  EXPECT_THAT(actual, StatusIs(AnyOf(StatusCode::kUnavailable)));
 }
 
 TEST_P(GrpcClientFailuresTest, LockBucketRetentionPolicy) {
