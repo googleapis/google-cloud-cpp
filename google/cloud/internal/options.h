@@ -51,7 +51,6 @@ namespace internal {
  * - `.has<T>()`     -- Returns true iff option `T` is set
  * - `.unset<T>()`   -- Removes the option `T`
  * - `.get<T>()`     -- Gets a const-ref to the value of option `T`
- * - `.get_or<T>(x)` -- Gets the value of option `T`, or `x` if no value was set
  * - `.lookup<T>(x)` -- Gets a non-const-ref to option `T`'s value, initializing
  *                      it to `x` if it was no set (`x` is optional).
  *
@@ -68,12 +67,8 @@ namespace internal {
  * Options opts;
  *
  * assert(opts.get<FooOption>() == 0);
- * assert(opts.get_or<FooOption>(123) == 123);
- *
  * opts.set<FooOption>(42);
- *
  * assert(opts.get<FooOption>() == 42);
- * assert(opts.get_or<FooOption>(123) == 42);
  *
  * // Inserts two elements directly into the BarOption's std::set.
  * opts.lookup<BarOption>().insert("hello");
@@ -165,34 +160,6 @@ class Options {
     auto const it = m_.find(typeid(T));
     if (it != m_.end()) return absl::any_cast<Data<T>>(&it->second)->value;
     return *kDefaultValue;
-  }
-
-  /**
-   * Returns the value for the option `T`, else returns the @p default_value.
-   *
-   * @code
-   * struct FooOption {
-   *   using Type = int;
-   * };
-   * Options opts;
-   * int x = opts.get_or<FooOption>(123);
-   * assert(x == 123);
-   * assert(!x.has<FooOption>());
-   *
-   * opts.set<FooOption>(42);
-   * x = opts.get_or<FooOption>(123);
-   * assert(x == 42);
-   * assert(x.has<FooOption>());
-   * @endcode
-   *
-   * @tparam T the option type
-   * @param default_value the value to return if `T` is not set
-   */
-  template <typename T>
-  ValueTypeT<T> get_or(ValueTypeT<T> default_value) const {
-    auto const it = m_.find(typeid(T));
-    if (it != m_.end()) return absl::any_cast<Data<T>>(it->second).value;
-    return default_value;
   }
 
   /**

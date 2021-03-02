@@ -68,17 +68,6 @@ TEST(OptionsUseCase, CustomerSettingComplexOption) {
   EXPECT_THAT(opts.lookup<ComplexOption>(), UnorderedElementsAre("foo", "bar"));
 }
 
-// This is how our factory functions should get options.
-TEST(OptionsUseCase, FactoriesGettingOptions) {
-  auto factory = [](Options const& opts) {
-    EXPECT_EQ(123, opts.get_or<IntOption>(123));
-    EXPECT_EQ("set-by-customer", opts.get<StringOption>());
-  };
-
-  auto opts = Options{}.set<StringOption>("set-by-customer");
-  factory(opts);
-}
-
 TEST(Options, Has) {
   Options opts;
   EXPECT_FALSE(opts.has<IntOption>());
@@ -90,23 +79,23 @@ TEST(Options, Set) {
   Options opts;
   opts.set<IntOption>({});
   EXPECT_TRUE(opts.has<IntOption>());
-  EXPECT_EQ(0, opts.get_or<IntOption>(-1));
+  EXPECT_EQ(0, opts.get<IntOption>());
   opts.set<IntOption>(123);
-  EXPECT_EQ(123, opts.get_or<IntOption>(-1));
+  EXPECT_EQ(123, opts.get<IntOption>());
 
   opts = Options{};
   opts.set<BoolOption>({});
   EXPECT_TRUE(opts.has<BoolOption>());
-  EXPECT_EQ(false, opts.get_or<BoolOption>(true));
+  EXPECT_EQ(false, opts.get<BoolOption>());
   opts.set<BoolOption>(true);
-  EXPECT_EQ(true, opts.get_or<BoolOption>(false));
+  EXPECT_EQ(true, opts.get<BoolOption>());
 
   opts = Options{};
   opts.set<StringOption>({});
   EXPECT_TRUE(opts.has<StringOption>());
-  EXPECT_EQ("", opts.get_or<StringOption>("default"));
+  EXPECT_EQ("", opts.get<StringOption>());
   opts.set<StringOption>("foo");
-  EXPECT_EQ("foo", opts.get_or<StringOption>("default"));
+  EXPECT_EQ("foo", opts.get<StringOption>());
 }
 
 TEST(Options, Get) {
@@ -121,18 +110,6 @@ TEST(Options, Get) {
   EXPECT_TRUE(s.empty());
   opts.set<StringOption>("test");
   EXPECT_EQ("test", opts.get<StringOption>());
-}
-
-TEST(Options, GetOr) {
-  Options opts;
-  EXPECT_EQ(opts.get_or<IntOption>({}), 0);
-  EXPECT_EQ(opts.get_or<IntOption>(42), 42);
-
-  EXPECT_EQ(opts.get_or<BoolOption>({}), false);
-  EXPECT_EQ(opts.get_or<BoolOption>(true), true);
-
-  EXPECT_EQ(opts.get_or<StringOption>({}), "");
-  EXPECT_EQ(opts.get_or<StringOption>("foo"), "foo");
 }
 
 TEST(Options, Lookup) {
