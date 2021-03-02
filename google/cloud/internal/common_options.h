@@ -19,6 +19,7 @@
 #include <set>
 #include <string>
 #include <tuple>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -37,14 +38,17 @@ struct EndpointOption {
 };
 
 /**
- * User-agent strings to include with each request.
+ * User-agent products to include with each request.
  *
  * Libraries or services that use Cloud C++ clients may want to set their own
- * user-agent prefix. This can help them develop telemetry information about
- * number of users running particular versions of their system or library.
+ * user-agent product information. This can help them develop telemetry
+ * information about number of users running particular versions of their
+ * system or library.
+ *
+ * @see https://tools.ietf.org/html/rfc7231#section-5.5.3
  */
-struct UserAgentPrefixOption {
-  using Type = std::set<std::string>;
+struct UserAgentProductsOption {
+  using Type = std::vector<std::string>;
 };
 
 /**
@@ -79,8 +83,8 @@ namespace internal {
  *     opts, "some factory function");
  * @endcode
  */
-using CommonOptions =
-    std::tuple<EndpointOption, UserAgentPrefixOption, TracingComponentsOption>;
+using CommonOptions = std::tuple<EndpointOption, UserAgentProductsOption,
+                                 TracingComponentsOption>;
 }  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

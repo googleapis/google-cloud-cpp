@@ -28,7 +28,7 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts) {
   for (auto const& p : opts.get_or<GrpcChannelArgumentsOption>({})) {
     channel_arguments.SetString(p.first, p.second);
   }
-  auto const user_agent_prefix = opts.get_or<UserAgentPrefixOption>({});
+  auto const user_agent_prefix = opts.get_or<UserAgentProductsOption>({});
   if (!user_agent_prefix.empty()) {
     channel_arguments.SetUserAgentPrefix(absl::StrJoin(user_agent_prefix, " "));
   }

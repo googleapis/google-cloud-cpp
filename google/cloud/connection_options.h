@@ -268,7 +268,7 @@ namespace internal {
 template <typename ConnectionTraits>
 Options MakeOptions(ConnectionOptions<ConnectionTraits> old) {
   Options opts = std::move(old.opts_);
-  opts.set<UserAgentPrefixOption>({std::move(old.user_agent_prefix_)});
+  opts.set<UserAgentProductsOption>({std::move(old.user_agent_prefix_)});
   opts.set<GrpcBackgroundThreadsFactoryOption>(
       old.background_threads_factory());
   if (!old.channel_pool_domain_.empty()) {
