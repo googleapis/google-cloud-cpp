@@ -154,18 +154,18 @@ TEST(ConnectionOptionsTest, ChannelPoolName) {
   EXPECT_EQ(opts["grpc.channel_pooling_domain"], "test-channel-pool");
 }
 
-TEST(ConnectionOptionsTest, UserAgentPrefix) {
+TEST(ConnectionOptionsTest, UserAgentProducts) {
   TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
   EXPECT_EQ(TestTraits::user_agent_prefix(), conn_opts.user_agent_prefix());
   EXPECT_THAT(
-      internal::MakeOptions(conn_opts).get<internal::UserAgentPrefixOption>(),
+      internal::MakeOptions(conn_opts).get<internal::UserAgentProductsOption>(),
       testing::ElementsAre(conn_opts.user_agent_prefix()));
 
   conn_opts.add_user_agent_prefix("test-prefix/1.2.3");
   EXPECT_EQ("test-prefix/1.2.3 " + TestTraits::user_agent_prefix(),
             conn_opts.user_agent_prefix());
   EXPECT_THAT(
-      internal::MakeOptions(conn_opts).get<internal::UserAgentPrefixOption>(),
+      internal::MakeOptions(conn_opts).get<internal::UserAgentProductsOption>(),
       testing::ElementsAre(conn_opts.user_agent_prefix()));
 }
 

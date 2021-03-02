@@ -41,7 +41,7 @@ void TestOption(ValueType const& expected) {
 
 TEST(CommonOptions, RegularOptions) {
   TestOption<EndpointOption>("foo.googleapis.com");
-  TestOption<UserAgentPrefixOption>({"foo", "bar"});
+  TestOption<UserAgentProductsOption>({"foo", "bar"});
   TestOption<TracingComponentsOption>({"foo", "bar", "baz"});
 }
 
