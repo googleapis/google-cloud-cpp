@@ -19,7 +19,6 @@
 #include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <iostream>
-#include <string>
 
 namespace google {
 namespace cloud {

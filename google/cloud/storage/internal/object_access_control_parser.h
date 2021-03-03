@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,8 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/iam_policy.h"
 #include <iosfwd>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

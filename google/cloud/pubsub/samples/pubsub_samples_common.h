@@ -21,6 +21,8 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

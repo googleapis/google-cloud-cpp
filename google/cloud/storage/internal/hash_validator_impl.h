@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/version.h"
 #include <openssl/md5.h>
+#include <string>
 
 namespace google {
 namespace cloud {

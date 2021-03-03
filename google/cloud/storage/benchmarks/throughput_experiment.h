@@ -18,6 +18,7 @@
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include <memory>
+#include <string>
 #include <vector>
 
 namespace google {

@@ -23,7 +23,9 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 #include <list>
+#include <vector>
 
 namespace google {
 namespace cloud {

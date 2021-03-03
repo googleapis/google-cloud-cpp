@@ -24,9 +24,11 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status.h"
+#include <chrono>
 #include <ctime>
 #include <mutex>
 #include <set>
+#include <string>
 
 namespace google {
 namespace cloud {

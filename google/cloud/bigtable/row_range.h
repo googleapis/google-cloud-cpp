@@ -19,7 +19,7 @@
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
-#include <chrono>
+#include <string>
 #include <utility>
 
 namespace google {

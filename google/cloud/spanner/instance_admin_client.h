@@ -20,6 +20,8 @@
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

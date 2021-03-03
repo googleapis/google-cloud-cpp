@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

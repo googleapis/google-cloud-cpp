@@ -20,6 +20,7 @@
 #include "absl/types/variant.h"
 #include <iterator>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

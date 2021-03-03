@@ -20,6 +20,7 @@
 #include <functional>
 #include <map>
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {

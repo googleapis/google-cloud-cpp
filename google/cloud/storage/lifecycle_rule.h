@@ -22,8 +22,8 @@
 #include "google/cloud/status_or.h"
 #include "absl/time/civil_time.h"
 #include "absl/types/optional.h"
-#include <chrono>
 #include <iosfwd>
+#include <string>
 #include <utility>
 #include <vector>
 

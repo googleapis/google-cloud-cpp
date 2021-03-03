@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
+#include <string>
 
 namespace google {
 namespace cloud {

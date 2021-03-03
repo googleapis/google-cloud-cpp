@@ -21,6 +21,8 @@
 #include "google/cloud/bigtable/version.h"
 #include "absl/memory/memory.h"
 #include "absl/types/optional.h"
+#include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {

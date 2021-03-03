@@ -21,6 +21,8 @@
 #include "google/cloud/storage/override_default_project.h"
 #include "google/cloud/storage/version.h"
 #include <iosfwd>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

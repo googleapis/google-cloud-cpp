@@ -22,6 +22,7 @@
 #include "absl/types/optional.h"
 #include <memory>
 #include <set>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/experimental/schema_admin_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

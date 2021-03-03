@@ -20,6 +20,7 @@
 #include "google/cloud/tracing_options.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/resource_quota.h>
+#include <chrono>
 #include <set>
 #include <string>
 

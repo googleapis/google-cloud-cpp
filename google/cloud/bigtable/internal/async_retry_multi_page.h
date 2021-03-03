@@ -21,6 +21,8 @@
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "absl/memory/memory.h"
+#include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

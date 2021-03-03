@@ -27,6 +27,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status_or.h"
 #include <functional>
+#include <vector>
 
 namespace google {
 namespace cloud {

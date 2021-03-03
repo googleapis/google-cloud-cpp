@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include <set>
+#include <string>
 
 namespace google {
 namespace cloud {

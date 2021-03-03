@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
 #include <regex>
+#include <string>
 
 namespace google {
 namespace cloud {

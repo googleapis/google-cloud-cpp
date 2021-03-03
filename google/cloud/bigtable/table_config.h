@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <map>
+#include <string>
 #include <vector>
 
 namespace google {

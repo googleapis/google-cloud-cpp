@@ -21,6 +21,8 @@
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/empty.pb.h>
+#include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

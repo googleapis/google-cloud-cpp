@@ -25,11 +25,14 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <chrono>
 #include <condition_variable>
 #include <ctime>
 #include <iostream>
 #include <mutex>
 #include <set>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

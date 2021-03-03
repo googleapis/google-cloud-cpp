@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/ack_handler.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

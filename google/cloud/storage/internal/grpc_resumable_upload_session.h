@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {

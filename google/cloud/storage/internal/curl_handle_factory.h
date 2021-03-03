@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
 #include <mutex>
+#include <string>
 #include <vector>
 
 namespace google {

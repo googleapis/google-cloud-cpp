@@ -17,6 +17,8 @@
 
 #include "google/cloud/version.h"
 #include <random>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -17,6 +17,7 @@
 
 #include "google/cloud/iam_bindings.h"
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -18,8 +18,11 @@
 #include "google/cloud/pubsub/internal/batch_sink.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
+#include <chrono>
 #include <memory>
 #include <mutex>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

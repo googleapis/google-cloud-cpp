@@ -21,7 +21,7 @@
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>
 #include <map>
-#include <vector>
+#include <string>
 
 namespace google {
 namespace cloud {

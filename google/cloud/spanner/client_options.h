@@ -17,7 +17,6 @@
 
 #include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/version.h"
-#include <string>
 
 namespace google {
 namespace cloud {

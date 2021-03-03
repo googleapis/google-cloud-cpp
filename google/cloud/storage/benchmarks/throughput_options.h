@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_OPTIONS_H
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include <chrono>
 #include <string>
 #include <vector>
 

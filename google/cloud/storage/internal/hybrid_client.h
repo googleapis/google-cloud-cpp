@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {

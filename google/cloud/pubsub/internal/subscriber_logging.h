@@ -19,6 +19,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/tracing_options.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

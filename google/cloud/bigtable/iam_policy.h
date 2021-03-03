@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/iam_binding.h"
 #include "google/cloud/bigtable/version.h"
 #include <list>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

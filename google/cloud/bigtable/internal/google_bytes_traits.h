@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/port_platform.h"
+#include <string>
 
 namespace google {
 namespace cloud {

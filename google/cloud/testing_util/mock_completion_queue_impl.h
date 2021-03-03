@@ -18,6 +18,7 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {

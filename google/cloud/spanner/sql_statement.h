@@ -21,6 +21,7 @@
 #include <google/spanner/v1/spanner.pb.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 namespace google {
 namespace cloud {

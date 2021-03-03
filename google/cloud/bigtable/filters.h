@@ -19,6 +19,7 @@
 #include "absl/meta/type_traits.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

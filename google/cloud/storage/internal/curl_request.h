@@ -20,7 +20,7 @@
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
-#include <vector>
+#include <string>
 
 namespace google {
 namespace cloud {

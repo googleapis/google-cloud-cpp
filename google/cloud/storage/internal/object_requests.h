@@ -26,6 +26,7 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "absl/types/span.h"
 #include <numeric>
+#include <string>
 #include <vector>
 
 namespace google {

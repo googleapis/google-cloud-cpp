@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 #include <thread>
 
 namespace google {

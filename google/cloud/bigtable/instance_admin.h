@@ -32,6 +32,8 @@
 #include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

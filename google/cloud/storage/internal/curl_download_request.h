@@ -19,6 +19,9 @@
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
+#include <chrono>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

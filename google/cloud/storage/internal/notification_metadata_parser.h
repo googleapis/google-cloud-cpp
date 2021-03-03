@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/notification_metadata.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

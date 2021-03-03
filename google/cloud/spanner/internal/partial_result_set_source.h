@@ -27,6 +27,8 @@
 #include <grpcpp/grpcpp.h>
 #include <deque>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

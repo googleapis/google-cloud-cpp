@@ -19,7 +19,8 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include <chrono>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

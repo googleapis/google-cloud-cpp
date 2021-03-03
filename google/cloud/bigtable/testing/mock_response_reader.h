@@ -23,6 +23,7 @@
 #include <grpcpp/impl/codegen/async_stream.h>
 #include <grpcpp/impl/codegen/sync_stream.h>
 #include <grpcpp/support/async_unary_call.h>
+#include <string>
 
 namespace google {
 namespace cloud {

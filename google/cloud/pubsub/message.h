@@ -17,8 +17,10 @@
 
 #include "google/cloud/pubsub/version.h"
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <chrono>
 #include <iosfwd>
 #include <map>
+#include <string>
 #include <vector>
 
 namespace google {

@@ -20,7 +20,10 @@
 #include "google/cloud/pubsub/version.h"
 #include <google/protobuf/util/field_mask_util.h>
 #include <google/pubsub/v1/pubsub.pb.h>
+#include <chrono>
 #include <set>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

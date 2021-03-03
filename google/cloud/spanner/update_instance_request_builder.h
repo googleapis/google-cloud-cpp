@@ -20,6 +20,7 @@
 #include <google/protobuf/util/field_mask_util.h>
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <map>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/version.h"
+#include <chrono>
 #include <memory>
 #include <thread>
 

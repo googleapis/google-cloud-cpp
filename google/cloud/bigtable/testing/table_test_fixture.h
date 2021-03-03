@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
+#include <string>
 
 namespace google {
 namespace cloud {

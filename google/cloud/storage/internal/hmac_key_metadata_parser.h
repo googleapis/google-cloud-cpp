@@ -18,6 +18,7 @@
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

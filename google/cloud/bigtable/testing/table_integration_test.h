@@ -22,6 +22,8 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

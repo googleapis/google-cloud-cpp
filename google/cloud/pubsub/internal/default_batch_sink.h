@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

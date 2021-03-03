@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
+#include <string>
 
 namespace google {
 namespace cloud {

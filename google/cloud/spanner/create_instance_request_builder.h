@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <map>
+#include <string>
 
 namespace google {
 namespace cloud {

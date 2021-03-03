@@ -22,6 +22,7 @@
 #include <google/protobuf/util/field_mask_util.h>
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <set>
+#include <string>
 
 namespace google {
 namespace cloud {

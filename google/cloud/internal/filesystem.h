@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include <cinttypes>
+#include <string>
 #include <system_error>
 
 namespace google {

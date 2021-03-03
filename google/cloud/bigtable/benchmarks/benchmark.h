@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <chrono>
 #include <deque>
+#include <string>
 #include <thread>
 
 namespace google {

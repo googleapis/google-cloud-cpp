@@ -18,6 +18,7 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <future>
+#include <string>
 
 namespace google {
 namespace cloud {
