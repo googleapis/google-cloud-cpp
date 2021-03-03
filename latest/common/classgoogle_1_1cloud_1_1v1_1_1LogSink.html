@@ -124,7 +124,7 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A sink to receive log records. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00240">240</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00241">241</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a732506f5ba04acb9d4b5b8d421ff3a18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a732506f5ba04acb9d4b5b8d421ff3a18">&#9670;&nbsp;</a></span>LogSink()</h2>
@@ -230,7 +230,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Return true if the severity is enabled at compile time. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00245">245</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00246">246</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -259,7 +259,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Disable <code>std::clog</code> on <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a1179efbf84e0af185bfb7817da38af81" title="Return the singleton instance for this application.">LogSink::Instance()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00318">318</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00319">319</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +290,7 @@ Static Public Member Functions</h2></td></tr>
 <p>We want to avoid synchronization overhead when checking if a log message is enabled. Most of the time, most messages will be disabled, so incurring the locking overhead on each message would be too expensive and would discourage developers from creating logs. Furthermore, missing a few messages while the change of state "propagates" to other threads does not affect the correctness of the program.</p>
 <p>Note that <code>memory_order_relaxed</code> does not provide a compiler barrier either, so in theory stores into the atomic could be reordered by the optimizer. We have no reason to worry about that because all the writes are done inside a critical section protected by a mutex. The compiler cannot (or should not) reorder operations around those. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00270">270</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00271">271</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -320,7 +320,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Enable <code>std::clog</code> on <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a1179efbf84e0af185bfb7817da38af81" title="Return the singleton instance for this application.">LogSink::Instance()</a></code>. </p>
 <p>This is also enabled if the "GOOGLE_CLOUD_CPP_ENABLE_CLOG" environment variable is set. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00315">315</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00316">316</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -381,7 +381,7 @@ Static Public Member Functions</h2></td></tr>
 <p>We want to avoid synchronization overhead when checking if a log message is enabled. Most of the time, most messages will be disabled, so incurring the locking overhead on each message would be too expensive and would discourage developers from creating logs. Furthermore, missing a few messages while the change of state "propagates" to other threads does not affect the correctness of the program.</p>
 <p>Note that <code>memory_order_relaxed</code> does not provide a compiler barrier either, so in theory stores into the atomic could be reordered by the optimizer. We have no reason to worry about that because all the writes are done inside a critical section protected by a mutex. The compiler cannot (or should not) reorder operations around those. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00288">288</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00289">289</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +428,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00296">296</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00297">297</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -476,7 +476,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00293">293</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00294">294</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>

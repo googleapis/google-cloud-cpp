@@ -105,7 +105,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Complete long running object rewrite operations. </p>
 <p>The <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a670ede04cb5a3d19ebf4ea87f8f5f046" title="Creates an ObjectRewriter to copy the source object.">Client::RewriteObject()</a></code> operation allows applications to copy objects across location boundaries, and to rewrite objects with different encryption keys. In some circumstances it may take multiple calls to the service to complete a rewrite, this class encapsulates the state of a partial copy. </p>
 
-<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00048">48</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00049">49</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a36a787b5a6f02d3735473a5c805cc251"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a36a787b5a6f02d3735473a5c805cc251">&#9670;&nbsp;</a></span>ObjectRewriter()</h2>
@@ -163,7 +163,7 @@ Public Member Functions</h2></td></tr>
 
 <p>The current progress on the rewrite operation. </p>
 
-<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00063">63</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00064">64</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
 
 </div>
 </div>
@@ -216,7 +216,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This operation blocks until the copy is finished. For very large objects that could take substantial time. Applications may need to persist the rewrite operation. Some applications may want to wrap this call with <code>std::async</code>, and run the copy on a separate thread.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>the object metadata once the copy completes. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00080">80</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00081">81</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
 
 </div>
 </div>
@@ -262,7 +262,7 @@ template&lt;typename Functor , typename std::enable_if&lt; google::cloud::intern
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the object metadata once the copy completes. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00104">104</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00105">105</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +293,7 @@ template&lt;typename Functor , typename std::enable_if&lt; google::cloud::intern
 <p>Applications can save the token of partially completed rewrites, and restart those operations using <code>Client::CopyObjectRestart</code>, even if the application has terminated. It is up to the application to preserve all the other information for the request, including source and destination buckets, encryption keys, and any preconditions affecting the request.</p>
 <dl class="section note"><dt>Note</dt><dd>For rewrites that have not started the token is an empty string. For rewrites that have completed the token is also an empty string. The application should preserve other information (such as the <code><a class="el" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1RewriteProgress.html" title="Represents the status of a rewrite operation.">RewriteProgress</a></code>) to avoid repeating a rewrite. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00128">128</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__rewriter_8h_source.html#l00129">129</a> of file <a class="el" href="object__rewriter_8h_source.html">object_rewriter.h</a>.</p>
 
 </div>
 </div>

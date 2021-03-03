@@ -143,7 +143,7 @@ Friends</h2></td></tr>
 <p>This class is used by the Cloud Bigtable wrappers to access Cloud Bigtable. Multiple <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html" title="The main interface to interact with data in a Cloud Bigtable table.">bigtable::Table</a></code> objects may share a connection via a single <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> object. The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> object is configured at construction time, this configuration includes the credentials, access endpoints, default timeouts, and other gRPC configuration options. This is an interface class because it is also used as a dependency injection point in some of the tests.</p>
 <dl class="section user"><dt>Cost</dt><dd>Applications should avoid unnecessarily creating new objects of type <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code>. Creating a new object of this type typically requires connecting to the Cloud Bigtable servers, and performing the authentication workflows with Google Cloud Platform. These operations can take many milliseconds, therefore applications should try to reuse the same <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html" title="Connects to Cloud Bigtable&#39;s data manipulation APIs.">DataClient</a></code> instances when possible. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00062">62</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00063">63</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9a230382e44f5b3c8e685ab07db5045a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a230382e44f5b3c8e685ab07db5045a">&#9670;&nbsp;</a></span>~DataClient()</h2>
@@ -910,7 +910,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00098">98</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00099">99</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -934,7 +934,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00096">96</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00097">97</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -958,7 +958,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00091">91</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00092">92</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>

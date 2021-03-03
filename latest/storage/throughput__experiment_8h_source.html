@@ -91,45 +91,46 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="throughput__options_8h.html">google/cloud/storage/benchmarks/throughput_options.h</a>&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="throughput__result_8h.html">google/cloud/storage/benchmarks/throughput_result.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>cloud {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span>storage_benchmarks {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">struct </span>ThroughputExperimentConfig {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  OpType op;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  std::int64_t object_size;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  std::size_t app_buffer_size;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  std::size_t lib_buffer_size;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">bool</span> enable_crc32c;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">bool</span> enable_md5;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;};</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">class </span>ThroughputExperiment {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">virtual</span> ~ThroughputExperiment() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">virtual</span> ThroughputResult Run(std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                               std::string <span class="keyword">const</span>&amp; object_name,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                               ThroughputExperimentConfig <span class="keyword">const</span>&amp; config) = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateUploadExperiments(</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateDownloadExperiments(</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}  <span class="comment">// namespace storage_benchmarks</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle.html">google</a> {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span>cloud {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span>storage_benchmarks {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">struct </span>ThroughputExperimentConfig {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  OpType op;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  std::int64_t object_size;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  std::size_t app_buffer_size;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  std::size_t lib_buffer_size;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordtype">bool</span> enable_crc32c;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordtype">bool</span> enable_md5;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">class </span>ThroughputExperiment {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">virtual</span> ~ThroughputExperiment() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keyword">virtual</span> ThroughputResult Run(std::string <span class="keyword">const</span>&amp; bucket_name,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                               std::string <span class="keyword">const</span>&amp; object_name,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                               ThroughputExperimentConfig <span class="keyword">const</span>&amp; config) = 0;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateUploadExperiments(</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;std::vector&lt;std::unique_ptr&lt;ThroughputExperiment&gt;&gt; CreateDownloadExperiments(</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    ThroughputOptions <span class="keyword">const</span>&amp; options,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> <span class="keyword">const</span>&amp; client_options, <span class="keywordtype">int</span> thread_id);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}  <span class="comment">// namespace storage_benchmarks</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::v1::ClientOptions</a></div><div class="ttdoc">Describes the configuration for a storage::Client object.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00074">client_options.h:74</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::v1::ClientOptions</a></div><div class="ttdoc">Describes the configuration for a storage::Client object.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00076">client_options.h:76</a></div></div>
 <div class="ttc" id="athroughput__options_8h_html"><div class="ttname"><a href="throughput__options_8h.html">throughput_options.h</a></div></div>
 <div class="ttc" id="athroughput__result_8h_html"><div class="ttname"><a href="throughput__result_8h.html">throughput_result.h</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>

@@ -92,7 +92,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple wrapper to represent the response from <code>Table::SampleRowKeys()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00028">28</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00027">27</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ac54bb61f6ab0fc647800bdd7f5131828"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac54bb61f6ab0fc647800bdd7f5131828">&#9670;&nbsp;</a></span>offset_bytes</h2>
@@ -108,7 +108,7 @@ Public Attributes</h2></td></tr>
 
 <p>An estimate of the table size for all the rows smaller than <code>row_key</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00042">42</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00041">41</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 
 </div>
 </div>
@@ -127,7 +127,7 @@ Public Attributes</h2></td></tr>
 <p>A row key value strictly larger than all the rows included in this sample. </p>
 <p>Note that the service may return row keys that do not exist in the Cloud Bigtable table. This should be interpreted as "a split point for sharding a <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#adc6306c3f4c31e27be8432b279c12c27" title="Reads a set of rows from the table.">Table::ReadRows()</a></code> call. That is calling <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#adc6306c3f4c31e27be8432b279c12c27" title="Reads a set of rows from the table.">Table::ReadRows()</a></code> to return all the rows in the range <code>[previous-sample-row-key, this-sample-row-key)</code> is expected to produce an efficient sharding of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1Table.html#adc6306c3f4c31e27be8432b279c12c27" title="Reads a set of rows from the table.">Table::ReadRows()</a></code> operation. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00039">39</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00038">38</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 
 </div>
 </div>

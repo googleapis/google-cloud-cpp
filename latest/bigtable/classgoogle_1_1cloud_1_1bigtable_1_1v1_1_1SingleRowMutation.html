@@ -132,7 +132,7 @@ Friends</h2></td></tr>
 <div class="textblock"><p>Represent a single row mutation. </p>
 <p>Bigtable can perform multiple changes to a single row atomically. This class represents 0 or more changes to apply to a single row. The changes may include setting cells (which implicitly insert the values), deleting values, etc. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00293">293</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00295">295</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a22cc8fe9fd98ebaa5a9a53aec9eaecd1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22cc8fe9fd98ebaa5a9a53aec9eaecd1">&#9670;&nbsp;</a></span>SingleRowMutation() <span class="overload">[1/7]</span></h2>
@@ -162,7 +162,7 @@ template&lt;typename RowKey , typename std::enable_if&lt; std::is_constructible&
 
 <p>Create an empty mutation. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00301">301</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00303">303</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -204,7 +204,7 @@ template&lt;typename RowKey &gt; </div>
 
 <p>Create a row mutation from a initializer list. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00307">307</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00309">309</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +246,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Create a single-row multiple-cell mutation from a variadic list. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00319">319</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00321">321</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -276,7 +276,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Create a row mutation from gRPC proto. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00329">329</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00331">331</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -306,7 +306,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Create a row mutation from gRPC proto. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00337">337</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00339">339</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -388,7 +388,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Remove the contents of the mutation. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00369">369</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00371">371</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -416,7 +416,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00341">341</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00343">343</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Transfer the contents to <code>request</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00363">363</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00365">365</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -476,7 +476,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 
 <p>Move the contents into a bigtable::v2::MutateRowsRequest::Entry. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00357">357</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00359">359</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -555,7 +555,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00347">347</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00349">349</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -580,7 +580,7 @@ template&lt;typename RowKey , typename... M, typename std::enable_if&lt; std::is
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00349">349</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00351">351</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>

@@ -135,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Thread Safety</dt><dd>Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating on the same instance of this class is not guaranteed to work.</dd></dl>
 <dl class="section user"><dt>Error Handling</dt><dd>This class uses <code>StatusOr&lt;T&gt;</code> to report errors. When an operation fails to perform its work the returned <code>StatusOr&lt;T&gt;</code> contains the error details. If the <code>ok()</code> member function in the <code>StatusOr&lt;T&gt;</code> returns <code>true</code> then it contains the expected result. Please consult the <a href="#google::cloud::v1::StatusOr"><code>StatusOr&lt;T&gt;</code> documentation</a> for more details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="schema__admin__client_8h_source.html#l00061">61</a> of file <a class="el" href="schema__admin__client_8h_source.html">schema_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="schema__admin__client_8h_source.html#l00062">62</a> of file <a class="el" href="schema__admin__client_8h_source.html">schema_admin_client.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ae40315963da204b2fd03e092482b10d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae40315963da204b2fd03e092482b10d5">&#9670;&nbsp;</a></span>SchemaAdminClient() <span class="overload">[1/2]</span></h2>

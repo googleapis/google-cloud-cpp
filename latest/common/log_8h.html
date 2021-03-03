@@ -85,6 +85,7 @@ $(function() {
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 </div>
 <p><a href="log_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -225,7 +226,7 @@ Functions</h2></td></tr>
 
 <p>Log a message with the Google Cloud Platform C++ Libraries logging framework. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00160">160</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00161">161</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -270,7 +271,7 @@ Functions</h2></td></tr>
 <p>Finally, the type of the GOOGLE_CLOUD_CPP_LOG_RECORD_IDENTIFIER changes if the log level is disabled at compile-time. For compile-time disabled log levels the compiler should be able to determine that the loop will not execute at all, and completely eliminate the code (we verified this using godbolt.org with modern GCC and Clang versions).</p>
 <p>Note the use of fully-qualified class names, including the initial <code>::</code>, this is to prevent problems if anybody uses this macro in a context where <code>Logger</code> is defined by the enclosing namespaces. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00141">141</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00142">142</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -289,7 +290,7 @@ Functions</h2></td></tr>
 <p>Create a unique, or most likely unique identifier. </p>
 <p>In <a class="el" href="log_8h.html#af60b860676e7fa25e1e2e36579dae6f9" title="Log a message with the Google Cloud Platform C++ Libraries logging framework.">GCP_LOG()</a> we need an identifier for the logger, we can easily create a C++ scope to make it work with any name, say "foo". However the user may have a variable called "foo" that they want to use in the scope (for example, to log the value of "foo". We try to make it unlikely that there will be collision by using an identifier that has a long prefix and depends on the line number. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00110">110</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00111">111</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -305,7 +306,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00164">164</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00165">165</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -337,18 +338,18 @@ Functions</h2></td></tr>
 
 <p>Concatenate two pre-processor tokens. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00099">99</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00100">100</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1LogSink_html_a01dc98ce3a03076cd9f74c6614eeca31"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a01dc98ce3a03076cd9f74c6614eeca31">google::cloud::v1::LogSink::EnableStdClog</a></div><div class="ttdeci">static void EnableStdClog()</div><div class="ttdoc">Enable std::clog on LogSink::Instance().</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00315">log.h:315</a></div></div>
-<div class="ttc" id="astructgoogle_1_1cloud_1_1v1_1_1LogRecord_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1v1_1_1LogRecord.html">google::cloud::v1::LogRecord</a></div><div class="ttdoc">Represents a single log message.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00214">log.h:214</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1Logger_html_ab8fb64c231d99227887c5e59b82f3c01"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1Logger.html#ab8fb64c231d99227887c5e59b82f3c01">google::cloud::v1::Logger::enabled</a></div><div class="ttdeci">bool enabled() const</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00372">log.h:372</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1Logger_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1Logger.html">google::cloud::v1::Logger</a></div><div class="ttdoc">Define the class to capture a log message.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00361">log.h:361</a></div></div>
-<div class="ttc" id="alog_8h_html_a48f881faa3b42d36b05f38a93ad4ea0d"><div class="ttname"><a href="log_8h.html#a48f881faa3b42d36b05f38a93ad4ea0d">GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER</div><div class="ttdoc">Create a unique, or most likely unique identifier.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00110">log.h:110</a></div></div>
-<div class="ttc" id="alog_8h_html_af60b860676e7fa25e1e2e36579dae6f9"><div class="ttname"><a href="log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a></div><div class="ttdeci">#define GCP_LOG(level)</div><div class="ttdoc">Log a message with the Google Cloud Platform C++ Libraries logging framework.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00160">log.h:160</a></div></div>
-<div class="ttc" id="astructgoogle_1_1cloud_1_1v1_1_1LogRecord_html_a352c94a2fd0d055c41fe58ad4ed48288"><div class="ttname"><a href="structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a352c94a2fd0d055c41fe58ad4ed48288">google::cloud::v1::LogRecord::severity</a></div><div class="ttdeci">Severity severity</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00215">log.h:215</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1LogSink_html_a01dc98ce3a03076cd9f74c6614eeca31"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a01dc98ce3a03076cd9f74c6614eeca31">google::cloud::v1::LogSink::EnableStdClog</a></div><div class="ttdeci">static void EnableStdClog()</div><div class="ttdoc">Enable std::clog on LogSink::Instance().</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00316">log.h:316</a></div></div>
+<div class="ttc" id="astructgoogle_1_1cloud_1_1v1_1_1LogRecord_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1v1_1_1LogRecord.html">google::cloud::v1::LogRecord</a></div><div class="ttdoc">Represents a single log message.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00215">log.h:215</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1Logger_html_ab8fb64c231d99227887c5e59b82f3c01"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1Logger.html#ab8fb64c231d99227887c5e59b82f3c01">google::cloud::v1::Logger::enabled</a></div><div class="ttdeci">bool enabled() const</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00373">log.h:373</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1v1_1_1Logger_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1v1_1_1Logger.html">google::cloud::v1::Logger</a></div><div class="ttdoc">Define the class to capture a log message.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00362">log.h:362</a></div></div>
+<div class="ttc" id="alog_8h_html_a48f881faa3b42d36b05f38a93ad4ea0d"><div class="ttname"><a href="log_8h.html#a48f881faa3b42d36b05f38a93ad4ea0d">GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_LOGGER_IDENTIFIER</div><div class="ttdoc">Create a unique, or most likely unique identifier.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00111">log.h:111</a></div></div>
+<div class="ttc" id="alog_8h_html_af60b860676e7fa25e1e2e36579dae6f9"><div class="ttname"><a href="log_8h.html#af60b860676e7fa25e1e2e36579dae6f9">GCP_LOG</a></div><div class="ttdeci">#define GCP_LOG(level)</div><div class="ttdoc">Log a message with the Google Cloud Platform C++ Libraries logging framework.</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00161">log.h:161</a></div></div>
+<div class="ttc" id="astructgoogle_1_1cloud_1_1v1_1_1LogRecord_html_a352c94a2fd0d055c41fe58ad4ed48288"><div class="ttname"><a href="structgoogle_1_1cloud_1_1v1_1_1LogRecord.html#a352c94a2fd0d055c41fe58ad4ed48288">google::cloud::v1::LogRecord::severity</a></div><div class="ttdeci">Severity severity</div><div class="ttdef"><b>Definition:</b> <a href="log_8h_source.html#l00216">log.h:216</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20
