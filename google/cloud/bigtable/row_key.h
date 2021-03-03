@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
-#include <string>
 #include <type_traits>
 #include <utility>
 
