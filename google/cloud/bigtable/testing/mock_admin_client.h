@@ -31,174 +31,169 @@ class MockAdminClient : public bigtable::AdminClient {
   MOCK_METHOD(void, reset, (), (override));
 
   MOCK_METHOD(grpc::Status, CreateTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::CreateTableRequest const& request,
-               google::bigtable::admin::v2::Table* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::CreateTableRequest const&,
+               google::bigtable::admin::v2::Table*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::Table>>,
               AsyncCreateTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::CreateTableRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::CreateTableRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(grpc::Status, ListTables,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::ListTablesRequest const& request,
-               google::bigtable::admin::v2::ListTablesResponse* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ListTablesRequest const&,
+               google::bigtable::admin::v2::ListTablesResponse*),
               (override));
   MOCK_METHOD(grpc::Status, GetTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::GetTableRequest const& request,
-               google::bigtable::admin::v2::Table* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::GetTableRequest const&,
+               google::bigtable::admin::v2::Table*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::Table>>,
               AsyncGetTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::GetTableRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::GetTableRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(grpc::Status, DeleteTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::DeleteTableRequest const& request,
-               google::protobuf::Empty* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::DeleteTableRequest const&,
+               google::protobuf::Empty*),
               (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
       AsyncDeleteTable,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::DeleteTableRequest const& request,
-       grpc::CompletionQueue* cq),
+      (grpc::ClientContext*,
+       google::bigtable::admin::v2::DeleteTableRequest const&,
+       grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(grpc::Status, CreateBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::CreateBackupRequest const& request,
-               google::longrunning::Operation* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::CreateBackupRequest const&,
+               google::longrunning::Operation*),
               (override));
   MOCK_METHOD(grpc::Status, GetBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::GetBackupRequest const& request,
-               google::bigtable::admin::v2::Backup* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::GetBackupRequest const&,
+               google::bigtable::admin::v2::Backup*),
               (override));
   MOCK_METHOD(grpc::Status, UpdateBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::UpdateBackupRequest const& request,
-               google::bigtable::admin::v2::Backup* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::UpdateBackupRequest const&,
+               google::bigtable::admin::v2::Backup*),
               (override));
   MOCK_METHOD(grpc::Status, DeleteBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::DeleteBackupRequest const& request,
-               google::protobuf::Empty* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::DeleteBackupRequest const&,
+               google::protobuf::Empty*),
               (override));
   MOCK_METHOD(grpc::Status, ListBackups,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::ListBackupsRequest const& request,
-               google::bigtable::admin::v2::ListBackupsResponse* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ListBackupsRequest const&,
+               google::bigtable::admin::v2::ListBackupsResponse*),
               (override));
   MOCK_METHOD(grpc::Status, RestoreTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::RestoreTableRequest const& request,
-               google::longrunning::Operation* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::RestoreTableRequest const&,
+               google::longrunning::Operation*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>,
               AsyncCreateBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::CreateBackupRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::CreateBackupRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::Backup>>,
               AsyncGetBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::GetBackupRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::GetBackupRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::Backup>>,
               AsyncUpdateBackup,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::UpdateBackupRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::UpdateBackupRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
       AsyncDeleteBackup,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::DeleteBackupRequest const& request,
-       grpc::CompletionQueue* cq),
+      (grpc::ClientContext*,
+       google::bigtable::admin::v2::DeleteBackupRequest const&,
+       grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::ListBackupsResponse>>,
               AsyncListBackups,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::ListBackupsRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ListBackupsRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>,
               AsyncRestoreTable,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::RestoreTableRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::RestoreTableRequest const&,
+               grpc::CompletionQueue*),
               (override));
-  MOCK_METHOD(
-      grpc::Status, ModifyColumnFamilies,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
-       google::bigtable::admin::v2::Table* response),
-      (override));
+  MOCK_METHOD(grpc::Status, ModifyColumnFamilies,
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&,
+               google::bigtable::admin::v2::Table*),
+              (override));
   MOCK_METHOD(grpc::Status, DropRowRange,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::DropRowRangeRequest const& request,
-               google::protobuf::Empty* response),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::DropRowRangeRequest const&,
+               google::protobuf::Empty*),
               (override));
   MOCK_METHOD(
       grpc::Status, GenerateConsistencyToken,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
-           request,
-       google::bigtable::admin::v2::GenerateConsistencyTokenResponse* response),
+      (grpc::ClientContext*,
+       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&,
+       google::bigtable::admin::v2::GenerateConsistencyTokenResponse*),
       (override));
-  MOCK_METHOD(
-      grpc::Status, CheckConsistency,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
-       google::bigtable::admin::v2::CheckConsistencyResponse* response),
-      (override));
+  MOCK_METHOD(grpc::Status, CheckConsistency,
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::CheckConsistencyRequest const&,
+               google::bigtable::admin::v2::CheckConsistencyResponse*),
+              (override));
   MOCK_METHOD(grpc::Status, GetIamPolicy,
-              (grpc::ClientContext * context,
-               google::iam::v1::GetIamPolicyRequest const& request,
-               google::iam::v1::Policy* response),
+              (grpc::ClientContext*,
+               google::iam::v1::GetIamPolicyRequest const&,
+               google::iam::v1::Policy*),
               (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>,
       AsyncGetIamPolicy,
-      (grpc::ClientContext * context,
-       google::iam::v1::GetIamPolicyRequest const& request,
-       grpc::CompletionQueue* cq),
+      (grpc::ClientContext*, google::iam::v1::GetIamPolicyRequest const&,
+       grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(grpc::Status, SetIamPolicy,
-              (grpc::ClientContext * context,
-               google::iam::v1::SetIamPolicyRequest const& request,
-               google::iam::v1::Policy* response),
+              (grpc::ClientContext*,
+               google::iam::v1::SetIamPolicyRequest const&,
+               google::iam::v1::Policy*),
               (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>,
       AsyncSetIamPolicy,
-      (grpc::ClientContext * context,
-       google::iam::v1::SetIamPolicyRequest const& request,
-       grpc::CompletionQueue* cq),
+      (grpc::ClientContext*, google::iam::v1::SetIamPolicyRequest const&,
+       grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(grpc::Status, TestIamPermissions,
-              (grpc::ClientContext * context,
-               google::iam::v1::TestIamPermissionsRequest const& request,
-               google::iam::v1::TestIamPermissionsResponse* response),
+              (grpc::ClientContext*,
+               google::iam::v1::TestIamPermissionsRequest const&,
+               google::iam::v1::TestIamPermissionsResponse*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::iam::v1::TestIamPermissionsResponse>>,
@@ -208,26 +203,25 @@ class MockAdminClient : public bigtable::AdminClient {
                grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(grpc::Status, GetOperation,
-              (grpc::ClientContext * context,
-               google::longrunning::GetOperationRequest const& request,
-               google::longrunning::Operation* response),
+              (grpc::ClientContext*,
+               google::longrunning::GetOperationRequest const&,
+               google::longrunning::Operation*),
               (override));
 
-  MOCK_METHOD(
-      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-          google::bigtable::admin::v2::Table>>,
-      AsyncModifyColumnFamilies,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
-       grpc::CompletionQueue* cq),
-      (override));
+  MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                  google::bigtable::admin::v2::Table>>,
+              AsyncModifyColumnFamilies,
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&,
+               grpc::CompletionQueue*),
+              (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
       AsyncDropRowRange,
-      (grpc::ClientContext * context,
-       google::bigtable::admin::v2::DropRowRangeRequest const& request,
-       grpc::CompletionQueue* cq),
+      (grpc::ClientContext*,
+       google::bigtable::admin::v2::DropRowRangeRequest const&,
+       grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -247,16 +241,16 @@ class MockAdminClient : public bigtable::AdminClient {
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::ListTablesResponse>>,
               AsyncListTables,
-              (grpc::ClientContext * context,
-               google::bigtable::admin::v2::ListTablesRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::admin::v2::ListTablesRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>,
               AsyncGetOperation,
-              (grpc::ClientContext * context,
-               const google::longrunning::GetOperationRequest& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               const google::longrunning::GetOperationRequest&,
+               grpc::CompletionQueue*),
               (override));
 };
 

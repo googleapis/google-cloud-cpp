@@ -32,47 +32,46 @@ class MockDataClient : public bigtable::DataClient {
   MOCK_METHOD(void, reset, (), (override));
 
   MOCK_METHOD(grpc::Status, MutateRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::MutateRowRequest const& request,
-               google::bigtable::v2::MutateRowResponse* response),
+              (grpc::ClientContext*,
+               google::bigtable::v2::MutateRowRequest const&,
+               google::bigtable::v2::MutateRowResponse*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::v2::MutateRowResponse>>,
               AsyncMutateRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::MutateRowRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::v2::MutateRowRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(grpc::Status, CheckAndMutateRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::CheckAndMutateRowRequest const& request,
-               google::bigtable::v2::CheckAndMutateRowResponse* response),
+              (grpc::ClientContext*,
+               google::bigtable::v2::CheckAndMutateRowRequest const&,
+               google::bigtable::v2::CheckAndMutateRowResponse*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::v2::CheckAndMutateRowResponse>>,
               AsyncCheckAndMutateRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::CheckAndMutateRowRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::v2::CheckAndMutateRowRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(grpc::Status, ReadModifyWriteRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-               google::bigtable::v2::ReadModifyWriteRowResponse* response),
+              (grpc::ClientContext*,
+               google::bigtable::v2::ReadModifyWriteRowRequest const&,
+               google::bigtable::v2::ReadModifyWriteRowResponse*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::v2::ReadModifyWriteRowResponse>>,
               AsyncReadModifyWriteRow,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-               grpc::CompletionQueue* cq),
+              (grpc::ClientContext*,
+               google::bigtable::v2::ReadModifyWriteRowRequest const&,
+               grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(
       std::unique_ptr<
           grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>,
       ReadRows,
-      (grpc::ClientContext * context,
-       google::bigtable::v2::ReadRowsRequest const& request),
+      (grpc::ClientContext*, google::bigtable::v2::ReadRowsRequest const&),
       (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncReaderInterface<
                   google::bigtable::v2::ReadRowsResponse>>,
@@ -91,8 +90,8 @@ class MockDataClient : public bigtable::DataClient {
   MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
                   google::bigtable::v2::SampleRowKeysResponse>>,
               SampleRowKeys,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::SampleRowKeysRequest const& request),
+              (grpc::ClientContext*,
+               google::bigtable::v2::SampleRowKeysRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncReaderInterface<
                   google::bigtable::v2::SampleRowKeysResponse>>,
@@ -104,8 +103,8 @@ class MockDataClient : public bigtable::DataClient {
   MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
                   google::bigtable::v2::MutateRowsResponse>>,
               MutateRows,
-              (grpc::ClientContext * context,
-               google::bigtable::v2::MutateRowsRequest const& request),
+              (grpc::ClientContext*,
+               google::bigtable::v2::MutateRowsRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncReaderInterface<
                   google::bigtable::v2::MutateRowsResponse>>,
