@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
 namespace cloud {

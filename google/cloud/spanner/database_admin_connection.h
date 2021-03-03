@@ -27,7 +27,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "absl/types/optional.h"
-#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
 #include <chrono>
 #include <string>
 #include <vector>

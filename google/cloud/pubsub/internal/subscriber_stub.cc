@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include <google/pubsub/v1/pubsub.grpc.pb.h>
 
 namespace google {
 namespace cloud {

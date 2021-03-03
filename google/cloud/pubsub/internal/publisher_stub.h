@@ -19,7 +19,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
 namespace cloud {
