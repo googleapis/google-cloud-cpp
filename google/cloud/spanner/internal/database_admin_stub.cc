@@ -16,6 +16,10 @@
 #include "google/cloud/spanner/internal/database_admin_logging.h"
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
@@ -276,11 +280,11 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 };
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    spanner::ConnectionOptions options) {
-  options = EmulatorOverrides(std::move(options));
+    internal::Options const& options) {
   auto channel =
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                options.CreateChannelArguments());
+      grpc::CreateCustomChannel(options.get<internal::EndpointOption>(),
+                                options.get<internal::GrpcCredentialOption>(),
+                                internal::MakeChannelArguments(options));
   auto spanner_grpc_stub = gcsa::DatabaseAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
@@ -291,10 +295,11 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
 
   stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(options.get<internal::TracingComponentsOption>(),
+                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<DatabaseAdminLogging>(std::move(stub),
-                                                  options.tracing_options());
+    stub = std::make_shared<DatabaseAdminLogging>(
+        std::move(stub), options.get<internal::GrpcTracingOptionsOption>());
   }
   return stub;
 }

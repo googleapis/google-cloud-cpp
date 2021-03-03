@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/options.h"
 #include <algorithm>
 
 namespace google {
@@ -23,7 +24,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
+DatabaseAdminClient::DatabaseAdminClient(internal::Options const& options)
     : conn_(MakeDatabaseAdminConnection(options)) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(

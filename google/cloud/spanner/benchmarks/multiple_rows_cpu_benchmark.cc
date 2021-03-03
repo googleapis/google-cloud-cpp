@@ -15,11 +15,14 @@
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/memory/memory.h"
@@ -477,8 +480,9 @@ class ExperimentImpl {
     std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
     std::cout << "# Creating clients and stubs " << std::flush;
     for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = spanner::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
+      auto options = spanner_internal::DefaultOptions();
+      options.set<google::cloud::internal::GrpcChannelArgumentsOption>(
+          {{"grpc.channel_pooling_domain", "task:" + std::to_string(i)}});
       clients.emplace_back(
           spanner::Client(spanner::MakeConnection(database, options)));
       stubs.emplace_back(spanner_internal::CreateDefaultSpannerStub(

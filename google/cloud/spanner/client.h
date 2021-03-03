@@ -36,6 +36,7 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -652,9 +653,12 @@ class Client {
  *     by the `Connection`.
  */
 std::shared_ptr<Connection> MakeConnection(
-    Database const& db,
-    ConnectionOptions const& connection_options = ConnectionOptions(),
-    SessionPoolOptions session_pool_options = SessionPoolOptions());
+    Database const& db, internal::Options options = {},
+    SessionPoolOptions session_pool_options = {});
+// DEPRECATED
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options);
 
 /**
  * @copydoc MakeConnection(Database const&, ConnectionOptions const&, SessionPoolOptions)
@@ -668,6 +672,12 @@ std::shared_ptr<Connection> MakeConnection(
  * @par Example
  * @snippet samples.cc custom-retry-policy
  */
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, internal::Options options,
+    SessionPoolOptions session_pool_options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy);
+// DEPRECATED
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options,

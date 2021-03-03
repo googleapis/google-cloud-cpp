@@ -15,10 +15,13 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
@@ -104,8 +107,11 @@ Result RunExperiment(Database const& db, int iterations) {
     return std::move(os).str();
   }();
 
-  Client client(
-      MakeConnection(db, ConnectionOptions().set_channel_pool_domain(pool)));
+  auto options = spanner_internal::DefaultOptions();
+  options.set<internal::GrpcChannelArgumentsOption>(
+      {{"grpc.channel_pooling_domain", pool}});
+
+  Client client(MakeConnection(db, std::move(options)));
 
   int number_of_successes = 0;
   int number_of_failures = 0;

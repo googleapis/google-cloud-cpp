@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -31,9 +34,8 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub =
-      CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                               spanner::ConnectionOptions(), /*channel_id=*/0);
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       internal::Options{}, /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
 
@@ -42,9 +44,11 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
 
   auto stub = CreateDefaultSpannerStub(
       spanner::Database("foo", "bar", "baz"),
-      spanner::ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1")
-          .enable_tracing("rpc"),
+      internal::Options{}
+          .set<internal::GrpcCredentialOption>(
+              grpc::InsecureChannelCredentials())
+          .set<internal::EndpointOption>("localhost:1")
+          .set<internal::TracingComponentsOption>({"rpc"}),
       /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 

@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
@@ -25,6 +26,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "absl/types/optional.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
@@ -327,7 +329,12 @@ class DatabaseAdminConnection {
  *     this function.
  */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    internal::Options options = {});
+// DEPRECATED
+inline std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    ConnectionOptions const& options) {
+  return MakeDatabaseAdminConnection(internal::MakeOptions(options));
+}
 
 /**
  * @copydoc MakeDatabaseAdminConnection
@@ -343,9 +350,18 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
  * @snippet samples.cc custom-database-admin-policies
  */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    internal::Options options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy);
+// DEPRECATED
+inline std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy) {
+  return MakeDatabaseAdminConnection(
+      internal::MakeOptions(options), std::move(retry_policy),
+      std::move(backoff_policy), std::move(polling_policy));
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
@@ -353,12 +369,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    std::shared_ptr<DatabaseAdminStub> stub,
-    spanner::ConnectionOptions const& options);
-
-std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    std::shared_ptr<DatabaseAdminStub> stub,
-    spanner::ConnectionOptions const& options,
+    std::shared_ptr<DatabaseAdminStub> stub, internal::Options options,
     std::unique_ptr<spanner::RetryPolicy> retry_policy,
     std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
     std::unique_ptr<spanner::PollingPolicy> polling_policy);

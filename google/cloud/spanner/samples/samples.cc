@@ -17,7 +17,6 @@
 //! [END spanner_quickstart]
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
@@ -29,6 +28,7 @@
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/random.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -2597,7 +2597,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
      std::string const& database_id) {
     auto client = spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id),
-        spanner::ConnectionOptions{}, spanner::SessionPoolOptions{},
+        google::cloud::internal::Options{}, spanner::SessionPoolOptions{},
         // Retry for at most 25 minutes.
         spanner::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(25))
@@ -2663,7 +2663,7 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
             .clone();
     auto client =
         spanner::InstanceAdminClient(spanner::MakeInstanceAdminConnection(
-            spanner::ConnectionOptions{}, std::move(retry_policy),
+            google::cloud::internal::Options{}, std::move(retry_policy),
             std::move(backoff_policy), std::move(polling_policy)));
 
     // Use the client as usual.
@@ -2718,7 +2718,7 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
             .clone();
     auto client =
         spanner::DatabaseAdminClient(spanner::MakeDatabaseAdminConnection(
-            spanner::ConnectionOptions{}, std::move(retry_policy),
+            google::cloud::internal::Options{}, std::move(retry_policy),
             std::move(backoff_policy), std::move(polling_policy)));
 
     // Use the client as usual.
@@ -3155,7 +3155,7 @@ void RunAll(bool emulator) {
 
   google::cloud::spanner::InstanceAdminClient instance_admin_client(
       google::cloud::spanner::MakeInstanceAdminConnection(
-          google::cloud::spanner::ConnectionOptions{},
+          google::cloud::internal::Options{},
           google::cloud::spanner_testing::TestRetryPolicy(),
           google::cloud::spanner_testing::TestBackoffPolicy(),
           google::cloud::spanner_testing::TestPollingPolicy()));
@@ -3182,8 +3182,8 @@ void RunAll(bool emulator) {
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
   google::cloud::spanner::DatabaseAdminClient database_admin_client(
-      MakeDatabaseAdminConnection(
-          google::cloud::spanner::ConnectionOptions{},
+      google::cloud::spanner::MakeDatabaseAdminConnection(
+          google::cloud::internal::Options{},
           google::cloud::spanner_testing::TestRetryPolicy(),
           google::cloud::spanner_testing::TestBackoffPolicy(),
           google::cloud::spanner_testing::TestPollingPolicy()));

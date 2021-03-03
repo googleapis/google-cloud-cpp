@@ -13,13 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
@@ -324,6 +329,36 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
 }
 
 std::shared_ptr<Connection> MakeConnection(
+    Database const& db, internal::Options options,
+    SessionPoolOptions session_pool_options) {
+  return MakeConnection(db, std::move(options), std::move(session_pool_options),
+                        spanner_internal::DefaultConnectionRetryPolicy(),
+                        spanner_internal::DefaultConnectionBackoffPolicy());
+}
+
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, internal::Options options,
+    SessionPoolOptions session_pool_options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  internal::CheckExpectedOptions<internal::CommonOptions,
+                                 internal::GrpcOptions>(options, __func__);
+  options = spanner_internal::DefaultOptions(std::move(options));
+
+  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
+  int num_channels = options.get<internal::GrpcNumChannelsOption>();
+  stubs.reserve(num_channels);
+  for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
+    stubs.push_back(
+        spanner_internal::CreateDefaultSpannerStub(db, options, channel_id));
+  }
+  return spanner_internal::MakeConnection(
+      db, std::move(stubs), options, std::move(session_pool_options),
+      std::move(retry_policy), std::move(backoff_policy));
+}
+
+// DEPRECATED
+std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options) {
   return MakeConnection(db, connection_options, std::move(session_pool_options),
@@ -331,21 +366,15 @@ std::shared_ptr<Connection> MakeConnection(
                         spanner_internal::DefaultConnectionBackoffPolicy());
 }
 
+// DEPRECATED
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-  int num_channels = std::max(connection_options.num_channels(), 1);
-  stubs.reserve(num_channels);
-  for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
-    stubs.push_back(spanner_internal::CreateDefaultSpannerStub(
-        db, connection_options, channel_id));
-  }
-  return spanner_internal::MakeConnection(
-      db, std::move(stubs), connection_options, std::move(session_pool_options),
-      std::move(retry_policy), std::move(backoff_policy));
+  return MakeConnection(db, internal::MakeOptions(connection_options),
+                        std::move(session_pool_options),
+                        std::move(retry_policy), std::move(backoff_policy));
 }
 
 }  // namespace SPANNER_CLIENT_NS

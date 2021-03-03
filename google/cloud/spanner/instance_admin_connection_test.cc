@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -52,7 +53,7 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   return spanner_internal::MakeInstanceAdminConnection(
-      std::move(mock), ConnectionOptions{}, retry.clone(), backoff.clone(),
+      std::move(mock), internal::Options{}, retry.clone(), backoff.clone(),
       polling.clone());
 }
 

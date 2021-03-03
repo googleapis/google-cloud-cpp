@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -67,7 +68,7 @@ class BackupTest : public ::testing::Test {
   BackupTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),
         database_admin_client_(MakeDatabaseAdminConnection(
-            ConnectionOptions{}, spanner_testing::TestRetryPolicy(),
+            internal::Options{}, spanner_testing::TestRetryPolicy(),
             spanner_testing::TestBackoffPolicy(),
             spanner_testing::TestPollingPolicy())) {}
 

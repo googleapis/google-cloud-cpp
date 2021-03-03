@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -386,10 +387,10 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   auto conn = MakeConnection(db);
   EXPECT_NE(conn, nullptr);
 
-  conn = MakeConnection(db, ConnectionOptions());
+  conn = MakeConnection(db, internal::Options{});
   EXPECT_NE(conn, nullptr);
 
-  conn = MakeConnection(db, ConnectionOptions(), SessionPoolOptions());
+  conn = MakeConnection(db, internal::Options{}, SessionPoolOptions{});
   EXPECT_NE(conn, nullptr);
 }
 

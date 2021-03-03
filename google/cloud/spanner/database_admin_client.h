@@ -24,6 +24,7 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -115,8 +116,10 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class DatabaseAdminClient {
  public:
-  explicit DatabaseAdminClient(
-      ConnectionOptions const& options = ConnectionOptions());
+  explicit DatabaseAdminClient(internal::Options const& options = {});
+  // DEPRECATED
+  explicit DatabaseAdminClient(ConnectionOptions const& options)
+      : DatabaseAdminClient(internal::MakeOptions(options)) {}
 
   /**
    * Creates a new Cloud Spanner database in the given project and instance.

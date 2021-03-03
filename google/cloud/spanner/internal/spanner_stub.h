@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H
 
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
@@ -123,7 +123,7 @@ class SpannerStub {
  * to ensure they use different underlying connections.
  */
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db, spanner::ConnectionOptions options,
+    spanner::Database const& db, internal::Options const& options,
     int channel_id);
 
 }  // namespace SPANNER_CLIENT_NS
