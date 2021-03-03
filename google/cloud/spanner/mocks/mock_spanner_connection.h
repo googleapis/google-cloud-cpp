@@ -76,7 +76,7 @@ class MockResultSetSource : public spanner_internal::ResultSourceInterface {
   MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetMetadata>, Metadata,
               (), (override));
   MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetStats>, Stats, (),
-              (const override));
+              (const, override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

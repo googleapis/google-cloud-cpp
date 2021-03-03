@@ -26,7 +26,7 @@ namespace testing {
 
 class MockAdminClient : public bigtable::AdminClient {
  public:
-  MOCK_METHOD(std::string const&, project, (), (const override));
+  MOCK_METHOD(std::string const&, project, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));
   MOCK_METHOD(void, reset, (), (override));
 

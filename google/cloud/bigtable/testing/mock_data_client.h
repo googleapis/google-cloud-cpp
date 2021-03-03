@@ -26,8 +26,8 @@ namespace testing {
 
 class MockDataClient : public bigtable::DataClient {
  public:
-  MOCK_METHOD(std::string const&, project_id, (), (const override));
-  MOCK_METHOD(std::string const&, instance_id, (), (const override));
+  MOCK_METHOD(std::string const&, project_id, (), (const, override));
+  MOCK_METHOD(std::string const&, instance_id, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));
   MOCK_METHOD(void, reset, (), (override));
 

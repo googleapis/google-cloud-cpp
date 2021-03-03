@@ -112,7 +112,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
 
-  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
   MOCK_METHOD(bool, OnFailure, (grpc::Status const& status), (override));
   bool OnFailure(google::cloud::Status const&) override { return true; }
 };

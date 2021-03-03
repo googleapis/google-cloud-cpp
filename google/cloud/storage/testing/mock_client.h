@@ -27,7 +27,7 @@ namespace testing {
 
 class MockClient : public google::cloud::storage::internal::RawClient {
  public:
-  MOCK_METHOD(ClientOptions const&, client_options, (), (const override));
+  MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
   MOCK_METHOD(StatusOr<internal::ListBucketsResponse>, ListBuckets,
               (internal::ListBucketsRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::BucketMetadata>, CreateBucket,
@@ -161,16 +161,16 @@ class MockResumableUploadSession
               (override));
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, ResetSession, (),
               (override));
-  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const override));
-  MOCK_METHOD(std::string const&, session_id, (), (const override));
-  MOCK_METHOD(bool, done, (), (const override));
+  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
+  MOCK_METHOD(std::string const&, session_id, (), (const, override));
+  MOCK_METHOD(bool, done, (), (const, override));
   MOCK_METHOD(StatusOr<internal::ResumableUploadResponse> const&, last_response,
-              (), (const override));
+              (), (const, override));
 };
 
 class MockObjectReadSource : public internal::ObjectReadSource {
  public:
-  MOCK_METHOD(bool, IsOpen, (), (const override));
+  MOCK_METHOD(bool, IsOpen, (), (const, override));
   MOCK_METHOD(StatusOr<internal::HttpResponse>, Close, (), (override));
   MOCK_METHOD(StatusOr<internal::ReadSourceResult>, Read,
               (char* buf, std::size_t n), (override));
@@ -178,13 +178,13 @@ class MockObjectReadSource : public internal::ObjectReadSource {
 
 class MockStreambuf : public internal::ObjectWriteStreambuf {
  public:
-  MOCK_METHOD(bool, IsOpen, (), (const override));
+  MOCK_METHOD(bool, IsOpen, (), (const, override));
   MOCK_METHOD(StatusOr<internal::HttpResponse>, DoClose, ());
   MOCK_METHOD(bool, ValidateHash, (ObjectMetadata const&), (override));
-  MOCK_METHOD(std::string const&, received_hash, (), (const override));
-  MOCK_METHOD(std::string const&, computed_hash, (), (const override));
-  MOCK_METHOD(std::string const&, resumable_session_id, (), (const override));
-  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const override));
+  MOCK_METHOD(std::string const&, received_hash, (), (const, override));
+  MOCK_METHOD(std::string const&, computed_hash, (), (const, override));
+  MOCK_METHOD(std::string const&, resumable_session_id, (), (const, override));
+  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
 };
 }  // namespace testing
 }  // namespace storage
