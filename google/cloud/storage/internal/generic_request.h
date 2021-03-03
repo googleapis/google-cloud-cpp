@@ -20,6 +20,7 @@
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iostream>
+#include <string>
 #include <utility>
 
 namespace google {

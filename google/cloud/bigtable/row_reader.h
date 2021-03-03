@@ -31,6 +31,7 @@
 #include <grpcpp/grpcpp.h>
 #include <cinttypes>
 #include <iterator>
+#include <string>
 
 namespace google {
 namespace cloud {

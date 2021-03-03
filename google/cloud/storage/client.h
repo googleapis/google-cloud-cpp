@@ -38,7 +38,9 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
+#include <string>
 #include <type_traits>
+#include <vector>
 
 namespace google {
 namespace cloud {

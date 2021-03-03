@@ -28,8 +28,8 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
+#include <string>
 #include <utility>
-#include <vector>
 
 namespace google {
 namespace cloud {

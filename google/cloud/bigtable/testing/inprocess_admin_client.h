@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/client_options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
+#include <string>
 
 namespace google {
 namespace cloud {

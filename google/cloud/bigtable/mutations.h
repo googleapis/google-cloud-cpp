@@ -27,7 +27,9 @@
 #include <google/bigtable/v2/data.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
+#include <string>
 #include <type_traits>
+#include <vector>
 
 namespace google {
 namespace cloud {

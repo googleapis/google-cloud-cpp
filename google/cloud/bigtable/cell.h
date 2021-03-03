@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
+#include <string>
 #include <type_traits>
 #include <vector>
 

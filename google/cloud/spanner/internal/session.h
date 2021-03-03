@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/version.h"
 #include <atomic>
-#include <chrono>
 #include <memory>
 #include <string>
 #include <utility>

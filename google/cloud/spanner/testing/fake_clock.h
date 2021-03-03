@@ -17,7 +17,6 @@
 
 #include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/version.h"
-#include <chrono>
 #include <mutex>
 
 namespace google {

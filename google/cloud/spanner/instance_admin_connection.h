@@ -24,6 +24,8 @@
 #include "google/cloud/internal/pagination_range.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
 #include <map>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

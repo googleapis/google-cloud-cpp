@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include <iostream>
+#include <string>
 #include <tuple>
 
 namespace google {

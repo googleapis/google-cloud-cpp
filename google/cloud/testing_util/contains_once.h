@@ -18,8 +18,10 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <cstddef>
+#include <string>
 #include <type_traits>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

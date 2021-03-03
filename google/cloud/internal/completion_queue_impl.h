@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {

@@ -32,7 +32,9 @@
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <chrono>
 #include <queue>
+#include <string>
 
 namespace google {
 namespace cloud {

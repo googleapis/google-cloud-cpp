@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <string>
 #include <vector>
 
 namespace google {

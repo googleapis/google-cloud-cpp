@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/version.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

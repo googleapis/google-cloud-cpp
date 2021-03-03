@@ -18,6 +18,7 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/version.h"
 #include <atomic>
+#include <chrono>
 #include <cinttypes>
 #include <deque>
 #include <unordered_map>

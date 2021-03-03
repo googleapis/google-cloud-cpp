@@ -25,6 +25,7 @@
 #include <deque>
 #include <functional>
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {

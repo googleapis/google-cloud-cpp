@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -22,8 +22,10 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
+#include <chrono>
 #include <iostream>
 #include <mutex>
+#include <string>
 
 namespace google {
 namespace cloud {

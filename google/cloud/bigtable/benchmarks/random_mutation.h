@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
+#include <string>
 
 namespace google {
 namespace cloud {

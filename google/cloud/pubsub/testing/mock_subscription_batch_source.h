@@ -18,6 +18,9 @@
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
 #include "google/cloud/pubsub/version.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/topic_builder.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

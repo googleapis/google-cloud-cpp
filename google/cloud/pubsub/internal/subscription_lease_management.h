@@ -22,6 +22,8 @@
 #include "google/cloud/internal/absl_flat_hash_map_quiet.h"
 #include <chrono>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

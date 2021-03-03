@@ -22,6 +22,8 @@
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

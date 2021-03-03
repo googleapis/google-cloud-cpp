@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include <google/spanner/v1/mutation.pb.h>
+#include <string>
 #include <vector>
 
 namespace google {

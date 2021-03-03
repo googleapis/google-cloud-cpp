@@ -17,6 +17,7 @@
 
 #include "google/cloud/version.h"
 #include <chrono>
+#include <string>
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 #include <sys/resource.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE

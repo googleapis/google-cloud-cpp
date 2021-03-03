@@ -20,8 +20,8 @@
 #include "google/cloud/pubsub/internal/subscription_message_source.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/version.h"
-#include <chrono>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

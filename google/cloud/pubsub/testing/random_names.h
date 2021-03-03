@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/random.h"
+#include <string>
 
 namespace google {
 namespace cloud {

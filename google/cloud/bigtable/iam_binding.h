@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <set>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

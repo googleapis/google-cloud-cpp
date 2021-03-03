@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/version.h"
 #include <google/type/expr.pb.h>
+#include <string>
 
 namespace google {
 namespace cloud {

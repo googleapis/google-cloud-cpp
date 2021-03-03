@@ -27,6 +27,7 @@
 #include <functional>
 #include <memory>
 #include <queue>
+#include <vector>
 
 namespace google {
 namespace cloud {

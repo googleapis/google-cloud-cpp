@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/status.h"
 #include <nlohmann/json.hpp>
+#include <string>
 namespace google {
 namespace cloud {
 namespace storage {

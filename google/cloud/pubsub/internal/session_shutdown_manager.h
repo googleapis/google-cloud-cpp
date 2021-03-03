@@ -19,6 +19,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/status.h"
 #include <mutex>
+#include <string>
 #include <unordered_map>
 
 namespace google {

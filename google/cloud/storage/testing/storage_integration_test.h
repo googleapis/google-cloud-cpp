@@ -20,7 +20,6 @@
 #include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 #include <algorithm>
-#include <chrono>
 #include <string>
 #include <thread>
 #include <vector>

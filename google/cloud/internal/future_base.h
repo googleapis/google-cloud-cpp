@@ -22,6 +22,7 @@
 
 #include "google/cloud/internal/future_impl.h"
 #include "google/cloud/version.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/curl_request.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

@@ -20,7 +20,6 @@
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
-#include <chrono>
 #include <memory>
 
 namespace google {

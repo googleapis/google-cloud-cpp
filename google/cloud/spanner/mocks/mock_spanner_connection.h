@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {

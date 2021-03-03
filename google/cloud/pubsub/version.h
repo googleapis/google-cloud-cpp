@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/version_info.h"
 #include "google/cloud/version.h"
-#include <string>
 
 #define GOOGLE_CLOUD_CPP_PUBSUB_NS                                     \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR, \

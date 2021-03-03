@@ -24,6 +24,8 @@
 #include "google/cloud/version.h"
 #include <google/protobuf/message.h>
 #include <grpcpp/grpcpp.h>
+#include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

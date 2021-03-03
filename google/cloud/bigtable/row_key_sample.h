@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include <cstdint>
-#include <string>
 
 namespace google {
 namespace cloud {

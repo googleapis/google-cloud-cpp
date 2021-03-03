@@ -21,6 +21,7 @@
 #include <google/bigtable/admin/v2/table.pb.h>
 #include <chrono>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

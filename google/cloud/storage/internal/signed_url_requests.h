@@ -22,8 +22,11 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
+#include <chrono>
 #include <iosfwd>
 #include <map>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

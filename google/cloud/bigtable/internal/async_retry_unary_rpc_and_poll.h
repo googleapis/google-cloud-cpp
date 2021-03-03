@@ -23,6 +23,7 @@
 #include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {

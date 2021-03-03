@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/connection_options.h"
 #include <grpcpp/grpcpp.h>
+#include <string>
 
 namespace google {
 namespace cloud {

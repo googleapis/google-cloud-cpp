@@ -18,6 +18,7 @@
 #include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

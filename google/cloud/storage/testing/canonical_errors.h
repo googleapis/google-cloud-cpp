@@ -17,6 +17,7 @@
 
 #include "google/cloud/status.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

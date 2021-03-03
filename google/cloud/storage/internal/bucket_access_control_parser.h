@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/bucket_access_control.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

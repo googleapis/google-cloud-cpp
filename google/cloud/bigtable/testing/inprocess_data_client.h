@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/data_client.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <string>
 
 namespace google {
 namespace cloud {

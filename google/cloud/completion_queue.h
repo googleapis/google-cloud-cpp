@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
 #include "absl/meta/type_traits.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {

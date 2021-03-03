@@ -16,8 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TUPLE_UTILS_H
 
 #include "google/cloud/spanner/version.h"
+#include <string>
 #include <tuple>
 #include <type_traits>
+#include <vector>
 
 namespace google {
 namespace cloud {

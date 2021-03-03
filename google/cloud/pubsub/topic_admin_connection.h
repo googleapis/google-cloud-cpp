@@ -26,6 +26,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

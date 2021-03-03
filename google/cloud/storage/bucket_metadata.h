@@ -23,9 +23,12 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
 #include "absl/types/optional.h"
+#include <chrono>
 #include <map>
+#include <string>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

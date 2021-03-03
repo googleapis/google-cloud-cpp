@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
+#include <string>
 #include <utility>
 
 namespace google {

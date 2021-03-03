@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <google/rpc/status.pb.h>
 #include <grpcpp/grpcpp.h>
+#include <string>
 
 namespace google {
 namespace cloud {

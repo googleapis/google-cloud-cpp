@@ -21,6 +21,8 @@
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_headers.h"
+#include <chrono>
+#include <string>
 
 namespace google {
 namespace cloud {

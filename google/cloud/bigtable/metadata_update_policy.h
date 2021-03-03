@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

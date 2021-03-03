@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMPILER_INFO_H
 
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {

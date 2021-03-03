@@ -24,6 +24,7 @@
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
 #include <grpcpp/grpcpp.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {

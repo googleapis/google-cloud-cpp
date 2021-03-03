@@ -30,8 +30,11 @@
 #include "google/cloud/internal/attributes.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <chrono>
 #include <future>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,8 @@
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

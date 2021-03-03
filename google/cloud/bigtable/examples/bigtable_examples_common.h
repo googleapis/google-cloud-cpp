@@ -20,6 +20,9 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <chrono>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
