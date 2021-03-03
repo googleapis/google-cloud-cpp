@@ -149,8 +149,8 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
 
 class MockBackoffPolicy : public BackoffPolicy {
  public:
-  MOCK_CONST_METHOD0(clone, std::unique_ptr<BackoffPolicy>());
-  MOCK_METHOD0(OnCompletion, std::chrono::milliseconds());
+  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
 };
 
 /// @test Verify the backoff policy is queried after each failure.

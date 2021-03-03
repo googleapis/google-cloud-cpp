@@ -40,7 +40,7 @@ using ::testing::Return;
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
-  MOCK_METHOD1(OnCompletionHook, std::chrono::milliseconds(Status const& s));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletionHook, (Status const& s));
 
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     num_calls_from_last_clone_++;

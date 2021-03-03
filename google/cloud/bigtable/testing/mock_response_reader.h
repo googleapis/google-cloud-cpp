@@ -42,10 +42,10 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
  public:
   explicit MockResponseReader(std::string method)
       : method_(std::move(method)) {}
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1_T(Read, bool(Response*));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+  MOCK_METHOD(grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
+  MOCK_METHOD(bool, Read, (Response*), (override));
 
   using UniquePtr = std::unique_ptr<grpc::ClientReaderInterface<Response>>;
 
@@ -108,19 +108,19 @@ template <typename Response>
 class MockAsyncResponseReader
     : public grpc::ClientAsyncResponseReaderInterface<Response> {
  public:
-  MOCK_METHOD0(StartCall, void());
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD3_T(Finish, void(Response*, grpc::Status*, void*));
+  MOCK_METHOD(void, StartCall, (), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+  MOCK_METHOD(void, Finish, (Response*, grpc::Status*, void*), (override));
 };
 
 template <typename Response>
 class MockClientAsyncReaderInterface
     : public grpc::ClientAsyncReaderInterface<Response> {
  public:
-  MOCK_METHOD1(StartCall, void(void*));
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD2(Finish, void(grpc::Status*, void*));
-  MOCK_METHOD2_T(Read, void(Response*, void*));
+  MOCK_METHOD(void, StartCall, (void*), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
+  MOCK_METHOD(void, Read, (Response*, void*), (override));
 };
 
 }  // namespace testing

@@ -27,22 +27,23 @@ namespace testing_util {
 
 class MockCompletionQueueImpl : public internal::CompletionQueueImpl {
  public:
-  MOCK_METHOD0(Run, void());
-  MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD0(CancelAll, void());
-  MOCK_METHOD1(MakeDeadlineTimer,
-               future<StatusOr<std::chrono::system_clock::time_point>>(
-                   std::chrono::system_clock::time_point));
-  MOCK_METHOD1(MakeRelativeTimer,
-               future<StatusOr<std::chrono::system_clock::time_point>>(
-                   std::chrono::nanoseconds));
-  MOCK_METHOD1(RunAsync, void(std::unique_ptr<internal::RunAsyncBase>));
+  MOCK_METHOD(void, Run, (), (override));
+  MOCK_METHOD(void, Shutdown, (), (override));
+  MOCK_METHOD(void, CancelAll, (), (override));
+  MOCK_METHOD(future<StatusOr<std::chrono::system_clock::time_point>>,
+              MakeDeadlineTimer, (std::chrono::system_clock::time_point),
+              (override));
+  MOCK_METHOD(future<StatusOr<std::chrono::system_clock::time_point>>,
+              MakeRelativeTimer, (std::chrono::nanoseconds), (override));
+  MOCK_METHOD(void, RunAsync, (std::unique_ptr<internal::RunAsyncBase>),
+              (override));
 
-  MOCK_METHOD2(StartOperation,
-               void(std::shared_ptr<internal::AsyncGrpcOperation>,
-                    absl::FunctionRef<void(void*)>));
+  MOCK_METHOD(void, StartOperation,
+              (std::shared_ptr<internal::AsyncGrpcOperation>,
+               absl::FunctionRef<void(void*)>),
+              (override));
 
-  MOCK_METHOD0(cq, grpc::CompletionQueue&());
+  MOCK_METHOD(grpc::CompletionQueue&, cq, (), (override));
 };
 
 }  // namespace testing_util

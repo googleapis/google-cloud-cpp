@@ -30,13 +30,15 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class MockSubscriptionBatchSource
     : public pubsub_internal::SubscriptionBatchSource {
  public:
-  MOCK_METHOD1(Start, void(pubsub_internal::BatchCallback));
-  MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD1(AckMessage, void(std::string const& ack_id));
-  MOCK_METHOD1(NackMessage, void(std::string const& ack_id));
-  MOCK_METHOD1(BulkNack, void(std::vector<std::string> ack_ids));
-  MOCK_METHOD2(ExtendLeases, void(std::vector<std::string> ack_ids,
-                                  std::chrono::seconds extension));
+  MOCK_METHOD(void, Start, (pubsub_internal::BatchCallback), (override));
+  MOCK_METHOD(void, Shutdown, (), (override));
+  MOCK_METHOD(void, AckMessage, (std::string const& ack_id), (override));
+  MOCK_METHOD(void, NackMessage, (std::string const& ack_id), (override));
+  MOCK_METHOD(void, BulkNack, (std::vector<std::string> ack_ids), (override));
+  MOCK_METHOD(void, ExtendLeases,
+              (std::vector<std::string> ack_ids,
+               std::chrono::seconds extension),
+              (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

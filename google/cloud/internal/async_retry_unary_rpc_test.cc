@@ -46,17 +46,18 @@ using ::testing::HasSubstr;
  */
 class MockStub {
  public:
-  MOCK_METHOD3(
+  MOCK_METHOD(
+      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>,
       AsyncGetTable,
-      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-          grpc::ClientContext*, btadmin::GetTableRequest const&,
-          grpc::CompletionQueue* cq));
+      (grpc::ClientContext*, btadmin::GetTableRequest const&,
+       grpc::CompletionQueue* cq));
 
-  MOCK_METHOD3(AsyncDeleteTable,
-               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                   google::protobuf::Empty>>(grpc::ClientContext*,
-                                             btadmin::DeleteTableRequest const&,
-                                             grpc::CompletionQueue* cq));
+  MOCK_METHOD(
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
+      AsyncDeleteTable,
+      (grpc::ClientContext*, btadmin::DeleteTableRequest const&,
+       grpc::CompletionQueue* cq));
 };
 
 // Each library defines its own retry policy class, typically by defining the

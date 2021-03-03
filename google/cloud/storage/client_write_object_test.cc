@@ -173,7 +173,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
 // A std::filebuf which allows to learn about seekpos calls.
 class MockFilebuf : public std::filebuf {
  public:
-  MOCK_METHOD1(SeekoffEvent, void(std::streamoff));
+  MOCK_METHOD(void, SeekoffEvent, (std::streamoff));
 
  protected:
   std::streampos seekoff(std::streamoff off, std::ios_base::seekdir way,

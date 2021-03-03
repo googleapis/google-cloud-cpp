@@ -27,9 +27,10 @@ inline namespace SPANNER_CLIENT_NS {
 class MockPartialResultSetReader
     : public spanner_internal::PartialResultSetReader {
  public:
-  MOCK_METHOD0(TryCancel, void());
-  MOCK_METHOD0(Read, absl::optional<google::spanner::v1::PartialResultSet>());
-  MOCK_METHOD0(Finish, Status());
+  MOCK_METHOD(void, TryCancel, (), (override));
+  MOCK_METHOD(absl::optional<google::spanner::v1::PartialResultSet>, Read, (),
+              (override));
+  MOCK_METHOD(Status, Finish, (), (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

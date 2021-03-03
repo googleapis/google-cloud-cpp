@@ -39,7 +39,7 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 
 class BackoffPolicyMockState {
  public:
-  MOCK_METHOD0(OnCompletion, std::chrono::milliseconds());
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, ());
 
   int num_calls_from_last_clone_{0};
   int num_clones_{0};

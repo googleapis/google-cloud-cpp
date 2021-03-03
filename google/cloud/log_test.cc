@@ -76,8 +76,8 @@ TEST(LogSinkTest, RuntimeSeverity) {
 namespace {
 class MockLogBackend : public LogBackend {
  public:
-  MOCK_METHOD1(Process, void(LogRecord const&));
-  MOCK_METHOD1(ProcessWithOwnership, void(LogRecord));
+  MOCK_METHOD(void, Process, (LogRecord const&), (override));
+  MOCK_METHOD(void, ProcessWithOwnership, (LogRecord), (override));
 };
 }  // namespace
 

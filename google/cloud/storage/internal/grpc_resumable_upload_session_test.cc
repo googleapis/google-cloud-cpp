@@ -35,10 +35,12 @@ using ::testing::Return;
 
 class MockGrpcUploadWriter : public GrpcClient::UploadWriter {
  public:
-  MOCK_METHOD2(Write, bool(google::storage::v1::InsertObjectRequest const&,
-                           grpc::WriteOptions));
-  MOCK_METHOD0(WritesDone, bool());
-  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD(bool, Write,
+              (google::storage::v1::InsertObjectRequest const&,
+               grpc::WriteOptions),
+              (override));
+  MOCK_METHOD(bool, WritesDone, (), (override));
+  MOCK_METHOD(grpc::Status, Finish, (), (override));
 };
 
 class MockGrpcClient : public GrpcClient {
@@ -50,11 +52,10 @@ class MockGrpcClient : public GrpcClient {
   MockGrpcClient()
       : GrpcClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
 
-  MOCK_METHOD2(CreateUploadWriter,
-               std::unique_ptr<GrpcClient::UploadWriter>(
-                   grpc::ClientContext&, google::storage::v1::Object&));
-  MOCK_METHOD1(QueryResumableUpload, StatusOr<ResumableUploadResponse>(
-                                         QueryResumableUploadRequest const&));
+  MOCK_METHOD(std::unique_ptr<GrpcClient::UploadWriter>, CreateUploadWriter,
+              (grpc::ClientContext&, google::storage::v1::Object&), (override));
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableUpload,
+              (QueryResumableUploadRequest const&), (override));
 };
 
 TEST(GrpcResumableUploadSessionTest, Simple) {

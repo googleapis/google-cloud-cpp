@@ -39,10 +39,10 @@ namespace storage_proto = ::google::storage::v1;
 class MockMediaReader : public grpc::ClientReaderInterface<
                             storage_proto::GetObjectMediaResponse> {
  public:
-  MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD1_T(Read, bool(storage_proto::GetObjectMediaResponse*));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
+  MOCK_METHOD(grpc::Status, Finish, (), (override));
+  MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
+  MOCK_METHOD(bool, Read, (storage_proto::GetObjectMediaResponse*), (override));
 
   using UniquePtr = std::unique_ptr<
       grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>;

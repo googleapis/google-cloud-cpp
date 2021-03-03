@@ -59,9 +59,9 @@ template <typename Response>
 class MockAsyncResponseReader
     : public grpc::ClientAsyncResponseReaderInterface<Response> {
  public:
-  MOCK_METHOD0(StartCall, void());
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD3_T(Finish, void(Response*, grpc::Status*, void*));
+  MOCK_METHOD(void, StartCall, (), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+  MOCK_METHOD(void, Finish, (Response*, grpc::Status*, void*), (override));
 };
 
 }  // namespace testing_util

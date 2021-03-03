@@ -34,29 +34,25 @@ inline namespace SPANNER_CLIENT_NS {
 class MockInstanceAdminConnection
     : public google::cloud::spanner::InstanceAdminConnection {
  public:
-  MOCK_METHOD1(GetInstance,
-               StatusOr<google::spanner::admin::instance::v1::Instance>(
-                   GetInstanceParams));
-  MOCK_METHOD1(CreateInstance,
-               future<StatusOr<google::spanner::admin::instance::v1::Instance>>(
-                   CreateInstanceParams));
-  MOCK_METHOD1(UpdateInstance,
-               future<StatusOr<google::spanner::admin::instance::v1::Instance>>(
-                   UpdateInstanceParams));
-  MOCK_METHOD1(DeleteInstance, Status(DeleteInstanceParams));
-  MOCK_METHOD1(GetInstanceConfig,
-               StatusOr<google::spanner::admin::instance::v1::InstanceConfig>(
-                   GetInstanceConfigParams));
-  MOCK_METHOD1(ListInstanceConfigs,
-               spanner::ListInstanceConfigsRange(ListInstanceConfigsParams));
-  MOCK_METHOD1(ListInstances, spanner::ListInstancesRange(ListInstancesParams));
-  MOCK_METHOD1(GetIamPolicy,
-               StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
-  MOCK_METHOD1(SetIamPolicy,
-               StatusOr<google::iam::v1::Policy>(SetIamPolicyParams));
-  MOCK_METHOD1(TestIamPermissions,
-               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
-                   TestIamPermissionsParams));
+  MOCK_METHOD(StatusOr<google::spanner::admin::instance::v1::Instance>,
+              GetInstance, (GetInstanceParams), (override));
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              CreateInstance, (CreateInstanceParams), (override));
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              UpdateInstance, (UpdateInstanceParams), (override));
+  MOCK_METHOD(Status, DeleteInstance, (DeleteInstanceParams), (override));
+  MOCK_METHOD(StatusOr<google::spanner::admin::instance::v1::InstanceConfig>,
+              GetInstanceConfig, (GetInstanceConfigParams), (override));
+  MOCK_METHOD(spanner::ListInstanceConfigsRange, ListInstanceConfigs,
+              (ListInstanceConfigsParams), (override));
+  MOCK_METHOD(spanner::ListInstancesRange, ListInstances, (ListInstancesParams),
+              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (GetIamPolicyParams), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (SetIamPolicyParams), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions, (TestIamPermissionsParams), (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

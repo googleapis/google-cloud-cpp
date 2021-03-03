@@ -43,10 +43,10 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
  */
 class MockAckHandler : public pubsub::AckHandler::Impl {
  public:
-  MOCK_METHOD0(ack, void());
-  MOCK_METHOD0(nack, void());
-  MOCK_CONST_METHOD0(ack_id, std::string());
-  MOCK_CONST_METHOD0(delivery_attempt, std::int32_t());
+  MOCK_METHOD(void, ack, (), (override));
+  MOCK_METHOD(void, nack, (), (override));
+  MOCK_METHOD(std::string, ack_id, ());
+  MOCK_METHOD(std::int32_t, delivery_attempt, (), (const override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

@@ -204,10 +204,10 @@ std::shared_ptr<spanner::Connection> MakeLimitedRetryConnection(
 class MockGrpcReader
     : public ::grpc::ClientReaderInterface<spanner_proto::PartialResultSet> {
  public:
-  MOCK_METHOD1(Read, bool(spanner_proto::PartialResultSet*));
-  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-  MOCK_METHOD0(Finish, grpc::Status());
-  MOCK_METHOD0(WaitForInitialMetadata, void());
+  MOCK_METHOD(bool, Read, (spanner_proto::PartialResultSet*), (override));
+  MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
+  MOCK_METHOD(grpc::Status, Finish, (), (override));
+  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
 };
 
 // Creates a MockGrpcReader that yields the specified `PartialResultSet`

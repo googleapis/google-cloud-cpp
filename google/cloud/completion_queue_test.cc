@@ -41,40 +41,42 @@ using ::testing::StrictMock;
 
 class MockClient {
  public:
-  MOCK_METHOD3(
+  MOCK_METHOD(
+      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>,
       AsyncGetTable,
-      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-          grpc::ClientContext*, btadmin::GetTableRequest const&,
-          grpc::CompletionQueue* cq));
+      (grpc::ClientContext*, btadmin::GetTableRequest const&,
+       grpc::CompletionQueue* cq));
 
-  MOCK_METHOD3(AsyncReadRows,
-               std::unique_ptr<::grpc::ClientAsyncReaderInterface<
-                   btproto::ReadRowsResponse>>(grpc::ClientContext*,
-                                               btproto::ReadRowsRequest const&,
-                                               grpc::CompletionQueue* cq));
+  MOCK_METHOD(
+      std::unique_ptr<
+          ::grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>,
+      AsyncReadRows,
+      (grpc::ClientContext*, btproto::ReadRowsRequest const&,
+       grpc::CompletionQueue* cq));
 };
 
 class MockTableReader
     : public grpc::ClientAsyncResponseReaderInterface<btadmin::Table> {
  public:
-  MOCK_METHOD0(StartCall, void());
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD3(Finish, void(btadmin::Table*, grpc::Status*, void*));
+  MOCK_METHOD(void, StartCall, (), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+  MOCK_METHOD(void, Finish, (btadmin::Table*, grpc::Status*, void*),
+              (override));
 };
 
 class MockRowReader
     : public grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse> {
  public:
-  MOCK_METHOD1(StartCall, void(void*));
-  MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD2(Read, void(btproto::ReadRowsResponse*, void*));
-  MOCK_METHOD2(Finish, void(grpc::Status*, void*));
+  MOCK_METHOD(void, StartCall, (void*), (override));
+  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
+  MOCK_METHOD(void, Read, (btproto::ReadRowsResponse*, void*), (override));
+  MOCK_METHOD(void, Finish, (grpc::Status*, void*), (override));
 };
 
 class MockOperation : public internal::AsyncGrpcOperation {
  public:
-  MOCK_METHOD0(Cancel, void());
-  MOCK_METHOD1(Notify, bool(bool));
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(bool, Notify, (bool), (override));
 };
 
 /// @test A regression test for #5141

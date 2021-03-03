@@ -27,55 +27,62 @@ inline namespace SPANNER_CLIENT_NS {
 class MockInstanceAdminStub
     : public google::cloud::spanner_internal::InstanceAdminStub {
  public:
-  MOCK_METHOD2(
-      GetInstance,
-      StatusOr<google::spanner::admin::instance::v1::Instance>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::GetInstanceRequest const&));
-  MOCK_METHOD2(
-      CreateInstance,
-      StatusOr<google::longrunning::Operation>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::CreateInstanceRequest const&));
-  MOCK_METHOD2(
-      UpdateInstance,
-      StatusOr<google::longrunning::Operation>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::UpdateInstanceRequest const&));
-  MOCK_METHOD2(
-      DeleteInstance,
-      Status(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::DeleteInstanceRequest const&));
-  MOCK_METHOD2(GetInstanceConfig,
-               StatusOr<google::spanner::admin::instance::v1::InstanceConfig>(
-                   grpc::ClientContext&, google::spanner::admin::instance::v1::
-                                             GetInstanceConfigRequest const&));
-  MOCK_METHOD2(
-      ListInstanceConfigs,
+  MOCK_METHOD(StatusOr<google::spanner::admin::instance::v1::Instance>,
+              GetInstance,
+              (grpc::ClientContext&,
+               google::spanner::admin::instance::v1::GetInstanceRequest const&),
+              (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::CreateInstanceRequest const&),
+      (override));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::UpdateInstanceRequest const&),
+      (override));
+  MOCK_METHOD(
+      Status, DeleteInstance,
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::DeleteInstanceRequest const&),
+      (override));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>,
+      GetInstanceConfig,
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&),
+      (override));
+  MOCK_METHOD(
       StatusOr<
-          google::spanner::admin::instance::v1::ListInstanceConfigsResponse>(
-          grpc::ClientContext&, google::spanner::admin::instance::v1::
-                                    ListInstanceConfigsRequest const&));
-  MOCK_METHOD2(
+          google::spanner::admin::instance::v1::ListInstanceConfigsResponse>,
+      ListInstanceConfigs,
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&),
+      (override));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>,
       ListInstances,
-      StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::ListInstancesRequest const&));
-  MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
-                                 grpc::ClientContext&,
-                                 google::iam::v1::GetIamPolicyRequest const&));
-  MOCK_METHOD2(SetIamPolicy, StatusOr<google::iam::v1::Policy>(
-                                 grpc::ClientContext&,
-                                 google::iam::v1::SetIamPolicyRequest const&));
-  MOCK_METHOD2(TestIamPermissions,
-               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
-                   grpc::ClientContext&,
-                   google::iam::v1::TestIamPermissionsRequest const&));
-  MOCK_METHOD2(GetOperation,
-               StatusOr<google::longrunning::Operation>(
-                   grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const&));
+      (grpc::ClientContext&,
+       google::spanner::admin::instance::v1::ListInstancesRequest const&),
+      (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (grpc::ClientContext&,
+               google::iam::v1::GetIamPolicyRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (grpc::ClientContext&,
+               google::iam::v1::SetIamPolicyRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (grpc::ClientContext&,
+               google::iam::v1::TestIamPermissionsRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (grpc::ClientContext&,
+               google::longrunning::GetOperationRequest const&),
+              (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS
