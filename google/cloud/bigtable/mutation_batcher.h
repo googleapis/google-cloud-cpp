@@ -22,7 +22,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
 #include "absl/memory/memory.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <deque>
 #include <functional>
 #include <memory>

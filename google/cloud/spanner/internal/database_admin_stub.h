@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
-#include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
 
 namespace google {
 namespace cloud {
