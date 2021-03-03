@@ -28,11 +28,11 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 class MockSubscriptionMessageSource
     : public pubsub_internal::SubscriptionMessageSource {
  public:
-  MOCK_METHOD1(Start, void(pubsub_internal::MessageCallback));
-  MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD1(Read, void(std::size_t max_callbacks));
-  MOCK_METHOD1(AckMessage, void(std::string const& ack_id));
-  MOCK_METHOD1(NackMessage, void(std::string const& ack_id));
+  MOCK_METHOD(void, Start, (pubsub_internal::MessageCallback), (override));
+  MOCK_METHOD(void, Shutdown, (), (override));
+  MOCK_METHOD(void, Read, (std::size_t max_callbacks), (override));
+  MOCK_METHOD(void, AckMessage, (std::string const& ack_id), (override));
+  MOCK_METHOD(void, NackMessage, (std::string const& ack_id), (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

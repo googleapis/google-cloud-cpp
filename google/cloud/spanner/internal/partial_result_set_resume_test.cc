@@ -46,8 +46,8 @@ using ::testing::Return;
 using ReadReturn = absl::optional<spanner_proto::PartialResultSet>;
 
 struct MockFactory {
-  MOCK_METHOD1(MakeReader, std::unique_ptr<PartialResultSetReader>(
-                               std::string const& token));
+  MOCK_METHOD(std::unique_ptr<PartialResultSetReader>, MakeReader,
+              (std::string const& token));
 };
 
 std::unique_ptr<PartialResultSetReader> MakeTestResume(

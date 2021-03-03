@@ -42,8 +42,8 @@ class MockHttpRequest {
   }
 
   struct Impl {
-    MOCK_METHOD1(MakeRequest,
-                 StatusOr<storage::internal::HttpResponse>(std::string const&));
+    MOCK_METHOD(StatusOr<storage::internal::HttpResponse>, MakeRequest,
+                (std::string const&));
   };
 
   std::shared_ptr<Impl> mock;
@@ -125,17 +125,17 @@ class MockHttpRequestBuilder {
   }
 
   struct Impl {
-    MOCK_METHOD1(Constructor, void(std::string));
-    MOCK_METHOD0(BuildRequest, MockHttpRequest());
-    MOCK_METHOD1(AddUserAgentPrefix, void(std::string const&));
-    MOCK_METHOD1(AddHeader, void(std::string const&));
-    MOCK_METHOD2(AddQueryParameter,
-                 void(std::string const&, std::string const&));
-    MOCK_METHOD1(SetMethod, void(std::string const&));
-    MOCK_METHOD1(SetDebugLogging, void(bool));
-    MOCK_CONST_METHOD0(UserAgentSuffix, std::string());
-    MOCK_METHOD1(MakeEscapedString,
-                 std::unique_ptr<char[]>(std::string const&));
+    MOCK_METHOD(void, Constructor, (std::string));
+    MOCK_METHOD(MockHttpRequest, BuildRequest, ());
+    MOCK_METHOD(void, AddUserAgentPrefix, (std::string const&));
+    MOCK_METHOD(void, AddHeader, (std::string const&));
+    MOCK_METHOD(void, AddQueryParameter,
+                (std::string const&, std::string const&));
+    MOCK_METHOD(void, SetMethod, (std::string const&));
+    MOCK_METHOD(void, SetDebugLogging, (bool));
+    MOCK_METHOD(std::string, UserAgentSuffix, (), (const));
+    MOCK_METHOD(std::unique_ptr<char[]>, MakeEscapedString,
+                (std::string const&));
   };
 
   static std::shared_ptr<Impl> mock_;

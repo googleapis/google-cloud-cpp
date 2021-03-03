@@ -42,22 +42,27 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class MockConnection : public spanner::Connection {
  public:
-  MOCK_METHOD1(Read, spanner::RowStream(ReadParams));
-  MOCK_METHOD1(PartitionRead, StatusOr<std::vector<spanner::ReadPartition>>(
-                                  PartitionReadParams));
-  MOCK_METHOD1(ExecuteQuery, spanner::RowStream(SqlParams));
-  MOCK_METHOD1(ExecuteDml, StatusOr<spanner::DmlResult>(SqlParams));
-  MOCK_METHOD1(ProfileQuery, spanner::ProfileQueryResult(SqlParams));
-  MOCK_METHOD1(ProfileDml, StatusOr<spanner::ProfileDmlResult>(SqlParams));
-  MOCK_METHOD1(AnalyzeSql, StatusOr<spanner::ExecutionPlan>(SqlParams));
-  MOCK_METHOD1(ExecutePartitionedDml, StatusOr<spanner::PartitionedDmlResult>(
-                                          ExecutePartitionedDmlParams));
-  MOCK_METHOD1(PartitionQuery, StatusOr<std::vector<spanner::QueryPartition>>(
-                                   PartitionQueryParams));
-  MOCK_METHOD1(ExecuteBatchDml,
-               StatusOr<spanner::BatchDmlResult>(ExecuteBatchDmlParams));
-  MOCK_METHOD1(Commit, StatusOr<spanner::CommitResult>(CommitParams));
-  MOCK_METHOD1(Rollback, Status(RollbackParams));
+  MOCK_METHOD(spanner::RowStream, Read, (ReadParams), (override));
+  MOCK_METHOD(StatusOr<std::vector<spanner::ReadPartition>>, PartitionRead,
+              (PartitionReadParams), (override));
+  MOCK_METHOD(spanner::RowStream, ExecuteQuery, (SqlParams), (override));
+  MOCK_METHOD(StatusOr<spanner::DmlResult>, ExecuteDml, (SqlParams),
+              (override));
+  MOCK_METHOD(spanner::ProfileQueryResult, ProfileQuery, (SqlParams),
+              (override));
+  MOCK_METHOD(StatusOr<spanner::ProfileDmlResult>, ProfileDml, (SqlParams),
+              (override));
+  MOCK_METHOD(StatusOr<spanner::ExecutionPlan>, AnalyzeSql, (SqlParams),
+              (override));
+  MOCK_METHOD(StatusOr<spanner::PartitionedDmlResult>, ExecutePartitionedDml,
+              (ExecutePartitionedDmlParams), (override));
+  MOCK_METHOD(StatusOr<std::vector<spanner::QueryPartition>>, PartitionQuery,
+              (PartitionQueryParams), (override));
+  MOCK_METHOD(StatusOr<spanner::BatchDmlResult>, ExecuteBatchDml,
+              (ExecuteBatchDmlParams), (override));
+  MOCK_METHOD(StatusOr<spanner::CommitResult>, Commit, (CommitParams),
+              (override));
+  MOCK_METHOD(Status, Rollback, (RollbackParams), (override));
 };
 
 /**
@@ -67,11 +72,11 @@ class MockConnection : public spanner::Connection {
  */
 class MockResultSetSource : public spanner_internal::ResultSourceInterface {
  public:
-  MOCK_METHOD0(NextRow, StatusOr<spanner::Row>());
-  MOCK_METHOD0(Metadata,
-               absl::optional<google::spanner::v1::ResultSetMetadata>());
-  MOCK_CONST_METHOD0(Stats,
-                     absl::optional<google::spanner::v1::ResultSetStats>());
+  MOCK_METHOD(StatusOr<spanner::Row>, NextRow, (), (override));
+  MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetMetadata>, Metadata,
+              (), (override));
+  MOCK_METHOD(absl::optional<google::spanner::v1::ResultSetStats>, Stats, (),
+              (const, override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

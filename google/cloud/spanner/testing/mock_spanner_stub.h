@@ -26,97 +26,107 @@ inline namespace SPANNER_CLIENT_NS {
 
 class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
  public:
-  MOCK_METHOD2(CreateSession,
-               StatusOr<google::spanner::v1::Session>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::CreateSessionRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::Session>, CreateSession,
+              (grpc::ClientContext&,
+               google::spanner::v1::CreateSessionRequest const&),
+              (override));
 
-  MOCK_METHOD2(BatchCreateSessions,
-               StatusOr<google::spanner::v1::BatchCreateSessionsResponse>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::BatchCreateSessionsRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::BatchCreateSessionsResponse>,
+              BatchCreateSessions,
+              (grpc::ClientContext&,
+               google::spanner::v1::BatchCreateSessionsRequest const&),
+              (override));
 
-  MOCK_METHOD3(AsyncBatchCreateSessions,
-               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                   google::spanner::v1::BatchCreateSessionsResponse>>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::BatchCreateSessionsRequest const&,
-                   grpc::CompletionQueue*));
+  MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                  google::spanner::v1::BatchCreateSessionsResponse>>,
+              AsyncBatchCreateSessions,
+              (grpc::ClientContext&,
+               google::spanner::v1::BatchCreateSessionsRequest const&,
+               grpc::CompletionQueue*),
+              (override));
 
-  MOCK_METHOD2(GetSession, StatusOr<google::spanner::v1::Session>(
-                               grpc::ClientContext&,
-                               google::spanner::v1::GetSessionRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::Session>, GetSession,
+              (grpc::ClientContext&,
+               google::spanner::v1::GetSessionRequest const&),
+              (override));
 
-  MOCK_METHOD2(ListSessions,
-               StatusOr<google::spanner::v1::ListSessionsResponse>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::ListSessionsRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::ListSessionsResponse>, ListSessions,
+              (grpc::ClientContext&,
+               google::spanner::v1::ListSessionsRequest const&),
+              (override));
 
-  MOCK_METHOD2(DeleteSession,
-               Status(grpc::ClientContext&,
-                      google::spanner::v1::DeleteSessionRequest const&));
+  MOCK_METHOD(Status, DeleteSession,
+              (grpc::ClientContext&,
+               google::spanner::v1::DeleteSessionRequest const&),
+              (override));
 
-  MOCK_METHOD3(
+  MOCK_METHOD(
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>,
       AsyncDeleteSession,
+      (grpc::ClientContext&, google::spanner::v1::DeleteSessionRequest const&,
+       grpc::CompletionQueue*),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::spanner::v1::ResultSet>, ExecuteSql,
+              (grpc::ClientContext&,
+               google::spanner::v1::ExecuteSqlRequest const&),
+              (override));
+
+  MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                  google::spanner::v1::ResultSet>>,
+              AsyncExecuteSql,
+              (grpc::ClientContext&,
+               google::spanner::v1::ExecuteSqlRequest const&,
+               grpc::CompletionQueue*),
+              (override));
+
+  MOCK_METHOD(
       std::unique_ptr<
-          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
-          grpc::ClientContext&,
-          google::spanner::v1::DeleteSessionRequest const&,
-          grpc::CompletionQueue*));
-
-  MOCK_METHOD2(ExecuteSql, StatusOr<google::spanner::v1::ResultSet>(
-                               grpc::ClientContext&,
-                               google::spanner::v1::ExecuteSqlRequest const&));
-
-  MOCK_METHOD3(AsyncExecuteSql,
-               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
-                   google::spanner::v1::ResultSet>>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::ExecuteSqlRequest const&,
-                   grpc::CompletionQueue*));
-
-  MOCK_METHOD2(
+          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>,
       ExecuteStreamingSql,
+      (grpc::ClientContext&, google::spanner::v1::ExecuteSqlRequest const&),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>,
+              ExecuteBatchDml,
+              (grpc::ClientContext&,
+               google::spanner::v1::ExecuteBatchDmlRequest const&),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::spanner::v1::ResultSet>, Read,
+              (grpc::ClientContext&, google::spanner::v1::ReadRequest const&));
+
+  MOCK_METHOD(
       std::unique_ptr<
-          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>(
-          grpc::ClientContext&, google::spanner::v1::ExecuteSqlRequest const&));
-
-  MOCK_METHOD2(ExecuteBatchDml,
-               StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::ExecuteBatchDmlRequest const&));
-
-  MOCK_METHOD2(Read, StatusOr<google::spanner::v1::ResultSet>(
-                         grpc::ClientContext&,
-                         google::spanner::v1::ReadRequest const&));
-
-  MOCK_METHOD2(
+          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>,
       StreamingRead,
-      std::unique_ptr<
-          grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>(
-          grpc::ClientContext&, google::spanner::v1::ReadRequest const&));
+      (grpc::ClientContext&, google::spanner::v1::ReadRequest const&),
+      (override));
 
-  MOCK_METHOD2(BeginTransaction,
-               StatusOr<google::spanner::v1::Transaction>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::BeginTransactionRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::Transaction>, BeginTransaction,
+              (grpc::ClientContext&,
+               google::spanner::v1::BeginTransactionRequest const&),
+              (override));
 
-  MOCK_METHOD2(Commit, StatusOr<google::spanner::v1::CommitResponse>(
-                           grpc::ClientContext&,
-                           google::spanner::v1::CommitRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::CommitResponse>, Commit,
+              (grpc::ClientContext&, google::spanner::v1::CommitRequest const&),
+              (override));
 
-  MOCK_METHOD2(Rollback, Status(grpc::ClientContext&,
-                                google::spanner::v1::RollbackRequest const&));
+  MOCK_METHOD(Status, Rollback,
+              (grpc::ClientContext&,
+               google::spanner::v1::RollbackRequest const&),
+              (override));
 
-  MOCK_METHOD2(PartitionQuery,
-               StatusOr<google::spanner::v1::PartitionResponse>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::PartitionQueryRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::PartitionResponse>, PartitionQuery,
+              (grpc::ClientContext&,
+               google::spanner::v1::PartitionQueryRequest const&),
+              (override));
 
-  MOCK_METHOD2(PartitionRead,
-               StatusOr<google::spanner::v1::PartitionResponse>(
-                   grpc::ClientContext&,
-                   google::spanner::v1::PartitionReadRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::v1::PartitionResponse>, PartitionRead,
+              (grpc::ClientContext&,
+               google::spanner::v1::PartitionReadRequest const&),
+              (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

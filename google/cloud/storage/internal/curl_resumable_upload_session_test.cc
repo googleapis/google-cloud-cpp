@@ -36,10 +36,10 @@ class MockCurlClient : public CurlClient {
   MockCurlClient()
       : CurlClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
 
-  MOCK_METHOD1(UploadChunk,
-               StatusOr<ResumableUploadResponse>(UploadChunkRequest const&));
-  MOCK_METHOD1(QueryResumableUpload, StatusOr<ResumableUploadResponse>(
-                                         QueryResumableUploadRequest const&));
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, UploadChunk,
+              (UploadChunkRequest const&), (override));
+  MOCK_METHOD(StatusOr<ResumableUploadResponse>, QueryResumableUpload,
+              (QueryResumableUploadRequest const&), (override));
 };
 
 MATCHER_P(MatchesPayload, value, "Checks whether payload matches a value") {

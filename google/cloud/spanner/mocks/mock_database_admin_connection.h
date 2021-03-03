@@ -35,48 +35,41 @@ inline namespace SPANNER_CLIENT_NS {
 class MockDatabaseAdminConnection
     : public google::cloud::spanner::DatabaseAdminConnection {
  public:
-  MOCK_METHOD1(CreateDatabase,
-               future<StatusOr<google::spanner::admin::database::v1::Database>>(
-                   CreateDatabaseParams));
-  MOCK_METHOD1(GetDatabase,
-               StatusOr<google::spanner::admin::database::v1::Database>(
-                   GetDatabaseParams));
-  MOCK_METHOD1(
-      GetDatabaseDdl,
-      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
-          GetDatabaseDdlParams));
-  MOCK_METHOD1(
-      UpdateDatabase,
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              CreateDatabase, (CreateDatabaseParams), (override));
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Database>,
+              GetDatabase, (GetDatabaseParams), (override));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>,
+      GetDatabaseDdl, (GetDatabaseDdlParams), (override));
+  MOCK_METHOD(
       future<StatusOr<
-          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>(
-          UpdateDatabaseParams));
-  MOCK_METHOD1(DropDatabase, Status(DropDatabaseParams));
-  MOCK_METHOD1(ListDatabases, spanner::ListDatabaseRange(ListDatabasesParams));
-  MOCK_METHOD1(RestoreDatabase,
-               future<StatusOr<google::spanner::admin::database::v1::Database>>(
-                   RestoreDatabaseParams));
-  MOCK_METHOD1(GetIamPolicy,
-               StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
-  MOCK_METHOD1(SetIamPolicy,
-               StatusOr<google::iam::v1::Policy>(SetIamPolicyParams));
-  MOCK_METHOD1(TestIamPermissions,
-               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
-                   TestIamPermissionsParams));
-  MOCK_METHOD1(CreateBackup,
-               future<StatusOr<google::spanner::admin::database::v1::Backup>>(
-                   CreateBackupParams));
-  MOCK_METHOD1(
-      GetBackup,
-      StatusOr<google::spanner::admin::database::v1::Backup>(GetBackupParams));
-  MOCK_METHOD1(DeleteBackup, Status(DeleteBackupParams));
-  MOCK_METHOD1(ListBackups, spanner::ListBackupsRange(ListBackupsParams));
-  MOCK_METHOD1(UpdateBackup,
-               StatusOr<google::spanner::admin::database::v1::Backup>(
-                   UpdateBackupParams));
-  MOCK_METHOD1(ListBackupOperations,
-               spanner::ListBackupOperationsRange(ListBackupOperationsParams));
-  MOCK_METHOD1(ListDatabaseOperations, spanner::ListDatabaseOperationsRange(
-                                           ListDatabaseOperationsParams));
+          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+      UpdateDatabase, (UpdateDatabaseParams), (override));
+  MOCK_METHOD(Status, DropDatabase, (DropDatabaseParams), (override));
+  MOCK_METHOD(spanner::ListDatabaseRange, ListDatabases, (ListDatabasesParams),
+              (override));
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              RestoreDatabase, (RestoreDatabaseParams), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (GetIamPolicyParams), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (SetIamPolicyParams), (override));
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions, (TestIamPermissionsParams), (override));
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+              CreateBackup, (CreateBackupParams), (override));
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
+              (GetBackupParams), (override));
+  MOCK_METHOD(Status, DeleteBackup, (DeleteBackupParams), (override));
+  MOCK_METHOD(spanner::ListBackupsRange, ListBackups, (ListBackupsParams),
+              (override));
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>,
+              UpdateBackup, (UpdateBackupParams), (override));
+  MOCK_METHOD(spanner::ListBackupOperationsRange, ListBackupOperations,
+              (ListBackupOperationsParams), (override));
+  MOCK_METHOD(spanner::ListDatabaseOperationsRange, ListDatabaseOperations,
+              (ListDatabaseOperationsParams), (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS

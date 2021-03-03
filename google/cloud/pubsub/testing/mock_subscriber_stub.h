@@ -102,16 +102,16 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
 class MockAsyncPullStream
     : public pubsub_internal::SubscriberStub::AsyncPullStream {
  public:
-  MOCK_METHOD0(Cancel, void());
-  MOCK_METHOD0(Start, future<bool>());
-  MOCK_METHOD0(
-      Read,
-      future<absl::optional<google::pubsub::v1::StreamingPullResponse>>());
-  MOCK_METHOD2(Write,
-               future<bool>(google::pubsub::v1::StreamingPullRequest const&,
-                            grpc::WriteOptions));
-  MOCK_METHOD0(WritesDone, future<bool>());
-  MOCK_METHOD0(Finish, future<Status>());
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<google::pubsub::v1::StreamingPullResponse>>,
+              Read, (), (override));
+  MOCK_METHOD(future<bool>, Write,
+              (google::pubsub::v1::StreamingPullRequest const&,
+               grpc::WriteOptions),
+              (override));
+  MOCK_METHOD(future<bool>, WritesDone, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

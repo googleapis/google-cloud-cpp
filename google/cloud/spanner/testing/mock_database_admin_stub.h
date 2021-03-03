@@ -27,110 +27,121 @@ inline namespace SPANNER_CLIENT_NS {
 class MockDatabaseAdminStub
     : public google::cloud::spanner_internal::DatabaseAdminStub {
  public:
-  MOCK_METHOD2(
-      CreateDatabase,
-      StatusOr<google::longrunning::Operation>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::CreateDatabaseRequest const&));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDatabase,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::CreateDatabaseRequest const&),
+      (override));
 
-  MOCK_METHOD2(
-      GetDatabase,
-      StatusOr<google::spanner::admin::database::v1::Database>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::GetDatabaseRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Database>,
+              GetDatabase,
+              (grpc::ClientContext&,
+               google::spanner::admin::database::v1::GetDatabaseRequest const&),
+              (override));
 
-  MOCK_METHOD2(
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>,
       GetDatabaseDdl,
-      StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::GetDatabaseDdlRequest const&));
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&),
+      (override));
 
-  MOCK_METHOD2(UpdateDatabase,
-               StatusOr<google::longrunning::Operation>(
-                   grpc::ClientContext&, google::spanner::admin::database::v1::
-                                             UpdateDatabaseDdlRequest const&));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDatabase,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&),
+      (override));
 
-  MOCK_METHOD2(
-      DropDatabase,
-      Status(grpc::ClientContext&,
-             google::spanner::admin::database::v1::DropDatabaseRequest const&));
+  MOCK_METHOD(
+      Status, DropDatabase,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::DropDatabaseRequest const&),
+      (override));
 
-  MOCK_METHOD2(
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>,
       ListDatabases,
-      StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::ListDatabasesRequest const&));
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::ListDatabasesRequest const&),
+      (override));
 
-  MOCK_METHOD2(
-      RestoreDatabase,
-      StatusOr<google::longrunning::Operation>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::RestoreDatabaseRequest const&));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RestoreDatabase,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::RestoreDatabaseRequest const&),
+      (override));
 
-  MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
-                                 grpc::ClientContext&,
-                                 google::iam::v1::GetIamPolicyRequest const&));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
+              (grpc::ClientContext&,
+               google::iam::v1::GetIamPolicyRequest const&),
+              (override));
 
-  MOCK_METHOD2(SetIamPolicy, StatusOr<google::iam::v1::Policy>(
-                                 grpc::ClientContext&,
-                                 google::iam::v1::SetIamPolicyRequest const&));
+  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
+              (grpc::ClientContext&,
+               google::iam::v1::SetIamPolicyRequest const&),
+              (override));
 
-  MOCK_METHOD2(TestIamPermissions,
-               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
-                   grpc::ClientContext&,
-                   google::iam::v1::TestIamPermissionsRequest const&));
+  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
+              TestIamPermissions,
+              (grpc::ClientContext&,
+               google::iam::v1::TestIamPermissionsRequest const&),
+              (override));
 
-  MOCK_METHOD2(
-      CreateBackup,
-      StatusOr<google::longrunning::Operation>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::CreateBackupRequest const&));
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateBackup,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::CreateBackupRequest const&),
+      (override));
 
-  MOCK_METHOD2(
-      GetBackup,
-      StatusOr<google::spanner::admin::database::v1::Backup>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::GetBackupRequest const&));
+  MOCK_METHOD(StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
+              (grpc::ClientContext&,
+               google::spanner::admin::database::v1::GetBackupRequest const&),
+              (override));
 
-  MOCK_METHOD2(
-      DeleteBackup,
-      Status(grpc::ClientContext&,
-             google::spanner::admin::database::v1::DeleteBackupRequest const&));
+  MOCK_METHOD(
+      Status, DeleteBackup,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::DeleteBackupRequest const&),
+      (override));
 
-  MOCK_METHOD2(
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>,
       ListBackups,
-      StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::ListBackupsRequest const&));
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::ListBackupsRequest const&),
+      (override));
 
-  MOCK_METHOD2(
-      UpdateBackup,
-      StatusOr<google::spanner::admin::database::v1::Backup>(
-          grpc::ClientContext&,
-          google::spanner::admin::database::v1::UpdateBackupRequest const&));
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::Backup>, UpdateBackup,
+      (grpc::ClientContext&,
+       google::spanner::admin::database::v1::UpdateBackupRequest const&),
+      (override));
 
-  MOCK_METHOD2(
+  MOCK_METHOD(
+      StatusOr<
+          google::spanner::admin::database::v1::ListBackupOperationsResponse>,
       ListBackupOperations,
-      StatusOr<
-          google::spanner::admin::database::v1::ListBackupOperationsResponse>(
-          grpc::ClientContext&, google::spanner::admin::database::v1::
-                                    ListBackupOperationsRequest const&));
+      (grpc::ClientContext&, google::spanner::admin::database::v1::
+                                 ListBackupOperationsRequest const&),
+      (override));
 
-  MOCK_METHOD2(
+  MOCK_METHOD(
+      StatusOr<
+          google::spanner::admin::database::v1::ListDatabaseOperationsResponse>,
       ListDatabaseOperations,
-      StatusOr<
-          google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
-          grpc::ClientContext&, google::spanner::admin::database::v1::
-                                    ListDatabaseOperationsRequest const&));
+      (grpc::ClientContext&, google::spanner::admin::database::v1::
+                                 ListDatabaseOperationsRequest const&),
+      (override));
 
-  MOCK_METHOD2(GetOperation,
-               StatusOr<google::longrunning::Operation>(
-                   grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const&));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
+              (grpc::ClientContext&,
+               google::longrunning::GetOperationRequest const&),
+              (override));
 
-  MOCK_METHOD2(CancelOperation,
-               Status(grpc::ClientContext&,
-                      google::longrunning::CancelOperationRequest const&));
+  MOCK_METHOD(Status, CancelOperation,
+              (grpc::ClientContext&,
+               google::longrunning::CancelOperationRequest const&),
+              (override));
 };
 
 }  // namespace SPANNER_CLIENT_NS
