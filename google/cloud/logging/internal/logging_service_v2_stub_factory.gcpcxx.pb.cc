@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
     logging::LoggingServiceV2ConnectionOptions const& options) {
@@ -49,7 +49,7 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
   return stub;
 }
 
-}  // namespace logging_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 GoldenThingAdminLogging::GoldenThingAdminLogging(
     std::shared_ptr<GoldenThingAdminStub> child,
@@ -258,8 +258,8 @@ Status GoldenThingAdminLogging::CancelOperation(
       },
       context, request, __func__, tracing_options_);
 }
-}  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

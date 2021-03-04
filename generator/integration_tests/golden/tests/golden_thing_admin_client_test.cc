@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -645,7 +645,7 @@ TEST(GoldenThingAdminClientTest, ListBackupOperations) {
 }
 
 }  // namespace
-}  // namespace golden
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google

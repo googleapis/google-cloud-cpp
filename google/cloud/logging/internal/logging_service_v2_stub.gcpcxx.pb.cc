@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 LoggingServiceV2Stub::~LoggingServiceV2Stub() = default;
 
@@ -91,7 +91,7 @@ DefaultLoggingServiceV2Stub::ListLogs(
   return response;
 }
 
-}  // namespace logging_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

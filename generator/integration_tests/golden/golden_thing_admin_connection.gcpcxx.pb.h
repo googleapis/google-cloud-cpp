@@ -33,8 +33,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct GoldenThingAdminConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -129,8 +129,8 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     std::unique_ptr<PollingPolicy> polling_policy,
     std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy);
 
-}  // namespace golden
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google
 

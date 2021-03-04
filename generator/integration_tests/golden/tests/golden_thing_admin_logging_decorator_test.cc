@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::testing::_;
@@ -460,7 +460,7 @@ TEST_F(LoggingDecoratorTest, CancelOperation) {
 }
 
 }  // namespace
-}  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

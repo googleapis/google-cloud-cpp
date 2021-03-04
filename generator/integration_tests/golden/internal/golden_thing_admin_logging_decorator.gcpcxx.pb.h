@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class GoldenThingAdminLogging : public GoldenThingAdminStub {
  public:
@@ -122,8 +122,8 @@ class GoldenThingAdminLogging : public GoldenThingAdminStub {
   std::set<std::string> components_;
 };  // GoldenThingAdminLogging
 
-}  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
     std::shared_ptr<GoldenKitchenSinkStub> child)
@@ -77,8 +77,8 @@ void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
   context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
-}  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

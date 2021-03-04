@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 struct IAMCredentialsConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -91,8 +91,8 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
         idempotency_policy);
 
-}  // namespace iam
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace iam
 }  // namespace cloud
 }  // namespace google
 

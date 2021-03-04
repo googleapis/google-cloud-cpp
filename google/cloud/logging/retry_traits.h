@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 /// Define the gRPC status code semantics for retrying requests.
 struct LoggingServiceV2RetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
@@ -32,8 +32,8 @@ struct LoggingServiceV2RetryTraits {
   }
 };
 
-}  // namespace logging_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google
 

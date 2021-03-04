@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<GoldenKitchenSinkStub>
 CreateDefaultGoldenKitchenSinkStub(golden::GoldenKitchenSinkConnectionOptions const& options) {
@@ -50,8 +50,8 @@ CreateDefaultGoldenKitchenSinkStub(golden::GoldenKitchenSinkConnectionOptions co
   return stub;
 }
 
-}  // namespace golden_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

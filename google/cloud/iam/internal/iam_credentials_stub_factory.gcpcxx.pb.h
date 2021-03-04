@@ -25,14 +25,14 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
     iam::IAMCredentialsConnectionOptions const& options);
 
-}  // namespace iam_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::testing::Contains;
@@ -239,7 +239,7 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestFailure) {
 }
 
 }  // namespace
-}  // namespace iam
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace iam
 }  // namespace cloud
 }  // namespace google

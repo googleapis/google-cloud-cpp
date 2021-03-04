@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 IAMCredentialsLogging::IAMCredentialsLogging(
     std::shared_ptr<IAMCredentialsStub> child, TracingOptions tracing_options,
@@ -81,7 +81,7 @@ IAMCredentialsLogging::SignJwt(
       context, request, __func__, tracing_options_);
 }
 
-}  // namespace iam_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
  public:
@@ -63,8 +63,8 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
   std::string api_client_header_;
 };  // LoggingServiceV2Metadata
 
-}  // namespace logging_internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google
 

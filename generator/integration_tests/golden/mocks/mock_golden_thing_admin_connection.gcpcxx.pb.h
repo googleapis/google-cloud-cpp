@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_mocks {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection {
  public:
@@ -98,8 +98,8 @@ class MockGoldenThingAdminConnection : public golden::GoldenThingAdminConnection
 
 };
 
-}  // namespace golden_mocks
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace golden_mocks
 }  // namespace cloud
 }  // namespace google
 

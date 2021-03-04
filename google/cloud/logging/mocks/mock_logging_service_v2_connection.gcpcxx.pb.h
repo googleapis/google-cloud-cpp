@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_mocks {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class MockLoggingServiceV2Connection
     : public logging::LoggingServiceV2Connection {
@@ -52,8 +52,8 @@ class MockLoggingServiceV2Connection
               (::google::logging::v2::ListLogsRequest request), (override));
 };
 
-}  // namespace logging_mocks
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace logging_mocks
 }  // namespace cloud
 }  // namespace google
 

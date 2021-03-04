@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class IAMCredentialsConnectionIdempotencyPolicy {
  public:
@@ -55,8 +55,8 @@ class IAMCredentialsConnectionIdempotencyPolicy {
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
 MakeDefaultIAMCredentialsConnectionIdempotencyPolicy();
 
-}  // namespace iam
 }  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace iam
 }  // namespace cloud
 }  // namespace google
 
