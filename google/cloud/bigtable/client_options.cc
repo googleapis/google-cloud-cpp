@@ -16,7 +16,7 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/strings/str_split.h"
-#include <sstream>
+#include <limits>
 #include <thread>
 
 namespace {
@@ -142,12 +142,22 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
   channel_arguments_.SetMaxReceiveMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  auto to_arg = [](std::chrono::milliseconds ms) {
+    auto const count = ms.count();
+    if (count >= (std::numeric_limits<int>::max)()) {
+      return std::numeric_limits<int>::max();
+    }
+    if (count <= (std::numeric_limits<int>::min)()) {
+      return std::numeric_limits<int>::max();
+    }
+    return static_cast<int>(ms.count());
+  };
   channel_arguments_.SetInt(
       GRPC_ARG_KEEPALIVE_TIME_MS,
-      duration_cast<milliseconds>(kDefaultKeepaliveTime).count());
+      to_arg(duration_cast<milliseconds>(kDefaultKeepaliveTime)));
   channel_arguments_.SetInt(
       GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
-      duration_cast<milliseconds>(kDefaultKeepaliveTimeout).count());
+      to_arg(duration_cast<milliseconds>(kDefaultKeepaliveTimeout)));
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
