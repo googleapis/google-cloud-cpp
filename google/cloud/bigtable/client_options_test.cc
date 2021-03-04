@@ -17,8 +17,8 @@
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "absl/types/optional.h"
 #include <gmock/gmock.h>
-#include <cstdlib>
 
 namespace google {
 namespace cloud {
@@ -34,6 +34,32 @@ struct ClientOptionsTestTraits {
 namespace {
 
 using ::testing::HasSubstr;
+
+absl::optional<int> GetInt(grpc::ChannelArguments const& args,
+                           std::string const& key) {
+  auto c_args = args.c_channel_args();
+  // Just do a linear search for the key, the data structure is not organized
+  // in any other useful way.
+  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
+    if (key != a->key) continue;
+    if (a->type != GRPC_ARG_INTEGER) return absl::nullopt;
+    return a->value.integer;
+  }
+  return absl::nullopt;
+}
+
+absl::optional<std::string> GetString(grpc::ChannelArguments const& args,
+                                      std::string const& key) {
+  auto c_args = args.c_channel_args();
+  // Just do a linear search for the key, the data structure is not organized
+  // in any other useful way.
+  for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
+    if (key != a->key) continue;
+    if (a->type != GRPC_ARG_STRING) return absl::nullopt;
+    return a->value.string;
+  }
+  return absl::nullopt;
+}
 
 TEST(ClientOptionsTest, ClientOptionsDefaultSettings) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
@@ -286,16 +312,10 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutMS) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   ASSERT_STATUS_OK(client_options_object.SetGrpclbFallbackTimeout(
       std::chrono::milliseconds(5)));
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // `SetGrpclbFallbackTimeout()` inserts new argument to args_ hence comparing
-  // 4th element of test_args.
-  EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
-            grpc::string(test_args.args[3].key));
+  auto const actual = GetInt(client_options_object.channel_arguments(),
+                             GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, 5);
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
@@ -304,12 +324,10 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutSec) {
       bigtable::ClientOptions();
   ASSERT_STATUS_OK(client_options_object_second.SetGrpclbFallbackTimeout(
       std::chrono::seconds(5)));
-  grpc::ChannelArguments c_args_second =
-      client_options_object_second.channel_arguments();
-  grpc_channel_args test_args_second = c_args_second.c_channel_args();
-  ASSERT_EQ(4UL, test_args_second.num_args);
-  EXPECT_EQ(GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS,
-            grpc::string(test_args_second.args[3].key));
+  auto const actual = GetInt(client_options_object_second.channel_arguments(),
+                             GRPC_ARG_GRPCLB_FALLBACK_TIMEOUT_MS);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, 5000);
 }
 
 TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
@@ -326,108 +344,69 @@ TEST(ClientOptionsTest, SetGrpclbFallbackTimeoutException) {
 TEST(ClientOptionsTest, SetCompressionAlgorithm) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetCompressionAlgorithm(GRPC_COMPRESS_NONE);
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetCompressionAlgorithm() inserts new argument to args_ hence comparing 4th
-  // element of test_args.
-  EXPECT_EQ(GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM,
-            grpc::string(test_args.args[3].key));
+  auto const actual = GetInt(client_options_object.channel_arguments(),
+                             GRPC_COMPRESSION_CHANNEL_DEFAULT_ALGORITHM);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, GRPC_COMPRESS_NONE);
 }
 
 TEST(ClientOptionsTest, SetMaxReceiveMessageSize) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetMaxReceiveMessageSize(256 * 1024L * 1024L);
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetMaxReceiveMessageSize() inserts new argument to args_ hence comparing
-  // 4th element of test_args.
-  EXPECT_EQ(GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH,
-            grpc::string(test_args.args[3].key));
-
-  EXPECT_EQ(test_args.args[3].value.integer, (256 * 1024L * 1024L));
+  auto constexpr kExpected = 256 * 1024L * 1024L;
+  client_options_object.SetMaxReceiveMessageSize(kExpected);
+  auto const actual = GetInt(client_options_object.channel_arguments(),
+                             GRPC_ARG_MAX_RECEIVE_MESSAGE_LENGTH);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, kExpected);
 }
 
 TEST(ClientOptionsTest, SetMaxSendMessageSize) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
-  client_options_object.SetMaxSendMessageSize(256 * 1024L * 1024L);
+  auto constexpr kExpected = 256 * 1024L * 1024L;
+  client_options_object.SetMaxSendMessageSize(kExpected);
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetMaxSendMessageSize() inserts new argument to args_ hence comparing 4th
-  // element of test_args.
-  EXPECT_EQ(GRPC_ARG_MAX_SEND_MESSAGE_LENGTH,
-            grpc::string(test_args.args[3].key));
-
-  EXPECT_EQ(test_args.args[3].value.integer, 256 * 1024L * 1024L);
+  auto const actual = GetInt(client_options_object.channel_arguments(),
+                             GRPC_ARG_MAX_SEND_MESSAGE_LENGTH);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, kExpected);
 }
 
 TEST(ClientOptionsTest, SetLoadBalancingPolicyName) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetLoadBalancingPolicyName("test-policy-name");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetLoadBalancingPolicyName() inserts new argument to args_ hence comparing
-  // 4th element of test_args.
-  EXPECT_EQ(GRPC_ARG_LB_POLICY_NAME, grpc::string(test_args.args[3].key));
+  auto const actual = GetString(client_options_object.channel_arguments(),
+                                GRPC_ARG_LB_POLICY_NAME);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-policy-name");
 }
 
 TEST(ClientOptionsTest, SetServiceConfigJSON) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetServiceConfigJSON("test-config");
   grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetServiceConfigJSON() inserts new argument to args_ hence comparing 4th
-  // element of test_args.
-  EXPECT_EQ(GRPC_ARG_SERVICE_CONFIG, grpc::string(test_args.args[3].key));
+  auto const actual = GetString(client_options_object.channel_arguments(),
+                                GRPC_ARG_SERVICE_CONFIG);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-config");
 }
 
 TEST(ClientOptionsTest, SetUserAgentPrefix) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetUserAgentPrefix("test_prefix");
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(3UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetUserAgentPrefix() appends the new prefix to existing prefix hence
-  // comparing 1st element of test_args.
-  EXPECT_EQ(GRPC_ARG_PRIMARY_USER_AGENT_STRING,
-            grpc::string(test_args.args[0].key));
+  auto const actual = GetString(client_options_object.channel_arguments(),
+                                GRPC_ARG_PRIMARY_USER_AGENT_STRING);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_THAT(*actual, HasSubstr("test_prefix"));
 }
 
 TEST(ClientOptionsTest, SetSslTargetNameOverride) {
   bigtable::ClientOptions client_options_object = bigtable::ClientOptions();
   client_options_object.SetSslTargetNameOverride("test-name");
-  grpc::ChannelArguments c_args = client_options_object.channel_arguments();
-  grpc_channel_args test_args = c_args.c_channel_args();
-  ASSERT_EQ(4UL, test_args.num_args);
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  // test_args now has 3 default arguments. Added max send/receive message size
-  // SetSslTargetNameOverride() inserts new argument to args_ hence comparing
-  // 4th element of test_args.
-  EXPECT_EQ(GRPC_SSL_TARGET_NAME_OVERRIDE_ARG,
-            grpc::string(test_args.args[3].key));
+  auto const actual = GetString(client_options_object.channel_arguments(),
+                                GRPC_SSL_TARGET_NAME_OVERRIDE_ARG);
+  ASSERT_TRUE(actual.has_value());
+  EXPECT_EQ(*actual, "test-name");
 }
 
 TEST(ClientOptionsTest, UserAgentPrefix) {

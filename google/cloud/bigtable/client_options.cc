@@ -40,6 +40,21 @@ auto constexpr kDefaultMinRefreshPeriod =
 static_assert(kDefaultMinRefreshPeriod <= kDefaultMaxRefreshPeriod,
               "The default period range must be valid");
 
+// For background information on gRPC keepalive pings, see
+//     https://github.com/grpc/grpc/blob/master/doc/keepalive.md
+
+// The default value for GRPC_KEEPALIVE_TIME_MS, how long before a keepalive
+// ping is sent. A better name may have been "period", but consistency with the
+// gRPC naming seems valuable.
+auto constexpr kDefaultKeepaliveTime =
+    std::chrono::milliseconds(std::chrono::seconds(30));
+
+// The default value for GRPC_KEEPALIVE_TIME_MS, how long the sender (in this
+// case the Cloud Bigtable C++ client library) waits for an acknowledgement for
+// a keepalive ping.
+auto constexpr kDefaultKeepaliveTimeout =
+    std::chrono::milliseconds(std::chrono::seconds(10));
+
 }  // anonymous namespace
 
 namespace google {
@@ -118,12 +133,21 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       // due to being idle.
       max_conn_refresh_period_(kDefaultMaxRefreshPeriod),
       min_conn_refresh_period_(kDefaultMinRefreshPeriod) {
+  using std::chrono::duration_cast;
+  using std::chrono::milliseconds;
+
   static std::string const kUserAgentPrefix = UserAgentPrefix();
   channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
   channel_arguments_.SetMaxSendMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
   channel_arguments_.SetMaxReceiveMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
+  channel_arguments_.SetInt(
+      GRPC_ARG_KEEPALIVE_TIME_MS,
+      duration_cast<milliseconds>(kDefaultKeepaliveTime).count());
+  channel_arguments_.SetInt(
+      GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
+      duration_cast<milliseconds>(kDefaultKeepaliveTimeout).count());
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
