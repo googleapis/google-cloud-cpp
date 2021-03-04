@@ -14,11 +14,12 @@
 
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "absl/strings/numbers.h"
+#include "absl/strings/str_split.h"
 #include <cinttypes>
 #include <sstream>
 
@@ -171,7 +172,6 @@ std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   return os << "}";
 }
 
-#include "google/cloud/internal/disable_msvc_crt_secure_warnings.inc"
 ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
     HttpResponse&& response) {
   auto loc = response.headers.find(std::string("content-range"));
@@ -196,38 +196,37 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   }
   char const* buffer = content_range_value.data();
   auto size = content_range_value.size();
+  if (size < sizeof(unit_descriptor) + 2) raise_error();
+
   // skip the initial "bytes " string.
   buffer += sizeof(unit_descriptor);
-
-  if (size < 2) {
-    raise_error();
-  }
+  size -= sizeof(unit_descriptor);
 
   if (buffer[0] == '*' && buffer[1] == '/') {
     // The header is just the indication of size ('bytes */<size>'), parse that.
-    buffer += 2;
     std::int64_t object_size;
-    auto count = std::sscanf(buffer, "%" PRId64, &object_size);
-    if (count != 1) {
+    if (!absl::SimpleAtoi(absl::string_view(buffer + 2, size - 2),
+                          &object_size)) {
       raise_error();
     }
     return ReadObjectRangeResponse{std::move(response.payload), 0, 0,
                                    object_size};
   }
 
+  std::vector<absl::string_view> components =
+      absl::StrSplit(absl::string_view(buffer, size), absl::ByAnyChar("-/"));
+  if (components.size() != 3) raise_error();
+
   std::int64_t first_byte;
   std::int64_t last_byte;
   std::int64_t object_size;
-  auto count = std::sscanf(buffer, "%" PRId64 "-%" PRId64 "/%" PRId64,
-                           &first_byte, &last_byte, &object_size);
-  if (count != 3) {
-    raise_error();
-  }
+  if (!absl::SimpleAtoi(components[0], &first_byte)) raise_error();
+  if (!absl::SimpleAtoi(components[1], &last_byte)) raise_error();
+  if (!absl::SimpleAtoi(components[2], &object_size)) raise_error();
 
   return ReadObjectRangeResponse{std::move(response.payload), first_byte,
                                  last_byte, object_size};
 }
-#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeResponse const& r) {
   return os << "ReadObjectRangeResponse={range=" << r.first_byte << "-"
