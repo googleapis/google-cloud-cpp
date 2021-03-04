@@ -24,7 +24,7 @@ using ::testing::Return;
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                                           v1::GoldenKitchenSink::StubInterface {
@@ -262,7 +262,7 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

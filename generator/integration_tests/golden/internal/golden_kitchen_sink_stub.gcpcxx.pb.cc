@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenKitchenSinkStub::~GoldenKitchenSinkStub() = default;
 
@@ -93,7 +93,7 @@ DefaultGoldenKitchenSinkStub::TailLogEntries(
       std::move(context), std::move(stream));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

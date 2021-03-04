@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class GoldenThingAdminStub {
  public:
@@ -221,7 +221,7 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

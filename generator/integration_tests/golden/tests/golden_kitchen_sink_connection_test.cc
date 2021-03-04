@@ -23,7 +23,7 @@
 namespace google {
 namespace cloud {
 namespace golden_internal {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -308,7 +308,7 @@ TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google

@@ -31,7 +31,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 struct LoggingServiceV2ConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -93,7 +93,7 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
         idempotency_policy);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

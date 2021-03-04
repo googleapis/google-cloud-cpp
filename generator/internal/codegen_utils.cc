@@ -99,7 +99,7 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
   }
 
   return std::vector<std::string>{"google", "cloud", name,
-                                  "GOOGLE_CLOUD_CPP_NS"};
+                                  "GOOGLE_CLOUD_CPP_GENERATED_NS"};
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>

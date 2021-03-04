@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class GoldenKitchenSinkConnectionIdempotencyPolicy {
  public:
@@ -53,7 +53,7 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
     MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy();
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

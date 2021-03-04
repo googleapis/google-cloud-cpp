@@ -27,7 +27,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::string GoldenThingAdminConnectionOptionsTraits::default_endpoint() {
   return "test.googleapis.com";
@@ -656,7 +656,7 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
       std::move(polling_policy), std::move(idempotency_policy));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google

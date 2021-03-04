@@ -25,6 +25,13 @@
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
                          GOOGLE_CLOUD_CPP_VERSION_MINOR)
 
+#define GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi) gcpcxxV##Ma
+#define GOOGLE_CLOUD_CPP_GENERATED_VEVAL(Ma, Mi) \
+  GOOGLE_CLOUD_CPP_GENERATED_VCONCAT(Ma, Mi)
+#define GOOGLE_CLOUD_CPP_GENERATED_NS                              \
+  GOOGLE_CLOUD_CPP_GENERATED_VEVAL(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \
+                                   GOOGLE_CLOUD_CPP_VERSION_MINOR)
+
 namespace google {
 /**
  * Contains all the Google Cloud C++ Library APIs.

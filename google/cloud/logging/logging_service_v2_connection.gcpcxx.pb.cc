@@ -26,7 +26,7 @@
 namespace google {
 namespace cloud {
 namespace logging {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::string LoggingServiceV2ConnectionOptionsTraits::default_endpoint() {
   return "logging.googleapis.com";
@@ -294,7 +294,7 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
       std::move(idempotency_policy));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging
 }  // namespace cloud
 }  // namespace google

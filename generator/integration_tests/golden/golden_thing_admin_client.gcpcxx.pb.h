@@ -29,7 +29,7 @@
 namespace google {
 namespace cloud {
 namespace golden {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 /**
  * Cloud Test Database Admin API
@@ -582,7 +582,7 @@ class GoldenThingAdminClient {
   std::shared_ptr<GoldenThingAdminConnection> connection_;
 };
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
 }  // namespace cloud
 }  // namespace google
