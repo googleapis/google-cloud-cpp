@@ -68,7 +68,7 @@ void CurlResumableUploadSession::Update(
     // Nothing has been committed on the server side yet, keep resending.
     next_expected_ = 0;
   }
-  if (!result->upload_session_url.empty()) {
+  if (session_id_.empty() && !result->upload_session_url.empty()) {
     session_id_ = result->upload_session_url;
   }
 }
