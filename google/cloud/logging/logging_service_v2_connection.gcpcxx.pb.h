@@ -27,7 +27,6 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {

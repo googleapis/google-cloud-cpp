@@ -20,7 +20,6 @@
 
 #include "google/cloud/logging/logging_service_v2_connection.gcpcxx.pb.h"
 #include <gmock/gmock.h>
-#include <string>
 
 namespace google {
 namespace cloud {
