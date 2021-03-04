@@ -257,9 +257,9 @@ Status StubGenerator::GenerateCc() {
     "    grpc::ClientContext&,\n"
     "    $request_type$ const& request) {\n"
     "  auto context = absl::make_unique<grpc::ClientContext>();\n"
-    "  auto stream = grpc_stub_->TailLogEntries(context.get(), request);\n"
+    "  auto stream = grpc_stub_->$method_name$(context.get(), request);\n"
     "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
-    "      ::google::test::admin::database::v1::TailLogEntriesResponse>>(\n"
+    "      $response_type$>>(\n"
     "      std::move(context), std::move(stream));\n"
     "}\n\n"}},
              // clang-format on
