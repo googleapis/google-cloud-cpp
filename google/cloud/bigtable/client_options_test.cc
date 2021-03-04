@@ -38,7 +38,7 @@ using ::testing::HasSubstr;
 absl::optional<int> GetInt(grpc::ChannelArguments const& args,
                            std::string const& key) {
   auto c_args = args.c_channel_args();
-  // Just do a linear search for the key, the data structure is not organized
+  // Just do a linear search for the key; the data structure is not organized
   // in any other useful way.
   for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
     if (key != a->key) continue;
@@ -51,7 +51,7 @@ absl::optional<int> GetInt(grpc::ChannelArguments const& args,
 absl::optional<std::string> GetString(grpc::ChannelArguments const& args,
                                       std::string const& key) {
   auto c_args = args.c_channel_args();
-  // Just do a linear search for the key, the data structure is not organized
+  // Just do a linear search for the key; the data structure is not organized
   // in any other useful way.
   for (auto const* a = c_args.args; a != c_args.args + c_args.num_args; ++a) {
     if (key != a->key) continue;

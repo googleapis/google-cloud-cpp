@@ -148,7 +148,7 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       return std::numeric_limits<int>::max();
     }
     if (count <= (std::numeric_limits<int>::min)()) {
-      return std::numeric_limits<int>::max();
+      return std::numeric_limits<int>::min();
     }
     return static_cast<int>(ms.count());
   };
