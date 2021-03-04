@@ -103,21 +103,23 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>MockSubscriptionBatchSource</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    : <span class="keyword">public</span> pubsub_internal::SubscriptionBatchSource {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  MOCK_METHOD1(Start, <span class="keywordtype">void</span>(pubsub_internal::BatchCallback));</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  MOCK_METHOD0(Shutdown, <span class="keywordtype">void</span>());</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  MOCK_METHOD1(AckMessage, <span class="keywordtype">void</span>(std::string <span class="keyword">const</span>&amp; ack_id));</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  MOCK_METHOD1(NackMessage, <span class="keywordtype">void</span>(std::string <span class="keyword">const</span>&amp; ack_id));</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  MOCK_METHOD1(BulkNack, <span class="keywordtype">void</span>(std::vector&lt;std::string&gt; ack_ids));</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  MOCK_METHOD2(ExtendLeases, <span class="keywordtype">void</span>(std::vector&lt;std::string&gt; ack_ids,</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                                  std::chrono::seconds extension));</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}  <span class="comment">// namespace pubsub_testing</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_SUBSCRIPTION_BATCH_SOURCE_H</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, Start, (pubsub_internal::BatchCallback), (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, Shutdown, (), (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, AckMessage, (std::string <span class="keyword">const</span>&amp; ack_id), (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, NackMessage, (std::string <span class="keyword">const</span>&amp; ack_id), (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, BulkNack, (std::vector&lt;std::string&gt; ack_ids), (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  MOCK_METHOD(<span class="keywordtype">void</span>, ExtendLeases,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;              (std::vector&lt;std::string&gt; ack_ids,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;               std::chrono::seconds extension),</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;              (<span class="keyword">override</span>));</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace GOOGLE_CLOUD_CPP_PUBSUB_NS</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}  <span class="comment">// namespace pubsub_testing</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TESTING_MOCK_SUBSCRIPTION_BATCH_SOURCE_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
 <div class="ttc" id="aversion_8h_html_a0d58adcdcb75930e7232c2f59a516f46"><div class="ttname"><a href="version_8h.html#a0d58adcdcb75930e7232c2f59a516f46">GOOGLE_CLOUD_CPP_PUBSUB_NS</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_PUBSUB_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00021">version.h:21</a></div></div>

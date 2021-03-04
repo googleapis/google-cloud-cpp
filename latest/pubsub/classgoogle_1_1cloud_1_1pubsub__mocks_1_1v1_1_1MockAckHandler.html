@@ -82,14 +82,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a74a75c9a66d1cc9f2c3825e085be3d47"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#a74a75c9a66d1cc9f2c3825e085be3d47">MOCK_METHOD0</a> (ack, void())</td></tr>
-<tr class="separator:a74a75c9a66d1cc9f2c3825e085be3d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe02a4c890338807bb2d15369db60a55"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#afe02a4c890338807bb2d15369db60a55">MOCK_METHOD0</a> (nack, void())</td></tr>
-<tr class="separator:afe02a4c890338807bb2d15369db60a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa44dafdd16e5107020f136c7df92b0f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#aa44dafdd16e5107020f136c7df92b0f5">MOCK_CONST_METHOD0</a> (ack_id, std::string())</td></tr>
-<tr class="separator:aa44dafdd16e5107020f136c7df92b0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c70d82bea1245e3d057e68392fe619e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#a6c70d82bea1245e3d057e68392fe619e">MOCK_CONST_METHOD0</a> (delivery_attempt, std::int32_t())</td></tr>
-<tr class="separator:a6c70d82bea1245e3d057e68392fe619e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7a1e92606a275a7901b8252571cd5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#a5c7a1e92606a275a7901b8252571cd5b">MOCK_METHOD</a> (void, ack,(),(override))</td></tr>
+<tr class="separator:a5c7a1e92606a275a7901b8252571cd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aaac4f7f2bc3bfbc4ce3821c029c6fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#a3aaac4f7f2bc3bfbc4ce3821c029c6fc">MOCK_METHOD</a> (void, nack,(),(override))</td></tr>
+<tr class="separator:a3aaac4f7f2bc3bfbc4ce3821c029c6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1c93fd781b7dff1831846a545fcc77"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#a3c1c93fd781b7dff1831846a545fcc77">MOCK_METHOD</a> (std::string, ack_id,())</td></tr>
+<tr class="separator:a3c1c93fd781b7dff1831846a545fcc77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab58697f776074d85fcb9ee5b5229d7ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1pubsub__mocks_1_1v1_1_1MockAckHandler.html#ab58697f776074d85fcb9ee5b5229d7ab">MOCK_METHOD</a> (std::int32_t, delivery_attempt,(),(const, override))</td></tr>
+<tr class="separator:ab58697f776074d85fcb9ee5b5229d7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A googlemock-based mock for <a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler_1_1Impl.html">pubsub::AckHandler::Impl</a>. </p>
@@ -97,50 +97,34 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="mock__ack__handler_8h_source.html#l00044">44</a> of file <a class="el" href="mock__ack__handler_8h_source.html">mock_ack_handler.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa44dafdd16e5107020f136c7df92b0f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa44dafdd16e5107020f136c7df92b0f5">&#9670;&nbsp;</a></span>MOCK_CONST_METHOD0() <span class="overload">[1/2]</span></h2>
+<a id="ab58697f776074d85fcb9ee5b5229d7ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab58697f776074d85fcb9ee5b5229d7ab">&#9670;&nbsp;</a></span>MOCK_METHOD() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_CONST_METHOD0 </td>
+          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD </td>
           <td>(</td>
-          <td class="paramtype">ack_id&#160;</td>
+          <td class="paramtype">std::int32_t&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string()&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6c70d82bea1245e3d057e68392fe619e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c70d82bea1245e3d057e68392fe619e">&#9670;&nbsp;</a></span>MOCK_CONST_METHOD0() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_CONST_METHOD0 </td>
-          <td>(</td>
           <td class="paramtype">delivery_attempt&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::int32_t()&#160;</td>
+          <td class="paramtype">()&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(const, override)&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -153,22 +137,68 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a74a75c9a66d1cc9f2c3825e085be3d47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74a75c9a66d1cc9f2c3825e085be3d47">&#9670;&nbsp;</a></span>MOCK_METHOD0() <span class="overload">[1/2]</span></h2>
+<a id="a3c1c93fd781b7dff1831846a545fcc77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c1c93fd781b7dff1831846a545fcc77">&#9670;&nbsp;</a></span>MOCK_METHOD() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD0 </td>
+          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD </td>
           <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ack_id&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">()&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5c7a1e92606a275a7901b8252571cd5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c7a1e92606a275a7901b8252571cd5b">&#9670;&nbsp;</a></span>MOCK_METHOD() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">ack&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void()&#160;</td>
+          <td class="paramtype">()&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(override)&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -181,22 +211,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afe02a4c890338807bb2d15369db60a55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe02a4c890338807bb2d15369db60a55">&#9670;&nbsp;</a></span>MOCK_METHOD0() <span class="overload">[2/2]</span></h2>
+<a id="a3aaac4f7f2bc3bfbc4ce3821c029c6fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aaac4f7f2bc3bfbc4ce3821c029c6fc">&#9670;&nbsp;</a></span>MOCK_METHOD() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD0 </td>
+          <td class="memname">google::cloud::pubsub_mocks::v1::MockAckHandler::MOCK_METHOD </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">nack&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void()&#160;</td>
+          <td class="paramtype">()&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">(override)&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
