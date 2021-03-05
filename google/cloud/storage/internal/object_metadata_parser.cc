@@ -139,7 +139,7 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
     metadata_as_json["metadata"] = std::move(meta_as_json);
   }
 
-  if (meta.custom_time() != std::chrono::system_clock::time_point{}) {
+  if (meta.has_custom_time()) {
     metadata_as_json["customTime"] =
         google::cloud::internal::FormatRfc3339(meta.custom_time());
   }
