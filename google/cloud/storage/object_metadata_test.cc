@@ -217,6 +217,7 @@ TEST(ObjectMetadataTest, JsonForCompose) {
        }},
       {"name", "baz"},
       {"storageClass", "STANDARD"},
+      {"customTime", "2020-08-10T12:34:56Z"},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -252,6 +253,7 @@ TEST(ObjectMetadataTest, JsonForCopy) {
        }},
       {"name", "baz"},
       {"storageClass", "STANDARD"},
+      {"customTime", "2020-08-10T12:34:56Z"},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -289,6 +291,7 @@ TEST(ObjectMetadataTest, JsonForInsert) {
        }},
       {"name", "baz"},
       {"storageClass", "STANDARD"},
+      {"customTime", "2020-08-10T12:34:56Z"},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);
@@ -324,6 +327,7 @@ TEST(ObjectMetadataTest, JsonForRewrite) {
        }},
       {"name", "baz"},
       {"storageClass", "STANDARD"},
+      {"customTime", "2020-08-10T12:34:56Z"},
   };
   EXPECT_EQ(expected, actual)
       << "diff=" << nlohmann::json::diff(expected, actual);

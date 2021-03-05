@@ -139,6 +139,11 @@ nlohmann::json ObjectMetadataJsonForCompose(ObjectMetadata const& meta) {
     metadata_as_json["metadata"] = std::move(meta_as_json);
   }
 
+  if (meta.has_custom_time()) {
+    metadata_as_json["customTime"] =
+        google::cloud::internal::FormatRfc3339(meta.custom_time());
+  }
+
   return metadata_as_json;
 }
 
