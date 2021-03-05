@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

@@ -21,6 +21,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "absl/memory/memory.h"
+#include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <chrono>
 #include <random>

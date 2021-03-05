@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_instance_config.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include <regex>
 

@@ -18,6 +18,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

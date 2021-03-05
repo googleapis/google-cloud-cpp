@@ -24,6 +24,7 @@
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/util/time_util.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

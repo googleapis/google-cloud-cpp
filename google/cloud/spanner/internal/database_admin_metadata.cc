@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/internal/api_client_header.h"
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

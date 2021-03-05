@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
+#include <grpcpp/grpcpp.h>
 #include <string>
 
 namespace google {
