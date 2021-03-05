@@ -24,7 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigquery {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
@@ -49,7 +49,7 @@ class BigQueryReadIntegrationTest : public ::testing::Test {
 TEST_F(BigQueryReadIntegrationTest, Faile) { EXPECT_TRUE(false); }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
