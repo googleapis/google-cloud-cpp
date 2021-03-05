@@ -23,6 +23,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
 
@@ -53,6 +54,17 @@ TEST(ConnectionOptionsTraits, UserAgentPrefix) {
   EXPECT_EQ(actual, options.user_agent_prefix());
   options.add_user_agent_prefix("test-prefix/1.2.3");
   EXPECT_EQ("test-prefix/1.2.3 " + actual, options.user_agent_prefix());
+}
+
+TEST(EmulatorOverrides, EnvironmentWorks) {
+  // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
+  // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
+  // grpc::InsecureChannelCredentials().
+  ScopedEnvironment env("SPANNER_EMULATOR_HOST", "localhost:9010");
+  ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
+  options = spanner_internal::EmulatorOverrides(options);
+  EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
+  EXPECT_EQ("localhost:9010", options.endpoint());
 }
 
 }  // namespace
