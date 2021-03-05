@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 struct GoldenKitchenSinkConnectionOptionsTraits {
   static std::string default_endpoint();
@@ -92,8 +92,8 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy);
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

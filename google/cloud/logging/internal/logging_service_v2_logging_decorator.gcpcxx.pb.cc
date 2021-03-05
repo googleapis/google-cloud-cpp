@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 LoggingServiceV2Logging::LoggingServiceV2Logging(
     std::shared_ptr<LoggingServiceV2Stub> child, TracingOptions tracing_options,
@@ -95,7 +95,7 @@ LoggingServiceV2Logging::ListLogs(
       context, request, __func__, tracing_options_);
 }
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

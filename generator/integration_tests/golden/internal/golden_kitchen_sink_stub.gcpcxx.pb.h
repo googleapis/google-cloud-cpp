@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class GoldenKitchenSinkStub {
  public:
@@ -91,8 +91,8 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
   std::unique_ptr<::google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

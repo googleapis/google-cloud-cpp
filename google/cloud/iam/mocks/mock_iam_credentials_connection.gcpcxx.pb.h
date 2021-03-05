@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace iam_mocks {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
  public:
@@ -52,8 +52,8 @@ class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
               (override));
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_mocks
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

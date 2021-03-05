@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace golden {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 /**
  * A service account is a special type of Google account that belongs to your
@@ -238,8 +238,8 @@ class GoldenKitchenSinkClient {
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 

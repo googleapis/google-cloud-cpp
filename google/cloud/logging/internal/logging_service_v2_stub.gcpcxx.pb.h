@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace logging_internal {
+inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class LoggingServiceV2Stub {
  public:
@@ -92,8 +92,8 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       grpc_stub_;
 };
 
+}  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal
-}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
