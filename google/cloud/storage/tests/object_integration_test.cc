@@ -925,6 +925,55 @@ TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
   EXPECT_FALSE(stream_resumable.metadata().status().ok());
 }
 
+TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  using std::chrono::seconds;
+  auto const custom_time = std::chrono::system_clock::now() + seconds(5);
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, expected, IfGenerationMatch(0),
+      WithObjectMetadata(ObjectMetadata{}.set_custom_time(custom_time)));
+  ASSERT_STATUS_OK(meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+  EXPECT_EQ(custom_time, meta->custom_time());
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  using std::chrono::seconds;
+  auto const custom_time = std::chrono::system_clock::now() + seconds(5);
+  auto stream = client->WriteObject(
+      bucket_name_, object_name, IfGenerationMatch(0),
+      WithObjectMetadata(ObjectMetadata{}.set_custom_time(custom_time)));
+  stream << expected;
+  stream.Close();
+  auto meta = stream.metadata();
+  ASSERT_STATUS_OK(meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+  EXPECT_EQ(custom_time, meta->custom_time());
+
+  auto status = client->DeleteObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
