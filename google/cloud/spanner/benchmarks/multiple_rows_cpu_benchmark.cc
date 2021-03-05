@@ -25,6 +25,7 @@
 #include "absl/memory/memory.h"
 #include "absl/time/civil_time.h"
 #include <google/spanner/v1/result_set.pb.h>
+#include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <chrono>
 #include <future>

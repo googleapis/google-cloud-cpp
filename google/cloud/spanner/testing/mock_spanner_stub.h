@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {

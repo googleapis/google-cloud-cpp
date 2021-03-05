@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/commit_options.h"
 #include "google/cloud/spanner/commit_result.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/partition_options.h"
