@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
 
 namespace google {
@@ -25,12 +24,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  // TODO(5738): cache the default endpoint in a function-local static after we
-  // add support for users using the new `Options` class. We don't want to
-  // cache the value currently because users might expect that changing the env
-  // var between calls to `MakeConnection()` actually changes the endpoint, and
-  // we want to give them an alternative way to accomplish that.
-  return spanner_internal::DefaultOptions().get<internal::EndpointOption>();
+  static auto const* const kEndpoint = new auto(
+      spanner_internal::DefaultOptions().get<internal::EndpointOption>());
+  return *kEndpoint;
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
@@ -50,24 +46,5 @@ int ConnectionOptionsTraits::default_num_channels() {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-// Override connection endpoint and credentials with values appropriate for
-// an emulated backend. This should be done after any user code that could
-// also override the default values (i.e., immediately before establishing
-// the connection).
-spanner::ConnectionOptions EmulatorOverrides(
-    spanner::ConnectionOptions options) {
-  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
-  if (emulator_addr.has_value()) {
-    options.set_endpoint(*emulator_addr)
-        .set_credentials(grpc::InsecureChannelCredentials());
-  }
-  return options;
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
