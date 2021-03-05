@@ -48,6 +48,14 @@ using ConnectionOptions =
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+spanner::ConnectionOptions EmulatorOverrides(
+    spanner::ConnectionOptions options);
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
+
 }  // namespace cloud
 }  // namespace google
 
