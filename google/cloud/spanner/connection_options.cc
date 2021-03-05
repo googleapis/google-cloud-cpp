@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
-#include "google/cloud/internal/compiler_info.h"
+#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc_options.h"
 
 namespace google {
 namespace cloud {
@@ -22,20 +25,28 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  auto default_endpoint = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-  return default_endpoint.has_value() ? *default_endpoint
-                                      : "spanner.googleapis.com";
+  // TODO(5738): cache the default endpoint in a function-local static after we
+  // add support for users using the new `Options` class. We don't want to
+  // cache the value currently because users might expect that changing the env
+  // var between calls to `MakeConnection()` actually changes the endpoint, and
+  // we want to give them an alternative way to accomplish that.
+  return spanner_internal::DefaultOptions().get<internal::EndpointOption>();
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
-         google::cloud::internal::CompilerId() + "-" +
-         google::cloud::internal::CompilerVersion() + "; " +
-         google::cloud::internal::CompilerFeatures() + ")";
+  static auto const* const kUserAgentPrefix = new auto([] {
+    auto const defaults = spanner_internal::DefaultOptions();
+    auto const& products = defaults.get<internal::UserAgentProductsOption>();
+    return absl::StrJoin(products, " ");
+  }());
+  return *kUserAgentPrefix;
 }
 
-int ConnectionOptionsTraits::default_num_channels() { return 4; }
+int ConnectionOptionsTraits::default_num_channels() {
+  static auto const kNumChannels =
+      spanner_internal::DefaultOptions().get<internal::GrpcNumChannelsOption>();
+  return kNumChannels;
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -88,6 +88,8 @@ add_library(
     internal/merge_chunk.h
     internal/metadata_spanner_stub.cc
     internal/metadata_spanner_stub.h
+    internal/options.cc
+    internal/options.h
     internal/partial_result_set_reader.h
     internal/partial_result_set_resume.cc
     internal/partial_result_set_resume.h
@@ -272,6 +274,7 @@ function (spanner_client_define_tests)
         internal/logging_spanner_stub_test.cc
         internal/merge_chunk_test.cc
         internal/metadata_spanner_stub_test.cc
+        internal/options_test.cc
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
         internal/session_pool_test.cc
