@@ -147,6 +147,27 @@ class ResumableParallelUploadState;
  * In addition, the @ref index "main page" contains examples using `StatusOr<T>`
  * to handle errors.
  *
+ * @par Optional Parameters
+ * Most of the member functions in this class can receive optional parameters
+ * to modify their behavior. For example, the default when reading multi-version
+ * objects is to retrieve the latest version:
+ *
+ * @code
+ * auto stream = gcs.ReadObject("my-bucket", "my-object");
+ * @endcode
+ *
+ * Some applications may want to retrieve specific versions, in this case
+ * just provide the `Generation` option:
+ *
+ * @code
+ * auto stream = gcs.ReadObject(
+ *     "my-bucket", "my-object", gcs::Generation(generation));
+ * @endcode
+ *
+ * Each function documents the types accepted as optional parameters. These
+ * options can be specified in any order. Specifying an option that is not
+ * applicable to a member function results in a compile-time error.
+ *
  * @par Retry, Backoff, and Idempotency Policies
  *
  * The library automatically retries requests that fail with transient errors,
