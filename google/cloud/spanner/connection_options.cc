@@ -63,8 +63,8 @@ spanner::ConnectionOptions EmulatorOverrides(
   }
   return options;
 }
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
-
 }  // namespace cloud
 }  // namespace google
