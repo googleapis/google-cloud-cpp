@@ -56,6 +56,13 @@ TEST(ConnectionOptionsTraits, UserAgentPrefix) {
   EXPECT_EQ("test-prefix/1.2.3 " + actual, options.user_agent_prefix());
 }
 
+TEST(DefaultEndpoint, EnvironmentWorks) {
+  EXPECT_NE("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+                        "invalid-endpoint");
+  EXPECT_EQ("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());
+}
+
 TEST(EmulatorOverrides, EnvironmentWorks) {
   // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
   // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
