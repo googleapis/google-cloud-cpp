@@ -26,9 +26,6 @@ export DISTRO=fedora-install
 export DISTRO_VERSION=33
 export CMAKE_SOURCE_DIR="."
 
-export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
-export CHECK_GENERATED_CODE_HASH="yes"
-
 # Define the build tool so other scripts (e.g. cache download),
 # currently the possible values are `CMake` or `Bazel`.
 export BUILD_TOOL="CMake"
@@ -484,7 +481,7 @@ docker_flags=(
   # If set to 'yes', the build script will verify that generated library code
   # was generated from proto files that are the same version that is defined
   # in the bazel dependencies.
-  "--env" "CHECK_GENERATED_CODE_HASH=${CHECK_GENERATED_CODE_HASH:-}"
+  "--env" "CHECK_GENERATED_CODE_HASH=${CHECK_GENERATED_CODE_HASH:-yes}"
 
   # If set, run the generate-libraries.sh script to generate library code from
   # proto files.
@@ -511,7 +508,7 @@ docker_flags=(
   "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
   # If set, executes the generator integration tests.
-  "--env" "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS:-no}"
+  "--env" "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS:-yes}"
 
   # These tests are quite slow, so we only enable them in certain builds.
   "--env" "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
