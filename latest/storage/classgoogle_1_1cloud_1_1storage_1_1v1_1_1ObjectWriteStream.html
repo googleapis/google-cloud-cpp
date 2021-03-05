@@ -447,7 +447,7 @@ Public Member Functions</h2></td></tr>
 <p>Application may write multiple times before closing the stream, this function gives the capability to find out status even before stream closure.</p>
 <p>This function is different than <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html#a9d2d1b8495fbd2dc827d55bdc14fc3f6" title="Access the upload results.">metadata()</a></code> as calling <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html#a9d2d1b8495fbd2dc827d55bdc14fc3f6" title="Access the upload results.">metadata()</a></code> before <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectWriteStream.html#af13e8c5445dda4c2d4ef278afcf81dc4" title="Close the stream, finalizing the upload.">Close()</a> is undefined. </p>
 
-<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00356">356</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00354">354</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -534,7 +534,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the next expected byte. </p>
 <p>For non-resumable uploads this is always zero. Applications that use resumable uploads can use this value to resend any data not committed in the GCS. </p>
 
-<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00332">332</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00330">330</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
@@ -677,10 +677,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the resumable upload session id for this upload. </p>
-<p>Note that this is an empty string for uploads that do not use resumable upload session ids. <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#ad49c1798f3a14605eea3ceb45cf1d729" title="Writes contents into an object.">Client::WriteObject()</a></code> enables resumable uploads based on the options set by the application.</p>
-<p>Furthermore, this value might change during an upload. </p>
+<p>Note that this is an empty string for uploads that do not use resumable upload session ids. <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#ad49c1798f3a14605eea3ceb45cf1d729" title="Writes contents into an object.">Client::WriteObject()</a></code> enables resumable uploads based on the options set by the application. </p>
 
-<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00321">321</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object__stream_8h_source.html#l00319">319</a> of file <a class="el" href="object__stream_8h_source.html">object_stream.h</a>.</p>
 
 </div>
 </div>
