@@ -322,8 +322,8 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
 
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already. Dummy MD5HasValue
-  // is passed during WriteObject.
+  // Create the object, but only if it does not exist already. Placeholder
+  // MD5HasValue is passed during WriteObject.
   auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                 MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
 
@@ -344,8 +344,8 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
 
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already. Dummy MD5HasValue
-  // is passed during WriteObject.
+  // Create the object, but only if it does not exist already. Placeholder
+  // MD5HasValue is passed during WriteObject.
   auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                 Projection::Full(),
                                 MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));

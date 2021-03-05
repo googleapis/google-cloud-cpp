@@ -376,7 +376,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
   parser->SetRows({"r1"});
   {
     ::testing::InSequence s;
-    // For sanity, check we have two rows in the initial request
+    // As a baseline, check we have two rows in the initial request
     EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(2)))
         .WillOnce(stream->MakeMockReturner());
 
@@ -462,7 +462,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
   parser->SetRows({"r1"});
   {
     ::testing::InSequence s;
-    // For sanity, check we have two rows in the initial request
+    // As a baseline, check we have two rows in the initial request
     EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(2)))
         .WillOnce(stream->MakeMockReturner());
 

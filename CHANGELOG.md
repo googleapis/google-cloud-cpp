@@ -1090,8 +1090,8 @@ more info.
     exception, any code trying to catch the exception should be modified to
     handle errors via `StatusOr<T>`.
   * Remove Snapshot-related functions, tests, examples, etc.: this is
-    whitelisted functionality in Cloud Bigtable and it is no longer expected
-    to reach GA.
+    functionality in Cloud Bigtable was controlled by an allow-list, and it is
+    no longer expected to reach GA.
 * Continue to implement more async APIs (`Async*()` methods) for the
   `InstanceAdmin`, `TableAdmin`, and `Table` classes
   (**Note: These are not yet stable**)

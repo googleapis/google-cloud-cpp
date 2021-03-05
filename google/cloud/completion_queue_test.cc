@@ -828,7 +828,7 @@ TEST(CompletionQueueTest, ImplStartOperationDuplicate) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-class DummyOperation : public internal::AsyncGrpcOperation {
+class PlaceholderOperation : public internal::AsyncGrpcOperation {
  public:
   void Cancel() override {}
   bool Notify(bool) override { return true; }
@@ -840,7 +840,7 @@ TEST(CompletionQueueTest, StartOperationMayOperateOnCq) {
   CompletionQueue cq(impl);
   std::thread t([&] { cq.Run(); });
   promise<void> run_async_promise;
-  impl->StartOperation(std::make_shared<DummyOperation>(), [&](void*) {
+  impl->StartOperation(std::make_shared<PlaceholderOperation>(), [&](void*) {
     cq.MakeRelativeTimer(std::chrono::seconds(0))
         .then([&](future<StatusOr<std::chrono::system_clock::time_point>>) {
           run_async_promise.set_value();

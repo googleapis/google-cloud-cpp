@@ -245,8 +245,8 @@ TEST_F(AsyncLongrunningOperationTest, PollExhausted) {
 
 TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
   google::longrunning::Operation op;
-  grpc::Status dummy_status;
-  OperationFinishedSuccessfully(op, dummy_status);
+  grpc::Status placeholder_status;
+  OperationFinishedSuccessfully(op, placeholder_status);
 
   internal::AsyncLongrunningOperation<testing::MockAdminClient,
                                       SampleRowKeysResponse>

@@ -22,17 +22,17 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-struct Dummy : public GenericRequest<Dummy> {};
+struct Placeholder : public GenericRequest<Placeholder> {};
 
 TEST(GenericRequestTest, SetOptionRValueFirstBase) {
-  Dummy req;
+  Placeholder req;
   req.set_option(QuotaUser("user1"));
   EXPECT_TRUE(req.HasOption<QuotaUser>());
   EXPECT_EQ("user1", req.GetOption<QuotaUser>().value());
 }
 
 TEST(GenericRequestTest, SetOptionLValueFirstBase) {
-  Dummy req;
+  Placeholder req;
   QuotaUser arg("user1");
   req.set_option(arg);
   EXPECT_TRUE(req.HasOption<QuotaUser>());
@@ -40,14 +40,14 @@ TEST(GenericRequestTest, SetOptionLValueFirstBase) {
 }
 
 TEST(GenericRequestTest, SetOptionRValueLastBase) {
-  Dummy req;
+  Placeholder req;
   req.set_option(CustomHeader("header1", "val1"));
   EXPECT_TRUE(req.HasOption<CustomHeader>());
   EXPECT_EQ("header1", req.GetOption<CustomHeader>().custom_header_name());
 }
 
 TEST(GenericRequestTest, SetOptionLValueLastBase) {
-  Dummy req;
+  Placeholder req;
   CustomHeader arg("header1", "val1");
   req.set_option(arg);
   EXPECT_TRUE(req.HasOption<CustomHeader>());

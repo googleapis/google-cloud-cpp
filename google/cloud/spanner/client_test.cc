@@ -399,7 +399,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
-  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Transaction txn = MakeReadWriteTransaction();  // placeholder
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}, {}};
 
@@ -448,7 +448,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
 
 TEST(ClientTest, CommitMutatorRollback) {
   auto conn = std::make_shared<MockConnection>();
-  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Transaction txn = MakeReadWriteTransaction();  // placeholder
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = absl::make_unique<MockResultSetSource>();
@@ -490,7 +490,7 @@ TEST(ClientTest, CommitMutatorRollback) {
 
 TEST(ClientTest, CommitMutatorRollbackError) {
   auto conn = std::make_shared<MockConnection>();
-  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Transaction txn = MakeReadWriteTransaction();  // placeholder
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = absl::make_unique<MockResultSetSource>();

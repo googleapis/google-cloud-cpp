@@ -63,15 +63,15 @@ std::multimap<std::string, std::string> GetMetadata(
       generic_stub.PrepareCall(&context, "made_up_method", &cli_cq);
   cli_stream->StartCall(nullptr);
   bool ok;
-  void* dummy;
-  cli_cq.Next(&dummy, &ok);  // actually start the client call
+  void* placeholder;
+  cli_cq.Next(&placeholder, &ok);  // actually start the client call
 
   // Receive the garbage with the supplied context.
   grpc::GenericServerContext server_context;
   grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
   generic_service.RequestCall(&server_context, &reader_writer, srv_cq.get(),
                               srv_cq.get(), nullptr);
-  srv_cq->Next(&dummy, &ok);  // actually receive the data
+  srv_cq->Next(&placeholder, &ok);  // actually receive the data
 
   // Now we've got the data - save it before cleaning up.
   std::multimap<std::string, std::string> res;
@@ -88,9 +88,9 @@ std::multimap<std::string, std::string> GetMetadata(
   srv_cq->Shutdown();
   cli_cq.Shutdown();
   // Drain completion queues.
-  while (srv_cq->Next(&dummy, &ok))
+  while (srv_cq->Next(&placeholder, &ok))
     ;
-  while (cli_cq.Next(&dummy, &ok))
+  while (cli_cq.Next(&placeholder, &ok))
     ;
 
   return res;

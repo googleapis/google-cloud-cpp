@@ -558,16 +558,16 @@ TEST(Value, SpannerStruct) {
   EXPECT_STATUS_OK(v5.get<T5>());
   EXPECT_EQ(empty, *v5.get<T5>());
 
-  auto crazy = tuple<tuple<std::vector<absl::optional<bool>>>>{};
-  using T6 = decltype(crazy);
-  Value v6(crazy);
+  auto deeply_nested = tuple<tuple<std::vector<absl::optional<bool>>>>{};
+  using T6 = decltype(deeply_nested);
+  Value v6(deeply_nested);
   EXPECT_STATUS_OK(v6.get<T6>());
   EXPECT_FALSE(v6.get<T5>().ok());
   EXPECT_EQ(v6, v6);
   EXPECT_NE(v6, v5);
 
   EXPECT_STATUS_OK(v6.get<T6>());
-  EXPECT_EQ(crazy, *v6.get<T6>());
+  EXPECT_EQ(deeply_nested, *v6.get<T6>());
 }
 
 TEST(Value, SpannerStructWithNull) {
