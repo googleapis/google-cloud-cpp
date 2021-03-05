@@ -151,19 +151,19 @@ TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
       "SignBlob");
 }
 
-// This is a dummy service account JSON file that is inactive. It's fine for it
-// to be public.
+// This is a placeholder service account JSON file that is inactive. It's fine
+// for it to be public.
 constexpr char kJsonKeyfileContentsForV4[] = R"""({
   "type": "service_account",
-  "project_id": "dummy-project-id",
+  "project_id": "placeholder-project-id",
   "private_key_id": "ffffffffffffffffffffffffffffffffffffffff",
   "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCsPzMirIottfQ2\nryjQmPWocSEeGo7f7Q4/tMQXHlXFzo93AGgU2t+clEj9L5loNhLVq+vk+qmnyDz5\nQ04y8jVWyMYzzGNNrGRW/yaYqnqlKZCy1O3bmnNjV7EDbC/jE1ZLBY0U3HaSHfn6\nS9ND8MXdgD0/ulRTWwq6vU8/w6i5tYsU7n2LLlQTl1fQ7/emO9nYcCFJezHZVa0H\nmeWsdHwWsok0skwQYQNIzP3JF9BpR5gJT2gNge6KopDesJeLoLzaX7cUnDn+CAnn\nLuLDwwSsIVKyVxhBFsFXPplgpaQRwmGzwEbf/Xpt9qo26w2UMgn30jsOaKlSeAX8\ncS6ViF+tAgMBAAECggEACKRuJCP8leEOhQziUx8Nmls8wmYqO4WJJLyk5xUMUC22\nSI4CauN1e0V8aQmxnIc0CDkFT7qc9xBmsMoF+yvobbeKrFApvlyzNyM7tEa/exh8\nDGD/IzjbZ8VfWhDcUTwn5QE9DCoon9m1sG+MBNlokB3OVOt8LieAAREdEBG43kJu\nyQTOkY9BGR2AY1FnAl2VZ/jhNDyrme3tp1sW1BJrawzR7Ujo8DzlVcS2geKA9at7\n55ua5GbHz3hfzFgjVXDfnkWzId6aHypUyqHrSn1SqGEbyXTaleKTc6Pgv0PgkJjG\nhZazWWdSuf1T5Xbs0OhAK9qraoAzT6cXXvMEvvPt6QKBgQDXcZKqJAOnGEU4b9+v\nOdoh+nssdrIOBNMu1m8mYbUVYS1aakc1iDGIIWNM3qAwbG+yNEIi2xi80a2RMw2T\n9RyCNB7yqCXXVKLBiwg9FbKMai6Vpk2bWIrzahM9on7AhCax/X2AeOp+UyYhFEy6\nUFG4aHb8THscL7b515ukSuKb5QKBgQDMq+9PuaB0eHsrmL6q4vHNi3MLgijGg/zu\nAXaPygSYAwYW8KglcuLZPvWrL6OG0+CrfmaWTLsyIZO4Uhdj7MLvX6yK7IMnagvk\nL3xjgxSklEHJAwi5wFeJ8ai/1MIuCn8p2re3CbwISKpvf7Sgs/W4196P4vKvTiAz\njcTiSYFIKQKBgCjMpkS4O0TakMlGTmsFnqyOneLmu4NyIHgfPb9cA4n/9DHKLKAT\noaWxBPgatOVWs7RgtyGYsk+XubHkpC6f3X0+15mGhFwJ+CSE6tN+l2iF9zp52vqP\nQwkjzm7+pdhZbmaIpcq9m1K+9lqPWJRz/3XXuqi+5xWIZ7NaxGvRjqaNAoGAdK2b\nutZ2y48XoI3uPFsuP+A8kJX+CtWZrlE1NtmS7tnicdd19AtfmTuUL6fz0FwfW4Su\nlQZfPT/5B339CaEiq/Xd1kDor+J7rvUHM2+5p+1A54gMRGCLRv92FQ4EON0RC1o9\nm2I4SHysdO3XmjmdXmfp4BsgAKJIJzutvtbqlakCgYB+Cb10z37NJJ+WgjDt+yT2\nyUNH17EAYgWXryfRgTyi2POHuJitd64Xzuy6oBVs3wVveYFM6PIKXlj8/DahYX5I\nR2WIzoCNLL3bEZ+nC6Jofpb4kspoAeRporj29SgesK6QBYWHWX2H645RkRGYGpDo\n51gjy9m/hSNqBbH2zmh04A==\n-----END PRIVATE KEY-----\n",
-  "client_email": "test-iam-credentials@dummy-project-id.iam.gserviceaccount.com",
+  "client_email": "test-iam-credentials@placeholder-project-id.iam.gserviceaccount.com",
   "client_id": "000000000000000000000",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-iam-credentials%40dummy-project-id.iam.gserviceaccount.com"
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-iam-credentials%40placeholder-project-id.iam.gserviceaccount.com"
 })""";
 
 TEST_F(CreateSignedUrlTest, V4SignGet) {
@@ -192,21 +192,20 @@ TEST_F(CreateSignedUrlTest, V4SignGet) {
   std::string expected =
       "https://storage.googleapis.com/test-bucket/test-object"
       "?X-Goog-Algorithm=GOOG4-RSA-SHA256"
-      "&X-Goog-Credential=test-iam-credentials%40dummy-project-id.iam."
+      "&X-Goog-Credential=test-iam-credentials%40placeholder-project-id.iam."
       "gserviceaccount.com%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
       "&X-Goog-Date=20190201T090000Z"
       "&X-Goog-Expires=10"
       "&X-Goog-SignedHeaders=host"
       "&X-Goog-Signature="
-      "95e6a13d43a1d1962e667f17397f2b80ac9bdd1669210d5e08e0135df9dff4e56113485d"
-      "be429ca2266487b9d1796ebdee2d7cf682a6ef3bb9fbb4c351686fba90d7b621cf1c4eb1"
-      "fdf126460dd25fa0837dfdde0a9fd98662ce60844c458448fb2b352c203d9969cb74efa4"
-      "bdb742287744a4f2308afa4af0e0773f55e32e92973619249214b97283b2daa141952444"
-      "44e33f938138d1e5f561088ce8011f4986dda33a556412594db7c12fc40e1ff3f1bedeb7"
-      "a42f5bcda0b9567f17f65855f65071fabb88ea12371877f3f77f10e1466fff6ff6973b74"
-      "a933322ff0949ce357e20abe96c3dd5cfab42c9c83e740a4d32b9e11e146f0eb3404d2e9"
-      "75896f74";
-
+      "3e1b3613c4f8ba2a4b00719341aed05fce44e9de3a8caf113f68e68cb02c0d3f14cc0133"
+      "01eeb42f11657ee5a4011a992fef1f442b46af1d357d746c9effd315430751853a9fee7a"
+      "4454fdcf37cfc37c468efb484ed69cf021795d30a5aa01c30968083f770fb506e64f9b3e"
+      "ddc809249ae7eb4bdb3b398d249cf1149689860d4a650095e1670e582f123b3f66f404f0"
+      "903435df1ea8baa10ce5fb7fbf571088be4c9c33f9439333c9d51c3d29b7e8e280bd859d"
+      "a53339fa7d0457a968d2930fb6909c3c8be315edeaf6e2a09dbea6421ada2e8e2a9cdd50"
+      "e6270fdbd2785e9dd32efebde9332081f6cc3c8143a152f55f6af06c4b798a516c61500e"
+      "17853581";
   EXPECT_EQ(expected, *actual);
 }
 
@@ -237,20 +236,20 @@ TEST_F(CreateSignedUrlTest, V4SignPut) {
   std::string expected =
       "https://storage.googleapis.com/test-bucket/test-object"
       "?X-Goog-Algorithm=GOOG4-RSA-SHA256"
-      "&X-Goog-Credential=test-iam-credentials%40dummy-project-id.iam."
+      "&X-Goog-Credential=test-iam-credentials%40placeholder-project-id.iam."
       "gserviceaccount.com%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
       "&X-Goog-Date=20190201T090000Z"
       "&X-Goog-Expires=10"
       "&X-Goog-SignedHeaders=host%3Bx-goog-resumable"
       "&X-Goog-Signature="
-      "4a6d39b23343cedf4c30782aed4b384001828c79ffa3a080a481ea01a640dea0a0ceb58d"
-      "67a12cef3b243c3f036bb3799c6ee88e8db3eaf7d0bdd4b70a228d0736e07eaa1ee076af"
-      "f5c6ce09dff1f1f03a0d8ead0d2893408dd3604fdabff553aa6d7af2da67cdba6790006a"
-      "70240f96717b98f1a6ccb24f00940749599be7ef72aaa5358db63ddd54b2de9e2d6d6a58"
-      "6eac4fe25f36d86fc6ab150418e9c6fa01b732cded226c6d62fc95b72473a4cc55a82574"
-      "82583fe66d9ab6ede909eb41516a8690946c3e87b0f2052eb0e97e012a14b2f721c42e6e"
-      "19b8a1cd5658ea36264f10b9b1ada66b8ed5bf7ed7d1708377ac6e5fe608ae361fb594d2"
-      "e5b24c54";
+      "7c98aa13a6b324fc91be68581708f268a03c4eb276e4d5fc4720fe66cb312a456c914fea"
+      "4f2c8b3f80836f0eba1c90d9997fb5f18baf17df59ab7c76a9e8c873cfe9af393b08fccb"
+      "c21c55265ba04b34f48950cc3ded5e37554d61cd76b77ed272b72367fead842d0819387d"
+      "3c96abc36b174546b6f797dd72525b2975153ae7e4a5d2f3a92fd2ad764678a80e6104ea"
+      "d5872d607456dbe966d341238713e543fd661524dc4c9c085e157452c1e980bf364ad2d8"
+      "ab8f217fd1ee0b95144f781c6392e8f88cbf1723ce4c048e9caf0c06a65d2db379620441"
+      "36e406a8d6ae717b3b28367f75b8a8fe20cba7b4a5f419f0cf0c8acff235c96e265f1be7"
+      "25e97c28";
 
   EXPECT_EQ(expected, *actual);
 }

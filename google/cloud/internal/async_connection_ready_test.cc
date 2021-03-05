@@ -56,8 +56,8 @@ TEST(CompletionQueueTest, SuccessfulWaitingForConnection) {
   auto srv_cq = builder.AddCompletionQueue();
   std::thread srv_thread([&srv_cq] {
     bool ok;
-    void* dummy;
-    while (srv_cq->Next(&dummy, &ok))
+    void* placeholder;
+    while (srv_cq->Next(&placeholder, &ok))
       ;
   });
   auto server = builder.BuildAndStart();

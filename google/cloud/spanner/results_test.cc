@@ -130,7 +130,7 @@ TEST(RowStream, TimestampNoTransaction) {
 TEST(RowStream, TimestampNotPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_no_timestamp;
-  transaction_no_timestamp.mutable_transaction()->set_id("dummy");
+  transaction_no_timestamp.mutable_transaction()->set_id("placeholder");
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_no_timestamp));
 
@@ -141,7 +141,7 @@ TEST(RowStream, TimestampNotPresent) {
 TEST(RowStream, TimestampPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
-  transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
+  transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
       timestamp.get<protobuf::Timestamp>().value();
@@ -155,7 +155,7 @@ TEST(RowStream, TimestampPresent) {
 TEST(ProfileQueryResult, TimestampPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
-  transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
+  transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
       timestamp.get<protobuf::Timestamp>().value();

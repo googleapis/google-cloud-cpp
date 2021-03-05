@@ -22,18 +22,18 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-struct DummyOption : public ComplexOption<DummyOption, int> {
-  using ComplexOption<DummyOption, int>::ComplexOption;
+struct PlaceholderOption : public ComplexOption<PlaceholderOption, int> {
+  using ComplexOption<PlaceholderOption, int>::ComplexOption;
 };
 
 TEST(ComplexOptionTest, ValueOrEmptyCase) {
-  DummyOption d;
+  PlaceholderOption d;
   ASSERT_FALSE(d.has_value());
   EXPECT_EQ(5, d.value_or(5));
 }
 
 TEST(ComplexOptionTest, ValueOrNonEmptyCase) {
-  DummyOption d(10);
+  PlaceholderOption d(10);
   ASSERT_TRUE(d.has_value());
   EXPECT_EQ(10, d.value_or(5));
 }

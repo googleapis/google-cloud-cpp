@@ -46,7 +46,8 @@ class DatabaseAdminClientTest : public ::testing::Test {
   // We can't use ASSERT* in the constructor, so defer initializing `instance_`
   // and `database_` until `SetUp()`.
   DatabaseAdminClientTest()
-      : instance_("dummy", "dummy"), database_(instance_, "dummy") {}
+      : instance_("placeholder", "placeholder"),
+        database_(instance_, "placeholder") {}
 
   void SetUp() override {
     using ::google::cloud::internal::GetEnv;

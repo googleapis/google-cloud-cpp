@@ -708,7 +708,7 @@ TEST_F(TableAsyncReadRowsTest, ParserFailure) {
   cq_impl_->SimulateCompletion(true);  // Return data
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(false);  // Finish dummy Read()
+  cq_impl_->SimulateCompletion(false);  // Finish placeholder Read()
   ASSERT_EQ(1U, cq_impl_->size());
   cq_impl_->SimulateCompletion(true);  // Finish Finish()
 

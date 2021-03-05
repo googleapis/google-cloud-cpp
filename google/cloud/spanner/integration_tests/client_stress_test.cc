@@ -137,7 +137,7 @@ class ClientStressTest : public spanner_testing::DatabaseIntegrationTest {};
 
 /// @test Test that ParseArgs works correctly.
 TEST_F(ClientStressTest, ParseArgs) {
-  std::string const cmd = "dummy-cmd";
+  std::string const cmd = "placeholder-cmd";
   auto config = ParseArgs({cmd, "--help"}, kDescription);
   EXPECT_TRUE(config && config->show_help);
   config = ParseArgs({cmd, "--description", "--help"}, kDescription);
