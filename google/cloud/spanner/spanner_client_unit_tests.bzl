@@ -40,6 +40,7 @@ spanner_client_unit_tests = [
     "internal/logging_spanner_stub_test.cc",
     "internal/merge_chunk_test.cc",
     "internal/metadata_spanner_stub_test.cc",
+    "internal/options_test.cc",
     "internal/partial_result_set_resume_test.cc",
     "internal/partial_result_set_source_test.cc",
     "internal/session_pool_test.cc",

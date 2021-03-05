@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
-#include "google/cloud/internal/compiler_info.h"
-#include "google/cloud/internal/getenv.h"
+#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
 
 namespace google {
 namespace cloud {
@@ -22,41 +24,27 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  auto default_endpoint = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-  return default_endpoint.has_value() ? *default_endpoint
-                                      : "spanner.googleapis.com";
+  static auto const* const kEndpoint = new auto(
+      spanner_internal::DefaultOptions().get<internal::EndpointOption>());
+  return *kEndpoint;
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
-  return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
-         google::cloud::internal::CompilerId() + "-" +
-         google::cloud::internal::CompilerVersion() + "; " +
-         google::cloud::internal::CompilerFeatures() + ")";
+  static auto const* const kUserAgentPrefix = new auto([] {
+    auto const defaults = spanner_internal::DefaultOptions();
+    auto const& products = defaults.get<internal::UserAgentProductsOption>();
+    return absl::StrJoin(products, " ");
+  }());
+  return *kUserAgentPrefix;
 }
 
-int ConnectionOptionsTraits::default_num_channels() { return 4; }
+int ConnectionOptionsTraits::default_num_channels() {
+  static auto const kNumChannels =
+      spanner_internal::DefaultOptions().get<internal::GrpcNumChannelsOption>();
+  return kNumChannels;
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-// Override connection endpoint and credentials with values appropriate for
-// an emulated backend. This should be done after any user code that could
-// also override the default values (i.e., immediately before establishing
-// the connection).
-spanner::ConnectionOptions EmulatorOverrides(
-    spanner::ConnectionOptions options) {
-  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
-  if (emulator_addr.has_value()) {
-    options.set_endpoint(*emulator_addr)
-        .set_credentials(grpc::InsecureChannelCredentials());
-  }
-  return options;
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
