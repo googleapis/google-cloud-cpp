@@ -166,7 +166,7 @@ class ResumableParallelUploadState;
  *
  * Each function documents the types accepted as optional parameters. These
  * options can be specified in any order. Specifying an option that is not
- * application to a member function results in a compile-time error.
+ * applicable to a member function results in a compile-time error.
  *
  * @par Retry, Backoff, and Idempotency Policies
  *
