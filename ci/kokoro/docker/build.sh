@@ -26,8 +26,6 @@ export DISTRO=fedora-install
 export DISTRO_VERSION=33
 export CMAKE_SOURCE_DIR="."
 
-export GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes"
-
 # Define the build tool so other scripts (e.g. cache download),
 # currently the possible values are `CMake` or `Bazel`.
 export BUILD_TOOL="CMake"
@@ -103,7 +101,6 @@ elif [[ "${BUILD_NAME}" = "coverage" ]]; then
 elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
-  export CHECK_GENERATED_CODE_HASH=yes
   RUN_INTEGRATION_TESTS="yes" # Integration tests were explicitly requested.
   # TODO(4306): Enable the backup tests once they don't timeout too often.
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
@@ -298,17 +295,6 @@ if [[ -z "${RUN_INTEGRATION_TESTS:-}" ]]; then
 fi
 export RUN_INTEGRATION_TESTS
 
-# If CHECK_GENERATED_CODE_HASH wasn't set in the environment or by one of the
-# builds above, default it to "yes" for CI builds and "no" otherwise.
-if [[ -z "${CHECK_GENERATED_CODE_HASH:-}" ]]; then
-  if [[ "${RUNNING_CI:-}" == "yes" ]]; then
-    CHECK_GENERATED_CODE_HASH="yes"
-  else
-    CHECK_GENERATED_CODE_HASH="no"
-  fi
-fi
-export CHECK_GENERATED_CODE_HASH
-
 echo "================================================================"
 io::log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
@@ -495,7 +481,7 @@ docker_flags=(
   # If set to 'yes', the build script will verify that generated library code
   # was generated from proto files that are the same version that is defined
   # in the bazel dependencies.
-  "--env" "CHECK_GENERATED_CODE_HASH=${CHECK_GENERATED_CODE_HASH:-}"
+  "--env" "CHECK_GENERATED_CODE_HASH=${CHECK_GENERATED_CODE_HASH:-yes}"
 
   # If set, run the generate-libraries.sh script to generate library code from
   # proto files.
@@ -522,7 +508,7 @@ docker_flags=(
   "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
   # If set, executes the generator integration tests.
-  "--env" "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS:-no}"
+  "--env" "GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS:-yes}"
 
   # These tests are quite slow, so we only enable them in certain builds.
   "--env" "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
