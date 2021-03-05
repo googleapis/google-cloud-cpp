@@ -179,8 +179,8 @@ endforeach ()
 set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
 foreach (
     _library
-    bigtable
     bigquery
+    bigtable
     logging
     iam
     spanner

@@ -17,23 +17,23 @@
 """Automatically generated source lists for google_cloud_cpp_bigquery - DO NOT EDIT."""
 
 google_cloud_cpp_bigquery_hdrs = [
+    "big_query_read_client.gcpcxx.pb.h",
+    "big_query_read_connection.gcpcxx.pb.h",
+    "big_query_read_connection_idempotency_policy.gcpcxx.pb.h",
     "internal/big_query_read_logging_decorator.gcpcxx.pb.h",
     "internal/big_query_read_metadata_decorator.gcpcxx.pb.h",
     "internal/big_query_read_stub.gcpcxx.pb.h",
     "internal/big_query_read_stub_factory.gcpcxx.pb.h",
-    "big_query_read_client.gcpcxx.pb.h",
-    "big_query_read_connection.gcpcxx.pb.h",
-    "big_query_read_connection_idempotency_policy.gcpcxx.pb.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_bigquery_srcs = [
+    "big_query_read_client.gcpcxx.pb.cc",
+    "big_query_read_connection.gcpcxx.pb.cc",
+    "big_query_read_connection_idempotency_policy.gcpcxx.pb.cc",
     "internal/big_query_read_logging_decorator.gcpcxx.pb.cc",
     "internal/big_query_read_metadata_decorator.gcpcxx.pb.cc",
     "internal/big_query_read_stub.gcpcxx.pb.cc",
     "internal/big_query_read_stub_factory.gcpcxx.pb.cc",
-    "big_query_read_client.gcpcxx.pb.cc",
-    "big_query_read_connection.gcpcxx.pb.cc",
-    "big_query_read_connection_idempotency_policy.gcpcxx.pb.cc",
     "streaming.cc",
 ]

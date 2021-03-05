@@ -34,6 +34,12 @@ unset(FPHSA_NAME_MISMATCHED)
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_bigquery # cmake-format: sort
+    big_query_read_client.gcpcxx.pb.cc
+    big_query_read_client.gcpcxx.pb.h
+    big_query_read_connection.gcpcxx.pb.cc
+    big_query_read_connection.gcpcxx.pb.h
+    big_query_read_connection_idempotency_policy.gcpcxx.pb.cc
+    big_query_read_connection_idempotency_policy.gcpcxx.pb.h
     internal/big_query_read_logging_decorator.gcpcxx.pb.cc
     internal/big_query_read_logging_decorator.gcpcxx.pb.h
     internal/big_query_read_metadata_decorator.gcpcxx.pb.cc
@@ -42,14 +48,8 @@ add_library(
     internal/big_query_read_stub.gcpcxx.pb.h
     internal/big_query_read_stub_factory.gcpcxx.pb.cc
     internal/big_query_read_stub_factory.gcpcxx.pb.h
-    big_query_read_client.gcpcxx.pb.cc
-    big_query_read_client.gcpcxx.pb.h
-    big_query_read_connection.gcpcxx.pb.cc
-    big_query_read_connection.gcpcxx.pb.h
-    big_query_read_connection_idempotency_policy.gcpcxx.pb.cc
-    big_query_read_connection_idempotency_policy.gcpcxx.pb.h
-    streaming.cc
-    retry_traits.h)
+    retry_traits.h
+    streaming.cc)
 target_include_directories(
     google_cloud_cpp_bigquery
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -79,8 +79,8 @@ create_bazel_config(google_cloud_cpp_bigquery YEAR "2021")
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-# target_sources example: ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.gcpcxx.pb.h
+# that they need absolute paths for their sources. target_sources example:
+# ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.gcpcxx.pb.h
 add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_mocks
