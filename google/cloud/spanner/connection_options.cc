@@ -25,9 +25,12 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  static auto const* const kEndpoint = new auto(
-      spanner_internal::DefaultOptions().get<internal::EndpointOption>());
-  return *kEndpoint;
+  // TODO(5738): cache the default endpoint in a function-local static after we
+  // add support for users using the new `Options` class. We don't want to
+  // cache the value currently because users might expect that changing the env
+  // var between calls to `MakeConnection()` actually changes the endpoint, and
+  // we want to give them an alternative way to accomplish that.
+  return spanner_internal::DefaultOptions().get<internal::EndpointOption>();
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
