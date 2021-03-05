@@ -27,10 +27,6 @@ namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Contains;
-using ::testing::HasSubstr;
-
 class BigQueryReadIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
