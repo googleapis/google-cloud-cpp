@@ -49,7 +49,7 @@ BigQueryReadConnection::CreateReadSession(
 
 StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadConnection::ReadRows(
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest) {
+    ::google::cloud::bigquery::storage::v1::ReadRowsRequest) {  // NOLINT
   return google::cloud::internal::MakeStreamRange<
       ::google::cloud::bigquery::storage::v1::ReadRowsResponse>(
       []() -> absl::variant<
