@@ -907,6 +907,25 @@ TEST_F(ClientIntegrationTest, InformationSchema) {
   }
 }
 
+/// @test Verify ability to enumerate SUPPORTED_OPTIMIZER_VERSIONS.
+TEST_F(ClientIntegrationTest, OptimizerStatisticsPackages) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT v.VERSION, v.RELEASE_DATE
+        FROM SPANNER_SYS.SUPPORTED_OPTIMIZER_VERSIONS AS v
+      )"""));
+  using RowType = std::tuple<std::int64_t, absl::CivilDay>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (emulator_) {
+      EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    EXPECT_GT(std::get<0>(*row), 0);
+    EXPECT_GE(std::get<1>(*row), absl::CivilDay(1998, 9, 4));
+  }
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
