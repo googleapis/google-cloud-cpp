@@ -128,7 +128,9 @@ TEST(CurlResumableUploadSessionTest, Reset) {
 
   session.ResetSession();
   EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_EQ(url2, session.session_id());
+  // Changes to the session id are ignored, they do not happen in production
+  // anyway
+  EXPECT_EQ(url1, session.session_id());
   StatusOr<ResumableUploadResponse> const& last_response =
       session.last_response();
   ASSERT_STATUS_OK(last_response);
@@ -160,7 +162,9 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   upload = session.UploadChunk({{payload}});
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, session.next_expected_byte());
-  EXPECT_EQ(url2, session.session_id());
+  // Changes to the session id are ignored, they do not happen in production
+  // anyway
+  EXPECT_EQ(url1, session.session_id());
 }
 
 TEST(CurlResumableUploadSessionTest, Empty) {

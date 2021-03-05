@@ -315,8 +315,6 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * Note that this is an empty string for uploads that do not use resumable
    * upload session ids. `Client::WriteObject()` enables resumable uploads based
    * on the options set by the application.
-   *
-   * Furthermore, this value might change during an upload.
    */
   std::string const& resumable_session_id() const {
     return buf_->resumable_session_id();
