@@ -52,6 +52,16 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
       MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+  auto response = client.CreateReadSession({}, {}, {});
+  EXPECT_FALSE(response.status().ok());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateReadSession")));
+}
+
+TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(
+      connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
+      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   auto response = client.CreateReadSession(request);
   EXPECT_FALSE(response.status().ok());
@@ -63,6 +73,17 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
       MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+  auto response = client.ReadRows({}, {});
+  auto begin = response.begin();
+  EXPECT_FALSE(begin == response.end());
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
+}
+
+TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoFailure) {
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(
+      connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
+      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
   ::google::cloud::bigquery::storage::v1::ReadRowsRequest request;
   auto response = client.ReadRows(request);
   auto begin = response.begin();
@@ -71,7 +92,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
 }
 
-TEST_F(BigQueryReadIntegrationTest, SplitReadStreamFailure) {
+TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
       MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));

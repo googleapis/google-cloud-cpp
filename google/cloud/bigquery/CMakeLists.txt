@@ -14,8 +14,8 @@
 # limitations under the License.
 # ~~~
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud Big Query C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Big Query")
+set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
@@ -142,9 +142,9 @@ google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_mocks"
 set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Big Query C++ Client Library")
+set(GOOGLE_CLOUD_PC_NAME "The Google Cloud BigQuery C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Big Query.")
+    "Provides C++ APIs to access Google Cloud BigQuery.")
 set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_bigquery_protos"
 )
