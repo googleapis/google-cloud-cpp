@@ -132,3 +132,17 @@ cc_library(
         "//google/cloud/logging:google_cloud_cpp_logging_mocks",
     ],
 )
+
+cc_library(
+    name = "experimental-bigquery",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
+    ],
+)
+
+cc_library(
+    name = "experimental-bigquery-mocks",
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
+    ],
+)

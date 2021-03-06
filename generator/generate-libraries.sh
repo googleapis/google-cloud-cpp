@@ -34,7 +34,9 @@ ${BAZEL_BIN} build @com_google_protobuf//:protoc
 io::log_yellow "Build microgenerator plugin"
 ${BAZEL_BIN} build //generator:protoc-gen-cpp_codegen
 
+# "year product_path proto_path_in_googleapis_repo"
 product_path_proto_path_to_generate=(
+  "2021 google/cloud/bigquery google/cloud/bigquery/storage/v1/storage.proto"
   "2020 google/cloud/iam google/iam/credentials/v1/iamcredentials.proto"
   "2021 google/cloud/logging google/logging/v2/logging.proto"
 )
