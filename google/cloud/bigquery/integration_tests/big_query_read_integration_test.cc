@@ -38,11 +38,13 @@ class BigQueryReadIntegrationTest : public ::testing::Test {
         absl::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(1);
     backoff_policy_ = absl::make_unique<ExponentialBackoffPolicy>(
         std::chrono::seconds(1), std::chrono::seconds(1), 2.0);
+    idempotency_policy_ = MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
   }
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
   BigQueryReadConnectionOptions connection_options_;
   std::unique_ptr<BigQueryReadRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> idempotency_policy_;
 
  private:
   testing_util::ScopedLog log_;
@@ -51,7 +53,7 @@ class BigQueryReadIntegrationTest : public ::testing::Test {
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+      idempotency_policy_->clone()));
   auto response = client.CreateReadSession({}, {}, {});
   EXPECT_FALSE(response.status().ok());
   auto const log_lines = ClearLogLines();
@@ -61,7 +63,7 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+      idempotency_policy_->clone()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   auto response = client.CreateReadSession(request);
   EXPECT_FALSE(response.status().ok());
@@ -70,9 +72,10 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
 }
 
 TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
+  connection_options_.enable_tracing("rpc-streams");
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+      idempotency_policy_->clone()));
   auto response = client.ReadRows({}, {});
   auto begin = response.begin();
   EXPECT_FALSE(begin == response.end());
@@ -83,7 +86,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsFailure) {
 TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+      idempotency_policy_->clone()));
   ::google::cloud::bigquery::storage::v1::ReadRowsRequest request;
   auto response = client.ReadRows(request);
   auto begin = response.begin();
@@ -95,7 +98,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoFailure) {
 TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultBigQueryReadConnectionIdempotencyPolicy()));
+      idempotency_policy_->clone()));
   ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest request;
   auto response = client.SplitReadStream(request);
   EXPECT_FALSE(response.status().ok());
