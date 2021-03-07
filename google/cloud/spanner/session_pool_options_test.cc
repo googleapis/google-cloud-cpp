@@ -51,6 +51,32 @@ TEST(SessionPoolOptionsTest, MaxMinSessionsConflict) {
   EXPECT_EQ(2, options.max_sessions_per_channel());
 }
 
+TEST(SessionPoolOptionsTest, DefaultOptions) {
+  auto const opts = SessionPoolOptions{};
+  EXPECT_EQ(0, opts.min_sessions());
+  EXPECT_EQ(100, opts.max_sessions_per_channel());
+  EXPECT_EQ(0, opts.max_idle_sessions());
+  EXPECT_EQ(ActionOnExhaustion::kBlock, opts.action_on_exhaustion());
+  EXPECT_EQ(std::chrono::minutes(55), opts.keep_alive_interval());
+  EXPECT_TRUE(opts.labels().empty());
+}
+
+TEST(SessionPoolOptionsTest, MakeOptions) {
+  auto const expected = SessionPoolOptions{};
+  auto const opts = spanner_internal::MakeOptions(SessionPoolOptions{});
+
+  EXPECT_EQ(expected.min_sessions(), opts.get<SessionPoolMinSessionsOption>());
+  EXPECT_EQ(expected.max_sessions_per_channel(),
+            opts.get<SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(expected.max_idle_sessions(),
+            opts.get<SessionPoolMaxIdleSessionsOption>());
+  EXPECT_EQ(expected.action_on_exhaustion(),
+            opts.get<SessionPoolActionOnExhaustionOption>());
+  EXPECT_EQ(expected.keep_alive_interval(),
+            opts.get<SessionPoolKeepAliveIntervalOption>());
+  EXPECT_EQ(expected.labels(), opts.get<SessionPoolLabelsOption>());
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

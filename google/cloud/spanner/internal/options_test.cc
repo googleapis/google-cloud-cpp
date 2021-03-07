@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/grpc_options.h"
@@ -47,6 +48,14 @@ TEST(Options, Defaults) {
   EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
+
+  EXPECT_EQ(0, opts.get<SessionPoolMinSessionsOption>());
+  EXPECT_EQ(100, opts.get<SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(0, opts.get<SessionPoolMaxIdleSessionsOption>());
+  EXPECT_EQ(ActionOnExhaustion::kBlock,
+            opts.get<SessionPoolActionOnExhaustionOption>());
+  EXPECT_EQ(std::chrono::minutes(55),
+            opts.get<SessionPoolKeepAliveIntervalOption>());
 }
 
 TEST(Options, EndpointFromEnv) {
