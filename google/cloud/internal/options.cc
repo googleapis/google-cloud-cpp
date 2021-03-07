@@ -15,6 +15,7 @@
 #include "google/cloud/internal/options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include <iterator>
 #include <set>
 #include <unordered_map>
 
@@ -31,6 +32,12 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const& expected,
                        << p.first.name();
     }
   }
+}
+
+Options MergeOptions(Options a, Options b) {
+  a.m_.insert(std::make_move_iterator(b.m_.begin()),
+              std::make_move_iterator(b.m_.end()));
+  return a;
 }
 
 }  // namespace internal
