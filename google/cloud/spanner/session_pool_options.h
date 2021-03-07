@@ -46,7 +46,7 @@ internal::Options MakeOptions(spanner::SessionPoolOptions);
  * This value will effectively be reduced if it exceeds the overall limit on
  * the number of sessions (`max_sessions_per_channel` * number of channels).
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolMinSessionsOption {
   using Type = int;
@@ -56,7 +56,7 @@ struct SessionPoolMinSessionsOption {
  * The maximum number of sessions to create on each channel.
  * Values <= 1 are treated as 1.
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolMaxSessionsPerChannelOption {
   using Type = int;
@@ -66,7 +66,7 @@ struct SessionPoolMaxSessionsPerChannelOption {
  * The maximum number of sessions to keep in the pool in an idle state.
  * Values <= 0 are treated as 0.
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolMaxIdleSessionsOption {
   using Type = int;
@@ -76,7 +76,7 @@ struct SessionPoolMaxIdleSessionsOption {
  * The action to take (kBlock or kFail) when attempting to allocate a session
  * when the pool is exhausted.
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
@@ -88,7 +88,7 @@ struct SessionPoolActionOnExhaustionOption {
  * below that (less some slack to allow the calls to be made to refresh the
  * sessions) should suffice.
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolKeepAliveIntervalOption {
   using Type = std::chrono::seconds;
@@ -100,7 +100,7 @@ struct SessionPoolKeepAliveIntervalOption {
  *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
  *  * The maximum number of labels is 64.
  *
- * @note This option is to be used with the `google/cloud/internal/options.h`
+ * @note This option is to be used with the `google::cloud::internal::Options`
  */
 struct SessionPoolLabelsOption {
   using Type = std::map<std::string, std::string>;
