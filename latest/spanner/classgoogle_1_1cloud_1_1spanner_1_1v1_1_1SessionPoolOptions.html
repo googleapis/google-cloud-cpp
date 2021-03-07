@@ -69,6 +69,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::spanner::v1::SessionPoolOptions Class Reference</div>  </div>
@@ -82,6 +83,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a528189fd8c35eca3b7a901a92a19bd4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#a528189fd8c35eca3b7a901a92a19bd4d">SessionPoolOptions</a> ()</td></tr>
+<tr class="separator:a528189fd8c35eca3b7a901a92a19bd4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add8169560d0804d53a99e7788b018998"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#add8169560d0804d53a99e7788b018998">EnforceConstraints</a> (int num_channels)</td></tr>
 <tr class="memdesc:add8169560d0804d53a99e7788b018998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enforce the stated constraints on the option values, altering them if necessary.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#add8169560d0804d53a99e7788b018998">More...</a><br /></td></tr>
 <tr class="separator:add8169560d0804d53a99e7788b018998"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,14 +123,47 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a711c858afdb60f4638ba1e64c08efc1d"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::string &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#a711c858afdb60f4638ba1e64c08efc1d">labels</a> () const</td></tr>
 <tr class="memdesc:a711c858afdb60f4638ba1e64c08efc1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the labels used when creating sessions within the pool.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#a711c858afdb60f4638ba1e64c08efc1d">More...</a><br /></td></tr>
 <tr class="separator:a711c858afdb60f4638ba1e64c08efc1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:aee380555fc19455c4a4fc6dc83365a44"><td class="memItemLeft" align="right" valign="top">internal::Options&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#aee380555fc19455c4a4fc6dc83365a44">spanner_internal::MakeOptions</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a>)</td></tr>
+<tr class="separator:aee380555fc19455c4a4fc6dc83365a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Controls the session pool maintained by a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html" title="Performs database client operations on Spanner.">spanner::Client</a></code>. </p>
 <p>Creating Cloud Spanner sessions is an expensive operation. The <a href="https://cloud.google.com/spanner/docs/sessions">recommended practice</a> is to maintain a cache (or pool) of sessions in the client side. This class controls the initial size of this pool, and how the pool grows (or shrinks) as needed.</p>
 <dl class="section note"><dt>Note</dt><dd>If no sessions are available to perform an operation the client library blocks until new sessions are available (either released by other threads or allocated on-demand, depending on the active constraints). It is also possible to configure the client to fail a request when the session pool is exhausted. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00048">48</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00131">131</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a528189fd8c35eca3b7a901a92a19bd4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a528189fd8c35eca3b7a901a92a19bd4d">&#9670;&nbsp;</a></span>SessionPoolOptions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">google::cloud::spanner::v1::SessionPoolOptions::SessionPoolOptions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00133">133</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2f5198c71010796a8a87950e54f409b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2f5198c71010796a8a87950e54f409b3">&#9670;&nbsp;</a></span>action_on_exhaustion()</h2>
 
@@ -153,7 +189,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the action to take (kBlock or kFail) when attempting to allocate a session when the pool is exhausted. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00115">115</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00205">205</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -185,7 +221,7 @@ Public Member Functions</h2></td></tr>
 <p>This can't be done in the setters, since we don't yet know the number of channels, and it would also constrain the order in which the fields must be set.</p>
 <p><code>num_channels</code> the number of RPC channels in use by the pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00058">58</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00143">143</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +250,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the interval at which we refresh sessions to prevent GC. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00131">131</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00222">222</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -243,7 +279,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the labels used when creating sessions within the pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00147">147</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00238">238</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -272,7 +308,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the maximum number of idle sessions to keep in the pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00103">103</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00190">190</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -301,7 +337,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the minimum number of sessions to keep in the pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00091">91</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00175">175</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -330,7 +366,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the minimum number of sessions to keep in the pool. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00079">79</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00161">161</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -360,7 +396,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Set whether to block or fail on pool exhaustion. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00106">106</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00195">195</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -388,7 +424,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00125">125</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00215">215</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -423,7 +459,7 @@ Public Member Functions</h2></td></tr>
 <li>The maximum number of labels is 64. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00141">141</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00232">232</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -454,7 +490,7 @@ Public Member Functions</h2></td></tr>
 <p>Set the maximum number of sessions to keep in the pool in an idle state. </p>
 <p>Values &lt;= 0 are treated as 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00097">97</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00184">184</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -485,7 +521,7 @@ Public Member Functions</h2></td></tr>
 <p>Set the maximum number of sessions to create on each channel. </p>
 <p>Values &lt;= 1 are treated as 1. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00085">85</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00169">169</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +552,34 @@ Public Member Functions</h2></td></tr>
 <p>Set the minimum number of sessions to keep in the pool. </p>
 <p>Values &lt;= 0 are treated as 0. This value will effectively be reduced if it exceeds the overall limit on the number of sessions (<code>max_sessions_per_channel</code> * number of channels). </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00073">73</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00155">155</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="aee380555fc19455c4a4fc6dc83365a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee380555fc19455c4a4fc6dc83365a44">&#9670;&nbsp;</a></span>spanner_internal::MakeOptions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">internal::Options <a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a589247a3cca0fc61a42b24ba587285a7">spanner_internal::MakeOptions</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">SessionPoolOptions</a>&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
