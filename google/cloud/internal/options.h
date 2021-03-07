@@ -28,7 +28,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 
 class Options;
 namespace internal {
-void MergeOptions(Options&, Options);
+Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 }  // namespace internal
@@ -190,7 +190,7 @@ class Options {
   }
 
  private:
-  friend void MergeOptions(Options&, Options);
+  friend Options MergeOptions(Options, Options);
   friend void CheckExpectedOptionsImpl(std::set<std::type_index> const&,
                                        Options const&, char const*);
 
@@ -260,10 +260,10 @@ void CheckExpectedOptions(Options const& opts, char const* caller) {
 }
 
 /**
- * Moves the options from @p b into @p a, unless the option already exists in
- * @p a.
+ * Moves the options from @p b into @p a and returns the result, unless the
+ * option already exists in @p a.
  */
-void MergeOptions(Options& a, Options b);
+Options MergeOptions(Options a, Options b);
 
 }  // namespace internal
 

@@ -34,9 +34,10 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const& expected,
   }
 }
 
-void MergeOptions(Options& a, Options b) {
+Options MergeOptions(Options a, Options b) {
   a.m_.insert(std::make_move_iterator(b.m_.begin()),
               std::make_move_iterator(b.m_.end()));
+  return a;
 }
 
 }  // namespace internal

@@ -256,7 +256,7 @@ TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
 TEST(MergeOptions, Basics) {
   auto a = Options{}.set<StringOption>("from a").set<IntOption>(42);
   auto b = Options{}.set<StringOption>("from b").set<BoolOption>(true);
-  MergeOptions(a, std::move(b));
+  a = MergeOptions(std::move(a), std::move(b));
   EXPECT_EQ(a.get<StringOption>(), "from a");  // From a
   EXPECT_EQ(a.get<BoolOption>(), true);        // From b
   EXPECT_EQ(a.get<IntOption>(), 42);           // From a
