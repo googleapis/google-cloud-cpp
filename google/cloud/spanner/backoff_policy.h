@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKOFF_POLICY_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/backoff_policy.h"
 
 namespace google {
 namespace cloud {
@@ -24,11 +24,10 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /// The base class for backoff policies.
-using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
+using BackoffPolicy = ::google::cloud::BackoffPolicy;
 
 /// A truncated exponential backoff policy with randomized periods.
-using ExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+using ExponentialBackoffPolicy = google::cloud::ExponentialBackoffPolicy;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

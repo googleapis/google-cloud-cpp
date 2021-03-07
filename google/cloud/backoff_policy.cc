@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
   return absl::make_unique<ExponentialBackoffPolicy>(*this);
@@ -54,7 +53,6 @@ std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {
   return duration_cast<milliseconds>(delay);
 }
 
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

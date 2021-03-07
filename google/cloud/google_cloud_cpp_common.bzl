@@ -31,7 +31,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
-    "internal/backoff_policy.h",
     "internal/big_endian.h",
     "internal/build_info.h",
     "internal/common_options.h",
@@ -67,6 +66,7 @@ google_cloud_cpp_common_hdrs = [
     "log.h",
     "optional.h",
     "polling_policy.h",
+    "retry_policy.h",
     "status.h",
     "status_or.h",
     "stream_range.h",
@@ -76,10 +76,10 @@ google_cloud_cpp_common_hdrs = [
 ]
 
 google_cloud_cpp_common_srcs = [
+    "backoff_policy.cc",
     "iam_bindings.cc",
     "iam_policy.cc",
     "internal/api_client_header.cc",
-    "internal/backoff_policy.cc",
     "internal/compiler_info.cc",
     "internal/filesystem.cc",
     "internal/format_time_point.cc",

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <vector>
 
-using google::cloud::internal::ExponentialBackoffPolicy;
+using google::cloud::ExponentialBackoffPolicy;
 using ms = std::chrono::milliseconds;
 
 using ::testing::ElementsAreArray;

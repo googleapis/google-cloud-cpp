@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_RETRY_POLICY_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 
@@ -50,11 +50,10 @@ using LimitedErrorCountRetryPolicy =
         internal::StatusTraits>;
 
 /// The backoff policy base class.
-using BackoffPolicy = google::cloud::internal::BackoffPolicy;
+using BackoffPolicy = google::cloud::BackoffPolicy;
 
 /// Implement truncated exponential backoff with randomization.
-using ExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+using ExponentialBackoffPolicy = google::cloud::ExponentialBackoffPolicy;
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

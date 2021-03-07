@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_retry_unary_rpc.h"
-#include "google/cloud/internal/backoff_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -76,9 +76,8 @@ using RpcRetryPolicy =
     google::cloud::internal::TraitBasedRetryPolicy<IsRetryableTraits>;
 using RpcLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<IsRetryableTraits>;
-using RpcBackoffPolicy = google::cloud::internal::BackoffPolicy;
-using RpcExponentialBackoffPolicy =
-    google::cloud::internal::ExponentialBackoffPolicy;
+using RpcBackoffPolicy = google::cloud::BackoffPolicy;
+using RpcExponentialBackoffPolicy = google::cloud::ExponentialBackoffPolicy;
 
 TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
   MockStub mock;

@@ -106,6 +106,7 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    backoff_policy.cc
     backoff_policy.h
     future.h
     future_generic.h
@@ -123,8 +124,6 @@ add_library(
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/attributes.h
-    internal/backoff_policy.cc
-    internal/backoff_policy.h
     internal/big_endian.h
     internal/build_info.h
     internal/common_options.h
@@ -174,6 +173,7 @@ add_library(
     log.h
     optional.h
     polling_policy.h
+    retry_policy.h
     status.cc
     status.h
     status_or.h
@@ -242,6 +242,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_common_define_benchmarks()
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        backoff_policy_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
@@ -249,7 +250,6 @@ if (BUILD_TESTING)
         iam_bindings_test.cc
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
-        internal/backoff_policy_test.cc
         internal/big_endian_test.cc
         internal/common_options_test.cc
         internal/compiler_info_test.cc
@@ -270,6 +270,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        retry_policy_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc
