@@ -65,16 +65,19 @@ TEST(SessionPoolOptionsTest, MakeOptions) {
   auto const expected = SessionPoolOptions{};
   auto const opts = spanner_internal::MakeOptions(SessionPoolOptions{});
 
-  EXPECT_EQ(expected.min_sessions(), opts.get<SessionPoolMinSessionsOption>());
-  EXPECT_EQ(expected.max_sessions_per_channel(),
-            opts.get<SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(expected.min_sessions(),
+            opts.get<spanner_internal::SessionPoolMinSessionsOption>());
+  EXPECT_EQ(
+      expected.max_sessions_per_channel(),
+      opts.get<spanner_internal::SessionPoolMaxSessionsPerChannelOption>());
   EXPECT_EQ(expected.max_idle_sessions(),
-            opts.get<SessionPoolMaxIdleSessionsOption>());
+            opts.get<spanner_internal::SessionPoolMaxIdleSessionsOption>());
   EXPECT_EQ(expected.action_on_exhaustion(),
-            opts.get<SessionPoolActionOnExhaustionOption>());
+            opts.get<spanner_internal::SessionPoolActionOnExhaustionOption>());
   EXPECT_EQ(expected.keep_alive_interval(),
-            opts.get<SessionPoolKeepAliveIntervalOption>());
-  EXPECT_EQ(expected.labels(), opts.get<SessionPoolLabelsOption>());
+            opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
+  EXPECT_EQ(expected.labels(),
+            opts.get<spanner_internal::SessionPoolLabelsOption>());
 }
 
 }  // namespace

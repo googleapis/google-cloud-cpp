@@ -49,13 +49,15 @@ TEST(Options, Defaults) {
   EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
-  EXPECT_EQ(0, opts.get<SessionPoolMinSessionsOption>());
-  EXPECT_EQ(100, opts.get<SessionPoolMaxSessionsPerChannelOption>());
-  EXPECT_EQ(0, opts.get<SessionPoolMaxIdleSessionsOption>());
+  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMinSessionsOption>());
+  EXPECT_EQ(
+      100,
+      opts.get<spanner_internal::SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMaxIdleSessionsOption>());
   EXPECT_EQ(ActionOnExhaustion::kBlock,
-            opts.get<SessionPoolActionOnExhaustionOption>());
+            opts.get<spanner_internal::SessionPoolActionOnExhaustionOption>());
   EXPECT_EQ(std::chrono::minutes(55),
-            opts.get<SessionPoolKeepAliveIntervalOption>());
+            opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
 }
 
 TEST(Options, EndpointFromEnv) {

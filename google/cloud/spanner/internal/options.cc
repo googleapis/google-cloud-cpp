@@ -56,24 +56,26 @@ internal::Options DefaultOptions(internal::Options opts) {
                       google::cloud::internal::CompilerFeatures() + ")");
 
   // Sets Spanner-specific options from session_pool_options.h
-  if (!opts.has<spanner::SessionPoolMaxSessionsPerChannelOption>()) {
-    opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(100);
+  if (!opts.has<spanner_internal::SessionPoolMaxSessionsPerChannelOption>()) {
+    opts.set<spanner_internal::SessionPoolMaxSessionsPerChannelOption>(100);
   }
-  if (!opts.has<spanner::SessionPoolActionOnExhaustionOption>()) {
-    opts.set<spanner::SessionPoolActionOnExhaustionOption>(
+  if (!opts.has<spanner_internal::SessionPoolActionOnExhaustionOption>()) {
+    opts.set<spanner_internal::SessionPoolActionOnExhaustionOption>(
         spanner::ActionOnExhaustion::kBlock);
   }
-  if (!opts.has<spanner::SessionPoolKeepAliveIntervalOption>()) {
-    opts.set<spanner::SessionPoolKeepAliveIntervalOption>(
+  if (!opts.has<spanner_internal::SessionPoolKeepAliveIntervalOption>()) {
+    opts.set<spanner_internal::SessionPoolKeepAliveIntervalOption>(
         std::chrono::minutes(55));
   }
   // Enforces some SessionPool constraints.
-  auto& max_idle = opts.lookup<spanner::SessionPoolMaxIdleSessionsOption>();
+  auto& max_idle =
+      opts.lookup<spanner_internal::SessionPoolMaxIdleSessionsOption>();
   max_idle = (std::max)(max_idle, 0);
   auto& max_sessions_per_channel =
-      opts.lookup<spanner::SessionPoolMaxSessionsPerChannelOption>();
+      opts.lookup<spanner_internal::SessionPoolMaxSessionsPerChannelOption>();
   max_sessions_per_channel = (std::max)(max_sessions_per_channel, 1);
-  auto& min_sessions = opts.lookup<spanner::SessionPoolMinSessionsOption>();
+  auto& min_sessions =
+      opts.lookup<spanner_internal::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
       (std::min)(min_sessions, max_sessions_per_channel *
