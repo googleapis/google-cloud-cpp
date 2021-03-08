@@ -340,12 +340,12 @@ std::shared_ptr<Connection> MakeConnection(
   internal::CheckExpectedOptions<internal::CommonOptions,
                                  internal::GrpcOptions>(opts, __func__);
 
-  // Sets spanner defaults, and merges in the session pool options.
-  opts = spanner_internal::DefaultOptions(std::move(opts));
   // TODO(#5738): Move session_pool_options once it's no longer passed to
   // ConnectionImpl.
   opts = internal::MergeOptions(
       std::move(opts), spanner_internal::MakeOptions(session_pool_options));
+  // Sets spanner defaults.
+  opts = spanner_internal::DefaultOptions(std::move(opts));
 
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<internal::GrpcNumChannelsOption>();
