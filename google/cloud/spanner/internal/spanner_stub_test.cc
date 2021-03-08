@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -31,21 +34,23 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub =
-      CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
-                               spanner::ConnectionOptions(), /*channel_id=*/0);
+  auto stub = CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"),
+                                       spanner_internal::DefaultOptions(),
+                                       /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
 
 TEST(SpannerStub, CreateDefaultStubWithLogging) {
   testing_util::ScopedLog log;
 
-  auto stub = CreateDefaultSpannerStub(
-      spanner::Database("foo", "bar", "baz"),
-      spanner::ConnectionOptions(grpc::InsecureChannelCredentials())
-          .set_endpoint("localhost:1")
-          .enable_tracing("rpc"),
-      /*channel_id=*/0);
+  auto opts = internal::Options{}
+                  .set<internal::GrpcCredentialOption>(
+                      grpc::InsecureChannelCredentials())
+                  .set<internal::EndpointOption>("localhost:1")
+                  .set<internal::TracingComponentsOption>({"rpc"});
+  auto stub =
+      CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"), opts,
+                               /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;

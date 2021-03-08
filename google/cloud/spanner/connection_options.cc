@@ -50,24 +50,5 @@ int ConnectionOptionsTraits::default_num_channels() {
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-// Override connection endpoint and credentials with values appropriate for
-// an emulated backend. This should be done after any user code that could
-// also override the default values (i.e., immediately before establishing
-// the connection).
-spanner::ConnectionOptions EmulatorOverrides(
-    spanner::ConnectionOptions options) {
-  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
-  if (emulator_addr.has_value()) {
-    options.set_endpoint(*emulator_addr)
-        .set_credentials(grpc::InsecureChannelCredentials());
-  }
-  return options;
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

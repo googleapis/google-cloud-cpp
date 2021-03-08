@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -649,16 +650,20 @@ DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options) {
+  auto opts = internal::MakeOptions(options);
+  opts = spanner_internal::DefaultOptions(opts);
   return spanner_internal::MakeDatabaseAdminConnection(
-      spanner_internal::CreateDefaultDatabaseAdminStub(options), options);
+      spanner_internal::CreateDefaultDatabaseAdminStub(opts), options);
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
+  auto opts = internal::MakeOptions(options);
+  opts = spanner_internal::DefaultOptions(opts);
   return spanner_internal::MakeDatabaseAdminConnection(
-      spanner_internal::CreateDefaultDatabaseAdminStub(options), options,
+      spanner_internal::CreateDefaultDatabaseAdminStub(opts), options,
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }

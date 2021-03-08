@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -55,7 +56,7 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto const db = GetDatabase();
-  auto stub = CreateDefaultSpannerStub(db, spanner::ConnectionOptions{},
+  auto stub = CreateDefaultSpannerStub(db, spanner_internal::DefaultOptions(),
                                        /*channel_id=*/0);
   auto session_pool = MakeSessionPool(
       db, {stub}, spanner::SessionPoolOptions{}, cq,

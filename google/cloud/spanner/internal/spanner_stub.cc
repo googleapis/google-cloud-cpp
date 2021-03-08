@@ -16,6 +16,9 @@
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/log.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -285,27 +288,28 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 }  // namespace
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db, spanner::ConnectionOptions options,
+    spanner::Database const& db, internal::Options const& opts,
     int channel_id) {
-  options = EmulatorOverrides(std::move(options));
-
-  grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
+  grpc::ChannelArguments channel_arguments =
+      internal::MakeChannelArguments(opts);
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
   // its value here to allow compiling against older versions.
   channel_arguments.SetInt("grpc.channel_id", channel_id);
 
   auto spanner_grpc_stub =
       spanner_proto::Spanner::NewStub(grpc::CreateCustomChannel(
-          options.endpoint(), options.credentials(), channel_arguments));
+          opts.get<internal::EndpointOption>(),
+          opts.get<internal::GrpcCredentialOption>(), channel_arguments));
 
   std::shared_ptr<SpannerStub> stub =
       std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
   stub = std::make_shared<MetadataSpannerStub>(std::move(stub), db.FullName());
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(opts.get<internal::TracingComponentsOption>(),
+                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    return std::make_shared<LoggingSpannerStub>(std::move(stub),
-                                                options.tracing_options());
+    return std::make_shared<LoggingSpannerStub>(
+        std::move(stub), opts.get<internal::GrpcTracingOptionsOption>());
   }
   return stub;
 }

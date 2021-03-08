@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <grpcpp/grpcpp.h>
@@ -319,16 +320,20 @@ InstanceAdminConnection::~InstanceAdminConnection() = default;
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options) {
+  auto opts = internal::MakeOptions(options);
+  opts = spanner_internal::DefaultOptions(opts);
   return spanner_internal::MakeInstanceAdminConnection(
-      spanner_internal::CreateDefaultInstanceAdminStub(options), options);
+      spanner_internal::CreateDefaultInstanceAdminStub(opts), options);
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
+  auto opts = internal::MakeOptions(options);
+  opts = spanner_internal::DefaultOptions(opts);
   return spanner_internal::MakeInstanceAdminConnection(
-      spanner_internal::CreateDefaultInstanceAdminStub(options), options,
+      spanner_internal::CreateDefaultInstanceAdminStub(opts), options,
       std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }

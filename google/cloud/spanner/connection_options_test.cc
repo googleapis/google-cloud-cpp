@@ -63,17 +63,6 @@ TEST(DefaultEndpoint, EnvironmentWorks) {
   EXPECT_EQ("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());
 }
 
-TEST(EmulatorOverrides, EnvironmentWorks) {
-  // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
-  // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
-  // grpc::InsecureChannelCredentials().
-  ScopedEnvironment env("SPANNER_EMULATOR_HOST", "localhost:9010");
-  ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
-  options = spanner_internal::EmulatorOverrides(options);
-  EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
-  EXPECT_EQ("localhost:9010", options.endpoint());
-}
-
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
