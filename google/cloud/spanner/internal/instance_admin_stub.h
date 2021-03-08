@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -86,7 +87,7 @@ class InstanceAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    spanner::ConnectionOptions options);
+    internal::Options const& opts);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

@@ -320,7 +320,9 @@ InstanceAdminConnection::~InstanceAdminConnection() = default;
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options) {
   return spanner_internal::MakeInstanceAdminConnection(
-      spanner_internal::CreateDefaultInstanceAdminStub(options), options);
+      spanner_internal::CreateDefaultInstanceAdminStub(
+          internal::MakeOptions(options)),
+      options);
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
@@ -328,8 +330,9 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return spanner_internal::MakeInstanceAdminConnection(
-      spanner_internal::CreateDefaultInstanceAdminStub(options), options,
-      std::move(retry_policy), std::move(backoff_policy),
+      spanner_internal::CreateDefaultInstanceAdminStub(
+          internal::MakeOptions(options)),
+      options, std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }
 

@@ -16,6 +16,9 @@
 #include "google/cloud/spanner/internal/instance_admin_logging.h"
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/common_options.h"
+#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
@@ -174,11 +177,11 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 };
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    spanner::ConnectionOptions options) {
-  options = EmulatorOverrides(std::move(options));
-  auto channel =
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                options.CreateChannelArguments());
+    internal::Options const& opts) {
+  auto channel_args = internal::MakeChannelArguments(opts);
+  auto channel = grpc::CreateCustomChannel(
+      opts.get<internal::EndpointOption>(),
+      opts.get<internal::GrpcCredentialOption>(), channel_args);
   auto spanner_grpc_stub = gcsa::InstanceAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
@@ -189,10 +192,11 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
 
   stub = std::make_shared<InstanceAdminMetadata>(std::move(stub));
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(opts.get<internal::TracingComponentsOption>(),
+                         "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<InstanceAdminLogging>(std::move(stub),
-                                                  options.tracing_options());
+    stub = std::make_shared<InstanceAdminLogging>(
+        std::move(stub), opts.get<internal::GrpcTracingOptionsOption>());
   }
   return stub;
 }
