@@ -88,11 +88,13 @@ else
 fi
 
 # Sadly, the Kokoro machines seem to be out of sync
-if command ntpdate >/dev/null 2>&1; then
+if [[ "${RUNNING_CI:-}" != "yes" ]]; then
+  io::log_yellow "Skipping clock sync for interactive build"
+elif type ntpdate >/dev/null 2>&1; then
   echo "================================================================"
   io::log_yellow "using ntpdate to synchronize clock from time.google.com."
   sudo ntpdate time.google.com
-elif command sntp >/dev/null 2>&1; then
+elif type sntp >/dev/null 2>&1; then
   echo "================================================================"
   io::log_yellow "using sntp to synchronize clock from time.google.com."
   sudo sntp -sS time.google.com
