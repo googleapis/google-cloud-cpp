@@ -73,4 +73,6 @@ bigtable_client_unit_tests = [
     "table_readrows_test.cc",
     "table_sample_row_keys_test.cc",
     "table_test.cc",
+    "testing/cleanup_stale_resources_test.cc",
+    "testing/random_names_test.cc",
 ]

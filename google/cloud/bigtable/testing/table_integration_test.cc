@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "absl/memory/memory.h"
@@ -91,48 +92,16 @@ void TableTestEnvironment::TearDown() {
   ASSERT_STATUS_OK(table_admin.DeleteTable(table_id_));
 }
 
-std::string TableTestEnvironment::CreateRandomId(std::string const& prefix,
-                                                 int count) {
-  return prefix +
-         google::cloud::internal::Sample(
-             generator_, count, "abcdefghijklmnopqrstuvwxyz0123456789");
-}
-
 std::string TableTestEnvironment::RandomTableId() {
-  // This value was discovered by trial and error, it is not documented in the
-  // proto files.
-  auto constexpr kMaxTableIdLength = 50;
-  static char const kPrefix[] = "table-";
-  static_assert(kMaxTableIdLength > sizeof(kPrefix), "prefix is too long");
-  auto constexpr kSampleCount = kMaxTableIdLength - sizeof(kPrefix) + 1;
-  return CreateRandomId(kPrefix, kSampleCount);
+  return google::cloud::bigtable::testing::RandomTableId(generator_);
 }
 
 std::string TableTestEnvironment::RandomBackupId() {
-  // Per google/bigtable/admin/v2/bigtable_table_admin.proto, backup names must
-  // be between 1 and 50 characters such, [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
-  constexpr int kMaxBackupIdLength = 50;
-  static char const kPrefix[] = "backup-";
-  static_assert(kMaxBackupIdLength > sizeof(kPrefix), "prefix is too long");
-  constexpr int kSampleCount = kMaxBackupIdLength - sizeof(kPrefix) + 1;
-  return CreateRandomId(kPrefix, kSampleCount);
+  return google::cloud::bigtable::testing::RandomBackupId(generator_);
 }
 
 std::string TableTestEnvironment::RandomInstanceId() {
-  // This value was discovered by trial and error, it is not documented in the
-  // proto files.
-  constexpr int kMaxInstanceIdLength = 33;
-
-  // There are other derived names such as cluster id, display name that uses
-  // returned values, these fields have their limits (e.g. 30 for cluster id)
-  // so need to keep some reserve.
-  constexpr int kReserveForSuffix = 10;
-  static char const kPrefix[] = "inst-";
-  static_assert((kMaxInstanceIdLength - kReserveForSuffix) > sizeof(kPrefix),
-                "prefix is too long");
-  auto constexpr kSampleCount =
-      (kMaxInstanceIdLength - kReserveForSuffix) - sizeof(kPrefix) + 1;
-  return CreateRandomId(kPrefix, kSampleCount);
+  return google::cloud::bigtable::testing::RandomInstanceId(generator_);
 }
 
 void TableIntegrationTest::SetUp() {

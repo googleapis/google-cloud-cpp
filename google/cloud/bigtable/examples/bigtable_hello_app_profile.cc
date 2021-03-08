@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -120,10 +122,10 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  examples::CleanupOldTables("hw-app-profile-tbl-", admin);
+  google::cloud::bigtable::testing::CleanupStaleTables(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = examples::RandomTableId("hw-app-profile-tbl-", generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
       table_id,
       cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));

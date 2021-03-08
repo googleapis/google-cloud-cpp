@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -698,11 +700,12 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  examples::CleanupOldInstances("exin-", admin);
+  google::cloud::bigtable::testing::CleanupStaleInstances(admin);
 
   // Create a different instance id to run the replicated instance example.
   {
-    auto const id = examples::RandomInstanceId("exin-", generator);
+    auto const id =
+        google::cloud::bigtable::testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateReplicatedInstance() example" << std::endl;
     CreateReplicatedInstance(admin, {id, zone_a, zone_b});
     std::cout << "\nRunning GetInstance() example" << std::endl;
@@ -712,7 +715,8 @@ void RunAll(std::vector<std::string> const& argv) {
 
   // Create a different instance id to run the development instance example.
   {
-    auto const id = examples::RandomInstanceId("exin-", generator);
+    auto const id =
+        google::cloud::bigtable::testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateDevInstance() example" << std::endl;
     CreateDevInstance(admin, {id, zone_a});
     std::cout << "\nRunning UpdateInstance() example" << std::endl;
@@ -723,13 +727,16 @@ void RunAll(std::vector<std::string> const& argv) {
   // Run the legacy "run instance operations" example using a different instance
   // id
   {
-    auto const id = examples::RandomInstanceId("exin-", generator);
-    auto const cluster_id = examples::RandomClusterId("exin-c1-", generator);
+    auto const id =
+        google::cloud::bigtable::testing::RandomInstanceId(generator);
+    auto const cluster_id =
+        google::cloud::bigtable::testing::RandomClusterId(generator);
     std::cout << "\nRunning RunInstanceOperations() example" << std::endl;
     RunInstanceOperations(admin, {id, cluster_id, zone_a});
   }
 
-  auto const instance_id = examples::RandomInstanceId("exin-", generator);
+  auto const instance_id =
+      google::cloud::bigtable::testing::RandomInstanceId(generator);
 
   std::cout << "\nRunning CheckInstanceExists() example [1]" << std::endl;
   CheckInstanceExists(admin, {instance_id});

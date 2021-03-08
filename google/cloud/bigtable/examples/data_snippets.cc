@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
@@ -723,14 +725,11 @@ void ConfigureConnectionPoolSize(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
-std::string DefaultTablePrefix() { return "tbl-data-"; }
-
 void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
                        google::cloud::internal::DefaultPRNG& generator) {
-  namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
 
-  auto table_id = examples::RandomTableId(DefaultTablePrefix(), generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
       table_id,
       cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
@@ -754,10 +753,9 @@ void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
 
 void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::internal::DefaultPRNG& generator) {
-  namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
 
-  auto table_id = examples::RandomTableId("mobile-time-series-", generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
       table_id, cbt::TableConfig(
                     {{"stats_summary", cbt::GcRule::MaxNumVersions(11)}}, {}));
@@ -785,10 +783,9 @@ void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
 
 void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
                      google::cloud::internal::DefaultPRNG& generator) {
-  namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
 
-  auto table_id = examples::RandomTableId(DefaultTablePrefix(), generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   std::cout << "Creating table " << table_id << std::endl;
   auto schema = admin.CreateTable(
       table_id,
@@ -923,8 +920,7 @@ void RunAll(std::vector<std::string> const& argv) {
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  examples::CleanupOldTables(DefaultTablePrefix(), admin);
-  examples::CleanupOldTables("mobile-time-series-", admin);
+  google::cloud::bigtable::testing::CleanupStaleTables(admin);
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());

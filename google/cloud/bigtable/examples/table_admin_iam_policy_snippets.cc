@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -140,13 +142,12 @@ void RunAll(std::vector<std::string> const& argv) {
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
-  std::string const prefix = "table-admin-snippets-";
-  examples::CleanupOldTables(prefix, admin);
+  google::cloud::bigtable::testing::CleanupStaleTables(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id = examples::RandomTableId(prefix, generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
 
   auto table = admin.CreateTable(
       table_id, cbt::TableConfig(
