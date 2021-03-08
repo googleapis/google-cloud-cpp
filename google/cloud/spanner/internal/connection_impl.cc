@@ -80,17 +80,6 @@ std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy() {
       .clone();
 }
 
-std::shared_ptr<ConnectionImpl> MakeConnection(
-    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::ConnectionOptions const& options,
-    spanner::SessionPoolOptions session_pool_options,
-    std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy) {
-  return std::shared_ptr<ConnectionImpl>(new ConnectionImpl(
-      std::move(db), std::move(stubs), options, std::move(session_pool_options),
-      std::move(retry_policy), std::move(backoff_policy)));
-}
-
 spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
   spanner_proto::TransactionOptions options;
   *options.mutable_partitioned_dml() =
