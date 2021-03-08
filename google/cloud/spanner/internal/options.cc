@@ -80,6 +80,20 @@ internal::Options DefaultOptions(internal::Options opts) {
   min_sessions =
       (std::min)(min_sessions, max_sessions_per_channel *
                                    opts.get<internal::GrpcNumChannelsOption>());
+
+  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
+    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+        std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
+            std::chrono::minutes(10)));
+  }
+  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+    auto constexpr kBackoffScaling = 2.0;
+    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+        std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
+            std::chrono::milliseconds(100), std::chrono::minutes(1),
+            kBackoffScaling));
+  }
+
   return opts;
 }
 
