@@ -32,6 +32,9 @@ TEST(BigtableRandomNames, RandomTableId) {
   auto const current = RandomTableId(generator, now);
   auto const older = RandomTableId(generator, now - hours(48));
   EXPECT_LT(older, current);
+  auto constexpr kMaxLength = 50;
+  EXPECT_LT(older.size(), kMaxLength);
+  EXPECT_LT(current.size(), kMaxLength);
 
   auto re = std::regex(RandomTableIdRegex());
   EXPECT_TRUE(std::regex_match(current, re));
@@ -45,6 +48,9 @@ TEST(BigtableRandomNames, RandomBackupId) {
   auto const current = RandomBackupId(generator, now);
   auto const older = RandomBackupId(generator, now - hours(48));
   EXPECT_LT(older, current);
+  auto constexpr kMaxLength = 50;
+  EXPECT_LT(older.size(), kMaxLength);
+  EXPECT_LT(current.size(), kMaxLength);
 
   auto re = std::regex(RandomBackupIdRegex());
   EXPECT_TRUE(std::regex_match(current, re));
@@ -58,6 +64,9 @@ TEST(BigtableRandomNames, RandomClusterId) {
   auto const current = RandomClusterId(generator, now);
   auto const older = RandomClusterId(generator, now - hours(48));
   EXPECT_LT(older, current);
+  auto constexpr kMaxLength = 30;
+  EXPECT_LT(older.size(), kMaxLength);
+  EXPECT_LT(current.size(), kMaxLength);
 
   auto re = std::regex(RandomClusterIdRegex());
   EXPECT_TRUE(std::regex_match(current, re));
@@ -71,6 +80,9 @@ TEST(BigtableRandomNames, RandomInstanceId) {
   auto const current = RandomInstanceId(generator, now);
   auto const older = RandomInstanceId(generator, now - hours(48));
   EXPECT_LT(older, current);
+  auto constexpr kMaxLength = 27;
+  EXPECT_LT(older.size(), kMaxLength);
+  EXPECT_LT(current.size(), kMaxLength);
 
   auto re = std::regex(RandomInstanceIdRegex());
   EXPECT_TRUE(std::regex_match(current, re));

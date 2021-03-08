@@ -23,20 +23,14 @@ namespace testing {
 // Unless otherwise noted, the maximum ID lengths discovered by trial and error.
 auto constexpr kMaxTableIdLength = 50;
 char const kRandomTableIdRE[] = R"re(^tbl-\d{4}-\d{2}-\d{2}-.*$)re";
-static_assert(sizeof(kRandomTableIdRE) < kMaxTableIdLength,
-              "TableId prefix is too long");
 
 // Per google/bigtable/admin/v2/bigtable_table_admin.proto, backup names must
 // be between 1 and 50 characters such, [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
 auto constexpr kMaxBackupIdLength = 50;
 char const kRandomBackupIdRE[] = R"re(^bck-\d{4}-\d{2}-\d{2}-.*$)re";
-static_assert(sizeof(kRandomBackupIdRE) < kMaxBackupIdLength,
-              "InstanceId prefix is too long");
 
 auto constexpr kMaxClusterIdLength = 30;
 char const kRandomClusterIdRE[] = R"re(^cl-\d{4}-\d{2}-\d{2}-.*$)re";
-static_assert(sizeof(kRandomClusterIdRE) < kMaxClusterIdLength,
-              "ClusterId prefix is too long");
 
 // Cloud Bigtable instance ids must have at least 6 characters, and can have
 // up to 33 characters. But many of the examples append `-c1` or `-c2` to
@@ -44,8 +38,6 @@ static_assert(sizeof(kRandomClusterIdRE) < kMaxClusterIdLength,
 // even shorter.
 auto constexpr kMaxInstanceIdLength = kMaxClusterIdLength - 3;
 char const kRandomInstanceIdRE[] = R"re(^it-\d{4}-\d{2}-\d{2}-.*$)re";
-static_assert(sizeof(kRandomInstanceIdRE) < kMaxInstanceIdLength,
-              "InstanceId prefix is too long");
 
 std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
                           std::chrono::system_clock::time_point tp) {
@@ -65,7 +57,7 @@ std::string RandomTableIdRegex() { return kRandomTableIdRE; }
 std::string RandomBackupId(google::cloud::internal::DefaultPRNG& generator,
                            std::chrono::system_clock::time_point tp) {
   auto const prefix = RandomBackupId(tp);
-  auto size = static_cast<int>(kMaxTableIdLength - 1 - prefix.size());
+  auto size = static_cast<int>(kMaxBackupIdLength - 1 - prefix.size());
   return prefix + google::cloud::internal::Sample(
                       generator, size, "abcdefghijlkmnopqrstuvwxyz0123456789");
 }
