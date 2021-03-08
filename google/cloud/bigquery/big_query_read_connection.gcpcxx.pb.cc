@@ -48,8 +48,8 @@ BigQueryReadConnection::CreateReadSession(
 }
 
 StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-    BigQueryReadConnection::ReadRows(
-        ::google::cloud::bigquery::storage::v1::ReadRowsRequest) {  // NOLINT
+BigQueryReadConnection::ReadRows(
+    ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       ::google::cloud::bigquery::storage::v1::ReadRowsResponse>(
       []() -> absl::variant<
@@ -114,8 +114,8 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
   }
 
   StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(::google::cloud::bigquery::storage::v1::ReadRowsRequest request)
-      override {
+  ReadRows(::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
+               request) override {
     auto stub = stub_;
     auto retry_policy = std::shared_ptr<BigQueryReadRetryPolicy const>(
         retry_policy_prototype_->clone());
@@ -134,7 +134,7 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
         ::google::cloud::bigquery::storage::v1::ReadRowsRequest>(
         retry_policy->clone(), backoff_policy->clone(),
         [](std::chrono::milliseconds) {}, factory,
-        BigQueryReadReadRowsStreamingUpdater, std::move(request));
+        BigQueryReadReadRowsStreamingUpdater, request);
 
     return internal::MakeStreamRange(
         internal::StreamReader<

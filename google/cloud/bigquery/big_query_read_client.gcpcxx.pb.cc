@@ -59,8 +59,8 @@ BigQueryReadClient::CreateReadSession(
 
 StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest request) {
-  return connection_->ReadRows(std::move(request));
+    ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+  return connection_->ReadRows(request);
 }
 
 StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

@@ -67,7 +67,8 @@ class BigQueryReadConnection {
           request);
 
   virtual StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(::google::cloud::bigquery::storage::v1::ReadRowsRequest request);
+  ReadRows(
+      ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
 
   virtual StatusOr<
       ::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

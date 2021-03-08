@@ -38,7 +38,7 @@ class MockBigQueryReadConnection : public bigquery::BigQueryReadConnection {
   MOCK_METHOD(
       StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>,
       ReadRows,
-      (::google::cloud::bigquery::storage::v1::ReadRowsRequest request),
+      (::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
       (override));
 
   MOCK_METHOD(
