@@ -650,7 +650,9 @@ DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options) {
   return spanner_internal::MakeDatabaseAdminConnection(
-      spanner_internal::CreateDefaultDatabaseAdminStub(options), options);
+      spanner_internal::CreateDefaultDatabaseAdminStub(
+          internal::MakeOptions(options)),
+      options);
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
@@ -658,8 +660,9 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   return spanner_internal::MakeDatabaseAdminConnection(
-      spanner_internal::CreateDefaultDatabaseAdminStub(options), options,
-      std::move(retry_policy), std::move(backoff_policy),
+      spanner_internal::CreateDefaultDatabaseAdminStub(
+          internal::MakeOptions(options)),
+      options, std::move(retry_policy), std::move(backoff_policy),
       std::move(polling_policy));
 }
 
