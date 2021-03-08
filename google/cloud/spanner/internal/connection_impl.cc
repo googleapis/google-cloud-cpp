@@ -66,18 +66,20 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
 namespace spanner_proto = ::google::spanner::v1;
 
+// TODO(#5738): Delete this function once `google::cloud::internal::Options`
+// are directly used in this class.
 std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy() {
-  return google::cloud::spanner::LimitedTimeRetryPolicy(
-             std::chrono::minutes(10))
-      .clone();
+  return spanner_internal::DefaultOptions()
+      .get<spanner_internal::SpannerRetryPolicyOption>()
+      ->clone();
 }
 
+// TODO(#5738): Delete this function once `google::cloud::internal::Options`
+// are directly used in this class.
 std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return google::cloud::spanner::ExponentialBackoffPolicy(
-             std::chrono::milliseconds(100), std::chrono::minutes(1),
-             kBackoffScaling)
-      .clone();
+  return spanner_internal::DefaultOptions()
+      .get<spanner_internal::SpannerBackoffPolicyOption>()
+      ->clone();
 }
 
 std::shared_ptr<ConnectionImpl> MakeConnection(

@@ -58,6 +58,9 @@ TEST(Options, Defaults) {
             opts.get<spanner_internal::SessionPoolActionOnExhaustionOption>());
   EXPECT_EQ(std::chrono::minutes(55),
             opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
+
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
 }
 
 TEST(Options, EndpointFromEnv) {
