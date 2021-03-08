@@ -134,7 +134,8 @@ class InstanceAdmin {
         rpc_backoff_policy_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
         polling_policy_prototype_(
-            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {}
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
+        background_threads_(client_->BackgroundThreadsFactory()()) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -1419,6 +1420,7 @@ class InstanceAdmin {
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
+  std::shared_ptr<BackgroundThreads> background_threads_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

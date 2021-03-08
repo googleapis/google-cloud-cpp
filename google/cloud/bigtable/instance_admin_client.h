@@ -332,6 +332,12 @@ class InstanceAdminClient {
                     const google::longrunning::GetOperationRequest& request,
                     grpc::CompletionQueue* cq) = 0;
   //@}
+
+ private:
+  /// The `ClientOptions` this client was created with.
+  virtual ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() {
+    return {};
+  }
 };
 
 /// Create a new admin client configured via @p options.
