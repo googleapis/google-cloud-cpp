@@ -47,7 +47,7 @@ file.
 This file is included with the gRPC source. You can download it using:
 
 ```console
-$ wget https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
+$ wget https://pki.google.com/roots.pem
 $ GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$PWD/roots.pem
 $ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH
 ```

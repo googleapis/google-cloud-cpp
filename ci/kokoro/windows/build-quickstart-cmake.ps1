@@ -53,7 +53,7 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
             "Downloading roots.pem [$_]"
             try {
                 (New-Object System.Net.WebClient).Downloadfile(
-                        'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem',
+                        'https://pki.google.com/roots.pem',
                         "${env:KOKORO_GFILE_DIR}/roots.pem")
                 break
             } catch {

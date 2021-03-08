@@ -52,7 +52,7 @@ fi
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
-readonly ROOTS_PEM_SOURCE="https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem"
+readonly ROOTS_PEM_SOURCE="https://pki.google.com/roots.pem"
 if [[ -r "${CREDENTIALS_FILE}" ]]; then
   if [[ -r "${CONFIG_DIR}/roots.pem" ]]; then
     run_quickstart="true"
