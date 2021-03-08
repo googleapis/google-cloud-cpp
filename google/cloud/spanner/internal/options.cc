@@ -83,16 +83,15 @@ internal::Options DefaultOptions(internal::Options opts) {
 
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
     opts.set<spanner_internal::SpannerRetryPolicyOption>(
-        google::cloud::spanner::LimitedTimeRetryPolicy(std::chrono::minutes(10))
-            .clone());
+        std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
+            std::chrono::minutes(10)));
   }
   if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
     opts.set<spanner_internal::SpannerBackoffPolicyOption>(
-        google::cloud::spanner::ExponentialBackoffPolicy(
+        std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
-            kBackoffScaling)
-            .clone());
+            kBackoffScaling));
   }
 
   return opts;
