@@ -17,6 +17,7 @@
 """Automatically generated source lists for bigtable_client_testing - DO NOT EDIT."""
 
 bigtable_client_testing_hdrs = [
+    "testing/cleanup_stale_resources.h",
     "testing/embedded_server_test_fixture.h",
     "testing/inprocess_admin_client.h",
     "testing/inprocess_data_client.h",
@@ -28,14 +29,17 @@ bigtable_client_testing_hdrs = [
     "testing/mock_read_rows_reader.h",
     "testing/mock_response_reader.h",
     "testing/mock_sample_row_keys_reader.h",
+    "testing/random_names.h",
     "testing/table_integration_test.h",
     "testing/table_test_fixture.h",
 ]
 
 bigtable_client_testing_srcs = [
+    "testing/cleanup_stale_resources.cc",
     "testing/embedded_server_test_fixture.cc",
     "testing/inprocess_admin_client.cc",
     "testing/inprocess_data_client.cc",
+    "testing/random_names.cc",
     "testing/table_integration_test.cc",
     "testing/table_test_fixture.cc",
 ]

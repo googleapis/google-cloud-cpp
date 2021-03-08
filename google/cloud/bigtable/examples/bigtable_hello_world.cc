@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes] [END bigtable_hw_imports]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -152,10 +153,8 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  examples::CleanupOldTables("hw-tbl-", admin);
-
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = examples::RandomTableId("hw-tbl-", generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
 
   std::cout << "\nRunning the BigtableHelloWorld() example" << std::endl;
   BigtableHelloWorld({project_id, instance_id, table_id});

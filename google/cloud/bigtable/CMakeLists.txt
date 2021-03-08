@@ -181,6 +181,8 @@ create_bazel_config(google_cloud_cpp_bigtable)
 if (BUILD_TESTING)
     add_library(
         bigtable_client_testing # cmake-format: sort
+        testing/cleanup_stale_resources.cc
+        testing/cleanup_stale_resources.h
         testing/embedded_server_test_fixture.cc
         testing/embedded_server_test_fixture.h
         testing/inprocess_admin_client.cc
@@ -195,6 +197,8 @@ if (BUILD_TESTING)
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
         testing/mock_sample_row_keys_reader.h
+        testing/random_names.cc
+        testing/random_names.h
         testing/table_integration_test.cc
         testing/table_integration_test.h
         testing/table_test_fixture.cc
@@ -274,7 +278,9 @@ if (BUILD_TESTING)
         table_readrow_test.cc
         table_readrows_test.cc
         table_sample_row_keys_test.cc
-        table_test.cc)
+        table_test.cc
+        testing/cleanup_stale_resources_test.cc
+        testing/random_names_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("bigtable_client_unit_tests.bzl"

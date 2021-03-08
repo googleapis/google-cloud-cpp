@@ -15,6 +15,8 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/crash_handler.h"
@@ -532,8 +534,6 @@ void InsertTestData(google::cloud::bigtable::Table table,
   throw std::runtime_error(failures.front().status().message());
 }
 
-std::string DefaultTablePrefix() { return "tbl-data-"; }
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -556,13 +556,12 @@ void RunAll(std::vector<std::string> const& argv) {
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  examples::CleanupOldTables(DefaultTablePrefix(), admin);
-  examples::CleanupOldTables("mobile-time-series-", admin);
+  google::cloud::bigtable::testing::CleanupStaleTables(admin);
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
 
-  auto table_id = examples::RandomTableId(DefaultTablePrefix(), generator);
+  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
       table_id, cbt::TableConfig({{"fam-0", cbt::GcRule::MaxNumVersions(10)},
                                   {"fam-1", cbt::GcRule::MaxNumVersions(10)}},

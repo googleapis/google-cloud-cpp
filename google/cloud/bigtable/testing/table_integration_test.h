@@ -43,17 +43,6 @@ class TableTestEnvironment : public ::testing::Environment {
   static std::string const& zone_a() { return zone_a_; }
   static std::string const& zone_b() { return zone_b_; }
 
-  /**
-   * Generate a random string for instance, cluster, or table identifiers.
-   *
-   * Return a string starting with @p prefix and with @p count random symbols
-   * from the [a-z0-9] set. These strings are useful as identifiers for tables,
-   * clusters, or instances. Using a random table id allows us to run two
-   * instances of a test with minimal chance of interference, without having
-   * to coordinate via some global state.
-   */
-  static std::string CreateRandomId(std::string const& prefix, int count);
-
   /// Return a random table id.
   static std::string RandomTableId();
 

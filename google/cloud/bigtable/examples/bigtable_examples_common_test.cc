@@ -13,8 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-#include "google/cloud/bigtable/testing/mock_admin_client.h"
-#include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
@@ -25,10 +23,7 @@ namespace cloud {
 namespace bigtable {
 namespace examples {
 
-using ::testing::_;
 using ::testing::HasSubstr;
-using ::testing::ReturnRef;
-using ::testing::StartsWith;
 
 TEST(BigtableExamplesCommon, RunAdminIntegrationTestsEmulator) {
   google::cloud::testing_util::ScopedEnvironment emulator(
@@ -80,196 +75,6 @@ TEST(BigtableExamplesCommon, MakeTableAdminCommandEntry) {
 
   ASSERT_NO_FATAL_FAILURE(actual.second({"unused", "unused", "a", "b"}));
   EXPECT_EQ(1, call_count);
-}
-
-TEST(BigtableExamplesCommon, CleanupOldTables) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  namespace btadmin = google::bigtable::admin::v2;
-
-  auto const expired_tp =
-      std::chrono::system_clock::now() - std::chrono::hours(72);
-  auto const active_tp = std::chrono::system_clock::now();
-  auto const id_1 = TablePrefix("test-", expired_tp) + "0001";
-  auto const id_2 = TablePrefix("test-", expired_tp) + "0002";
-  auto const id_3 = TablePrefix("test-", active_tp) + "0003";
-  auto const id_4 = TablePrefix("test-", active_tp) + "0004";
-  auto const id_5 = TablePrefix("exclude-", expired_tp) + "0005";
-
-  std::string const project_id = "test-project-id";
-  std::string const instance_id = "test-instance-id";
-
-  auto mock = std::make_shared<MockAdminClient>();
-  EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
-
-  EXPECT_CALL(*mock, ListTables(_, _, _))
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::ListTablesRequest const& request,
-                    btadmin::ListTablesResponse* response) {
-        for (auto const& id : {id_1, id_2, id_3, id_4, id_5}) {
-          auto& instance = *response->add_tables();
-          instance.set_name(request.parent() + "/tables/" + id);
-        }
-        response->clear_next_page_token();
-        return grpc::Status::OK;
-      });
-
-  bigtable::TableAdmin admin(mock, instance_id);
-  auto const name_1 = admin.TableName(id_1);
-  auto const name_2 = admin.TableName(id_2);
-
-  // Verify only `name_1` and `name_2` are deleted.
-  EXPECT_CALL(*mock, DeleteTable(_, _, _))
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteTableRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), name_1);
-        return grpc::Status::OK;
-      })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteTableRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), name_2);
-        return grpc::Status::OK;
-      });
-
-  CleanupOldTables("test-", admin);
-}
-
-TEST(BigtableExamplesCommon, CleanupOldBackups) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
-  using google::protobuf::util::TimeUtil;
-  namespace btadmin = google::bigtable::admin::v2;
-
-  std::string const project_id = "test-project-id";
-  std::string const instance_id = "test-instance-id";
-  std::string const cluster_id = "test-instance-id-c1";
-
-  std::string const prefix = "project/" + project_id + "/instances/" +
-                             instance_id + "/clusters/" + cluster_id +
-                             "/backups/";
-  google::bigtable::admin::v2::Backup backup_1;
-  backup_1.set_name(prefix + "001");
-  *backup_1.mutable_expire_time() =
-      TimeUtil::GetCurrentTime() - TimeUtil::HoursToDuration(24 * 14);
-  google::bigtable::admin::v2::Backup backup_2;
-  backup_2.set_name(prefix + "002");
-  *backup_2.mutable_expire_time() =
-      TimeUtil::GetCurrentTime() - TimeUtil::HoursToDuration(24 * 8);
-
-  auto mock = std::make_shared<MockAdminClient>();
-  EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
-
-  EXPECT_CALL(*mock, ListBackups(_, _, _))
-      .WillOnce([&](grpc::ClientContext*, btadmin::ListBackupsRequest const&,
-                    btadmin::ListBackupsResponse* response) {
-        for (auto const& backup : {backup_1, backup_2}) {
-          auto& instance = *response->add_backups();
-          instance = backup;
-        }
-        response->clear_next_page_token();
-        return grpc::Status::OK;
-      });
-
-  bigtable::TableAdmin admin(mock, instance_id);
-
-  EXPECT_CALL(*mock, DeleteBackup(_, _, _))
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteBackupRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), backup_1.name());
-        return grpc::Status::OK;
-      })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteBackupRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), backup_2.name());
-        return grpc::Status::OK;
-      });
-
-  CleanupOldBackups("test-instance-id-c1", admin);
-}
-
-TEST(BigtableExamplesCommon, RandomInstanceId) {
-  auto generator = google::cloud::internal::DefaultPRNG();
-  auto const id_1 = RandomInstanceId("test-", generator);
-  auto const id_2 = RandomInstanceId("test-", generator);
-  EXPECT_THAT(id_1, StartsWith("test-"));
-  EXPECT_THAT(id_2, StartsWith("test-"));
-  EXPECT_NE(id_1, id_2);
-}
-
-TEST(BigtableExamplesCommon, RandomInstanceIdTooLong) {
-  auto generator = google::cloud::internal::DefaultPRNG();
-  EXPECT_THROW(RandomInstanceId("this-prefix-is-too-long-by-half", generator),
-               std::invalid_argument);
-}
-
-TEST(BigtableExamplesCommon, RandomClusterId) {
-  auto generator = google::cloud::internal::DefaultPRNG();
-  auto const id_1 = RandomClusterId("test-", generator);
-  auto const id_2 = RandomClusterId("test-", generator);
-  EXPECT_THAT(id_1, StartsWith("test-"));
-  EXPECT_THAT(id_2, StartsWith("test-"));
-  EXPECT_NE(id_1, id_2);
-}
-
-TEST(BigtableExamplesCommon, RandomClusterIdTooLong) {
-  auto generator = google::cloud::internal::DefaultPRNG();
-  EXPECT_THROW(RandomClusterId("this-prefix-is-too-long-by-half", generator),
-               std::invalid_argument);
-}
-
-TEST(BigtableExamplesCommon, CleanupOldInstances) {
-  using MockAdminClient =
-      ::google::cloud::bigtable::testing::MockInstanceAdminClient;
-  namespace btadmin = google::bigtable::admin::v2;
-
-  auto const expired_tp =
-      std::chrono::system_clock::now() - std::chrono::hours(72);
-  auto const active_tp = std::chrono::system_clock::now();
-  auto const id_1 = InstancePrefix("test-", expired_tp) + "0001";
-  auto const id_2 = InstancePrefix("test-", expired_tp) + "0002";
-  auto const id_3 = InstancePrefix("test-", active_tp) + "0003";
-  auto const id_4 = InstancePrefix("test-", active_tp) + "0004";
-  auto const id_5 = InstancePrefix("exclude-", expired_tp) + "0005";
-
-  std::string const project_id = "test-project-id";
-
-  auto mock = std::make_shared<MockAdminClient>();
-  EXPECT_CALL(*mock, project()).WillRepeatedly(ReturnRef(project_id));
-
-  EXPECT_CALL(*mock, ListInstances(_, _, _))
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::ListInstancesRequest const& request,
-                    btadmin::ListInstancesResponse* response) {
-        for (auto const& id : {id_1, id_2, id_3, id_4, id_5}) {
-          auto& instance = *response->add_instances();
-          instance.set_name(request.parent() + "/instances/" + id);
-        }
-        response->clear_next_page_token();
-        return grpc::Status::OK;
-      });
-
-  bigtable::InstanceAdmin admin(mock);
-  auto const name_1 = admin.InstanceName(id_1);
-  auto const name_2 = admin.InstanceName(id_2);
-
-  // Verify only `name_1` and `name_2` are deleted.
-  EXPECT_CALL(*mock, DeleteInstance(_, _, _))
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteInstanceRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), name_1);
-        return grpc::Status::OK;
-      })
-      .WillOnce([&](grpc::ClientContext*,
-                    btadmin::DeleteInstanceRequest const& request,
-                    google::protobuf::Empty*) {
-        EXPECT_EQ(request.name(), name_2);
-        return grpc::Status::OK;
-      });
-
-  CleanupOldInstances("test-", admin);
 }
 
 TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {

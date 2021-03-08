@@ -19,10 +19,11 @@ if (BUILD_TESTING)
                 bigtable_examples_common.cc bigtable_examples_common.h)
     target_link_libraries(
         bigtable_examples_common
+        bigtable_client_testing
+        google_cloud_cpp_testing
         google-cloud-cpp::bigtable
         google-cloud-cpp::bigtable_protos
         google-cloud-cpp::common
-        google_cloud_cpp_testing
         google-cloud-cpp::grpc_utils
         gRPC::grpc++
         gRPC::grpc

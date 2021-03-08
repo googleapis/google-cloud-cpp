@@ -35,26 +35,6 @@ using ::google::cloud::testing_util::CommandType;
 using ::google::cloud::testing_util::Example;
 using ::google::cloud::testing_util::Usage;
 
-std::string TablePrefix(std::string const& prefix,
-                        std::chrono::system_clock::time_point tp);
-std::string RandomTableId(std::string const& prefix,
-                          google::cloud::internal::DefaultPRNG& generator);
-void CleanupOldTables(std::string const& prefix,
-                      google::cloud::bigtable::TableAdmin admin);
-
-void CleanupOldBackups(std::string const& cluster_id,
-                       google::cloud::bigtable::TableAdmin admin);
-
-std::string InstancePrefix(std::string const& prefix,
-                           std::chrono::system_clock::time_point tp);
-std::string RandomInstanceId(std::string const& prefix,
-                             google::cloud::internal::DefaultPRNG& generator);
-void CleanupOldInstances(std::string const& prefix,
-                         google::cloud::bigtable::InstanceAdmin admin);
-
-std::string RandomClusterId(std::string const& prefix,
-                            google::cloud::internal::DefaultPRNG& generator);
-
 bool UsingEmulator();
 bool RunAdminIntegrationTests();
 

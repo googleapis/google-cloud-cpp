@@ -18,6 +18,8 @@
 #include "google/cloud/bigtable/instance_admin.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -181,8 +183,9 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  examples::CleanupOldInstances("exin-", admin);
-  auto const instance_id = examples::RandomInstanceId("exin-", generator);
+  google::cloud::bigtable::testing::CleanupStaleInstances(admin);
+  auto const instance_id =
+      google::cloud::bigtable::testing::RandomInstanceId(generator);
   auto const cluster_id = instance_id + "-c1";
 
   std::cout << "\nRunning the BigtableHelloInstance() example" << std::endl;
