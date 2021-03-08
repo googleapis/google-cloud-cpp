@@ -336,12 +336,23 @@ std::shared_ptr<Connection> MakeConnection(
     SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
+  auto opts = internal::MakeOptions(connection_options);
+  internal::CheckExpectedOptions<internal::CommonOptions,
+                                 internal::GrpcOptions>(opts, __func__);
+
+  // Sets spanner defaults, and merges in the session pool options.
+  opts = spanner_internal::DefaultOptions(std::move(opts));
+  // TODO(#5738): Move session_pool_options once it's no longer passed to
+  // ConnectionImpl.
+  opts = internal::MergeOptions(
+      std::move(opts), spanner_internal::MakeOptions(session_pool_options));
+
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-  int num_channels = std::max(connection_options.num_channels(), 1);
+  int num_channels = opts.get<internal::GrpcNumChannelsOption>();
   stubs.reserve(num_channels);
   for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
-    stubs.push_back(spanner_internal::CreateDefaultSpannerStub(
-        db, connection_options, channel_id));
+    stubs.push_back(
+        spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
   }
   return std::make_shared<spanner_internal::ConnectionImpl>(
       std::move(db), std::move(stubs), connection_options,

@@ -123,8 +123,7 @@ class SpannerStub {
  * to ensure they use different underlying connections.
  */
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db, spanner::ConnectionOptions options,
-    int channel_id);
+    spanner::Database const& db, internal::Options const& opts, int channel_id);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

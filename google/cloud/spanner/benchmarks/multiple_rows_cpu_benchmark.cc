@@ -15,11 +15,13 @@
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/timer.h"
 #include "absl/memory/memory.h"
@@ -482,7 +484,8 @@ class ExperimentImpl {
       clients.emplace_back(
           spanner::Client(spanner::MakeConnection(database, options)));
       stubs.emplace_back(spanner_internal::CreateDefaultSpannerStub(
-          database, options, /*channel_id=*/0));
+          database, google::cloud::internal::MakeOptions(options),
+          /*channel_id=*/0));
       std::cout << '.' << std::flush;
     }
     std::cout << " DONE\n";
