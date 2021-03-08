@@ -28,7 +28,7 @@ On Windows and macOS gRPC [requires][grpc-roots-pem-bug] an environment variable
 to find the root of trust for SSL. On macOS use:
 
 ```console
-curl -Lo roots.pem https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
+curl -Lo roots.pem https://pki.google.com/roots.pem
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ```
 
@@ -37,8 +37,7 @@ While on Windows use:
 ```console
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command ^
     (new-object System.Net.WebClient).Downloadfile( ^
-        'https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem', ^
-        'roots.pem')
+        'https://pki.google.com/roots.pem', 'roots.pem')
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 

@@ -55,7 +55,7 @@ bazel_args=(
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
-readonly ROOTS_PEM_SOURCE="https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem"
+readonly ROOTS_PEM_SOURCE="https://pki.google.com/roots.pem"
 readonly BAZEL_CACHE="https://storage.googleapis.com/cloud-cpp-bazel-cache"
 
 if [[ -r "${CREDENTIALS_FILE}" ]]; then
