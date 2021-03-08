@@ -73,7 +73,7 @@ class GoldenKitchenSinkConnection {
   ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
 
   virtual StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
+  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
 };
 

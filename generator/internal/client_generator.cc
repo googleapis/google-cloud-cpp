@@ -189,7 +189,7 @@ Status ClientGenerator::GenerateHeader() {
                  {FormatMethodCommentsFromRpcComments(
         method, MethodParameterStyle::kProtobufRequest)},
    {"  StreamRange<$response_type$>\n"
-    "  $method_name$($request_type$ request);\n\n"},
+    "  $method_name$($request_type$ const& request);\n\n"},
                  // clang-format on
              },
              IsStreamingRead)},
@@ -348,8 +348,8 @@ Status ClientGenerator::GenerateCc() {
              {
                  // clang-format off
    {"StreamRange<$response_type$>\n"
-    "$client_class_name$::$method_name$($request_type$ request) {\n"
-    "  return connection_->$method_name$(std::move(request));\n"
+    "$client_class_name$::$method_name$($request_type$ const& request) {\n"
+    "  return connection_->$method_name$(request);\n"
     "}\n\n"}
                  // clang-format on
              },

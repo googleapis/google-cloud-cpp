@@ -99,7 +99,7 @@ Status MockConnectionGenerator::GenerateHeader() {
                  // clang-format off
    {"  MOCK_METHOD(StreamRange<$response_type$>,\n"
     "  $method_name$,\n"
-    "  ($request_type$ request), (override));\n\n"},
+    "  ($request_type$ const& request), (override));\n\n"},
                  // clang-format on
              },
              IsStreamingRead)},

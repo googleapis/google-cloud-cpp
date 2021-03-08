@@ -74,7 +74,7 @@ StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
 }
 
 StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> GoldenKitchenSinkConnection::TailLogEntries(
-    ::google::test::admin::database::v1::TailLogEntriesRequest) {
+    ::google::test::admin::database::v1::TailLogEntriesRequest const&) {
   return google::cloud::internal::MakeStreamRange<
       ::google::test::admin::database::v1::TailLogEntriesResponse>(
       []() -> absl::variant<Status,
@@ -188,7 +188,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
   }
 
   StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
-      ::google::test::admin::database::v1::TailLogEntriesRequest request) override {
+      ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
     auto stub = stub_;
     auto retry_policy =
         std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(
@@ -209,7 +209,7 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
                 retry_policy->clone(), backoff_policy->clone(),
                 [](std::chrono::milliseconds) {}, factory,
                 GoldenKitchenSinkTailLogEntriesStreamingUpdater,
-                std::move(request));
+                request);
 
     return internal::MakeStreamRange(internal::StreamReader<
         ::google::test::admin::database::v1::TailLogEntriesResponse>(

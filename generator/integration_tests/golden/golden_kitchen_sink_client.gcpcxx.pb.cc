@@ -90,8 +90,8 @@ GoldenKitchenSinkClient::ListLogs(::google::test::admin::database::v1::ListLogsR
 }
 
 StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
-GoldenKitchenSinkClient::TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request) {
-  return connection_->TailLogEntries(std::move(request));
+GoldenKitchenSinkClient::TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+  return connection_->TailLogEntries(request);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

@@ -166,7 +166,8 @@ class BigQueryReadClient {
    * [::google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/dff6e4625d4ea0a16fc44d3b9be115219c403f07/google/cloud/bigquery/storage/v1/storage.proto#L185)
    */
   StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(::google::cloud::bigquery::storage::v1::ReadRowsRequest request);
+  ReadRows(
+      ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
 
   /**
    * Splits a given `ReadStream` into two `ReadStream` objects. These
