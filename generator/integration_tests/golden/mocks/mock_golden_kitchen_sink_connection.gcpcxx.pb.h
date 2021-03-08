@@ -46,7 +46,7 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
 
   MOCK_METHOD(StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>,
   TailLogEntries,
-  (::google::test::admin::database::v1::TailLogEntriesRequest request), (override));
+  (::google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
 
 };
 

@@ -152,7 +152,7 @@ Status ConnectionGenerator::GenerateHeader() {
              {
                  // clang-format off
    {"  virtual StreamRange<$response_type$>\n"
-    "  $method_name$($request_type$ request);\n\n"},
+    "  $method_name$($request_type$ const& request);\n\n"},
                  // clang-format on
              },
              IsStreamingRead)},
@@ -299,7 +299,7 @@ Status ConnectionGenerator::GenerateCc() {
              {
                  // clang-format off
    {"StreamRange<$response_type$> $connection_class_name$::$method_name$(\n"
-    "    $request_type$) {\n"
+    "    $request_type$ const&) {\n"
     "  return google::cloud::internal::MakeStreamRange<\n"
     "      $response_type$>(\n"
     "      []() -> absl::variant<Status,\n"
@@ -472,7 +472,7 @@ Status ConnectionGenerator::GenerateCc() {
              {
                  // clang-format off
    {"  StreamRange<$response_type$> $method_name$(\n"
-    "      $request_type$ request) override {\n"
+    "      $request_type$ const& request) override {\n"
     "    auto stub = stub_;\n"
     "    auto retry_policy =\n"
     "        std::shared_ptr<$retry_policy_name$ const>(\n"
@@ -493,7 +493,7 @@ Status ConnectionGenerator::GenerateCc() {
     "                retry_policy->clone(), backoff_policy->clone(),\n"
     "                [](std::chrono::milliseconds) {}, factory,\n"
     "                $service_name$$method_name$StreamingUpdater,\n"
-    "                std::move(request));\n"
+    "                request);\n"
     "\n"
     "    return internal::MakeStreamRange(internal::StreamReader<\n"
     "        $response_type$>(\n"

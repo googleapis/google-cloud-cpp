@@ -232,7 +232,7 @@ class GoldenKitchenSinkClient {
    * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1189)
    */
   StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest request);
+  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;
