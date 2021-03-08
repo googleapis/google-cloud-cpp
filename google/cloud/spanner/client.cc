@@ -343,9 +343,10 @@ std::shared_ptr<Connection> MakeConnection(
     stubs.push_back(spanner_internal::CreateDefaultSpannerStub(
         db, connection_options, channel_id));
   }
-  return spanner_internal::MakeConnection(
-      db, std::move(stubs), connection_options, std::move(session_pool_options),
-      std::move(retry_policy), std::move(backoff_policy));
+  return std::make_shared<spanner_internal::ConnectionImpl>(
+      std::move(db), std::move(stubs), connection_options,
+      std::move(session_pool_options), std::move(retry_policy),
+      std::move(backoff_policy));
 }
 
 }  // namespace SPANNER_CLIENT_NS

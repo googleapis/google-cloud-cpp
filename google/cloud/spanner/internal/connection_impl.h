@@ -46,28 +46,18 @@ std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy();
 std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy();
 
 /**
- * Factory method to construct a `ConnectionImpl`.
- *
- * @note In tests we can use mock stubs and custom (or mock) policies.
- */
-class ConnectionImpl;
-std::shared_ptr<ConnectionImpl> MakeConnection(
-    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::ConnectionOptions const& options = spanner::ConnectionOptions{},
-    spanner::SessionPoolOptions session_pool_options =
-        spanner::SessionPoolOptions{},
-    std::unique_ptr<spanner::RetryPolicy> retry_policy =
-        DefaultConnectionRetryPolicy(),
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy =
-        DefaultConnectionBackoffPolicy());
-
-/**
  * A concrete `Connection` subclass that uses gRPC to actually talk to a real
- * Spanner instance. See `MakeConnection()` for a factory function that creates
- * and returns instances of this class.
+ * Spanner instance.
  */
 class ConnectionImpl : public spanner::Connection {
  public:
+  ConnectionImpl(spanner::Database db,
+                 std::vector<std::shared_ptr<SpannerStub>> stubs,
+                 spanner::ConnectionOptions const& options,
+                 spanner::SessionPoolOptions session_pool_options,
+                 std::unique_ptr<spanner::RetryPolicy> retry_policy,
+                 std::unique_ptr<spanner::BackoffPolicy> backoff_policy);
+
   spanner::RowStream Read(ReadParams) override;
   StatusOr<std::vector<spanner::ReadPartition>> PartitionRead(
       PartitionReadParams) override;
@@ -86,18 +76,6 @@ class ConnectionImpl : public spanner::Connection {
   Status Rollback(RollbackParams) override;
 
  private:
-  // Only the factory method can construct instances of this class.
-  friend std::shared_ptr<ConnectionImpl> MakeConnection(
-      spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
-      spanner::ConnectionOptions const&, spanner::SessionPoolOptions,
-      std::unique_ptr<spanner::RetryPolicy>, std::unique_ptr<BackoffPolicy>);
-  ConnectionImpl(spanner::Database db,
-                 std::vector<std::shared_ptr<SpannerStub>> stubs,
-                 spanner::ConnectionOptions const& options,
-                 spanner::SessionPoolOptions session_pool_options,
-                 std::unique_ptr<spanner::RetryPolicy> retry_policy,
-                 std::unique_ptr<spanner::BackoffPolicy> backoff_policy);
-
   Status PrepareSession(SessionHolder& session,
                         bool dissociate_from_pool = false);
 

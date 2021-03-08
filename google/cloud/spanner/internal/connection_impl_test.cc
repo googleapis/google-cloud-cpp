@@ -30,6 +30,7 @@
 #include <atomic>
 #include <chrono>
 #include <future>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
@@ -183,14 +184,28 @@ spanner_proto::CommitResponse MakeCommitResponse(
   return response;
 }
 
+std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    spanner::ConnectionOptions const& options = spanner::ConnectionOptions{},
+    spanner::SessionPoolOptions session_pool_options =
+        spanner::SessionPoolOptions{},
+    std::unique_ptr<spanner::RetryPolicy> retry_policy =
+        DefaultConnectionRetryPolicy(),
+    std::unique_ptr<spanner::BackoffPolicy> backoff_policy =
+        DefaultConnectionBackoffPolicy()) {
+  return std::make_shared<ConnectionImpl>(
+      std::move(db), std::move(stubs), options, std::move(session_pool_options),
+      std::move(retry_policy), std::move(backoff_policy));
+}
+
 // Create a `Connection` suitable for use in tests that continue retrying
 // until the retry policy is exhausted - attempting that with the default
 // policies would take too long (10 minutes).
-// Other tests can use this method or just call `MakeConnection()` directly.
+// Other tests can use this method or just call `MakeConnectionImpl()` directly.
 std::shared_ptr<spanner::Connection> MakeLimitedRetryConnection(
     spanner::Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
-  return MakeConnection(
+  return MakeConnectionImpl(
       db, {std::move(mock)},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()},
       spanner::SessionPoolOptions{},
@@ -252,7 +267,7 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -275,7 +290,7 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -302,7 +317,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -404,7 +419,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -425,7 +440,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   grpc::Status grpc_status(grpc::StatusCode::UNAVAILABLE, "uh-oh");
@@ -488,7 +503,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   grpc::Status grpc_status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
@@ -592,7 +607,7 @@ TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -613,7 +628,7 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -637,7 +652,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -685,7 +700,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -720,7 +735,7 @@ TEST(ConnectionImplTest, QueryOptions) {
                                                  query_options};
     auto db = spanner::Database("placeholder_project", "placeholder_instance",
                                 "placeholder_database_id");
-    auto conn = MakeConnection(
+    auto conn = MakeConnectionImpl(
         db, {mock},
         spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -760,7 +775,7 @@ TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -780,7 +795,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -810,7 +825,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -868,7 +883,7 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionAtomicity) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -905,7 +920,7 @@ TEST(ConnectionImplTest, ExecuteDmlTransactionMissing) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -930,7 +945,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1002,7 +1017,7 @@ TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1023,7 +1038,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1046,7 +1061,7 @@ TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1065,7 +1080,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1120,7 +1135,7 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1177,7 +1192,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1211,7 +1226,7 @@ TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1230,7 +1245,7 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1310,7 +1325,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       spanner::SqlStatement("update ..."),
   };
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -1351,7 +1366,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
       spanner::SqlStatement("update ..."),
   };
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -1455,7 +1470,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlNoResultSets) {
   }
 
   auto request = {spanner::SqlStatement("update ...")};
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -1470,7 +1485,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1500,7 +1515,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1517,7 +1532,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeletePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1606,7 +1621,7 @@ TEST(ConnectionImplTest,
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -1803,7 +1818,7 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
@@ -1827,7 +1842,7 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1854,7 +1869,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1879,7 +1894,7 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   spanner_proto::Transaction txn = MakeTestTransaction();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -1909,7 +1924,7 @@ TEST(ConnectionImplTest, RollbackGetSessionFailure) {
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in GetSession")));
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -1933,7 +1948,7 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
                                        HasNakedTransactionId(transaction_id))))
       .WillOnce(Return(Status()));
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -1949,7 +1964,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner_internal::MakeSingleUseTransaction(
@@ -2016,7 +2031,7 @@ TEST(ConnectionImplTest, RollbackSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(Status()));
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   auto txn = spanner::MakeReadWriteTransaction();
@@ -2030,7 +2045,7 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _)).Times(0);
@@ -2050,7 +2065,7 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -2162,7 +2177,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -2288,7 +2303,7 @@ TEST(ConnectionImplTest, MultipleThreads) {
             return Status();
           });
 
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
@@ -2332,7 +2347,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -2432,7 +2447,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
@@ -2668,7 +2683,7 @@ TEST(ConnectionImplTest, OperationsFailOnInvalidatedTransaction) {
 
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  auto conn = MakeConnection(
+  auto conn = MakeConnectionImpl(
       db, {mock},
       spanner::ConnectionOptions{grpc::InsecureChannelCredentials()});
 
