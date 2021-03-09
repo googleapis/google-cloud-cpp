@@ -582,24 +582,15 @@ TEST(FutureTestVoid, conform_30_6_6_21) {
   promise<void> p;
   future<void> const f = p.get_future();
 
-  // We use std::promise<> and std::future<> to test our promises and futures.
-  // This test uses a number of promises to track progress in a separate thread,
-  // and checks the expected conditions in each one.
-  std::promise<void> thread_started;
-  std::promise<void> f_wait_returned;
-
-  ScopedThread t([&] {
-    thread_started.set_value();
-    f.wait_for(500_ms);
-    f_wait_returned.set_value();
-  });
-
-  thread_started.get_future().get();
-
-  auto waiter = f_wait_returned.get_future();
-  EXPECT_EQ(std::future_status::timeout, waiter.wait_for(2_ms));
+  // Just check that `.wait_for()` blocks for at least one millisecond.
+  auto const start = std::chrono::steady_clock::now();
+  EXPECT_EQ(std::future_status::timeout, f.wait_for(10_ms));
+  auto const elapsed = std::chrono::steady_clock::now() - start;
+  auto const actual =
+      std::chrono::duration_cast<std::chrono::milliseconds>(elapsed);
+  EXPECT_NE(actual.count(), 0);
   p.set_value();
-  EXPECT_EQ(std::future_status::ready, waiter.wait_for(500_ms));
+  EXPECT_EQ(std::future_status::ready, f.wait_for(0_ms));
 }
 
 // Paragraph 30.6.6.22.1 refers to futures that hold a deferred function (like
