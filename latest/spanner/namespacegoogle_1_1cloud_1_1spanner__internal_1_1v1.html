@@ -139,8 +139,6 @@ Functions</h2></td></tr>
 <tr class="separator:a01c05fc57d7432ccb0261b957e77ea87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ee931aab1db437400c7067d619297f1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a1ee931aab1db437400c7067d619297f1">BytesToBase64</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes.html">spanner::Bytes</a> b)</td></tr>
 <tr class="separator:a1ee931aab1db437400c7067d619297f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a050f15451431f3db1cc81192fe11b2b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a050f15451431f3db1cc81192fe11b2b6">EmulatorOverrides</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> options)</td></tr>
-<tr class="separator:a050f15451431f3db1cc81192fe11b2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad73da7f6972d7399107f12cad772bf66"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad73da7f6972d7399107f12cad772bf66">MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options)</td></tr>
 <tr class="separator:ad73da7f6972d7399107f12cad772bf66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad63fc6dc1efbe898b964527865bbba70"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad63fc6dc1efbe898b964527865bbba70">MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">spanner::BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a> &gt; polling_policy)</td></tr>
@@ -275,26 +273,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a050f15451431f3db1cc81192fe11b2b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a050f15451431f3db1cc81192fe11b2b6">&#9670;&nbsp;</a></span>EmulatorOverrides()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> google::cloud::spanner_internal::v1::EmulatorOverrides </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a>&#160;</td>
-          <td class="paramname"><em>options</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="connection__options_8cc_source.html#l00060">60</a> of file <a class="el" href="connection__options_8cc_source.html">connection_options.cc</a>.</p>
-
-</div>
-</div>
 <a id="a0bc45660826f4f612b39b25bf8f3acf6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0bc45660826f4f612b39b25bf8f3acf6">&#9670;&nbsp;</a></span>FromProto() <span class="overload">[1/2]</span></h2>
 
@@ -387,7 +365,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00672">672</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00677">677</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -435,7 +413,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00679">679</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00684">684</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -465,7 +443,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00342">342</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00347">347</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -559,7 +537,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00349">349</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00354">354</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
 
 </div>
 </div>
