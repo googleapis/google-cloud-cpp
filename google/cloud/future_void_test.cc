@@ -582,7 +582,7 @@ TEST(FutureTestVoid, conform_30_6_6_21) {
   promise<void> p;
   future<void> const f = p.get_future();
 
-  // Just check that `.wait_for()` blocks for a few millis.
+  // Just check that `.wait_for()` blocks for at least one millisecond.
   auto const start = std::chrono::steady_clock::now();
   EXPECT_EQ(std::future_status::timeout, f.wait_for(10_ms));
   auto const elapsed = std::chrono::steady_clock::now() - start;
