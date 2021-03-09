@@ -100,8 +100,10 @@ elif type sntp >/dev/null 2>&1; then
   sudo sntp -sS time.google.com
   # TODO(#5689) - some debugging to troubleshoot clock sync issues
   sudo sntp -sS time.google.com
-  sudo systemsetup -getnetworktimeserver
-  sudo systemsetup -getusingnetworktime
+  if ! sudo systemsetup -getusingnetworktime | grep -q ': On'; then
+    sudo systemsetup -setnetworktimeserver time.google.com
+    sudo systemsetup -setusingnetworktime On
+  fi
 else
   echo "================================================================"
   io::log_red "no command available to sync clock"
