@@ -593,6 +593,8 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
+
+  ASSERT_STATUS_OK(table_admin_->DeleteTable(table_id));
 }
 
 TEST(ConnectionRefresh, Disabled) {
