@@ -18,6 +18,7 @@
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "session_pool.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -64,6 +65,7 @@ TEST(Options, Defaults) {
 
   EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 
 TEST(Options, EndpointFromEnv) {

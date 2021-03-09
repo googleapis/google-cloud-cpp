@@ -24,6 +24,7 @@
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
+#include "options.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -75,17 +76,18 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
   return response;
 }
 
-std::shared_ptr<SessionPool> MakeSessionPool(
+std::shared_ptr<SessionPool> MakeTestSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::SessionPoolOptions options, CompletionQueue cq,
-    std::shared_ptr<SteadyClock> clock = std::make_shared<SteadyClock>()) {
-  return MakeSessionPool(
-      std::move(db), std::move(stubs), std::move(options), std::move(cq),
-      absl::make_unique<spanner::LimitedTimeRetryPolicy>(
-          std::chrono::minutes(10)),
-      absl::make_unique<spanner::ExponentialBackoffPolicy>(
-          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0),
-      std::move(clock));
+    CompletionQueue cq, internal::Options opts = {}) {
+  opts.set<SpannerRetryPolicyOption>(
+      std::make_shared<spanner::LimitedTimeRetryPolicy>(
+          std::chrono::minutes(10)));
+  opts.set<SpannerBackoffPolicyOption>(
+      std::make_shared<spanner::ExponentialBackoffPolicy>(
+          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0));
+  opts = DefaultOptions(std::move(opts));
+  return MakeSessionPool(std::move(db), std::move(stubs), std::move(cq),
+                         std::move(opts));
 }
 
 TEST(SessionPool, Allocate) {
@@ -101,7 +103,7 @@ TEST(SessionPool, Allocate) {
           });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -128,7 +130,7 @@ TEST(SessionPool, ReleaseBadSession) {
           });
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   {
     auto session = pool->Allocate();
     ASSERT_STATUS_OK(session);
@@ -154,7 +156,7 @@ TEST(SessionPool, CreateError) {
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   auto session = pool->Allocate();
   EXPECT_THAT(session,
               StatusIs(StatusCode::kInternal, HasSubstr("some failure")));
@@ -167,7 +169,7 @@ TEST(SessionPool, ReuseSession) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -186,7 +188,7 @@ TEST(SessionPool, Lifo) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -216,10 +218,10 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
-  spanner::SessionPoolOptions options;
-  options.set_min_sessions(min_sessions);
+  internal::Options opts;
+  opts.set<SessionPoolMinSessionsOption>(min_sessions);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
   auto session = pool->Allocate();
 }
 
@@ -231,10 +233,10 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
-  spanner::SessionPoolOptions options;
-  options.set_min_sessions(min_sessions);
+  internal::Options opts;
+  opts.set<SessionPoolMinSessionsOption>(min_sessions);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
 
   // When we run out of sessions it will make this call.
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions + 1)))
@@ -260,11 +262,12 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
 
-  spanner::SessionPoolOptions options;
-  options.set_max_sessions_per_channel(max_sessions_per_channel)
-      .set_action_on_exhaustion(spanner::ActionOnExhaustion::kFail);
+  internal::Options opts;
+  opts.set<SessionPoolMaxSessionsPerChannelOption>(max_sessions_per_channel);
+  opts.set<SessionPoolActionOnExhaustionOption>(
+      spanner::ActionOnExhaustion::kFail);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 3; ++i) {
@@ -286,11 +289,12 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
 
-  spanner::SessionPoolOptions options;
-  options.set_max_sessions_per_channel(max_sessions_per_channel)
-      .set_action_on_exhaustion(spanner::ActionOnExhaustion::kBlock);
+  internal::Options opts;
+  opts.set<SessionPoolMaxSessionsPerChannelOption>(max_sessions_per_channel);
+  opts.set<SessionPoolActionOnExhaustionOption>(
+      spanner::ActionOnExhaustion::kBlock);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "s1");
@@ -314,10 +318,10 @@ TEST(SessionPool, Labels) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, LabelsAre(labels)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
-  spanner::SessionPoolOptions options;
-  options.set_labels(std::move(labels));
+  internal::Options opts;
+  opts.set<SessionPoolLabelsOption>(std::move(labels));
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq(), std::move(opts));
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -337,7 +341,7 @@ TEST(SessionPool, MultipleChannels) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s3"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock1, mock2}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock1, mock2}, threads.cq());
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 6; ++i) {
@@ -362,14 +366,15 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   EXPECT_CALL(*mock3, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
 
-  spanner::SessionPoolOptions options;
   // note that min_sessions will effectively be reduced to 9
   // (max_sessions_per_channel * num_channels).
-  options.set_min_sessions(20)
-      .set_max_sessions_per_channel(3)
-      .set_action_on_exhaustion(spanner::ActionOnExhaustion::kFail);
+  internal::Options opts;
+  opts.set<SessionPoolMaxSessionsPerChannelOption>(3);
+  opts.set<SessionPoolActionOnExhaustionOption>(
+      spanner::v1::ActionOnExhaustion::kFail);
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, options, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock1, mock2, mock3}, threads.cq(),
+                                  std::move(opts));
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 9; ++i) {
@@ -390,7 +395,7 @@ TEST(SessionPool, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
-  auto pool = MakeSessionPool(db, {mock}, {}, threads.cq());
+  auto pool = MakeTestSessionPool(db, {mock}, threads.cq());
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
   EXPECT_EQ(pool->GetStub(*session), mock);
@@ -430,12 +435,13 @@ TEST(SessionPool, SessionRefresh) {
           });
 
   auto db = spanner::Database("project", "instance", "database");
-  spanner::SessionPoolOptions options;
-  options.set_keep_alive_interval(std::chrono::seconds(1));
   auto impl = std::make_shared<FakeCompletionQueueImpl>();
   auto clock = std::make_shared<FakeSteadyClock>();
-  auto pool =
-      MakeSessionPool(db, {mock}, options, CompletionQueue(impl), clock);
+  auto opts =
+      internal::Options{}
+          .set<SessionPoolKeepAliveIntervalOption>(std::chrono::seconds(1))
+          .set<SessionPoolClockOption>(clock);
+  auto pool = MakeTestSessionPool(db, {mock}, CompletionQueue(impl), opts);
 
   // Allocate and release two session, "s1" and "s2". This will satisfy the
   // BatchCreateSessions() expectations.
@@ -449,7 +455,7 @@ TEST(SessionPool, SessionRefresh) {
       EXPECT_EQ("s2", (*s2)->session_name());
     }
     // Wait for "s2" to need refreshing before releasing "s1".
-    clock->AdvanceTime(options.keep_alive_interval() * 2);
+    clock->AdvanceTime(opts.get<SessionPoolKeepAliveIntervalOption>() * 2);
   }
 
   // Simulate completion of pending operations, which will result in

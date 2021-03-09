@@ -19,6 +19,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/options.h"
+#include "session_pool.h"
 #include <chrono>
 #include <string>
 
@@ -92,6 +93,9 @@ internal::Options DefaultOptions(internal::Options opts) {
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
             kBackoffScaling));
+  }
+  if (!opts.has<SessionPoolClockOption>()) {
+    opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
 
   return opts;

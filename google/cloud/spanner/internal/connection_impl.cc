@@ -23,6 +23,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
+#include "options.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 
@@ -109,9 +110,13 @@ ConnectionImpl::ConnectionImpl(
       backoff_policy_prototype_(std::move(backoff_policy)),
       background_threads_(options.background_threads_factory()()),
       session_pool_(MakeSessionPool(
-          db_, std::move(stubs), std::move(session_pool_options),
-          background_threads_->cq(), retry_policy_prototype_->clone(),
-          backoff_policy_prototype_->clone())),
+          db_, std::move(stubs), background_threads_->cq(),
+          DefaultOptions(
+              MergeOptions(internal::MakeOptions(options),
+                           MakeOptions(std::move(session_pool_options))))
+              .set<SpannerRetryPolicyOption>(retry_policy_prototype_->clone())
+              .set<SpannerBackoffPolicyOption>(
+                  backoff_policy_prototype_->clone()))),
       rpc_stream_tracing_enabled_(options.tracing_enabled("rpc-streams")),
       tracing_options_(options.tracing_options()) {}
 

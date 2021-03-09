@@ -346,6 +346,9 @@ std::shared_ptr<Connection> MakeConnection(
       std::move(opts), spanner_internal::MakeOptions(session_pool_options));
   // Sets spanner defaults.
   opts = spanner_internal::DefaultOptions(std::move(opts));
+  opts.set<spanner_internal::SpannerRetryPolicyOption>(retry_policy->clone());
+  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+      backoff_policy->clone());
 
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<internal::GrpcNumChannelsOption>();

@@ -40,32 +40,30 @@ using google::cloud::internal::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::SessionPoolOptions options, google::cloud::CompletionQueue cq,
-    std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
-    std::shared_ptr<Session::Clock> clock) {
-  auto pool = std::make_shared<SessionPool>(
-      std::move(db), std::move(stubs), std::move(options), std::move(cq),
-      std::move(retry_policy), std::move(backoff_policy), std::move(clock));
+    google::cloud::CompletionQueue cq, internal::Options opts) {
+  auto const stub_size = static_cast<int>(stubs.size());
+  if (opts.get<internal::GrpcNumChannelsOption>() != stub_size) {
+    opts.set<internal::GrpcNumChannelsOption>(stub_size);
+    opts = DefaultOptions(std::move(opts));
+  }
+  auto pool = std::shared_ptr<SessionPool>(new SessionPool(
+      std::move(db), std::move(stubs), std::move(cq), std::move(opts)));
   pool->Initialize();
   return pool;
 }
 
 SessionPool::SessionPool(spanner::Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
-                         spanner::SessionPoolOptions options,
                          google::cloud::CompletionQueue cq,
-                         std::unique_ptr<spanner::RetryPolicy> retry_policy,
-                         std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
-                         std::shared_ptr<Session::Clock> clock)
+                         internal::Options opts)
     : db_(std::move(db)),
-      options_(std::move(
-          options.EnforceConstraints(static_cast<int>(stubs.size())))),
       cq_(std::move(cq)),
-      retry_policy_prototype_(std::move(retry_policy)),
-      backoff_policy_prototype_(std::move(backoff_policy)),
-      clock_(std::move(clock)),
-      max_pool_size_(options_.max_sessions_per_channel() *
+      opts_(std::move(opts)),
+      retry_policy_prototype_(opts_.get<SpannerRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          opts_.get<SpannerBackoffPolicyOption>()->clone()),
+      clock_(opts_.get<SessionPoolClockOption>()),
+      max_pool_size_(opts_.get<SessionPoolMaxSessionsPerChannelOption>() *
                      static_cast<int>(stubs.size())),
       random_generator_(std::random_device()()),
       channels_(stubs.size()) {
@@ -82,9 +80,10 @@ SessionPool::SessionPool(spanner::Database db,
 }
 
 void SessionPool::Initialize() {
-  if (options_.min_sessions() > 0) {
+  auto const min_sessions = opts_.get<SessionPoolMinSessionsOption>();
+  if (min_sessions > 0) {
     std::unique_lock<std::mutex> lk(mu_);
-    (void)Grow(lk, options_.min_sessions(), WaitForSessionAllocation::kWait);
+    (void)Grow(lk, min_sessions, WaitForSessionAllocation::kWait);
   }
   ScheduleBackgroundWork(std::chrono::seconds(5));
 }
@@ -128,10 +127,9 @@ void SessionPool::DoBackgroundWork() {
 // creating or deleting sessions as necessary.
 void SessionPool::MaintainPoolSize() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (create_calls_in_progress_ == 0 &&
-      total_sessions_ < options_.min_sessions()) {
-    Grow(lk, total_sessions_ - options_.min_sessions(),
-         WaitForSessionAllocation::kNoWait);
+  auto const min_sessions = opts_.get<SessionPoolMinSessionsOption>();
+  if (create_calls_in_progress_ == 0 && total_sessions_ < min_sessions) {
+    Grow(lk, total_sessions_ - min_sessions, WaitForSessionAllocation::kNoWait);
   }
 }
 
@@ -141,7 +139,7 @@ void SessionPool::RefreshExpiringSessions() {
   std::vector<std::pair<std::shared_ptr<SpannerStub>, std::string>>
       sessions_to_refresh;
   auto now = clock_->Now();
-  auto refresh_limit = now - options_.keep_alive_interval();
+  auto refresh_limit = now - opts_.get<SessionPoolKeepAliveIntervalOption>();
   {
     std::unique_lock<std::mutex> lk(mu_);
     if (last_use_time_lower_bound_ <= refresh_limit) {
@@ -250,17 +248,17 @@ Status SessionPool::CreateSessions(
     WaitForSessionAllocation wait) {
   Status return_status;
   for (auto const& op : create_counts) {
+    auto const& labels = opts_.get<SessionPoolLabelsOption>();
     switch (wait) {
       case WaitForSessionAllocation::kWait: {
-        Status status =
-            CreateSessionsSync(op.channel, options_.labels(), op.session_count);
+        auto status = CreateSessionsSync(op.channel, labels, op.session_count);
         if (!status.ok()) {
           return_status = status;
         }
         break;
       }
       case WaitForSessionAllocation::kNoWait:
-        CreateSessionsAsync(op.channel, options_.labels(), op.session_count);
+        CreateSessionsAsync(op.channel, labels, op.session_count);
         break;
     }
   }
@@ -287,7 +285,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // If the pool is at its max size, fail or wait until someone returns a
     // session to the pool then try again.
     if (total_sessions_ >= max_pool_size_) {
-      if (options_.action_on_exhaustion() ==
+      if (opts_.get<SessionPoolActionOnExhaustionOption>() ==
           spanner::ActionOnExhaustion::kFail) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
@@ -312,8 +310,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 
     // Try to add some sessions to the pool; for now add `min_sessions` plus
     // one for the `Session` this caller is waiting for.
-    auto status =
-        Grow(lk, options_.min_sessions() + 1, WaitForSessionAllocation::kWait);
+    auto const min_sessions = opts_.get<SessionPoolMinSessionsOption>();
+    auto status = Grow(lk, min_sessions + 1, WaitForSessionAllocation::kWait);
     if (!status.ok()) {
       return status;
     }
