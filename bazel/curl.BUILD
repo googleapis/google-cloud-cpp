@@ -67,6 +67,8 @@ genrule(
         echo '#define CURL_CA_BUNDLE "/etc/pki/tls/certs/ca-bundle.crt"'
       elif [ -f /etc/debian_version ]; then
         echo '#define CURL_CA_BUNDLE "/etc/ssl/certs/ca-certificates.crt"'
+      elif [ -f /etc/arch-release ]; then
+        echo '#define CURL_CA_BUNDLE "/etc/ssl/certs/ca-certificates.crt"'
       else
         >&2 echo "Unknown platform, cannot guess location of CA bundle"
         exit 1
