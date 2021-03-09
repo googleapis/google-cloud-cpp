@@ -98,6 +98,8 @@ elif type sntp >/dev/null 2>&1; then
   echo "================================================================"
   io::log_yellow "using sntp to synchronize clock from time.google.com."
   sudo sntp -sS time.google.com
+  # TODO(#5689) - run it again for debugging
+  sudo sntp -sS time.google.com
 else
   echo "================================================================"
   io::log_red "no command available to sync clock"
