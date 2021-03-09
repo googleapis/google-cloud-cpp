@@ -136,14 +136,25 @@ if ($LastExitCode) {
 }
 
 # Remove old versions of the packages.
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup old vcpkg package versions."
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
 &"${vcpkg_dir}\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
     Exit ${LastExitCode}
 }
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg package versions."
+ForEach($_ in (1, 2, 3)) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Warmup vcpkg [$_]"
+    # Additional dependencies, these are not downloaded by `bazel fetch ...`,
+    # but are needed to compile the code
+    &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "crc32c"
+    if ($LastExitCode -eq 0) {
+        break
+    }
+    Start-Sleep -Seconds (60 * $_)
+}
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg packages."
 foreach ($pkg in $packages) {
     &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
