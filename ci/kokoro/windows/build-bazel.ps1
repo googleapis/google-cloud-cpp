@@ -109,6 +109,7 @@ ForEach($_ in (1, 2, 3)) {
         "@go_sdk//...",
         "@remotejdk11_win//:jdk"
     )
+    bazel $common_flags fetch $build_flags ${external} ...
     if ($LastExitCode -eq 0) {
         break
     }
