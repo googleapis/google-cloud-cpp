@@ -46,6 +46,25 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 struct SessionPoolFriendForTest;
 
+// An option for the Clock that the session pool will use. This is an injection
+// point to facility unit testing.
+struct SessionPoolClockOption {
+  using Type = std::shared_ptr<Session::Clock>;
+};
+
+class SessionPool;
+
+/**
+ * Create a `SessionPool`.
+ *
+ * The parameters allow the `SessionPool` to make remote calls needed to manage
+ * the pool, and to associate `Session`s with the stubs used to create them.
+ * `stubs` must not be empty.
+ */
+std::shared_ptr<SessionPool> MakeSessionPool(
+    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    google::cloud::CompletionQueue cq, internal::Options opts);
+
 /**
  * Maintains a pool of `Session` objects.
  *
@@ -61,28 +80,7 @@ struct SessionPoolFriendForTest;
  */
 class SessionPool : public std::enable_shared_from_this<SessionPool> {
  public:
-  /**
-   * Construct a `SessionPool`.
-   *
-   * @warning callers should use the `MakeSessionPool()` factory method rather
-   * than calling the constructor and `Initialize()` directly.
-   */
-  SessionPool(spanner::Database db,
-              std::vector<std::shared_ptr<SpannerStub>> stubs,
-              spanner::SessionPoolOptions options,
-              google::cloud::CompletionQueue cq,
-              std::unique_ptr<spanner::RetryPolicy> retry_policy,
-              std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
-              std::shared_ptr<Session::Clock> clock);
-
   ~SessionPool();
-
-  /**
-   * If using the factory method is not possible, call `Initialize()` exactly
-   * once, immediately after constructing the pool. This is necessary because
-   * we are unable to call shared_from_this() in the constructor.
-   */
-  void Initialize();
 
   /**
    * Allocate a `Session` from the pool, creating a new one if necessary.
@@ -103,6 +101,21 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
  private:
+  friend std::shared_ptr<SessionPool> MakeSessionPool(
+      spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
+      google::cloud::CompletionQueue, internal::Options);
+
+  /**
+   * Construct a `SessionPool`.
+   *
+   * @warning must call Initialize() once immediately after the constructor.
+   */
+  SessionPool(spanner::Database db,
+              std::vector<std::shared_ptr<SpannerStub>> stubs,
+              google::cloud::CompletionQueue cq, internal::Options opts);
+
+  void Initialize();
+
   // Represents a request to create `session_count` sessions on `channel`
   // See `ComputeCreateCounts` and `CreateSessions`.
   struct CreateCount {
@@ -163,8 +176,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void RefreshExpiringSessions();
 
   spanner::Database const db_;
-  spanner::SessionPoolOptions const options_;
   google::cloud::CompletionQueue cq_;
+  internal::Options const opts_;
   std::unique_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<Session::Clock> clock_;
@@ -191,20 +204,6 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   ChannelVec channels_;                                 // GUARDED_BY(mu_)
   ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
-
-/**
- * Create a `SessionPool`.
- *
- * The parameters allow the `SessionPool` to make remote calls needed to manage
- * the pool, and to associate `Session`s with the stubs used to create them.
- * `stubs` must not be empty.
- */
-std::shared_ptr<SessionPool> MakeSessionPool(
-    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::SessionPoolOptions options, google::cloud::CompletionQueue cq,
-    std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
-    std::shared_ptr<Session::Clock> clock = std::make_shared<Session::Clock>());
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

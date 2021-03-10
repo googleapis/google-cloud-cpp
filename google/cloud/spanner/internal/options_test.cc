@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
@@ -64,6 +65,7 @@ TEST(Options, Defaults) {
 
   EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 
 TEST(Options, EndpointFromEnv) {

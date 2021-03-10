@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
@@ -92,6 +93,9 @@ internal::Options DefaultOptions(internal::Options opts) {
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
             kBackoffScaling));
+  }
+  if (!opts.has<SessionPoolClockOption>()) {
+    opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
 
   return opts;

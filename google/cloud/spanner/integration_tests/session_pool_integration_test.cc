@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -56,14 +57,16 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   google::cloud::CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
   auto const db = GetDatabase();
-  auto stub = CreateDefaultSpannerStub(db, spanner_internal::DefaultOptions(),
-                                       /*channel_id=*/0);
-  auto session_pool = MakeSessionPool(
-      db, {stub}, spanner::SessionPoolOptions{}, cq,
-      spanner::LimitedTimeRetryPolicy(std::chrono::minutes(5)).clone(),
-      spanner::ExponentialBackoffPolicy(std::chrono::seconds(10),
-                                        std::chrono::minutes(1), 2.0)
-          .clone());
+  auto opts = spanner_internal::DefaultOptions();
+  opts.set<SpannerRetryPolicyOption>(
+      std::make_shared<spanner::LimitedTimeRetryPolicy>(
+          std::chrono::minutes(5)));
+  opts.set<SpannerBackoffPolicyOption>(
+      std::make_shared<spanner::ExponentialBackoffPolicy>(
+          std::chrono::seconds(10), std::chrono::minutes(1), 2.0));
+
+  auto stub = CreateDefaultSpannerStub(db, opts, /*channel_id=*/0);
+  auto session_pool = MakeSessionPool(db, {stub}, cq, opts);
 
   // Make an asynchronous request, but immediately block until the response
   // arrives
