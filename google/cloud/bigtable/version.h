@@ -32,6 +32,12 @@
       " instead. The function will be removed on 2022-04-01 or shortly "       \
       "after. See GitHub issue #5929 for more information.")
 
+#define GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED                  \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                               \
+      "this experimental function will be removed on or shortly after "      \
+      "2021-07-01. See GitHub issue #2567 for more information. Please use " \
+      "an overload without the cq parameter.")
+
 #define BIGTABLE_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(BIGTABLE_CLIENT_VERSION_MAJOR, \
                          BIGTABLE_CLIENT_VERSION_MINOR)

@@ -26,6 +26,9 @@ namespace testing {
 
 class MockDataClient : public bigtable::DataClient {
  public:
+  explicit MockDataClient(ClientOptions options = {})
+      : options_(std::move(options)) {}
+
   MOCK_METHOD(std::string const&, project_id, (), (const, override));
   MOCK_METHOD(std::string const&, instance_id, (), (const, override));
   MOCK_METHOD(std::shared_ptr<grpc::Channel>, Channel, (), (override));
@@ -120,6 +123,14 @@ class MockDataClient : public bigtable::DataClient {
                const google::bigtable::v2::MutateRowsRequest&,
                grpc::CompletionQueue*),
               (override));
+
+ private:
+  /// The thread factory from `ClientOptions` this client was created with.
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return options_.background_threads_factory();
+  }
+
+  ClientOptions options_;
 };
 
 }  // namespace testing

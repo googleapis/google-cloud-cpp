@@ -51,8 +51,8 @@ bool Unsatisfied(future<T> const& fut) {
 class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
  protected:
   TableAsyncReadRowsTest()
-      : cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
+      : TableTestFixture(
+            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
         stream_status_future_(stream_status_promise_.get_future()) {}
 
   MockClientAsyncReaderInterface<btproto::ReadRowsResponse>& AddReader(
@@ -102,7 +102,6 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   // Start Table::AsyncReadRows.
   void ReadRows(int row_limit = RowReader::NO_ROWS_LIMIT) {
     table_.AsyncReadRows(
-        cq_,
         [this](Row const& row) {
           EXPECT_EQ(expected_rows_.front(), row.row_key());
           expected_rows_.pop();
@@ -136,8 +135,6 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     }
   }
 
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  bigtable::CompletionQueue cq_;
   std::vector<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>*>
       readers_;
   // Whether `Start()` was called on i-th retry attempt.
@@ -998,7 +995,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
     *status = grpc::Status::OK;
   });
 
-  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
 
   EXPECT_TRUE(reader_started_[0]);
 
@@ -1033,7 +1030,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
     *status = grpc::Status::OK;
   });
 
-  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
 
   EXPECT_TRUE(reader_started_[0]);
 
@@ -1059,7 +1056,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowError) {
     *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "");
   });
 
-  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+  auto row_future = table_.AsyncReadRow("000", Filter::PassAllFilter());
 
   EXPECT_TRUE(reader_started_[0]);
 

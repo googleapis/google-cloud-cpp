@@ -56,17 +56,16 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
 class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
  protected:
   AsyncPollOpTest()
-      : polling_policy_(
+      : TableTestFixture(
+            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
+        polling_policy_(
             bigtable::DefaultPollingPolicy(internal::kBigtableLimits)),
         metadata_update_policy_("test_operation_id", MetadataParamTypes::NAME),
-        cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new testing::MockAdminClient) {}
+        client_(new testing::MockAdminClient(
+            ClientOptions().DisableBackgroundThreads(cq_))) {}
 
   std::shared_ptr<PollingPolicy const> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
   std::shared_ptr<testing::MockAdminClient> client_;
 };
 

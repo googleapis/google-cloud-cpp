@@ -42,13 +42,21 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
 }
 
 std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
-  auto client = std::make_shared<MockDataClient>();
+  auto client = std::make_shared<MockDataClient>(
+      ClientOptions().DisableBackgroundThreads(cq_));
   EXPECT_CALL(*client, project_id())
       .WillRepeatedly(::testing::ReturnRef(project_id_));
   EXPECT_CALL(*client, instance_id())
       .WillRepeatedly(::testing::ReturnRef(instance_id_));
   return client;
 }
+
+TableTestFixture::TableTestFixture(CompletionQueue cq)
+    : cq_impl_(std::dynamic_pointer_cast<
+               ::google::cloud::testing_util::FakeCompletionQueueImpl>(
+          google::cloud::internal::GetCompletionQueueImpl(cq))),
+      cq_(cq),
+      client_(SetupMockClient()) {}
 
 }  // namespace testing
 }  // namespace bigtable

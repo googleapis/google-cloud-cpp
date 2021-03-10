@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include <string>
 
 namespace google {
@@ -27,8 +28,7 @@ namespace testing {
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
-  TableTestFixture() = default;
-
+  explicit TableTestFixture(CompletionQueue cq);
   std::shared_ptr<MockDataClient> SetupMockClient();
 
   static char const kProjectId[];
@@ -39,7 +39,10 @@ class TableTestFixture : public ::testing::Test {
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
-  std::shared_ptr<MockDataClient> client_ = SetupMockClient();
+  std::shared_ptr<::google::cloud::testing_util::FakeCompletionQueueImpl>
+      cq_impl_;
+  CompletionQueue cq_;
+  std::shared_ptr<MockDataClient> client_;
   bigtable::Table table_ = bigtable::Table(client_, kTableId);
 };
 

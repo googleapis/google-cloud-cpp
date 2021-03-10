@@ -31,7 +31,10 @@ namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 
 /// Define helper types and functions for this test.
-class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {};
+class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
+ public:
+  TableReadModifyWriteTest() : TableTestFixture(CompletionQueue{}) {}
+};
 
 auto create_rules_lambda = [](std::string const& expected_request_string,
                               std::string const& generated_response_string) {

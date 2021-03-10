@@ -131,6 +131,10 @@ class LoggingDataClient : public DataClient {
       ::grpc::CompletionQueue* cq) override;
 
  private:
+  ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
+    return child_->BackgroundThreadsFactory();
+  }
+
   std::shared_ptr<google::cloud::bigtable::DataClient> child_;
   google::cloud::TracingOptions tracing_options_;
 };

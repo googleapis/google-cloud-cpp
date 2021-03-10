@@ -30,8 +30,11 @@ using ::google::cloud::bigtable::testing::MockSampleRowKeysReader;
 using ::testing::Return;
 using ::testing::Unused;
 
-using TableSampleRowKeysTest =
-    ::google::cloud::bigtable::testing::TableTestFixture;
+class TableSampleRowKeysTest
+    : public ::google::cloud::bigtable::testing::TableTestFixture {
+ public:
+  TableSampleRowKeysTest() : TableTestFixture(CompletionQueue{}) {}
+};
 
 /// @test Verify that Table::SampleRows<T>() works for default parameter.
 TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {

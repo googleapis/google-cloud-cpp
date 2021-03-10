@@ -54,13 +54,17 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
 }
 
 class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
-                                     public WithParamInterface<bool> {};
+                                     public WithParamInterface<bool> {
+ public:
+  AsyncLongrunningOpFutureTest()
+      : TableTestFixture(
+            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())) {}
+};
 
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
-  auto client = std::make_shared<testing::MockAdminClient>();
-  auto cq_impl = std::make_shared<FakeCompletionQueueImpl>();
-  bigtable::CompletionQueue cq(cq_impl);
+  auto client = std::make_shared<testing::MockAdminClient>(
+      ClientOptions().DisableBackgroundThreads(cq_));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish(_, _, _))
@@ -93,16 +97,16 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
 
   auto fut = internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
-      __func__, polling_policy->clone(), metadata_update_policy, client, cq,
+      __func__, polling_policy->clone(), metadata_update_policy, client, cq_,
       std::move(op_arg));
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1, cq_impl->size());
+  EXPECT_EQ(1, cq_impl_->size());
 
-  cq_impl->SimulateCompletion(true);
+  cq_impl_->SimulateCompletion(true);
 
   auto res = fut.get();
-  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cq_impl_->empty());
   if (success) {
     ASSERT_STATUS_OK(res);
     EXPECT_EQ("test_response", res->row_key());

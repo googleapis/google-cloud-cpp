@@ -45,7 +45,9 @@ class AsyncStartPollAfterRetryUnaryRpcTest
     : public bigtable::testing::TableTestFixture {
  public:
   AsyncStartPollAfterRetryUnaryRpcTest()
-      : k_project_id("the-project"),
+      : TableTestFixture(CompletionQueue(
+            std::make_shared<testing_util::FakeCompletionQueueImpl>())),
+        k_project_id("the-project"),
         k_instance_id("the-instance"),
         k_cluster_id("the-cluster"),
         k_table_id("the-table"),
@@ -62,9 +64,8 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         metadata_update_policy(
             "projects/" + k_project_id + "/instances/" + k_instance_id,
             MetadataParamTypes::PARENT),
-        client(std::make_shared<testing::MockInstanceAdminClient>()),
-        cq_impl(std::make_shared<testing_util::FakeCompletionQueueImpl>()),
-        cq(cq_impl),
+        client(std::make_shared<testing::MockInstanceAdminClient>(
+            ClientOptions().DisableBackgroundThreads(cq_))),
         create_cluster_reader(
             absl::make_unique<MockAsyncLongrunningOpReader>()),
         get_operation_reader(
@@ -154,11 +155,11 @@ class AsyncStartPollAfterRetryUnaryRpcTest
                grpc::CompletionQueue* cq) {
           return client->AsyncCreateCluster(context, request, cq);
         },
-        std::move(request), cq);
+        std::move(request), cq_);
 
     EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-    EXPECT_EQ(1U, cq_impl->size());  // AsyncCreateCluster
-    cq_impl->SimulateCompletion(true);
+    EXPECT_EQ(1U, cq_impl_->size());  // AsyncCreateCluster
+    cq_impl_->SimulateCompletion(true);
     return fut;
   }
 
@@ -172,8 +173,6 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy;
   MetadataUpdatePolicy metadata_update_policy;
   std::shared_ptr<testing::MockInstanceAdminClient> client;
-  std::shared_ptr<testing_util::FakeCompletionQueueImpl> cq_impl;
-  bigtable::CompletionQueue cq;
   std::unique_ptr<MockAsyncLongrunningOpReader> create_cluster_reader;
   std::unique_ptr<MockAsyncLongrunningOpReader> get_operation_reader;
 };
@@ -185,12 +184,12 @@ TEST_F(AsyncStartPollAfterRetryUnaryRpcTest, EverythingSucceeds) {
   auto fut = SimulateCreateCluster();
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl->size());  // AsyncGetOperation
-  cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(1U, cq_impl_->size());  // AsyncGetOperation
+  cq_impl_->SimulateCompletion(true);
 
   auto res = fut.get();
 
-  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cq_impl_->empty());
   ASSERT_STATUS_OK(res);
   EXPECT_EQ("my_newly_created_cluster", res->name());
 }
@@ -213,12 +212,12 @@ TEST_F(AsyncStartPollAfterRetryUnaryRpcTest, PollTimesOutReturnsUnknown) {
   auto fut = SimulateCreateCluster();
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl->size());  // AsyncGetOperation
-  cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(1U, cq_impl_->size());  // AsyncGetOperation
+  cq_impl_->SimulateCompletion(true);
 
   auto res = fut.get();
 
-  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cq_impl_->empty());
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kUnknown, res.status().code());
 }
@@ -231,12 +230,12 @@ TEST_F(AsyncStartPollAfterRetryUnaryRpcTest,
   auto fut = SimulateCreateCluster();
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl->size());  // AsyncGetOperation
-  cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(1U, cq_impl_->size());  // AsyncGetOperation
+  cq_impl_->SimulateCompletion(true);
 
   auto res = fut.get();
 
-  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cq_impl_->empty());
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kUnavailable, res.status().code());
 }
@@ -248,12 +247,12 @@ TEST_F(AsyncStartPollAfterRetryUnaryRpcTest, FinalErrorIsPassedOn) {
   auto fut = SimulateCreateCluster();
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl->size());  // AsyncGetOperation
-  cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(1U, cq_impl_->size());  // AsyncGetOperation
+  cq_impl_->SimulateCompletion(true);
 
   auto res = fut.get();
 
-  EXPECT_TRUE(cq_impl->empty());
+  EXPECT_TRUE(cq_impl_->empty());
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kUnavailable, res.status().code());
 }
