@@ -340,8 +340,6 @@ std::shared_ptr<Connection> MakeConnection(
   internal::CheckExpectedOptions<internal::CommonOptions,
                                  internal::GrpcOptions>(opts, __func__);
 
-  // TODO(#5738): Move session_pool_options once it's no longer passed to
-  // ConnectionImpl.
   opts = internal::MergeOptions(
       std::move(opts),
       spanner_internal::MakeOptions(std::move(session_pool_options)));
