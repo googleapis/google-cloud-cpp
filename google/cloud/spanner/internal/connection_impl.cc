@@ -14,16 +14,17 @@
 
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
+#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "absl/memory/memory.h"
-#include "options.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 

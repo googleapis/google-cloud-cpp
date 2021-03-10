@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "session_pool.h"
 #include <gmock/gmock.h>
 
 namespace google {

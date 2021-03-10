@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/options.h"
-#include "session_pool.h"
 #include <chrono>
 #include <string>
 
