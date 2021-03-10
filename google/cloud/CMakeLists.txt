@@ -399,6 +399,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/retry_loop.h
         internal/retry_loop_helpers.cc
         internal/retry_loop_helpers.h
+        internal/setup_context.h
         internal/streaming_read_rpc.cc
         internal/streaming_read_rpc.h
         internal/streaming_read_rpc_logging.h
