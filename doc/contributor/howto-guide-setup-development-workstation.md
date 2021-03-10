@@ -155,6 +155,13 @@ You may want to [install Docker](https://docs.docker.com/engine/installation/),
 this will allow you to use the build scripts to test on multiple platforms,
 as described in [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
+Once Docker is installed, to avoid needing to prepend `sudo` to Docker
+invocations, add yourself to the Docker group:
+
+```console
+sudo usermod -aG docker $USER
+```
+
 ## Windows
 
 If you mainly use Windows as your development environment, you need to install

@@ -29,7 +29,11 @@ if ! type w3m >/dev/null 2>&1; then
   # Try to install a HTML renderer, if this fails the script will exit. Note
   # that this runs on Kokoro, under Ubuntu, therefore the command to install
   # this package is well-known:
-  sudo apt install -y w3m
+  if [[ "${RUNNING_CI:-}" == "yes" ]]; then
+    sudo apt install -y w3m
+  else
+    echo "w3m not found. Please install it to dump the reports."
+  fi
 fi
 
 function dump_report() {
