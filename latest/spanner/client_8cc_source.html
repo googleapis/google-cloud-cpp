@@ -415,24 +415,27 @@ $(function() {
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      std::move(opts), <a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a589247a3cca0fc61a42b24ba587285a7">spanner_internal::MakeOptions</a>(session_pool_options));</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="comment">// Sets spanner defaults.</span></div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  opts = spanner_internal::DefaultOptions(std::move(opts));</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  std::vector&lt;std::shared_ptr&lt;spanner_internal::SpannerStub&gt;&gt; stubs;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="keywordtype">int</span> num_channels = opts.get&lt;internal::GrpcNumChannelsOption&gt;();</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  stubs.reserve(num_channels);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> channel_id = 0; channel_id &lt; num_channels; ++channel_id) {</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    stubs.push_back(</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  }</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;spanner_internal::ConnectionImpl&gt;(</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;      std::move(db), std::move(stubs), connection_options,</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      std::move(session_pool_options), std::move(retry_policy),</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      std::move(backoff_policy));</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  opts.set&lt;spanner_internal::SpannerRetryPolicyOption&gt;(retry_policy-&gt;clone());</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  opts.set&lt;spanner_internal::SpannerBackoffPolicyOption&gt;(</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      backoff_policy-&gt;clone());</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  std::vector&lt;std::shared_ptr&lt;spanner_internal::SpannerStub&gt;&gt; stubs;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  <span class="keywordtype">int</span> num_channels = opts.get&lt;internal::GrpcNumChannelsOption&gt;();</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;  stubs.reserve(num_channels);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> channel_id = 0; channel_id &lt; num_channels; ++channel_id) {</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    stubs.push_back(</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordflow">return</span> std::make_shared&lt;spanner_internal::ConnectionImpl&gt;(</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      std::move(db), std::move(stubs), connection_options,</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      std::move(session_pool_options), std::move(retry_policy),</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      std::move(backoff_policy));</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;}</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160; </div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeTransactionRerun_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SafeTransactionRerun.html">google::cloud::spanner_internal::v1::SafeTransactionRerun</a></div><div class="ttdoc">Define the gRPC status code semantics for rerunning transactions.</div><div class="ttdef"><b>Definition:</b> <a href="retry__policy_8h_source.html#l00059">retry_policy.h:59</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
