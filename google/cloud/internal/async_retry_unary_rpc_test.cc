@@ -407,7 +407,8 @@ TEST(AsyncRetryUnaryRpcTest, SetsTimeout) {
         };
         auto r = absl::make_unique<ReaderType>();
         EXPECT_CALL(*r, Finish).WillOnce(finish_failure);
-        // gRPC defines a trivial deleter for these, and gmock complains if
+        // gRPC defines a trivial deleter for these, and google mock complains
+        // if they are not deleted.
         auto* tmp = r.get();
         cleanup_readers.push_back(std::move(r));
         return std::unique_ptr<
