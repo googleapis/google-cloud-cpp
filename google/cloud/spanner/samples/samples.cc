@@ -30,7 +30,6 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -439,6 +438,27 @@ void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
 }
 
+google::cloud::spanner::Timestamp DatabaseNow(std::string const& project_id,
+                                              std::string const& instance_id,
+                                              std::string const& database_id) {
+  auto client = google::cloud::spanner::Client(
+      google::cloud::spanner::MakeConnection(google::cloud::spanner::Database(
+          project_id, instance_id, database_id)));
+  auto rows = client.ExecuteQuery(
+      google::cloud::spanner::SqlStatement("SELECT CURRENT_TIMESTAMP()"));
+  using RowType = std::tuple<google::cloud::spanner::Timestamp>;
+  auto row = google::cloud::spanner::GetSingularRow(
+      google::cloud::spanner::StreamOf<RowType>(rows));
+  if (!row) throw std::runtime_error(row.status().message());
+  return std::get<0>(*row);
+}
+
+google::cloud::spanner::Timestamp TimestampAdd(
+    google::cloud::spanner::Timestamp ts, absl::Duration d) {
+  auto const t = ts.get<absl::Time>().value();
+  return google::cloud::spanner::MakeTimestamp(t + d).value();
+}
+
 //! [create-database] [START spanner_create_database]
 void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
@@ -680,24 +700,11 @@ void ListDatabasesCommand(std::vector<std::string> const& argv) {
 //! [create-backup] [START spanner_create_backup]
 void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
-                  std::string const& database_id,
-                  std::string const& backup_id) {
+                  std::string const& database_id, std::string const& backup_id,
+                  google::cloud::spanner::Timestamp expire_time,
+                  google::cloud::spanner::Timestamp version_time) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  auto expire_time =
-      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
-          .value();
-  auto version_time = [&database]() {
-    auto client = google::cloud::spanner::Client(
-        google::cloud::spanner::MakeConnection(database));
-    auto rows = client.ExecuteQuery(
-        google::cloud::spanner::SqlStatement("SELECT CURRENT_TIMESTAMP()"));
-    using RowType = std::tuple<google::cloud::spanner::Timestamp>;
-    auto row = google::cloud::spanner::GetSingularRow(
-        google::cloud::spanner::StreamOf<RowType>(rows));
-    if (!row) throw std::runtime_error(row.status().message());
-    return std::get<0>(*row);
-  }();
   auto backup =
       client.CreateBackup(database, backup_id, expire_time, version_time).get();
   if (!backup) throw std::runtime_error(backup.status().message());
@@ -717,7 +724,9 @@ void CreateBackupCommand(std::vector<std::string> const& argv) {
         " <database-id> <backup-id>");
   }
   google::cloud::spanner::DatabaseAdminClient client;
-  CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+  auto now = DatabaseNow(argv[0], argv[1], argv[2]);
+  CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3],
+               TimestampAdd(now, absl::Hours(7)), now);
 }
 
 //! [restore-database] [START spanner_restore_backup]
@@ -785,12 +794,10 @@ void GetBackupCommand(std::vector<std::string> const& argv) {
 //! [update-backup] [START spanner_update_backup]
 void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
-                  std::string const& backup_id) {
+                  std::string const& backup_id,
+                  google::cloud::spanner::Timestamp expire_time) {
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
-  auto expire_time =
-      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
-          .value();
   auto backup = client.UpdateBackupExpireTime(backup_name, expire_time);
   if (!backup) throw std::runtime_error(backup.status().message());
   std::cout
@@ -806,7 +813,9 @@ void UpdateBackupCommand(std::vector<std::string> const& argv) {
         "update-backup <project-id> <instance-id> <backup-id>");
   }
   google::cloud::spanner::DatabaseAdminClient client;
-  UpdateBackup(std::move(client), argv[0], argv[1], argv[2]);
+  auto now = DatabaseNow(argv[0], argv[1], argv[2]);
+  UpdateBackup(std::move(client), argv[0], argv[1], argv[2],
+               TimestampAdd(now, absl::Hours(7)));
 }
 
 //! [delete-backup] [START spanner_delete_backup]
@@ -836,12 +845,10 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
                            std::string const& project_id,
                            std::string const& instance_id,
                            std::string const& database_id,
-                           std::string const& backup_id) {
+                           std::string const& backup_id,
+                           google::cloud::spanner::Timestamp expire_time) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  auto expire_time =
-      google::cloud::spanner::MakeTimestamp(absl::Now() + absl::Hours(7))
-          .value();
   auto f = client.CreateBackup(database, backup_id, expire_time);
   f.cancel();
   auto backup = f.get();
@@ -863,7 +870,9 @@ void CreateBackupAndCancelCommand(std::vector<std::string> const& argv) {
         " <database-id> <backup-id>");
   }
   google::cloud::spanner::DatabaseAdminClient client;
-  CreateBackupAndCancel(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+  auto now = DatabaseNow(argv[0], argv[1], argv[2]);
+  CreateBackupAndCancel(std::move(client), argv[0], argv[1], argv[2], argv[3],
+                        TimestampAdd(now, absl::Hours(7)));
 }
 
 //! [list-backups] [START spanner_list_backups]
@@ -1354,13 +1363,14 @@ void QueryWithStringParameter(google::cloud::spanner::Client client) {
 //! [END spanner_query_with_string_parameter]
 
 //! [START spanner_query_with_timestamp_parameter]
-void QueryWithTimestampParameter(google::cloud::spanner::Client client) {
+void QueryWithTimestampParameter(
+    google::cloud::spanner::Client client,
+    google::cloud::spanner::Timestamp last_update_time) {
   namespace spanner = ::google::cloud::spanner;
-  auto example_timestamp = spanner::MakeTimestamp(absl::Now()).value();
   spanner::SqlStatement select(
       "SELECT VenueId, VenueName, LastUpdateTime FROM Venues"
       " WHERE LastUpdateTime <= @last_update_time",
-      {{"last_update_time", spanner::Value(example_timestamp)}});
+      {{"last_update_time", spanner::Value(last_update_time)}});
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<spanner::Timestamp>>;
   auto rows = client.ExecuteQuery(std::move(select));
@@ -1373,6 +1383,17 @@ void QueryWithTimestampParameter(google::cloud::spanner::Client client) {
   std::cout << "Query completed for [spanner_query_with_timestamp_parameter]\n";
 }
 //! [END spanner_query_with_timestamp_parameter]
+
+void QueryWithTimestampParameterCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "query-with-timestamp-parameter <project-id> <instance-id> "
+        "<database-id>");
+  }
+  auto client = MakeSampleClient(argv[0], argv[1], argv[2]);
+  auto now = DatabaseNow(argv[0], argv[1], argv[2]);
+  QueryWithTimestampParameter(client, now);
+}
 
 //! [keyset-all]
 void DeleteAll(google::cloud::spanner::Client client) {
@@ -3006,8 +3027,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("query-with-int-parameter", QueryWithIntParameter),
       make_command_entry("query-with-string-parameter",
                          QueryWithStringParameter),
-      make_command_entry("query-with-timestamp-parameter",
-                         QueryWithTimestampParameter),
+      {"query-with-timestamp-parameter", QueryWithTimestampParameterCommand},
       make_command_entry("insert-data-with-timestamp", InsertDataWithTimestamp),
       make_command_entry("update-data-with-timestamp", UpdateDataWithTimestamp),
       make_command_entry("query-data-with-timestamp", QueryDataWithTimestamp),
@@ -3218,16 +3238,20 @@ void RunAll(bool emulator) {
                        database_id);
 
         std::cout << "\nRunning spanner_create_backup sample" << std::endl;
+        auto now = DatabaseNow(project_id, crud_instance_id, database_id);
+        auto expire_time = TimestampAdd(now, absl::Hours(7));
+        auto version_time = now;
         CreateBackup(database_admin_client, project_id, crud_instance_id,
-                     database_id, backup_id);
+                     database_id, backup_id, expire_time, version_time);
 
         std::cout << "\nRunning spanner_get_backup sample" << std::endl;
         GetBackup(database_admin_client, project_id, crud_instance_id,
                   backup_id);
 
         std::cout << "\nRunning spanner_update_backup sample" << std::endl;
+        expire_time = TimestampAdd(expire_time, absl::Hours(1));
         UpdateBackup(database_admin_client, project_id, crud_instance_id,
-                     backup_id);
+                     backup_id, expire_time);
 
         std::string restore_database_id =
             google::cloud::spanner_testing::RandomDatabaseName(generator);
@@ -3247,7 +3271,8 @@ void RunAll(bool emulator) {
         std::cout << "\nRunning spanner_cancel_backup_create sample"
                   << std::endl;
         CreateBackupAndCancel(database_admin_client, project_id,
-                              crud_instance_id, database_id, backup_id);
+                              crud_instance_id, database_id, backup_id,
+                              expire_time);
 
         std::cout << "\nRunning spanner_list_backup_operations sample"
                   << std::endl;
@@ -3388,7 +3413,8 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_query_with_timestamp_parameter sample"
             << std::endl;
-  QueryWithTimestampParameter(client);
+  QueryWithTimestampParameter(
+      client, DatabaseNow(project_id, instance_id, database_id));
 
   std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample"
             << std::endl;
