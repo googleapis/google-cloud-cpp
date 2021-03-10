@@ -161,7 +161,6 @@ TEST(AsyncRetryLoopTest, UsesBackoffPolicy) {
   EXPECT_CALL(*mock, OnCompletion()).Times(3).WillRepeatedly(Return(ms(1)));
 
   int counter = 0;
-  std::vector<ms> sleep_for;
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
@@ -280,8 +279,6 @@ class MockRetryPolicy : public RetryPolicyWithSetup {
 };
 
 TEST(AsyncRetryLoopTest, SetsTimeout) {
-  using ms = std::chrono::milliseconds;
-
   auto mock = absl::make_unique<MockRetryPolicy>();
   EXPECT_CALL(*mock, OnFailure)
       .WillOnce(Return(true))
@@ -295,7 +292,6 @@ TEST(AsyncRetryLoopTest, SetsTimeout) {
   EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock, Setup).Times(3);
 
-  std::vector<ms> sleep_for;
   AutomaticallyCreatedBackgroundThreads background;
 
   StatusOr<int> actual =
