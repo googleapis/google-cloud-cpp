@@ -262,6 +262,56 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
                              HasSubstr("test-location"))));
 }
 
+class RetryPolicyWithSetup {
+ public:
+  virtual ~RetryPolicyWithSetup() = default;
+  virtual bool OnFailure(Status const&) = 0;
+  virtual void Setup(grpc::ClientContext&) const = 0;
+  virtual bool IsExhausted() const = 0;
+  virtual bool IsPermanentFailure(Status const&) const = 0;
+};
+
+class MockRetryPolicy : public RetryPolicyWithSetup {
+ public:
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+};
+
+TEST(AsyncRetryLoopTest, SetsTimeout) {
+  using ms = std::chrono::milliseconds;
+
+  auto mock = absl::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock, OnFailure)
+      .WillOnce(Return(true))
+      .WillOnce(Return(true))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*mock, IsExhausted)
+      .WillOnce(Return(false))
+      .WillOnce(Return(false))
+      .WillOnce(Return(false))
+      .WillRepeatedly(Return(true));
+  EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock, Setup).Times(3);
+
+  std::vector<ms> sleep_for;
+  AutomaticallyCreatedBackgroundThreads background;
+
+  StatusOr<int> actual =
+      AsyncRetryLoop(
+          std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
+          TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
+          [&](google::cloud::CompletionQueue&,
+              std::unique_ptr<grpc::ClientContext>, int /*request*/) {
+            return make_ready_future(
+                StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
+          },
+          42, "error message")
+          .get();
+  ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
+}
+
 TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
   using ms = std::chrono::milliseconds;
 

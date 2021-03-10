@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <thread>
@@ -32,9 +33,11 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Return;
 
 /**
  * A class to test the retry loop.
@@ -360,6 +363,62 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("non-idempotent"));
   EXPECT_THAT(result.status().message(), HasSubstr("maybe-try-again"));
+}
+
+class RetryPolicyWithSetup {
+ public:
+  virtual ~RetryPolicyWithSetup() = default;
+  virtual bool OnFailure(Status const&) = 0;
+  virtual void Setup(grpc::ClientContext&) const = 0;
+  virtual bool IsExhausted() const = 0;
+  virtual bool IsPermanentFailure(Status const&) const = 0;
+};
+
+class MockRetryPolicy : public RetryPolicyWithSetup {
+ public:
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext&), (const, override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+};
+
+TEST(AsyncRetryUnaryRpcTest, SetsTimeout) {
+  auto mock = absl::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock, OnFailure)
+      .WillOnce(Return(true))
+      .WillOnce(Return(true))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*mock, IsPermanentFailure).WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock, Setup).Times(3);
+
+  using ReaderType = MockAsyncResponseReader<btadmin::Table>;
+  std::vector<std::unique_ptr<ReaderType>> cleanup_readers;
+
+  auto impl = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  auto fut = StartRetryAsyncUnaryRpc(
+      cq, __func__, std::move(mock),
+      RpcExponentialBackoffPolicy(10_us, 40_us, 2.0).clone(),
+      Idempotency::kIdempotent,
+      [&](grpc::ClientContext*, btadmin::GetTableRequest const&,
+          grpc::CompletionQueue*) {
+        auto finish_failure = [](btadmin::Table*, grpc::Status* status, void*) {
+          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+        };
+        auto r = absl::make_unique<ReaderType>();
+        EXPECT_CALL(*r, Finish).WillOnce(finish_failure);
+        // gRPC defines a trivial deleter for these, and gmock complains if
+        auto* tmp = r.get();
+        cleanup_readers.push_back(std::move(r));
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(tmp);
+      },
+      btadmin::GetTableRequest{});
+
+  while (!impl->empty()) impl->SimulateCompletion(true);
+
+  auto actual = fut.get();
+  ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace
