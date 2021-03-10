@@ -53,10 +53,7 @@ class ConnectionImpl : public spanner::Connection {
  public:
   ConnectionImpl(spanner::Database db,
                  std::vector<std::shared_ptr<SpannerStub>> stubs,
-                 spanner::ConnectionOptions const& options,
-                 spanner::SessionPoolOptions session_pool_options,
-                 std::unique_ptr<spanner::RetryPolicy> retry_policy,
-                 std::unique_ptr<spanner::BackoffPolicy> backoff_policy);
+                 internal::Options const& opts);
 
   spanner::RowStream Read(ReadParams) override;
   StatusOr<std::vector<spanner::ReadPartition>> PartitionRead(

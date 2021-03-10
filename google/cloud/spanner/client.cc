@@ -343,7 +343,8 @@ std::shared_ptr<Connection> MakeConnection(
   // TODO(#5738): Move session_pool_options once it's no longer passed to
   // ConnectionImpl.
   opts = internal::MergeOptions(
-      std::move(opts), spanner_internal::MakeOptions(session_pool_options));
+      std::move(opts),
+      spanner_internal::MakeOptions(std::move(session_pool_options)));
   // Sets spanner defaults.
   opts = spanner_internal::DefaultOptions(std::move(opts));
   opts.set<spanner_internal::SpannerRetryPolicyOption>(retry_policy->clone());
@@ -358,9 +359,7 @@ std::shared_ptr<Connection> MakeConnection(
         spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
   }
   return std::make_shared<spanner_internal::ConnectionImpl>(
-      std::move(db), std::move(stubs), connection_options,
-      std::move(session_pool_options), std::move(retry_policy),
-      std::move(backoff_policy));
+      std::move(db), std::move(stubs), opts);
 }
 
 }  // namespace SPANNER_CLIENT_NS

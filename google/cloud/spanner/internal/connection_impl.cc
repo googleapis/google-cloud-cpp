@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -100,26 +101,20 @@ Status MissingTransactionStatus(std::string const& operation) {
                     operation + ")");
 }
 
-ConnectionImpl::ConnectionImpl(
-    spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    spanner::ConnectionOptions const& options,
-    spanner::SessionPoolOptions session_pool_options,
-    std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy)
+ConnectionImpl::ConnectionImpl(spanner::Database db,
+                               std::vector<std::shared_ptr<SpannerStub>> stubs,
+                               internal::Options const& opts)
     : db_(std::move(db)),
-      retry_policy_prototype_(std::move(retry_policy)),
-      backoff_policy_prototype_(std::move(backoff_policy)),
-      background_threads_(options.background_threads_factory()()),
-      session_pool_(MakeSessionPool(
-          db_, std::move(stubs), background_threads_->cq(),
-          DefaultOptions(
-              MergeOptions(internal::MakeOptions(options),
-                           MakeOptions(std::move(session_pool_options))))
-              .set<SpannerRetryPolicyOption>(retry_policy_prototype_->clone())
-              .set<SpannerBackoffPolicyOption>(
-                  backoff_policy_prototype_->clone()))),
-      rpc_stream_tracing_enabled_(options.tracing_enabled("rpc-streams")),
-      tracing_options_(options.tracing_options()) {}
+      retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(
+          opts.get<SpannerBackoffPolicyOption>()->clone()),
+      background_threads_(
+          opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()),
+      session_pool_(MakeSessionPool(db_, std::move(stubs),
+                                    background_threads_->cq(), opts)),
+      rpc_stream_tracing_enabled_(internal::Contains(
+          opts.get<internal::TracingComponentsOption>(), "rpc-streams")),
+      tracing_options_(opts.get<internal::GrpcTracingOptionsOption>()) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {
   return Visit(std::move(params.transaction),
