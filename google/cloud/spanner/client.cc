@@ -355,7 +355,7 @@ inline namespace SPANNER_CLIENT_NS {
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     internal::Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptions, internal::GrpcOptions,
-                                 spanner_internal::SessionPoolOptions,
+                                 spanner_internal::SessionPoolOptionList,
                                  spanner_internal::SpannerInternalOptions>(
       opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
