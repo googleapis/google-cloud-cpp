@@ -41,6 +41,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/strerror_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/tuple_test.cc",
+    "internal/type_list_test.cc",
     "internal/user_agent_prefix_test.cc",
     "internal/utility_test.cc",
     "kms_key_name_test.cc",
