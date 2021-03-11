@@ -49,7 +49,7 @@ Status ConnectionGenerator::GenerateHeader() {
   HeaderLocalIncludes(
       {vars("idempotency_policy_header_path"), vars("stub_header_path"),
        vars("retry_traits_header_path"), "google/cloud/backoff_policy.h",
-       "google/cloud/connection_options.h",
+       "google/cloud/internal/options.h",
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
@@ -64,20 +64,6 @@ Status ConnectionGenerator::GenerateHeader() {
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
-
-  // connection options
-  HeaderPrint(  // clang-format off
-    "struct $connection_options_traits_name$ {\n"
-    "  static std::string default_endpoint();\n"
-    "  static std::string user_agent_prefix();\n"
-    "  static int default_num_channels();\n"
-    "};\n\n");
-  // clang-format on
-
-  HeaderPrint(  // clang-format off
-    "using $connection_options_name$ =\n"
-    "  google::cloud::ConnectionOptions<$connection_options_traits_name$>;\n\n");
-  // clang-format on
 
   HeaderPrint(  // clang-format off
     "using $retry_policy_name$ = google::cloud::internal::TraitBasedRetryPolicy<\n"
@@ -166,12 +152,12 @@ Status ConnectionGenerator::GenerateHeader() {
 
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    $connection_options_name$ const& options = $connection_options_name$());\n\n");
+    "    internal::Options const& options = {});\n\n");
   // clang-format on
 
   HeaderPrint({// clang-format off
    {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    $connection_options_name$ const& options,\n"
+    "    internal::Options const& options,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
     {generator_internal::HasLongrunningMethod,
@@ -217,26 +203,12 @@ Status ConnectionGenerator::GenerateCc() {
        "google/cloud/internal/retry_loop.h",
        HasStreamingReadMethod()
            ? "google/cloud/internal/streaming_read_rpc_logging.h"
-           : "",
-       "google/cloud/internal/user_agent_prefix.h"});
+           : ""});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
-
-  CcPrint(  // clang-format off
-    "std::string $connection_options_traits_name$::default_endpoint() {\n"
-    "  return \"$service_endpoint$\";\n"
-    "}\n\n");
-  // clang-format on
-
-  CcPrint(  // clang-format off
-    "std::string $connection_options_traits_name$::user_agent_prefix() {\n"
-    "  return google::cloud::internal::UserAgentPrefix();\n"
-    "}\n\n"
-    "int $connection_options_traits_name$::default_num_channels() { return 4; }\n\n");
-  // clang-format on
 
   CcPrint(  // clang-format off
     "$connection_class_name$::~$connection_class_name$() = default;\n\n");
@@ -596,7 +568,7 @@ Status ConnectionGenerator::GenerateCc() {
 
   CcPrint(  // clang-format off
     "std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    $connection_options_name$ const& options) {\n"
+    "    internal::Options const& options) {\n"
     "  return std::make_shared<$connection_class_name$Impl>(\n"
     "      $product_internal_namespace$::CreateDefault$stub_class_name$(options));\n"
     "}\n\n");
@@ -605,7 +577,7 @@ Status ConnectionGenerator::GenerateCc() {
   CcPrint(
       {// clang-format off
    {"std::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    $connection_options_name$ const& options,\n"
+    "    internal::Options const& options,\n"
     "    std::unique_ptr<$retry_policy_name$> retry_policy,\n"
     "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"},
    {generator_internal::HasLongrunningMethod,

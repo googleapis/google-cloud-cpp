@@ -21,23 +21,12 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string GoldenThingAdminConnectionOptionsTraits::default_endpoint() {
-  return "test.googleapis.com";
-}
-
-std::string GoldenThingAdminConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int GoldenThingAdminConnectionOptionsTraits::default_num_channels() { return 4; }
 
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
@@ -628,13 +617,13 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
 }  // namespace
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options) {
+    internal::Options const& options) {
   return std::make_shared<GoldenThingAdminConnectionImpl>(
       golden_internal::CreateDefaultGoldenThingAdminStub(options));
 }
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,

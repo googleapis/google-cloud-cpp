@@ -28,8 +28,10 @@ namespace cloud {
 namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+internal::Options ResolveBigQueryReadOptions(internal::Options options);
+
 std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
-    bigquery::BigQueryReadConnectionOptions const& options);
+    internal::Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery_internal

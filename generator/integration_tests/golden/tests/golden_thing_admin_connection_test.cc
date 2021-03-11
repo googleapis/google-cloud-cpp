@@ -162,22 +162,6 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
       golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());
 }
 
-TEST(GoldenThingAdminConnectionOptionsTest, DefaultEndpoint) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_EQ("test.googleapis.com", options.endpoint());
-}
-
-TEST(GoldenThingAdminConnectionOptionsTest, UserAgentPrefix) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_THAT(options.user_agent_prefix(),
-              HasSubstr("gcloud-cpp/" + version_string()));
-}
-
-TEST(GoldenThingAdminConnectionOptionsTest, DefaultNumChannels) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_EQ(4, options.num_channels());
-}
-
 /// @test Verify that we can list databases in multiple pages.
 TEST(GoldenThingAdminClientTest, ListDatabases) {
   auto mock = std::make_shared<MockGoldenStub>();

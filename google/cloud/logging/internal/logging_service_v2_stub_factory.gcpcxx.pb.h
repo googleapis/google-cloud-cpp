@@ -28,8 +28,10 @@ namespace cloud {
 namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+internal::Options ResolveLoggingServiceV2Options(internal::Options options);
+
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
-    logging::LoggingServiceV2ConnectionOptions const& options);
+    internal::Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging_internal

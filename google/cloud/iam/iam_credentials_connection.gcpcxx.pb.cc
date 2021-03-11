@@ -19,23 +19,12 @@
 #include "google/cloud/iam/iam_credentials_connection.gcpcxx.pb.h"
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string IAMCredentialsConnectionOptionsTraits::default_endpoint() {
-  return "iamcredentials.googleapis.com";
-}
-
-std::string IAMCredentialsConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int IAMCredentialsConnectionOptionsTraits::default_num_channels() { return 4; }
 
 IAMCredentialsConnection::~IAMCredentialsConnection() = default;
 
@@ -159,13 +148,13 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 }  // namespace
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    IAMCredentialsConnectionOptions const& options) {
+    internal::Options const& options) {
   return std::make_shared<IAMCredentialsConnectionImpl>(
       iam_internal::CreateDefaultIAMCredentialsStub(options));
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    IAMCredentialsConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>

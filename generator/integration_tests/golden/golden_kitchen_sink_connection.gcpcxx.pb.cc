@@ -22,23 +22,12 @@
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string GoldenKitchenSinkConnectionOptionsTraits::default_endpoint() {
-  return "iamcredentials.googleapis.com";
-}
-
-std::string GoldenKitchenSinkConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int GoldenKitchenSinkConnectionOptionsTraits::default_num_channels() { return 4; }
 
 GoldenKitchenSinkConnection::~GoldenKitchenSinkConnection() = default;
 
@@ -225,13 +214,13 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
 }  // namespace
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    GoldenKitchenSinkConnectionOptions const& options) {
+    internal::Options const& options) {
   return std::make_shared<GoldenKitchenSinkConnectionImpl>(
       golden_internal::CreateDefaultGoldenKitchenSinkStub(options));
 }
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    GoldenKitchenSinkConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<GoldenKitchenSinkRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy) {

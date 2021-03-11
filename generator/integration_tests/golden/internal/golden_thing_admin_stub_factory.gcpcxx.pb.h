@@ -28,8 +28,10 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+internal::Options ResolveGoldenThingAdminOptions(internal::Options options);
+
 std::shared_ptr<GoldenThingAdminStub>
-CreateDefaultGoldenThingAdminStub(golden::GoldenThingAdminConnectionOptions const& options);
+CreateDefaultGoldenThingAdminStub(internal::Options options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal

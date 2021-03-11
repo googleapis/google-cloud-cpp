@@ -22,7 +22,7 @@
 #include "google/cloud/bigquery/internal/big_query_read_stub.gcpcxx.pb.h"
 #include "google/cloud/bigquery/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/connection_options.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -32,15 +32,6 @@ namespace google {
 namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-struct BigQueryReadConnectionOptionsTraits {
-  static std::string default_endpoint();
-  static std::string user_agent_prefix();
-  static int default_num_channels();
-};
-
-using BigQueryReadConnectionOptions =
-    google::cloud::ConnectionOptions<BigQueryReadConnectionOptionsTraits>;
 
 using BigQueryReadRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     bigquery_internal::BigQueryReadRetryTraits>;
@@ -78,11 +69,10 @@ class BigQueryReadConnection {
 };
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options =
-        BigQueryReadConnectionOptions());
+    internal::Options const& options = {});
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>

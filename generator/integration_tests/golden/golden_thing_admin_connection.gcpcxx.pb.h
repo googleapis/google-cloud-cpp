@@ -22,8 +22,8 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/connection_options.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -35,15 +35,6 @@ namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-struct GoldenThingAdminConnectionOptionsTraits {
-  static std::string default_endpoint();
-  static std::string user_agent_prefix();
-  static int default_num_channels();
-};
-
-using GoldenThingAdminConnectionOptions =
-  google::cloud::ConnectionOptions<GoldenThingAdminConnectionOptionsTraits>;
 
 using GoldenThingAdminRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     golden_internal::GoldenThingAdminRetryTraits>;
@@ -113,10 +104,10 @@ class GoldenThingAdminConnection {
 };
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options = GoldenThingAdminConnectionOptions());
+    internal::Options const& options = {});
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy,

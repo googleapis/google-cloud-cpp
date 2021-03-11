@@ -21,23 +21,12 @@
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string BigQueryReadConnectionOptionsTraits::default_endpoint() {
-  return "bigquerystorage.googleapis.com";
-}
-
-std::string BigQueryReadConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int BigQueryReadConnectionOptionsTraits::default_num_channels() { return 4; }
 
 BigQueryReadConnection::~BigQueryReadConnection() = default;
 
@@ -166,13 +155,13 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 }  // namespace
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options) {
+    internal::Options const& options) {
   return std::make_shared<BigQueryReadConnectionImpl>(
       bigquery_internal::CreateDefaultBigQueryReadStub(options));
 }
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>

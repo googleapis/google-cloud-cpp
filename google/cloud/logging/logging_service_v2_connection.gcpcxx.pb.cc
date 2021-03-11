@@ -20,25 +20,12 @@
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace logging {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string LoggingServiceV2ConnectionOptionsTraits::default_endpoint() {
-  return "logging.googleapis.com";
-}
-
-std::string LoggingServiceV2ConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int LoggingServiceV2ConnectionOptionsTraits::default_num_channels() {
-  return 4;
-}
 
 LoggingServiceV2Connection::~LoggingServiceV2Connection() = default;
 
@@ -266,13 +253,13 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
 }  // namespace
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    LoggingServiceV2ConnectionOptions const& options) {
+    internal::Options const& options) {
   return std::make_shared<LoggingServiceV2ConnectionImpl>(
       logging_internal::CreateDefaultLoggingServiceV2Stub(options));
 }
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    LoggingServiceV2ConnectionOptions const& options,
+    internal::Options const& options,
     std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>

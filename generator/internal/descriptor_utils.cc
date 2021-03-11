@@ -478,6 +478,10 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "retry_traits", ".h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
+  vars["service_endpoint_env_var"] = absl::StrCat(
+      "GOOGLE_CLOUD_CPP_",
+      absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
+      "_ENDPOINT");
   vars["service_name"] = descriptor.name();
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",

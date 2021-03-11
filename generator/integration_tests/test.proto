@@ -739,7 +739,7 @@ enum RestoreSourceType {
 // tokens, OpenID Connect ID tokens, self-signed JSON Web Tokens (JWTs), and
 // more.
 service GoldenKitchenSink {
-  option (google.api.default_host) = "iamcredentials.googleapis.com";
+  option (google.api.default_host) = "goldenkitchensink.googleapis.com";
   option (google.api.oauth_scopes) = "https://www.googleapis.com/auth/cloud-platform";
 
   // Generates an OAuth 2.0 access token for a service account.
