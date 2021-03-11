@@ -3133,7 +3133,12 @@ int RunOneCommand(std::vector<std::string> argv) {
   return 0;
 }
 
-void RunAll(bool emulator) {
+void RunAllSlowInstanceTests(
+    google::cloud::spanner::InstanceAdminClient& instance_admin_client,
+    google::cloud::spanner::DatabaseAdminClient& database_admin_client,
+    google::cloud::internal::DefaultPRNG& generator,
+    std::string const& project_id, std::string const& test_iam_service_account,
+    bool const emulator) {
   auto const run_slow_integration_tests =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
@@ -3142,6 +3147,92 @@ void RunAll(bool emulator) {
       run_slow_integration_tests.find("backup") != std::string::npos;
   auto const run_slow_instance_tests =
       run_slow_integration_tests.find("instance") != std::string::npos;
+
+  if (!run_slow_instance_tests) return;
+
+  auto const crud_instance_id =
+      google::cloud::spanner_testing::RandomInstanceName(generator);
+  auto const database_id =
+      google::cloud::spanner_testing::RandomDatabaseName(generator);
+
+  std::cout << "\nRunning create-instance sample" << std::endl;
+  PickLocationAndCreateInstance(instance_admin_client, project_id,
+                                crud_instance_id, "Test Instance");
+  if (!emulator) {
+    std::cout << "\nRunning update-instance sample" << std::endl;
+    UpdateInstance(instance_admin_client, project_id, crud_instance_id,
+                   "New name");
+    std::cout << "\nRunning (instance) add-database-reader sample" << std::endl;
+    AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                      "serviceAccount:" + test_iam_service_account);
+    std::cout << "\nRunning (instance) remove-database-reader sample"
+              << std::endl;
+    RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                         "serviceAccount:" + test_iam_service_account);
+
+    if (run_slow_backup_tests) {
+      std::string backup_id =
+          google::cloud::spanner_testing::RandomBackupName(generator);
+
+      std::cout << "\nRunning spanner_create_database sample" << std::endl;
+      CreateDatabase(database_admin_client, project_id, crud_instance_id,
+                     database_id);
+
+      std::cout << "\nRunning spanner_create_backup sample" << std::endl;
+      auto now = DatabaseNow(
+          MakeSampleClient(project_id, crud_instance_id, database_id));
+      auto expire_time = TimestampAdd(now, absl::Hours(7));
+      auto version_time = now;
+      CreateBackup(database_admin_client, project_id, crud_instance_id,
+                   database_id, backup_id, expire_time, version_time);
+
+      std::cout << "\nRunning spanner_get_backup sample" << std::endl;
+      GetBackup(database_admin_client, project_id, crud_instance_id, backup_id);
+
+      std::cout << "\nRunning spanner_update_backup sample" << std::endl;
+      expire_time = TimestampAdd(expire_time, absl::Hours(1));
+      UpdateBackup(database_admin_client, project_id, crud_instance_id,
+                   backup_id, expire_time);
+
+      std::string restore_database_id =
+          google::cloud::spanner_testing::RandomDatabaseName(generator);
+
+      std::cout << "\nRunning spanner_restore_backup sample" << std::endl;
+      RestoreDatabase(database_admin_client, project_id, crud_instance_id,
+                      restore_database_id, backup_id);
+
+      std::cout << "\nRunning spanner_drop_database sample" << std::endl;
+      DropDatabase(database_admin_client, project_id, crud_instance_id,
+                   restore_database_id);
+
+      std::cout << "\nRunning spanner_delete_backup sample" << std::endl;
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   backup_id);
+
+      std::cout << "\nRunning spanner_cancel_backup_create sample" << std::endl;
+      CreateBackupAndCancel(database_admin_client, project_id, crud_instance_id,
+                            database_id, backup_id, expire_time);
+
+      std::cout << "\nRunning spanner_list_backup_operations sample"
+                << std::endl;
+      ListBackupOperations(database_admin_client, project_id, crud_instance_id,
+                           database_id);
+
+      std::cout << "\nRunning spanner_list_backups sample" << std::endl;
+      ListBackups(database_admin_client, project_id, crud_instance_id);
+
+      std::cout << "\nRunning spanner_list_database_operations sample"
+                << std::endl;
+      ListDatabaseOperations(database_admin_client, project_id,
+                             crud_instance_id);
+    }
+  }
+
+  std::cout << "\nRunning delete-instance sample" << std::endl;
+  DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+}
+
+void RunAll(bool emulator) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   if (project_id.empty()) {
@@ -3206,88 +3297,9 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning PickInstanceLocation()" << std::endl;
   PickInstanceLocation(instance_admin_client, project_id);
 
-  if (run_slow_instance_tests) {
-    std::string crud_instance_id =
-        google::cloud::spanner_testing::RandomInstanceName(generator);
-    std::cout << "\nRunning create-instance sample" << std::endl;
-    PickLocationAndCreateInstance(instance_admin_client, project_id,
-                                  crud_instance_id, "Test Instance");
-    if (!emulator) {
-      std::cout << "\nRunning update-instance sample" << std::endl;
-      UpdateInstance(instance_admin_client, project_id, crud_instance_id,
-                     "New name");
-      std::cout << "\nRunning (instance) add-database-reader sample"
-                << std::endl;
-      AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
-                        "serviceAccount:" + test_iam_service_account);
-      std::cout << "\nRunning (instance) remove-database-reader sample"
-                << std::endl;
-      RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
-                           "serviceAccount:" + test_iam_service_account);
-      if (run_slow_backup_tests) {
-        std::string backup_id =
-            google::cloud::spanner_testing::RandomBackupName(generator);
-
-        std::cout << "\nRunning spanner_create_database sample" << std::endl;
-        CreateDatabase(database_admin_client, project_id, crud_instance_id,
-                       database_id);
-
-        std::cout << "\nRunning spanner_create_backup sample" << std::endl;
-        auto now =
-            DatabaseNow(MakeSampleClient(project_id, instance_id, database_id));
-        auto expire_time = TimestampAdd(now, absl::Hours(7));
-        auto version_time = now;
-        CreateBackup(database_admin_client, project_id, crud_instance_id,
-                     database_id, backup_id, expire_time, version_time);
-
-        std::cout << "\nRunning spanner_get_backup sample" << std::endl;
-        GetBackup(database_admin_client, project_id, crud_instance_id,
-                  backup_id);
-
-        std::cout << "\nRunning spanner_update_backup sample" << std::endl;
-        expire_time = TimestampAdd(expire_time, absl::Hours(1));
-        UpdateBackup(database_admin_client, project_id, crud_instance_id,
-                     backup_id, expire_time);
-
-        std::string restore_database_id =
-            google::cloud::spanner_testing::RandomDatabaseName(generator);
-
-        std::cout << "\nRunning spanner_restore_backup sample" << std::endl;
-        RestoreDatabase(database_admin_client, project_id, crud_instance_id,
-                        restore_database_id, backup_id);
-
-        std::cout << "\nRunning spanner_drop_database sample" << std::endl;
-        DropDatabase(database_admin_client, project_id, crud_instance_id,
-                     restore_database_id);
-
-        std::cout << "\nRunning spanner_delete_backup sample" << std::endl;
-        DeleteBackup(database_admin_client, project_id, crud_instance_id,
-                     backup_id);
-
-        std::cout << "\nRunning spanner_cancel_backup_create sample"
-                  << std::endl;
-        CreateBackupAndCancel(database_admin_client, project_id,
-                              crud_instance_id, database_id, backup_id,
-                              expire_time);
-
-        std::cout << "\nRunning spanner_list_backup_operations sample"
-                  << std::endl;
-        ListBackupOperations(database_admin_client, project_id,
-                             crud_instance_id, database_id);
-
-        std::cout << "\nRunning spanner_list_backups sample" << std::endl;
-        ListBackups(database_admin_client, project_id, crud_instance_id);
-
-        std::cout << "\nRunning spanner_list_database_operations sample"
-                  << std::endl;
-        ListDatabaseOperations(database_admin_client, project_id,
-                               crud_instance_id);
-      }
-    }
-
-    std::cout << "\nRunning delete-instance sample" << std::endl;
-    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
-  }
+  RunAllSlowInstanceTests(instance_admin_client, database_admin_client,
+                          generator, project_id, test_iam_service_account,
+                          emulator);
 
   if (!emulator) {
     std::cout << "\nRunning (instance) test-iam-permissions sample"
