@@ -326,9 +326,10 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
     SessionPoolOptions session_pool_options) {
-  return MakeConnection(db, connection_options, std::move(session_pool_options),
-                        spanner_internal::DefaultConnectionRetryPolicy(),
-                        spanner_internal::DefaultConnectionBackoffPolicy());
+  auto opts = internal::MergeOptions(
+      internal::MakeOptions(connection_options),
+      spanner_internal::MakeOptions(std::move(session_pool_options)));
+  return spanner_internal::MakeConnection(db, std::move(opts));
 }
 
 std::shared_ptr<Connection> MakeConnection(
@@ -336,19 +337,28 @@ std::shared_ptr<Connection> MakeConnection(
     SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  auto opts = internal::MakeOptions(connection_options);
-  internal::CheckExpectedOptions<internal::CommonOptionList,
-                                 internal::GrpcOptionList>(opts, __func__);
-
-  opts = internal::MergeOptions(
-      std::move(opts),
+  auto opts = internal::MergeOptions(
+      internal::MakeOptions(connection_options),
       spanner_internal::MakeOptions(std::move(session_pool_options)));
-  // Sets spanner defaults.
-  opts = spanner_internal::DefaultOptions(std::move(opts));
   opts.set<spanner_internal::SpannerRetryPolicyOption>(retry_policy->clone());
   opts.set<spanner_internal::SpannerBackoffPolicyOption>(
       backoff_policy->clone());
+  return spanner_internal::MakeConnection(db, std::move(opts));
+}
 
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
+                                                    internal::Options opts) {
+  internal::CheckExpectedOptions<internal::CommonOptions, internal::GrpcOptions,
+                                 spanner_internal::SessionPoolOptions,
+                                 spanner_internal::SpannerInternalOptions>(
+      opts, __func__);
+  opts = spanner_internal::DefaultOptions(std::move(opts));
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<internal::GrpcNumChannelsOption>();
   stubs.reserve(num_channels);
@@ -361,6 +371,6 @@ std::shared_ptr<Connection> MakeConnection(
 }
 
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google

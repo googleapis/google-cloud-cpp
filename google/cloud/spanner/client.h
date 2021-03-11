@@ -676,6 +676,38 @@ std::shared_ptr<Connection> MakeConnection(
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
+
+namespace spanner_internal {
+inline namespace SPANNER_CLIENT_NS {
+
+/**
+ * Returns a Connection object that can be used for interacting with Spanner.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `Client` instance, and methods should be invoked on `Client`.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `Connection`. Expected options are any of the following:
+ *
+ * - `google::cloud::internal::CommonOptions`
+ * - `google::cloud::internal::GrpcOptions`
+ * - `google::cloud::spanner_internal::SessionPoolOptions`
+ *
+ * @note Unrecognized options will be ignored. To debug issues with options set
+ *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected
+ *     options will be logged.
+ *
+ * @see `Connection`
+ *
+ * @param db See `Database`.
+ * @param opts (optional) configure the `Connection` created by
+ *     this function.
+ */
+std::shared_ptr<spanner::Connection> MakeConnection(
+    spanner::Database const& db, internal::Options opts = {});
+
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -391,6 +391,12 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
 
   conn = MakeConnection(db, ConnectionOptions(), SessionPoolOptions());
   EXPECT_NE(conn, nullptr);
+
+  conn = spanner_internal::MakeConnection(db);
+  EXPECT_NE(conn, nullptr);
+
+  conn = spanner_internal::MakeConnection(db, internal::Options{});
+  EXPECT_NE(conn, nullptr);
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {
