@@ -40,14 +40,14 @@ void TestGrpcOption(ValueType const& expected) {
 
 }  // namespace
 
-TEST(GrpcOptions, RegularOptions) {
+TEST(GrpcOptionList, RegularOptions) {
   TestGrpcOption<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   TestGrpcOption<GrpcNumChannelsOption>(42);
   TestGrpcOption<GrpcChannelArgumentsOption>({{"foo", "bar"}, {"baz", "quux"}});
   TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
 }
 
-TEST(GrpcOptions, GrpcBackgroundThreadsFactoryOption) {
+TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
   struct Fake : BackgroundThreads {
     CompletionQueue cq() const override { return {}; }
   };
@@ -62,7 +62,7 @@ TEST(GrpcOptions, GrpcBackgroundThreadsFactoryOption) {
   EXPECT_TRUE(invoked);
 }
 
-TEST(GrpcOptions, DefaultBackgroundThreadsFactory) {
+TEST(GrpcOptionList, DefaultBackgroundThreadsFactory) {
   auto f = DefaultBackgroundThreadsFactory();
   auto* tp =
       dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(f.get());
@@ -70,22 +70,22 @@ TEST(GrpcOptions, DefaultBackgroundThreadsFactory) {
   EXPECT_EQ(1, tp->pool_size());
 }
 
-TEST(GrpcOptions, Expected) {
+TEST(GrpcOptionList, Expected) {
   testing_util::ScopedLog log;
   Options opts;
   opts.set<GrpcNumChannelsOption>(42);
-  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
-TEST(GrpcOptions, Unexpected) {
+TEST(GrpcOptionList, Unexpected) {
   struct UnexpectedOption {
     using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<UnexpectedOption>({});
-  internal::CheckExpectedOptions<GrpcOptions>(opts, "caller");
+  internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));

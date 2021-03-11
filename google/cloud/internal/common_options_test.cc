@@ -39,28 +39,28 @@ void TestOption(ValueType const& expected) {
 
 }  // namespace
 
-TEST(CommonOptions, RegularOptions) {
+TEST(CommonOptionList, RegularOptions) {
   TestOption<EndpointOption>("foo.googleapis.com");
   TestOption<UserAgentProductsOption>({"foo", "bar"});
   TestOption<TracingComponentsOption>({"foo", "bar", "baz"});
 }
 
-TEST(CommonOptions, Expected) {
+TEST(CommonOptionList, Expected) {
   testing_util::ScopedLog log;
   Options opts;
   opts.set<EndpointOption>("foo.googleapis.com");
-  internal::CheckExpectedOptions<CommonOptions>(opts, "caller");
+  internal::CheckExpectedOptions<CommonOptionList>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
-TEST(CommonOptions, Unexpected) {
+TEST(CommonOptionList, Unexpected) {
   struct UnexpectedOption {
     using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<UnexpectedOption>({});
-  internal::CheckExpectedOptions<CommonOptions>(opts, "caller");
+  internal::CheckExpectedOptions<CommonOptionList>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));

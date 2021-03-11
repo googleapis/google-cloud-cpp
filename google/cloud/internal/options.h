@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONS_H
 
+#include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
 #include "absl/types/any.h"
 #include <set>
@@ -204,22 +205,35 @@ class Options {
   std::unordered_map<std::type_index, absl::any> m_;
 };
 
+/**
+ * A template to hold a list of "option" types.
+ *
+ * This can be a useful way to create meaningful lists of options. For example,
+ * there could be a list containing all the gRPC options. Or a list of all
+ * ProductX options. This gives us a way to link to lists of options with
+ * doxygen, and to do some checking about what options a function may expect.
+ */
+template <typename... T>
+using OptionList = TypeList<T...>;
+
 }  // namespace internal
 
 namespace internal {
 
-// Wraps `T` in a `std::tuple`, unless it was already a tuple.
+// Wraps `T` in a `OptionList`, unless it was already one.
 template <typename T>
-struct FlatTuple {
-  using Type = std::tuple<T>;
+struct WrapTypeList {
+  using Type = OptionList<T>;
 };
 template <typename... T>
-struct FlatTuple<std::tuple<T...>> {
-  using Type = std::tuple<T...>;  // Note: Doesn't work w/ nested tuples.
+struct WrapTypeList<OptionList<T...>> {
+  using Type = OptionList<T...>;  // Note: Doesn't work w/ nested OptionLists.
 };
+template <typename T>
+using WrapTypeListT = typename WrapTypeList<T>::Type;
 
 template <typename... T>
-void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
+void CheckExpectedOptionsImpl(OptionList<T...> const&, Options const& opts,
                               char const* caller) {
   CheckExpectedOptionsImpl({typeid(T)...}, opts, caller);
 }
@@ -232,21 +246,21 @@ void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
  * on the console. Set the environment variable
  * `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` to enable logging.
  *
- * Options may be specified directly or as a collection within a `std::tuple`.
+ * Options may be specified directly or as a collection in an `OptionList`.
  * For example,
  *
  * @code
  * struct FooOption { int value; };
  * struct BarOption { int value; };
- * using OptionTuple = std::tuple<FooOption, BarOption>;
+ * using MyOptions = OptionList<FooOption, BarOption>;
  *
  * struct BazOption { int value; };
  *
  * // All valid ways to call this with varying expectations.
  * CheckExpectedOptions<FooOption>(opts, "test caller");
  * CheckExpectedOptions<FooOption, BarOption>(opts, "test caller");
- * CheckExpectedOptions<OptionTuple>(opts, "test caller");
- * CheckExpectedOptions<BazOption, OptionTuple>(opts, "test caller");
+ * CheckExpectedOptions<MyOptions>(opts, "test caller");
+ * CheckExpectedOptions<BazOption, MyOptions>(opts, "test caller");
  * @endcode
  *
  * @param opts the `Options` to check.
@@ -255,8 +269,8 @@ void CheckExpectedOptionsImpl(std::tuple<T...> const&, Options const& opts,
  */
 template <typename... T>
 void CheckExpectedOptions(Options const& opts, char const* caller) {
-  using Tuple = decltype(std::tuple_cat(typename FlatTuple<T>::Type{}...));
-  CheckExpectedOptionsImpl(Tuple{}, opts, caller);
+  using ExpectedTypes = TypeListCatT<WrapTypeListT<T>...>;
+  CheckExpectedOptionsImpl(ExpectedTypes{}, opts, caller);
 }
 
 /**

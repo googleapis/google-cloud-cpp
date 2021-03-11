@@ -106,6 +106,14 @@ struct SessionPoolLabelsOption {
   using Type = std::map<std::string, std::string>;
 };
 
+/**
+ * List of all SessionPool options.
+ */
+using SessionPoolOptionList = internal::OptionList<
+    SessionPoolMinSessionsOption, SessionPoolMaxSessionsPerChannelOption,
+    SessionPoolMaxIdleSessionsOption, SessionPoolActionOnExhaustionOption,
+    SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
