@@ -302,7 +302,7 @@ cd "${PROJECT_ROOT}"
 if [[ "${RUNNING_CI:-}" == "yes" ]]; then
   echo "================================================================"
   io::log_yellow "Capture Docker version to troubleshoot."
-  sudo docker version
+  docker version
 fi
 
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
@@ -633,8 +633,8 @@ else
 fi
 
 # Run the docker image with that giant collection of flags.
-echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
-sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
+echo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
+docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
 if [[ "${exit_status}" -eq 0 ]]; then

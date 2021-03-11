@@ -124,6 +124,6 @@ codecov_flags=(
 )
 # Run the upload script from codecov.io within a Docker container.
 time {
-  sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
+  docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
     "/bin/bash <(curl -s https://codecov.io/bash) ${codecov_flags[*]}"
 }
