@@ -16,10 +16,10 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/options.h"
+#include "google/cloud/internal/user_agent_prefix.h"
 #include <chrono>
 #include <string>
 
@@ -50,11 +50,7 @@ internal::Options DefaultOptions(internal::Options opts) {
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<internal::UserAgentProductsOption>();
-  products.insert(products.begin(),
-                  "gcloud-cpp/" + google::cloud::spanner::VersionString() +
-                      " (" + google::cloud::internal::CompilerId() + "-" +
-                      google::cloud::internal::CompilerVersion() + "; " +
-                      google::cloud::internal::CompilerFeatures() + ")");
+  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 
   // Sets Spanner-specific options from session_pool_options.h
   if (!opts.has<spanner_internal::SessionPoolMaxSessionsPerChannelOption>()) {
