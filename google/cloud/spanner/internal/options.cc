@@ -101,6 +101,33 @@ internal::Options DefaultOptions(internal::Options opts) {
   return opts;
 }
 
+// Sets the options that have different defaults for admin connections, then
+// uses `DefaultOptions()` to set all the remaining defaults.
+internal::Options DefaultAdminOptions(internal::Options opts) {
+  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
+    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+        std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
+            std::chrono::minutes(30)));
+  }
+  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+    auto constexpr kBackoffScaling = 2.0;
+    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+        std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
+            std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling));
+  }
+  if (!opts.has<spanner_internal::SpannerPollingPolicyOption>()) {
+    auto constexpr kBackoffScaling = 2.0;
+    opts.set<spanner_internal::SpannerPollingPolicyOption>(
+        std::make_shared<google::cloud::spanner::GenericPollingPolicy<>>(
+            google::cloud::spanner::LimitedTimeRetryPolicy(
+                std::chrono::minutes(30)),
+            google::cloud::spanner::ExponentialBackoffPolicy(
+                std::chrono::seconds(10), std::chrono::minutes(5),
+                kBackoffScaling)));
+  }
+  return DefaultOptions(std::move(opts));
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 }  // namespace cloud

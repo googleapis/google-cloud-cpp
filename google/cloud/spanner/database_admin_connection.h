@@ -352,16 +352,34 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    std::shared_ptr<DatabaseAdminStub> stub,
-    spanner::ConnectionOptions const& options);
 
+/**
+ * Returns an DatabaseAdminConnection object that can be used for interacting
+ * with Cloud Spanner's admin APIs.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `DatabaseAdminClient` instance.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DatabaseAdminConnection`. Expected options are any of the
+ * following:
+ *
+ * - `google::cloud::internal::CommonOptionList`
+ * - `google::cloud::internal::GrpcOptionList`
+ *
+ * @see `DatabaseAdminConnection`
+ *
+ * @param opts (optional) configure the `DatabaseAdminConnection` created by
+ *     this function.
+ */
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    std::shared_ptr<DatabaseAdminStub> stub,
-    spanner::ConnectionOptions const& options,
-    std::unique_ptr<spanner::RetryPolicy> retry_policy,
-    std::unique_ptr<spanner::BackoffPolicy> backoff_policy,
-    std::unique_ptr<spanner::PollingPolicy> polling_policy);
+    internal::Options opts = {});
+
+/// Internal-only factory that allows us to inject mock stubs for testing.
+std::shared_ptr<spanner::DatabaseAdminConnection>
+MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
+                                      internal::Options opts);
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
