@@ -47,6 +47,12 @@ struct SpannerBackoffPolicyOption {
 };
 
 /**
+ * List of internal-only options.
+ */
+using SpannerInternalOptionList =
+    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption>;
+
+/**
  * Returns an `Options` with the appropriate defaults for Spanner.
  *
  * Environment variables and the optional @p opts argument may be consulted to

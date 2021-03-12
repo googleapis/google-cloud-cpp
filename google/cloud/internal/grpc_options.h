@@ -22,7 +22,6 @@
 #include <grpcpp/grpcpp.h>
 #include <map>
 #include <string>
-#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -104,12 +103,12 @@ std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory();
  * @code
  * Options opts;
  * opts.set<GrpcCredentialOption>(...);
- * internal::CheckExpectedOptions<internal::GrpcOptions>(
+ * internal::CheckExpectedOptions<internal::GrpcOptionList>(
  *     opts, "some factory function");
  * @endcode
  */
-using GrpcOptions =
-    std::tuple<GrpcCredentialOption, GrpcNumChannelsOption,
+using GrpcOptionList =
+    OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
                GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
                GrpcBackgroundThreadsFactoryOption>;
 

@@ -17,7 +17,6 @@
 #include <gmock/gmock.h>
 #include <set>
 #include <string>
-#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -42,7 +41,7 @@ struct StringOption {
   using Type = std::string;
 };
 
-using TestOptionsTuple = std::tuple<IntOption, BoolOption, StringOption>;
+using TestOptionList = OptionList<IntOption, BoolOption, StringOption>;
 
 // This is how customers should set a simple options.
 TEST(OptionsUseCase, CustomerSettingSimpleOptions) {
@@ -222,7 +221,7 @@ TEST(CheckUnexpectedOptions, BasicOptionsList) {
   Options opts;
   opts.set<IntOption>({});
   opts.set<StringOption>({});
-  internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
+  internal::CheckExpectedOptions<TestOptionList>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
@@ -235,7 +234,7 @@ TEST(CheckUnexpectedOptions, OptionsListPlusOne) {
   opts.set<IntOption>({});
   opts.set<StringOption>({});
   opts.set<FooOption>({});
-  internal::CheckExpectedOptions<FooOption, TestOptionsTuple>(opts, "caller");
+  internal::CheckExpectedOptions<FooOption, TestOptionList>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
@@ -248,7 +247,7 @@ TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
   opts.set<IntOption>({});
   opts.set<StringOption>({});
   opts.set<FooOption>({});
-  internal::CheckExpectedOptions<TestOptionsTuple>(opts, "caller");
+  internal::CheckExpectedOptions<TestOptionList>(opts, "caller");
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("caller: Unexpected option.+FooOption")));
 }

@@ -337,8 +337,8 @@ std::shared_ptr<Connection> MakeConnection(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto opts = internal::MakeOptions(connection_options);
-  internal::CheckExpectedOptions<internal::CommonOptions,
-                                 internal::GrpcOptions>(opts, __func__);
+  internal::CheckExpectedOptions<internal::CommonOptionList,
+                                 internal::GrpcOptionList>(opts, __func__);
 
   opts = internal::MergeOptions(
       std::move(opts),

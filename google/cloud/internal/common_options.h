@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
 
+#include "google/cloud/internal/options.h"
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
-#include <tuple>
 #include <vector>
 
 namespace google {
@@ -79,12 +79,12 @@ namespace internal {
  * @code
  * Options opts;
  * opts.set<EndpointOption>("...");
- * internal::CheckExpectedOptions<internal::CommonOptions>(
+ * internal::CheckExpectedOptions<internal::CommonOptionList>(
  *     opts, "some factory function");
  * @endcode
  */
-using CommonOptions = std::tuple<EndpointOption, UserAgentProductsOption,
-                                 TracingComponentsOption>;
+using CommonOptionList = OptionList<EndpointOption, UserAgentProductsOption,
+                                    TracingComponentsOption>;
 }  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
