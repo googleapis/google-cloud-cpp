@@ -25,80 +25,117 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util_internal {
-// Allows the matchers to work with `Status` or `StatusOr<T>`
-inline ::google::cloud::Status const& GetStatus(
-    ::google::cloud::Status const& status) {
-  return status;
-}
 
-template <typename T>
-inline ::google::cloud::Status const& GetStatus(
-    ::google::cloud::StatusOr<T> const& status) {
-  return status.status();
-}
+/*
+ * Implementation of the StatusIs() matcher for a Status, a StatusOr<T>,
+ * or a reference to either of them.
+ */
+class StatusIsMatcher {
+ public:
+  template <typename CodeMatcher, typename MessageMatcher>
+  StatusIsMatcher(CodeMatcher&& code_matcher, MessageMatcher&& message_matcher)
+      : code_matcher_(::testing::MatcherCast<StatusCode>(
+            std::forward<CodeMatcher>(code_matcher))),
+        message_matcher_(::testing::MatcherCast<std::string const&>(
+            std::forward<MessageMatcher>(message_matcher))) {}
+
+  bool MatchAndExplain(Status const& status,
+                       ::testing::MatchResultListener* listener) const;
+
+  template <typename T>
+  bool MatchAndExplain(StatusOr<T> const& value,
+                       ::testing::MatchResultListener* listener) const {
+    // Because StatusOr<T> does not have a printer, gMock will render the
+    // value using RawBytesPrinter as "N-byte object <...>", which is not
+    // very useful. Accordingly, we print the enclosed Status so that a
+    // failing expection does not require further explanation.
+    Status const& status = value.status();
+    *listener << "whose status is " << ::testing::PrintToString(status);
+
+    ::testing::StringMatchResultListener inner_listener;
+    auto const match = MatchAndExplain(status, &inner_listener);
+    auto const explanation = inner_listener.str();
+    if (!explanation.empty()) *listener << ", " << explanation;
+    return match;
+  }
+
+  void DescribeTo(std::ostream* os) const;
+  void DescribeNegationTo(std::ostream* os) const;
+
+ private:
+  ::testing::Matcher<StatusCode> const code_matcher_;
+  ::testing::Matcher<std::string const&> const message_matcher_;
+};
+
 }  // namespace testing_util_internal
 
 namespace testing_util {
 
 /**
- * Match the `code` and `message` of a `google::cloud::Status`.
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
+ * code matches `code_matcher` and whose message matches `message_matcher`.
  *
- * example:
- *
- * ```
- * Status status = ...;
- * EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument,
- *                              testing::HasSubstr("message substring"));
- * ```
+ * @par Example:
+ * @code
+ *   Status status = ...;
+ *   EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument,
+ *                                testing::HasSubstr("no rows"));
+ * @endcode
  */
-// NOLINTNEXTLINE(readability-redundant-string-init)
-MATCHER_P2(StatusIs, code_matcher, message_matcher, "") {
-  ::testing::StringMatchResultListener code_listener;
-  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
-  bool result = true;
-  if (!::testing::MatcherCast<::google::cloud::StatusCode const&>(code_matcher)
-           .MatchAndExplain(status.code(), &code_listener)) {
-    std::string code_explanation = code_listener.str();
-    if (code_explanation.empty()) {
-      code_explanation = "does not match expected value";
-    }
-    result = false;
-    *result_listener << "code " << status.code() << " " << code_explanation;
-  }
-  ::testing::StringMatchResultListener message_listener;
-  if (!::testing::MatcherCast<std::string const&>(message_matcher)
-           .MatchAndExplain(status.message(), &message_listener)) {
-    if (!result) {
-      *result_listener << "; ";
-    }
-    result = false;
-    std::string message_explanation = message_listener.str();
-    if (message_explanation.empty()) {
-      message_explanation = "does not match expected value";
-    }
-    *result_listener << "message '" << status.message() << "' "
-                     << message_explanation;
-  }
-  return result;
+template <typename CodeMatcher, typename MessageMatcher>
+::testing::PolymorphicMatcher<testing_util_internal::StatusIsMatcher> StatusIs(
+    CodeMatcher&& code_matcher, MessageMatcher&& message_matcher) {
+  return ::testing::MakePolymorphicMatcher(
+      testing_util_internal::StatusIsMatcher(
+          std::forward<CodeMatcher>(code_matcher),
+          std::forward<MessageMatcher>(message_matcher)));
 }
 
-/// Match the `code` of a `google::cloud::Status`, disregarding the message
-// NOLINTNEXTLINE(readability-redundant-string-init)
-MATCHER_P(StatusIs, code_matcher, "") {
-  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
-  return ::testing::MatcherCast<::google::cloud::Status const&>(
-             StatusIs(code_matcher, ::testing::_))
-      .MatchAndExplain(status, result_listener);
+/**
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
+ * code matches `code_matcher` and whose message matches anything.
+ *
+ * @par Example:
+ * @code
+ *   Status status = ...;
+ *   EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+ * @endcode
+ */
+template <typename CodeMatcher>
+::testing::PolymorphicMatcher<testing_util_internal::StatusIsMatcher> StatusIs(
+    CodeMatcher&& code_matcher) {
+  return StatusIs(std::forward<CodeMatcher>(code_matcher), ::testing::_);
 }
 
-/// Shorthand for `StatusIs(StatusCode::kOk)`
-// NOLINTNEXTLINE(readability-redundant-string-init)
-MATCHER(IsOk, "") {
-  auto const& status = ::google::cloud::testing_util_internal::GetStatus(arg);
-  return ::testing::MatcherCast<::google::cloud::Status const&>(
-             StatusIs(::google::cloud::StatusCode::kOk, ::testing::_))
-      .MatchAndExplain(status, result_listener);
+/**
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
+ * code is OK and whose message matches anything.
+ *
+ * @par Example:
+ * @code
+ *   Status status = ...;
+ *   EXPECT_THAT(status, IsOk());
+ * @endcode
+ */
+inline ::testing::PolymorphicMatcher<testing_util_internal::StatusIsMatcher>
+IsOk() {
+  // We could use ::testing::IsEmpty() here, but historically have not.
+  return StatusIs(StatusCode::kOk, ::testing::_);
 }
+
+/**
+ * Expectations that a `Status` or `StatusOr<T>` has an OK code.
+ *
+ * @par Example:
+ * @code
+ *   Status status = ...;
+ *   EXPECT_STATUS_OK(status);
+ * @endcode
+ */
+#define EXPECT_STATUS_OK(expression) \
+  EXPECT_THAT(expression, ::google::cloud::testing_util::IsOk())
+#define ASSERT_STATUS_OK(expression) \
+  ASSERT_THAT(expression, ::google::cloud::testing_util::IsOk())
 
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
