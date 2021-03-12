@@ -101,7 +101,7 @@ internal::Options DefaultOptions(internal::Options opts) {
   return opts;
 }
 
-// Sets the options that have differnt defaults for admin connections, then
+// Sets the options that have different defaults for admin connections, then
 // uses `DefaultOptions()` to set all the remaining defaults.
 internal::Options DefaultAdminOptions(internal::Options opts) {
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
