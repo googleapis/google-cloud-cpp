@@ -47,7 +47,7 @@ TEST(AssertOkTest, AssertionFailed) {
         Status status(StatusCode::kInternal, "oh no!");
         ASSERT_STATUS_OK(status);
       },
-      "Value of: status\nExpected: is OK\nActual: oh no! [INTERNAL]");
+      "\n  Actual: oh no! [INTERNAL]");
 }
 
 TEST(AssertOkTest, AssertionFailedStatusOr) {
@@ -56,27 +56,25 @@ TEST(AssertOkTest, AssertionFailedStatusOr) {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
         ASSERT_STATUS_OK(status_or);
       },
-      "Value of: status_or\nExpected: is OK\nActual: oh no! [INTERNAL]");
+      ", whose status is oh no! [INTERNAL]");
 }
 
 TEST(AssertOkTest, AssertionFailedDescription) {
   EXPECT_FATAL_FAILURE(
       {
         Status status(StatusCode::kInternal, "oh no!");
-        ASSERT_STATUS_OK(status) << "my precious assertion failed";
+        ASSERT_STATUS_OK(status) << "my assertion failed";
       },
-      "Value of: status\nExpected: is OK\nActual: oh no! [INTERNAL]\nmy "
-      "precious assertion failed");
+      "\nmy assertion failed");
 }
 
 TEST(AssertOkTest, AssertionFailedDescriptionStatusOr) {
   EXPECT_FATAL_FAILURE(
       {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
-        ASSERT_STATUS_OK(status_or) << "my precious assertion failed";
+        ASSERT_STATUS_OK(status_or) << "my assertion failed";
       },
-      "Value of: status_or\nExpected: is OK\nActual: oh no! [INTERNAL]\nmy "
-      "precious assertion failed");
+      "\nmy assertion failed");
 }
 
 TEST(ExpectOkTest, ExpectOk) {
@@ -105,7 +103,7 @@ TEST(ExpectOkTest, ExpectionFailed) {
         Status status(StatusCode::kInternal, "oh no!");
         EXPECT_STATUS_OK(status);
       },
-      "Value of: status\nExpected: is OK\nActual: oh no! [INTERNAL]");
+      "\n  Actual: oh no! [INTERNAL]");
 }
 
 TEST(ExpectOkTest, ExpectionFailedStatusOr) {
@@ -114,25 +112,23 @@ TEST(ExpectOkTest, ExpectionFailedStatusOr) {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
         EXPECT_STATUS_OK(status_or);
       },
-      "Value of: status_or\nExpected: is OK\nActual: oh no! [INTERNAL]");
+      ", whose status is oh no! [INTERNAL]");
 }
 
 TEST(ExpectOkTest, ExpectionFailedDescription) {
   EXPECT_NONFATAL_FAILURE(
       {
         Status status(StatusCode::kInternal, "oh no!");
-        EXPECT_STATUS_OK(status) << "my precious assertion failed";
+        EXPECT_STATUS_OK(status) << "my assertion failed";
       },
-      "Value of: status\nExpected: is OK\nActual: oh no! [INTERNAL]\nmy "
-      "precious assertion failed");
+      "\nmy assertion failed");
 }
 
 TEST(ExpectOkTest, ExpectionFailedDescriptionStatusOr) {
   EXPECT_NONFATAL_FAILURE(
       {
         StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
-        EXPECT_STATUS_OK(status_or) << "my precious assertion failed";
+        EXPECT_STATUS_OK(status_or) << "my assertion failed";
       },
-      "Value of: status_or\nExpected: is OK\nActual: oh no! [INTERNAL]\nmy "
-      "precious assertion failed");
+      "\nmy assertion failed");
 }

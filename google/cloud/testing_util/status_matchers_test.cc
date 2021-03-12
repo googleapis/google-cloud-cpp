@@ -15,6 +15,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include <gtest/gtest-spi.h>
 #include <gtest/gtest.h>
 
 namespace google {
@@ -28,6 +29,118 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+
+TEST(AssertOkTest, AssertionOk) {
+  Status status;
+  ASSERT_STATUS_OK(status);
+}
+
+TEST(AssertOkTest, AssertionOkStatusOr) {
+  StatusOr<int> status_or(42);
+  ASSERT_STATUS_OK(status_or);
+}
+
+TEST(AssertOkTest, AssertionOkDescription) {
+  Status status;
+  ASSERT_STATUS_OK(status) << "OK is not OK?";
+}
+
+TEST(AssertOkTest, AssertionOkDescriptionStatusOr) {
+  StatusOr<int> status_or(42);
+  ASSERT_STATUS_OK(status_or) << "OK is not OK?";
+}
+
+TEST(AssertOkTest, AssertionFailed) {
+  EXPECT_FATAL_FAILURE(
+      {
+        Status status(StatusCode::kInternal, "oh no!");
+        ASSERT_STATUS_OK(status);
+      },
+      "\n  Actual: oh no! [INTERNAL]");
+}
+
+TEST(AssertOkTest, AssertionFailedStatusOr) {
+  EXPECT_FATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        ASSERT_STATUS_OK(status_or);
+      },
+      ", whose status is oh no! [INTERNAL]");
+}
+
+TEST(AssertOkTest, AssertionFailedDescription) {
+  EXPECT_FATAL_FAILURE(
+      {
+        Status status(StatusCode::kInternal, "oh no!");
+        ASSERT_STATUS_OK(status) << "my assertion failed";
+      },
+      "\nmy assertion failed");
+}
+
+TEST(AssertOkTest, AssertionFailedDescriptionStatusOr) {
+  EXPECT_FATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        ASSERT_STATUS_OK(status_or) << "my assertion failed";
+      },
+      "\nmy assertion failed");
+}
+
+TEST(ExpectOkTest, ExpectOk) {
+  Status status;
+  EXPECT_STATUS_OK(status);
+}
+
+TEST(ExpectOkTest, ExpectOkStatusOr) {
+  StatusOr<int> status_or(42);
+  EXPECT_STATUS_OK(status_or);
+}
+
+TEST(ExpectOkTest, ExpectionOkDescription) {
+  Status status;
+  EXPECT_STATUS_OK(status) << "OK is not OK?";
+}
+
+TEST(ExpectOkTest, ExpectionOkDescriptionStatusOr) {
+  StatusOr<int> status_or(42);
+  EXPECT_STATUS_OK(status_or) << "OK is not OK?";
+}
+
+TEST(ExpectOkTest, ExpectionFailed) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        Status status(StatusCode::kInternal, "oh no!");
+        EXPECT_STATUS_OK(status);
+      },
+      "\n  Actual: oh no! [INTERNAL]");
+}
+
+TEST(ExpectOkTest, ExpectionFailedStatusOr) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        EXPECT_STATUS_OK(status_or);
+      },
+      ", whose status is oh no! [INTERNAL]");
+}
+
+TEST(ExpectOkTest, ExpectionFailedDescription) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        Status status(StatusCode::kInternal, "oh no!");
+        EXPECT_STATUS_OK(status) << "my assertion failed";
+      },
+      "\nmy assertion failed");
+}
+
+TEST(ExpectOkTest, ExpectionFailedDescriptionStatusOr) {
+  EXPECT_NONFATAL_FAILURE(
+      {
+        StatusOr<int> status_or(Status(StatusCode::kInternal, "oh no!"));
+        EXPECT_STATUS_OK(status_or) << "my assertion failed";
+      },
+      "\nmy assertion failed");
+}
 
 TEST(StatusIsTest, OkStatus) {
   Status status;

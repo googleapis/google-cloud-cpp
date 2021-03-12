@@ -15,39 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H
 
-#include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <gtest/gtest.h>
-
-namespace google {
-namespace cloud {
-inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace testing_util {
-
-// A unary predicate-formatter for google::cloud::Status.
-testing::AssertionResult IsOkPredFormat(char const* expr,
-                                        ::google::cloud::Status const& status);
-
-// A unary predicate-formatter for google::cloud::StatusOr<T>.
-template <typename T>
-testing::AssertionResult IsOkPredFormat(
-    char const* expr, ::google::cloud::StatusOr<T> const& status_or) {
-  if (status_or) {
-    return testing::AssertionSuccess();
-  }
-  return IsOkPredFormat(expr, status_or.status());
-}
-
-}  // namespace testing_util
-}  // namespace GOOGLE_CLOUD_CPP_NS
-}  // namespace cloud
-}  // namespace google
-
-#define ASSERT_STATUS_OK(val) \
-  ASSERT_PRED_FORMAT1(::google::cloud::testing_util::IsOkPredFormat, val)
-
-#define EXPECT_STATUS_OK(val) \
-  EXPECT_PRED_FORMAT1(::google::cloud::testing_util::IsOkPredFormat, val)
+// Deprecated. Use google/cloud/testing_util/status_matchers.h directly.
+#include "google/cloud/testing_util/status_matchers.h"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_ASSERT_OK_H

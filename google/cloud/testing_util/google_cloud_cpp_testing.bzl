@@ -36,12 +36,12 @@ google_cloud_cpp_testing_hdrs = [
 ]
 
 google_cloud_cpp_testing_srcs = [
-    "assert_ok.cc",
     "command_line_parsing.cc",
     "crash_handler.cc",
     "example_driver.cc",
     "scoped_environment.cc",
     "scoped_log.cc",
+    "status_matchers.cc",
     "testing_types.cc",
     "timer.cc",
 ]

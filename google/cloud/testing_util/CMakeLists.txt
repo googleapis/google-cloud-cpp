@@ -18,7 +18,6 @@
 if (BUILD_TESTING)
     add_library(
         google_cloud_cpp_testing # cmake-format: sort
-        assert_ok.cc
         assert_ok.h
         async_sequencer.h
         check_predicate_becomes_false.h
@@ -37,6 +36,7 @@ if (BUILD_TESTING)
         scoped_log.cc
         scoped_log.h
         scoped_thread.h
+        status_matchers.cc
         status_matchers.h
         testing_types.cc
         testing_types.h
