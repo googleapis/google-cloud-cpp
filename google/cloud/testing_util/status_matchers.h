@@ -45,7 +45,7 @@ class StatusIsMatcher {
   template <typename T>
   bool MatchAndExplain(StatusOr<T> const& value,
                        ::testing::MatchResultListener* listener) const {
-    // Because StatusOr<T> does not have a printer, gmock will render the
+    // Because StatusOr<T> does not have a printer, gMock will render the
     // value using RawBytesPrinter as "N-byte object <...>", which is not
     // very useful. Accordingly, we print the enclosed Status so that a
     // failing expection does not require further explanation.
@@ -72,7 +72,7 @@ class StatusIsMatcher {
 namespace testing_util {
 
 /**
- * Returns a gmock matcher that matches a `Status` or `StatusOr<T>` whose
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
  * code matches `code_matcher` and whose message matches `message_matcher`.
  *
  * @par Example:
@@ -92,7 +92,7 @@ template <typename CodeMatcher, typename MessageMatcher>
 }
 
 /**
- * Returns a gmock matcher that matches a `Status` or `StatusOr<T>` whose
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
  * code matches `code_matcher` and whose message matches anything.
  *
  * @par Example:
@@ -108,7 +108,7 @@ template <typename CodeMatcher>
 }
 
 /**
- * Returns a gmock matcher that matches a `Status` or `StatusOr<T>` whose
+ * Returns a gMock matcher that matches a `Status` or `StatusOr<T>` whose
  * code is OK and whose message matches anything.
  *
  * @par Example:
