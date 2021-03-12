@@ -114,6 +114,8 @@ namespace {
 
 class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
  public:
+   // Note all the policies will be set to their default non-null values in the
+   // `MakeDatabaseAdminConnection()` function below.
   explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
       internal::Options const& opts)
