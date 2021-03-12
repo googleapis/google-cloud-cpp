@@ -68,6 +68,34 @@ TEST(Options, Defaults) {
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 
+TEST(Options, AdminDefaults) {
+  auto opts = spanner_internal::DefaultAdminOptions();
+  EXPECT_EQ(opts.get<internal::EndpointOption>(), "spanner.googleapis.com");
+  // In Google's testing environment `expected` can be `nullptr`, we just want
+  // to verify that both are `nullptr` or neither is `nullptr`.
+  auto const expected = grpc::GoogleDefaultCredentials();
+  EXPECT_EQ(!!opts.get<internal::GrpcCredentialOption>(), !!expected);
+  EXPECT_NE(opts.get<internal::GrpcBackgroundThreadsFactoryOption>(), nullptr);
+  EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
+  EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
+              ElementsAre(gcloud_user_agent_matcher()));
+
+  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMinSessionsOption>());
+  EXPECT_EQ(
+      100,
+      opts.get<spanner_internal::SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMaxIdleSessionsOption>());
+  EXPECT_EQ(ActionOnExhaustion::kBlock,
+            opts.get<spanner_internal::SessionPoolActionOnExhaustionOption>());
+  EXPECT_EQ(std::chrono::minutes(55),
+            opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
+
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerPollingPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
+}
+
 TEST(Options, EndpointFromEnv) {
   testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "foo.bar.baz");

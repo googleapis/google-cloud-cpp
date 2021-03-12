@@ -15,11 +15,13 @@
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/internal/options.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
+#include "internal/options.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -49,9 +51,12 @@ std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
-  return spanner_internal::MakeDatabaseAdminConnection(
-      std::move(mock), ConnectionOptions{}, retry.clone(), backoff.clone(),
-      polling.clone());
+  internal::Options opts;
+  opts.set<spanner_internal::SpannerRetryPolicyOption>(retry.clone());
+  opts.set<spanner_internal::SpannerBackoffPolicyOption>(backoff.clone());
+  opts.set<spanner_internal::SpannerPollingPolicyOption>(polling.clone());
+  return spanner_internal::MakeDatabaseAdminConnectionForTesting(
+      std::move(mock), std::move(opts));
 }
 
 /// @test Verify that successful case works.

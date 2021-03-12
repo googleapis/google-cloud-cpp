@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPTIONS_H
 
 #include "google/cloud/spanner/backoff_policy.h"
+#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/options.h"
@@ -47,10 +48,19 @@ struct SpannerBackoffPolicyOption {
 };
 
 /**
+ * *Internal-only* option for `google::cloud::internal::Options` to allow
+ * passing a `spanner::PollingPolicy`.
+ */
+struct SpannerPollingPolicyOption {
+  using Type = std::shared_ptr<spanner::PollingPolicy>;
+};
+
+/**
  * List of internal-only options.
  */
 using SpannerInternalOptionList =
-    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption>;
+    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
+                         SpannerPollingPolicyOption>;
 
 /**
  * Returns an `Options` with the appropriate defaults for Spanner.
@@ -66,6 +76,22 @@ using SpannerInternalOptionList =
  * along unmodified.
  */
 internal::Options DefaultOptions(internal::Options opts = {});
+
+/**
+ * Returns an `Options` with the appropriate defaults for Spanner Admin
+ * connections.
+ *
+ * Environment variables and the optional @p opts argument may be consulted to
+ * determine the correct `Options` to set. It's up to the implementation as to
+ * what overrides what. For example, it may be that a user-provided value for
+ * `EndpointOption` via @p opts takes precedence, OR it may be that an
+ * environment variable overrides that, and these rules may differ for each
+ * setting.
+ *
+ * Option values that this implementation doesn't know about will be passed
+ * along unmodified.
+ */
+internal::Options DefaultAdminOptions(internal::Options opts = {});
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
