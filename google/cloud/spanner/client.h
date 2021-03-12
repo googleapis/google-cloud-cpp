@@ -689,8 +689,8 @@ inline namespace SPANNER_CLIENT_NS {
  * The optional @p opts argument may be used to configure aspects of the
  * returned `Connection`. Expected options are any of the following:
  *
- * - `google::cloud::internal::CommonOptions`
- * - `google::cloud::internal::GrpcOptions`
+ * - `google::cloud::internal::CommonOptionList`
+ * - `google::cloud::internal::GrpcOptionList`
  * - `google::cloud::spanner_internal::SessionPoolOptionList`
  *
  * @note Unrecognized options will be ignored. To debug issues with options set
