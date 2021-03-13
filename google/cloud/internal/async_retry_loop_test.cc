@@ -25,6 +25,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
@@ -103,7 +104,7 @@ TEST(AsyncRetryLoopTest, Success) {
           },
           42, "error message")
           .get();
-  ASSERT_THAT(actual.status(), StatusIs(StatusCode::kOk));
+  ASSERT_THAT(actual.status(), IsOk());
   EXPECT_EQ(84, *actual);
 }
 
@@ -124,7 +125,7 @@ TEST(AsyncRetryLoopTest, TransientThenSuccess) {
           },
           42, "error message")
           .get();
-  ASSERT_THAT(actual.status(), StatusIs(StatusCode::kOk));
+  ASSERT_THAT(actual.status(), IsOk());
   EXPECT_EQ(84, *actual);
 }
 
@@ -144,7 +145,7 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
                       },
                       42, "error message")
                       .get();
-  ASSERT_THAT(actual, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(actual, IsOk());
 }
 
 class MockBackoffPolicy : public BackoffPolicy {
@@ -176,7 +177,7 @@ TEST(AsyncRetryLoopTest, UsesBackoffPolicy) {
           },
           42, "error message")
           .get();
-  ASSERT_THAT(actual.status(), StatusIs(StatusCode::kOk));
+  ASSERT_THAT(actual.status(), IsOk());
   EXPECT_EQ(84, *actual);
 }
 
@@ -193,11 +194,10 @@ TEST(AsyncRetryLoopTest, TransientFailureNonIdempotent) {
           },
           42, "test-location")
           .get();
-  EXPECT_THAT(actual.status(),
-              StatusIs(StatusCode::kUnavailable,
-                       AllOf(HasSubstr("test-message-try-again"),
-                             HasSubstr("Error in non-idempotent"),
-                             HasSubstr("test-location"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("test-message-try-again"),
+                                     HasSubstr("Error in non-idempotent"),
+                                     HasSubstr("test-location"))));
 }
 
 TEST(AsyncRetryLoopTest, PermanentFailureIdempotent) {
@@ -213,10 +213,10 @@ TEST(AsyncRetryLoopTest, PermanentFailureIdempotent) {
           },
           42, "test-location")
           .get();
-  EXPECT_THAT(actual.status(), StatusIs(StatusCode::kPermissionDenied,
-                                        AllOf(HasSubstr("test-message-uh-oh"),
-                                              HasSubstr("Permanent error in"),
-                                              HasSubstr("test-location"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kPermissionDenied,
+                               AllOf(HasSubstr("test-message-uh-oh"),
+                                     HasSubstr("Permanent error in"),
+                                     HasSubstr("test-location"))));
 }
 
 TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
@@ -232,11 +232,10 @@ TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
           },
           42, "test-location")
           .get();
-  EXPECT_THAT(actual.status(),
-              StatusIs(StatusCode::kUnavailable,
-                       AllOf(HasSubstr("test-message-try-again"),
-                             HasSubstr("Retry policy exhausted"),
-                             HasSubstr("test-location"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("test-message-try-again"),
+                                     HasSubstr("Retry policy exhausted"),
+                                     HasSubstr("test-location"))));
 }
 
 TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
@@ -254,11 +253,10 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
           },
           42, "test-location")
           .get();
-  EXPECT_THAT(actual.status(),
-              StatusIs(StatusCode::kUnavailable,
-                       AllOf(HasSubstr("test-message-try-again"),
-                             HasSubstr("Retry policy exhausted"),
-                             HasSubstr("test-location"))));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable,
+                               AllOf(HasSubstr("test-message-try-again"),
+                                     HasSubstr("Retry policy exhausted"),
+                                     HasSubstr("test-location"))));
 }
 
 class RetryPolicyWithSetup {
@@ -336,7 +334,7 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
   EXPECT_EQ(1, CancelCount());
   p.set_value({});
   auto value = actual.get();
-  ASSERT_THAT(value, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(value, IsOk());
   EXPECT_EQ(84, *value);
 }
 

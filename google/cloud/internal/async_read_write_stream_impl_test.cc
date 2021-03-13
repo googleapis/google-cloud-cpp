@@ -29,8 +29,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
-using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ReturnRef;
 
@@ -159,7 +159,7 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   auto finish = stream->Finish();
   ASSERT_EQ(1, operations.size());
   notify_next_op();
-  EXPECT_THAT(finish.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(finish.get(), IsOk());
 }
 
 }  // namespace

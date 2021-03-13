@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 

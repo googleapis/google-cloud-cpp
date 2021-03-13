@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

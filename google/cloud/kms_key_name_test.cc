@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/kms_key_name.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sstream>

@@ -15,7 +15,7 @@
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
 #include <google/protobuf/struct.pb.h>
 #include <gmock/gmock.h>

@@ -16,8 +16,8 @@
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,8 +26,10 @@ namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class IamCredentialsIntegrationTest : public ::testing::Test {
  protected:
@@ -73,7 +75,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
   auto response = client.GenerateAccessToken(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, lifetime);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
@@ -98,7 +100,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
       IAMCredentialsClient(MakeIAMCredentialsConnection(rpc_tracing_options_));
   auto response = client.GenerateIdToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, {""}, false);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
@@ -126,7 +128,7 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobFailure) {
   auto response = client.SignBlob(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       payload);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
@@ -148,7 +150,7 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtFailure) {
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {},
       payload);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignJwt")));
 }
@@ -171,7 +173,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestFailure) {
   auto client =
       IAMCredentialsClient(MakeIAMCredentialsConnection(rpc_tracing_options_));
   auto response = client.GenerateAccessToken(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
@@ -191,7 +193,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestFailure) {
   auto client =
       IAMCredentialsClient(MakeIAMCredentialsConnection(rpc_tracing_options_));
   auto response = client.GenerateIdToken(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
@@ -212,7 +214,7 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobProtoRequestFailure) {
   auto client =
       IAMCredentialsClient(MakeIAMCredentialsConnection(rpc_tracing_options_));
   auto response = client.SignBlob(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignBlob")));
 }
@@ -233,7 +235,7 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestFailure) {
   auto client =
       IAMCredentialsClient(MakeIAMCredentialsConnection(rpc_tracing_options_));
   auto response = client.SignJwt(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SignJwt")));
 }

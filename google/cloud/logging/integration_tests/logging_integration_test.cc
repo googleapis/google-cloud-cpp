@@ -16,7 +16,6 @@
 #include "google/cloud/logging/logging_service_v2_client.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,6 +26,7 @@ namespace logging {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -51,7 +51,7 @@ TEST_F(LoggingIntegrationTest, DeleteLogFailure) {
       MakeLoggingServiceV2Connection(connection_options_));
   ::google::logging::v2::DeleteLogRequest request;
   auto response = client.DeleteLog(request);
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteLog")));
 }
@@ -61,7 +61,7 @@ TEST_F(LoggingIntegrationTest, WriteLogEntries) {
       MakeLoggingServiceV2Connection(connection_options_));
   ::google::logging::v2::WriteLogEntriesRequest request;
   auto response = client.WriteLogEntries(request);
-  EXPECT_TRUE(response.ok());
+  EXPECT_THAT(response, IsOk());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
 }
@@ -88,7 +88,7 @@ TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
   auto range = client.ListMonitoredResourceDescriptors(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_THAT(*begin, StatusIs(StatusCode::kOk));
+  EXPECT_THAT(*begin, IsOk());
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(HasSubstr("ListMonitoredResourceDescriptors")));
