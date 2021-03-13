@@ -357,12 +357,12 @@ inline namespace SPANNER_CLIENT_NS {
  * Returns an DatabaseAdminConnection object that can be used for interacting
  * with Cloud Spanner's admin APIs.
  *
- * The returned connection object should not be used directly, rather it should
- * be given to a `DatabaseAdminClient` instance.
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DatabaseAdminClient` instance.
  *
  * The optional @p opts argument may be used to configure aspects of the
- * returned `DatabaseAdminConnection`. Expected options are any of the
- * following:
+ * returned `DatabaseAdminConnection`. Expected options are any of types in the
+ * following option lists.
  *
  * - `google::cloud::internal::CommonOptionList`
  * - `google::cloud::internal::GrpcOptionList`

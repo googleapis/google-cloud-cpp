@@ -683,11 +683,13 @@ inline namespace SPANNER_CLIENT_NS {
 /**
  * Returns a Connection object that can be used for interacting with Spanner.
  *
- * The returned connection object should not be used directly, rather it should
- * be given to a `Client` instance, and methods should be invoked on `Client`.
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `Client` instance, and methods should be invoked on
+ * `Client`.
  *
  * The optional @p opts argument may be used to configure aspects of the
- * returned `Connection`. Expected options are any of the following:
+ * returned `Connection`. Expected options are any of the types in the
+ * following option lists.
  *
  * - `google::cloud::internal::CommonOptionList`
  * - `google::cloud::internal::GrpcOptionList`
