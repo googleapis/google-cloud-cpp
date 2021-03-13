@@ -158,14 +158,14 @@ def print_test(test):
     output += "  ASSERT_FALSE(chunks.empty());\n\n"
 
     if test_case_is_success(test):
-        output += "EXPECT_STATUS_OK(FeedChunks(chunks));\n\n"
+        output += "EXPECT_THAT(FeedChunks(chunks), IsOk());\n\n"
     else:
-        output += "EXPECT_FALSE(FeedChunks(chunks).ok());\n\n"
+        output += "EXPECT_THAT(FeedChunks(chunks), Not(IsOk()));\n\n"
 
     output += "  std::vector<std::string> expected_cells = {"
     results = get_results(test)
     output += results
-    if results[-1] == "\n":
+    if results.endswith("\n"):
         output += "  "
     output += "};\n"
 
