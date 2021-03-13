@@ -39,9 +39,9 @@
  */
 
 #include "google/cloud/spanner/backoff_policy.h"
+#include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
-#include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/options.h"
 #include <chrono>
@@ -156,17 +156,6 @@ using SessionPoolOptionList = internal::OptionList<
     SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
 
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {}
-
-// An option for the Clock that the session pool will use. This is an injection
-// point to facility unit testing.
-struct SessionPoolClockOption {
-  using Type = std::shared_ptr<Session::Clock>;
-};
-
 }  // namespace spanner_internal
 }  // namespace cloud
 }  // namespace google
