@@ -60,9 +60,8 @@ SessionPool::SessionPool(spanner::Database db,
     : db_(std::move(db)),
       cq_(std::move(cq)),
       opts_(std::move(opts)),
-      retry_policy_prototype_(opts_.get<SpannerRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          opts_.get<SpannerBackoffPolicyOption>()->clone()),
+      retry_policy_prototype_(opts_.get<RetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(opts_.get<BackoffPolicyOption>()->clone()),
       clock_(opts_.get<SessionPoolClockOption>()),
       max_pool_size_(opts_.get<SessionPoolMaxSessionsPerChannelOption>() *
                      static_cast<int>(stubs.size())),

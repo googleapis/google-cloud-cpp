@@ -79,10 +79,9 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 std::shared_ptr<SessionPool> MakeTestSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     CompletionQueue cq, internal::Options opts = {}) {
-  opts.set<SpannerRetryPolicyOption>(
-      std::make_shared<spanner::LimitedTimeRetryPolicy>(
-          std::chrono::minutes(10)));
-  opts.set<SpannerBackoffPolicyOption>(
+  opts.set<RetryPolicyOption>(std::make_shared<spanner::LimitedTimeRetryPolicy>(
+      std::chrono::minutes(10)));
+  opts.set<BackoffPolicyOption>(
       std::make_shared<spanner::ExponentialBackoffPolicy>(
           std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0));
   opts = DefaultOptions(std::move(opts));

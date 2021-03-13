@@ -39,11 +39,11 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       internal::Options const& opts)
       : stub_(std::move(stub)),
         retry_policy_prototype_(
-            opts.get<spanner_internal::SpannerRetryPolicyOption>()->clone()),
+            opts.get<spanner_internal::RetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
-            opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
+            opts.get<spanner_internal::BackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
-            opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
+            opts.get<spanner_internal::PollingPolicyOption>()->clone()),
         background_threads_(
             opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()) {}
 
@@ -301,11 +301,9 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   auto opts = internal::MakeOptions(options);
-  opts.set<spanner_internal::SpannerRetryPolicyOption>(std::move(retry_policy));
-  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
-      std::move(backoff_policy));
-  opts.set<spanner_internal::SpannerPollingPolicyOption>(
-      std::move(polling_policy));
+  opts.set<spanner_internal::RetryPolicyOption>(std::move(retry_policy));
+  opts.set<spanner_internal::BackoffPolicyOption>(std::move(backoff_policy));
+  opts.set<spanner_internal::PollingPolicyOption>(std::move(polling_policy));
   return spanner_internal::MakeInstanceAdminConnection(std::move(opts));
 }
 
@@ -319,8 +317,8 @@ std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     internal::Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
-                                 spanner_internal::SpannerInternalOptionList>(
-      opts, __func__);
+                                 spanner_internal::PolicyOptionList>(opts,
+                                                                     __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   auto stub = spanner_internal::CreateDefaultInstanceAdminStub(opts);
   return std::make_shared<spanner::InstanceAdminConnectionImpl>(

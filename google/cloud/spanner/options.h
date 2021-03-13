@@ -28,39 +28,35 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * *Internal-only* options for `google::cloud::internal::Options` to allow
- * passing a `spanner::RetryPolicy`. Customers will not use these, but they
- * will allow us internally to stop passing this policy separately from the
- * other `Options.`
+ * Option for `google::cloud::internal::Options` to set a
+ * `spanner::RetryPolicy`.
  */
-struct SpannerRetryPolicyOption {
+struct RetryPolicyOption {
   using Type = std::shared_ptr<spanner::RetryPolicy>;
 };
 
 /**
- * *Internal-only* options for `google::cloud::internal::Options` to allow
- * passing a `spanner::BackoffPolicy`. Customers will not use these, but they
- * will allow us internally to stop passing this policy separately from the
- * other `Options.`
+ * Option for `google::cloud::internal::Options` to set a
+ * `spanner::BackoffPolicy`.
  */
-struct SpannerBackoffPolicyOption {
+struct BackoffPolicyOption {
   using Type = std::shared_ptr<spanner::BackoffPolicy>;
 };
 
 /**
- * *Internal-only* option for `google::cloud::internal::Options` to allow
- * passing a `spanner::PollingPolicy`.
+ * Option for `google::cloud::internal::Options` to set a
+ * `spanner::PollingPolicy`.
  */
-struct SpannerPollingPolicyOption {
+struct PollingPolicyOption {
   using Type = std::shared_ptr<spanner::PollingPolicy>;
 };
 
 /**
- * List of internal-only options.
+ * List of all "policy" options.
  */
-using SpannerInternalOptionList =
-    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
-                         SpannerPollingPolicyOption>;
+using PolicyOptionList =
+    internal::OptionList<RetryPolicyOption, BackoffPolicyOption,
+                         PollingPolicyOption>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

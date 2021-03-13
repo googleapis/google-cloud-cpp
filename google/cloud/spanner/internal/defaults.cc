@@ -62,14 +62,14 @@ void SetBasicDefaults(internal::Options& opts) {
 internal::Options DefaultOptions(internal::Options opts) {
   SetBasicDefaults(opts);
 
-  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
-    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+  if (!opts.has<spanner_internal::RetryPolicyOption>()) {
+    opts.set<spanner_internal::RetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
             std::chrono::minutes(10)));
   }
-  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+  if (!opts.has<spanner_internal::BackoffPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+    opts.set<spanner_internal::BackoffPolicyOption>(
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
             kBackoffScaling));
@@ -112,20 +112,20 @@ internal::Options DefaultOptions(internal::Options opts) {
 internal::Options DefaultAdminOptions(internal::Options opts) {
   SetBasicDefaults(opts);
 
-  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
-    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+  if (!opts.has<spanner_internal::RetryPolicyOption>()) {
+    opts.set<spanner_internal::RetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
             std::chrono::minutes(30)));
   }
-  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+  if (!opts.has<spanner_internal::BackoffPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+    opts.set<spanner_internal::BackoffPolicyOption>(
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling));
   }
-  if (!opts.has<spanner_internal::SpannerPollingPolicyOption>()) {
+  if (!opts.has<spanner_internal::PollingPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerPollingPolicyOption>(
+    opts.set<spanner_internal::PollingPolicyOption>(
         std::make_shared<google::cloud::spanner::GenericPollingPolicy<>>(
             google::cloud::spanner::LimitedTimeRetryPolicy(
                 std::chrono::minutes(30)),

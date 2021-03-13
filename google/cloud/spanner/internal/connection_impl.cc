@@ -74,7 +74,7 @@ namespace spanner_proto = ::google::spanner::v1;
 // are directly used in this class.
 std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy() {
   return spanner_internal::DefaultOptions()
-      .get<spanner_internal::SpannerRetryPolicyOption>()
+      .get<spanner_internal::RetryPolicyOption>()
       ->clone();
 }
 
@@ -82,7 +82,7 @@ std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy() {
 // are directly used in this class.
 std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy() {
   return spanner_internal::DefaultOptions()
-      .get<spanner_internal::SpannerBackoffPolicyOption>()
+      .get<spanner_internal::BackoffPolicyOption>()
       ->clone();
 }
 
@@ -106,9 +106,8 @@ ConnectionImpl::ConnectionImpl(spanner::Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
                                internal::Options const& opts)
     : db_(std::move(db)),
-      retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
-      backoff_policy_prototype_(
-          opts.get<SpannerBackoffPolicyOption>()->clone()),
+      retry_policy_prototype_(opts.get<RetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(opts.get<BackoffPolicyOption>()->clone()),
       background_threads_(
           opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
