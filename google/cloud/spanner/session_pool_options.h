@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_SESSION_POOL_OPTIONS_H
 
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/grpc_options.h"
 #include <algorithm>
@@ -27,93 +28,13 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-// What action to take if the session pool is exhausted.
-enum class ActionOnExhaustion { kBlock, kFail };
-
 class SessionPoolOptions;
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 internal::Options MakeOptions(spanner::SessionPoolOptions);
-
-/**
- * The minimum number of sessions to keep in the pool.
- * Values <= 0 are treated as 0.
- * This value will effectively be reduced if it exceeds the overall limit on
- * the number of sessions (`max_sessions_per_channel` * number of channels).
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolMinSessionsOption {
-  using Type = int;
-};
-
-/**
- * The maximum number of sessions to create on each channel.
- * Values <= 1 are treated as 1.
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolMaxSessionsPerChannelOption {
-  using Type = int;
-};
-
-/**
- * The maximum number of sessions to keep in the pool in an idle state.
- * Values <= 0 are treated as 0.
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolMaxIdleSessionsOption {
-  using Type = int;
-};
-
-/**
- * The action to take (kBlock or kFail) when attempting to allocate a session
- * when the pool is exhausted.
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolActionOnExhaustionOption {
-  using Type = spanner::ActionOnExhaustion;
-};
-
-/*
- * The interval at which we refresh sessions so they don't get collected by the
- * backend GC. The GC collects objects older than 60 minutes, so any duration
- * below that (less some slack to allow the calls to be made to refresh the
- * sessions) should suffice.
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolKeepAliveIntervalOption {
-  using Type = std::chrono::seconds;
-};
-
-/**
- * The labels used when creating sessions within the pool.
- *  * Label keys must match `[a-z]([-a-z0-9]{0,61}[a-z0-9])?`.
- *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
- *  * The maximum number of labels is 64.
- *
- * @note This option is to be used with the `google::cloud::internal::Options`
- */
-struct SessionPoolLabelsOption {
-  using Type = std::map<std::string, std::string>;
-};
-
-/**
- * List of all SessionPool options.
- */
-using SessionPoolOptionList = internal::OptionList<
-    SessionPoolMinSessionsOption, SessionPoolMaxSessionsPerChannelOption,
-    SessionPoolMaxIdleSessionsOption, SessionPoolActionOnExhaustionOption,
-    SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
