@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,7 +25,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
+using ::testing::Not;
 
 class MockCurlClient : public CurlClient {
  public:
@@ -122,7 +124,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   auto upload = session.UploadChunk({{payload}});
   EXPECT_EQ(size, session.next_expected_byte());
   upload = session.UploadChunk({{payload}});
-  EXPECT_FALSE(upload.ok());
+  EXPECT_THAT(upload, Not(IsOk()));
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_EQ(url1, session.session_id());
 

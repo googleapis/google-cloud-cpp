@@ -22,7 +22,6 @@
 #include "google/cloud/storage/testing/constants.h"
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -39,6 +38,7 @@ using ::google::cloud::storage::internal::GceCheckOverrideEnvVar;
 using ::google::cloud::storage::testing::kP12KeyFileContents;
 using ::google::cloud::storage::testing::kP12ServiceAccountId;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
@@ -141,14 +141,14 @@ TEST_F(GoogleCredentialsTest,
   os << contents_str;
   os.close();
   auto creds = CreateAuthorizedUserCredentialsFromJsonFilePath(filename);
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 TEST_F(GoogleCredentialsTest,
        LoadInvalidAuthorizedUserCredentialsFromJsonContents) {
   std::string contents_str = R"""( not-a-json-object-string )""";
   auto creds = CreateAuthorizedUserCredentialsFromJsonContents(contents_str);
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 /**
@@ -273,7 +273,7 @@ TEST_F(GoogleCredentialsTest,
   auto creds = CreateServiceAccountCredentialsFromJsonFilePath(
       filename, {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 TEST_F(GoogleCredentialsTest,
@@ -371,7 +371,7 @@ TEST_F(GoogleCredentialsTest,
       "not-a-valid-jason-object",
       {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 TEST_F(GoogleCredentialsTest,
@@ -379,7 +379,7 @@ TEST_F(GoogleCredentialsTest,
   // Test that providing invalid private_key returns a failure status.
   auto creds = CreateServiceAccountCredentialsFromJsonContents(
       kServiceAccountCredInvalidPrivateKey);
-  EXPECT_THAT(creds, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(creds, Not(IsOk()));
 }
 
 TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {

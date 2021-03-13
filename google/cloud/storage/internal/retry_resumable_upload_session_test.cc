@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -31,10 +30,12 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -233,7 +234,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUpload) {
                                       TestBackoffPolicy());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 /// @test Verify that a permanent error on ResetSession results in a failure.
@@ -275,7 +276,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnReset) {
                                       TestBackoffPolicy());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 /// @test Verify that too many transients on ResetSession results in a failure.
@@ -401,7 +402,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
                                       TestBackoffPolicy());
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk({{payload}});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 /// @test Verify that transients (or elapsed time) from different chunks do not
@@ -646,7 +647,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
 
   StatusOr<ResumableUploadResponse> response =
       session.UploadFinalChunk({{payload}}, quantum);
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(RetryResumableUploadSession, Done) {

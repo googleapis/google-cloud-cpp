@@ -19,7 +19,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,7 +29,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
@@ -94,7 +96,7 @@ TEST_F(BucketAccessControlsTest, Parse) {
 /// @test Verify that we parse JSON objects into BucketAccessControl objects.
 TEST_F(BucketAccessControlsTest, ParseFailure) {
   auto actual = internal::BucketAccessControlParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST_F(BucketAccessControlsTest, ListBucketAcl) {

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -26,7 +27,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(DefaultObjectAclRequestTest, List) {
   ListDefaultObjectAclRequest request("my-bucket");
@@ -76,7 +79,7 @@ TEST(DefaultObjectAclRequestTest, ListResponseFailure) {
 
   StatusOr<ListDefaultObjectAclResponse> actual =
       ListDefaultObjectAclResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(DefaultObjectAclRequestTest, ListResponseParseFailureElements) {
@@ -84,7 +87,7 @@ TEST(DefaultObjectAclRequestTest, ListResponseParseFailureElements) {
 
   StatusOr<ListDefaultObjectAclResponse> actual =
       ListDefaultObjectAclResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(DefaultObjectAclRequestTest, Get) {

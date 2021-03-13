@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
 #include "google/cloud/storage/notification_event_type.h"
 #include "google/cloud/storage/notification_payload_format.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,7 +26,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 /// @test Verify that we parse JSON objects into NotificationMetadata objects.
 TEST(NotificationRequestTest, Parse) {
@@ -76,7 +79,7 @@ TEST(NotificationRequestTest, Parse) {
 /// @test Verify that we parse JSON objects into NotificationMetadata objects.
 TEST(NotificationRequestTest, ParseFailure) {
   auto actual = internal::NotificationMetadataParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(NotificationRequestTest, List) {
@@ -122,7 +125,7 @@ TEST(NotificationRequestTest, ListResponseParseFailure) {
 
   StatusOr<ListNotificationsResponse> actual =
       ListNotificationsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(NotificationRequestTest, ListResponseParseFailureListElements) {
@@ -134,7 +137,7 @@ TEST(NotificationRequestTest, ListResponseParseFailureListElements) {
 
   StatusOr<ListNotificationsResponse> actual =
       ListNotificationsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(CreateNotificationRequestTest, Create) {

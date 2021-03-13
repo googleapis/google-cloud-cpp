@@ -22,7 +22,6 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/storage/testing/temp_file.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -42,10 +41,12 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -165,8 +166,7 @@ class ParallelUploadTest : public ::testing::Test {
       std::string const& object_name, Status status,
       absl::optional<std::string> const& resumable_session_id =
           absl::optional<std::string>()) {
-    EXPECT_FALSE(status.ok())
-        << "Expect either a failure or an actual MockResumableUploadSession";
+    EXPECT_THAT(status, Not(IsOk()));
     session_mocks_.emplace(std::move(status));
     AddNewExpectation(object_name, resumable_session_id);
   }

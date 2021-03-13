@@ -16,7 +16,6 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/terminate_handler.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
@@ -32,6 +31,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -307,7 +307,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   SymbolInterceptor::Instance().StartFailingSend(
       SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET, 3);
   is.read(read_buf.data(), read_buf.size());
-  EXPECT_THAT(is.status(), StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(is.status(), Not(IsOk()));
   is.Close();
   EXPECT_THAT(is.status(), StatusIs(StatusCode::kUnavailable));
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);

@@ -18,7 +18,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -39,6 +38,8 @@ namespace {
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::google::cloud::testing_util::ContainsOnce;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::Eq;
@@ -483,9 +484,8 @@ TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
   os.Close();
   auto meta = os.metadata();
   if (!UsingGrpc()) {
-    EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
-    EXPECT_THAT(meta.status(),
-                testing_util::StatusIs(StatusCode::kInvalidArgument));
+    EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
+    EXPECT_THAT(meta, StatusIs(StatusCode::kInvalidArgument));
   }
 }
 
@@ -696,7 +696,7 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
 
   // This operation should fail because the source object does not exist.
   auto meta = client->GetObjectMetadata(bucket_name_, object_name);
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
@@ -806,7 +806,7 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
   // This operation should fail because the source object does not exist.
   auto update =
       client->UpdateObject(bucket_name_, object_name, ObjectMetadata());
-  EXPECT_FALSE(update.ok()) << "value=" << update.value();
+  EXPECT_THAT(update, Not(IsOk())) << "value=" << update.value();
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
@@ -818,7 +818,7 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
   // This operation should fail because the source object does not exist.
   auto patch = client->PatchObject(bucket_name_, object_name,
                                    ObjectMetadataPatchBuilder());
-  EXPECT_FALSE(patch.ok()) << "value=" << patch.value();
+  EXPECT_THAT(patch, Not(IsOk())) << "value=" << patch.value();
 }
 
 TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {

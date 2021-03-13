@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,7 +23,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(SignBlobRequestsTest, IOStream) {
   SignBlobRequest request("test-sa1", "blob-to-sign", {"test-sa2, test-sa3"});
@@ -52,7 +55,7 @@ TEST(SignBlobRequestsTest, ResponseParseFailure) {
   std::string text = R"""({123)""";
 
   auto actual = SignBlobResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(SignBlobRequestsTest, ResponseIOStream) {

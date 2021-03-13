@@ -16,8 +16,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
@@ -30,9 +30,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class ObjectFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -123,8 +126,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
   auto file_name = MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), HasSubstr(object_name));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
@@ -141,8 +143,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
   auto file_name = MakeRandomFilename() + "/" + MakeRandomFilename();
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), HasSubstr(object_name));
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
 
   status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -171,8 +172,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
   auto constexpr kFileName = "/dev/full";
 
   auto status = client->DownloadToFile(bucket_name_, object_name, kFileName);
-  EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), HasSubstr(object_name)) << "status=" << status;
+  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
 
   status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -293,9 +293,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
-  EXPECT_FALSE(meta.ok());
-  EXPECT_EQ(StatusCode::kNotFound, meta.status().code());
-  EXPECT_THAT(meta.status().message(), HasSubstr(file_name));
+  EXPECT_THAT(meta, StatusIs(StatusCode::kNotFound, HasSubstr(file_name)));
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
@@ -580,7 +578,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
   // Trying to upload the file to a non-existing bucket should fail.
   StatusOr<ObjectMetadata> meta = client.UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
 
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }

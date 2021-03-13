@@ -18,8 +18,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/expect_exception.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
 #include <algorithm>

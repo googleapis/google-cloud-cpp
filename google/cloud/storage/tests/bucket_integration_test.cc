@@ -18,8 +18,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
@@ -34,6 +34,7 @@ namespace {
 
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
@@ -486,7 +487,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
   auto metadata2 = client->GetBucketMetadata(
       bucket_name_, storage::Projection("noAcl"),
       storage::IfMetagenerationNotMatch(metadata->metageneration()));
-  EXPECT_FALSE(metadata2.ok()) << "metadata=" << *metadata2;
+  EXPECT_THAT(metadata2, Not(IsOk())) << "metadata=" << metadata2.value();
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
@@ -839,7 +840,7 @@ TEST_F(BucketIntegrationTest, BucketLockFailure) {
   // This should fail because the bucket does not exist.
   StatusOr<BucketMetadata> status =
       client->LockBucketRetentionPolicy(bucket_name, 42U);
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
@@ -850,7 +851,7 @@ TEST_F(BucketIntegrationTest, ListFailure) {
   auto stream = client->ListBucketsForProject("Invalid-project-id-");
   auto it = stream.begin();
   StatusOr<BucketMetadata> metadata = *it;
-  EXPECT_FALSE(metadata.ok()) << "value=" << metadata.value();
+  EXPECT_THAT(metadata, Not(IsOk())) << "value=" << metadata.value();
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
@@ -918,7 +919,7 @@ TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
   auto policy = client->GetBucketIamPolicy(bucket_name);
-  EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
+  EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
@@ -929,7 +930,7 @@ TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
   auto policy = client->SetBucketIamPolicy(bucket_name, IamPolicy{});
-  EXPECT_FALSE(policy.ok()) << "value=" << policy.value();
+  EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
@@ -940,7 +941,7 @@ TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
   auto items = client->TestBucketIamPermissions(bucket_name, {});
-  EXPECT_FALSE(items.ok()) << "items[0]=" << items.value().front();
+  EXPECT_THAT(items, Not(IsOk())) << "items[0]=" << items.value().front();
 }
 
 TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
@@ -950,7 +951,7 @@ TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto list = client->ListBucketAcl(bucket_name);
-  EXPECT_FALSE(list.ok()) << "list[0]=" << list.value().front();
+  EXPECT_THAT(list, Not(IsOk())) << "list[0]=" << list.value().front();
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
@@ -961,7 +962,7 @@ TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto acl = client->CreateBucketAcl(bucket_name, entity_name, "READER");
-  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
+  EXPECT_THAT(acl, Not(IsOk())) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
@@ -972,7 +973,7 @@ TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto acl = client->GetBucketAcl(bucket_name, entity_name);
-  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
+  EXPECT_THAT(acl, Not(IsOk())) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
@@ -985,7 +986,7 @@ TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
   auto acl = client->UpdateBucketAcl(
       bucket_name,
       BucketAccessControl().set_entity(entity_name).set_role("READER"));
-  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
+  EXPECT_THAT(acl, Not(IsOk())) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
@@ -998,7 +999,7 @@ TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
   auto acl = client->PatchBucketAcl(
       bucket_name, entity_name, BucketAccessControl(),
       BucketAccessControl().set_entity(entity_name).set_role("READER"));
-  EXPECT_FALSE(acl.ok()) << "value=" << acl.value();
+  EXPECT_THAT(acl, Not(IsOk())) << "value=" << acl.value();
 }
 
 TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
@@ -1009,7 +1010,7 @@ TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto status = client->DeleteBucketAcl(bucket_name, entity_name);
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
@@ -1019,7 +1020,7 @@ TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto status = client->ListDefaultObjectAcl(bucket_name).status();
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
@@ -1032,7 +1033,7 @@ TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
   auto status =
       client->CreateDefaultObjectAcl(bucket_name, entity_name, "READER")
           .status();
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
@@ -1043,7 +1044,7 @@ TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto status = client->GetDefaultObjectAcl(bucket_name, entity_name).status();
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
@@ -1059,7 +1060,7 @@ TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
               bucket_name,
               ObjectAccessControl().set_entity(entity_name).set_role("READER"))
           .status();
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
@@ -1075,7 +1076,7 @@ TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
               bucket_name, entity_name, ObjectAccessControl(),
               ObjectAccessControl().set_entity(entity_name).set_role("READER"))
           .status();
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
@@ -1086,7 +1087,7 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
 
   // This operation should fail because the target bucket does not exist.
   auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {

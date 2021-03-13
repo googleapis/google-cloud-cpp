@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,7 +25,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 /// @test Verify that we parse JSON objects into ObjectAccessControl objects.
 TEST(ObjectAccessControlTest, Parse) {
@@ -146,7 +149,7 @@ TEST(ObjectAclRequestTest, ListResponseParseFailure) {
 
   StatusOr<ListObjectAclResponse> actual =
       ListObjectAclResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectAclRequestTest, ListResponseParseFailureElements) {
@@ -154,7 +157,7 @@ TEST(ObjectAclRequestTest, ListResponseParseFailureElements) {
 
   StatusOr<ListObjectAclResponse> actual =
       ListObjectAclResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectAclRequestTest, Get) {

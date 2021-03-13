@@ -15,7 +15,6 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,6 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -109,7 +109,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       Crc32cChecksumValue("4UedKg=="));
-  EXPECT_THAT(failure, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(failure, Not(IsOk()));
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
@@ -124,7 +124,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
       Crc32cChecksumValue("4UedKg=="));
-  EXPECT_THAT(failure, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(failure, Not(IsOk()));
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
@@ -323,7 +323,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->crc32c()));
-  EXPECT_THAT(stream.status(), StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(stream.status(), Not(IsOk()));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
   auto status = client->DeleteObject(bucket_name_, object_name);

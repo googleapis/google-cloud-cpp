@@ -16,8 +16,8 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <fstream>
@@ -26,6 +26,10 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Not;
+
 namespace {
 class ClientOptionsTest : public ::testing::Test {
  public:
@@ -84,14 +88,14 @@ TEST_F(ClientOptionsTest, CreateDefaultError) {
   testing_util::ScopedEnvironment creds("GOOGLE_APPLICATION_CREDENTIALS",
                                         "not-a-file-should-fail");
   auto connection = ClientOptions::CreateDefaultClientOptions();
-  EXPECT_FALSE(connection.ok());
+  EXPECT_THAT(connection, Not(IsOk()));
 }
 
 TEST_F(ClientOptionsTest, CreateDefaultWithChannelOptionsError) {
   testing_util::ScopedEnvironment creds("GOOGLE_APPLICATION_CREDENTIALS",
                                         "not-a-file-should-fail");
   auto connection = ClientOptions::CreateDefaultClientOptions({});
-  EXPECT_FALSE(connection.ok());
+  EXPECT_THAT(connection, Not(IsOk()));
 }
 
 TEST_F(ClientOptionsTest, CreateDefault) {

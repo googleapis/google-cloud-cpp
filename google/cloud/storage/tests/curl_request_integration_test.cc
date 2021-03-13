@@ -16,7 +16,7 @@
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -32,8 +32,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 std::string HttpBinEndpoint() {
   return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
@@ -92,7 +94,7 @@ TEST(CurlRequestTest, FailedGET) {
                              storage::internal::GetDefaultCurlHandleFactory());
 
   auto response = builder.BuildRequest().MakeRequest({});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
 }
 
 TEST(CurlRequestTest, RepeatedGET) {
