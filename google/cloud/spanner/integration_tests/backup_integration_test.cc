@@ -22,7 +22,6 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
@@ -245,7 +244,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
         database_admin_client_
             .CreateBackup(db, db.database_id(), expire_time, version_time)
             .get();
-    EXPECT_THAT(backup, IsOk()) << backup.status();
+    EXPECT_THAT(backup, IsOk());
     if (backup) {
       EXPECT_EQ(MakeTimestamp(backup->expire_time()).value(), expire_time);
       EXPECT_EQ(MakeTimestamp(backup->version_time()).value(), version_time);
@@ -254,7 +253,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
       Database rdb(in, spanner_testing::RandomDatabaseName(generator_));
       auto restored =
           database_admin_client_.RestoreDatabase(rdb, *backup).get();
-      EXPECT_THAT(restored, IsOk()) << restored.status();
+      EXPECT_THAT(restored, IsOk());
       if (restored) {
         auto const& restore_info = restored->restore_info();
         EXPECT_EQ(restore_info.source_type(),
@@ -270,7 +269,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
           EXPECT_EQ(backup_info.source_database(), db.FullName());
         }
         auto database = database_admin_client_.GetDatabase(rdb);
-        EXPECT_THAT(database, IsOk()) << database.status();
+        EXPECT_THAT(database, IsOk());
         if (database) {
           auto const& restore_info = database->restore_info();
           EXPECT_EQ(restore_info.source_type(),
@@ -284,7 +283,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
         }
         bool found_restored = false;
         for (auto const& database : database_admin_client_.ListDatabases(in)) {
-          EXPECT_THAT(database, IsOk()) << database.status();
+          EXPECT_THAT(database, IsOk());
           if (!database) continue;
           if (database->name() == rdb.FullName()) {
             EXPECT_FALSE(found_restored);
@@ -307,7 +306,7 @@ TEST_F(BackupTest, CreateBackupWithVersionTime) {
           auto rows = client.Read("Counters", std::move(keys), {"Value"});
           using RowType = std::tuple<std::int64_t>;
           auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
-          EXPECT_THAT(row, IsOk()) << row.status();
+          EXPECT_THAT(row, IsOk());
           if (row) {
             // Expect to see the state of the table at version_time.
             EXPECT_EQ(std::get<0>(*std::move(row)), 0);
@@ -352,10 +351,8 @@ TEST_F(BackupTest, CreateBackupWithExpiredVersionTime) {
       database_admin_client_
           .CreateBackup(db, db.database_id(), expire_time, version_time)
           .get();
-  EXPECT_THAT(backup, Not(IsOk()));
-  EXPECT_THAT(backup.status(),
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("earlier than the creation time")));
+  EXPECT_THAT(backup, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("earlier than the creation time")));
   if (backup) {
     EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
   }
@@ -392,10 +389,8 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
       database_admin_client_
           .CreateBackup(db, db.database_id(), expire_time, version_time)
           .get();
-  EXPECT_THAT(backup, Not(IsOk()));
-  EXPECT_THAT(backup.status(),
-              StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("with a future version time")));
+  EXPECT_THAT(backup, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("with a future version time")));
   if (backup) {
     EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
   }

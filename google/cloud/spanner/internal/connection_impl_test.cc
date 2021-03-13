@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -59,6 +58,7 @@ namespace {
 #endif
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
@@ -70,6 +70,7 @@ using ::testing::DoAll;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
+using ::testing::Not;
 using ::testing::Property;
 using ::testing::Return;
 using ::testing::Sequence;
@@ -1680,7 +1681,7 @@ TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
       .WillOnce(Return(Status(StatusCode::kNotFound, "Session not found")));
   auto txn = spanner::MakeReadWriteTransaction();
   auto commit = conn->Commit({txn});
-  EXPECT_FALSE(commit.ok());
+  EXPECT_THAT(commit, Not(IsOk()));
   auto status = commit.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -1762,7 +1763,7 @@ TEST(ConnectionImplTest, CommitCommitInvalidatedTransaction) {
                         Status(StatusCode::kAlreadyExists, "constraint error"));
 
   auto commit = conn->Commit({txn});
-  EXPECT_FALSE(commit.ok());
+  EXPECT_THAT(commit, Not(IsOk()));
   auto status = commit.status();
   EXPECT_THAT(commit, StatusIs(StatusCode::kAlreadyExists,
                                HasSubstr("constraint error")));
@@ -2389,7 +2390,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
   SetTransactionId(txn, "test-txn-id");
   auto params = spanner::Connection::ReadParams{txn};
   auto response = GetSingularRow(conn->Read(std::move(params)));
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2408,7 +2409,7 @@ TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
   SetTransactionId(txn, "test-txn-id");
   auto params = spanner::Connection::ReadParams{txn};
   auto response = conn->PartitionRead({params});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2427,7 +2428,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = GetSingularRow(conn->ExecuteQuery({txn}));
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2446,7 +2447,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = GetSingularRow(conn->ProfileQuery({txn}));
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2464,7 +2465,7 @@ TEST(ConnectionImplTest, ExecuteDmlSessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ExecuteDml({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2482,7 +2483,7 @@ TEST(ConnectionImplTest, ProfileDmlSessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ProfileDml({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2500,7 +2501,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->AnalyzeSql({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2518,7 +2519,7 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->PartitionQuery({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2536,7 +2537,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->ExecuteBatchDml({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());
@@ -2561,7 +2562,7 @@ TEST(ConnectionImplTest, CommitSessionNotFound) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
   auto response = conn->Commit({txn});
-  EXPECT_FALSE(response.ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
   EXPECT_THAT(txn, HasBadSession());

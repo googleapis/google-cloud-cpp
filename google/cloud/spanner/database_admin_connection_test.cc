@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/options.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/clock.h"

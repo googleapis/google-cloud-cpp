@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/testing/matchers.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -45,6 +45,8 @@ class QueryPartitionTester {
 namespace {
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Not;
 
 TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string stmt("select * from foo where name = @name");
@@ -126,7 +128,7 @@ TEST(QueryPartitionTest, FailedDeserialize) {
   std::string bad_serialized_proto("ThisIsNotTheProtoYouAreLookingFor");
   StatusOr<QueryPartition> partition =
       DeserializeQueryPartition(bad_serialized_proto);
-  EXPECT_FALSE(partition.ok());
+  EXPECT_THAT(partition, Not(IsOk()));
 }
 
 TEST(QueryPartitionTest, MakeSqlParams) {

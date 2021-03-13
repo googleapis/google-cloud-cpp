@@ -19,7 +19,7 @@
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/bytes.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdint>
@@ -185,7 +184,6 @@ TEST(Bytes, FromBase64Failures) {
   // Chars outside base64 alphabet.
   for (std::string const base64 : {".xxx", "x.xx", "xx.x", "xxx.", "xx.="}) {
     auto decoded = spanner_internal::BytesFromBase64(base64);
-    EXPECT_FALSE(decoded.ok());
     EXPECT_THAT(decoded,
                 StatusIs(Not(StatusCode::kOk),
                          ContainsRegex("Invalid base64.*at offset 0")));
@@ -194,7 +192,6 @@ TEST(Bytes, FromBase64Failures) {
   // Non-zero padding bits.
   for (std::string const base64 : {"xx==", "xxx="}) {
     auto decoded = spanner_internal::BytesFromBase64(base64);
-    EXPECT_FALSE(decoded.ok());
     EXPECT_THAT(decoded,
                 StatusIs(Not(StatusCode::kOk),
                          ContainsRegex("Invalid base64.*at offset 0")));

@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 

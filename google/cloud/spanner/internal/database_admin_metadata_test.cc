@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

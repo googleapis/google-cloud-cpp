@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>

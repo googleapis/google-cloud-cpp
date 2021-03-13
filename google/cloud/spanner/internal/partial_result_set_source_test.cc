@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -714,7 +713,6 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
                                     })));
 
   auto row = (*reader)->NextRow();
-  EXPECT_FALSE(row.ok());
   EXPECT_THAT(row,
               StatusIs(StatusCode::kInternal, HasSubstr("incomplete row")));
 }

@@ -16,7 +16,6 @@
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>

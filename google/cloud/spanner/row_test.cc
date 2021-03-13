@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/row.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <tuple>
@@ -25,8 +24,10 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 // Given a `vector<StatusOr<Row>>` creates a 'Row::Source' object. This is
 // helpful for unit testing and letting the test inject a non-OK Status.
@@ -100,7 +101,7 @@ TEST(Row, GetByPosition) {
   EXPECT_STATUS_OK(row.get(0));
   EXPECT_STATUS_OK(row.get(1));
   EXPECT_STATUS_OK(row.get(2));
-  EXPECT_FALSE(row.get(3).ok());
+  EXPECT_THAT(row.get(3), Not(IsOk()));
 
   EXPECT_EQ(Value(1), *row.get(0));
   EXPECT_EQ(Value("blah"), *row.get(1));
@@ -117,7 +118,7 @@ TEST(Row, GetByColumnName) {
   EXPECT_STATUS_OK(row.get("a"));
   EXPECT_STATUS_OK(row.get("b"));
   EXPECT_STATUS_OK(row.get("c"));
-  EXPECT_FALSE(row.get("not a column name").ok());
+  EXPECT_THAT(row.get("not a column name"), Not(IsOk()));
 
   EXPECT_EQ(Value(1), *row.get("a"));
   EXPECT_EQ(Value("blah"), *row.get("b"));
@@ -132,10 +133,10 @@ TEST(Row, TemplatedGetByPosition) {
   EXPECT_STATUS_OK(row.get<bool>(2));
 
   // Ensures that the wrong type specification results in a failure.
-  EXPECT_FALSE(row.get<bool>(0).ok());
-  EXPECT_FALSE(row.get<std::int64_t>(1).ok());
-  EXPECT_FALSE(row.get<std::string>(2).ok());
-  EXPECT_FALSE(row.get<std::int64_t>(3).ok());
+  EXPECT_THAT(row.get<bool>(0), Not(IsOk()));
+  EXPECT_THAT(row.get<std::int64_t>(1), Not(IsOk()));
+  EXPECT_THAT(row.get<std::string>(2), Not(IsOk()));
+  EXPECT_THAT(row.get<std::int64_t>(3), Not(IsOk()));
 
   EXPECT_EQ(1, *row.get<std::int64_t>(0));
   EXPECT_EQ("blah", *row.get<std::string>(1));
@@ -154,10 +155,10 @@ TEST(Row, TemplatedGetByColumnName) {
   EXPECT_STATUS_OK(row.get<bool>("c"));
 
   // Ensures that the wrong type specification results in a failure.
-  EXPECT_FALSE(row.get<bool>("a").ok());
-  EXPECT_FALSE(row.get<std::int64_t>("b").ok());
-  EXPECT_FALSE(row.get<std::string>("c").ok());
-  EXPECT_FALSE(row.get<std::string>("column does not exist").ok());
+  EXPECT_THAT(row.get<bool>("a"), Not(IsOk()));
+  EXPECT_THAT(row.get<std::int64_t>("b"), Not(IsOk()));
+  EXPECT_THAT(row.get<std::string>("c"), Not(IsOk()));
+  EXPECT_THAT(row.get<std::string>("column does not exist"), Not(IsOk()));
 
   EXPECT_EQ(1, *row.get<std::int64_t>("a"));
   EXPECT_EQ("blah", *row.get<std::string>("b"));
@@ -172,19 +173,19 @@ TEST(Row, TemplatedGetAsTuple) {
   EXPECT_EQ(std::make_tuple(1, "blah", true), *row.get<RowType>());
 
   using TooFewTypes = std::tuple<std::int64_t, std::string>;
-  EXPECT_FALSE(row.get<TooFewTypes>().ok());
+  EXPECT_THAT(row.get<TooFewTypes>(), Not(IsOk()));
   Row copy = row;
-  EXPECT_FALSE(std::move(copy).get<TooFewTypes>().ok());
+  EXPECT_THAT(std::move(copy).get<TooFewTypes>(), Not(IsOk()));
 
   using TooManyTypes = std::tuple<std::int64_t, std::string, bool, bool>;
-  EXPECT_FALSE(row.get<TooManyTypes>().ok());
+  EXPECT_THAT(row.get<TooManyTypes>(), Not(IsOk()));
   copy = row;
-  EXPECT_FALSE(std::move(copy).get<TooManyTypes>().ok());
+  EXPECT_THAT(std::move(copy).get<TooManyTypes>(), Not(IsOk()));
 
   using WrongType = std::tuple<std::int64_t, std::string, std::int64_t>;
-  EXPECT_FALSE(row.get<WrongType>().ok());
+  EXPECT_THAT(row.get<WrongType>(), Not(IsOk()));
   copy = row;
-  EXPECT_FALSE(std::move(copy).get<WrongType>().ok());
+  EXPECT_THAT(std::move(copy).get<WrongType>(), Not(IsOk()));
 
   EXPECT_EQ(std::make_tuple(1, "blah", true), *std::move(row).get<RowType>());
 }
@@ -486,7 +487,6 @@ TEST(GetSingularRow, BasicEmpty) {
   std::vector<Row> rows;
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
-  EXPECT_FALSE(row.ok());
   EXPECT_THAT(row,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
 }
@@ -495,7 +495,6 @@ TEST(GetSingularRow, TupleStreamEmpty) {
   std::vector<Row> rows;
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
-  EXPECT_FALSE(row.ok());
   EXPECT_THAT(row,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("no rows")));
 }
@@ -529,7 +528,6 @@ TEST(GetSingularRow, BasicTooManyRows) {
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
-  EXPECT_FALSE(row.ok());
   EXPECT_THAT(
       row, StatusIs(StatusCode::kInvalidArgument, HasSubstr("too many rows")));
 }

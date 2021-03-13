@@ -15,8 +15,8 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <future>
 #include <random>
