@@ -145,10 +145,12 @@ Functions</h2></td></tr>
 <tr class="memitem:aa7c9d02da37fb3b28f0a651e7a38aa24"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html">spanner::Connection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aa7c9d02da37fb3b28f0a651e7a38aa24">MakeConnection</a> (<a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">spanner::Database</a> const  &amp;db, internal::Options opts={})</td></tr>
 <tr class="memdesc:aa7c9d02da37fb3b28f0a651e7a38aa24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a Connection object that can be used for interacting with Spanner.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#aa7c9d02da37fb3b28f0a651e7a38aa24">More...</a><br /></td></tr>
 <tr class="separator:aa7c9d02da37fb3b28f0a651e7a38aa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad73da7f6972d7399107f12cad772bf66"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad73da7f6972d7399107f12cad772bf66">MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options)</td></tr>
-<tr class="separator:ad73da7f6972d7399107f12cad772bf66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad63fc6dc1efbe898b964527865bbba70"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad63fc6dc1efbe898b964527865bbba70">MakeDatabaseAdminConnection</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">spanner::BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a> &gt; polling_policy)</td></tr>
-<tr class="separator:ad63fc6dc1efbe898b964527865bbba70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dd04aec7341758793addda9df6171f5"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a8dd04aec7341758793addda9df6171f5">MakeDatabaseAdminConnection</a> (internal::Options opts={})</td></tr>
+<tr class="memdesc:a8dd04aec7341758793addda9df6171f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an DatabaseAdminConnection object that can be used for interacting with Cloud Spanner's admin APIs.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a8dd04aec7341758793addda9df6171f5">More...</a><br /></td></tr>
+<tr class="separator:a8dd04aec7341758793addda9df6171f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a713e5f189f0427b45c0139dc1c32138c"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a713e5f189f0427b45c0139dc1c32138c">MakeDatabaseAdminConnectionForTesting</a> (std::shared_ptr&lt; DatabaseAdminStub &gt; stub, internal::Options opts)</td></tr>
+<tr class="memdesc:a713e5f189f0427b45c0139dc1c32138c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal-only factory that allows us to inject mock stubs for testing.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a713e5f189f0427b45c0139dc1c32138c">More...</a><br /></td></tr>
+<tr class="separator:a713e5f189f0427b45c0139dc1c32138c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7ca9cd638bf142674cf49297751d303"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html">spanner::InstanceAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ac7ca9cd638bf142674cf49297751d303">MakeInstanceAdminConnection</a> (std::shared_ptr&lt; InstanceAdminStub &gt; base_stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options)</td></tr>
 <tr class="separator:ac7ca9cd638bf142674cf49297751d303"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82fd1180a4f9666d9c49e4ae1c1979bd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html">spanner::InstanceAdminConnection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a82fd1180a4f9666d9c49e4ae1c1979bd">MakeInstanceAdminConnection</a> (std::shared_ptr&lt; spanner_internal::InstanceAdminStub &gt; base_stub, <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;options, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt; retry_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">spanner::BackoffPolicy</a> &gt; backoff_policy, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a> &gt; polling_policy)</td></tr>
@@ -411,8 +413,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad73da7f6972d7399107f12cad772bf66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad73da7f6972d7399107f12cad772bf66">&#9670;&nbsp;</a></span>MakeDatabaseAdminConnection() <span class="overload">[1/2]</span></h2>
+<a id="a8dd04aec7341758793addda9df6171f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dd04aec7341758793addda9df6171f5">&#9670;&nbsp;</a></span>MakeDatabaseAdminConnection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -420,14 +422,49 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt; google::cloud::spanner_internal::v1::MakeDatabaseAdminConnection </td>
           <td>(</td>
+          <td class="paramtype">internal::Options&#160;</td>
+          <td class="paramname"><em>opts</em> = <code>{}</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns an DatabaseAdminConnection object that can be used for interacting with Cloud Spanner's admin APIs. </p>
+<p>The returned connection object should not be used directly, rather it should be given to a <code>DatabaseAdminClient</code> instance.</p>
+<p>The optional <code>opts</code> argument may be used to configure aspects of the returned <code>DatabaseAdminConnection</code>. Expected options are any of the following:</p>
+<ul>
+<li><code>google::cloud::internal::CommonOptionList</code></li>
+<li><code>google::cloud::internal::GrpcOptionList</code></li>
+</ul>
+<dl class="section see"><dt>See also</dt><dd><code>DatabaseAdminConnection</code></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">opts</td><td>(optional) configure the <code>DatabaseAdminConnection</code> created by this function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00655">655</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+
+</div>
+</div>
+<a id="a713e5f189f0427b45c0139dc1c32138c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a713e5f189f0427b45c0139dc1c32138c">&#9670;&nbsp;</a></span>MakeDatabaseAdminConnectionForTesting()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt; google::cloud::spanner_internal::v1::MakeDatabaseAdminConnectionForTesting </td>
+          <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; DatabaseAdminStub &gt;&#160;</td>
           <td class="paramname"><em>stub</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;&#160;</td>
-          <td class="paramname"><em>options</em>&#160;</td>
+          <td class="paramtype">internal::Options&#160;</td>
+          <td class="paramname"><em>opts</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -437,55 +474,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00677">677</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p>Internal-only factory that allows us to inject mock stubs for testing. </p>
 
-</div>
-</div>
-<a id="ad63fc6dc1efbe898b964527865bbba70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad63fc6dc1efbe898b964527865bbba70">&#9670;&nbsp;</a></span>MakeDatabaseAdminConnection() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection.html">spanner::DatabaseAdminConnection</a> &gt; google::cloud::spanner_internal::v1::MakeDatabaseAdminConnection </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; DatabaseAdminStub &gt;&#160;</td>
-          <td class="paramname"><em>stub</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">spanner::ConnectionOptions</a> const &amp;&#160;</td>
-          <td class="paramname"><em>options</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt;&#160;</td>
-          <td class="paramname"><em>retry_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a">spanner::BackoffPolicy</a> &gt;&#160;</td>
-          <td class="paramname"><em>backoff_policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a> &gt;&#160;</td>
-          <td class="paramname"><em>polling_policy</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00684">684</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00668">668</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
 </div>
 </div>
