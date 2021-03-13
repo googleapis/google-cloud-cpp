@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_SESSION_POOL_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_SESSION_POOL_OPTIONS_H
 
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/grpc_options.h"
 #include <algorithm>

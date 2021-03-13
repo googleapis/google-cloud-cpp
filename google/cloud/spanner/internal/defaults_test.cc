@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/internal/common_options.h"

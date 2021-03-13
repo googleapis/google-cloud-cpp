@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/client.h"
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"

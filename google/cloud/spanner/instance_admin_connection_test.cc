@@ -14,7 +14,7 @@
 
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/connection_impl.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
-#include "google/cloud/spanner/internal/options.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/status_utils.h"
