@@ -77,6 +77,7 @@ load(":google_cloud_cpp_generator_integration_tests.bzl", "google_cloud_cpp_gene
     ],
     deps = [
         "//generator:google_cloud_cpp_generator",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_integration_tests]

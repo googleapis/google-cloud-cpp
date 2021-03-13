@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
@@ -25,6 +25,7 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -214,7 +215,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
   grpc::ClientContext context;
   auto response = stub.TailLogEntries(
       context, google::test::admin::database::v1::TailLogEntriesRequest());
-  EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
+  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
@@ -234,7 +235,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   grpc::ClientContext context;
   auto response = stub.TailLogEntries(
       context, google::test::admin::database::v1::TailLogEntriesRequest());
-  EXPECT_TRUE(absl::get<Status>(response->Read()).ok());
+  EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));

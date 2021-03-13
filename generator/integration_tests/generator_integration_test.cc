@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/string_view.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -30,6 +31,8 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
 
 StatusOr<std::vector<std::string>> ReadFile(std::string const& filepath) {
   std::string line;
@@ -133,11 +136,11 @@ class GeneratorIntegrationTest
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
   auto golden_file = ReadFile(absl::StrCat(golden_path_, GetParam()));
-  EXPECT_TRUE(golden_file.ok());
+  EXPECT_THAT(golden_file, IsOk());
   auto generated_file =
       ReadFile(absl::StrCat(output_path_, product_path_, GetParam()));
 
-  EXPECT_TRUE(generated_file.ok());
+  EXPECT_THAT(generated_file, IsOk());
   EXPECT_EQ(golden_file->size(), generated_file->size());
   for (unsigned int i = 0; i < golden_file->size(); ++i) {
     EXPECT_EQ((*golden_file)[i], (*generated_file)[i]);
