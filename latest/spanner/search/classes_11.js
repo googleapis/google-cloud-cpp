@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['updatebackupparams_759',['UpdateBackupParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateBackupParams.html',1,'google::cloud::spanner::v1::DatabaseAdminConnection']]],
-  ['updatedatabaseparams_760',['UpdateDatabaseParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateDatabaseParams.html',1,'google::cloud::spanner::v1::DatabaseAdminConnection']]],
-  ['updateinstanceparams_761',['UpdateInstanceParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection_1_1UpdateInstanceParams.html',1,'google::cloud::spanner::v1::InstanceAdminConnection']]],
-  ['updateinstancerequestbuilder_762',['UpdateInstanceRequestBuilder',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1UpdateInstanceRequestBuilder.html',1,'google::cloud::spanner::v1::UpdateInstanceRequestBuilder'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1UpdateInstanceRequestBuilder.html',1,'google::cloud::spanner::v1::UpdateInstanceRequestBuilder']]],
-  ['updateop_763',['UpdateOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1UpdateOp.html',1,'google::cloud::spanner_internal::v1::UpdateOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1UpdateOp.html',1,'google::cloud::spanner_internal::v1::UpdateOp']]]
+  ['updatebackupparams_760',['UpdateBackupParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateBackupParams.html',1,'google::cloud::spanner::v1::DatabaseAdminConnection']]],
+  ['updatedatabaseparams_761',['UpdateDatabaseParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1DatabaseAdminConnection_1_1UpdateDatabaseParams.html',1,'google::cloud::spanner::v1::DatabaseAdminConnection']]],
+  ['updateinstanceparams_762',['UpdateInstanceParams',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection_1_1UpdateInstanceParams.html',1,'google::cloud::spanner::v1::InstanceAdminConnection']]],
+  ['updateinstancerequestbuilder_763',['UpdateInstanceRequestBuilder',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1UpdateInstanceRequestBuilder.html',1,'google::cloud::spanner::v1::UpdateInstanceRequestBuilder'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1UpdateInstanceRequestBuilder.html',1,'google::cloud::spanner::v1::UpdateInstanceRequestBuilder']]],
+  ['updateop_764',['UpdateOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1UpdateOp.html',1,'google::cloud::spanner_internal::v1::UpdateOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1UpdateOp.html',1,'google::cloud::spanner_internal::v1::UpdateOp']]]
 ];

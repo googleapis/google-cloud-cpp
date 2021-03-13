@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['iambinding_676',['IamBinding',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBinding.html',1,'google::cloud::v1']]],
-  ['iambindings_677',['IamBindings',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html',1,'google::cloud::v1']]],
-  ['iampolicy_678',['IamPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html',1,'google::cloud::v1']]],
-  ['insertop_679',['InsertOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOp.html',1,'google::cloud::spanner_internal::v1::InsertOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOp.html',1,'google::cloud::spanner_internal::v1::InsertOp']]],
-  ['insertorupdateop_680',['InsertOrUpdateOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOrUpdateOp.html',1,'google::cloud::spanner_internal::v1::InsertOrUpdateOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOrUpdateOp.html',1,'google::cloud::spanner_internal::v1::InsertOrUpdateOp']]],
-  ['instance_681',['Instance',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html',1,'google::cloud::spanner::v1::Instance'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html',1,'google::cloud::spanner::v1::Instance']]],
-  ['instanceadminclient_682',['InstanceAdminClient',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html',1,'google::cloud::spanner::v1::InstanceAdminClient'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html',1,'google::cloud::spanner::v1::InstanceAdminClient']]],
-  ['instanceadminconnection_683',['InstanceAdminConnection',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html',1,'google::cloud::spanner::v1::InstanceAdminConnection'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html',1,'google::cloud::spanner::v1::InstanceAdminConnection']]],
-  ['iterator_684',['Iterator',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator.html',1,'google::cloud::spanner::v1::Bytes::Decoder']]],
-  ['iteratorimpl_685',['IteratorImpl',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html',1,'google::cloud::v1::StreamRange']]]
+  ['iambinding_677',['IamBinding',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBinding.html',1,'google::cloud::v1']]],
+  ['iambindings_678',['IamBindings',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1IamBindings.html',1,'google::cloud::v1']]],
+  ['iampolicy_679',['IamPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html',1,'google::cloud::v1']]],
+  ['insertop_680',['InsertOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOp.html',1,'google::cloud::spanner_internal::v1::InsertOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOp.html',1,'google::cloud::spanner_internal::v1::InsertOp']]],
+  ['insertorupdateop_681',['InsertOrUpdateOp',['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOrUpdateOp.html',1,'google::cloud::spanner_internal::v1::InsertOrUpdateOp'],['../structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1InsertOrUpdateOp.html',1,'google::cloud::spanner_internal::v1::InsertOrUpdateOp']]],
+  ['instance_682',['Instance',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html',1,'google::cloud::spanner::v1::Instance'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Instance.html',1,'google::cloud::spanner::v1::Instance']]],
+  ['instanceadminclient_683',['InstanceAdminClient',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html',1,'google::cloud::spanner::v1::InstanceAdminClient'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html',1,'google::cloud::spanner::v1::InstanceAdminClient']]],
+  ['instanceadminconnection_684',['InstanceAdminConnection',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html',1,'google::cloud::spanner::v1::InstanceAdminConnection'],['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection.html',1,'google::cloud::spanner::v1::InstanceAdminConnection']]],
+  ['iterator_685',['Iterator',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Bytes_1_1Decoder_1_1Iterator.html',1,'google::cloud::spanner::v1::Bytes::Decoder']]],
+  ['iteratorimpl_686',['IteratorImpl',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html',1,'google::cloud::v1::StreamRange']]]
 ];
