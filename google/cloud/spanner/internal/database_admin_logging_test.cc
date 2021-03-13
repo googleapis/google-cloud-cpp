@@ -16,8 +16,8 @@
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 

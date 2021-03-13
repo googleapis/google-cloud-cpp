@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"

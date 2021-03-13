@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -34,6 +33,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::HasSubstr;
@@ -238,8 +238,7 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
     // Set the policy to the existing value of the policy. While this
     // changes nothing, it tests all the code in the client library.
     auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
-    ASSERT_THAT(updated_policy, AnyOf(StatusIs(StatusCode::kOk),
-                                      StatusIs(StatusCode::kAborted)));
+    ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
     if (updated_policy) {
       EXPECT_FALSE(updated_policy->etag().empty());
     }

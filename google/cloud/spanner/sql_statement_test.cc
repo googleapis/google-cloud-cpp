@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/sql_statement.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>

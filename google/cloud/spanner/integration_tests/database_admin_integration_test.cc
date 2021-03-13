@@ -20,7 +20,6 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -124,8 +123,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
     *binding.add_members() = expected_member;
 
     auto updated_policy = client_.SetIamPolicy(database_, *current_policy);
-    ASSERT_THAT(updated_policy, AnyOf(StatusIs(StatusCode::kOk),
-                                      StatusIs(StatusCode::kAborted)));
+    ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
     if (updated_policy) {
       EXPECT_EQ(1, updated_policy->bindings_size());
       ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());

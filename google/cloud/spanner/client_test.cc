@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"

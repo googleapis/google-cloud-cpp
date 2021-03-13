@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
@@ -34,6 +33,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
@@ -46,7 +46,7 @@ absl::Time MakeTime(std::time_t sec, int nanos) {
 template <typename T>
 void TestBasicSemantics(T init) {
   Value const default_ctor{};
-  EXPECT_FALSE(default_ctor.get<T>().ok());
+  EXPECT_THAT(default_ctor.get<T>(), Not(IsOk()));
 
   Value const v{init};
 
@@ -61,7 +61,7 @@ void TestBasicSemantics(T init) {
   // Tests a null Value of type `T`.
   Value const null = MakeNullValue<T>();
 
-  EXPECT_FALSE(null.get<T>().ok());
+  EXPECT_THAT(null.get<T>(), Not(IsOk()));
   EXPECT_STATUS_OK(null.get<absl::optional<T>>());
   EXPECT_EQ(absl::optional<T>{}, *null.get<absl::optional<T>>());
 
@@ -398,26 +398,26 @@ TEST(Value, MixingTypes) {
 
   Value a(A{});
   EXPECT_STATUS_OK(a.get<A>());
-  EXPECT_FALSE(a.get<B>().ok());
-  EXPECT_FALSE(a.get<B>().ok());
+  EXPECT_THAT(a.get<B>(), Not(IsOk()));
+  EXPECT_THAT(a.get<B>(), Not(IsOk()));
 
   Value null_a = MakeNullValue<A>();
-  EXPECT_FALSE(null_a.get<A>().ok());
-  EXPECT_FALSE(null_a.get<B>().ok());
+  EXPECT_THAT(null_a.get<A>(), Not(IsOk()));
+  EXPECT_THAT(null_a.get<B>(), Not(IsOk()));
 
   EXPECT_NE(null_a, a);
 
   Value b(B{});
   EXPECT_STATUS_OK(b.get<B>());
-  EXPECT_FALSE(b.get<A>().ok());
-  EXPECT_FALSE(b.get<A>().ok());
+  EXPECT_THAT(b.get<A>(), Not(IsOk()));
+  EXPECT_THAT(b.get<A>(), Not(IsOk()));
 
   EXPECT_NE(b, a);
   EXPECT_NE(b, null_a);
 
   Value null_b = MakeNullValue<B>();
-  EXPECT_FALSE(null_b.get<B>().ok());
-  EXPECT_FALSE(null_b.get<A>().ok());
+  EXPECT_THAT(null_b.get<B>(), Not(IsOk()));
+  EXPECT_THAT(null_b.get<A>(), Not(IsOk()));
 
   EXPECT_NE(null_b, b);
   EXPECT_NE(null_b, null_a);
@@ -432,21 +432,21 @@ TEST(Value, SpannerArray) {
   Value const ve(empty);
   EXPECT_EQ(ve, ve);
   EXPECT_STATUS_OK(ve.get<ArrayInt64>());
-  EXPECT_FALSE(ve.get<ArrayDouble>().ok());
+  EXPECT_THAT(ve.get<ArrayDouble>(), Not(IsOk()));
   EXPECT_EQ(empty, *ve.get<ArrayInt64>());
 
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
   EXPECT_STATUS_OK(vi.get<ArrayInt64>());
-  EXPECT_FALSE(vi.get<ArrayDouble>().ok());
+  EXPECT_THAT(vi.get<ArrayDouble>(), Not(IsOk()));
   EXPECT_EQ(ai, *vi.get<ArrayInt64>());
 
   ArrayDouble const ad = {1.0, 2.0, 3.0};
   Value const vd(ad);
   EXPECT_EQ(vd, vd);
   EXPECT_NE(vi, vd);
-  EXPECT_FALSE(vd.get<ArrayInt64>().ok());
+  EXPECT_THAT(vd.get<ArrayInt64>(), Not(IsOk()));
   EXPECT_STATUS_OK(vd.get<ArrayDouble>());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
 
@@ -454,16 +454,16 @@ TEST(Value, SpannerArray) {
   EXPECT_EQ(null_vi, null_vi);
   EXPECT_NE(null_vi, vi);
   EXPECT_NE(null_vi, vd);
-  EXPECT_FALSE(null_vi.get<ArrayInt64>().ok());
-  EXPECT_FALSE(null_vi.get<ArrayDouble>().ok());
+  EXPECT_THAT(null_vi.get<ArrayInt64>(), Not(IsOk()));
+  EXPECT_THAT(null_vi.get<ArrayDouble>(), Not(IsOk()));
 
   Value const null_vd = MakeNullValue<ArrayDouble>();
   EXPECT_EQ(null_vd, null_vd);
   EXPECT_NE(null_vd, null_vi);
   EXPECT_NE(null_vd, vd);
   EXPECT_NE(null_vd, vi);
-  EXPECT_FALSE(null_vd.get<ArrayDouble>().ok());
-  EXPECT_FALSE(null_vd.get<ArrayInt64>().ok());
+  EXPECT_THAT(null_vd.get<ArrayDouble>(), Not(IsOk()));
+  EXPECT_THAT(null_vd.get<ArrayInt64>(), Not(IsOk()));
 }
 
 TEST(Value, SpannerStruct) {
@@ -540,9 +540,9 @@ TEST(Value, SpannerStruct) {
   using T4 = decltype(array_struct);
   Value v4(array_struct);
   EXPECT_STATUS_OK(v4.get<T4>());
-  EXPECT_FALSE(v4.get<T3>().ok());
-  EXPECT_FALSE(v4.get<T2>().ok());
-  EXPECT_FALSE(v4.get<T1>().ok());
+  EXPECT_THAT(v4.get<T3>(), Not(IsOk()));
+  EXPECT_THAT(v4.get<T2>(), Not(IsOk()));
+  EXPECT_THAT(v4.get<T1>(), Not(IsOk()));
 
   EXPECT_STATUS_OK(v4.get<T4>());
   EXPECT_EQ(array_struct, *v4.get<T4>());
@@ -551,7 +551,7 @@ TEST(Value, SpannerStruct) {
   using T5 = decltype(empty);
   Value v5(empty);
   EXPECT_STATUS_OK(v5.get<T5>());
-  EXPECT_FALSE(v5.get<T4>().ok());
+  EXPECT_THAT(v5.get<T4>(), Not(IsOk()));
   EXPECT_EQ(v5, v5);
   EXPECT_NE(v5, v4);
 
@@ -562,7 +562,7 @@ TEST(Value, SpannerStruct) {
   using T6 = decltype(deeply_nested);
   Value v6(deeply_nested);
   EXPECT_STATUS_OK(v6.get<T6>());
-  EXPECT_FALSE(v6.get<T5>().ok());
+  EXPECT_THAT(v6.get<T5>(), Not(IsOk()));
   EXPECT_EQ(v6, v6);
   EXPECT_NE(v6, v5);
 
@@ -806,211 +806,211 @@ void ClearProtoKind(Value& v) {
 TEST(Value, GetBadBool) {
   Value v(true);
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<bool>().ok());
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<bool>().ok());
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<bool>().ok());
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 
   SetProtoKind(v, "hello");
-  EXPECT_FALSE(v.get<bool>().ok());
+  EXPECT_THAT(v.get<bool>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadDouble) {
   Value v(0.0);
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<double>().ok());
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<double>().ok());
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<double>().ok());
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 
   SetProtoKind(v, "bad string");
-  EXPECT_FALSE(v.get<double>().ok());
+  EXPECT_THAT(v.get<double>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadString) {
   Value v("hello");
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadBytes) {
   Value v(Bytes("hello"));
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<Bytes>().ok());
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<Bytes>().ok());
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<Bytes>().ok());
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<Bytes>().ok());
+  EXPECT_THAT(v.get<Bytes>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadNumeric) {
   Value v(MakeNumeric(0).value());
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<std::string>().ok());
+  EXPECT_THAT(v.get<std::string>(), Not(IsOk()));
 
   SetProtoKind(v, "");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, "123blah");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadInt) {
   Value v(42);
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, "");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 
   SetProtoKind(v, "123blah");
-  EXPECT_FALSE(v.get<std::int64_t>().ok());
+  EXPECT_THAT(v.get<std::int64_t>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadTimestamp) {
   Value v(Timestamp{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<Timestamp>().ok());
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<Timestamp>().ok());
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<Timestamp>().ok());
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<Timestamp>().ok());
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<Timestamp>().ok());
+  EXPECT_THAT(v.get<Timestamp>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadCommitTimestamp) {
   Value v(CommitTimestamp{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+  EXPECT_THAT(v.get<CommitTimestamp>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+  EXPECT_THAT(v.get<CommitTimestamp>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+  EXPECT_THAT(v.get<CommitTimestamp>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+  EXPECT_THAT(v.get<CommitTimestamp>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+  EXPECT_THAT(v.get<CommitTimestamp>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadDate) {
   Value v(absl::CivilDay{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<absl::CivilDay>().ok());
+  EXPECT_THAT(v.get<absl::CivilDay>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadOptional) {
   Value v(absl::optional<double>{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<absl::optional<double>>().ok());
+  EXPECT_THAT(v.get<absl::optional<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadArray) {
   Value v(std::vector<double>{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+  EXPECT_THAT(v.get<std::vector<double>>(), Not(IsOk()));
 }
 
 TEST(Value, GetBadStruct) {
   Value v(std::tuple<bool>{});
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
 
   SetProtoKind(v, "blah");
-  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+  EXPECT_THAT(v.get<std::tuple<bool>>(), Not(IsOk()));
 }
 
 TEST(Value, CommitTimestamp) {
@@ -1030,7 +1030,7 @@ TEST(Value, CommitTimestamp) {
   EXPECT_EQ(CommitTimestamp{}, *good);
 
   auto bad = v.get<Timestamp>();
-  EXPECT_FALSE(bad.ok());
+  EXPECT_THAT(bad, Not(IsOk()));
 }
 
 TEST(Value, OutputStream) {

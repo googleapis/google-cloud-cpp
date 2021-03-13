@@ -14,8 +14,8 @@
 
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/testing/matchers.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -48,7 +48,9 @@ class ReadPartitionTester {
 namespace {
 
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::testing::Not;
 
 TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
@@ -146,7 +148,7 @@ TEST(ReadPartitionTest, FailedDeserialize) {
   std::string bad_serialized_proto("ThisIsNotTheProtoYouAreLookingFor");
   StatusOr<ReadPartition> partition =
       DeserializeReadPartition(bad_serialized_proto);
-  EXPECT_FALSE(partition.ok());
+  EXPECT_THAT(partition, Not(IsOk()));
 }
 
 TEST(ReadPartitionTest, MakeReadParams) {
