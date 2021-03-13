@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/setup.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

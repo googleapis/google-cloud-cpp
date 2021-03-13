@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 
 #include "google/cloud/bigtable/internal/common_client.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

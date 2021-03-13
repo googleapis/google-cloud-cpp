@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>

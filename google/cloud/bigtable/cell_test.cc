@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/cell.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gtest/gtest.h>
 
 namespace google {

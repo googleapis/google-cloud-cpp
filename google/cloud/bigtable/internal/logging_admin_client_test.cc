@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/logging_admin_client.h"
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 

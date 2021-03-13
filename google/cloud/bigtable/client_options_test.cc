@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/status.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 

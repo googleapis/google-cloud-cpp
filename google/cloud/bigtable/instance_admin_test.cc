@@ -17,7 +17,6 @@
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -40,12 +39,14 @@ namespace btadmin = ::google::bigtable::admin::v2;
 using MockAdminClient =
     ::google::cloud::bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -358,7 +359,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
+  EXPECT_THAT(tested.DeleteInstance("other-instance"), Not(IsOk()));
 }
 
 /// @test Verify that recoverable error for DeleteInstance
@@ -369,7 +370,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
+  EXPECT_THAT(tested.DeleteInstance("other-instance"), Not(IsOk()));
 }
 
 /// @test Verify that `bigtable::InstanceAdmin::ListClusters` works in the easy
@@ -458,7 +459,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  ASSERT_FALSE(tested.GetCluster("other-instance", "the-cluster"));
+  ASSERT_THAT(tested.GetCluster("other-instance", "the-cluster"), Not(IsOk()));
 }
 
 /// @test Verify recoverable errors for GetCluster
@@ -508,7 +509,8 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
+  EXPECT_THAT(tested.DeleteCluster("other-instance", "other-cluster"),
+              Not(IsOk()));
 }
 
 /// @test Verify that recoverable error for DeleteCluster
@@ -519,7 +521,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
+  EXPECT_THAT(tested.DeleteCluster("other-instance", "other-cluster"),
+              Not(IsOk()));
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
@@ -561,8 +564,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
 
   std::string resource = "test-resource";
   auto res = tested.GetIamPolicy(resource);
-  ASSERT_FALSE(res);
-  EXPECT_EQ(google::cloud::StatusCode::kUnimplemented, res.status().code());
+  ASSERT_THAT(res, StatusIs(StatusCode::kUnimplemented));
 }
 
 /// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy.
@@ -756,9 +758,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that AsyncGetNativeIamPolicy works in simple case.
@@ -803,9 +803,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_native_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify positive scenario for InstanceAdmin::SetIamPolicy.
@@ -1221,9 +1219,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 /// @test Verify that AsyncSetIamPolicy works in simple case (native).
@@ -1273,9 +1269,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_native_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 using MockAsyncTestIamPermissionsReader =
@@ -1367,9 +1361,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto permission_set = user_future_.get();
-  ASSERT_FALSE(permission_set);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            permission_set.status().code());
+  ASSERT_THAT(permission_set, StatusIs(StatusCode::kPermissionDenied));
 }
 
 class ValidContextMdAsyncTest : public ::testing::Test {
