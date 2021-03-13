@@ -19,6 +19,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <utility>
@@ -32,7 +33,9 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::oauth2::Credentials;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 StatusCode const kStatusErrorCode = StatusCode::kUnavailable;
 std::string const kStatusErrorMsg = "FailingCredentials doing its job, failing";
@@ -61,8 +64,8 @@ class CurlClientTest : public ::testing::Test,
       // We know exactly what error to expect, so setup the assertions to be
       // very strict.
       check_status_ = [](Status const& actual) {
-        EXPECT_EQ(kStatusErrorCode, actual.code());
-        EXPECT_THAT(actual.message(), HasSubstr(kStatusErrorMsg));
+        EXPECT_THAT(actual,
+                    StatusIs(kStatusErrorCode, HasSubstr(kStatusErrorMsg)));
       };
     } else if (error_type == "libcurl-failure") {
       google::cloud::internal::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
@@ -74,8 +77,8 @@ class CurlClientTest : public ::testing::Test,
       // by version of libcurl. Just make sure it is an error and the CURL
       // details are included in the error message.
       check_status_ = [](Status const& actual) {
-        EXPECT_FALSE(actual.ok());
-        EXPECT_THAT(actual.message(), HasSubstr("CURL error"));
+        EXPECT_THAT(actual,
+                    StatusIs(Not(StatusCode::kOk), HasSubstr("CURL error")));
       };
     } else {
       FAIL() << "Invalid test parameter value: " << error_type

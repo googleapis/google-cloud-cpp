@@ -21,7 +21,6 @@
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
@@ -45,6 +44,7 @@ using ::google::cloud::storage::testing::kP12ServiceAccountId;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
@@ -635,21 +635,21 @@ TEST_F(ServiceAccountCredentialsTest, ParseP12MissingKey) {
   std::string filename = CreateRandomFileName() + ".p12";
   WriteBase64AsBinary(filename, kP12KeyFileMissingKey);
   auto info = ParseServiceAccountP12File(filename);
-  EXPECT_FALSE(info.ok());
+  EXPECT_THAT(info, Not(IsOk()));
 }
 
 TEST_F(ServiceAccountCredentialsTest, ParseP12MissingCerts) {
   std::string filename = ::testing::TempDir() + CreateRandomFileName() + ".p12";
   WriteBase64AsBinary(filename, kP12KeyFileMissingCerts);
   auto info = ParseServiceAccountP12File(filename);
-  EXPECT_FALSE(info.ok());
+  EXPECT_THAT(info, Not(IsOk()));
 }
 
 TEST_F(ServiceAccountCredentialsTest, CreateFromP12MissingFile) {
   std::string filename = CreateRandomFileName();
   // Loading a non-existent file should fail.
   auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST_F(ServiceAccountCredentialsTest, CreateFromP12EmptyFile) {
@@ -658,7 +658,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12EmptyFile) {
 
   // Loading an empty file should fail.
   auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 
   EXPECT_EQ(0, std::remove(filename.c_str()));
 }

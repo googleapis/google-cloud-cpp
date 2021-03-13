@@ -15,6 +15,7 @@
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -23,7 +24,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 ServiceAccount CreateServiceAccountForTest() {
   return internal::ServiceAccountParser::FromString(R"""({
@@ -44,7 +47,7 @@ TEST(ServiceAccountTest, Parse) {
 /// @test Verify that we parse JSON objects into ServiceAccount objects.
 TEST(ServiceAccountTest, ParseFailure) {
   auto actual = internal::ServiceAccountParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 /// @test Verify that the IOStream operator works as expected.

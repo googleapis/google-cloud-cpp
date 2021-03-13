@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

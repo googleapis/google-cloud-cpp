@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,12 +24,13 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
 TEST(HmacKeyRequestsTest, ParseFailure) {
   auto actual = internal::HmacKeyMetadataParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(HmacKeyRequestsTest, ParseEmpty) {
@@ -87,14 +88,14 @@ TEST(HmacKeyRequestsTest, ParseCreateResponseFailure) {
   std::string text = R"""({123)""";
 
   auto actual = CreateHmacKeyResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(HmacKeyRequestsTest, ParseCreateResponseFailureInResource) {
   std::string text = R"""({"metadata": "invalid-metadata" })""";
 
   auto actual = CreateHmacKeyResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(HmacKeyRequestsTest, CreateResponseIOStream) {
@@ -171,14 +172,14 @@ TEST(HmacKeysRequestsTest, ParseListResponseFailure) {
   std::string text = R"""({123)""";
 
   auto actual = ListHmacKeysResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(HmacKeysRequestsTest, ParseListResponseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual = ListHmacKeysResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(HmacKeysRequestsTest, ListResponseOStream) {

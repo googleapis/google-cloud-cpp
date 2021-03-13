@@ -16,7 +16,7 @@
 #include "google/cloud/storage/testing/object_integration_test.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <sys/types.h>
 #include <algorithm>

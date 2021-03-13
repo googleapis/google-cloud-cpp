@@ -31,6 +31,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -39,7 +40,7 @@ using ::testing::Not;
 /// @test Verify that we parse JSON objects into LifecycleRule objects.
 TEST(LifecycleRuleParserTest, ParseFailure) {
   auto actual = LifecycleRuleParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(LifecycleRuleParserTest, ParseCreatedBeforeFailure) {
@@ -48,7 +49,7 @@ TEST(LifecycleRuleParserTest, ParseCreatedBeforeFailure) {
       "createdBefore": "xxxx"
     }
   })js");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(LifecycleRuleParserTest, ParseFull) {
@@ -65,34 +66,34 @@ TEST(LifecycleRuleParserTest, ParseFull) {
       "numNewerVersions": 3
     }
   })js");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataParserTest, ParseFailure) {
   auto actual = internal::BucketMetadataParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataParserTest, ParseAclFailure) {
   auto actual = internal::BucketMetadataParser::FromString(
       R"""({"acl: ["invalid-item"]})""");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataParserTest, ParseDefaultObjecAclFailure) {
   auto actual = internal::BucketMetadataParser::FromString(
       R"""({"defaultObjectAcl: ["invalid-item"]})""");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 /// @test Verify that we parse JSON objects into BucketMetadata objects.
 TEST(BucketMetadataParserTest, ParseLifecycleFailure) {
   auto actual = internal::BucketMetadataParser::FromString(
       R"""({"lifecycle: {"rule": [ "invalid-item" ]}})""");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(GetBucketMetadataRequestTest, OStreamBasic) {
@@ -178,14 +179,14 @@ TEST(ListBucketsResponseTest, ParseFailure) {
   std::string text("{123");
   StatusOr<ListBucketsResponse> actual =
       ListBucketsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ListBucketsResponseTest, ParseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual = ListBucketsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(CreateBucketsRequestTest, Basic) {
@@ -756,7 +757,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
 TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
   std::string text("{123");
   StatusOr<google::cloud::IamPolicy> actual = ParseIamPolicyFromString(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
@@ -977,7 +978,7 @@ TEST(ListBucketsResponseTest, TestIamPermissionsResponseParseFailure) {
   std::string text("{123");
   StatusOr<TestBucketIamPermissionsResponse> actual =
       TestBucketIamPermissionsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(BucketRequestsTest, TestIamPermissionsResponseEmpty) {

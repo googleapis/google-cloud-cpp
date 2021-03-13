@@ -23,7 +23,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/terminate_handler.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>

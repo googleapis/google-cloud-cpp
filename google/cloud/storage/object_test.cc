@@ -19,7 +19,7 @@
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,6 +30,7 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -533,8 +534,7 @@ TEST_F(ObjectTest, DeleteByPrefixListFailure) {
 
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
-  EXPECT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
@@ -566,8 +566,7 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
 
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
-  EXPECT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
 }
 
 TEST_F(ObjectTest, ComposeManyNone) {

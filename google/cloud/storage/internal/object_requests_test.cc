@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -26,11 +27,13 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 TEST(ObjectRequestsTest, ParseFailure) {
   auto actual = internal::ObjectMetadataParser::FromString("{123");
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, ParseAclListFailure) {
@@ -49,7 +52,7 @@ TEST(ObjectRequestsTest, ParseAclListFailure) {
       "name": "baz"
 })""";
   auto actual = internal::ObjectMetadataParser::FromString(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, List) {
@@ -127,14 +130,14 @@ TEST(ObjectRequestsTest, ParseListResponseFailure) {
   std::string text = R"""({123)""";
 
   auto actual = ListObjectsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, ParseListResponseFailureInItems) {
   std::string text = R"""({"items": [ "invalid-item" ]})""";
 
   auto actual = ListObjectsResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, Get) {
@@ -477,14 +480,14 @@ TEST(ObjectRequestsTest, RewriteObjectResponseFailure) {
   std::string text = R"""({123)""";
 
   auto actual = RewriteObjectResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, RewriteObjectResponseFailureInResource) {
   std::string text = R"""({"resource": "invalid-resource"})""";
 
   auto actual = RewriteObjectResponse::FromHttpResponse(text);
-  EXPECT_FALSE(actual.ok());
+  EXPECT_THAT(actual, Not(IsOk()));
 }
 
 TEST(ObjectRequestsTest, ResumableUpload) {

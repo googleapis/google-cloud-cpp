@@ -18,9 +18,9 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -31,8 +31,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -681,7 +683,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
   // This operation should fail because the object already exists.
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
-  EXPECT_FALSE(failure.ok()) << "metadata=" << *failure;
+  EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
@@ -706,7 +708,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   // This operation should fail because the object already exists.
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, Fields(""), IfGenerationMatch(0));
-  EXPECT_FALSE(failure.ok()) << "metadata=" << *failure;
+  EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);

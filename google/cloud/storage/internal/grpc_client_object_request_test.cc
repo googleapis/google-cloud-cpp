@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"

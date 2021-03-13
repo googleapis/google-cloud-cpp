@@ -15,7 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_result.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 

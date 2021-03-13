@@ -15,7 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -23,6 +23,10 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Contains;
+using ::testing::Not;
 
 class ServiceAccountIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -106,8 +110,6 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   EXPECT_FALSE(key->second.empty());
   auto access_id = key->first.access_id();
 
-  using ::testing::Contains;
-  using ::testing::Not;
   EXPECT_THAT(initial_access_ids, Not(Contains(access_id)));
 
   auto post_create_access_ids = get_current_access_ids();
@@ -148,20 +150,20 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
 
   Status deleted_status =
       client.DeleteHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(deleted_status.ok());
+  EXPECT_THAT(deleted_status, Not(IsOk()));
 
   StatusOr<HmacKeyMetadata> get_status =
       client.GetHmacKey("invalid-access-id", OverrideDefaultProject(""));
-  EXPECT_FALSE(get_status) << "value=" << *get_status;
+  EXPECT_THAT(get_status, Not(IsOk())) << "value=" << get_status.value();
 
   StatusOr<HmacKeyMetadata> update_status = client.UpdateHmacKey(
       "invalid-access-id", HmacKeyMetadata(), OverrideDefaultProject(""));
-  EXPECT_FALSE(update_status) << "value=" << *update_status;
+  EXPECT_THAT(update_status, Not(IsOk())) << "value=" << update_status.value();
 
   auto range = client.ListHmacKeys(OverrideDefaultProject(""));
   auto begin = range.begin();
   EXPECT_NE(begin, range.end());
-  EXPECT_FALSE(*begin) << "value=" << **begin;
+  EXPECT_THAT(*begin, Not(IsOk())) << "value=" << begin->value();
 }
 
 }  // namespace

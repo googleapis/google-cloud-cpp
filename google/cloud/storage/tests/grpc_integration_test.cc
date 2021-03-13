@@ -19,9 +19,9 @@
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>

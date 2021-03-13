@@ -16,8 +16,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/expect_exception.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -28,6 +28,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Not;
 
 class ObjectRewriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -438,7 +440,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
   // This operation should fail because the source object does not exist.
   auto meta = client->CopyObject(bucket_name_, source_object_name, bucket_name_,
                                  destination_object_name);
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
@@ -453,7 +455,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
   // This operation should fail because the source object does not exist.
   auto meta =
       client->ComposeObject(bucket_name_, source_objects, composed_object_name);
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
+  EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
@@ -466,7 +468,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
   // This operation should fail because the source object does not exist.
   StatusOr<ObjectMetadata> metadata = client->RewriteObjectBlocking(
       bucket_name_, source_object_name, bucket_name_, destination_object_name);
-  EXPECT_FALSE(metadata.ok());
+  EXPECT_THAT(metadata, Not(IsOk()));
 }
 
 }  // anonymous namespace

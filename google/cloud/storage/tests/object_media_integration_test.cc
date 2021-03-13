@@ -16,8 +16,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
@@ -29,7 +29,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Not;
 
 class ObjectMediaIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -614,8 +617,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
   auto file_name = MakeRandomFilename();
 
   Status status = client.DownloadToFile(bucket_name_, object_name, file_name);
-  EXPECT_FALSE(status.ok());
-  EXPECT_EQ(StatusCode::kUnavailable, status.code()) << ", status=" << status;
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
@@ -631,9 +633,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 
   StatusOr<ObjectMetadata> meta =
       client.UploadFile(file_name, bucket_name_, object_name);
-  EXPECT_FALSE(meta.ok()) << "value=" << meta.value();
-  EXPECT_EQ(StatusCode::kUnavailable, meta.status().code())
-      << ", status=" << meta.status();
+  EXPECT_THAT(meta, Not(IsOk())) << "value=" << meta.value();
+  EXPECT_THAT(meta, StatusIs(StatusCode::kUnavailable));
 
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }

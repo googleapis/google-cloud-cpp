@@ -17,7 +17,6 @@
 #include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -34,6 +33,7 @@ using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
@@ -195,7 +195,7 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
   EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
   // Response 2
   status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk)));
+  EXPECT_THAT(status, Not(IsOk()));
 }
 
 /// @test Verify that parsing an authorized user account JSON string works.
