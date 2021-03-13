@@ -30,7 +30,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::AtLeast;
 using ::testing::StartsWith;
 
@@ -138,7 +138,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageLifecycle) {
 
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 /// @test Verify SubscriptionConcurrencyControl schedules multiple callbacks.
@@ -218,7 +218,7 @@ TEST_F(SubscriptionConcurrencyControlTest, ParallelCallbacks) {
 
   shutdown->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 /// @test Verify SubscriptionConcurrencyControl respects the concurrency limit.
@@ -303,7 +303,7 @@ TEST_F(SubscriptionConcurrencyControlTest,
   shutdown->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
 
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 /// @test Verify SubscriptionConcurrencyControl shutdown.
@@ -368,7 +368,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
     handler_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
   }
   session.cancel();
-  EXPECT_THAT(session.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(session.get(), IsOk());
 }
 
 /// @test Verify SubscriptionConcurrencyControl shutdown with early acks.
@@ -431,7 +431,7 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
     handler_cv.wait(lk, [&] { return message_counter >= kTestDoneThreshold; });
   }
   session.cancel();
-  EXPECT_THAT(session.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(session.get(), IsOk());
 }
 
 /// @test Verify SubscriptionConcurrencyControl preserves message contents.
@@ -499,7 +499,7 @@ TEST_F(SubscriptionConcurrencyControlTest, MessageContents) {
 
   shutdown->MarkAsShutdown(__func__, {});
   uut->Shutdown();
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 }  // namespace

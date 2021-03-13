@@ -14,8 +14,8 @@
 
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 

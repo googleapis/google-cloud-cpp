@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/internal/rejects_with_ordering_key.h"
 #include "google/cloud/pubsub/mocks/mock_publisher_connection.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -39,7 +38,7 @@ TEST(RejectsWithOrderingKeyTest, MessageRejected) {
                                      .SetOrderingKey("test-ordering-key-0")
                                      .Build()})
                       .get();
-  EXPECT_THAT(response.status(), StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
   publisher->ResumePublish({"test-ordering-key-0"});
 }
 

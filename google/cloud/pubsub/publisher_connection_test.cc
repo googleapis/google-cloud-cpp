@@ -16,7 +16,6 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -204,7 +203,7 @@ TEST(PublisherConnectionTest, HandleTooManyFailures) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
-  EXPECT_THAT(response.status(),
+  EXPECT_THAT(response,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
@@ -226,7 +225,7 @@ TEST(PublisherConnectionTest, HandlePermanentError) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
-  EXPECT_THAT(response.status(),
+  EXPECT_THAT(response,
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
 
@@ -249,7 +248,7 @@ TEST(PublisherConnectionTest, HandleTransientDisabledRetry) {
   auto response =
       publisher->Publish({MessageBuilder{}.SetData("test-message-0").Build()})
           .get();
-  EXPECT_THAT(response.status(),
+  EXPECT_THAT(response,
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 

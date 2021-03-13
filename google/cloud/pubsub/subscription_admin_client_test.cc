@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/mocks/mock_subscription_admin_connection.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

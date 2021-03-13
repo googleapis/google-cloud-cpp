@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"

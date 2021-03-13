@@ -23,7 +23,6 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -38,6 +37,7 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
@@ -61,22 +61,20 @@ class SubscriberIntegrationTest : public ::testing::Test {
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
     auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
-    ASSERT_THAT(topic_metadata, AnyOf(StatusIs(StatusCode::kOk),
-                                      StatusIs(StatusCode::kAlreadyExists)));
+    ASSERT_THAT(topic_metadata,
+                AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
     auto subscription_metadata = subscription_admin.CreateSubscription(
         topic_, subscription_,
         SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
-    ASSERT_THAT(
-        subscription_metadata,
-        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
+    ASSERT_THAT(subscription_metadata,
+                AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
     auto ordered_subscription_metadata = subscription_admin.CreateSubscription(
         topic_, ordered_subscription_,
         SubscriptionBuilder{}
             .set_ack_deadline(std::chrono::seconds(30))
             .enable_message_ordering(true));
-    ASSERT_THAT(
-        ordered_subscription_metadata,
-        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kAlreadyExists)));
+    ASSERT_THAT(ordered_subscription_metadata,
+                AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
   }
 
   void TearDown() override {
@@ -86,16 +84,14 @@ class SubscriberIntegrationTest : public ::testing::Test {
 
     auto delete_ordered_subscription =
         subscription_admin.DeleteSubscription(ordered_subscription_);
-    EXPECT_THAT(
-        delete_ordered_subscription,
-        AnyOf(StatusIs(StatusCode::kOk), StatusIs(StatusCode::kNotFound)));
+    EXPECT_THAT(delete_ordered_subscription,
+                AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_subscription =
         subscription_admin.DeleteSubscription(subscription_);
-    EXPECT_THAT(delete_subscription, AnyOf(StatusIs(StatusCode::kOk),
-                                           StatusIs(StatusCode::kNotFound)));
+    EXPECT_THAT(delete_subscription,
+                AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_topic = topic_admin.DeleteTopic(topic_);
-    EXPECT_THAT(delete_topic, AnyOf(StatusIs(StatusCode::kOk),
-                                    StatusIs(StatusCode::kNotFound)));
+    EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   }
 
   google::cloud::internal::DefaultPRNG generator_;
@@ -158,8 +154,8 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   for (auto r = stream->Read().get(); r.has_value(); r = stream->Read().get()) {
   }
 
-  EXPECT_THAT(stream->Finish().get(), AnyOf(StatusIs(StatusCode::kOk),
-                                            StatusIs(StatusCode::kCancelled)));
+  EXPECT_THAT(stream->Finish().get(),
+              AnyOf(IsOk(), StatusIs(StatusCode::kCancelled)));
 }
 
 TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {

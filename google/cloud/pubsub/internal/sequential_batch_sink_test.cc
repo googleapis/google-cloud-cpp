@@ -31,6 +31,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Unused;
@@ -109,14 +110,14 @@ TEST(DefaultBatchSinkTest, BasicNoErrors) {
   checkpoint(1);
   sequencer.PopFront().set_value();
   auto r1 = f1.get();
-  ASSERT_THAT(r1, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(r1, IsOk());
   EXPECT_THAT(*r1, IsProtoEqual(MakeResponse(MakeRequest(3))));
   EXPECT_EQ(1, uut->QueueDepth());
 
   checkpoint(2);
   sequencer.PopFront().set_value();
   auto r2 = f2.get();
-  ASSERT_THAT(r2, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(r2, IsOk());
   EXPECT_THAT(*r2, IsProtoEqual(MakeResponse(MakeRequest(2))));
   EXPECT_EQ(0, uut->QueueDepth());
 }
@@ -170,7 +171,7 @@ TEST(DefaultBatchSinkTest, BasicErrorHandling) {
   auto f5 = uut->AsyncPublish(MakeRequest(2));
   sequencer.PopFront().set_value();
   auto r5 = f5.get();
-  ASSERT_THAT(r5, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(r5, IsOk());
   EXPECT_THAT(*r5, IsProtoEqual(MakeResponse(MakeRequest(2))));
 }
 

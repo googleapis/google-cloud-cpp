@@ -15,7 +15,7 @@
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/mocks/mock_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_subscriber_connection.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
