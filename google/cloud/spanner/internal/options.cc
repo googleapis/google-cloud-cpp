@@ -28,7 +28,10 @@ namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-internal::Options DefaultOptions(internal::Options opts) {
+namespace {
+
+// Sets basic defaults that apply to normal and admin connections.
+void SetBasicDefaults(internal::Options& opts) {
   if (!opts.has<internal::EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
     opts.set<internal::EndpointOption>(env ? *env : "spanner.googleapis.com");
@@ -51,6 +54,25 @@ internal::Options DefaultOptions(internal::Options opts) {
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<internal::UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
+}
+
+}  // namespace
+
+internal::Options DefaultOptions(internal::Options opts) {
+  SetBasicDefaults(opts);
+
+  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
+    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+        std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
+            std::chrono::minutes(10)));
+  }
+  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+    auto constexpr kBackoffScaling = 2.0;
+    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+        std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
+            std::chrono::milliseconds(100), std::chrono::minutes(1),
+            kBackoffScaling));
+  }
 
   // Sets Spanner-specific options from session_pool_options.h
   if (!opts.has<spanner_internal::SessionPoolMaxSessionsPerChannelOption>()) {
@@ -63,6 +85,9 @@ internal::Options DefaultOptions(internal::Options opts) {
   if (!opts.has<spanner_internal::SessionPoolKeepAliveIntervalOption>()) {
     opts.set<spanner_internal::SessionPoolKeepAliveIntervalOption>(
         std::chrono::minutes(55));
+  }
+  if (!opts.has<SessionPoolClockOption>()) {
+    opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
   // Enforces some SessionPool constraints.
   auto& max_idle =
@@ -78,28 +103,14 @@ internal::Options DefaultOptions(internal::Options opts) {
       (std::min)(min_sessions, max_sessions_per_channel *
                                    opts.get<internal::GrpcNumChannelsOption>());
 
-  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
-    opts.set<spanner_internal::SpannerRetryPolicyOption>(
-        std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
-            std::chrono::minutes(10)));
-  }
-  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
-    auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
-        std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
-            std::chrono::milliseconds(100), std::chrono::minutes(1),
-            kBackoffScaling));
-  }
-  if (!opts.has<SessionPoolClockOption>()) {
-    opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
-  }
-
   return opts;
 }
 
 // Sets the options that have different defaults for admin connections, then
 // uses `DefaultOptions()` to set all the remaining defaults.
 internal::Options DefaultAdminOptions(internal::Options opts) {
+  SetBasicDefaults(opts);
+
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
     opts.set<spanner_internal::SpannerRetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
@@ -121,7 +132,8 @@ internal::Options DefaultAdminOptions(internal::Options opts) {
                 std::chrono::seconds(10), std::chrono::minutes(5),
                 kBackoffScaling)));
   }
-  return DefaultOptions(std::move(opts));
+
+  return opts;
 }
 
 }  // namespace SPANNER_CLIENT_NS
