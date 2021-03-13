@@ -15,6 +15,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_OPTIONS_H
 
+/**
+ * @file
+ *
+ * This file defines options to be used with instances of
+ * `google::cloud::internal::Options`. By convention options are named with an
+ * "Option" suffix. As the name would imply, all options are optional, and
+ * leaving them unset will result in a reasonable default being chosen.
+ *
+ * Not all options are meaningful to all functions that accept a
+ * `google::cloud::internal::Options` instance. Each function that accepts a
+ * `google::cloud::internal::Options` should document which options it expects.
+ * This is typically done by indicating lists of options using "OptionList"
+ * aliases. For example, a function may indicate that users may set any option
+ * in `PolicyOptionList`.
+ *
+ * @note Unrecognized options are allowed and will be ignored. To debug issues
+ *     with options set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment
+ *     and unexpected options will be logged.
+ *
+ * @see `google::cloud::internal::CommonOptionList`
+ * @see `google::cloud::internal::GrpcOptionList`
+ */
+
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
