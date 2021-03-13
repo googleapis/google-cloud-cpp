@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -32,6 +31,7 @@ namespace {
 
 using ::google::cloud::pubsub_testing::TestBackoffPolicy;
 using ::google::cloud::pubsub_testing::TestRetryPolicy;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
@@ -69,8 +69,8 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
               Not(Contains(topic.FullName())));
 
   auto create_response = publisher.CreateTopic(TopicBuilder(topic));
-  ASSERT_THAT(create_response, AnyOf(StatusIs(StatusCode::kOk),
-                                     StatusIs(StatusCode::kAlreadyExists)));
+  ASSERT_THAT(create_response,
+              AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
   EXPECT_THAT(topic_names(publisher, project_id), Contains(topic.FullName()));
 
   auto get_response = publisher.GetTopic(topic);
@@ -91,8 +91,7 @@ TEST(TopicAdminIntegrationTest, TopicCRUD) {
   // complicate this test with little benefit.
 
   auto delete_response = publisher.DeleteTopic(topic);
-  EXPECT_THAT(delete_response, AnyOf(StatusIs(StatusCode::kOk),
-                                     StatusIs(StatusCode::kNotFound)));
+  EXPECT_THAT(delete_response, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   EXPECT_THAT(topic_names(publisher, project_id),
               Not(Contains(topic.FullName())));
 }

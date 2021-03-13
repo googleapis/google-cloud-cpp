@@ -16,7 +16,6 @@
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -33,6 +32,7 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -704,7 +704,7 @@ TEST(BatchingPublisherConnectionTest, HandleErrorWithOrderingResume) {
   async.PopFront().set_value();
 
   // All results should be satisfied with an error.
-  for (auto& f : results) ASSERT_THAT(f.get(), StatusIs(StatusCode::kOk));
+  for (auto& f : results) ASSERT_THAT(f.get(), IsOk());
 
   cq.CancelAll();
   cq.Shutdown();

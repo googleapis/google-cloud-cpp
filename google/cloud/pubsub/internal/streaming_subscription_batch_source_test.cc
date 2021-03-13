@@ -35,6 +35,7 @@ using ::google::cloud::internal::AutomaticallyCreatedBackgroundThreads;
 using ::google::cloud::pubsub_testing::TestBackoffPolicy;
 using ::google::cloud::pubsub_testing::TestRetryPolicy;
 using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AtLeast;
@@ -144,7 +145,7 @@ TEST(StreamingSubscriptionBatchSourceTest, Start) {
   last.set_value(false);
   success_stream.WaitForAction().set_value(true);  // Finish()
 
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
@@ -195,7 +196,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
   last.set_value(false);
   success_stream.WaitForAction().set_value(true);  // Finish()
 
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
@@ -581,7 +582,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   last_read.set_value(false);                      // Read()
   success_stream.WaitForAction().set_value(true);  // Finish()
 
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
@@ -695,7 +696,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckBatching) {
   last_read.set_value(false);                      // Read()
   success_stream.WaitForAction().set_value(true);  // Finish()
 
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
@@ -728,7 +729,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
       });
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
-  EXPECT_CALL(callback, Call(StatusIs(StatusCode::kOk))).Times(1);
+  EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
@@ -786,7 +787,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
       });
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
-  EXPECT_CALL(callback, Call(StatusIs(StatusCode::kOk))).Times(1);
+  EXPECT_CALL(callback, Call(IsOk())).Times(1);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
@@ -832,7 +833,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
       });
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
-  EXPECT_CALL(callback, Call(StatusIs(StatusCode::kOk))).Times(0);
+  EXPECT_CALL(callback, Call(IsOk())).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
@@ -908,7 +909,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
 
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
   ::testing::MockFunction<void(CallbackArg const&)> callback;
-  EXPECT_CALL(callback, Call(StatusIs(StatusCode::kOk))).Times(0);
+  EXPECT_CALL(callback, Call(IsOk())).Times(0);
 
   auto shutdown = std::make_shared<SessionShutdownManager>();
   auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
@@ -929,7 +930,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
   read.set_value(false);
   shutdown->MarkAsShutdown("test", Status{});
   wait_and_check_name("Finish").set_value(true);
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(StreamingSubscriptionBatchSourceTest, StateOStream) {

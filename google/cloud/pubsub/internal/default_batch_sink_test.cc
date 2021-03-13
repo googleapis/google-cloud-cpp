@@ -26,6 +26,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
@@ -73,7 +74,7 @@ TEST(DefaultBatchSinkTest, BasicWithRetry) {
                                       pubsub_testing::TestBackoffPolicy());
 
   auto response = uut->AsyncPublish(MakeRequest(3)).get();
-  ASSERT_THAT(response, StatusIs(StatusCode::kOk));
+  ASSERT_THAT(response, IsOk());
   EXPECT_THAT(*response, IsProtoEqual(MakeResponse(MakeRequest(3))));
 
   uut->ResumePublish("unused");  // No observable side-effects

@@ -25,6 +25,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::UnorderedElementsAre;
 
@@ -118,7 +119,7 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   uut->Shutdown();
   EXPECT_EQ(3, cancel_count);
   timers[2].set_value(Status(StatusCode::kCancelled, "test-cancel"));
-  EXPECT_THAT(done.get(), StatusIs(StatusCode::kOk));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {

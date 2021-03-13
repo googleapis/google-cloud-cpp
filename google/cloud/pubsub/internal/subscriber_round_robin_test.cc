@@ -14,7 +14,7 @@
 
 #include "google/cloud/pubsub/internal/subscriber_round_robin.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
