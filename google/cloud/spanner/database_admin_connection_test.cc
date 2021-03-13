@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/options.h"

@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
