@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include "generator/testing/printer_mocks.h"
 #include <google/api/client.pb.h>
@@ -30,11 +31,14 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 
 class StringSourceTree : public google::protobuf::compiler::SourceTree {
@@ -742,8 +746,8 @@ TEST_F(PrintMethodTest, NoMatchingPatterns) {
 
   auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
                             printer, {}, {}, "some_file", 42);
-  EXPECT_FALSE(result.ok());
-  EXPECT_THAT(result.message(), HasSubstr("no matching patterns"));
+  EXPECT_THAT(result, StatusIs(Not(StatusCode::kOk),
+                               HasSubstr("no matching patterns")));
 }
 
 TEST_F(PrintMethodTest, MoreThanOneMatchingPattern) {
@@ -768,8 +772,8 @@ TEST_F(PrintMethodTest, MoreThanOneMatchingPattern) {
 
   auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
                             printer, {}, patterns, "some_file", 42);
-  EXPECT_FALSE(result.ok());
-  EXPECT_THAT(result.message(), HasSubstr("more than one pattern"));
+  EXPECT_THAT(result, StatusIs(Not(StatusCode::kOk),
+                               HasSubstr("more than one pattern")));
 }
 
 TEST_F(PrintMethodTest, ExactlyOnePattern) {
@@ -798,7 +802,7 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
 
   auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
                             printer, {}, patterns, "some_file", 42);
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
 }
 
 }  // namespace

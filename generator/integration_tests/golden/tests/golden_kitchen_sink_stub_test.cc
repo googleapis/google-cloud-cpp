@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Return;
@@ -179,7 +182,7 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateAccessToken) {
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success = stub.GenerateAccessToken(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GenerateAccessToken(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -193,7 +196,7 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateIdToken) {
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success = stub.GenerateIdToken(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GenerateIdToken(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -207,7 +210,7 @@ TEST_F(GoldenKitchenSinkStubTest, WriteLogEntries) {
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success = stub.WriteLogEntries(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.WriteLogEntries(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -221,7 +224,7 @@ TEST_F(GoldenKitchenSinkStubTest, ListLogs) {
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success = stub.ListLogs(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.ListLogs(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -255,10 +258,10 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success_stream = stub.TailLogEntries(context, request);
   auto success_status = absl::get<Status>(success_stream->Read());
-  EXPECT_TRUE(success_status.ok());
+  EXPECT_THAT(success_status, IsOk());
   auto failure_stream = stub.TailLogEntries(context, request);
   auto failure_status = absl::get<Status>(failure_stream->Read());
-  EXPECT_EQ(failure_status.code(), StatusCode::kUnavailable);
+  EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>

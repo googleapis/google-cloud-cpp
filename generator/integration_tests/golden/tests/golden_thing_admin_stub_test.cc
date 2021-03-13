@@ -12,10 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
 using ::testing::Return;
 
@@ -541,7 +543,7 @@ TEST_F(GoldenStubTest, ListDatabases) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListDatabases(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.ListDatabases(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -556,7 +558,7 @@ TEST_F(GoldenStubTest, CreateDatabase) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.CreateDatabase(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.CreateDatabase(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -571,7 +573,7 @@ TEST_F(GoldenStubTest, GetDatabase) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetDatabase(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GetDatabase(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -586,7 +588,7 @@ TEST_F(GoldenStubTest, UpdateDatabaseDdl) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.UpdateDatabaseDdl(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.UpdateDatabaseDdl(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -601,7 +603,7 @@ TEST_F(GoldenStubTest, DropDatabase) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.DropDatabase(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.DropDatabase(context, request);
   EXPECT_EQ(failure, TransientError());
 }
@@ -616,7 +618,7 @@ TEST_F(GoldenStubTest, GetDatabaseDdl) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetDatabaseDdl(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GetDatabaseDdl(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -631,7 +633,7 @@ TEST_F(GoldenStubTest, SetIamPolicy) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.SetIamPolicy(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.SetIamPolicy(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -646,7 +648,7 @@ TEST_F(GoldenStubTest, GetIamPolicy) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetIamPolicy(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GetIamPolicy(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -661,7 +663,7 @@ TEST_F(GoldenStubTest, TestIamPermissions) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.TestIamPermissions(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.TestIamPermissions(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -676,7 +678,7 @@ TEST_F(GoldenStubTest, CreateBackup) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.CreateBackup(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.CreateBackup(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -691,7 +693,7 @@ TEST_F(GoldenStubTest, GetBackup) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetBackup(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GetBackup(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -706,7 +708,7 @@ TEST_F(GoldenStubTest, UpdateBackup) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.UpdateBackup(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.UpdateBackup(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -721,7 +723,7 @@ TEST_F(GoldenStubTest, DeleteBackup) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.DeleteBackup(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.DeleteBackup(context, request);
   EXPECT_EQ(failure, TransientError());
 }
@@ -736,7 +738,7 @@ TEST_F(GoldenStubTest, ListBackups) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListBackups(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.ListBackups(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -751,7 +753,7 @@ TEST_F(GoldenStubTest, RestoreDatabase) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.RestoreDatabase(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.RestoreDatabase(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -766,7 +768,7 @@ TEST_F(GoldenStubTest, ListDatabaseOperations) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListDatabaseOperations(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.ListDatabaseOperations(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -781,7 +783,7 @@ TEST_F(GoldenStubTest, ListBackupOperations) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.ListBackupOperations(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.ListBackupOperations(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -796,7 +798,7 @@ TEST_F(GoldenStubTest, GetOperation) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.GetOperation(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.GetOperation(context, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
@@ -811,7 +813,7 @@ TEST_F(GoldenStubTest, CancelOperation) {
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
                                    std::move(longrunning_stub_));
   auto success = stub.CancelOperation(context, request);
-  EXPECT_TRUE(success.ok());
+  EXPECT_THAT(success, IsOk());
   auto failure = stub.CancelOperation(context, request);
   EXPECT_EQ(failure, TransientError());
 }

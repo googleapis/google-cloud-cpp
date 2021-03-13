@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_client.gcpcxx.pb.h"

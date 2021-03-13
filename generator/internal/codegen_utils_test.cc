@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
@@ -22,6 +23,8 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
 TEST(GeneratedFileSuffix, Success) {
@@ -153,54 +156,54 @@ TEST(BuildNamespaces, FourDirectoryPathNotInternal) {
 
 TEST(ProcessCommandLineArgs, NoProductPath) {
   auto result = ProcessCommandLineArgs("");
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(result.status().message(),
-            "--cpp_codegen_opt=product_path=<path> must be specified.");
+  EXPECT_THAT(
+      result,
+      StatusIs(StatusCode::kInvalidArgument,
+               "--cpp_codegen_opt=product_path=<path> must be specified."));
 }
 
 TEST(ProcessCommandLineArgs, EmptyProductPath) {
   auto result = ProcessCommandLineArgs("product_path=");
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(result.status().message(),
-            "--cpp_codegen_opt=product_path=<path> must be specified.");
+  EXPECT_THAT(
+      result,
+      StatusIs(StatusCode::kInvalidArgument,
+               "--cpp_codegen_opt=product_path=<path> must be specified."));
 }
 
 TEST(ProcessCommandLineArgs, ProductPathNeedsFormatting) {
   auto result = ProcessCommandLineArgs(
       "product_path=/google/cloud/pubsub,googleapis_commit_hash=foo");
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
   EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
 }
 
 TEST(ProcessCommandLineArgs, ProductPathAlreadyFormatted) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
   EXPECT_EQ(result->front().second, "google/cloud/pubsub/");
 }
 
 TEST(ProcessCommandLineArgs, NoCommitHash) {
   auto result = ProcessCommandLineArgs("product_path=/google/cloud/bar");
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(
-      result.status().message(),
-      "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               "--cpp_codegen_opt=googleapis_commit_hash=<hash>"
+                               " must be specified."));
 }
 
 TEST(ProcessCommandLineArgs, EmptyCommitHash) {
   auto result = ProcessCommandLineArgs(
       "product_path=/google/cloud/bar,googleapis_commit_hash=");
-  EXPECT_EQ(result.status().code(), StatusCode::kInvalidArgument);
-  EXPECT_EQ(
-      result.status().message(),
-      "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+  EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
+                               "--cpp_codegen_opt=googleapis_commit_hash=<hash>"
+                               " must be specified."));
 }
 
 TEST(ProcessCommandLineArgs, NoCopyrightYearParameterOrValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/,googleapis_commit_hash=foo");
   auto expected_year = CurrentCopyrightYear();
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
   EXPECT_EQ(result->back().first, "copyright_year");
   EXPECT_EQ(result->back().second, expected_year);
 }
@@ -210,7 +213,7 @@ TEST(ProcessCommandLineArgs, NoCopyrightYearValue) {
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=");
   auto expected_year = CurrentCopyrightYear();
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
   EXPECT_EQ(result->back().first, "copyright_year");
   EXPECT_EQ(result->back().second, expected_year);
 }
@@ -219,7 +222,7 @@ TEST(ProcessCommandLineArgs, CopyrightYearWithValue) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/pubsub/"
       ",googleapis_commit_hash=foo,copyright_year=1995");
-  EXPECT_TRUE(result.ok());
+  EXPECT_THAT(result, IsOk());
   EXPECT_EQ(result->back().first, "copyright_year");
   EXPECT_EQ(result->back().second, "1995");
 }

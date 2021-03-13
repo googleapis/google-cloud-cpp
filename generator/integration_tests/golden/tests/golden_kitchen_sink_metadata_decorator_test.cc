@@ -11,8 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
@@ -25,7 +26,9 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
+using ::testing::Not;
 using ::testing::Return;
 
 class MockGoldenKitchenSinkStub
@@ -198,7 +201,7 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
   grpc::ClientContext context;
   google::test::admin::database::v1::TailLogEntriesRequest request;
   auto response = stub.TailLogEntries(context, request);
-  EXPECT_FALSE(absl::get<Status>(response->Read()).ok());
+  EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
 }
 
 }  // namespace
