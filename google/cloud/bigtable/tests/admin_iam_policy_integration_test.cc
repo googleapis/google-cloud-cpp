@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 // TODO(#5923) - remove after deprecation is completed
 #include "google/cloud/internal/disable_deprecation_warnings.inc"

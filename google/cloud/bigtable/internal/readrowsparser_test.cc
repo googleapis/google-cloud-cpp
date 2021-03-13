@@ -16,8 +16,7 @@
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
 #include <gtest/gtest.h>
 #include <numeric>

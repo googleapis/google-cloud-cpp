@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/internal/build_info.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {

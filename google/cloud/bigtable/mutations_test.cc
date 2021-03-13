@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/rpc/error_details.pb.h>
 #include <gmock/gmock.h>
 

@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 
 namespace google {
@@ -27,8 +27,10 @@ namespace {
 
 namespace btproto = google::bigtable::v2;
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::testing::Not;
 using ::testing::Return;
 
 /// Define types and functions used in the tests.
@@ -272,7 +274,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
       SingleRowMutation("not-idempotent", {SetCell("fam", "col", "baz")})));
   EXPECT_EQ(1UL, failures.size());
   EXPECT_EQ(1, failures.front().original_index());
-  EXPECT_FALSE(failures.front().status().ok());
+  EXPECT_THAT(failures.front().status(), Not(IsOk()));
   EXPECT_FALSE(failures.empty());
 }
 
@@ -292,7 +294,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
       SingleRowMutation("foo", {SetCell("fam", "col", 0_ms, "baz")}),
       SingleRowMutation("bar", {SetCell("fam", "col", 0_ms, "qux")})));
   EXPECT_EQ(2UL, failures.size());
-  EXPECT_FALSE(failures.front().status().ok());
+  EXPECT_THAT(failures.front().status(), Not(IsOk()));
   EXPECT_FALSE(failures.empty());
   EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition,
             failures.front().status().code());

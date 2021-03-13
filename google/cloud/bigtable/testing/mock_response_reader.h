@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H
 
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

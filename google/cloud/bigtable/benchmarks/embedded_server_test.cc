@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/benchmarks/embedded_server.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <thread>
 

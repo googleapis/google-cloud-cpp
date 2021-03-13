@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <typeinfo>
 
 namespace google {

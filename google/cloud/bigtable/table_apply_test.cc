@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 
 namespace google {
@@ -27,6 +27,7 @@ namespace {
 
 namespace bigtable = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
 auto mock_mutate_row = [](grpc::Status const& status) {
@@ -62,8 +63,7 @@ TEST_F(TableApplyTest, Failure) {
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
-  EXPECT_FALSE(status.ok());
-  EXPECT_EQ(google::cloud::StatusCode::kFailedPrecondition, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 /// @test Verify that Table::Apply() retries on partial failures.
@@ -90,8 +90,7 @@ TEST_F(TableApplyTest, RetryIdempotent) {
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "not-idempotent", {bigtable::SetCell("fam", "col", "val")}));
-  EXPECT_FALSE(status.ok());
-  EXPECT_EQ(google::cloud::StatusCode::kUnavailable, status.code());
+  EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 }
 
 }  // namespace

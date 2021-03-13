@@ -17,9 +17,9 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -34,10 +34,12 @@ namespace btproto = google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
+using ::testing::Not;
 using ::testing::WithParamInterface;
 
 std::size_t MutationSize(SingleRowMutation mut) {
@@ -409,7 +411,7 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
-  EXPECT_FALSE(state->completion_status.ok());
+  EXPECT_THAT(state->completion_status, Not(IsOk()));
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
@@ -424,7 +426,7 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
-  EXPECT_FALSE(state->completion_status.ok());
+  EXPECT_THAT(state->completion_status, Not(IsOk()));
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
@@ -434,7 +436,7 @@ TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
   auto state = Apply(mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
-  EXPECT_FALSE(state->completion_status.ok());
+  EXPECT_THAT(state->completion_status, Not(IsOk()));
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
@@ -471,7 +473,7 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
   EXPECT_TRUE(state1.AllCompleted());
   EXPECT_EQ(0, NumOperationsOutstanding());
   EXPECT_STATUS_OK(state1.states_[0]->completion_status);
-  EXPECT_FALSE(state1.states_[1]->completion_status.ok());
+  EXPECT_THAT(state1.states_[1]->completion_status, Not(IsOk()));
 }
 
 TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
@@ -637,7 +639,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   auto state2 = Apply(mutations[2]);
   EXPECT_TRUE(state2->admitted);
   EXPECT_TRUE(state2->completed);
-  EXPECT_FALSE(state2->completion_status.ok());
+  EXPECT_THAT(state2->completion_status, Not(IsOk()));
   EXPECT_EQ(1, NumOperationsOutstanding());
 
   auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
@@ -659,7 +661,7 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   FinishSingleItemStream();
 
   EXPECT_TRUE(state1->completed);
-  EXPECT_FALSE(state1->completion_status.ok());
+  EXPECT_THAT(state1->completion_status, Not(IsOk()));
   EXPECT_EQ(0, NumOperationsOutstanding());
 
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::ready);

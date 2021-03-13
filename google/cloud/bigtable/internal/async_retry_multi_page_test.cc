@@ -19,9 +19,9 @@
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <future>
 #include <thread>

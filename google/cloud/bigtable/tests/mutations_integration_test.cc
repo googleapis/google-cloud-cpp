@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_integration_test.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/status_matchers.h"
 
 namespace google {
 namespace cloud {
@@ -22,7 +22,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::testing::Not;
 
 using MutationIntegrationTest =
     ::google::cloud::bigtable::testing::TableIntegrationTest;
@@ -232,7 +234,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForReversedTimestampRangeTest) {
   // Try to delete the columns with an invalid range:
   auto status = table.Apply(SingleRowMutation(
       key, DeleteFromColumn(kColumnFamily2, "c2", 4000_us, 2000_us)));
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
   auto actual_cells = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(created_cells, actual_cells);
@@ -261,7 +263,7 @@ TEST_F(MutationIntegrationTest, DeleteFromColumnForEmptyTimestampRangeTest) {
 
   auto status = table.Apply(SingleRowMutation(
       key, DeleteFromColumn(kColumnFamily2, "c2", 2000_us, 2000_us)));
-  EXPECT_FALSE(status.ok());
+  EXPECT_THAT(status, Not(IsOk()));
   auto actual_cells = ReadRows(table, Filter::PassAllFilter());
 
   CheckEqualUnordered(created_cells, actual_cells);

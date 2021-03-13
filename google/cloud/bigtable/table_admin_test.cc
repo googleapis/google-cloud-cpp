@@ -19,9 +19,9 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -41,12 +41,15 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
 using ::google::cloud::testing_util::chrono_literals::operator"" _s;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
+using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -483,7 +486,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteTable("other-table").ok());
+  EXPECT_THAT(tested.DeleteTable("other-table"), Not(IsOk()));
 }
 
 /// @test Verify that `bigtable::TableAdmin::ListBackups` works in the easy
@@ -723,7 +726,7 @@ TEST_F(TableAdminTest, DeleteBackupFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteBackup("the-cluster", "the-backup").ok());
+  EXPECT_THAT(tested.DeleteBackup("the-cluster", "the-backup"), Not(IsOk()));
 }
 
 /**
@@ -806,7 +809,7 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
-  EXPECT_FALSE(tested.DropRowsByPrefix("other-table", "prefix").ok());
+  EXPECT_THAT(tested.DropRowsByPrefix("other-table", "prefix"), Not(IsOk()));
 }
 
 /// @test Verify that bigtable::TableAdmin::DropRowsByPrefix works as expected.
@@ -838,7 +841,7 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DropAllRows("other-table").ok());
+  EXPECT_THAT(tested.DropAllRows("other-table"), Not(IsOk()));
 }
 
 /**
@@ -1321,10 +1324,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   ASSERT_EQ(std::future_status::ready, future_status);
 
   auto consistent = result.get();
-  EXPECT_FALSE(consistent.ok());
-
-  EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            consistent.status().code());
+  EXPECT_THAT(consistent, StatusIs(StatusCode::kPermissionDenied));
 }
 
 class ValidContextMdAsyncTest : public ::testing::Test {
@@ -1346,9 +1346,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
-    EXPECT_FALSE(res);
-    EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
-              res.status().code());
+    EXPECT_THAT(res, StatusIs(StatusCode::kPermissionDenied));
   }
 
   void FinishTest(google::cloud::future<google::cloud::Status> res_future) {
@@ -1356,7 +1354,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
-    EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
+    EXPECT_THAT(res, StatusIs(StatusCode::kPermissionDenied));
   }
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
@@ -1589,9 +1587,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 using MockAsyncSetIamPolicyReader =
@@ -1685,9 +1681,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
-  ASSERT_FALSE(policy);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            policy.status().code());
+  ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
 
 using MockAsyncTestIamPermissionsReader =
@@ -1777,9 +1771,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   cq_impl_->SimulateCompletion(true);
 
   auto permission_set = user_future_.get();
-  ASSERT_FALSE(permission_set);
-  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
-            permission_set.status().code());
+  ASSERT_THAT(permission_set, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

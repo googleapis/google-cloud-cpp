@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>

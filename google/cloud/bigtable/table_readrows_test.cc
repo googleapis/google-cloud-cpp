@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 
 namespace google {
