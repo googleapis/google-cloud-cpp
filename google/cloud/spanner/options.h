@@ -28,7 +28,7 @@
  * `google::cloud::internal::Options` should document which options it expects.
  * This is typically done by indicating lists of options using "OptionList"
  * aliases. For example, a function may indicate that users may set any option
- * in `PolicyOptionList`.
+ * in `SpannerPolicyOptionList`.
  *
  * @note Unrecognized options are allowed and will be ignored. To debug issues
  *     with options set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment
@@ -66,7 +66,7 @@ inline namespace SPANNER_CLIENT_NS {
  * Option for `google::cloud::internal::Options` to set a
  * `spanner::RetryPolicy`.
  */
-struct RetryPolicyOption {
+struct SpannerRetryPolicyOption {
   using Type = std::shared_ptr<spanner::RetryPolicy>;
 };
 
@@ -74,7 +74,7 @@ struct RetryPolicyOption {
  * Option for `google::cloud::internal::Options` to set a
  * `spanner::BackoffPolicy`.
  */
-struct BackoffPolicyOption {
+struct SpannerBackoffPolicyOption {
   using Type = std::shared_ptr<spanner::BackoffPolicy>;
 };
 
@@ -82,16 +82,16 @@ struct BackoffPolicyOption {
  * Option for `google::cloud::internal::Options` to set a
  * `spanner::PollingPolicy`.
  */
-struct PollingPolicyOption {
+struct SpannerPollingPolicyOption {
   using Type = std::shared_ptr<spanner::PollingPolicy>;
 };
 
 /**
  * List of all "policy" options.
  */
-using PolicyOptionList =
-    internal::OptionList<RetryPolicyOption, BackoffPolicyOption,
-                         PollingPolicyOption>;
+using SpannerPolicyOptionList =
+    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
+                         SpannerPollingPolicyOption>;
 
 /**
  * The minimum number of sessions to keep in the pool.

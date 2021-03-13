@@ -341,8 +341,9 @@ std::shared_ptr<Connection> MakeConnection(
   auto opts = internal::MergeOptions(
       internal::MakeOptions(connection_options),
       spanner_internal::MakeOptions(std::move(session_pool_options)));
-  opts.set<spanner_internal::RetryPolicyOption>(retry_policy->clone());
-  opts.set<spanner_internal::BackoffPolicyOption>(backoff_policy->clone());
+  opts.set<spanner_internal::SpannerRetryPolicyOption>(retry_policy->clone());
+  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+      backoff_policy->clone());
   return spanner_internal::MakeConnection(db, std::move(opts));
 }
 
@@ -357,8 +358,8 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
                                  spanner_internal::SessionPoolOptionList,
-                                 spanner_internal::PolicyOptionList>(opts,
-                                                                     __func__);
+                                 spanner_internal::SpannerPolicyOptionList>(
+      opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<internal::GrpcNumChannelsOption>();

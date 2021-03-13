@@ -122,11 +122,11 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       internal::Options const& opts)
       : stub_(std::move(stub)),
         retry_policy_prototype_(
-            opts.get<spanner_internal::RetryPolicyOption>()->clone()),
+            opts.get<spanner_internal::SpannerRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
-            opts.get<spanner_internal::BackoffPolicyOption>()->clone()),
+            opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
-            opts.get<spanner_internal::PollingPolicyOption>()->clone()),
+            opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
         background_threads_(
             opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()) {}
 
@@ -639,9 +639,11 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   auto opts = internal::MakeOptions(options);
-  opts.set<spanner_internal::RetryPolicyOption>(std::move(retry_policy));
-  opts.set<spanner_internal::BackoffPolicyOption>(std::move(backoff_policy));
-  opts.set<spanner_internal::PollingPolicyOption>(std::move(polling_policy));
+  opts.set<spanner_internal::SpannerRetryPolicyOption>(std::move(retry_policy));
+  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+      std::move(backoff_policy));
+  opts.set<spanner_internal::SpannerPollingPolicyOption>(
+      std::move(polling_policy));
   return spanner_internal::MakeDatabaseAdminConnection(std::move(opts));
 }
 
@@ -655,8 +657,8 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     internal::Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
-                                 spanner_internal::PolicyOptionList>(opts,
-                                                                     __func__);
+                                 spanner_internal::SpannerPolicyOptionList>(
+      opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   auto stub = spanner_internal::CreateDefaultDatabaseAdminStub(opts);
   return std::make_shared<spanner::DatabaseAdminConnectionImpl>(

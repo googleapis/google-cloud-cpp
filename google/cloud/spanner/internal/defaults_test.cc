@@ -64,8 +64,8 @@ TEST(Options, Defaults) {
   EXPECT_EQ(std::chrono::minutes(55),
             opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
 
-  EXPECT_TRUE(opts.has<spanner_internal::RetryPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::BackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 
@@ -81,9 +81,9 @@ TEST(Options, AdminDefaults) {
   EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
-  EXPECT_TRUE(opts.has<spanner_internal::RetryPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::BackoffPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::PollingPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<spanner_internal::SpannerPollingPolicyOption>());
 
   // Admin connections don't use a session pool, so these should not be set.
   EXPECT_FALSE(opts.has<spanner_internal::SessionPoolMinSessionsOption>());
