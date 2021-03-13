@@ -25,6 +25,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -138,7 +139,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
       values.push_back(absl::get<FakeResponse>(std::move(v)).value);
       continue;
     }
-    EXPECT_THAT(absl::get<Status>(std::move(v)), StatusIs(StatusCode::kOk));
+    EXPECT_THAT(absl::get<Status>(std::move(v)), IsOk());
     break;
   }
   EXPECT_THAT(values, ElementsAre("value-0", "value-1", "value-2"));

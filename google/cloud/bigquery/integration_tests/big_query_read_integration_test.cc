@@ -16,7 +16,6 @@
 #include "google/cloud/bigquery/internal/big_query_read_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,8 +26,10 @@ namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 
 class BigQueryReadIntegrationTest : public ::testing::Test {
  protected:
@@ -55,7 +56,7 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
       connection_options_, retry_policy_->clone(), backoff_policy_->clone(),
       idempotency_policy_->clone()));
   auto response = client.CreateReadSession({}, {}, {});
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateReadSession")));
 }
@@ -66,7 +67,7 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoFailure) {
       idempotency_policy_->clone()));
   ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   auto response = client.CreateReadSession(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateReadSession")));
 }
@@ -101,7 +102,7 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
       idempotency_policy_->clone()));
   ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest request;
   auto response = client.SplitReadStream(request);
-  EXPECT_FALSE(response.status().ok());
+  EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SplitReadStream")));
 }

@@ -15,9 +15,9 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/default_completion_queue_impl.h"
-#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
@@ -34,9 +34,11 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::IsOk;
 using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::StrictMock;
 
 class MockClient {
@@ -786,7 +788,7 @@ TEST(CompletionQueueTest, CancelTimerSimple) {
   auto fut = cq.MakeRelativeTimer(ms(20000));
   fut.cancel();
   auto tp = fut.get();
-  EXPECT_FALSE(tp.ok()) << ", status=" << tp.status();
+  EXPECT_THAT(tp, Not(IsOk()));
   cq.Shutdown();
   t.join();
 }
@@ -802,7 +804,7 @@ TEST(CompletionQueueTest, CancelTimerContinuation) {
       });
   fut.cancel();
   auto status = fut.get();
-  EXPECT_FALSE(status.ok()) << ", status=" << status;
+  EXPECT_THAT(status, Not(IsOk()));
   cq.Shutdown();
   t.join();
 }
