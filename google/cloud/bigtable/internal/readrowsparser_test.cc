@@ -31,6 +31,8 @@ namespace internal {
 namespace {
 
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
+using ::google::cloud::testing_util::IsOk;
+using ::testing::Not;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
   grpc::Status status;
