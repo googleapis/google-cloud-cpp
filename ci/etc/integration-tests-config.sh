@@ -23,6 +23,7 @@ fi # include guard
 # Common configuration parameters.
 #
 export GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+export GOOGLE_CLOUD_CPP_LOG_CONFIG="lastN,100,WARNING"
 
 # Cloud Bigtable configuration parameters
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="test-instance"

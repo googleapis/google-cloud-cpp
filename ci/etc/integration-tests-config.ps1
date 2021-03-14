@@ -16,6 +16,7 @@
 # Common configuration parameters.
 #
 $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
+$env:GOOGLE_CLOUD_CPP_LOG_CONFIG="lastN,100,WARNING"
 
 # Cloud Bigtable configuration parameters
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="test-instance"

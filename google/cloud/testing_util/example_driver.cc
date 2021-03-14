@@ -14,6 +14,7 @@
 
 #include "google/cloud/testing_util/example_driver.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include <iostream>
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -72,6 +73,7 @@ int Example::Run(int argc, char const* const argv[]) try {
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
+  GCP_LOG(ERROR) << ex.what();
   throw;
 }
 

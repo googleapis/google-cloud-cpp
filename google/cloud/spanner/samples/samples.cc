@@ -30,6 +30,7 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/log.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -3656,5 +3657,6 @@ int main(int ac, char* av[]) try {
   return RunOneCommand({av, av + ac});
 } catch (std::exception const& ex) {
   std::cerr << ex.what() << "\n";
+  GCP_LOG(ERROR) << ex.what();
   return 1;
 }
