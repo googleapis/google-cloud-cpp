@@ -117,6 +117,15 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMinSessionsOption.html">SessionPoolMinSessionsOption</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The minimum number of sessions to keep in the pool.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMinSessionsOption.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerBackoffPolicyOption.html">SpannerBackoffPolicyOption</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Option for <code>google::cloud::internal::Options</code> to set a <code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a82490621a0064a08ed19471b8eee2c1a" title="The base class for backoff policies.">spanner::BackoffPolicy</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerBackoffPolicyOption.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerPollingPolicyOption.html">SpannerPollingPolicyOption</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Option for <code>google::cloud::internal::Options</code> to set a <code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a322c3e1eeb5393de86e7afd2cc08f991">spanner::PollingPolicy</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerPollingPolicyOption.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerRetryPolicyOption.html">SpannerRetryPolicyOption</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Option for <code>google::cloud::internal::Options</code> to set a <code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01" title="The base class for retry policies.">spanner::RetryPolicy</a></code>.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerRetryPolicyOption.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SqlStatementInternals.html">SqlStatementInternals</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1TransactionInternals.html">TransactionInternals</a></td></tr>
@@ -130,6 +139,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a996ff39d0ed475d7f01a1c5fcd5fa350"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a996ff39d0ed475d7f01a1c5fcd5fa350">SpannerPolicyOptionList</a> = internal::OptionList&lt; <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerRetryPolicyOption.html">SpannerRetryPolicyOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerBackoffPolicyOption.html">SpannerBackoffPolicyOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerPollingPolicyOption.html">SpannerPollingPolicyOption</a> &gt;</td></tr>
+<tr class="memdesc:a996ff39d0ed475d7f01a1c5fcd5fa350"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all "policy" options.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a996ff39d0ed475d7f01a1c5fcd5fa350">More...</a><br /></td></tr>
+<tr class="separator:a996ff39d0ed475d7f01a1c5fcd5fa350"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bd19d397607461fa9b1f71b9cbd6136"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a9bd19d397607461fa9b1f71b9cbd6136">SessionPoolOptionList</a> = internal::OptionList&lt; <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMinSessionsOption.html">SessionPoolMinSessionsOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxSessionsPerChannelOption.html">SessionPoolMaxSessionsPerChannelOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxIdleSessionsOption.html">SessionPoolMaxIdleSessionsOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolActionOnExhaustionOption.html">SessionPoolActionOnExhaustionOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolKeepAliveIntervalOption.html">SessionPoolKeepAliveIntervalOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html">SessionPoolLabelsOption</a> &gt;</td></tr>
 <tr class="memdesc:a9bd19d397607461fa9b1f71b9cbd6136"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all SessionPool options.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a9bd19d397607461fa9b1f71b9cbd6136">More...</a><br /></td></tr>
 <tr class="separator:a9bd19d397607461fa9b1f71b9cbd6136"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -222,7 +234,25 @@ Functions</h2></td></tr>
 
 <p>List of all SessionPool options. </p>
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00112">112</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00153">153</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
+
+</div>
+</div>
+<a id="a996ff39d0ed475d7f01a1c5fcd5fa350"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a996ff39d0ed475d7f01a1c5fcd5fa350">&#9670;&nbsp;</a></span>SpannerPolicyOptionList</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a996ff39d0ed475d7f01a1c5fcd5fa350">google::cloud::spanner_internal::v1::SpannerPolicyOptionList</a> = typedef internal::OptionList&lt;<a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerRetryPolicyOption.html">SpannerRetryPolicyOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerBackoffPolicyOption.html">SpannerBackoffPolicyOption</a>, <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SpannerPollingPolicyOption.html">SpannerPollingPolicyOption</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>List of all "policy" options. </p>
+
+<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00092">92</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +439,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="client_8cc_source.html#l00355">355</a> of file <a class="el" href="client_8cc_source.html">client.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="client_8cc_source.html#l00356">356</a> of file <a class="el" href="client_8cc_source.html">client.cc</a>.</p>
 
 </div>
 </div>
@@ -444,7 +474,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00655">655</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00656">656</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -476,7 +506,7 @@ Functions</h2></td></tr>
 
 <p>Internal-only factory that allows us to inject mock stubs for testing. </p>
 
-<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00668">668</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="database__admin__connection_8cc_source.html#l00669">669</a> of file <a class="el" href="database__admin__connection_8cc_source.html">database_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -511,7 +541,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00317">317</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00318">318</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -543,7 +573,7 @@ Functions</h2></td></tr>
 
 <p>Internal-only factory that allows us to inject mock stubs for testing. </p>
 
-<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00330">330</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="instance__admin__connection_8cc_source.html#l00331">331</a> of file <a class="el" href="instance__admin__connection_8cc_source.html">instance_admin_connection.cc</a>.</p>
 
 </div>
 </div>
@@ -621,7 +651,7 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00260">260</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="session__pool__options_8h_source.html#l00181">181</a> of file <a class="el" href="session__pool__options_8h_source.html">session_pool_options.h</a>.</p>
 
 </div>
 </div>

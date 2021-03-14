@@ -66,14 +66,13 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">session_pool_options.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;google/cloud/spanner/internal/options.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/spanner/internal/defaults.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="options_8h_source.html">google/cloud/spanner/options.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/spanner/version.h</a>&quot;</code><br />
 <code>#include &quot;google/cloud/internal/grpc_options.h&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
@@ -85,23 +84,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMinSessionsOption.html">google::cloud::spanner_internal::v1::SessionPoolMinSessionsOption</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The minimum number of sessions to keep in the pool.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMinSessionsOption.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxSessionsPerChannelOption.html">google::cloud::spanner_internal::v1::SessionPoolMaxSessionsPerChannelOption</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of sessions to create on each channel.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxSessionsPerChannelOption.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxIdleSessionsOption.html">google::cloud::spanner_internal::v1::SessionPoolMaxIdleSessionsOption</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of sessions to keep in the pool in an idle state.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolMaxIdleSessionsOption.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolActionOnExhaustionOption.html">google::cloud::spanner_internal::v1::SessionPoolActionOnExhaustionOption</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The action to take (kBlock or kFail) when attempting to allocate a session when the pool is exhausted.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolActionOnExhaustionOption.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolKeepAliveIntervalOption.html">google::cloud::spanner_internal::v1::SessionPoolKeepAliveIntervalOption</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html">google::cloud::spanner_internal::v1::SessionPoolLabelsOption</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The labels used when creating sessions within the pool.  <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html">google::cloud::spanner::v1::SessionPoolOptions</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the session pool maintained by a <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html" title="Performs database client operations on Spanner.">spanner::Client</a></code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SessionPoolOptions.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,19 +105,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">google::cloud::spanner_internal::v1</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a9bd19d397607461fa9b1f71b9cbd6136"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a9bd19d397607461fa9b1f71b9cbd6136">google::cloud::spanner_internal::v1::SessionPoolOptionList</a> = internal::OptionList&lt; SessionPoolMinSessionsOption, SessionPoolMaxSessionsPerChannelOption, SessionPoolMaxIdleSessionsOption, SessionPoolActionOnExhaustionOption, SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption &gt;</td></tr>
-<tr class="memdesc:a9bd19d397607461fa9b1f71b9cbd6136"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of all SessionPool options.  <a href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#a9bd19d397607461fa9b1f71b9cbd6136">More...</a><br /></td></tr>
-<tr class="separator:a9bd19d397607461fa9b1f71b9cbd6136"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:abacb634bafaedf382f3c08380fd16de0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#abacb634bafaedf382f3c08380fd16de0">google::cloud::spanner::v1::ActionOnExhaustion</a> { <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#abacb634bafaedf382f3c08380fd16de0aaf937713a39275d7c02a4a08b982d81a">google::cloud::spanner::v1::ActionOnExhaustion::kBlock</a>, 
-<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#abacb634bafaedf382f3c08380fd16de0a36f2a6ba7a5a19d5ab451e08bc7a7745">google::cloud::spanner::v1::ActionOnExhaustion::kFail</a>
- }</td></tr>
-<tr class="separator:abacb634bafaedf382f3c08380fd16de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>

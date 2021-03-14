@@ -17,5 +17,7 @@ var searchData=
   ['optimizer_5fversion_384',['optimizer_version',['../classgoogle_1_1cloud_1_1spanner_1_1v1_1_1QueryOptions.html#a8edea6a0665ed83fefd59403e292cf9e',1,'google::cloud::spanner::v1::QueryOptions']]],
   ['optional_385',['optional',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd',1,'google::cloud::v1']]],
   ['optional_2eh_386',['optional.h',['https://googleapis.dev/cpp/google-cloud-common/latest/optional_8h.html',1,'']]],
-  ['options_387',['options',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection_1_1CommitParams.html#a51c58f8b31d3c064236fde81ef52d3f0',1,'google::cloud::spanner::v1::Connection::CommitParams']]]
+  ['options_387',['options',['../structgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection_1_1CommitParams.html#a51c58f8b31d3c064236fde81ef52d3f0',1,'google::cloud::spanner::v1::Connection::CommitParams']]],
+  ['options_2ecc_388',['options.cc',['../options_8cc.html',1,'']]],
+  ['options_2eh_389',['options.h',['../options_8h.html',1,'']]]
 ];
