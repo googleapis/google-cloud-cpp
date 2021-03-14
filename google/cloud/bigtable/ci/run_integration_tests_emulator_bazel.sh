@@ -69,6 +69,8 @@ done
   --test_env="BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST=${BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST}" \
   --test_env="ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=yes" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
+  --test_env="GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING" \
+  --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/bigtable/..." \
   "${excluded_targets[@]}"

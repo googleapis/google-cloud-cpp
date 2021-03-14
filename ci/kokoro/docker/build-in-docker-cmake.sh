@@ -283,6 +283,8 @@ if [[ "${BUILD_TESTING:-}" == "yes" ]]; then
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
+    export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+    export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
 
     # Changing the PATH disables the Bazel cache, so use an absolute path.
     readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"

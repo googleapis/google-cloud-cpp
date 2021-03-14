@@ -99,6 +99,9 @@ if should_run_integration_tests; then
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
+    export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+    export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
+    export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
     if [[ "${SOURCE_DIR}" == "super" ]]; then
       cd "${BINARY_DIR}/src/google_cloud_cpp_project-build/"

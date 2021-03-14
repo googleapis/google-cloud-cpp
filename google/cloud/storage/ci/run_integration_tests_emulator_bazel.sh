@@ -85,6 +85,9 @@ emulator_args=(
   "--test_env=HTTPBIN_ENDPOINT=${HTTPBIN_ENDPOINT}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=fake-service-account-sign@example.com"
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+  "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING"
+  "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc"
+  "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client"
   "--test_env=EMULATOR_SHA=${EMULATOR_SHA}"
 )
 "${BAZEL_BIN}" run "${bazel_test_args[@]}" "${emulator_args[@]}" \

@@ -177,6 +177,9 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_APPLICATION_CREDENTIALS=${env:KOKORO_GFILE_DIR}/kokoro-run-key.json",
         "--test_env=GOOGLE_CLOUD_PROJECT=${env:GOOGLE_CLOUD_PROJECT}",
         "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes",
+        "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING",
+        "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc",
+        "--test_env=CLOUD_STORAGE_ENABLE_TRACING=rpc",
 
         # Bigtable
         "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}",
