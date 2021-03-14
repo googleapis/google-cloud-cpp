@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/compiler_info.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -44,14 +44,14 @@ auto gcloud_user_agent_matcher = [] {
 
 TEST(Options, Defaults) {
   auto opts = spanner_internal::DefaultOptions();
-  EXPECT_EQ(opts.get<internal::EndpointOption>(), "spanner.googleapis.com");
+  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<internal::GrpcCredentialOption>(), !!expected);
   EXPECT_NE(opts.get<internal::GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
-  EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
+  EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
   EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMinSessionsOption>());
@@ -71,14 +71,14 @@ TEST(Options, Defaults) {
 
 TEST(Options, AdminDefaults) {
   auto opts = spanner_internal::DefaultAdminOptions();
-  EXPECT_EQ(opts.get<internal::EndpointOption>(), "spanner.googleapis.com");
+  EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
   EXPECT_EQ(!!opts.get<internal::GrpcCredentialOption>(), !!expected);
   EXPECT_NE(opts.get<internal::GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
-  EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
+  EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
   EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
@@ -101,13 +101,13 @@ TEST(Options, EndpointFromEnv) {
   testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "foo.bar.baz");
   auto opts = spanner_internal::DefaultOptions();
-  EXPECT_EQ(opts.get<internal::EndpointOption>(), "foo.bar.baz");
+  EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
 }
 
 TEST(Options, SpannerEmulatorHost) {
   testing_util::ScopedEnvironment env("SPANNER_EMULATOR_HOST", "foo.bar.baz");
   auto opts = spanner_internal::DefaultOptions();
-  EXPECT_EQ(opts.get<internal::EndpointOption>(), "foo.bar.baz");
+  EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
   EXPECT_NE(opts.get<internal::GrpcCredentialOption>(), nullptr);
 }
 
@@ -121,9 +121,9 @@ TEST(Options, PassThroughUnknown) {
 }
 
 TEST(Options, OverrideEndpoint) {
-  auto opts = Options{}.set<internal::EndpointOption>("foo.bar.baz");
+  auto opts = Options{}.set<EndpointOption>("foo.bar.baz");
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  EXPECT_EQ("foo.bar.baz", opts.get<internal::EndpointOption>());
+  EXPECT_EQ("foo.bar.baz", opts.get<EndpointOption>());
 }
 
 TEST(Options, OverrideCredential) {
@@ -155,12 +155,12 @@ TEST(Options, OverrideNumChannels) {
 
 TEST(Options, AppendToUserAgent) {
   Options opts;
-  opts.lookup<internal::UserAgentProductsOption>().push_back("product-a/1.2.3");
-  opts.lookup<internal::UserAgentProductsOption>().push_back("product-b/4.5.6");
+  opts.lookup<UserAgentProductsOption>().push_back("product-a/1.2.3");
+  opts.lookup<UserAgentProductsOption>().push_back("product-b/4.5.6");
 
   opts = spanner_internal::DefaultOptions(std::move(opts));
   // The gcloud user-agent string should be first.
-  EXPECT_THAT(opts.get<internal::UserAgentProductsOption>(),
+  EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher(), "product-a/1.2.3",
                           "product-b/4.5.6"));
 }

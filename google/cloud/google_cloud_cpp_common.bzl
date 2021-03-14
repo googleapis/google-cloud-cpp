@@ -18,6 +18,7 @@
 
 google_cloud_cpp_common_hdrs = [
     "backoff_policy.h",
+    "common_options.h",
     "future.h",
     "future_generic.h",
     "future_void.h",
@@ -34,7 +35,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/backoff_policy.h",
     "internal/big_endian.h",
     "internal/build_info.h",
-    "internal/common_options.h",
     "internal/compiler_info.h",
     "internal/diagnostics_pop.inc",
     "internal/diagnostics_push.inc",

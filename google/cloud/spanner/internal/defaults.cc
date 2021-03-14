@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -33,14 +33,13 @@ namespace {
 
 // Sets basic defaults that apply to normal and admin connections.
 void SetBasicDefaults(Options& opts) {
-  if (!opts.has<internal::EndpointOption>()) {
+  if (!opts.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-    opts.set<internal::EndpointOption>(env ? *env : "spanner.googleapis.com");
+    opts.set<EndpointOption>(env ? *env : "spanner.googleapis.com");
   }
   if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
-    opts.set<internal::EndpointOption>(*emulator)
-        .set<internal::GrpcCredentialOption>(
-            grpc::InsecureChannelCredentials());
+    opts.set<EndpointOption>(*emulator).set<internal::GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
   }
   if (!opts.has<internal::GrpcCredentialOption>()) {
     opts.set<internal::GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
@@ -53,7 +52,7 @@ void SetBasicDefaults(Options& opts) {
     opts.set<internal::GrpcNumChannelsOption>(4);
   }
   // Inserts our user-agent string at the front.
-  auto& products = opts.lookup<internal::UserAgentProductsOption>();
+  auto& products = opts.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 }
 

@@ -34,7 +34,7 @@
  *     with options set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment
  *     and unexpected options will be logged.
  *
- * @see `google::cloud::internal::CommonOptionList`
+ * @see `google::cloud::CommonOptionList`
  * @see `google::cloud::internal::GrpcOptionList`
  */
 

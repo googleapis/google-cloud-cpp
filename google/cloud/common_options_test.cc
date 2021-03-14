@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
@@ -22,7 +22,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 namespace {
 
@@ -66,7 +65,6 @@ TEST(CommonOptionList, Unexpected) {
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

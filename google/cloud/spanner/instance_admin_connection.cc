@@ -317,8 +317,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     Options opts) {
-  internal::CheckExpectedOptions<internal::CommonOptionList,
-                                 internal::GrpcOptionList,
+  internal::CheckExpectedOptions<CommonOptionList, internal::GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));

@@ -98,7 +98,7 @@ ConnectionImpl::ConnectionImpl(spanner::Database db,
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),
       rpc_stream_tracing_enabled_(internal::Contains(
-          opts.get<internal::TracingComponentsOption>(), "rpc-streams")),
+          opts.get<TracingComponentsOption>(), "rpc-streams")),
       tracing_options_(opts.get<internal::GrpcTracingOptionsOption>()) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {

@@ -107,6 +107,7 @@ add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     backoff_policy.h
+    common_options.h
     future.h
     future_generic.h
     future_void.h
@@ -127,7 +128,6 @@ add_library(
     internal/backoff_policy.h
     internal/big_endian.h
     internal/build_info.h
-    internal/common_options.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/diagnostics_pop.inc
@@ -243,6 +243,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_common_define_benchmarks()
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        common_options_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
@@ -252,7 +253,6 @@ if (BUILD_TESTING)
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
-        internal/common_options_test.cc
         internal/compiler_info_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc

@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTION_OPTIONS_H
 
+#include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -59,11 +59,11 @@ class ConnectionOptions {
       std::shared_ptr<grpc::ChannelCredentials> credentials)
       : opts_(Options{}
                   .set<internal::GrpcCredentialOption>(std::move(credentials))
-                  .set<internal::TracingComponentsOption>(
+                  .set<TracingComponentsOption>(
                       internal::DefaultTracingComponents())
                   .set<internal::GrpcTracingOptionsOption>(
                       internal::DefaultTracingOptions())
-                  .template set<internal::EndpointOption>(
+                  .template set<EndpointOption>(
                       ConnectionTraits::default_endpoint())
                   .template set<internal::GrpcNumChannelsOption>(
                       ConnectionTraits::default_num_channels())),
@@ -93,14 +93,12 @@ class ConnectionOptions {
    */
   // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
   ConnectionOptions& set_endpoint(std::string v) {
-    opts_.set<internal::EndpointOption>(std::move(v));
+    opts_.set<EndpointOption>(std::move(v));
     return *this;
   }
 
   /// The endpoint used by clients configured with this object.
-  std::string const& endpoint() const {
-    return opts_.get<internal::EndpointOption>();
-  }
+  std::string const& endpoint() const { return opts_.get<EndpointOption>(); }
 
   /**
    * The number of transport channels to create.
@@ -130,25 +128,24 @@ class ConnectionOptions {
    * be enabled by clients configured with this option.
    */
   bool tracing_enabled(std::string const& component) const {
-    return internal::Contains(opts_.get<internal::TracingComponentsOption>(),
-                              component);
+    return internal::Contains(opts_.get<TracingComponentsOption>(), component);
   }
 
   /// Enable tracing for @p component in clients configured with this object.
   ConnectionOptions& enable_tracing(std::string const& component) {
-    opts_.lookup<internal::TracingComponentsOption>().insert(component);
+    opts_.lookup<TracingComponentsOption>().insert(component);
     return *this;
   }
 
   /// Disable tracing for @p component in clients configured with this object.
   ConnectionOptions& disable_tracing(std::string const& component) {
-    opts_.lookup<internal::TracingComponentsOption>().erase(component);
+    opts_.lookup<TracingComponentsOption>().erase(component);
     return *this;
   }
 
   /// Return the set of tracing components.
   std::set<std::string> const& components() const {
-    return opts_.get<internal::TracingComponentsOption>();
+    return opts_.get<TracingComponentsOption>();
   }
 
   /// Return the options for use when tracing RPCs.

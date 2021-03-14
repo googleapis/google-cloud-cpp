@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -655,8 +655,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options opts) {
-  internal::CheckExpectedOptions<internal::CommonOptionList,
-                                 internal::GrpcOptionList,
+  internal::CheckExpectedOptions<CommonOptionList, internal::GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));

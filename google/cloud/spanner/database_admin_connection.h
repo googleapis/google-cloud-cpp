@@ -364,7 +364,7 @@ inline namespace SPANNER_CLIENT_NS {
  * returned `DatabaseAdminConnection`. Expected options are any of types in the
  * following option lists.
  *
- * - `google::cloud::internal::CommonOptionList`
+ * - `google::cloud::CommonOptionList`
  * - `google::cloud::internal::GrpcOptionList`
  *
  * @see `DatabaseAdminConnection`
