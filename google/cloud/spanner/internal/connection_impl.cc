@@ -70,22 +70,6 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-// TODO(#5738): Delete this function once `google::cloud::internal::Options`
-// are directly used in this class.
-std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy() {
-  return spanner_internal::DefaultOptions()
-      .get<spanner_internal::SpannerRetryPolicyOption>()
-      ->clone();
-}
-
-// TODO(#5738): Delete this function once `google::cloud::internal::Options`
-// are directly used in this class.
-std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy() {
-  return spanner_internal::DefaultOptions()
-      .get<spanner_internal::SpannerBackoffPolicyOption>()
-      ->clone();
-}
-
 spanner_proto::TransactionOptions PartitionedDmlTransactionOptions() {
   spanner_proto::TransactionOptions options;
   *options.mutable_partitioned_dml() =

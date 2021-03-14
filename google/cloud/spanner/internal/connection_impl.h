@@ -39,12 +39,6 @@ namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-/// Return the default retry policy for `ConnectionImpl`
-std::unique_ptr<spanner::RetryPolicy> DefaultConnectionRetryPolicy();
-
-/// Return the default backoff policy for `ConnectionImpl`
-std::unique_ptr<spanner::BackoffPolicy> DefaultConnectionBackoffPolicy();
-
 /**
  * A concrete `Connection` subclass that uses gRPC to actually talk to a real
  * Spanner instance.
