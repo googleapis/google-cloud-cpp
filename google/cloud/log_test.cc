@@ -23,6 +23,7 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::_;
 using ::testing::ExitedWithCode;
 using ::testing::HasSubstr;
@@ -132,6 +133,8 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
 }
 
 TEST(LogSinkTest, LogDefaultInstance) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", absl::nullopt);
+
   auto backend = std::make_shared<MockLogBackend>();
   EXPECT_CALL(*backend, ProcessWithOwnership(_))
       .WillOnce([](LogRecord const& lr) {
@@ -182,8 +185,8 @@ TEST(LogSinkTest, ClogEnvironment) {
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
-  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_CLOG",
-                                      "anyvalue");
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", absl::nullopt);
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "anyvalue");
 
   auto f = [] {
     GCP_LOG(INFO) << "testing clog";
