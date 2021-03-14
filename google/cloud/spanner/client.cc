@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/status_utils.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/backoff_policy.h"
@@ -357,7 +358,7 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
                                  spanner_internal::SessionPoolOptionList,
-                                 spanner_internal::SpannerInternalOptionList>(
+                                 spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;

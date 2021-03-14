@@ -22,6 +22,7 @@ gtest
 INPROCESS
 i'th
 JWTs
+kokoro
 LCOV
 MSAN
 Nacked

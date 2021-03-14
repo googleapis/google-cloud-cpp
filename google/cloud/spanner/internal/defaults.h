@@ -12,55 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DEFAULTS_H
 
-#include "google/cloud/spanner/backoff_policy.h"
-#include "google/cloud/spanner/polling_policy.h"
-#include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/options.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-
-/**
- * *Internal-only* options for `google::cloud::internal::Options` to allow
- * passing a `spanner::RetryPolicy`. Customers will not use these, but they
- * will allow us internally to stop passing this policy separately from the
- * other `Options.`
- */
-struct SpannerRetryPolicyOption {
-  using Type = std::shared_ptr<spanner::RetryPolicy>;
-};
-
-/**
- * *Internal-only* options for `google::cloud::internal::Options` to allow
- * passing a `spanner::BackoffPolicy`. Customers will not use these, but they
- * will allow us internally to stop passing this policy separately from the
- * other `Options.`
- */
-struct SpannerBackoffPolicyOption {
-  using Type = std::shared_ptr<spanner::BackoffPolicy>;
-};
-
-/**
- * *Internal-only* option for `google::cloud::internal::Options` to allow
- * passing a `spanner::PollingPolicy`.
- */
-struct SpannerPollingPolicyOption {
-  using Type = std::shared_ptr<spanner::PollingPolicy>;
-};
-
-/**
- * List of internal-only options.
- */
-using SpannerInternalOptionList =
-    internal::OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
-                         SpannerPollingPolicyOption>;
 
 /**
  * Returns an `Options` with the appropriate defaults for Spanner.
@@ -98,4 +59,4 @@ internal::Options DefaultAdminOptions(internal::Options opts = {});
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DEFAULTS_H

@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/options.h"
@@ -20,7 +22,6 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
-#include "internal/options.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

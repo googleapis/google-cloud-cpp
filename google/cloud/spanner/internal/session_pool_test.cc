@@ -14,7 +14,9 @@
 
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/clock.h"
+#include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
@@ -23,7 +25,6 @@
 #include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "options.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>

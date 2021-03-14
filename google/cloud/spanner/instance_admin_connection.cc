@@ -14,7 +14,8 @@
 
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <grpcpp/grpcpp.h>
@@ -318,7 +319,7 @@ std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     internal::Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
-                                 spanner_internal::SpannerInternalOptionList>(
+                                 spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   auto stub = spanner_internal::CreateDefaultInstanceAdminStub(opts);

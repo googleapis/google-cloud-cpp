@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
-#include "google/cloud/spanner/internal/options.h"
+#include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
@@ -656,7 +657,7 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     internal::Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
-                                 spanner_internal::SpannerInternalOptionList>(
+                                 spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   auto stub = spanner_internal::CreateDefaultDatabaseAdminStub(opts);
