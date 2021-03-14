@@ -18,7 +18,6 @@
 if (BUILD_TESTING)
     add_library(
         google_cloud_cpp_testing # cmake-format: sort
-        assert_ok.h
         async_sequencer.h
         check_predicate_becomes_false.h
         chrono_literals.h
@@ -65,7 +64,6 @@ if (BUILD_TESTING)
 
     set(google_cloud_cpp_testing_unit_tests
         # cmake-format: sort
-        assert_ok_test.cc
         command_line_parsing_test.cc
         contains_once_test.cc
         crash_handler_test.cc

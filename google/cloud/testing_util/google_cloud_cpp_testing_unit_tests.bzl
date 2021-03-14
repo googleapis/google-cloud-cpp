@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_testing_unit_tests = [
-    "assert_ok_test.cc",
     "command_line_parsing_test.cc",
     "contains_once_test.cc",
     "crash_handler_test.cc",
