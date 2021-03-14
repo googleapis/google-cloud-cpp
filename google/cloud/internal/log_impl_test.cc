@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_impl.h"
-#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,10 +24,9 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::CircularBufferBackend;
-using ::google::cloud::testing_util::ScopedLog;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::ScopedLog;
 using ::testing::ElementsAre;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
 TEST(CircularBufferBackend, Basic) {

@@ -72,7 +72,7 @@ absl::optional<std::size_t> ParseSize(std::string const& str) {
   std::size_t econv = -1;
   auto const val = std::stol(str, &econv);
   if (econv != str.size()) return {};
-  if (val <=  0) return {};
+  if (val <= 0) return {};
   return static_cast<std::size_t>(val);
 }
 
