@@ -63,7 +63,7 @@ class SessionPool;
  */
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    google::cloud::CompletionQueue cq, internal::Options opts);
+    google::cloud::CompletionQueue cq, Options opts);
 
 /**
  * Maintains a pool of `Session` objects.
@@ -103,7 +103,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
  private:
   friend std::shared_ptr<SessionPool> MakeSessionPool(
       spanner::Database, std::vector<std::shared_ptr<SpannerStub>>,
-      google::cloud::CompletionQueue, internal::Options);
+      google::cloud::CompletionQueue, Options);
 
   /**
    * Construct a `SessionPool`.
@@ -112,7 +112,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   SessionPool(spanner::Database db,
               std::vector<std::shared_ptr<SpannerStub>> stubs,
-              google::cloud::CompletionQueue cq, internal::Options opts);
+              google::cloud::CompletionQueue cq, Options opts);
 
   void Initialize();
 
@@ -177,7 +177,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;
-  internal::Options const opts_;
+  Options const opts_;
   std::unique_ptr<spanner::RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<spanner::BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<Session::Clock> clock_;

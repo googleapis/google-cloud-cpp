@@ -18,9 +18,9 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 
@@ -119,7 +119,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   // `MakeDatabaseAdminConnection()` function below.
   explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
-      internal::Options const& opts)
+      Options const& opts)
       : stub_(std::move(stub)),
         retry_policy_prototype_(
             opts.get<spanner_internal::SpannerRetryPolicyOption>()->clone()),
@@ -654,7 +654,7 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    internal::Options opts) {
+    Options opts) {
   internal::CheckExpectedOptions<internal::CommonOptionList,
                                  internal::GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
@@ -667,7 +667,7 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
 
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
-                                      internal::Options opts) {
+                                      Options opts) {
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   return std::make_shared<spanner::DatabaseAdminConnectionImpl>(
       std::move(stub), std::move(opts));

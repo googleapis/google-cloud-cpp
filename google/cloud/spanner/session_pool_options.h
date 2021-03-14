@@ -34,7 +34,7 @@ class SessionPoolOptions;
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-internal::Options MakeOptions(spanner::SessionPoolOptions);
+Options MakeOptions(spanner::SessionPoolOptions);
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -169,8 +169,8 @@ class SessionPoolOptions {
   }
 
  private:
-  friend internal::Options spanner_internal::MakeOptions(SessionPoolOptions);
-  internal::Options opts_;
+  friend Options spanner_internal::MakeOptions(SessionPoolOptions);
+  Options opts_;
 };
 
 }  // namespace SPANNER_CLIENT_NS
@@ -178,7 +178,7 @@ class SessionPoolOptions {
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-inline internal::Options MakeOptions(spanner::SessionPoolOptions old) {
+inline Options MakeOptions(spanner::SessionPoolOptions old) {
   return std::move(old.opts_);
 }
 }  // namespace SPANNER_CLIENT_NS

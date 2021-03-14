@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DEFAULTS_H
 
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -36,7 +36,7 @@ inline namespace SPANNER_CLIENT_NS {
  * Option values that this implementation doesn't know about will be passed
  * along unmodified.
  */
-internal::Options DefaultOptions(internal::Options opts = {});
+Options DefaultOptions(Options opts = {});
 
 /**
  * Returns an `Options` with the appropriate defaults for Spanner Admin
@@ -52,7 +52,7 @@ internal::Options DefaultOptions(internal::Options opts = {});
  * Option values that this implementation doesn't know about will be passed
  * along unmodified.
  */
-internal::Options DefaultAdminOptions(internal::Options opts = {});
+Options DefaultAdminOptions(Options opts = {});
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

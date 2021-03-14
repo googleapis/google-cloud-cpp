@@ -288,8 +288,7 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 }  // namespace
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    spanner::Database const& db, internal::Options const& opts,
-    int channel_id) {
+    spanner::Database const& db, Options const& opts, int channel_id) {
   grpc::ChannelArguments channel_arguments =
       internal::MakeChannelArguments(opts);
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use

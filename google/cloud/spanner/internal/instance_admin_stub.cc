@@ -177,7 +177,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 };
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    internal::Options const& opts) {
+    Options const& opts) {
   auto channel_args = internal::MakeChannelArguments(opts);
   auto channel = grpc::CreateCustomChannel(
       opts.get<internal::EndpointOption>(),

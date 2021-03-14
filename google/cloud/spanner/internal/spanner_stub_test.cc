@@ -43,7 +43,7 @@ TEST(SpannerStub, CreateDefaultStub) {
 TEST(SpannerStub, CreateDefaultStubWithLogging) {
   testing_util::ScopedLog log;
 
-  auto opts = internal::Options{}
+  auto opts = Options{}
                   .set<internal::GrpcCredentialOption>(
                       grpc::InsecureChannelCredentials())
                   .set<internal::EndpointOption>("localhost:1")

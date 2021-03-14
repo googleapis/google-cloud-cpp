@@ -276,7 +276,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 };
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    internal::Options const& opts) {
+    Options const& opts) {
   auto channel_args = internal::MakeChannelArguments(opts);
   auto channel = grpc::CreateCustomChannel(
       opts.get<internal::EndpointOption>(),

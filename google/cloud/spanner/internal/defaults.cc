@@ -19,8 +19,8 @@
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/options.h"
 #include <chrono>
 #include <string>
 
@@ -32,7 +32,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 // Sets basic defaults that apply to normal and admin connections.
-void SetBasicDefaults(internal::Options& opts) {
+void SetBasicDefaults(Options& opts) {
   if (!opts.has<internal::EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
     opts.set<internal::EndpointOption>(env ? *env : "spanner.googleapis.com");
@@ -59,7 +59,7 @@ void SetBasicDefaults(internal::Options& opts) {
 
 }  // namespace
 
-internal::Options DefaultOptions(internal::Options opts) {
+Options DefaultOptions(Options opts) {
   SetBasicDefaults(opts);
 
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
@@ -109,7 +109,7 @@ internal::Options DefaultOptions(internal::Options opts) {
 
 // Sets the options that have different defaults for admin connections, then
 // uses `DefaultOptions()` to set all the remaining defaults.
-internal::Options DefaultAdminOptions(internal::Options opts) {
+Options DefaultAdminOptions(Options opts) {
   SetBasicDefaults(opts);
 
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {

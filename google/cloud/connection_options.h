@@ -20,7 +20,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -57,7 +57,7 @@ class ConnectionOptions {
   /// The default options, using an explicit credentials object.
   explicit ConnectionOptions(
       std::shared_ptr<grpc::ChannelCredentials> credentials)
-      : opts_(internal::Options{}
+      : opts_(Options{}
                   .set<internal::GrpcCredentialOption>(std::move(credentials))
                   .set<internal::TracingComponentsOption>(
                       internal::DefaultTracingComponents())
@@ -251,9 +251,9 @@ class ConnectionOptions {
 
  private:
   template <typename T>
-  friend internal::Options internal::MakeOptions(ConnectionOptions<T>);
+  friend Options internal::MakeOptions(ConnectionOptions<T>);
 
-  internal::Options opts_;
+  Options opts_;
 
   // These are fields that have different semantics than the equivalent ones in
   // the new `Options` class.

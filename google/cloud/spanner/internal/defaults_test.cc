@@ -115,20 +115,20 @@ TEST(Options, PassThroughUnknown) {
   struct UnknownOption {
     using Type = int;
   };
-  auto opts = internal::Options{}.set<UnknownOption>(42);
+  auto opts = Options{}.set<UnknownOption>(42);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ(42, opts.get<UnknownOption>());
 }
 
 TEST(Options, OverrideEndpoint) {
-  auto opts = internal::Options{}.set<internal::EndpointOption>("foo.bar.baz");
+  auto opts = Options{}.set<internal::EndpointOption>("foo.bar.baz");
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ("foo.bar.baz", opts.get<internal::EndpointOption>());
 }
 
 TEST(Options, OverrideCredential) {
   auto cred = grpc::InsecureChannelCredentials();
-  auto opts = internal::Options{}.set<internal::GrpcCredentialOption>(cred);
+  auto opts = Options{}.set<internal::GrpcCredentialOption>(cred);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ(cred.get(), opts.get<internal::GrpcCredentialOption>().get());
 }
@@ -139,9 +139,8 @@ TEST(Options, OverrideBackgroundThreadsFactory) {
     called = true;
     return internal::DefaultBackgroundThreadsFactory();
   };
-  auto opts =
-      internal::Options{}.set<internal::GrpcBackgroundThreadsFactoryOption>(
-          std::move(factory));
+  auto opts = Options{}.set<internal::GrpcBackgroundThreadsFactoryOption>(
+      std::move(factory));
   opts = spanner_internal::DefaultOptions(std::move(opts));
   called = false;
   opts.get<internal::GrpcBackgroundThreadsFactoryOption>()();
@@ -149,13 +148,13 @@ TEST(Options, OverrideBackgroundThreadsFactory) {
 }
 
 TEST(Options, OverrideNumChannels) {
-  auto opts = internal::Options{}.set<internal::GrpcNumChannelsOption>(42);
+  auto opts = Options{}.set<internal::GrpcNumChannelsOption>(42);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ(42, opts.get<internal::GrpcNumChannelsOption>());
 }
 
 TEST(Options, AppendToUserAgent) {
-  internal::Options opts;
+  Options opts;
   opts.lookup<internal::UserAgentProductsOption>().push_back("product-a/1.2.3");
   opts.lookup<internal::UserAgentProductsOption>().push_back("product-b/4.5.6");
 

@@ -52,7 +52,7 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
-  internal::Options opts;
+  Options opts;
   opts.set<spanner_internal::SpannerRetryPolicyOption>(retry.clone());
   opts.set<spanner_internal::SpannerBackoffPolicyOption>(backoff.clone());
   opts.set<spanner_internal::SpannerPollingPolicyOption>(polling.clone());

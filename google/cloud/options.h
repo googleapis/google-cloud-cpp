@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H
 
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
@@ -33,8 +33,6 @@ Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
 }  // namespace internal
-
-namespace internal {
 
 /**
  * A class that holds option structs indexed by their type.
@@ -191,9 +189,9 @@ class Options {
   }
 
  private:
-  friend Options MergeOptions(Options, Options);
-  friend void CheckExpectedOptionsImpl(std::set<std::type_index> const&,
-                                       Options const&, char const*);
+  friend Options internal::MergeOptions(Options, Options);
+  friend void internal::CheckExpectedOptionsImpl(
+      std::set<std::type_index> const&, Options const&, char const*);
 
   // The data holder for all the option values.
   template <typename T>
@@ -214,9 +212,7 @@ class Options {
  * doxygen, and to do some checking about what options a function may expect.
  */
 template <typename... T>
-using OptionList = TypeList<T...>;
-
-}  // namespace internal
+using OptionList = internal::TypeList<T...>;
 
 namespace internal {
 
@@ -285,4 +281,4 @@ Options MergeOptions(Options a, Options b);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIONS_H

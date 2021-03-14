@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <string>

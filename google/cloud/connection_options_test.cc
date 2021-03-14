@@ -90,7 +90,7 @@ TEST(ConnectionOptionsTest, Tracing) {
   conn_opts.enable_tracing("fake-component");
   EXPECT_TRUE(conn_opts.tracing_enabled("fake-component"));
 
-  internal::Options opts = internal::MakeOptions(conn_opts);
+  Options opts = internal::MakeOptions(conn_opts);
   auto components = opts.get<internal::TracingComponentsOption>();
   EXPECT_TRUE(internal::Contains(components, "fake-component"));
   EXPECT_EQ(conn_opts.components(), components);
@@ -108,7 +108,7 @@ TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
   EXPECT_FALSE(conn_opts.tracing_enabled("rpc"));
 
-  internal::Options opts = internal::MakeOptions(conn_opts);
+  Options opts = internal::MakeOptions(conn_opts);
   auto const& components = opts.get<internal::TracingComponentsOption>();
   EXPECT_EQ(conn_opts.components(), components);
 }

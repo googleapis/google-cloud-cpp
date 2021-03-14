@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>

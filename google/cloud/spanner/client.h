@@ -705,8 +705,8 @@ inline namespace SPANNER_CLIENT_NS {
  * @param opts (optional) configure the `Connection` created by
  *     this function.
  */
-std::shared_ptr<spanner::Connection> MakeConnection(
-    spanner::Database const& db, internal::Options opts = {});
+std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
+                                                    Options opts = {});
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
