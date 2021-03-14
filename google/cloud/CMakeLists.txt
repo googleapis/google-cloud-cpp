@@ -148,6 +148,8 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
+    internal/log_impl.cc
+    internal/log_impl.h
     internal/options.cc
     internal/options.h
     internal/pagination_range.h
@@ -259,6 +261,7 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/log_impl_test.cc
         internal/options_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc

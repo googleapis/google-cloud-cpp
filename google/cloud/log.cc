@@ -14,6 +14,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/log_impl.h"
 #include "absl/time/time.h"
 #include <array>
 #include <thread>
@@ -56,6 +57,17 @@ std::array<char const*, kSeverityCount> constexpr kSeverityNames{{
     "FATAL",
 }};
 }  // namespace
+
+namespace internal {
+Severity ParseSeverity(std::string const& name) {
+  int i = 0;
+  for (auto const* n : kSeverityNames) {
+    if (name == n) return static_cast<Severity>(i);
+    ++i;
+  }
+  return Severity::GCP_LS_LOWEST_ENABLED;
+}
+}  // namespace internal
 
 std::ostream& operator<<(std::ostream& os, Severity x) {
   auto index = static_cast<int>(x);
@@ -132,31 +144,13 @@ void LogSink::Log(LogRecord log_record) {
   }
 }
 
-namespace {
-class StdClogBackend : public LogBackend {
- public:
-  StdClogBackend() = default;
-
-  void Process(LogRecord const& lr) override {
-    std::lock_guard<std::mutex> lk(mu_);
-    std::clog << lr << "\n";
-    if (lr.severity >= Severity::GCP_LS_WARNING) {
-      std::clog << std::flush;
-    }
-  }
-  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
-
- private:
-  std::mutex mu_;
-};
-}  // namespace
-
 void LogSink::EnableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
   if (clog_backend_id_ != 0) {
     return;
   }
-  clog_backend_id_ = AddBackendImpl(std::make_shared<StdClogBackend>());
+  clog_backend_id_ =
+      AddBackendImpl(std::make_shared<internal::StdClogBackend>());
 }
 
 void LogSink::DisableStdClogImpl() {
