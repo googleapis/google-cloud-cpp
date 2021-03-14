@@ -19,7 +19,12 @@ namespace cloud {
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
-// Nothing for now.
+// This empty .cc file eliminated false positive errors from clang-tidy in our
+// presubmit CI. Not exactly sure why, but I was able to reproduce the error
+// locally with:
+//   $ KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH=master \
+//         KOKORO_JOB_TYPE=PRESUBMIT_GITHUB \
+//         ./ci/kokoro/docker/build.sh clang-tidy
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
