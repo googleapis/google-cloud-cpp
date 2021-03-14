@@ -16,6 +16,7 @@
 #include "google/cloud/bigquery/internal/big_query_read_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -31,9 +32,11 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-class BigQueryReadIntegrationTest : public ::testing::Test {
+class BigQueryReadIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
+    ::google::cloud::testing_util::IntegrationTest::SetUp();
     connection_options_.enable_tracing("rpc");
     retry_policy_ =
         absl::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(1);
@@ -41,6 +44,7 @@ class BigQueryReadIntegrationTest : public ::testing::Test {
         std::chrono::seconds(1), std::chrono::seconds(1), 2.0);
     idempotency_policy_ = MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
   }
+
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
   BigQueryReadConnectionOptions connection_options_;
   std::unique_ptr<BigQueryReadRetryPolicy> retry_policy_;

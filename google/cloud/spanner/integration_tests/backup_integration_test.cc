@@ -22,6 +22,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
@@ -61,7 +62,7 @@ bool Emulator() {
   return emulator;
 }
 
-class BackupTest : public ::testing::Test {
+class BackupTest : public ::google::cloud::testing_util::IntegrationTest {
  public:
   BackupTest()
       : generator_(google::cloud::internal::MakeDefaultPRNG()),

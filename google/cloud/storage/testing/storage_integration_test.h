@@ -18,6 +18,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <string>
@@ -31,7 +32,8 @@ namespace testing {
 /**
  * Common class for storage integration tests.
  */
-class StorageIntegrationTest : public ::testing::Test {
+class StorageIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   /**
    * Return a client suitable for most integration tests.

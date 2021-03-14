@@ -30,6 +30,8 @@ if (BUILD_TESTING)
         example_driver.h
         expect_exception.h
         expect_future_error.h
+        integration_test.cc
+        integration_test.h
         scoped_environment.cc
         scoped_environment.h
         scoped_log.cc

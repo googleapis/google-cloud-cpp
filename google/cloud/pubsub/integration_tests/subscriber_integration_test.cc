@@ -23,6 +23,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -43,9 +44,11 @@ using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
 
-class SubscriberIntegrationTest : public ::testing::Test {
+class SubscriberIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
+    ::google::cloud::testing_util::IntegrationTest::SetUp();
     auto project_id =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id.empty());
@@ -92,6 +95,7 @@ class SubscriberIntegrationTest : public ::testing::Test {
                 AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_topic = topic_admin.DeleteTopic(topic_);
     EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
+    ::google::cloud::testing_util::IntegrationTest::TearDown();
   }
 
   google::cloud::internal::DefaultPRNG generator_;

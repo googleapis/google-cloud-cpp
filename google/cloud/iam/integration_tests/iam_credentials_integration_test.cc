@@ -16,6 +16,7 @@
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -31,9 +32,11 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-class IamCredentialsIntegrationTest : public ::testing::Test {
+class IamCredentialsIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
+    ::google::cloud::testing_util::IntegrationTest::SetUp();
     rpc_tracing_options_.enable_tracing("rpc");
 
     iam_service_account_ = google::cloud::internal::GetEnv(

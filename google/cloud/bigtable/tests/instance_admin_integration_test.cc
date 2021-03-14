@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/contains_once.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
@@ -39,9 +40,11 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 namespace btadmin = google::bigtable::admin::v2;
 
-class InstanceAdminIntegrationTest : public ::testing::Test {
+class InstanceAdminIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
+    ::google::cloud::testing_util::IntegrationTest::SetUp();
     if (google::cloud::internal::GetEnv(
             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {
