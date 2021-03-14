@@ -692,7 +692,7 @@ inline namespace SPANNER_CLIENT_NS {
  * following option lists.
  *
  * - `google::cloud::CommonOptionList`
- * - `google::cloud::internal::GrpcOptionList`
+ * - `google::cloud::GrpcOptionList`
  * - `google::cloud::spanner_internal::SessionPoolOptionList`
  *
  * @note Unrecognized options will be ignored. To debug issues with options set

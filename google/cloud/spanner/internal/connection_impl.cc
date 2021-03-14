@@ -93,13 +93,12 @@ ConnectionImpl::ConnectionImpl(spanner::Database db,
       retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
       backoff_policy_prototype_(
           opts.get<SpannerBackoffPolicyOption>()->clone()),
-      background_threads_(
-          opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()),
+      background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),
       rpc_stream_tracing_enabled_(internal::Contains(
           opts.get<TracingComponentsOption>(), "rpc-streams")),
-      tracing_options_(opts.get<internal::GrpcTracingOptionsOption>()) {}
+      tracing_options_(opts.get<GrpcTracingOptionsOption>()) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {
   return Visit(std::move(params.transaction),

@@ -17,8 +17,8 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/compiler_info.h"
-#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
@@ -48,9 +48,9 @@ TEST(Options, Defaults) {
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
-  EXPECT_EQ(!!opts.get<internal::GrpcCredentialOption>(), !!expected);
-  EXPECT_NE(opts.get<internal::GrpcBackgroundThreadsFactoryOption>(), nullptr);
-  EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
+  EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
+  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
+  EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
@@ -75,9 +75,9 @@ TEST(Options, AdminDefaults) {
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
   auto const expected = grpc::GoogleDefaultCredentials();
-  EXPECT_EQ(!!opts.get<internal::GrpcCredentialOption>(), !!expected);
-  EXPECT_NE(opts.get<internal::GrpcBackgroundThreadsFactoryOption>(), nullptr);
-  EXPECT_EQ(opts.get<internal::GrpcNumChannelsOption>(), 4);
+  EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
+  EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
+  EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
@@ -108,7 +108,7 @@ TEST(Options, SpannerEmulatorHost) {
   testing_util::ScopedEnvironment env("SPANNER_EMULATOR_HOST", "foo.bar.baz");
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
-  EXPECT_NE(opts.get<internal::GrpcCredentialOption>(), nullptr);
+  EXPECT_NE(opts.get<GrpcCredentialOption>(), nullptr);
 }
 
 TEST(Options, PassThroughUnknown) {
@@ -128,9 +128,9 @@ TEST(Options, OverrideEndpoint) {
 
 TEST(Options, OverrideCredential) {
   auto cred = grpc::InsecureChannelCredentials();
-  auto opts = Options{}.set<internal::GrpcCredentialOption>(cred);
+  auto opts = Options{}.set<GrpcCredentialOption>(cred);
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  EXPECT_EQ(cred.get(), opts.get<internal::GrpcCredentialOption>().get());
+  EXPECT_EQ(cred.get(), opts.get<GrpcCredentialOption>().get());
 }
 
 TEST(Options, OverrideBackgroundThreadsFactory) {
@@ -139,18 +139,18 @@ TEST(Options, OverrideBackgroundThreadsFactory) {
     called = true;
     return internal::DefaultBackgroundThreadsFactory();
   };
-  auto opts = Options{}.set<internal::GrpcBackgroundThreadsFactoryOption>(
-      std::move(factory));
+  auto opts =
+      Options{}.set<GrpcBackgroundThreadsFactoryOption>(std::move(factory));
   opts = spanner_internal::DefaultOptions(std::move(opts));
   called = false;
-  opts.get<internal::GrpcBackgroundThreadsFactoryOption>()();
+  opts.get<GrpcBackgroundThreadsFactoryOption>()();
   EXPECT_TRUE(called);
 }
 
 TEST(Options, OverrideNumChannels) {
-  auto opts = Options{}.set<internal::GrpcNumChannelsOption>(42);
+  auto opts = Options{}.set<GrpcNumChannelsOption>(42);
   opts = spanner_internal::DefaultOptions(std::move(opts));
-  EXPECT_EQ(42, opts.get<internal::GrpcNumChannelsOption>());
+  EXPECT_EQ(42, opts.get<GrpcNumChannelsOption>());
 }
 
 TEST(Options, AppendToUserAgent) {

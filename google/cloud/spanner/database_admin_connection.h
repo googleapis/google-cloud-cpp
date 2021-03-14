@@ -365,7 +365,7 @@ inline namespace SPANNER_CLIENT_NS {
  * following option lists.
  *
  * - `google::cloud::CommonOptionList`
- * - `google::cloud::internal::GrpcOptionList`
+ * - `google::cloud::GrpcOptionList`
  *
  * @see `DatabaseAdminConnection`
  *

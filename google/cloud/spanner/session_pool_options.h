@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/grpc_options.h"
 #include <algorithm>
 #include <chrono>
 #include <map>
@@ -70,7 +70,7 @@ class SessionPoolOptions {
    * @p num_channels the number of RPC channels in use by the pool.
    */
   SessionPoolOptions& EnforceConstraints(int num_channels) {
-    opts_.set<internal::GrpcNumChannelsOption>(num_channels);
+    opts_.set<GrpcNumChannelsOption>(num_channels);
     opts_ = spanner_internal::DefaultOptions(std::move(opts_));
     return *this;
   }

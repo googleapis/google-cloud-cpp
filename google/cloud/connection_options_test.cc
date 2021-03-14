@@ -44,17 +44,15 @@ TEST(ConnectionOptionsTest, Credentials) {
   auto expected = grpc::InsecureChannelCredentials();
   TestConnectionOptions conn_opts(expected);
   EXPECT_EQ(expected.get(), conn_opts.credentials().get());
-  EXPECT_EQ(
-      expected,
-      internal::MakeOptions(conn_opts).get<internal::GrpcCredentialOption>());
+  EXPECT_EQ(expected,
+            internal::MakeOptions(conn_opts).get<GrpcCredentialOption>());
 
   auto other_credentials = grpc::InsecureChannelCredentials();
   EXPECT_NE(expected, other_credentials);
   conn_opts.set_credentials(other_credentials);
   EXPECT_EQ(other_credentials, conn_opts.credentials());
-  EXPECT_EQ(
-      other_credentials,
-      internal::MakeOptions(conn_opts).get<internal::GrpcCredentialOption>());
+  EXPECT_EQ(other_credentials,
+            internal::MakeOptions(conn_opts).get<GrpcCredentialOption>());
 }
 
 TEST(ConnectionOptionsTest, AdminEndpoint) {
@@ -73,16 +71,14 @@ TEST(ConnectionOptionsTest, NumChannels) {
   TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
   int num_channels = conn_opts.num_channels();
   EXPECT_EQ(TestTraits::default_num_channels(), num_channels);
-  EXPECT_EQ(
-      conn_opts.num_channels(),
-      internal::MakeOptions(conn_opts).get<internal::GrpcNumChannelsOption>());
+  EXPECT_EQ(conn_opts.num_channels(),
+            internal::MakeOptions(conn_opts).get<GrpcNumChannelsOption>());
 
   num_channels *= 2;  // ensure we change it from the default value.
   conn_opts.set_num_channels(num_channels);
   EXPECT_EQ(num_channels, conn_opts.num_channels());
-  EXPECT_EQ(
-      conn_opts.num_channels(),
-      internal::MakeOptions(conn_opts).get<internal::GrpcNumChannelsOption>());
+  EXPECT_EQ(conn_opts.num_channels(),
+            internal::MakeOptions(conn_opts).get<GrpcNumChannelsOption>());
 }
 
 TEST(ConnectionOptionsTest, Tracing) {
@@ -136,20 +132,19 @@ TEST(ConnectionOptionsTest, TracingOptions) {
   EXPECT_FALSE(tracing_options.use_short_repeated_primitives());
   EXPECT_EQ(32, tracing_options.truncate_string_field_longer_than());
   EXPECT_EQ(conn_opts.tracing_options(),
-            internal::MakeOptions(conn_opts)
-                .get<internal::GrpcTracingOptionsOption>());
+            internal::MakeOptions(conn_opts).get<GrpcTracingOptionsOption>());
 }
 
 TEST(ConnectionOptionsTest, ChannelPoolName) {
   TestConnectionOptions conn_opts(grpc::InsecureChannelCredentials());
   EXPECT_TRUE(conn_opts.channel_pool_domain().empty());
-  EXPECT_FALSE(internal::MakeOptions(conn_opts)
-                   .has<internal::GrpcChannelArgumentsOption>());
+  EXPECT_FALSE(
+      internal::MakeOptions(conn_opts).has<GrpcChannelArgumentsOption>());
 
   conn_opts.set_channel_pool_domain("test-channel-pool");
   EXPECT_EQ("test-channel-pool", conn_opts.channel_pool_domain());
-  auto opts = internal::MakeOptions(conn_opts)
-                  .get<internal::GrpcChannelArgumentsOption>();
+  auto opts =
+      internal::MakeOptions(conn_opts).get<GrpcChannelArgumentsOption>();
   EXPECT_EQ(opts["grpc.channel_pooling_domain"], "test-channel-pool");
 }
 

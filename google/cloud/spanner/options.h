@@ -35,7 +35,7 @@
  *     and unexpected options will be logged.
  *
  * @see `google::cloud::CommonOptionList`
- * @see `google::cloud::internal::GrpcOptionList`
+ * @see `google::cloud::GrpcOptionList`
  */
 
 #include "google/cloud/spanner/backoff_policy.h"

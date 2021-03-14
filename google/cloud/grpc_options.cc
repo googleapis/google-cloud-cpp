@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/background_threads_impl.h"

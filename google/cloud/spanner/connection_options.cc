@@ -15,9 +15,9 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
 
 namespace google {
 namespace cloud {
@@ -39,7 +39,7 @@ std::string ConnectionOptionsTraits::user_agent_prefix() {
 
 int ConnectionOptionsTraits::default_num_channels() {
   static auto const kNumChannels =
-      spanner_internal::DefaultOptions().get<internal::GrpcNumChannelsOption>();
+      spanner_internal::DefaultOptions().get<GrpcNumChannelsOption>();
   return kNumChannels;
 }
 

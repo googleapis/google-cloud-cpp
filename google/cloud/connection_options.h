@@ -17,9 +17,9 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
@@ -58,14 +58,14 @@ class ConnectionOptions {
   explicit ConnectionOptions(
       std::shared_ptr<grpc::ChannelCredentials> credentials)
       : opts_(Options{}
-                  .set<internal::GrpcCredentialOption>(std::move(credentials))
+                  .set<GrpcCredentialOption>(std::move(credentials))
                   .set<TracingComponentsOption>(
                       internal::DefaultTracingComponents())
-                  .set<internal::GrpcTracingOptionsOption>(
+                  .set<GrpcTracingOptionsOption>(
                       internal::DefaultTracingOptions())
                   .template set<EndpointOption>(
                       ConnectionTraits::default_endpoint())
-                  .template set<internal::GrpcNumChannelsOption>(
+                  .template set<GrpcNumChannelsOption>(
                       ConnectionTraits::default_num_channels())),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()) {}
 
@@ -73,13 +73,13 @@ class ConnectionOptions {
   ConnectionOptions& set_credentials(
       // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
       std::shared_ptr<grpc::ChannelCredentials> v) {
-    opts_.set<internal::GrpcCredentialOption>(std::move(v));
+    opts_.set<GrpcCredentialOption>(std::move(v));
     return *this;
   }
 
   /// The gRPC credentials used by clients configured with this object.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
-    return opts_.get<internal::GrpcCredentialOption>();
+    return opts_.get<GrpcCredentialOption>();
   }
 
   /**
@@ -110,13 +110,11 @@ class ConnectionOptions {
    *
    * The default value is set by `ConnectionTraits::default_num_channels()`.
    */
-  int num_channels() const {
-    return opts_.get<internal::GrpcNumChannelsOption>();
-  }
+  int num_channels() const { return opts_.get<GrpcNumChannelsOption>(); }
 
   /// Set the value for `num_channels()`.
   ConnectionOptions& set_num_channels(int num_channels) {
-    opts_.set<internal::GrpcNumChannelsOption>(num_channels);
+    opts_.set<GrpcNumChannelsOption>(num_channels);
     return *this;
   }
 
@@ -150,7 +148,7 @@ class ConnectionOptions {
 
   /// Return the options for use when tracing RPCs.
   TracingOptions const& tracing_options() const {
-    return opts_.get<internal::GrpcTracingOptionsOption>();
+    return opts_.get<GrpcTracingOptionsOption>();
   }
 
   /**
@@ -239,7 +237,7 @@ class ConnectionOptions {
     return *this;
   }
 
-  using BackgroundThreadsFactory = internal::BackgroundThreadsFactory;
+  using BackgroundThreadsFactory = BackgroundThreadsFactory;
   BackgroundThreadsFactory background_threads_factory() const {
     if (background_threads_factory_) return background_threads_factory_;
     auto const s = background_thread_pool_size_;

@@ -44,8 +44,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
             opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
-        background_threads_(
-            opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()) {}
+        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~InstanceAdminConnectionImpl() override = default;
 
@@ -317,7 +316,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
     Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, internal::GrpcOptionList,
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));

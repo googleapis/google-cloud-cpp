@@ -191,7 +191,7 @@ std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     Options opts = {}) {
   // No actual credential needed for unit tests
-  opts.set<internal::GrpcCredentialOption>(grpc::InsecureChannelCredentials());
+  opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   opts = spanner_internal::DefaultOptions(std::move(opts));
   return std::make_shared<ConnectionImpl>(std::move(db), std::move(stubs),
                                           std::move(opts));

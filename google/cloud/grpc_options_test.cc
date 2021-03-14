@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "absl/memory/memory.h"
@@ -23,7 +23,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 namespace {
 
@@ -63,7 +62,7 @@ TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
 }
 
 TEST(GrpcOptionList, DefaultBackgroundThreadsFactory) {
-  auto f = DefaultBackgroundThreadsFactory();
+  auto f = internal::DefaultBackgroundThreadsFactory();
   auto* tp =
       dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(f.get());
   ASSERT_NE(nullptr, tp);
@@ -91,7 +90,6 @@ TEST(GrpcOptionList, Unexpected) {
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

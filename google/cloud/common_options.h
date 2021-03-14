@@ -66,17 +66,7 @@ struct TracingComponentsOption {
 };
 
 /**
- * A list of all the options in this file.
- *
- * This is intended to be used with `internal::CheckExpectedOptions<T>()` to
- * make it easy to specify groups of options as allowed/expected.
- *
- * @code
- * Options opts;
- * opts.set<EndpointOption>("...");
- * internal::CheckExpectedOptions<CommonOptionList>(
- *     opts, "some factory function");
- * @endcode
+ * A list of all the common options.
  */
 using CommonOptionList = OptionList<EndpointOption, UserAgentProductsOption,
                                     TracingComponentsOption>;

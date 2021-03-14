@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H
 
 #include "google/cloud/background_threads.h"
 #include "google/cloud/options.h"
@@ -26,8 +26,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-
-namespace internal {
 
 /**
  * The gRPC credentials used by clients configured with this object.
@@ -84,7 +82,13 @@ struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;
 };
 
-}  // namespace internal
+/**
+ * A list of all the gRPC options.
+ */
+using GrpcOptionList =
+    OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
+               GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
+               GrpcBackgroundThreadsFactoryOption>;
 
 namespace internal {
 
@@ -94,28 +98,10 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts);
 /// Returns a factory to use if `GrpcBackgroundThreadsFactoryOption` is unset.
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreadsFactory();
 
-/**
- * A list of all the options in this file.
- *
- * This is intended to be used with `internal::CheckExpectedOptions<T>()` to
- * make it easy to specify groups of options as allowed/expected.
- *
- * @code
- * Options opts;
- * opts.set<GrpcCredentialOption>(...);
- * internal::CheckExpectedOptions<internal::GrpcOptionList>(
- *     opts, "some factory function");
- * @endcode
- */
-using GrpcOptionList =
-    OptionList<GrpcCredentialOption, GrpcNumChannelsOption,
-               GrpcChannelArgumentsOption, GrpcTracingOptionsOption,
-               GrpcBackgroundThreadsFactoryOption>;
-
 }  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_OPTIONS_H

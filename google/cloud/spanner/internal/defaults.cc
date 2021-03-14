@@ -17,8 +17,8 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
 #include <chrono>
@@ -38,18 +38,18 @@ void SetBasicDefaults(Options& opts) {
     opts.set<EndpointOption>(env ? *env : "spanner.googleapis.com");
   }
   if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
-    opts.set<EndpointOption>(*emulator).set<internal::GrpcCredentialOption>(
+    opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
         grpc::InsecureChannelCredentials());
   }
-  if (!opts.has<internal::GrpcCredentialOption>()) {
-    opts.set<internal::GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  if (!opts.has<GrpcCredentialOption>()) {
+    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!opts.has<internal::GrpcBackgroundThreadsFactoryOption>()) {
-    opts.set<internal::GrpcBackgroundThreadsFactoryOption>(
+  if (!opts.has<GrpcBackgroundThreadsFactoryOption>()) {
+    opts.set<GrpcBackgroundThreadsFactoryOption>(
         internal::DefaultBackgroundThreadsFactory);
   }
-  if (!opts.has<internal::GrpcNumChannelsOption>()) {
-    opts.set<internal::GrpcNumChannelsOption>(4);
+  if (!opts.has<GrpcNumChannelsOption>()) {
+    opts.set<GrpcNumChannelsOption>(4);
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
@@ -100,8 +100,8 @@ Options DefaultOptions(Options opts) {
       opts.lookup<spanner_internal::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
-      (std::min)(min_sessions, max_sessions_per_channel *
-                                   opts.get<internal::GrpcNumChannelsOption>());
+      (std::min)(min_sessions,
+                 max_sessions_per_channel * opts.get<GrpcNumChannelsOption>());
 
   return opts;
 }

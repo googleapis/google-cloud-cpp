@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/options.h"
@@ -127,8 +127,7 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
             opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
-        background_threads_(
-            opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()) {}
+        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
 
@@ -655,7 +654,7 @@ inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, internal::GrpcOptionList,
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
