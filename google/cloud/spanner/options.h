@@ -19,16 +19,16 @@
  * @file
  *
  * This file defines options to be used with instances of
- * `google::cloud::Options`. By convention options are named with an
- * "Option" suffix. As the name would imply, all options are optional, and
- * leaving them unset will result in a reasonable default being chosen.
+ * `google::cloud::Options`. By convention options are named with an "Option"
+ * suffix. As the name would imply, all options are optional, and leaving them
+ * unset will result in a reasonable default being chosen.
  *
  * Not all options are meaningful to all functions that accept a
  * `google::cloud::Options` instance. Each function that accepts a
- * `google::cloud::Options` should document which options it expects.
- * This is typically done by indicating lists of options using "OptionList"
- * aliases. For example, a function may indicate that users may set any option
- * in `SpannerPolicyOptionList`.
+ * `google::cloud::Options` should document which options it expects. This is
+ * typically done by indicating lists of options using "OptionList" aliases.
+ * For example, a function may indicate that users may set any option in
+ * `SpannerPolicyOptionList`.
  *
  * @note Unrecognized options are allowed and will be ignored. To debug issues
  *     with options set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment
@@ -63,24 +63,21 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * Option for `google::cloud::Options` to set a
- * `spanner::RetryPolicy`.
+ * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
  */
 struct SpannerRetryPolicyOption {
   using Type = std::shared_ptr<spanner::RetryPolicy>;
 };
 
 /**
- * Option for `google::cloud::Options` to set a
- * `spanner::BackoffPolicy`.
+ * Option for `google::cloud::Options` to set a `spanner::BackoffPolicy`.
  */
 struct SpannerBackoffPolicyOption {
   using Type = std::shared_ptr<spanner::BackoffPolicy>;
 };
 
 /**
- * Option for `google::cloud::Options` to set a
- * `spanner::PollingPolicy`.
+ * Option for `google::cloud::Options` to set a `spanner::PollingPolicy`.
  */
 struct SpannerPollingPolicyOption {
   using Type = std::shared_ptr<spanner::PollingPolicy>;
