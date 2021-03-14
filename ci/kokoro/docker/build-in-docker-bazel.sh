@@ -150,6 +150,8 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
+    "--test_env=GOOGLE_CLOUD_CPP_LOG_CONFIG=lastN,100,WARNING"
+    "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc"
 
     # Bigtable
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"

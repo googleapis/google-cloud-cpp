@@ -39,6 +39,8 @@ source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
+export GOOGLE_CLOUD_CPP_LOG_CONFIG="lastN,100,WARNING"
+export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 
 cd "${BINARY_DIR}"
