@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/log_impl.h"
 #include "google/cloud/internal/getenv.h"
-#include "absl/strings/str_split.h"
 
 namespace google {
 namespace cloud {
@@ -46,31 +45,6 @@ void CircularBufferBackend::Flush(LogRecord lr) {
   }
   backend_->ProcessWithOwnership(std::move(lr));
   begin_ = end_ = 0;
-}
-
-namespace {
-std::shared_ptr<LogBackend> LegacyLogBackend() {
-  if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG").has_value()) {
-    return std::make_shared<StdClogBackend>();
-  }
-  return {};
-}
-
-
-}  // namespace
-
-std::shared_ptr<LogBackend> DefaultLogBackend() {
-  auto config = internal::GetEnv("GOOGLE_CLOUD_CPP_LOG_CONFIG").value_or("");
-  std::vector<std::string> fields = absl::StrSplit(config, ',');
-  if (fields.empty()) return LegacyLogBackend();
-  if (fields[0] == "clog") return std::make_shared<StdClogBackend>();
-  if (fields[0] == "lastN") {
-
-  }
-  if (config.rfind("clog,", 0) == 0) {
-    auto value =
-  }
-  return LegacyLogBackend();
 }
 
 }  // namespace internal

@@ -45,6 +45,9 @@ class CircularBufferBackend : public LogBackend {
         min_flush_severity_(min_flush_severity),
         backend_(std::move(backend)) {}
 
+  std::size_t size() const { return buffer_.size(); }
+  Severity min_flush_severity() const { return min_flush_severity_; }
+
   void Process(LogRecord const& lr) override { ProcessWithOwnership(lr); }
   void ProcessWithOwnership(LogRecord lr) override;
 

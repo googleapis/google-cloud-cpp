@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/log_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,6 +25,7 @@ namespace {
 
 using ::google::cloud::internal::CircularBufferBackend;
 using ::google::cloud::testing_util::ScopedLog;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -52,6 +54,60 @@ TEST(CircularBufferBackend, Basic) {
   buffer.ProcessWithOwnership(LogRecord{
       Severity::GCP_LS_ERROR, "test_function()", "file", 1, {}, "msg 8"});
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 7", "msg 8"));
+}
+
+TEST(DefaultLogBackend, CircularBuffer) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", "lastN,5,WARNING");
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
+  auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
+  ASSERT_NE(buffer, nullptr);
+  EXPECT_EQ(5, buffer->size());
+  EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
+}
+
+TEST(DefaultLogBackend, CLog) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", absl::nullopt);
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "yes");
+  auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
+  EXPECT_NE(dynamic_cast<StdClogBackend*>(be.get()), nullptr);
+}
+
+TEST(DefaultLogBackend, Unset) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", absl::nullopt);
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, UnknownType) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", "invalid");
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, MissingComponents) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", "lastN,1");
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, InvalidSize) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", "lastN,-10,WARNING");
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, InvalidSeverity) {
+  ScopedEnvironment config("GOOGLE_CLOUD_CPP_LOG_CONFIG", "lastN,10,invalid");
+  ScopedEnvironment clog("GOOGLE_CLOUD_CPP_ENABLE_CLOG", absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
 }
 
 }  // namespace

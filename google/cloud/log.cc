@@ -15,7 +15,9 @@
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/log_impl.h"
+#include "absl/strings/str_split.h"
 #include "absl/time/time.h"
+#include "absl/types/optional.h"
 #include <array>
 #include <thread>
 
@@ -56,18 +58,25 @@ std::array<char const*, kSeverityCount> constexpr kSeverityNames{{
     "ALERT",
     "FATAL",
 }};
-}  // namespace
 
-namespace internal {
-Severity ParseSeverity(std::string const& name) {
+absl::optional<Severity> ParseSeverity(std::string const& name) {
   int i = 0;
   for (auto const* n : kSeverityNames) {
     if (name == n) return static_cast<Severity>(i);
     ++i;
   }
-  return Severity::GCP_LS_LOWEST_ENABLED;
+  return {};
 }
-}  // namespace internal
+
+absl::optional<std::size_t> ParseSize(std::string const& str) {
+  std::size_t econv = -1;
+  auto const val = std::stol(str, &econv);
+  if (econv != str.size()) return {};
+  if (val <=  0) return {};
+  return static_cast<std::size_t>(val);
+}
+
+}  // namespace
 
 std::ostream& operator<<(std::ostream& os, Severity x) {
   auto index = static_cast<int>(x);
@@ -88,9 +97,8 @@ LogSink::LogSink()
 LogSink& LogSink::Instance() {
   static auto* const kInstance = [] {
     auto* p = new LogSink;
-    if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG").has_value()) {
-      p->EnableStdClogImpl();
-    }
+    auto be = internal::DefaultLogBackend();
+    if (be) p->SetDefaultBackend(std::move(be));
     return p;
   }();
   return *kInstance;
@@ -111,7 +119,7 @@ void LogSink::RemoveBackend(long id) {
 void LogSink::ClearBackends() {
   std::unique_lock<std::mutex> lk(mu_);
   backends_.clear();
-  clog_backend_id_ = 0;
+  default_backend_id_ = 0;
   empty_.store(backends_.empty());
 }
 
@@ -146,32 +154,33 @@ void LogSink::Log(LogRecord log_record) {
 
 void LogSink::EnableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (clog_backend_id_ != 0) {
-    return;
-  }
-  clog_backend_id_ =
+  if (default_backend_id_ != 0) return;
+  default_backend_id_ =
       AddBackendImpl(std::make_shared<internal::StdClogBackend>());
 }
 
 void LogSink::DisableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
-  if (clog_backend_id_ == 0) {
-    return;
-  }
-  RemoveBackendImpl(clog_backend_id_);
-  clog_backend_id_ = 0;
+  if (default_backend_id_ == 0) return;
+  RemoveBackendImpl(default_backend_id_);
+  default_backend_id_ = 0;
 }
 
-// NOLINTNEXTLINE(google-runtime-int)
-long LogSink::AddBackendImpl(std::shared_ptr<LogBackend> backend) {
+void LogSink::SetDefaultBackend(std::shared_ptr<LogBackend> backend) {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (default_backend_id_ != 0) return;
+  default_backend_id_ = AddBackendImpl(std::move(backend));
+}
+
+LogSink::BackendId LogSink::AddBackendImpl(
+    std::shared_ptr<LogBackend> backend) {
   auto const id = ++next_id_;
   backends_.emplace(id, std::move(backend));
   empty_.store(backends_.empty());
   return id;
 }
 
-// NOLINTNEXTLINE(google-runtime-int)
-void LogSink::RemoveBackendImpl(long id) {
+void LogSink::RemoveBackendImpl(BackendId id) {
   auto it = backends_.find(id);
   if (backends_.end() == it) {
     return;
@@ -180,6 +189,31 @@ void LogSink::RemoveBackendImpl(long id) {
   empty_.store(backends_.empty());
 }
 
+namespace internal {
+
+std::shared_ptr<LogBackend> DefaultLogBackend() {
+  auto clog_or_none = []() -> std::shared_ptr<LogBackend> {
+    if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG").has_value()) {
+      return std::make_shared<StdClogBackend>();
+    }
+    return {};
+  };
+
+  auto config = internal::GetEnv("GOOGLE_CLOUD_CPP_LOG_CONFIG").value_or("");
+  std::vector<std::string> fields = absl::StrSplit(config, ',');
+  if (fields.empty()) return clog_or_none();
+  if (fields[0] == "lastN" && fields.size() == 3) {
+    auto size = ParseSize(fields[1]);
+    auto min_severity = ParseSeverity(fields[2]);
+    if (size.has_value() && min_severity.has_value()) {
+      return std::make_shared<CircularBufferBackend>(
+          *size, *min_severity, std::make_shared<StdClogBackend>());
+    }
+  }
+  return clog_or_none();
+}
+
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

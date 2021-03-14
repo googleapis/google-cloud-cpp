@@ -298,10 +298,15 @@ class LogSink {
     return static_cast<Severity>(minimum_severity_.load());
   }
 
-  // NOLINTNEXTLINE(google-runtime-int)
-  long AddBackend(std::shared_ptr<LogBackend> backend);
-  // NOLINTNEXTLINE(google-runtime-int)
-  void RemoveBackend(long id);
+  // The use of `long` here is for backwards compatibility. The style guide
+  // recommends using `std::int32_t` or something similar, but I (coryan) picked
+  // this type before we enforced the `google-runtime-int` rule. Note that
+  // `long` is guaranteed to be at least 32-bits, and that is enough for this
+  // purpose.
+  using BackendId = long;  // NOLINT(google-runtime-int)
+
+  BackendId AddBackend(std::shared_ptr<LogBackend> backend);
+  void RemoveBackend(BackendId id);
   void ClearBackends();
   std::size_t BackendCount() const;
 
@@ -321,18 +326,16 @@ class LogSink {
  private:
   void EnableStdClogImpl();
   void DisableStdClogImpl();
-  // NOLINTNEXTLINE(google-runtime-int)
-  long AddBackendImpl(std::shared_ptr<LogBackend> backend);
-  // NOLINTNEXTLINE(google-runtime-int)
-  void RemoveBackendImpl(long id);
+  void SetDefaultBackend(std::shared_ptr<LogBackend> backend);
+  BackendId AddBackendImpl(std::shared_ptr<LogBackend> backend);
+  void RemoveBackendImpl(BackendId id);
 
   std::atomic<bool> empty_;
   std::atomic<int> minimum_severity_;
   std::mutex mutable mu_;
-  long next_id_ = 0;          // NOLINT(google-runtime-int)
-  long clog_backend_id_ = 0;  // NOLINT(google-runtime-int)
-  // NOLINTNEXTLINE(google-runtime-int)
-  std::map<long, std::shared_ptr<LogBackend>> backends_;
+  BackendId next_id_ = 0;
+  BackendId default_backend_id_ = 0;
+  std::map<BackendId, std::shared_ptr<LogBackend>> backends_;
 };
 
 /**
@@ -427,6 +430,9 @@ class Logger<false> {
   //@}
 };
 
+namespace internal {
+std::shared_ptr<LogBackend> DefaultLogBackend();
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
