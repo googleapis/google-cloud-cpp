@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['log_355',['Log',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a37dba0d38faf5d103859d8bc73c61312',1,'google::cloud::v1::LogSink']]],
-  ['logger_356',['Logger',['../classgoogle_1_1cloud_1_1v1_1_1Logger.html#a8d861d2365b8cce93dc94ba2b1980701',1,'google::cloud::v1::Logger::Logger()'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#a99c95a9e7bebab948a751943559f1abd',1,'google::cloud::v1::Logger&lt; false &gt;::Logger()=default'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#a49294322009f9d580dd09b3671adcc2c',1,'google::cloud::v1::Logger&lt; false &gt;::Logger(Severity, char const *, char const *, int, LogSink &amp;)']]],
-  ['logsink_357',['LogSink',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a732506f5ba04acb9d4b5b8d421ff3a18',1,'google::cloud::v1::LogSink']]],
-  ['logto_358',['LogTo',['../classgoogle_1_1cloud_1_1v1_1_1Logger.html#aaf7b214bf5a547b77bec499359d7fffe',1,'google::cloud::v1::Logger::LogTo()'],['../classgoogle_1_1cloud_1_1v1_1_1Logger_3_01false_01_4.html#af6f6cdd54d4f9855f4dddf9ebff9ce0e',1,'google::cloud::v1::Logger&lt; false &gt;::LogTo()']]]
+  ['kmskeyname_391',['KmsKeyName',['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a7500aab23ec150c1d8d5c69c19761ffb',1,'google::cloud::v1::KmsKeyName::KmsKeyName(std::string const &amp;project_id, std::string const &amp;location, std::string const &amp;key_ring, std::string const &amp;kms_key_name)'],['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#ada481a1d3faa83097edc7f60c6985a59',1,'google::cloud::v1::KmsKeyName::KmsKeyName(KmsKeyName const &amp;)=default'],['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a9ca06d7b4d39adff786bf0b1f8d32470',1,'google::cloud::v1::KmsKeyName::KmsKeyName(KmsKeyName &amp;&amp;)=default']]]
 ];

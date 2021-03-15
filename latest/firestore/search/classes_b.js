@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['status_262',['Status',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1']]],
-  ['statusor_263',['StatusOr',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1']]],
-  ['streamrange_264',['StreamRange',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1']]]
+  ['pollingpolicy_287',['PollingPolicy',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html',1,'google::cloud::v1']]],
+  ['promise_288',['promise',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise.html',1,'google::cloud::v1']]],
+  ['promise_3c_20void_20_3e_289',['promise&lt; void &gt;',['https://googleapis.dev/cpp/google-cloud-common/latest/classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html',1,'google::cloud::v1']]]
 ];

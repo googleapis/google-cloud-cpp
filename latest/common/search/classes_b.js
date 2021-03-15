@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['status_266',['Status',['../classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1::Status'],['../classgoogle_1_1cloud_1_1v1_1_1Status.html',1,'google::cloud::v1::Status']]],
-  ['statusor_267',['StatusOr',['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1::StatusOr&lt; T &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1StatusOr.html',1,'google::cloud::v1::StatusOr&lt; T &gt;']]],
-  ['streamrange_268',['StreamRange',['../classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1::StreamRange&lt; T &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1StreamRange.html',1,'google::cloud::v1::StreamRange&lt; T &gt;']]]
+  ['pollingpolicy_291',['PollingPolicy',['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html',1,'google::cloud::v1::PollingPolicy'],['../classgoogle_1_1cloud_1_1v1_1_1PollingPolicy.html',1,'google::cloud::v1::PollingPolicy']]],
+  ['promise_292',['promise',['../classgoogle_1_1cloud_1_1v1_1_1promise.html',1,'google::cloud::v1::promise&lt; T &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1promise.html',1,'google::cloud::v1::promise&lt; T &gt;']]],
+  ['promise_3c_20void_20_3e_293',['promise&lt; void &gt;',['../classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html',1,'google::cloud::v1::promise&lt; void &gt;'],['../classgoogle_1_1cloud_1_1v1_1_1promise_3_01void_01_4.html',1,'google::cloud::v1::promise&lt; void &gt;']]]
 ];

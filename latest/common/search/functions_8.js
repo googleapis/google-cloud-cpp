@@ -1,4 +1,8 @@
 var searchData=
 [
-  ['kmskeyname_354',['KmsKeyName',['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a7500aab23ec150c1d8d5c69c19761ffb',1,'google::cloud::v1::KmsKeyName::KmsKeyName(std::string const &amp;project_id, std::string const &amp;location, std::string const &amp;key_ring, std::string const &amp;kms_key_name)'],['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#ada481a1d3faa83097edc7f60c6985a59',1,'google::cloud::v1::KmsKeyName::KmsKeyName(KmsKeyName const &amp;)=default'],['../classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#a9ca06d7b4d39adff786bf0b1f8d32470',1,'google::cloud::v1::KmsKeyName::KmsKeyName(KmsKeyName &amp;&amp;)=default']]]
+  ['iambinding_386',['IamBinding',['../classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a98555de0a328e49832f307aac8fb7a04',1,'google::cloud::v1::IamBinding']]],
+  ['iambindings_387',['IamBindings',['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#adc80880b9fa1a2ad75469e0507307b69',1,'google::cloud::v1::IamBindings::IamBindings()=default'],['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a8801804664f3d3392c5dd11c1f45620f',1,'google::cloud::v1::IamBindings::IamBindings(std::vector&lt; IamBinding &gt; bindings)'],['../classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ade19fe96a28b0418ee9528a3e1b68b76',1,'google::cloud::v1::IamBindings::IamBindings(std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)']]],
+  ['instance_388',['Instance',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a1179efbf84e0af185bfb7817da38af81',1,'google::cloud::v1::LogSink']]],
+  ['is_5fenabled_389',['is_enabled',['../classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a5e65e33bad034236bf3d64eeba795cad',1,'google::cloud::v1::LogSink']]],
+  ['iteratorimpl_390',['IteratorImpl',['../classgoogle_1_1cloud_1_1v1_1_1StreamRange_1_1IteratorImpl.html#af4b3ffc5cdebd7c4bd12b826bba1d812',1,'google::cloud::v1::StreamRange::IteratorImpl']]]
 ];
