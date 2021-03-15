@@ -36,7 +36,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
   InstanceAdminConnectionImpl(
       std::shared_ptr<spanner_internal::InstanceAdminStub> stub,
-      internal::Options const& opts)
+      Options const& opts)
       : stub_(std::move(stub)),
         retry_policy_prototype_(
             opts.get<spanner_internal::SpannerRetryPolicyOption>()->clone()),
@@ -44,8 +44,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
             opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
             opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
-        background_threads_(
-            opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()) {}
+        background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~InstanceAdminConnectionImpl() override = default;
 
@@ -316,9 +315,8 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 
 std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
-    internal::Options opts) {
-  internal::CheckExpectedOptions<internal::CommonOptionList,
-                                 internal::GrpcOptionList,
+    Options opts) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  spanner_internal::SpannerPolicyOptionList>(
       opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
@@ -329,7 +327,7 @@ std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
 
 std::shared_ptr<spanner::InstanceAdminConnection>
 MakeInstanceAdminConnectionForTesting(std::shared_ptr<InstanceAdminStub> stub,
-                                      internal::Options opts) {
+                                      Options opts) {
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   return std::make_shared<spanner::InstanceAdminConnectionImpl>(
       std::move(stub), std::move(opts));

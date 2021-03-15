@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -149,7 +149,7 @@ class DatabaseAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    internal::Options const& opts);
+    Options const& opts);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

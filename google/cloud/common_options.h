@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMON_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMON_OPTIONS_H
 
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <set>
 #include <string>
@@ -24,7 +24,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 /**
  * Change the endpoint.
@@ -66,29 +65,14 @@ struct TracingComponentsOption {
   using Type = std::set<std::string>;
 };
 
-}  // namespace internal
-
-namespace internal {
-
 /**
- * A list of all the options in this file.
- *
- * This is intended to be used with `internal::CheckExpectedOptions<T>()` to
- * make it easy to specify groups of options as allowed/expected.
- *
- * @code
- * Options opts;
- * opts.set<EndpointOption>("...");
- * internal::CheckExpectedOptions<internal::CommonOptionList>(
- *     opts, "some factory function");
- * @endcode
+ * A list of all the common options.
  */
 using CommonOptionList = OptionList<EndpointOption, UserAgentProductsOption,
                                     TracingComponentsOption>;
-}  // namespace internal
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMMON_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMON_OPTIONS_H

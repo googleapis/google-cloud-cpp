@@ -364,8 +364,8 @@ inline namespace SPANNER_CLIENT_NS {
  * returned `DatabaseAdminConnection`. Expected options are any of types in the
  * following option lists.
  *
- * - `google::cloud::internal::CommonOptionList`
- * - `google::cloud::internal::GrpcOptionList`
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
  *
  * @see `DatabaseAdminConnection`
  *
@@ -373,12 +373,12 @@ inline namespace SPANNER_CLIENT_NS {
  *     this function.
  */
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    internal::Options opts = {});
+    Options opts = {});
 
 /// Internal-only factory that allows us to inject mock stubs for testing.
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
-                                      internal::Options opts);
+                                      Options opts);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

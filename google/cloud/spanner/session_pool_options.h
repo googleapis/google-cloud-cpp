@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/internal/defaults.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/grpc_options.h"
 #include <algorithm>
 #include <chrono>
 #include <map>
@@ -34,7 +34,7 @@ class SessionPoolOptions;
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-internal::Options MakeOptions(spanner::SessionPoolOptions);
+Options MakeOptions(spanner::SessionPoolOptions);
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal
 
@@ -70,7 +70,7 @@ class SessionPoolOptions {
    * @p num_channels the number of RPC channels in use by the pool.
    */
   SessionPoolOptions& EnforceConstraints(int num_channels) {
-    opts_.set<internal::GrpcNumChannelsOption>(num_channels);
+    opts_.set<GrpcNumChannelsOption>(num_channels);
     opts_ = spanner_internal::DefaultOptions(std::move(opts_));
     return *this;
   }
@@ -169,8 +169,8 @@ class SessionPoolOptions {
   }
 
  private:
-  friend internal::Options spanner_internal::MakeOptions(SessionPoolOptions);
-  internal::Options opts_;
+  friend Options spanner_internal::MakeOptions(SessionPoolOptions);
+  Options opts_;
 };
 
 }  // namespace SPANNER_CLIENT_NS
@@ -178,7 +178,7 @@ class SessionPoolOptions {
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-inline internal::Options MakeOptions(spanner::SessionPoolOptions old) {
+inline Options MakeOptions(spanner::SessionPoolOptions old) {
   return std::move(old.opts_);
 }
 }  // namespace SPANNER_CLIENT_NS

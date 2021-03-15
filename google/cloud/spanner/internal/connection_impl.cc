@@ -23,9 +23,9 @@
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
+#include "google/cloud/options.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
@@ -88,18 +88,17 @@ Status MissingTransactionStatus(std::string const& operation) {
 
 ConnectionImpl::ConnectionImpl(spanner::Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
-                               internal::Options const& opts)
+                               Options const& opts)
     : db_(std::move(db)),
       retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
       backoff_policy_prototype_(
           opts.get<SpannerBackoffPolicyOption>()->clone()),
-      background_threads_(
-          opts.get<internal::GrpcBackgroundThreadsFactoryOption>()()),
+      background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),
       rpc_stream_tracing_enabled_(internal::Contains(
-          opts.get<internal::TracingComponentsOption>(), "rpc-streams")),
-      tracing_options_(opts.get<internal::GrpcTracingOptionsOption>()) {}
+          opts.get<TracingComponentsOption>(), "rpc-streams")),
+      tracing_options_(opts.get<GrpcTracingOptionsOption>()) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {
   return Visit(std::move(params.transaction),

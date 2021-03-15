@@ -14,10 +14,10 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/common_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
 
 namespace google {
 namespace cloud {
@@ -25,13 +25,13 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  return spanner_internal::DefaultOptions().get<internal::EndpointOption>();
+  return spanner_internal::DefaultOptions().get<EndpointOption>();
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
   static auto const* const kUserAgentPrefix = new auto([] {
     auto const defaults = spanner_internal::DefaultOptions();
-    auto const& products = defaults.get<internal::UserAgentProductsOption>();
+    auto const& products = defaults.get<UserAgentProductsOption>();
     return absl::StrJoin(products, " ");
   }());
   return *kUserAgentPrefix;
@@ -39,7 +39,7 @@ std::string ConnectionOptionsTraits::user_agent_prefix() {
 
 int ConnectionOptionsTraits::default_num_channels() {
   static auto const kNumChannels =
-      spanner_internal::DefaultOptions().get<internal::GrpcNumChannelsOption>();
+      spanner_internal::DefaultOptions().get<GrpcNumChannelsOption>();
   return kNumChannels;
 }
 

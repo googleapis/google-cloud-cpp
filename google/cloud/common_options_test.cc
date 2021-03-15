@@ -12,10 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <utility>
@@ -23,7 +22,6 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 namespace {
 
@@ -32,7 +30,7 @@ using ::testing::ContainsRegex;
 
 // Tests a generic option by setting it, then getting it.
 template <typename T, typename ValueType = typename T::Type>
-void TestGrpcOption(ValueType const& expected) {
+void TestOption(ValueType const& expected) {
   auto opts = Options{}.template set<T>(expected);
   EXPECT_EQ(expected, opts.template get<T>())
       << "Failed with type: " << typeid(T).name();
@@ -40,58 +38,33 @@ void TestGrpcOption(ValueType const& expected) {
 
 }  // namespace
 
-TEST(GrpcOptionList, RegularOptions) {
-  TestGrpcOption<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-  TestGrpcOption<GrpcNumChannelsOption>(42);
-  TestGrpcOption<GrpcChannelArgumentsOption>({{"foo", "bar"}, {"baz", "quux"}});
-  TestGrpcOption<GrpcTracingOptionsOption>(TracingOptions{});
+TEST(CommonOptionList, RegularOptions) {
+  TestOption<EndpointOption>("foo.googleapis.com");
+  TestOption<UserAgentProductsOption>({"foo", "bar"});
+  TestOption<TracingComponentsOption>({"foo", "bar", "baz"});
 }
 
-TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
-  struct Fake : BackgroundThreads {
-    CompletionQueue cq() const override { return {}; }
-  };
-  bool invoked = false;
-  auto factory = [&invoked] {
-    invoked = true;
-    return absl::make_unique<Fake>();
-  };
-  auto opts = Options{}.set<GrpcBackgroundThreadsFactoryOption>(factory);
-  EXPECT_FALSE(invoked);
-  opts.get<GrpcBackgroundThreadsFactoryOption>()();
-  EXPECT_TRUE(invoked);
-}
-
-TEST(GrpcOptionList, DefaultBackgroundThreadsFactory) {
-  auto f = DefaultBackgroundThreadsFactory();
-  auto* tp =
-      dynamic_cast<internal::AutomaticallyCreatedBackgroundThreads*>(f.get());
-  ASSERT_NE(nullptr, tp);
-  EXPECT_EQ(1, tp->pool_size());
-}
-
-TEST(GrpcOptionList, Expected) {
+TEST(CommonOptionList, Expected) {
   testing_util::ScopedLog log;
   Options opts;
-  opts.set<GrpcNumChannelsOption>(42);
-  internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
+  opts.set<EndpointOption>("foo.googleapis.com");
+  internal::CheckExpectedOptions<CommonOptionList>(opts, "caller");
   EXPECT_TRUE(log.ExtractLines().empty());
 }
 
-TEST(GrpcOptionList, Unexpected) {
+TEST(CommonOptionList, Unexpected) {
   struct UnexpectedOption {
     using Type = int;
   };
   testing_util::ScopedLog log;
   Options opts;
   opts.set<UnexpectedOption>({});
-  internal::CheckExpectedOptions<GrpcOptionList>(opts, "caller");
+  internal::CheckExpectedOptions<CommonOptionList>(opts, "caller");
   EXPECT_THAT(
       log.ExtractLines(),
       Contains(ContainsRegex("caller: Unexpected option.+UnexpectedOption")));
 }
 
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

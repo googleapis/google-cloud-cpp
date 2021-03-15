@@ -16,11 +16,11 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
 #include "google/cloud/internal/user_agent_prefix.h"
+#include "google/cloud/options.h"
 #include <chrono>
 #include <string>
 
@@ -32,34 +32,33 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 // Sets basic defaults that apply to normal and admin connections.
-void SetBasicDefaults(internal::Options& opts) {
-  if (!opts.has<internal::EndpointOption>()) {
+void SetBasicDefaults(Options& opts) {
+  if (!opts.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-    opts.set<internal::EndpointOption>(env ? *env : "spanner.googleapis.com");
+    opts.set<EndpointOption>(env ? *env : "spanner.googleapis.com");
   }
   if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
-    opts.set<internal::EndpointOption>(*emulator)
-        .set<internal::GrpcCredentialOption>(
-            grpc::InsecureChannelCredentials());
+    opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
+        grpc::InsecureChannelCredentials());
   }
-  if (!opts.has<internal::GrpcCredentialOption>()) {
-    opts.set<internal::GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  if (!opts.has<GrpcCredentialOption>()) {
+    opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
-  if (!opts.has<internal::GrpcBackgroundThreadsFactoryOption>()) {
-    opts.set<internal::GrpcBackgroundThreadsFactoryOption>(
+  if (!opts.has<GrpcBackgroundThreadsFactoryOption>()) {
+    opts.set<GrpcBackgroundThreadsFactoryOption>(
         internal::DefaultBackgroundThreadsFactory);
   }
-  if (!opts.has<internal::GrpcNumChannelsOption>()) {
-    opts.set<internal::GrpcNumChannelsOption>(4);
+  if (!opts.has<GrpcNumChannelsOption>()) {
+    opts.set<GrpcNumChannelsOption>(4);
   }
   // Inserts our user-agent string at the front.
-  auto& products = opts.lookup<internal::UserAgentProductsOption>();
+  auto& products = opts.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
 }
 
 }  // namespace
 
-internal::Options DefaultOptions(internal::Options opts) {
+Options DefaultOptions(Options opts) {
   SetBasicDefaults(opts);
 
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
@@ -101,15 +100,15 @@ internal::Options DefaultOptions(internal::Options opts) {
       opts.lookup<spanner_internal::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
-      (std::min)(min_sessions, max_sessions_per_channel *
-                                   opts.get<internal::GrpcNumChannelsOption>());
+      (std::min)(min_sessions,
+                 max_sessions_per_channel * opts.get<GrpcNumChannelsOption>());
 
   return opts;
 }
 
 // Sets the options that have different defaults for admin connections, then
 // uses `DefaultOptions()` to set all the remaining defaults.
-internal::Options DefaultAdminOptions(internal::Options opts) {
+Options DefaultAdminOptions(Options opts) {
   SetBasicDefaults(opts);
 
   if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {

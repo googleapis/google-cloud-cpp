@@ -189,9 +189,9 @@ spanner_proto::CommitResponse MakeCommitResponse(
 
 std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    internal::Options opts = {}) {
+    Options opts = {}) {
   // No actual credential needed for unit tests
-  opts.set<internal::GrpcCredentialOption>(grpc::InsecureChannelCredentials());
+  opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
   opts = spanner_internal::DefaultOptions(std::move(opts));
   return std::make_shared<ConnectionImpl>(std::move(db), std::move(stubs),
                                           std::move(opts));
@@ -204,7 +204,7 @@ std::shared_ptr<ConnectionImpl> MakeConnectionImpl(
 std::shared_ptr<spanner::Connection> MakeLimitedRetryConnection(
     spanner::Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
-  internal::Options opts;
+  Options opts;
   opts.set<SpannerRetryPolicyOption>(
       std::make_shared<spanner::LimitedErrorCountRetryPolicy>(
           /*maximum_failures=*/2));

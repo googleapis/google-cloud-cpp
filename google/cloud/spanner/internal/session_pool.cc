@@ -41,10 +41,10 @@ using google::cloud::internal::Idempotency;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     spanner::Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    google::cloud::CompletionQueue cq, internal::Options opts) {
+    google::cloud::CompletionQueue cq, Options opts) {
   auto const stub_size = static_cast<int>(stubs.size());
-  if (opts.get<internal::GrpcNumChannelsOption>() != stub_size) {
-    opts.set<internal::GrpcNumChannelsOption>(stub_size);
+  if (opts.get<GrpcNumChannelsOption>() != stub_size) {
+    opts.set<GrpcNumChannelsOption>(stub_size);
     opts = DefaultOptions(std::move(opts));
   }
   auto pool = std::shared_ptr<SessionPool>(new SessionPool(
@@ -55,8 +55,7 @@ std::shared_ptr<SessionPool> MakeSessionPool(
 
 SessionPool::SessionPool(spanner::Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
-                         google::cloud::CompletionQueue cq,
-                         internal::Options opts)
+                         google::cloud::CompletionQueue cq, Options opts)
     : db_(std::move(db)),
       cq_(std::move(cq)),
       opts_(std::move(opts)),

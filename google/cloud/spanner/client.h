@@ -691,8 +691,8 @@ inline namespace SPANNER_CLIENT_NS {
  * returned `Connection`. Expected options are any of the types in the
  * following option lists.
  *
- * - `google::cloud::internal::CommonOptionList`
- * - `google::cloud::internal::GrpcOptionList`
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
  * - `google::cloud::spanner_internal::SessionPoolOptionList`
  *
  * @note Unrecognized options will be ignored. To debug issues with options set
@@ -705,8 +705,8 @@ inline namespace SPANNER_CLIENT_NS {
  * @param opts (optional) configure the `Connection` created by
  *     this function.
  */
-std::shared_ptr<spanner::Connection> MakeConnection(
-    spanner::Database const& db, internal::Options opts = {});
+std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
+                                                    Options opts = {});
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner_internal

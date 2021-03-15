@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include <iterator>

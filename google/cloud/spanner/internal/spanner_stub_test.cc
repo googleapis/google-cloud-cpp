@@ -14,8 +14,8 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/defaults.h"
-#include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/grpc_options.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -43,11 +43,10 @@ TEST(SpannerStub, CreateDefaultStub) {
 TEST(SpannerStub, CreateDefaultStubWithLogging) {
   testing_util::ScopedLog log;
 
-  auto opts = internal::Options{}
-                  .set<internal::GrpcCredentialOption>(
-                      grpc::InsecureChannelCredentials())
-                  .set<internal::EndpointOption>("localhost:1")
-                  .set<internal::TracingComponentsOption>({"rpc"});
+  auto opts = Options{}
+                  .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials())
+                  .set<EndpointOption>("localhost:1")
+                  .set<TracingComponentsOption>({"rpc"});
   auto stub =
       CreateDefaultSpannerStub(spanner::Database("foo", "bar", "baz"), opts,
                                /*channel_id=*/0);

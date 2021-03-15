@@ -107,6 +107,7 @@ add_library(
     google_cloud_cpp_common # cmake-format: sort
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     backoff_policy.h
+    common_options.h
     future.h
     future_generic.h
     future_void.h
@@ -127,7 +128,6 @@ add_library(
     internal/backoff_policy.h
     internal/big_endian.h
     internal/build_info.h
-    internal/common_options.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/diagnostics_pop.inc
@@ -148,8 +148,6 @@ add_library(
     internal/getenv.h
     internal/invoke_result.h
     internal/ios_flags_saver.h
-    internal/options.cc
-    internal/options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
@@ -174,6 +172,8 @@ add_library(
     log.cc
     log.h
     optional.h
+    options.cc
+    options.h
     polling_policy.h
     status.cc
     status.h
@@ -243,6 +243,7 @@ if (BUILD_TESTING)
     google_cloud_cpp_common_define_benchmarks()
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
+        common_options_test.cc
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
@@ -252,14 +253,12 @@ if (BUILD_TESTING)
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
-        internal/common_options_test.cc
         internal/compiler_info_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
-        internal/options_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
@@ -272,6 +271,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        options_test.cc
         status_or_test.cc
         status_test.cc
         stream_range_test.cc
@@ -376,6 +376,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         connection_options.h
         grpc_error_delegate.cc
         grpc_error_delegate.h
+        grpc_options.cc
+        grpc_options.h
         grpc_utils/async_operation.h
         grpc_utils/completion_queue.h
         grpc_utils/grpc_error_delegate.h
@@ -392,8 +394,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h
-        internal/grpc_options.cc
-        internal/grpc_options.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/polling_loop.h
@@ -473,12 +473,12 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
+            grpc_options_test.cc
             internal/async_connection_ready_test.cc
             internal/async_read_write_stream_impl_test.cc
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
-            internal/grpc_options_test.cc
             internal/log_wrapper_test.cc
             internal/polling_loop_test.cc
             internal/resumable_streaming_read_rpc_test.cc

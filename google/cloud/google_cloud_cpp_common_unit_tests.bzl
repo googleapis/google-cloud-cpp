@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_common_unit_tests = [
+    "common_options_test.cc",
     "future_generic_test.cc",
     "future_generic_then_test.cc",
     "future_void_test.cc",
@@ -26,14 +27,12 @@ google_cloud_cpp_common_unit_tests = [
     "internal/api_client_header_test.cc",
     "internal/backoff_policy_test.cc",
     "internal/big_endian_test.cc",
-    "internal/common_options_test.cc",
     "internal/compiler_info_test.cc",
     "internal/env_test.cc",
     "internal/filesystem_test.cc",
     "internal/format_time_point_test.cc",
     "internal/future_impl_test.cc",
     "internal/invoke_result_test.cc",
-    "internal/options_test.cc",
     "internal/pagination_range_test.cc",
     "internal/parse_rfc3339_test.cc",
     "internal/random_test.cc",
@@ -46,6 +45,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/utility_test.cc",
     "kms_key_name_test.cc",
     "log_test.cc",
+    "options_test.cc",
     "status_or_test.cc",
     "status_test.cc",
     "stream_range_test.cc",

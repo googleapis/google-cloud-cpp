@@ -47,7 +47,7 @@ class ConnectionImpl : public spanner::Connection {
  public:
   ConnectionImpl(spanner::Database db,
                  std::vector<std::shared_ptr<SpannerStub>> stubs,
-                 internal::Options const& opts);
+                 Options const& opts);
 
   spanner::RowStream Read(ReadParams) override;
   StatusOr<std::vector<spanner::ReadPartition>> PartitionRead(

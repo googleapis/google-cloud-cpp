@@ -276,11 +276,11 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 };
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    internal::Options const& opts) {
+    Options const& opts) {
   auto channel_args = internal::MakeChannelArguments(opts);
-  auto channel = grpc::CreateCustomChannel(
-      opts.get<internal::EndpointOption>(),
-      opts.get<internal::GrpcCredentialOption>(), channel_args);
+  auto channel =
+      grpc::CreateCustomChannel(opts.get<EndpointOption>(),
+                                opts.get<GrpcCredentialOption>(), channel_args);
   auto spanner_grpc_stub = gcsa::DatabaseAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
@@ -291,11 +291,10 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
 
   stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
 
-  if (internal::Contains(opts.get<internal::TracingComponentsOption>(),
-                         "rpc")) {
+  if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DatabaseAdminLogging>(
-        std::move(stub), opts.get<internal::GrpcTracingOptionsOption>());
+        std::move(stub), opts.get<GrpcTracingOptionsOption>());
   }
   return stub;
 }
