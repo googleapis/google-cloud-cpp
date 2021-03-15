@@ -52,9 +52,9 @@ std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
       /*scaling=*/2.0);
   GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   Options opts;
-  opts.set<spanner_internal::SpannerRetryPolicyOption>(retry.clone());
-  opts.set<spanner_internal::SpannerBackoffPolicyOption>(backoff.clone());
-  opts.set<spanner_internal::SpannerPollingPolicyOption>(polling.clone());
+  opts.set<SpannerRetryPolicyOption>(retry.clone());
+  opts.set<SpannerBackoffPolicyOption>(backoff.clone());
+  opts.set<SpannerPollingPolicyOption>(polling.clone());
   return spanner_internal::MakeDatabaseAdminConnectionForTesting(
       std::move(mock), std::move(opts));
 }

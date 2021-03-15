@@ -693,7 +693,8 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
- * - `google::cloud::spanner_internal::SessionPoolOptionList`
+ * - `google::cloud::spanner::SpannerPolicyOptionList`
+ * - `google::cloud::spanner::SessionPoolOptionList`
  *
  * @note Unrecognized options will be ignored. To debug issues with options set
  *     `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment and unexpected

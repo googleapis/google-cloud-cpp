@@ -205,10 +205,10 @@ std::shared_ptr<spanner::Connection> MakeLimitedRetryConnection(
     spanner::Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
   Options opts;
-  opts.set<SpannerRetryPolicyOption>(
+  opts.set<spanner::SpannerRetryPolicyOption>(
       std::make_shared<spanner::LimitedErrorCountRetryPolicy>(
           /*maximum_failures=*/2));
-  opts.set<SpannerBackoffPolicyOption>(
+  opts.set<spanner::SpannerBackoffPolicyOption>(
       std::make_shared<spanner::ExponentialBackoffPolicy>(
           /*initial_delay=*/std::chrono::microseconds(1),
           /*maximum_delay=*/std::chrono::microseconds(1),

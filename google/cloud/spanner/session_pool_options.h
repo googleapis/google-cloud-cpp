@@ -82,28 +82,25 @@ class SessionPoolOptions {
    * the number of sessions (`max_sessions_per_channel` * number of channels).
    */
   SessionPoolOptions& set_min_sessions(int count) {
-    opts_.set<spanner_internal::SessionPoolMinSessionsOption>(count);
+    opts_.set<SessionPoolMinSessionsOption>(count);
     return *this;
   }
 
   /// Return the minimum number of sessions to keep in the pool.
-  int min_sessions() const {
-    return opts_.get<spanner_internal::SessionPoolMinSessionsOption>();
-  }
+  int min_sessions() const { return opts_.get<SessionPoolMinSessionsOption>(); }
 
   /**
    * Set the maximum number of sessions to create on each channel.
    * Values <= 1 are treated as 1.
    */
   SessionPoolOptions& set_max_sessions_per_channel(int count) {
-    opts_.set<spanner_internal::SessionPoolMaxSessionsPerChannelOption>(count);
+    opts_.set<SessionPoolMaxSessionsPerChannelOption>(count);
     return *this;
   }
 
   /// Return the minimum number of sessions to keep in the pool.
   int max_sessions_per_channel() const {
-    return opts_
-        .get<spanner_internal::SessionPoolMaxSessionsPerChannelOption>();
+    return opts_.get<SessionPoolMaxSessionsPerChannelOption>();
   }
 
   /**
@@ -111,19 +108,18 @@ class SessionPoolOptions {
    * Values <= 0 are treated as 0.
    */
   SessionPoolOptions& set_max_idle_sessions(int count) {
-    opts_.set<spanner_internal::SessionPoolMaxIdleSessionsOption>(count);
+    opts_.set<SessionPoolMaxIdleSessionsOption>(count);
     return *this;
   }
 
   /// Return the maximum number of idle sessions to keep in the pool.
   int max_idle_sessions() const {
-    return opts_.get<spanner_internal::SessionPoolMaxIdleSessionsOption>();
+    return opts_.get<SessionPoolMaxIdleSessionsOption>();
   }
 
   /// Set whether to block or fail on pool exhaustion.
   SessionPoolOptions& set_action_on_exhaustion(ActionOnExhaustion action) {
-    opts_.set<spanner_internal::SessionPoolActionOnExhaustionOption>(
-        std::move(action));
+    opts_.set<SessionPoolActionOnExhaustionOption>(std::move(action));
     return *this;
   }
 
@@ -132,7 +128,7 @@ class SessionPoolOptions {
    * session when the pool is exhausted.
    */
   ActionOnExhaustion action_on_exhaustion() const {
-    return opts_.get<spanner_internal::SessionPoolActionOnExhaustionOption>();
+    return opts_.get<SessionPoolActionOnExhaustionOption>();
   }
 
   /*
@@ -142,14 +138,13 @@ class SessionPoolOptions {
    * to be made to refresh the sessions) should suffice.
    */
   SessionPoolOptions& set_keep_alive_interval(std::chrono::seconds interval) {
-    opts_.set<spanner_internal::SessionPoolKeepAliveIntervalOption>(
-        std::move(interval));
+    opts_.set<SessionPoolKeepAliveIntervalOption>(std::move(interval));
     return *this;
   }
 
   /// Return the interval at which we refresh sessions to prevent GC.
   std::chrono::seconds keep_alive_interval() const {
-    return opts_.get<spanner_internal::SessionPoolKeepAliveIntervalOption>();
+    return opts_.get<SessionPoolKeepAliveIntervalOption>();
   }
 
   /**
@@ -159,13 +154,13 @@ class SessionPoolOptions {
    *  * The maximum number of labels is 64.
    */
   SessionPoolOptions& set_labels(std::map<std::string, std::string> labels) {
-    opts_.set<spanner_internal::SessionPoolLabelsOption>(std::move(labels));
+    opts_.set<SessionPoolLabelsOption>(std::move(labels));
     return *this;
   }
 
   /// Return the labels used when creating sessions within the pool.
   std::map<std::string, std::string> const& labels() const {
-    return opts_.get<spanner_internal::SessionPoolLabelsOption>();
+    return opts_.get<SessionPoolLabelsOption>();
   }
 
  private:

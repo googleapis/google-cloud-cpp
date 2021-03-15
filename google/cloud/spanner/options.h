@@ -52,15 +52,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-// TODO(#5738): Move this closer to the option that uses it once those are
-// moved to the "spanner" namespace.
-// What action to take if the session pool is exhausted.
-enum class ActionOnExhaustion { kBlock, kFail };
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
@@ -87,11 +78,13 @@ struct SpannerPollingPolicyOption {
  * List of all "policy" options.
  */
 using SpannerPolicyOptionList =
-    OptionList<SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
+    OptionList<spanner::SpannerRetryPolicyOption, SpannerBackoffPolicyOption,
                SpannerPollingPolicyOption>;
 
 /**
- * The minimum number of sessions to keep in the pool.
+ * Option for `google::cloud::Options` to set the minimum number of sessions to
+ * keep in the pool.
+ *
  * Values <= 0 are treated as 0.
  * This value will effectively be reduced if it exceeds the overall limit on
  * the number of sessions (`max_sessions_per_channel` * number of channels).
@@ -101,7 +94,9 @@ struct SessionPoolMinSessionsOption {
 };
 
 /**
- * The maximum number of sessions to create on each channel.
+ * Option for `google::cloud::Options` to set the maximum number of sessions to
+ * create on each channel.
+ *
  * Values <= 1 are treated as 1.
  */
 struct SessionPoolMaxSessionsPerChannelOption {
@@ -109,24 +104,30 @@ struct SessionPoolMaxSessionsPerChannelOption {
 };
 
 /**
- * The maximum number of sessions to keep in the pool in an idle state.
+ * Option for `google::cloud::Options` to set the maximum number of sessions to
+ * keep in the pool in an idle state.
+ *
  * Values <= 0 are treated as 0.
  */
 struct SessionPoolMaxIdleSessionsOption {
   using Type = int;
 };
 
+/// Action to take when the session pool is exhausted.
+enum class ActionOnExhaustion { kBlock, kFail };
 /**
- * The action to take (kBlock or kFail) when attempting to allocate a session
- * when the pool is exhausted.
+ * Option for `google::cloud::Options` to set the action to take when
+ * attempting to allocate a session when the pool is exhausted.
  */
 struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
 };
 
 /*
- * The interval at which we refresh sessions so they don't get collected by the
- * backend GC. The GC collects objects older than 60 minutes, so any duration
+ * Option for `google::cloud::Options` to set the interval at which we refresh
+ * sessions so they don't get collected by the backend GC.
+ *
+ * The GC collects objects older than 60 minutes, so any duration
  * below that (less some slack to allow the calls to be made to refresh the
  * sessions) should suffice.
  */
@@ -135,7 +136,9 @@ struct SessionPoolKeepAliveIntervalOption {
 };
 
 /**
- * The labels used when creating sessions within the pool.
+ * Option for `google::cloud::Options` to set the labels used when creating
+ * sessions within the pool.
+ *
  *  * Label keys must match `[a-z]([-a-z0-9]{0,61}[a-z0-9])?`.
  *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
  *  * The maximum number of labels is 64.
@@ -153,7 +156,7 @@ using SessionPoolOptionList = OptionList<
     SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
 
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
+}  // namespace spanner
 }  // namespace cloud
 }  // namespace google
 
