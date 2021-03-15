@@ -391,10 +391,10 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   conn = MakeConnection(db, ConnectionOptions(), SessionPoolOptions());
   EXPECT_NE(conn, nullptr);
 
-  conn = spanner_internal::MakeConnection(db);
+  conn = MakeConnection(db);
   EXPECT_NE(conn, nullptr);
 
-  conn = spanner_internal::MakeConnection(db, Options{});
+  conn = MakeConnection(db, Options{});
   EXPECT_NE(conn, nullptr);
 }
 

@@ -640,49 +640,6 @@ class Client {
 /**
  * Returns a Connection object that can be used for interacting with Spanner.
  *
- * The returned connection object should not be used directly, rather it should
- * be given to a `Client` instance, and methods should be invoked on `Client`.
- *
- * @see `Connection`
- *
- * @param db See `Database`.
- * @param connection_options (optional) configure the `Connection` created by
- *     this function.
- * @param session_pool_options (optional) configure the `SessionPool` created
- *     by the `Connection`.
- */
-std::shared_ptr<Connection> MakeConnection(
-    Database const& db,
-    ConnectionOptions const& connection_options = ConnectionOptions(),
-    SessionPoolOptions session_pool_options = SessionPoolOptions());
-
-/**
- * @copydoc MakeConnection(Database const&, ConnectionOptions const&, SessionPoolOptions)
- *
- * @param retry_policy override the default `RetryPolicy`, controls how long
- *     the returned `Connection` object retries requests on transient
- *     failures.
- * @param backoff_policy override the default `BackoffPolicy`, controls how
- *     long the `Connection` object waits before retrying a failed request.
- *
- * @par Example
- * @snippet samples.cc custom-retry-policy
- */
-std::shared_ptr<Connection> MakeConnection(
-    Database const& db, ConnectionOptions const& connection_options,
-    SessionPoolOptions session_pool_options,
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy);
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-
-/**
- * Returns a Connection object that can be used for interacting with Spanner.
- *
  * The returned connection object should not be used directly; instead it
  * should be given to a `Client` instance, and methods should be invoked on
  * `Client`.
@@ -709,8 +666,50 @@ inline namespace SPANNER_CLIENT_NS {
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     Options opts = {});
 
+/**
+ * Returns a Connection object that can be used for interacting with Spanner.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `Client` instance, and methods should be invoked on `Client`.
+ *
+ * @note Prefer using the `MakeConnection()` overload that accepts
+ *     `google::cloud::Options`.
+ *
+ * @see `Connection`
+ *
+ * @param db See `Database`.
+ * @param connection_options (optional) configure the `Connection` created by
+ *     this function.
+ * @param session_pool_options (optional) configure the `SessionPool` created
+ *     by the `Connection`.
+ */
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options = SessionPoolOptions());
+
+/**
+ * @copydoc MakeConnection(Database const&, ConnectionOptions const&, SessionPoolOptions)
+ *
+ * @note Prefer using the `MakeConnection()` overload that accepts
+ *     `google::cloud::Options`.
+ *
+ * @param retry_policy override the default `RetryPolicy`, controls how long
+ *     the returned `Connection` object retries requests on transient
+ *     failures.
+ * @param backoff_policy override the default `BackoffPolicy`, controls how
+ *     long the `Connection` object waits before retrying a failed request.
+ *
+ * @par Example
+ * @snippet samples.cc custom-retry-policy
+ */
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy);
+
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
+}  // namespace spanner
 }  // namespace cloud
 }  // namespace google
 
