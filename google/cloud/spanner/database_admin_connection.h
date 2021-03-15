@@ -318,8 +318,33 @@ class DatabaseAdminConnection {
  * Returns an DatabaseAdminConnection object that can be used for interacting
  * with Cloud Spanner's admin APIs.
  *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `DatabaseAdminClient` instance.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `DatabaseAdminConnection`. Expected options are any of types in the
+ * following option lists.
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ *
+ * @see `DatabaseAdminConnection`
+ *
+ * @param opts (optional) configure the `DatabaseAdminConnection` created by
+ *     this function.
+ */
+std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    Options opts = {});
+
+/**
+ * Returns an DatabaseAdminConnection object that can be used for interacting
+ * with Cloud Spanner's admin APIs.
+ *
  * The returned connection object should not be used directly, rather it should
  * be given to a `DatabaseAdminClient` instance.
+ *
+ * @note Prefer using the `MakeDatabaseAdminConnection()` overload that accepts
+ *     `google::cloud::Options`.
  *
  * @see `DatabaseAdminConnection`
  *
@@ -327,10 +352,13 @@ class DatabaseAdminConnection {
  *     this function.
  */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    ConnectionOptions const& options);
 
 /**
  * @copydoc MakeDatabaseAdminConnection
+ *
+ * @note Prefer using the `MakeDatabaseAdminConnection()` overload that accepts
+ *     `google::cloud::Options`.
  *
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted
@@ -352,28 +380,6 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-
-/**
- * Returns an DatabaseAdminConnection object that can be used for interacting
- * with Cloud Spanner's admin APIs.
- *
- * The returned connection object should not be used directly; instead it
- * should be given to a `DatabaseAdminClient` instance.
- *
- * The optional @p opts argument may be used to configure aspects of the
- * returned `DatabaseAdminConnection`. Expected options are any of types in the
- * following option lists.
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- *
- * @see `DatabaseAdminConnection`
- *
- * @param opts (optional) configure the `DatabaseAdminConnection` created by
- *     this function.
- */
-std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    Options opts = {});
 
 /// Internal-only factory that allows us to inject mock stubs for testing.
 std::shared_ptr<spanner::DatabaseAdminConnection>
