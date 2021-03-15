@@ -54,18 +54,16 @@ TEST(Options, Defaults) {
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
-  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMinSessionsOption>());
-  EXPECT_EQ(
-      100,
-      opts.get<spanner_internal::SessionPoolMaxSessionsPerChannelOption>());
-  EXPECT_EQ(0, opts.get<spanner_internal::SessionPoolMaxIdleSessionsOption>());
+  EXPECT_EQ(0, opts.get<SessionPoolMinSessionsOption>());
+  EXPECT_EQ(100, opts.get<SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_EQ(0, opts.get<SessionPoolMaxIdleSessionsOption>());
   EXPECT_EQ(ActionOnExhaustion::kBlock,
-            opts.get<spanner_internal::SessionPoolActionOnExhaustionOption>());
+            opts.get<SessionPoolActionOnExhaustionOption>());
   EXPECT_EQ(std::chrono::minutes(55),
-            opts.get<spanner_internal::SessionPoolKeepAliveIntervalOption>());
+            opts.get<SessionPoolKeepAliveIntervalOption>());
 
-  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 
@@ -81,19 +79,16 @@ TEST(Options, AdminDefaults) {
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
-  EXPECT_TRUE(opts.has<spanner_internal::SpannerRetryPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::SpannerBackoffPolicyOption>());
-  EXPECT_TRUE(opts.has<spanner_internal::SpannerPollingPolicyOption>());
+  EXPECT_TRUE(opts.has<SpannerRetryPolicyOption>());
+  EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
+  EXPECT_TRUE(opts.has<SpannerPollingPolicyOption>());
 
   // Admin connections don't use a session pool, so these should not be set.
-  EXPECT_FALSE(opts.has<spanner_internal::SessionPoolMinSessionsOption>());
-  EXPECT_FALSE(
-      opts.has<spanner_internal::SessionPoolMaxSessionsPerChannelOption>());
-  EXPECT_FALSE(opts.has<spanner_internal::SessionPoolMaxIdleSessionsOption>());
-  EXPECT_FALSE(
-      opts.has<spanner_internal::SessionPoolActionOnExhaustionOption>());
-  EXPECT_FALSE(
-      opts.has<spanner_internal::SessionPoolKeepAliveIntervalOption>());
+  EXPECT_FALSE(opts.has<SessionPoolMinSessionsOption>());
+  EXPECT_FALSE(opts.has<SessionPoolMaxSessionsPerChannelOption>());
+  EXPECT_FALSE(opts.has<SessionPoolMaxIdleSessionsOption>());
+  EXPECT_FALSE(opts.has<SessionPoolActionOnExhaustionOption>());
+  EXPECT_FALSE(opts.has<SessionPoolKeepAliveIntervalOption>());
   EXPECT_FALSE(opts.has<spanner_internal::SessionPoolClockOption>());
 }
 

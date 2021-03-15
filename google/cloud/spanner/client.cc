@@ -324,41 +324,11 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
   return opts;
 }
 
-std::shared_ptr<Connection> MakeConnection(
-    Database const& db, ConnectionOptions const& connection_options,
-    SessionPoolOptions session_pool_options) {
-  auto opts = internal::MergeOptions(
-      internal::MakeOptions(connection_options),
-      spanner_internal::MakeOptions(std::move(session_pool_options)));
-  return spanner_internal::MakeConnection(db, std::move(opts));
-}
-
-std::shared_ptr<Connection> MakeConnection(
-    Database const& db, ConnectionOptions const& connection_options,
-    SessionPoolOptions session_pool_options,
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
-  auto opts = internal::MergeOptions(
-      internal::MakeOptions(connection_options),
-      spanner_internal::MakeOptions(std::move(session_pool_options)));
-  opts.set<spanner_internal::SpannerRetryPolicyOption>(retry_policy->clone());
-  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
-      backoff_policy->clone());
-  return spanner_internal::MakeConnection(db, std::move(opts));
-}
-
-}  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner
-
-namespace spanner_internal {
-inline namespace SPANNER_CLIENT_NS {
-
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 spanner_internal::SessionPoolOptionList,
-                                 spanner_internal::SpannerPolicyOptionList>(
-      opts, __func__);
+                                 SessionPoolOptionList,
+                                 SpannerPolicyOptionList>(opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<GrpcNumChannelsOption>();
@@ -371,7 +341,29 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
       std::move(db), std::move(stubs), opts);
 }
 
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options) {
+  auto opts = internal::MergeOptions(
+      internal::MakeOptions(connection_options),
+      spanner_internal::MakeOptions(std::move(session_pool_options)));
+  return MakeConnection(db, std::move(opts));
+}
+
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  auto opts = internal::MergeOptions(
+      internal::MakeOptions(connection_options),
+      spanner_internal::MakeOptions(std::move(session_pool_options)));
+  opts.set<SpannerRetryPolicyOption>(retry_policy->clone());
+  opts.set<SpannerBackoffPolicyOption>(backoff_policy->clone());
+  return MakeConnection(db, std::move(opts));
+}
+
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_internal
+}  // namespace spanner
 }  // namespace cloud
 }  // namespace google

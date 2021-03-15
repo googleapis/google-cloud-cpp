@@ -61,43 +61,41 @@ void SetBasicDefaults(Options& opts) {
 Options DefaultOptions(Options opts) {
   SetBasicDefaults(opts);
 
-  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
-    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+  if (!opts.has<spanner::SpannerRetryPolicyOption>()) {
+    opts.set<spanner::SpannerRetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
             std::chrono::minutes(10)));
   }
-  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+  if (!opts.has<spanner::SpannerBackoffPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+    opts.set<spanner::SpannerBackoffPolicyOption>(
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::milliseconds(100), std::chrono::minutes(1),
             kBackoffScaling));
   }
 
   // Sets Spanner-specific options from session_pool_options.h
-  if (!opts.has<spanner_internal::SessionPoolMaxSessionsPerChannelOption>()) {
-    opts.set<spanner_internal::SessionPoolMaxSessionsPerChannelOption>(100);
+  if (!opts.has<spanner::SessionPoolMaxSessionsPerChannelOption>()) {
+    opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(100);
   }
-  if (!opts.has<spanner_internal::SessionPoolActionOnExhaustionOption>()) {
-    opts.set<spanner_internal::SessionPoolActionOnExhaustionOption>(
+  if (!opts.has<spanner::SessionPoolActionOnExhaustionOption>()) {
+    opts.set<spanner::SessionPoolActionOnExhaustionOption>(
         spanner::ActionOnExhaustion::kBlock);
   }
-  if (!opts.has<spanner_internal::SessionPoolKeepAliveIntervalOption>()) {
-    opts.set<spanner_internal::SessionPoolKeepAliveIntervalOption>(
+  if (!opts.has<spanner::SessionPoolKeepAliveIntervalOption>()) {
+    opts.set<spanner::SessionPoolKeepAliveIntervalOption>(
         std::chrono::minutes(55));
   }
   if (!opts.has<SessionPoolClockOption>()) {
     opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
   // Enforces some SessionPool constraints.
-  auto& max_idle =
-      opts.lookup<spanner_internal::SessionPoolMaxIdleSessionsOption>();
+  auto& max_idle = opts.lookup<spanner::SessionPoolMaxIdleSessionsOption>();
   max_idle = (std::max)(max_idle, 0);
   auto& max_sessions_per_channel =
-      opts.lookup<spanner_internal::SessionPoolMaxSessionsPerChannelOption>();
+      opts.lookup<spanner::SessionPoolMaxSessionsPerChannelOption>();
   max_sessions_per_channel = (std::max)(max_sessions_per_channel, 1);
-  auto& min_sessions =
-      opts.lookup<spanner_internal::SessionPoolMinSessionsOption>();
+  auto& min_sessions = opts.lookup<spanner::SessionPoolMinSessionsOption>();
   min_sessions = (std::max)(min_sessions, 0);
   min_sessions =
       (std::min)(min_sessions,
@@ -111,20 +109,20 @@ Options DefaultOptions(Options opts) {
 Options DefaultAdminOptions(Options opts) {
   SetBasicDefaults(opts);
 
-  if (!opts.has<spanner_internal::SpannerRetryPolicyOption>()) {
-    opts.set<spanner_internal::SpannerRetryPolicyOption>(
+  if (!opts.has<spanner::SpannerRetryPolicyOption>()) {
+    opts.set<spanner::SpannerRetryPolicyOption>(
         std::make_shared<google::cloud::spanner::LimitedTimeRetryPolicy>(
             std::chrono::minutes(30)));
   }
-  if (!opts.has<spanner_internal::SpannerBackoffPolicyOption>()) {
+  if (!opts.has<spanner::SpannerBackoffPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerBackoffPolicyOption>(
+    opts.set<spanner::SpannerBackoffPolicyOption>(
         std::make_shared<google::cloud::spanner::ExponentialBackoffPolicy>(
             std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling));
   }
-  if (!opts.has<spanner_internal::SpannerPollingPolicyOption>()) {
+  if (!opts.has<spanner::SpannerPollingPolicyOption>()) {
     auto constexpr kBackoffScaling = 2.0;
-    opts.set<spanner_internal::SpannerPollingPolicyOption>(
+    opts.set<spanner::SpannerPollingPolicyOption>(
         std::make_shared<google::cloud::spanner::GenericPollingPolicy<>>(
             google::cloud::spanner::LimitedTimeRetryPolicy(
                 std::chrono::minutes(30)),

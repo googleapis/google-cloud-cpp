@@ -90,9 +90,10 @@ ConnectionImpl::ConnectionImpl(spanner::Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
                                Options const& opts)
     : db_(std::move(db)),
-      retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
+      retry_policy_prototype_(
+          opts.get<spanner::SpannerRetryPolicyOption>()->clone()),
       backoff_policy_prototype_(
-          opts.get<SpannerBackoffPolicyOption>()->clone()),
+          opts.get<spanner::SpannerBackoffPolicyOption>()->clone()),
       background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     background_threads_->cq(), opts)),

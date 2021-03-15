@@ -59,10 +59,10 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
   std::thread t([&cq] { cq.Run(); });
   auto const db = GetDatabase();
   auto opts = spanner_internal::DefaultOptions();
-  opts.set<SpannerRetryPolicyOption>(
+  opts.set<spanner::SpannerRetryPolicyOption>(
       std::make_shared<spanner::LimitedTimeRetryPolicy>(
           std::chrono::minutes(5)));
-  opts.set<SpannerBackoffPolicyOption>(
+  opts.set<spanner::SpannerBackoffPolicyOption>(
       std::make_shared<spanner::ExponentialBackoffPolicy>(
           std::chrono::seconds(10), std::chrono::minutes(1), 2.0));
 

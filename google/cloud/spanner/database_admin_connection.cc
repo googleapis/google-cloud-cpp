@@ -121,12 +121,11 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       std::shared_ptr<spanner_internal::DatabaseAdminStub> stub,
       Options const& opts)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(
-            opts.get<spanner_internal::SpannerRetryPolicyOption>()->clone()),
+        retry_policy_prototype_(opts.get<SpannerRetryPolicyOption>()->clone()),
         backoff_policy_prototype_(
-            opts.get<spanner_internal::SpannerBackoffPolicyOption>()->clone()),
+            opts.get<SpannerBackoffPolicyOption>()->clone()),
         polling_policy_prototype_(
-            opts.get<spanner_internal::SpannerPollingPolicyOption>()->clone()),
+            opts.get<SpannerPollingPolicyOption>()->clone()),
         background_threads_(opts.get<GrpcBackgroundThreadsFactoryOption>()()) {}
 
   ~DatabaseAdminConnectionImpl() override = default;
@@ -627,10 +626,19 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
+std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    Options opts) {
+  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 SpannerPolicyOptionList>(opts, __func__);
+  opts = spanner_internal::DefaultAdminOptions(std::move(opts));
+  auto stub = spanner_internal::CreateDefaultDatabaseAdminStub(opts);
+  return std::make_shared<spanner::DatabaseAdminConnectionImpl>(
+      std::move(stub), std::move(opts));
+}
+
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options) {
-  return spanner_internal::MakeDatabaseAdminConnection(
-      internal::MakeOptions(options));
+  return MakeDatabaseAdminConnection(internal::MakeOptions(options));
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
@@ -638,12 +646,10 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::unique_ptr<PollingPolicy> polling_policy) {
   auto opts = internal::MakeOptions(options);
-  opts.set<spanner_internal::SpannerRetryPolicyOption>(std::move(retry_policy));
-  opts.set<spanner_internal::SpannerBackoffPolicyOption>(
-      std::move(backoff_policy));
-  opts.set<spanner_internal::SpannerPollingPolicyOption>(
-      std::move(polling_policy));
-  return spanner_internal::MakeDatabaseAdminConnection(std::move(opts));
+  opts.set<SpannerRetryPolicyOption>(std::move(retry_policy));
+  opts.set<SpannerBackoffPolicyOption>(std::move(backoff_policy));
+  opts.set<SpannerPollingPolicyOption>(std::move(polling_policy));
+  return MakeDatabaseAdminConnection(std::move(opts));
 }
 
 }  // namespace SPANNER_CLIENT_NS
@@ -651,17 +657,6 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-
-std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
-    Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 spanner_internal::SpannerPolicyOptionList>(
-      opts, __func__);
-  opts = spanner_internal::DefaultAdminOptions(std::move(opts));
-  auto stub = spanner_internal::CreateDefaultDatabaseAdminStub(opts);
-  return std::make_shared<spanner::DatabaseAdminConnectionImpl>(
-      std::move(stub), std::move(opts));
-}
 
 std::shared_ptr<spanner::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionForTesting(std::shared_ptr<DatabaseAdminStub> stub,
