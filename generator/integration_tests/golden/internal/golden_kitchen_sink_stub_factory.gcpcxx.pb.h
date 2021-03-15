@@ -28,10 +28,8 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-internal::Options ResolveGoldenKitchenSinkOptions(internal::Options options);
-
 std::shared_ptr<GoldenKitchenSinkStub>
-CreateDefaultGoldenKitchenSinkStub(internal::Options options);
+CreateDefaultGoldenKitchenSinkStub(Options const& options);
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal

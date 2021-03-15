@@ -23,7 +23,7 @@
 #include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -45,6 +45,28 @@ using GoldenThingAdminLimitedTimeRetryPolicy = google::cloud::internal::LimitedT
 using GoldenThingAdminLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
+
+struct GoldenThingAdminRetryPolicyOption {
+  using Type = std::shared_ptr<GoldenThingAdminRetryPolicy>;
+};
+
+struct GoldenThingAdminBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+struct GoldenThingAdminPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+struct GoldenThingAdminIdempotencyPolicyOption {
+  using Type = std::shared_ptr<GoldenThingAdminConnectionIdempotencyPolicy>;
+};
+
+using GoldenThingAdminPolicyOptionList =
+    OptionList<GoldenThingAdminRetryPolicyOption, GoldenThingAdminBackoffPolicyOption,
+               GoldenThingAdminIdempotencyPolicyOption>;
+
+Options ResolveGoldenThingAdminOptions(Options options);
 
 class GoldenThingAdminConnection {
  public:
@@ -104,21 +126,11 @@ class GoldenThingAdminConnection {
 };
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    internal::Options const& options = {});
-
-std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    internal::Options const& options,
-    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy);
+    Options options = {});
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
-    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy);
+    Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden

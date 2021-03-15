@@ -22,7 +22,7 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,9 +43,27 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
+struct GoldenKitchenSinkRetryPolicyOption {
+  using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
+};
+
+struct GoldenKitchenSinkBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+struct GoldenKitchenSinkIdempotencyPolicyOption {
+  using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
+};
+
+using GoldenKitchenSinkPolicyOptionList =
+    OptionList<GoldenKitchenSinkRetryPolicyOption, GoldenKitchenSinkBackoffPolicyOption,
+               GoldenKitchenSinkIdempotencyPolicyOption>;
+
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
     ::google::test::admin::database::v1::TailLogEntriesRequest& request);
+
+Options ResolveGoldenKitchenSinkOptions(Options options);
 
 class GoldenKitchenSinkConnection {
  public:
@@ -69,19 +87,11 @@ class GoldenKitchenSinkConnection {
 };
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    internal::Options const& options = {});
-
-std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    internal::Options const& options,
-    std::unique_ptr<GoldenKitchenSinkRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy);
+    Options options = {});
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
-    std::unique_ptr<GoldenKitchenSinkRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy);
+    Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden

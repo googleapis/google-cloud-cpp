@@ -20,13 +20,11 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -34,33 +32,12 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-internal::Options ResolveGoldenKitchenSinkOptions(internal::Options options) {
-  if (!options.has<internal::EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT");
-    options.set<internal::EndpointOption>(env ? *env : "goldenkitchensink.googleapis.com");
-  }
-  if (!options.has<internal::GrpcCredentialOption>()) {
-    options.set<internal::GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<internal::GrpcBackgroundThreadsFactoryOption>()) {
-    options.set<internal::GrpcBackgroundThreadsFactoryOption>(
-        internal::DefaultBackgroundThreadsFactory);
-  }
-  if (!options.has<internal::GrpcNumChannelsOption>()) {
-    options.set<internal::GrpcNumChannelsOption>(4);
-  }
-  auto& products = options.lookup<internal::UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
-  return options;
-}
 
 std::shared_ptr<GoldenKitchenSinkStub>
-CreateDefaultGoldenKitchenSinkStub(internal::Options options) {
-  options = ResolveGoldenKitchenSinkOptions(std::move(options));
+CreateDefaultGoldenKitchenSinkStub(Options const& options) {
   auto channel = grpc::CreateCustomChannel(
-      options.get<internal::EndpointOption>(),
-      options.get<internal::GrpcCredentialOption>(),
+      options.get<EndpointOption>(),
+      options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       ::google::test::admin::database::v1::GoldenKitchenSink::NewStub(channel);
@@ -71,12 +48,12 @@ CreateDefaultGoldenKitchenSinkStub(internal::Options options) {
   stub = std::make_shared<GoldenKitchenSinkMetadata>(std::move(stub));
 
   if (internal::Contains(
-      options.get<internal::TracingComponentsOption>(), "rpc")) {
+      options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GoldenKitchenSinkLogging>(
         std::move(stub),
-        options.get<internal::GrpcTracingOptionsOption>(),
-        options.get<internal::TracingComponentsOption>());
+        options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

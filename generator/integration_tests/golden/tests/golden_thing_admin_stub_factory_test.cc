@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
@@ -26,32 +25,6 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::testing::HasSubstr;
-
-TEST(ResolveGoldenThingAdminOptions, DefaultEndpoint) {
-  internal::Options options;
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("test.googleapis.com",
-            resolved_options.get<internal::EndpointOption>());
-}
-
-TEST(ResolveGoldenThingAdminOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
-                   "foo.googleapis.com");
-  internal::Options options;
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("foo.googleapis.com",
-            resolved_options.get<internal::EndpointOption>());
-}
-
-TEST(ResolveGoldenThingAdminOptions, OptionEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
-                   "foo.googleapis.com");
-  internal::Options options;
-  options.set<internal::EndpointOption>("bar.googleapis.com");
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("bar.googleapis.com",
-            resolved_options.get<internal::EndpointOption>());
-}
 
 class GoldenStubFactoryTest : public ::testing::Test {
  protected:
@@ -69,8 +42,8 @@ TEST_F(GoldenStubFactoryTest, DefaultStubWithoutLogging) {
 }
 
 TEST_F(GoldenStubFactoryTest, DefaultStubWithLogging) {
-  internal::Options options;
-  options.set<internal::TracingComponentsOption>({"rpc"});
+  Options options;
+  options.set<TracingComponentsOption>({"rpc"});
   auto default_stub = CreateDefaultGoldenThingAdminStub(options);
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for gRPC calls")));

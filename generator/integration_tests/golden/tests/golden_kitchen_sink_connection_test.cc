@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -22,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
@@ -33,6 +35,30 @@ using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::Mock;
 using ::testing::Return;
+
+TEST(ResolveGoldenKitchenSinkOptions, DefaultEndpoint) {
+  Options options;
+  auto resolved_options = ResolveGoldenKitchenSinkOptions(options);
+  EXPECT_EQ("goldenkitchensink.googleapis.com",
+            resolved_options.get<EndpointOption>());
+}
+
+TEST(ResolveGoldenKitchenSinkOptions, EnvVarEndpoint) {
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+                   "foo.googleapis.com");
+  Options options;
+  auto resolved_options = ResolveGoldenKitchenSinkOptions(options);
+  EXPECT_EQ("foo.googleapis.com", resolved_options.get<EndpointOption>());
+}
+
+TEST(ResolveGoldenKitchenSinkOptions, OptionEndpoint) {
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+                   "foo.googleapis.com");
+  Options options;
+  options.set<EndpointOption>("bar.googleapis.com");
+  auto resolved_options = ResolveGoldenKitchenSinkOptions(options);
+  EXPECT_EQ("bar.googleapis.com", resolved_options.get<EndpointOption>());
+}
 
 class MockGoldenKitchenSinkStub
     : public google::cloud::golden_internal::GoldenKitchenSinkStub {
@@ -86,9 +112,11 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  return golden::MakeGoldenKitchenSinkConnection(
-      std::move(mock), retry.clone(), backoff.clone(),
-      golden::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy());
+  Options options;
+  options.set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone());
+  options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone());
+  return golden::MakeGoldenKitchenSinkConnection(std::move(mock),
+                                                 std::move(options));
 }
 
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
@@ -309,6 +337,6 @@ TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden_internal
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google
