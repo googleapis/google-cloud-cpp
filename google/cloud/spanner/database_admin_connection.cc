@@ -629,8 +629,7 @@ DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 spanner::SpannerPolicyOptionList>(opts,
-                                                                   __func__);
+                                 SpannerPolicyOptionList>(opts, __func__);
   opts = spanner_internal::DefaultAdminOptions(std::move(opts));
   auto stub = spanner_internal::CreateDefaultDatabaseAdminStub(opts);
   return std::make_shared<spanner::DatabaseAdminConnectionImpl>(

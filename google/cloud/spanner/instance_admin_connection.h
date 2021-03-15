@@ -203,8 +203,34 @@ class InstanceAdminConnection {
  * Returns an InstanceAdminConnection object that can be used for interacting
  * with Cloud Spanner's admin APIs.
  *
+ * The returned connection object should not be used directly; instead it
+ * should be given to a `InstanceAdminClient` instance.
+ *
+ * The optional @p opts argument may be used to configure aspects of the
+ * returned `InstanceAdminConnection`. Expected options are any of the types in
+ * the following option lists.
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::SpannerPolicyOptionList`
+ *
+ * @see `InstanceAdminConnection`
+ *
+ * @param opts (optional) configure the `InstanceAdminConnection` created by
+ *     this function.
+ */
+std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
+    Options opts = {});
+
+/**
+ * Returns an InstanceAdminConnection object that can be used for interacting
+ * with Cloud Spanner's admin APIs.
+ *
  * The returned connection object should not be used directly, rather it should
  * be given to a `InstanceAdminClient` instance.
+ *
+ * @note Prefer using the `MakeInstanceAdminConnection()` overload that accepts
+ *     `google::cloud::Options`.
  *
  * @see `InstanceAdminConnection`
  *
@@ -212,10 +238,13 @@ class InstanceAdminConnection {
  *     this function.
  */
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
-    ConnectionOptions const& options = ConnectionOptions());
+    ConnectionOptions const& options);
 
 /**
  * @copydoc MakeInstanceAdminConnection
+ *
+ * @note Prefer using the `MakeInstanceAdminConnection()` overload that accepts
+ *     `google::cloud::Options`.
  *
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted
@@ -237,28 +266,6 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
 
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
-
-/**
- * Returns an InstanceAdminConnection object that can be used for interacting
- * with Cloud Spanner's admin APIs.
- *
- * The returned connection object should not be used directly; instead it
- * should be given to a `InstanceAdminClient` instance.
- *
- * The optional @p opts argument may be used to configure aspects of the
- * returned `InstanceAdminConnection`. Expected options are any of the types in
- * the following option lists.
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- *
- * @see `InstanceAdminConnection`
- *
- * @param opts (optional) configure the `InstanceAdminConnection` created by
- *     this function.
- */
-std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
-    Options opts = {});
 
 /// Internal-only factory that allows us to inject mock stubs for testing.
 std::shared_ptr<spanner::InstanceAdminConnection>

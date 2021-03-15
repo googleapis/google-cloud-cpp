@@ -327,6 +327,7 @@ class DatabaseAdminConnection {
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::SpannerPolicyOptionList`
  *
  * @see `DatabaseAdminConnection`
  *
