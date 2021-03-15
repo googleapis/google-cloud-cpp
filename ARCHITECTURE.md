@@ -210,7 +210,7 @@ in order to help users diagnose option-related issues in their code.
 [grpc-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/grpc_options.h
 [spanner-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/options.h
 [options-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/options.h
-[spanner-defaults-link: https]://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/internal/defaults.h
+[spanner-defaults-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/internal/defaults.h
 [check-expected-example-link]: https://github.com/googleapis/google-cloud-cpp/blob/6bd0fae69af98939a1ba4fedea7bb20366ad15d9/google/cloud/spanner/client.cc#L358-L360
 
 ## Deviations from the "normal" Architecture
