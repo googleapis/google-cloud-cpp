@@ -166,12 +166,12 @@ their testing.
 
 Many functions need a way for a user to specify optional settings. This was
 traditionally done with distinct classes, like
-`[spanner::ConnectionOptions][spanner-connection-options-link]`,
-`[spanner::QueryOptions][query-options-link]`, or
-`[storage::ClientOptions][client-options-link]`. These classes often had very
+[`spanner::ConnectionOptions`][spanner-connection-options-link],
+[`spanner::QueryOptions`][query-options-link], or
+[`storage::ClientOptions`][client-options-link]. These classes often had very
 different interfaces and semantics (e.g., some included a meaningful default
 value, others didn't). The new, **recommended** way to represent options of all
-varieties is using the `[google::cloud::Options][options-link]` class.
+varieties is using the [`google::cloud::Options`][options-link] class.
 
 Any function that needs to accept optional settings should do so by accepting
 an instance of `google::cloud::Options`, and by **documenting** which option
@@ -186,13 +186,13 @@ Each setting for an `Options` instance is a unique type. To improve
 discoverability of available option types, we should minimize the places where
 users have to look to find them to [common_options.h][common-options-link],
 [grpc_options.h][grpc-options-link], and (preferably) a single
-`<product>/options.h` file (e.g., `[spanner/options.h][spanner-options-link]`).
+`<product>/options.h` file (e.g., [`spanner/options.h`][spanner-options-link]).
 It's OK to introduce additional options files, but keep discoverability in
 mind.
 
 Instances of `Options` do not contain any default values. Defaults should be
 computed by a service-specific function, such as
-`[spanner_internal::DefaultOptions()][spanner-defaults-link]`. This function
+[`spanner_internal::DefaultOptions()`][spanner-defaults-link]. This function
 (or a related one) is used _by our implementations_ to augment the (optionally)
 user-provided `Options` instance with appropriate defaults for the given
 service. Defaults should be computed in the user-facing function that accepted
@@ -200,7 +200,7 @@ the `Options` argument so that all the internal implementation functions lower
 in the stack can simply accept the `Options` by `const&` and can assume it's
 properly populated. The user-facing function that documented to the user which
 options it accepts should also call
-`[google::cloud::internal::CheckExpectedOptions<...>(...)][check-expected-example-link]`
+[`google::cloud::internal::CheckExpectedOptions<...>(...)`][check-expected-example-link]
 in order to help users diagnose option-related issues in their code.
 
 [spanner-connection-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/spanner/connection_options.h
