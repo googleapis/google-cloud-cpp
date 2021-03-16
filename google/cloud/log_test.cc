@@ -78,6 +78,7 @@ class MockLogBackend : public LogBackend {
  public:
   MOCK_METHOD(void, Process, (LogRecord const&), (override));
   MOCK_METHOD(void, ProcessWithOwnership, (LogRecord), (override));
+  MOCK_METHOD(void, Flush, (), (override));
 };
 }  // namespace
 
@@ -129,6 +130,18 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
   sink.AddBackend(be2);
 
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_WARNING, sink) << "test message";
+}
+
+TEST(LogSinkTest, FlushMultipleBackends) {
+  LogSink sink;
+  auto be1 = std::make_shared<MockLogBackend>();
+  auto be2 = std::make_shared<MockLogBackend>();
+  EXPECT_CALL(*be1, Flush).Times(1);
+  EXPECT_CALL(*be2, Flush).Times(1);
+  sink.AddBackend(be1);
+  sink.AddBackend(be2);
+
+  sink.Flush();
 }
 
 TEST(LogSinkTest, LogDefaultInstance) {

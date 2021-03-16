@@ -48,7 +48,6 @@ class ScopedLog {
 
   std::vector<std::string> ExtractLines() { return backend_->ExtractLines(); }
 
- private:
   class Backend : public LogBackend {
    public:
     std::vector<std::string> ExtractLines();
@@ -60,6 +59,7 @@ class ScopedLog {
     std::vector<std::string> log_lines_;
   };
 
+ private:
   std::shared_ptr<Backend> backend_;
   long id_;  // NOLINT(google-runtime-int)
 };

@@ -233,6 +233,7 @@ class LogBackend {
 
   virtual void Process(LogRecord const& log_record) = 0;
   virtual void ProcessWithOwnership(LogRecord log_record) = 0;
+  virtual void Flush() {}
 };
 
 /**
@@ -298,14 +299,22 @@ class LogSink {
     return static_cast<Severity>(minimum_severity_.load());
   }
 
-  // NOLINTNEXTLINE(google-runtime-int)
-  long AddBackend(std::shared_ptr<LogBackend> backend);
-  // NOLINTNEXTLINE(google-runtime-int)
-  void RemoveBackend(long id);
+  // A `long` is perfectly fine here, it is guaranteed to be at least 32-bits
+  // wide, it is unlikely that an application would need more than 2 billion
+  // logging backends during its lifetime. The style guide recommends using
+  // `std::int32_t` for such a use-case, unfortunately I (coryan) picked `long`
+  // before we had tooling to enforce this style guide rule.
+  using BackendId = long;  // NOLINT(google-runtime-int)
+
+  BackendId AddBackend(std::shared_ptr<LogBackend> backend);
+  void RemoveBackend(BackendId id);
   void ClearBackends();
   std::size_t BackendCount() const;
 
   void Log(LogRecord log_record);
+
+  /// Flush all the current backends
+  void Flush();
 
   /**
    * Enable `std::clog` on `LogSink::Instance()`.
@@ -321,18 +330,17 @@ class LogSink {
  private:
   void EnableStdClogImpl();
   void DisableStdClogImpl();
-  // NOLINTNEXTLINE(google-runtime-int)
-  long AddBackendImpl(std::shared_ptr<LogBackend> backend);
-  // NOLINTNEXTLINE(google-runtime-int)
-  void RemoveBackendImpl(long id);
+  BackendId AddBackendImpl(std::shared_ptr<LogBackend> backend);
+  void RemoveBackendImpl(BackendId id);
+
+  std::map<BackendId, std::shared_ptr<LogBackend>> CopyBackends();
 
   std::atomic<bool> empty_;
   std::atomic<int> minimum_severity_;
   std::mutex mutable mu_;
-  long next_id_ = 0;          // NOLINT(google-runtime-int)
-  long clog_backend_id_ = 0;  // NOLINT(google-runtime-int)
-  // NOLINTNEXTLINE(google-runtime-int)
-  std::map<long, std::shared_ptr<LogBackend>> backends_;
+  BackendId next_id_ = 0;
+  BackendId clog_backend_id_ = 0;
+  std::map<BackendId, std::shared_ptr<LogBackend>> backends_;
 };
 
 /**
