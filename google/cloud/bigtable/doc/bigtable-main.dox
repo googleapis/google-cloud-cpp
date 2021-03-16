@@ -55,11 +55,6 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 
 ## API Notes
 
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or they set this
-  environment variable.
-
 - `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
   configure the GCP project.
 
@@ -68,11 +63,18 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls, the library injects an additional Stub decorator that prints each gRPC
-  request and response.
+  request and response. Unless you have configured you own logging backend, you
+  should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on the
+  program's console.
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
   string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
 
 ## Next Steps
 

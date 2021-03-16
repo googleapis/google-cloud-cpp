@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/log_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,8 +25,12 @@ namespace {
 
 using ::google::cloud::internal::CircularBufferBackend;
 using ::google::cloud::testing_util::ScopedLog;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
+
+auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
+auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 
 TEST(CircularBufferBackend, Basic) {
   auto be = std::make_shared<ScopedLog::Backend>();
@@ -58,6 +63,68 @@ TEST(CircularBufferBackend, Basic) {
       Severity::GCP_LS_INFO, "test_function()", "file", 1, {}, "msg 10"});
   buffer.Flush();
   EXPECT_THAT(be->ExtractLines(), ElementsAre("msg 9", "msg 10"));
+}
+
+TEST(DefaultLogBackend, CircularBuffer) {
+  ScopedEnvironment config(kLogConfig, "lastN,5,WARNING");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
+  auto const* buffer = dynamic_cast<CircularBufferBackend*>(be.get());
+  ASSERT_NE(buffer, nullptr);
+  EXPECT_EQ(5, buffer->size());
+  EXPECT_EQ(Severity::GCP_LS_WARNING, buffer->min_flush_severity());
+}
+
+TEST(DefaultLogBackend, CLog) {
+  ScopedEnvironment config(kLogConfig, "clog");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
+  EXPECT_NE(dynamic_cast<StdClogBackend*>(be.get()), nullptr);
+}
+
+TEST(DefaultLogBackend, CLogBackwardsCompatibility) {
+  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, "yes");
+  auto be = DefaultLogBackend();
+  EXPECT_TRUE(!!be);
+  EXPECT_NE(dynamic_cast<StdClogBackend*>(be.get()), nullptr);
+}
+
+TEST(DefaultLogBackend, Unset) {
+  ScopedEnvironment config(kLogConfig, absl::nullopt);
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, UnknownType) {
+  ScopedEnvironment config(kLogConfig, "invalid");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, MissingComponents) {
+  ScopedEnvironment config(kLogConfig, "lastN,1");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, InvalidSize) {
+  ScopedEnvironment config(kLogConfig, "lastN,-10,WARNING");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
+}
+
+TEST(DefaultLogBackend, InvalidSeverity) {
+  ScopedEnvironment config(kLogConfig, "lastN,10,invalid");
+  ScopedEnvironment clog(kEnableClog, absl::nullopt);
+  auto be = DefaultLogBackend();
+  EXPECT_FALSE(!!be);
 }
 
 }  // namespace

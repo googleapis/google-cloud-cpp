@@ -57,14 +57,11 @@ The following are general notes about using the library.
 There are several environment variables that can be set to configure certain
 behaviors in the library.
 
-- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
-  the library always "logs" but the logging infrastructure has no backend to
-  actually print anything until the application sets a backend or they set this
-  environment variable.
-
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
-  request and response.
+  request and response.  Unless you have configured you own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
 
 - `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
   including whether messages will be output on multiple lines, or whether
@@ -75,6 +72,11 @@ behaviors in the library.
 
 - `PUBSUB_EMULATOR_HOST=host:port` tells the library to connect to the
   specified emulator rather than the default endpoint.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
 
 ### Error Handling
 
