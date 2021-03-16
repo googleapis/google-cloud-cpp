@@ -141,11 +141,11 @@ API Notes</h2>
 Environment Variables</h3>
 <p>There are several environment variables that can be set to configure certain behaviors in the library.</p>
 <ul>
-<li><code>GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes</code> turns on logging in the library, basically the library always "logs" but the logging infrastructure has no backend to actually print anything until the application sets a backend or they set this environment variable.</li>
-<li><code>GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc</code> turns on tracing for most gRPC calls. The library injects an additional Stub decorator that prints each gRPC request and response.</li>
+<li><code>GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc</code> turns on tracing for most gRPC calls. The library injects an additional Stub decorator that prints each gRPC request and response. Unless you have configured you own logging backend, you should also set <code>GOOGLE_CLOUD_CPP_ENABLE_CLOG</code> to produce any output on the program's console.</li>
 <li><code>GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...</code> modifies the behavior of gRPC tracing, including whether messages will be output on multiple lines, or whether string/bytes fields will be truncated.</li>
 <li><code>GOOGLE_CLOUD_PROJECT=...</code> is used in examples and integration tests to configure the GCP project.</li>
 <li><code>PUBSUB_EMULATOR_HOST=host:port</code> tells the library to connect to the specified emulator rather than the default endpoint.</li>
+<li><code>GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes</code> turns on logging in the library, basically the library always "logs" but the logging infrastructure has no backend to actually print anything until the application sets a backend or they set this environment variable.</li>
 </ul>
 <h3><a class="anchor" id="autotoc_md7"></a>
 Error Handling</h3>
