@@ -458,7 +458,14 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
 TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
   auto table = GetTable();
 
-  // Create kBatchSize * kBatchCount rows.
+  // Create kBatchSize * kBatchCount rows. Use a special client with tracing
+  // disabled because it simply generates too much data.
+  auto bulk_table =
+      bigtable::Table(bigtable::CreateDefaultDataClient(
+                          testing::TableTestEnvironment::project_id(),
+                          testing::TableTestEnvironment::instance_id(),
+                          ClientOptions().disable_tracing("rpc")),
+                      testing::TableTestEnvironment::table_id());
   int constexpr kBatchCount = 10;
   int constexpr kBatchSize = 5000;
   int constexpr kColumnCount = 10;
@@ -481,7 +488,7 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
       bulk.emplace_back(std::move(mutation));
       ++rowid;
     }
-    auto failures = table.BulkApply(std::move(bulk));
+    auto failures = bulk_table.BulkApply(std::move(bulk));
     ASSERT_THAT(failures, ::testing::IsEmpty());
   }
   auto samples = table.SampleRows();
