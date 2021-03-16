@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classgoogle_1_1cloud_1_1v1_1_1LogSink-members.html">List of all members</a>  </div>
@@ -81,6 +82,11 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="log_8h_source.html">google/cloud/log.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:af31722884af22acedd4036305c71a787"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#af31722884af22acedd4036305c71a787">BackendId</a> = long</td></tr>
+<tr class="separator:af31722884af22acedd4036305c71a787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a732506f5ba04acb9d4b5b8d421ff3a18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a732506f5ba04acb9d4b5b8d421ff3a18">LogSink</a> ()</td></tr>
@@ -95,16 +101,19 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a62d36669ac0b555e65ad0e202d5fedc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a147cb946bc610c702d1f17ec83efd030"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#ac4c72b23eec2946858a43c41386b1dd4">Severity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a147cb946bc610c702d1f17ec83efd030">minimum_severity</a> () const</td></tr>
 <tr class="separator:a147cb946bc610c702d1f17ec83efd030"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a166d3816617ada53aa212b12d09ad7e9"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a166d3816617ada53aa212b12d09ad7e9">AddBackend</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogBackend.html">LogBackend</a> &gt; backend)</td></tr>
+<tr class="memitem:a166d3816617ada53aa212b12d09ad7e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#af31722884af22acedd4036305c71a787">BackendId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a166d3816617ada53aa212b12d09ad7e9">AddBackend</a> (std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogBackend.html">LogBackend</a> &gt; backend)</td></tr>
 <tr class="separator:a166d3816617ada53aa212b12d09ad7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a715301591f0514604df49811751c7e7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a715301591f0514604df49811751c7e7a">RemoveBackend</a> (long id)</td></tr>
-<tr class="separator:a715301591f0514604df49811751c7e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06648ef35cb5c00e19be1f7f56e6e885"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a06648ef35cb5c00e19be1f7f56e6e885">RemoveBackend</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#af31722884af22acedd4036305c71a787">BackendId</a> id)</td></tr>
+<tr class="separator:a06648ef35cb5c00e19be1f7f56e6e885"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a206cddeac7e728bd0248629fd595dd81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a206cddeac7e728bd0248629fd595dd81">ClearBackends</a> ()</td></tr>
 <tr class="separator:a206cddeac7e728bd0248629fd595dd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bdc998062721aece514382850a8610a"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a6bdc998062721aece514382850a8610a">BackendCount</a> () const</td></tr>
 <tr class="separator:a6bdc998062721aece514382850a8610a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37dba0d38faf5d103859d8bc73c61312"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a37dba0d38faf5d103859d8bc73c61312">Log</a> (<a class="el" href="structgoogle_1_1cloud_1_1v1_1_1LogRecord.html">LogRecord</a> log_record)</td></tr>
 <tr class="separator:a37dba0d38faf5d103859d8bc73c61312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace175063b28c6ce8917c1290ee0a6800"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#ace175063b28c6ce8917c1290ee0a6800">Flush</a> ()</td></tr>
+<tr class="memdesc:ace175063b28c6ce8917c1290ee0a6800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush all the current backends.  <a href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#ace175063b28c6ce8917c1290ee0a6800">More...</a><br /></td></tr>
+<tr class="separator:ace175063b28c6ce8917c1290ee0a6800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -124,8 +133,25 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A sink to receive log records. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00241">241</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00242">242</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="af31722884af22acedd4036305c71a787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af31722884af22acedd4036305c71a787">&#9670;&nbsp;</a></span>BackendId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#af31722884af22acedd4036305c71a787">google::cloud::v1::LogSink::BackendId</a> =  long</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00307">307</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a732506f5ba04acb9d4b5b8d421ff3a18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a732506f5ba04acb9d4b5b8d421ff3a18">&#9670;&nbsp;</a></span>LogSink()</h2>
 
@@ -141,7 +167,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00072">72</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00073">73</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -162,7 +188,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00088">88</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00089">89</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -181,7 +207,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00106">106</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00107">107</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -200,7 +226,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00099">99</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00100">100</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -230,7 +256,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Return true if the severity is enabled at compile time. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00246">246</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00247">247</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -259,7 +285,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Disable <code>std::clog</code> on <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a1179efbf84e0af185bfb7817da38af81" title="Return the singleton instance for this application.">LogSink::Instance()</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00319">319</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00328">328</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +316,7 @@ Static Public Member Functions</h2></td></tr>
 <p>We want to avoid synchronization overhead when checking if a log message is enabled. Most of the time, most messages will be disabled, so incurring the locking overhead on each message would be too expensive and would discourage developers from creating logs. Furthermore, missing a few messages while the change of state "propagates" to other threads does not affect the correctness of the program.</p>
 <p>Note that <code>memory_order_relaxed</code> does not provide a compiler barrier either, so in theory stores into the atomic could be reordered by the optimizer. We have no reason to worry about that because all the writes are done inside a critical section protected by a mutex. The compiler cannot (or should not) reorder operations around those. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00271">271</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00272">272</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -320,7 +346,28 @@ Static Public Member Functions</h2></td></tr>
 <p>Enable <code>std::clog</code> on <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#a1179efbf84e0af185bfb7817da38af81" title="Return the singleton instance for this application.">LogSink::Instance()</a></code>. </p>
 <p>This is also enabled if the "GOOGLE_CLOUD_CPP_ENABLE_CLOG" environment variable is set. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00316">316</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00325">325</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+
+</div>
+</div>
+<a id="ace175063b28c6ce8917c1290ee0a6800"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace175063b28c6ce8917c1290ee0a6800">&#9670;&nbsp;</a></span>Flush()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void google::cloud::v1::LogSink::Flush </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Flush all the current backends. </p>
+
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00128">128</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -349,7 +396,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Return the singleton instance for this application. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00076">76</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00077">77</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -381,7 +428,7 @@ Static Public Member Functions</h2></td></tr>
 <p>We want to avoid synchronization overhead when checking if a log message is enabled. Most of the time, most messages will be disabled, so incurring the locking overhead on each message would be too expensive and would discourage developers from creating logs. Furthermore, missing a few messages while the change of state "propagates" to other threads does not affect the correctness of the program.</p>
 <p>Note that <code>memory_order_relaxed</code> does not provide a compiler barrier either, so in theory stores into the atomic could be reordered by the optimizer. We have no reason to worry about that because all the writes are done inside a critical section protected by a mutex. The compiler cannot (or should not) reorder operations around those. </p>
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00289">289</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00290">290</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
@@ -401,7 +448,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00111">111</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00112">112</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -428,12 +475,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00297">297</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00298">298</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
-<a id="a715301591f0514604df49811751c7e7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a715301591f0514604df49811751c7e7a">&#9670;&nbsp;</a></span>RemoveBackend()</h2>
+<a id="a06648ef35cb5c00e19be1f7f56e6e885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06648ef35cb5c00e19be1f7f56e6e885">&#9670;&nbsp;</a></span>RemoveBackend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,14 +488,14 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void google::cloud::v1::LogSink::RemoveBackend </td>
           <td>(</td>
-          <td class="paramtype">long&#160;</td>
+          <td class="paramtype"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1LogSink.html#af31722884af22acedd4036305c71a787">BackendId</a>&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00094">94</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8cc_source.html#l00095">95</a> of file <a class="el" href="log_8cc_source.html">log.cc</a>.</p>
 
 </div>
 </div>
@@ -476,7 +523,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00294">294</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="log_8h_source.html#l00295">295</a> of file <a class="el" href="log_8h_source.html">log.h</a>.</p>
 
 </div>
 </div>
