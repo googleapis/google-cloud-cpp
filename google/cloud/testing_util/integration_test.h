@@ -33,4 +33,4 @@ class IntegrationTest : public ::testing::Test {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_LOG_TEST_FAILURES_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_INTEGRATION_TEST_H
