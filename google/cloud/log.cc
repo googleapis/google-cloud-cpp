@@ -14,6 +14,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/log_impl.h"
 #include "absl/time/time.h"
 #include <array>
 #include <thread>
@@ -109,16 +110,8 @@ std::size_t LogSink::BackendCount() const {
 }
 
 void LogSink::Log(LogRecord log_record) {
-  // Make a copy of the backends because calling user-defined functions while
-  // holding a lock is a bad idea: the application may change the backends while
-  // we are holding this lock, and soon deadlock occurs.
-  auto copy = [this]() {
-    std::unique_lock<std::mutex> lk(mu_);
-    return backends_;
-  }();
-  if (copy.empty()) {
-    return;
-  }
+  auto copy = CopyBackends();
+  if (copy.empty()) return;
   // In general, we just give each backend a const-reference and the backends
   // must make a copy if needed.  But if there is only one backend we can give
   // the backend an opportunity to optimize things by transferring ownership of
@@ -132,31 +125,18 @@ void LogSink::Log(LogRecord log_record) {
   }
 }
 
-namespace {
-class StdClogBackend : public LogBackend {
- public:
-  StdClogBackend() = default;
-
-  void Process(LogRecord const& lr) override {
-    std::lock_guard<std::mutex> lk(mu_);
-    std::clog << lr << "\n";
-    if (lr.severity >= Severity::GCP_LS_WARNING) {
-      std::clog << std::flush;
-    }
-  }
-  void ProcessWithOwnership(LogRecord lr) override { Process(lr); }
-
- private:
-  std::mutex mu_;
-};
-}  // namespace
+void LogSink::Flush() {
+  auto copy = CopyBackends();
+  for (auto& kv : copy) kv.second->Flush();
+}
 
 void LogSink::EnableStdClogImpl() {
   std::unique_lock<std::mutex> lk(mu_);
   if (clog_backend_id_ != 0) {
     return;
   }
-  clog_backend_id_ = AddBackendImpl(std::make_shared<StdClogBackend>());
+  clog_backend_id_ =
+      AddBackendImpl(std::make_shared<internal::StdClogBackend>());
 }
 
 void LogSink::DisableStdClogImpl() {
@@ -168,22 +148,30 @@ void LogSink::DisableStdClogImpl() {
   clog_backend_id_ = 0;
 }
 
-// NOLINTNEXTLINE(google-runtime-int)
-long LogSink::AddBackendImpl(std::shared_ptr<LogBackend> backend) {
+LogSink::BackendId LogSink::AddBackendImpl(
+    std::shared_ptr<LogBackend> backend) {
   auto const id = ++next_id_;
   backends_.emplace(id, std::move(backend));
   empty_.store(backends_.empty());
   return id;
 }
 
-// NOLINTNEXTLINE(google-runtime-int)
-void LogSink::RemoveBackendImpl(long id) {
+void LogSink::RemoveBackendImpl(BackendId id) {
   auto it = backends_.find(id);
   if (backends_.end() == it) {
     return;
   }
   backends_.erase(it);
   empty_.store(backends_.empty());
+}
+
+// Make a copy of the backends because calling user-defined functions while
+// holding a lock is a bad idea: the application may change the backends while
+// we are holding this lock, and soon deadlock occurs.
+std::map<LogSink::BackendId, std::shared_ptr<LogBackend>>
+LogSink::CopyBackends() {
+  std::lock_guard<std::mutex> lk(mu_);
+  return backends_;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
