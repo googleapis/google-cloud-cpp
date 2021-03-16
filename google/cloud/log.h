@@ -330,6 +330,7 @@ class LogSink {
  private:
   void EnableStdClogImpl();
   void DisableStdClogImpl();
+  void SetDefaultBackend(std::shared_ptr<LogBackend> backend);
   BackendId AddBackendImpl(std::shared_ptr<LogBackend> backend);
   void RemoveBackendImpl(BackendId id);
 
@@ -339,7 +340,7 @@ class LogSink {
   std::atomic<int> minimum_severity_;
   std::mutex mutable mu_;
   BackendId next_id_ = 0;
-  BackendId clog_backend_id_ = 0;
+  BackendId default_backend_id_ = 0;
   std::map<BackendId, std::shared_ptr<LogBackend>> backends_;
 };
 
@@ -435,6 +436,9 @@ class Logger<false> {
   //@}
 };
 
+namespace internal {
+std::shared_ptr<LogBackend> DefaultLogBackend();
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
