@@ -23,7 +23,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::CircularBufferBackend;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::ScopedLog;
 using ::testing::ElementsAre;

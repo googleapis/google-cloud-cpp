@@ -54,6 +54,8 @@ done
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
+  --test_env="GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING" \
+  --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/pubsub/...:all" \
   "${excluded_targets[@]}"

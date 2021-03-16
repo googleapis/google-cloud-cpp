@@ -37,6 +37,9 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
+export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
+export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account-hmac@example.com"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account-sign@example.com"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
