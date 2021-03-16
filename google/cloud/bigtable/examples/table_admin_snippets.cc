@@ -275,7 +275,8 @@ void CreateNestedFamily(google::cloud::bigtable::TableAdmin const& admin,
 
 void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
                        std::vector<std::string> const& argv) {
-  // [START bigtable_get_family_metadata] [START bigtable_get_family]
+  // [START bigtable_get_family_metadata]
+  // [START bigtable_get_family]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string const& table_id,
@@ -292,7 +293,8 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
     std::cout << "Column family metadata for <" << family_name << "> is "
               << pos->second.DebugString() << "\n";
   }
-  // [END bigtable_get_family_metadata] [END bigtable_get_family]
+  // [END bigtable_get_family_metadata]
+  // [END bigtable_get_family]
   (std::move(admin), argv.at(0), argv.at(1));
 }
 
@@ -415,14 +417,16 @@ void UpdateGcRule(google::cloud::bigtable::TableAdmin const& admin,
 void DropAllRows(google::cloud::bigtable::TableAdmin const& admin,
                  std::vector<std::string> const& argv) {
   //! [drop all rows]
-  // [START bigtable_truncate_table] [START bigtable_delete_rows]
+  // [START bigtable_truncate_table]
+  // [START bigtable_delete_rows]
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string const& table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows successfully deleted\n";
   }
-  // [END bigtable_truncate_table] [END bigtable_delete_rows]
+  // [END bigtable_truncate_table]
+  // [END bigtable_delete_rows]
   //! [drop all rows]
   (std::move(admin), argv.at(0));
 }
