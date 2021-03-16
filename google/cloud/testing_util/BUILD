@@ -56,7 +56,7 @@ cc_library(
             "GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD",
         ],
         (
-            "@bazel_tools//src/conditions:darwin_x86_64",
+            "@bazel_tools//src/conditions:darwin",
             "@bazel_tools//src/conditions:freebsd",
             "@bazel_tools//src/conditions:openbsd",
         ): [
