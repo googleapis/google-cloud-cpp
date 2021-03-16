@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Spanner C++ Client: google::cloud::spanner_internal::v1::SessionPoolLabelsOption Struct Reference</title>
+<title>Google Cloud Spanner C++ Client: google::cloud::spanner::v1::SpannerRetryPolicyOption Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,51 +63,46 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacegoogle.html">google</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud.html">cloud</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal.html">spanner_internal</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html">v1</a></li><li class="navelem"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html">SessionPoolLabelsOption</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacegoogle.html">google</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud.html">cloud</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a></li><li class="navelem"><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html">v1</a></li><li class="navelem"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1SpannerRetryPolicyOption.html">SpannerRetryPolicyOption</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
-<a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption-members.html">List of all members</a>  </div>
+<a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1SpannerRetryPolicyOption-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">google::cloud::spanner_internal::v1::SessionPoolLabelsOption Struct Reference</div>  </div>
+<div class="title">google::cloud::spanner::v1::SpannerRetryPolicyOption Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The labels used when creating sessions within the pool.  
- <a href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html#details">More...</a></p>
+<p>Option for <code>google::cloud::Options</code> to set a <code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01" title="The base class for retry policies.">spanner::RetryPolicy</a></code>.  
+ <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1SpannerRetryPolicyOption.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="options_8h_source.html">google/cloud/spanner/options.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a464abe5d6c419961b06e5643c4462e4b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html#a464abe5d6c419961b06e5643c4462e4b">Type</a> = std::map&lt; std::string, std::string &gt;</td></tr>
-<tr class="separator:a464abe5d6c419961b06e5643c4462e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6312ae32c2f5b9871402db6acc2929b1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1SpannerRetryPolicyOption.html#a6312ae32c2f5b9871402db6acc2929b1">Type</a> = std::shared_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a> &gt;</td></tr>
+<tr class="separator:a6312ae32c2f5b9871402db6acc2929b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The labels used when creating sessions within the pool. </p>
-<ul>
-<li>Label keys must match <code>[a-z]([-a-z0-9]{0,61}[a-z0-9])?</code>.</li>
-<li>Label values must match <code>([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?</code>.</li>
-<li>The maximum number of labels is 64. </li>
-</ul>
+<div class="textblock"><p>Option for <code>google::cloud::Options</code> to set a <code><a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01" title="The base class for retry policies.">spanner::RetryPolicy</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00143">143</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00059">59</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a464abe5d6c419961b06e5643c4462e4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a464abe5d6c419961b06e5643c4462e4b">&#9670;&nbsp;</a></span>Type</h2>
+<a id="a6312ae32c2f5b9871402db6acc2929b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6312ae32c2f5b9871402db6acc2929b1">&#9670;&nbsp;</a></span>Type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structgoogle_1_1cloud_1_1spanner__internal_1_1v1_1_1SessionPoolLabelsOption.html#a464abe5d6c419961b06e5643c4462e4b">google::cloud::spanner_internal::v1::SessionPoolLabelsOption::Type</a> =  std::map&lt;std::string, std::string&gt;</td>
+          <td class="memname">using <a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1SpannerRetryPolicyOption.html#a6312ae32c2f5b9871402db6acc2929b1">google::cloud::spanner::v1::SpannerRetryPolicyOption::Type</a> =  std::shared_ptr&lt;<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a9bc9b97837a8c11a969be3b6d6d8ae01">spanner::RetryPolicy</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00144">144</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="options_8h_source.html#l00060">60</a> of file <a class="el" href="options_8h_source.html">options.h</a>.</p>
 
 </div>
 </div>
