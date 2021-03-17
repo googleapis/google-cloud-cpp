@@ -22,6 +22,7 @@ namespace testing_util {
 
 void IntegrationTest::TearDown() {
   if (HasFailure()) ::google::cloud::LogSink::Instance().Flush();
+  ::testing::Test::TearDown();
 }
 
 }  // namespace testing_util
