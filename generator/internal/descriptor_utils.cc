@@ -22,7 +22,6 @@
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
-#include "generator/internal/connection_options_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"

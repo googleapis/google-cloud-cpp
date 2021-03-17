@@ -35,8 +35,6 @@ add_library(
     internal/codegen_utils.h
     internal/connection_generator.cc
     internal/connection_generator.h
-    internal/connection_options_generator.cc
-    internal/connection_options_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
     internal/generator_interface.h
