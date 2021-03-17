@@ -16,8 +16,14 @@
 
 set -eu
 
-source "$(dirname "$0")/lib/init.sh"
-source module /ci/etc/install-config.sh
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  PROJECT_ROOT="$(
+    cd "$(dirname "$0")/.."
+    pwd
+  )"
+  readonly PROJECT_ROOT
+fi
+source "${PROJECT_ROOT}/ci/etc/install-config.sh"
 
 readonly KERNEL="$(uname -s | tr '[:upper:]' '[:lower:]')"
 MACHINE="$(uname -m)"
