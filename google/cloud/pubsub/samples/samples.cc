@@ -1006,7 +1006,7 @@ google::cloud::future<google::cloud::Status> SubscribeAvroRecords(
   using google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
-        [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Message contents: " << m.data() << "\n";
           std::move(h).ack();
         });
@@ -1058,7 +1058,7 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
   using google::cloud::StatusOr;
   return [](pubsub::Subscriber subscriber) {
     auto session = subscriber.Subscribe(
-        [&](pubsub::Message const& m, pubsub::AckHandler h) {
+        [](pubsub::Message const& m, pubsub::AckHandler h) {
           google::cloud::pubsub::samples::State state;
           state.ParseFromString(m.data());
           std::cout << "Message contents: " << state.DebugString() << "\n";
@@ -1769,6 +1769,16 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void WaitForSession(google::cloud::future<google::cloud::Status> session) {
+  std::cout << "\nWaiting for session... " << std::flush;
+  auto result = session.wait_for(std::chrono::minutes(1));
+  if (result == std::future_status::timeout) {
+    std::cout << "TIMEOUT" << std::endl;
+    throw std::runtime_error("session timeout");
+  }
+  std::cout << "DONE (" << session.get() << ")" << std::endl;
+}
+
 void AutoRunAvro(
     std::string const& project_id,
     google::cloud::internal::DefaultPRNG& generator,
@@ -1816,7 +1826,7 @@ void AutoRunAvro(
   PublishAvroRecords(publisher, {});
 
   session.cancel();
-  session.get();
+  WaitForSession(std::move(session));
 
   std::cout << "\nRunning DeleteSubscription() sample [avro]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
@@ -1885,7 +1895,7 @@ void AutoRunProtobuf(
   PublishProtobufRecords(publisher, {});
 
   session.cancel();
-  session.get();
+  WaitForSession(std::move(session));
 
   std::cout << "\nRunning DeleteSubscription sample [proto]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});

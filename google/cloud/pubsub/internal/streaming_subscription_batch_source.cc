@@ -141,15 +141,21 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
     OnInitialError(std::move(rs));
     return;
   }
-  shutdown_manager_->StartOperation(__func__, "InitialRead", [&] {
-    auto weak = WeakFromThis();
-    stream_->Read().then(
-        [weak,
-         rs](future<absl::optional<google::pubsub::v1::StreamingPullResponse>>
-                 f) {
-          if (auto s = weak.lock()) s->OnInitialRead(std::move(rs), f.get());
-        });
-  });
+  auto scheduled =
+      shutdown_manager_->StartOperation(__func__, "InitialRead", [&] {
+        auto weak = WeakFromThis();
+        stream_->Read().then(
+            [weak,
+             rs](future<
+                 absl::optional<google::pubsub::v1::StreamingPullResponse>>
+                     f) {
+              if (auto s = weak.lock())
+                s->OnInitialRead(std::move(rs), f.get());
+            });
+      });
+  // This is very rare, but it can happen if the session enters shutdown while
+  // the initial setup is in progress.
+  if (!scheduled) OnInitialError(std::move(rs));
 }
 
 void StreamingSubscriptionBatchSource::OnInitialRead(
