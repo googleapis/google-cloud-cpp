@@ -43,10 +43,6 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
-std::unique_ptr<GoldenKitchenSinkRetryPolicy> DefaultGoldenKitchenSinkRetryPolicy();
-
-std::unique_ptr<BackoffPolicy> DefaultGoldenKitchenSinkBackoffPolicy();
-
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
     ::google::test::admin::database::v1::TailLogEntriesRequest& request);

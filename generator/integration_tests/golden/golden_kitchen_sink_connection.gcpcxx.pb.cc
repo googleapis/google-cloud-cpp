@@ -74,17 +74,6 @@ StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> GoldenK
       );
 }
 
-std::unique_ptr<GoldenKitchenSinkRetryPolicy> DefaultGoldenKitchenSinkRetryPolicy() {
-  return GoldenKitchenSinkLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
-}
-
-std::unique_ptr<BackoffPolicy> DefaultGoldenKitchenSinkBackoffPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                  std::chrono::minutes(5), kBackoffScaling)
-      .clone();
-}
-
 namespace {
 class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
  public:

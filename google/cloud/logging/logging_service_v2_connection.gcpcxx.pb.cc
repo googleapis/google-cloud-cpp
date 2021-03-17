@@ -85,19 +85,6 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
       });
 }
 
-std::unique_ptr<LoggingServiceV2RetryPolicy>
-DefaultLoggingServiceV2RetryPolicy() {
-  return LoggingServiceV2LimitedTimeRetryPolicy(std::chrono::minutes(30))
-      .clone();
-}
-
-std::unique_ptr<BackoffPolicy> DefaultLoggingServiceV2BackoffPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                  std::chrono::minutes(5), kBackoffScaling)
-      .clone();
-}
-
 namespace {
 class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
  public:

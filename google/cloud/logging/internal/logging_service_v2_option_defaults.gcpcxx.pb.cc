@@ -31,6 +31,10 @@ namespace cloud {
 namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
 Options LoggingServiceV2DefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT");
@@ -51,12 +55,16 @@ Options LoggingServiceV2DefaultOptions(Options options) {
 
   if (!options.has<logging::LoggingServiceV2RetryPolicyOption>()) {
     options.set<logging::LoggingServiceV2RetryPolicyOption>(
-        logging::DefaultLoggingServiceV2RetryPolicy());
+        logging::LoggingServiceV2LimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
+            .clone());
   }
 
   if (!options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
     options.set<logging::LoggingServiceV2BackoffPolicyOption>(
-        logging::DefaultLoggingServiceV2BackoffPolicy());
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
 
   if (!options

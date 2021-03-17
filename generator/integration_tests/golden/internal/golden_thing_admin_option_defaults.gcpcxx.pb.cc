@@ -31,6 +31,10 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
 Options GoldenThingAdminDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT");
@@ -51,17 +55,24 @@ Options GoldenThingAdminDefaultOptions(Options options) {
 
   if (!options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
     options.set<golden::GoldenThingAdminRetryPolicyOption>(
-        golden::DefaultGoldenThingAdminRetryPolicy());
+        golden::GoldenThingAdminLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
 
   if (!options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
     options.set<golden::GoldenThingAdminBackoffPolicyOption>(
-        golden::DefaultGoldenThingAdminBackoffPolicy());
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling).clone());
   }
 
   if (!options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
     options.set<golden::GoldenThingAdminPollingPolicyOption>(
-        golden::DefaultGoldenThingAdminPollingPolicy());
+        GenericPollingPolicy<golden::GoldenThingAdminLimitedTimeRetryPolicy,
+        ExponentialBackoffPolicy>(
+            golden::GoldenThingAdminLimitedTimeRetryPolicy(
+                std::chrono::minutes(30)),
+                ExponentialBackoffPolicy(std::chrono::seconds(10),
+                    std::chrono::minutes(5), kBackoffScaling)).clone());
   }
 
   if (!options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {

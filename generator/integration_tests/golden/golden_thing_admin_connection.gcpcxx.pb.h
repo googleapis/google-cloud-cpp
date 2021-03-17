@@ -46,12 +46,6 @@ using GoldenThingAdminLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
 
-std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultGoldenThingAdminRetryPolicy();
-
-std::unique_ptr<BackoffPolicy> DefaultGoldenThingAdminBackoffPolicy();
-
-std::unique_ptr<PollingPolicy> DefaultGoldenThingAdminPollingPolicy();
-
 class GoldenThingAdminConnection {
  public:
   virtual ~GoldenThingAdminConnection() = 0;

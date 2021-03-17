@@ -44,10 +44,6 @@ using BigQueryReadLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
 
-std::unique_ptr<BigQueryReadRetryPolicy> DefaultBigQueryReadRetryPolicy();
-
-std::unique_ptr<BackoffPolicy> DefaultBigQueryReadBackoffPolicy();
-
 void BigQueryReadReadRowsStreamingUpdater(
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
     ::google::cloud::bigquery::storage::v1::ReadRowsRequest& request);

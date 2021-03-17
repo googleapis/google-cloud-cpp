@@ -83,6 +83,13 @@ Status OptionDefaultsGenerator::GenerateCc() {
   if (!result.ok()) return result;
 
   CcPrint(  // clang-format off
+    "namespace {\n"
+    "auto constexpr kBackoffScaling = 2.0;\n"
+    "}  // namespace\n\n"
+  );
+  //  clang-format on
+
+  CcPrint(  // clang-format off
   {{"Options $service_name$DefaultOptions(Options options) {\n"
     "  if (!options.has<EndpointOption>()) {\n"
     "    auto env = internal::GetEnv(\"$service_endpoint_env_var$\");\n"
@@ -103,18 +110,25 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "\n"
     "  if (!options.has<$product_namespace$::$retry_policy_name$Option>()) {\n"
     "    options.set<$product_namespace$::$retry_policy_name$Option>(\n"
-    "        $product_namespace$::Default$retry_policy_name$());\n"
+    "        $product_namespace$::$limited_time_retry_policy_name$(\n"
+    "            std::chrono::minutes(30)).clone());\n"
     "  }\n"
     "\n"
     "  if (!options.has<$product_namespace$::$service_name$BackoffPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$BackoffPolicyOption>(\n"
-    "        $product_namespace$::Default$service_name$BackoffPolicy());\n"
+    "        ExponentialBackoffPolicy(std::chrono::seconds(1),\n"
+    "            std::chrono::minutes(5), kBackoffScaling).clone());\n"
     "  }\n"
     "\n"},
    {generator_internal::HasLongrunningMethod,
     "  if (!options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$PollingPolicyOption>(\n"
-    "        $product_namespace$::Default$service_name$PollingPolicy());\n"
+    "        GenericPollingPolicy<$product_namespace$::$limited_time_retry_policy_name$,\n"
+    "        ExponentialBackoffPolicy>(\n"
+    "            $product_namespace$::$limited_time_retry_policy_name$(\n"
+    "                std::chrono::minutes(30)),\n"
+    "                ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
+    "                    std::chrono::minutes(5), kBackoffScaling)).clone());\n"
     "  }\n"
     "\n", ""},
    {"  if (!options.has<$product_namespace$::$idempotency_class_name$Option>()) {\n"

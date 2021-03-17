@@ -31,6 +31,10 @@ namespace cloud {
 namespace bigquery_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
 Options BigQueryReadDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_BIG_QUERY_READ_ENDPOINT");
@@ -51,12 +55,15 @@ Options BigQueryReadDefaultOptions(Options options) {
 
   if (!options.has<bigquery::BigQueryReadRetryPolicyOption>()) {
     options.set<bigquery::BigQueryReadRetryPolicyOption>(
-        bigquery::DefaultBigQueryReadRetryPolicy());
+        bigquery::BigQueryReadLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
 
   if (!options.has<bigquery::BigQueryReadBackoffPolicyOption>()) {
     options.set<bigquery::BigQueryReadBackoffPolicyOption>(
-        bigquery::DefaultBigQueryReadBackoffPolicy());
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
 
   if (!options.has<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()) {

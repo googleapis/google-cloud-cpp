@@ -30,14 +30,17 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenKitchenSinkRetryPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenKitchenSinkBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenKitchenSinkConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
 };

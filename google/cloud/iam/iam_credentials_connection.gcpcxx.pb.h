@@ -44,10 +44,6 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
-std::unique_ptr<IAMCredentialsRetryPolicy> DefaultIAMCredentialsRetryPolicy();
-
-std::unique_ptr<BackoffPolicy> DefaultIAMCredentialsBackoffPolicy();
-
 class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
