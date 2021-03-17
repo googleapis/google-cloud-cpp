@@ -17,14 +17,13 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/kokoro/lib/gcloud.sh
+source module /ci/kokoro/lib/cache.sh
 source module /ci/lib/io.sh
 
 if [[ $# != 3 ]]; then
   echo "Usage: $(basename "$0") <cache-folder> <cache-name> <home-directory>"
   exit 1
 fi
-
-source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"

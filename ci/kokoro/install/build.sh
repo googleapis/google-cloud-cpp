@@ -50,8 +50,7 @@ echo "================================================================"
 io::log "Load Google Container Registry configuration parameters."
 source module /ci/kokoro/lib/docker-variables.sh
 source module /ci/kokoro/lib/gcloud.sh
-
-source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
+source module /ci/kokoro/lib/cache.sh
 
 echo "================================================================"
 io::log_yellow "Change working directory to project root."
