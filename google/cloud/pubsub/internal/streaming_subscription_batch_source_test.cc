@@ -86,7 +86,9 @@ class FakeStream {
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
     EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
-    EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
+    EXPECT_CALL(*stream, Finish)
+        .Times(AtMost(1))
+        .WillRepeatedly(finish_response);
 
     return stream;
   }
@@ -359,7 +361,42 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
   EXPECT_EQ(done.get(), status);
 }
 
-TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterShutdown) {
+TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterStartAndShutdown) {
+  auto subscription = pubsub::Subscription("test-project", "test-subscription");
+  std::string const client_id = "fake-client-id";
+  AutomaticallyCreatedBackgroundThreads background;
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+
+  FakeStream success_stream(Status{StatusCode::kCancelled, "cancelled"});
+
+  EXPECT_CALL(*mock, AsyncStreamingPull)
+      .WillOnce([&](google::cloud::CompletionQueue& cq,
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::pubsub::v1::StreamingPullRequest const& request) {
+        return success_stream.MakeWriteFailureStream(cq, std::move(context),
+                                                     request);
+      });
+
+  using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
+  ::testing::MockFunction<void(CallbackArg const&)> callback;
+  EXPECT_CALL(callback, Call).Times(0);
+
+  auto shutdown = std::make_shared<SessionShutdownManager>();
+  auto uut = std::make_shared<StreamingSubscriptionBatchSource>(
+      background.cq(), shutdown, mock, subscription.FullName(), client_id,
+      TestSubscriptionOptions(), TestRetryPolicy(), TestBackoffPolicy(),
+      TestBatchingConfig());
+
+  auto done = shutdown->Start({});
+  uut->Start(callback.AsStdFunction());
+  success_stream.WaitForAction().set_value(true);  // Start()
+  shutdown->MarkAsShutdown("test", {});
+  success_stream.WaitForAction().set_value(true);  // Start() / retry
+
+  EXPECT_EQ(Status{}, done.get());
+}
+
+TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterWriteAndShutdown) {
   auto subscription = pubsub::Subscription("test-project", "test-subscription");
   std::string const client_id = "fake-client-id";
   AutomaticallyCreatedBackgroundThreads background;
