@@ -78,6 +78,12 @@ class AdminClient {
    */
   virtual void reset() = 0;
 
+  /**
+   * The thread factory this client was created with.
+   */
+  virtual ClientOptions::BackgroundThreadsFactory
+  BackgroundThreadsFactory() = 0;
+
   // The member functions of this class are not intended for general use by
   // application developers (they are simply a dependency injection point). Make
   // them protected, so the mock classes can override them, and then make the
@@ -289,12 +295,6 @@ class AdminClient {
                     const google::longrunning::GetOperationRequest& request,
                     grpc::CompletionQueue* cq) = 0;
   //@}
-
- private:
-  /// The thread factory from `ClientOptions` this client was created with.
-  virtual ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() {
-    return {};
-  }
 };
 
 /// Create a new admin client configured via @p options.

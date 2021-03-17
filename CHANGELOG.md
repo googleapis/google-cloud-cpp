@@ -68,6 +68,14 @@
 
 ## v1.26.0 - TBD
 
+### Bigtable:
+**BREAKING CHANGES**:
+* `bigtable::AdminClient`, `bigtable::DataClient`, and
+  `bigtable::InstanceAdminClient` each gained a new, pure virtual
+  `BackgroundThreadsFactory()` member function, requiring anyone who derives
+  from those classes to implement that function. This would typically only
+  affect users who create mock clients for testing purposes.
+
 ## v1.25.0 - 2021-03
 
 ### Bigtable:
