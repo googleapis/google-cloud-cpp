@@ -22,16 +22,20 @@ set(google_cloud_cpp_generator_golden_files
     golden_kitchen_sink_connection.gcpcxx.pb.h
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
+    golden_kitchen_sink_options.gcpcxx.pb.h
     golden_thing_admin_client.gcpcxx.pb.cc
     golden_thing_admin_client.gcpcxx.pb.h
     golden_thing_admin_connection.gcpcxx.pb.cc
     golden_thing_admin_connection.gcpcxx.pb.h
     golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
     golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
+    golden_thing_admin_options.gcpcxx.pb.h
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub.gcpcxx.pb.cc
     internal/golden_kitchen_sink_stub.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
@@ -40,6 +44,8 @@ set(google_cloud_cpp_generator_golden_files
     internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
     internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
     internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_option_defaults.gcpcxx.pb.cc
+    internal/golden_thing_admin_option_defaults.gcpcxx.pb.h
     internal/golden_thing_admin_stub.gcpcxx.pb.cc
     internal/golden_thing_admin_stub.gcpcxx.pb.h
     internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
@@ -63,16 +69,20 @@ add_library(
     golden_kitchen_sink_connection.gcpcxx.pb.h
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
     golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h
+    golden_kitchen_sink_options.gcpcxx.pb.h
     golden_thing_admin_client.gcpcxx.pb.cc
     golden_thing_admin_client.gcpcxx.pb.h
     golden_thing_admin_connection.gcpcxx.pb.cc
     golden_thing_admin_connection.gcpcxx.pb.h
     golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc
     golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h
+    golden_thing_admin_options.gcpcxx.pb.h
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc
     internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h
+    internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.cc
+    internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub.gcpcxx.pb.cc
     internal/golden_kitchen_sink_stub.gcpcxx.pb.h
     internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc
@@ -81,6 +91,8 @@ add_library(
     internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h
     internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc
     internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h
+    internal/golden_thing_admin_option_defaults.gcpcxx.pb.cc
+    internal/golden_thing_admin_option_defaults.gcpcxx.pb.h
     internal/golden_thing_admin_stub.gcpcxx.pb.cc
     internal/golden_thing_admin_stub.gcpcxx.pb.h
     internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc
@@ -121,6 +133,7 @@ function (google_cloud_cpp_generator_define_golden_tests)
         tests/golden_kitchen_sink_idempotency_policy_test.cc
         tests/golden_kitchen_sink_logging_decorator_test.cc
         tests/golden_kitchen_sink_metadata_decorator_test.cc
+        tests/golden_kitchen_sink_option_defaults_test.cc
         tests/golden_kitchen_sink_stub_factory_test.cc
         tests/golden_kitchen_sink_stub_test.cc
         tests/golden_thing_admin_client_test.cc

@@ -22,7 +22,7 @@
 #include "google/cloud/iam/internal/iam_credentials_stub.gcpcxx.pb.h"
 #include "google/cloud/iam/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -43,6 +43,10 @@ using IAMCredentialsLimitedTimeRetryPolicy =
 using IAMCredentialsLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
+
+std::unique_ptr<IAMCredentialsRetryPolicy> DefaultIAMCredentialsRetryPolicy();
+
+std::unique_ptr<BackoffPolicy> DefaultIAMCredentialsBackoffPolicy();
 
 class IAMCredentialsConnection {
  public:
@@ -65,21 +69,11 @@ class IAMCredentialsConnection {
 };
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    internal::Options const& options = {});
-
-std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    internal::Options const& options,
-    std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-    std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam

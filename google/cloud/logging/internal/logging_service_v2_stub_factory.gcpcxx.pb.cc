@@ -20,13 +20,11 @@
 #include "google/cloud/logging/internal/logging_service_v2_logging_decorator.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub.gcpcxx.pb.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/common_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/grpc_options.h"
-#include "google/cloud/internal/options.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -34,36 +32,11 @@ namespace cloud {
 namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-internal::Options ResolveLoggingServiceV2Options(internal::Options options) {
-  if (!options.has<internal::EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_LOGGING_SERVICE_V2_ENDPOINT");
-    options.set<internal::EndpointOption>(env ? *env
-                                              : "logging.googleapis.com");
-  }
-  if (!options.has<internal::GrpcCredentialOption>()) {
-    options.set<internal::GrpcCredentialOption>(
-        grpc::GoogleDefaultCredentials());
-  }
-  if (!options.has<internal::GrpcBackgroundThreadsFactoryOption>()) {
-    options.set<internal::GrpcBackgroundThreadsFactoryOption>(
-        internal::DefaultBackgroundThreadsFactory);
-  }
-  if (!options.has<internal::GrpcNumChannelsOption>()) {
-    options.set<internal::GrpcNumChannelsOption>(4);
-  }
-  auto& products = options.lookup<internal::UserAgentProductsOption>();
-  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());
-
-  return options;
-}
-
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
-    internal::Options options) {
-  options = ResolveLoggingServiceV2Options(std::move(options));
-  auto channel =
-      grpc::CreateCustomChannel(options.get<internal::EndpointOption>(),
-                                options.get<internal::GrpcCredentialOption>(),
-                                internal::MakeChannelArguments(options));
+    Options const& options) {
+  auto channel = grpc::CreateCustomChannel(
+      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
+      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       ::google::logging::v2::LoggingServiceV2::NewStub(channel);
   std::shared_ptr<LoggingServiceV2Stub> stub =
@@ -72,12 +45,11 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
 
   stub = std::make_shared<LoggingServiceV2Metadata>(std::move(stub));
 
-  if (internal::Contains(options.get<internal::TracingComponentsOption>(),
-                         "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LoggingServiceV2Logging>(
-        std::move(stub), options.get<internal::GrpcTracingOptionsOption>(),
-        options.get<internal::TracingComponentsOption>());
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

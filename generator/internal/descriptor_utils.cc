@@ -27,6 +27,8 @@
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/mock_connection_generator.h"
+#include "generator/internal/option_defaults_generator.h"
+#include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_policy_generator.h"
 #include "generator/internal/stub_factory_generator.h"
@@ -466,6 +468,17 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "mocks/mock_",
                    ServiceNameToFilePath(descriptor.name()), "_connection",
                    GeneratedFileSuffix(), ".h");
+  vars["option_defaults_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
+                   GeneratedFileSuffix(), ".cc");
+  vars["option_defaults_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
+                   GeneratedFileSuffix(), ".h");
+  vars["options_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_options", GeneratedFileSuffix(), ".h");
   vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["product_internal_namespace"] =
       BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
@@ -561,6 +574,12 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
+  code_generators.push_back(absl::make_unique<OptionDefaultsGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
+  code_generators.push_back(absl::make_unique<OptionsGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubGenerator>(

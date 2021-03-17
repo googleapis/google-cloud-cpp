@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/iam/iam_credentials_client.gcpcxx.pb.h"
+#include "google/cloud/iam/iam_credentials_options.gcpcxx.pb.h"
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
-#include "google/cloud/internal/common_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/integration_test.h"
@@ -37,7 +38,7 @@ class IamCredentialsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    options_.set<internal::TracingComponentsOption>({"rpc"});
+    options_.set<TracingComponentsOption>({"rpc"});
     iam_service_account_ = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT")
                                .value_or("");
@@ -50,7 +51,7 @@ class IamCredentialsIntegrationTest
     ASSERT_FALSE(invalid_iam_service_account_.empty());
   }
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
-  internal::Options options_;
+  Options options_;
   std::string iam_service_account_;
   std::string invalid_iam_service_account_;
 
@@ -61,7 +62,7 @@ class IamCredentialsIntegrationTest
 TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenSuccess) {
   google::protobuf::Duration lifetime;
   lifetime.set_seconds(3600);
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateAccessToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, lifetime);
@@ -82,13 +83,13 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenFailure) {
 }
 
 TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenSuccess) {
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(
-      internal::Options(),
+  options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
-          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))),
+          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
+  options_.set<IAMCredentialsBackoffPolicyOption>(
       std::unique_ptr<BackoffPolicy>(new ExponentialBackoffPolicy(
-          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)),
-      MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()));
+          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
   auto response = client.GenerateIdToken(
       "projects/-/serviceAccounts/" + iam_service_account_, {},
       {"https://www.googleapis.com/auth/spanner.admin"}, true);
@@ -107,13 +108,13 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenFailure) {
 
 TEST_F(IamCredentialsIntegrationTest, SignBlobSuccess) {
   std::string payload = "somebytes";
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(
-      iam_internal::CreateDefaultIAMCredentialsStub({}),
+  options_.set<IAMCredentialsRetryPolicyOption>(
       std::unique_ptr<IAMCredentialsRetryPolicy>(
-          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))),
+          new IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))));
+  options_.set<IAMCredentialsBackoffPolicyOption>(
       std::unique_ptr<BackoffPolicy>(new ExponentialBackoffPolicy(
-          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)),
-      MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()));
+          std::chrono::seconds(1), std::chrono::minutes(5), 2.0)));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection(options_));
   auto response = client.SignBlob(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, payload);
   EXPECT_STATUS_OK(response);
@@ -134,7 +135,7 @@ TEST_F(IamCredentialsIntegrationTest, SignBlobFailure) {
 
 TEST_F(IamCredentialsIntegrationTest, SignJwtSuccess) {
   std::string payload = R"({"some": "json"})";
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignJwt(
       "projects/-/serviceAccounts/" + iam_service_account_, {}, payload);
   EXPECT_STATUS_OK(response);
@@ -160,7 +161,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateAccessTokenProtoRequestSuccess) {
   google::protobuf::Duration lifetime;
   lifetime.set_seconds(3600);
   *request.mutable_lifetime() = lifetime;
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateAccessToken(request);
   EXPECT_STATUS_OK(response);
   EXPECT_FALSE(response->access_token().empty());
@@ -179,7 +180,7 @@ TEST_F(IamCredentialsIntegrationTest, GenerateIdTokenProtoRequestSuccess) {
   ::google::iam::credentials::v1::GenerateIdTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_audience("https://www.googleapis.com/auth/spanner.admin");
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.GenerateIdToken(request);
   EXPECT_STATUS_OK(response);
   EXPECT_FALSE(response->token().empty());
@@ -218,7 +219,7 @@ TEST_F(IamCredentialsIntegrationTest, SignJwtProtoRequestSuccess) {
   ::google::iam::credentials::v1::SignJwtRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   request.set_payload(R"({"some": "json"})");
-  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection({}));
+  auto client = IAMCredentialsClient(MakeIAMCredentialsConnection());
   auto response = client.SignJwt(request);
   EXPECT_STATUS_OK(response);
   EXPECT_FALSE(response->key_id().empty());

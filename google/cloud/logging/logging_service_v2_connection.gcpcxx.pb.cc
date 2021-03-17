@@ -17,7 +17,9 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/logging_service_v2_connection.gcpcxx.pb.h"
+#include "google/cloud/logging/internal/logging_service_v2_option_defaults.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/logging/logging_service_v2_options.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -83,37 +85,33 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
       });
 }
 
-namespace {
-std::unique_ptr<LoggingServiceV2RetryPolicy> DefaultRetryPolicy() {
+std::unique_ptr<LoggingServiceV2RetryPolicy>
+DefaultLoggingServiceV2RetryPolicy() {
   return LoggingServiceV2LimitedTimeRetryPolicy(std::chrono::minutes(30))
       .clone();
 }
 
-std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
+std::unique_ptr<BackoffPolicy> DefaultLoggingServiceV2BackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
   return ExponentialBackoffPolicy(std::chrono::seconds(1),
                                   std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
 
+namespace {
 class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
  public:
-  explicit LoggingServiceV2ConnectionImpl(
+  LoggingServiceV2ConnectionImpl(
       std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-      std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-          idempotency_policy)
+      Options const& options)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
-        idempotency_policy_(std::move(idempotency_policy)) {}
-
-  explicit LoggingServiceV2ConnectionImpl(
-      std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub)
-      : LoggingServiceV2ConnectionImpl(
-            std::move(stub), DefaultRetryPolicy(), DefaultBackoffPolicy(),
-            MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()) {}
+        retry_policy_prototype_(
+            options.get<LoggingServiceV2RetryPolicyOption>()->clone()),
+        backoff_policy_prototype_(
+            options.get<LoggingServiceV2BackoffPolicyOption>()->clone()),
+        idempotency_policy_(
+            options.get<LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+                ->clone()) {}
 
   ~LoggingServiceV2ConnectionImpl() override = default;
 
@@ -253,32 +251,20 @@ class LoggingServiceV2ConnectionImpl : public LoggingServiceV2Connection {
 }  // namespace
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    internal::Options const& options) {
+    Options options) {
+  options =
+      logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
   return std::make_shared<LoggingServiceV2ConnectionImpl>(
-      logging_internal::CreateDefaultLoggingServiceV2Stub(options));
-}
-
-std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    internal::Options const& options,
-    std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<LoggingServiceV2ConnectionImpl>(
-      logging_internal::CreateDefaultLoggingServiceV2Stub(options),
-      std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+      logging_internal::CreateDefaultLoggingServiceV2Stub(options), options);
 }
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<LoggingServiceV2ConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+    Options options) {
+  options =
+      logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
+  return std::make_shared<LoggingServiceV2ConnectionImpl>(std::move(stub),
+                                                          std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

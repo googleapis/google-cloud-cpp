@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/setenv.h"
+//#include "google/cloud/common_options.h"
+//#include "google/cloud/internal/setenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_options.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <memory>
@@ -35,29 +36,6 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Mock;
 using ::testing::Return;
-
-TEST(ResolveGoldenThingAdminOptions, DefaultEndpoint) {
-  Options options;
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("test.googleapis.com", resolved_options.get<EndpointOption>());
-}
-
-TEST(ResolveGoldenThingAdminOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
-                   "foo.googleapis.com");
-  Options options;
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("foo.googleapis.com", resolved_options.get<EndpointOption>());
-}
-
-TEST(ResolveGoldenThingAdminOptions, OptionEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
-                   "foo.googleapis.com");
-  Options options;
-  options.set<EndpointOption>("bar.googleapis.com");
-  auto resolved_options = ResolveGoldenThingAdminOptions(options);
-  EXPECT_EQ("bar.googleapis.com", resolved_options.get<EndpointOption>());
-}
 
 class MockGoldenStub
     : public google::cloud::golden_internal::GoldenThingAdminStub {

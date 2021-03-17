@@ -17,6 +17,8 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/iam_credentials_connection.gcpcxx.pb.h"
+#include "google/cloud/iam/iam_credentials_options.gcpcxx.pb.h"
+#include "google/cloud/iam/internal/iam_credentials_option_defaults.gcpcxx.pb.h"
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -52,36 +54,31 @@ IAMCredentialsConnection::SignJwt(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-std::unique_ptr<IAMCredentialsRetryPolicy> DefaultRetryPolicy() {
+std::unique_ptr<IAMCredentialsRetryPolicy> DefaultIAMCredentialsRetryPolicy() {
   return IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
 }
 
-std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
+std::unique_ptr<BackoffPolicy> DefaultIAMCredentialsBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
   return ExponentialBackoffPolicy(std::chrono::seconds(1),
                                   std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
 
+namespace {
 class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
  public:
-  explicit IAMCredentialsConnectionImpl(
+  IAMCredentialsConnectionImpl(
       std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-      std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-          idempotency_policy)
+      Options const& options)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
-        idempotency_policy_(std::move(idempotency_policy)) {}
-
-  explicit IAMCredentialsConnectionImpl(
-      std::shared_ptr<iam_internal::IAMCredentialsStub> stub)
-      : IAMCredentialsConnectionImpl(
-            std::move(stub), DefaultRetryPolicy(), DefaultBackoffPolicy(),
-            MakeDefaultIAMCredentialsConnectionIdempotencyPolicy()) {}
+        retry_policy_prototype_(
+            options.get<IAMCredentialsRetryPolicyOption>()->clone()),
+        backoff_policy_prototype_(
+            options.get<IAMCredentialsBackoffPolicyOption>()->clone()),
+        idempotency_policy_(
+            options.get<IAMCredentialsConnectionIdempotencyPolicyOption>()
+                ->clone()) {}
 
   ~IAMCredentialsConnectionImpl() override = default;
 
@@ -148,32 +145,17 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 }  // namespace
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    internal::Options const& options) {
+    Options options) {
+  options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
   return std::make_shared<IAMCredentialsConnectionImpl>(
-      iam_internal::CreateDefaultIAMCredentialsStub(options));
+      iam_internal::CreateDefaultIAMCredentialsStub(options), options);
 }
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    internal::Options const& options,
-    std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<IAMCredentialsConnectionImpl>(
-      iam_internal::CreateDefaultIAMCredentialsStub(options),
-      std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
-}
-
-std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    std::shared_ptr<iam_internal::IAMCredentialsStub> stub,
-    std::unique_ptr<IAMCredentialsRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<IAMCredentialsConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+    std::shared_ptr<iam_internal::IAMCredentialsStub> stub, Options options) {
+  options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
+  return std::make_shared<IAMCredentialsConnectionImpl>(std::move(stub),
+                                                        std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

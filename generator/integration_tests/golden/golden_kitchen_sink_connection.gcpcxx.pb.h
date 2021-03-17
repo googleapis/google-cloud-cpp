@@ -43,27 +43,13 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
-struct GoldenKitchenSinkRetryPolicyOption {
-  using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
-};
+std::unique_ptr<GoldenKitchenSinkRetryPolicy> DefaultGoldenKitchenSinkRetryPolicy();
 
-struct GoldenKitchenSinkBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
-
-struct GoldenKitchenSinkIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
-};
-
-using GoldenKitchenSinkPolicyOptionList =
-    OptionList<GoldenKitchenSinkRetryPolicyOption, GoldenKitchenSinkBackoffPolicyOption,
-               GoldenKitchenSinkIdempotencyPolicyOption>;
+std::unique_ptr<BackoffPolicy> DefaultGoldenKitchenSinkBackoffPolicy();
 
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
     ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
     ::google::test::admin::database::v1::TailLogEntriesRequest& request);
-
-Options ResolveGoldenKitchenSinkOptions(Options options);
 
 class GoldenKitchenSinkConnection {
  public:

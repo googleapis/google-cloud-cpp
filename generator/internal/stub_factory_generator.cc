@@ -52,12 +52,8 @@ Status StubFactoryGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint(  // clang-format off
-    "internal::Options Resolve$service_name$Options(internal::Options options);\n\n");
-  //clang-format on
-
-  HeaderPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(internal::Options options);\n\n");
+    "CreateDefault$stub_class_name$(Options const& options);\n\n");
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -77,52 +73,25 @@ Status StubFactoryGenerator::GenerateCc() {
   // clang-format on
 
   // includes
-  CcLocalIncludes(
-      {vars("stub_factory_header_path"), vars("logging_header_path"),
-       vars("metadata_header_path"), vars("stub_header_path"),
-       "google/cloud/internal/algorithm.h",
-       "google/cloud/internal/common_options.h",
-       "google/cloud/internal/getenv.h", "google/cloud/internal/grpc_options.h",
-       "google/cloud/internal/options.h",
-       "google/cloud/internal/user_agent_prefix.h", "google/cloud/log.h"});
+  CcLocalIncludes({vars("stub_factory_header_path"),
+                   vars("logging_header_path"), vars("metadata_header_path"),
+                   vars("stub_header_path"), "google/cloud/common_options.h",
+                   "google/cloud/grpc_options.h",
+                   "google/cloud/internal/algorithm.h",
+                   "google/cloud/options.h", "google/cloud/log.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  CcPrint(  // clang-format off
-    "internal::Options Resolve$service_name$Options(internal::Options options) {\n"
-    "  if (!options.has<internal::EndpointOption>()) {\n"
-    "    auto env = internal::GetEnv(\"$service_endpoint_env_var$\");\n"
-    "    options.set<internal::EndpointOption>(env ? *env : \"$service_endpoint$\");\n"
-    "  }\n"
-    "  if (!options.has<internal::GrpcCredentialOption>()) {\n"
-    "    options.set<internal::GrpcCredentialOption>(grpc::GoogleDefaultCredentials());\n"
-    "  }\n"
-    "  if (!options.has<internal::GrpcBackgroundThreadsFactoryOption>()) {\n"
-    "    options.set<internal::GrpcBackgroundThreadsFactoryOption>(\n"
-    "        internal::DefaultBackgroundThreadsFactory);\n"
-    "  }\n"
-    "  if (!options.has<internal::GrpcNumChannelsOption>()) {\n"
-    "    options.set<internal::GrpcNumChannelsOption>(4);\n"
-    "  }\n"
-    "  auto& products = options.lookup<internal::UserAgentProductsOption>();\n"
-    "  products.insert(products.begin(), google::cloud::internal::UserAgentPrefix());\n"
-    "\n"
-    "  return options;\n"
-    "}\n\n"
-            // clang-format on
-  );
-
   // factory function implementation
   CcPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$(internal::Options options) {\n"
-    "  options = Resolve$service_name$Options(std::move(options));\n"
+    "CreateDefault$stub_class_name$(Options const& options) {\n"
     "  auto channel = grpc::CreateCustomChannel(\n"
-    "      options.get<internal::EndpointOption>(),\n"
-    "      options.get<internal::GrpcCredentialOption>(),\n"
+    "      options.get<EndpointOption>(),\n"
+    "      options.get<GrpcCredentialOption>(),\n"
     "      internal::MakeChannelArguments(options));\n"
     "  auto service_grpc_stub =\n"
     "      $grpc_stub_fqn$::NewStub(channel);\n");
@@ -152,12 +121,12 @@ Status StubFactoryGenerator::GenerateCc() {
     "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
     "\n"
     "  if (internal::Contains(\n"
-    "      options.get<internal::TracingComponentsOption>(), \"rpc\")) {\n"
+    "      options.get<TracingComponentsOption>(), \"rpc\")) {\n"
     "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
     "    stub = std::make_shared<$logging_class_name$>(\n"
     "        std::move(stub),\n"
-    "        options.get<internal::GrpcTracingOptionsOption>(),\n"
-    "        options.get<internal::TracingComponentsOption>());\n"
+    "        options.get<GrpcTracingOptionsOption>(),\n"
+    "        options.get<TracingComponentsOption>());\n"
     "  }\n"
     "  return stub;\n"
     "}\n\n");

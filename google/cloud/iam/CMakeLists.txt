@@ -38,10 +38,13 @@ add_library(
     iam_credentials_connection.gcpcxx.pb.h
     iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
     iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
+    iam_credentials_options.gcpcxx.pb.h
     internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
     internal/iam_credentials_logging_decorator.gcpcxx.pb.h
     internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
     internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
+    internal/iam_credentials_option_defaults.gcpcxx.pb.cc
+    internal/iam_credentials_option_defaults.gcpcxx.pb.h
     internal/iam_credentials_stub.gcpcxx.pb.cc
     internal/iam_credentials_stub.gcpcxx.pb.h
     internal/iam_credentials_stub_factory.gcpcxx.pb.cc

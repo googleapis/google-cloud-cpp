@@ -17,6 +17,8 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/big_query_read_connection.gcpcxx.pb.h"
+#include "google/cloud/bigquery/big_query_read_options.gcpcxx.pb.h"
+#include "google/cloud/bigquery/internal/big_query_read_option_defaults.gcpcxx.pb.h"
 #include "google/cloud/bigquery/internal/big_query_read_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
@@ -54,36 +56,31 @@ BigQueryReadConnection::SplitReadStream(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-namespace {
-std::unique_ptr<BigQueryReadRetryPolicy> DefaultRetryPolicy() {
+std::unique_ptr<BigQueryReadRetryPolicy> DefaultBigQueryReadRetryPolicy() {
   return BigQueryReadLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
 }
 
-std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
+std::unique_ptr<BackoffPolicy> DefaultBigQueryReadBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
   return ExponentialBackoffPolicy(std::chrono::seconds(1),
                                   std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
 
+namespace {
 class BigQueryReadConnectionImpl : public BigQueryReadConnection {
  public:
-  explicit BigQueryReadConnectionImpl(
+  BigQueryReadConnectionImpl(
       std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-      std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-          idempotency_policy)
+      Options const& options)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
-        idempotency_policy_(std::move(idempotency_policy)) {}
-
-  explicit BigQueryReadConnectionImpl(
-      std::shared_ptr<bigquery_internal::BigQueryReadStub> stub)
-      : BigQueryReadConnectionImpl(
-            std::move(stub), DefaultRetryPolicy(), DefaultBackoffPolicy(),
-            MakeDefaultBigQueryReadConnectionIdempotencyPolicy()) {}
+        retry_policy_prototype_(
+            options.get<BigQueryReadRetryPolicyOption>()->clone()),
+        backoff_policy_prototype_(
+            options.get<BigQueryReadBackoffPolicyOption>()->clone()),
+        idempotency_policy_(
+            options.get<BigQueryReadConnectionIdempotencyPolicyOption>()
+                ->clone()) {}
 
   ~BigQueryReadConnectionImpl() override = default;
 
@@ -155,32 +152,18 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
 }  // namespace
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    internal::Options const& options) {
+    Options options) {
+  options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
   return std::make_shared<BigQueryReadConnectionImpl>(
-      bigquery_internal::CreateDefaultBigQueryReadStub(options));
-}
-
-std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    internal::Options const& options,
-    std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<BigQueryReadConnectionImpl>(
-      bigquery_internal::CreateDefaultBigQueryReadStub(options),
-      std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+      bigquery_internal::CreateDefaultBigQueryReadStub(options), options);
 }
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-    std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-        idempotency_policy) {
-  return std::make_shared<BigQueryReadConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(idempotency_policy));
+    Options options) {
+  options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
+  return std::make_shared<BigQueryReadConnectionImpl>(std::move(stub),
+                                                      std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

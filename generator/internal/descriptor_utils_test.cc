@@ -240,6 +240,14 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("mock_connection_header_path",
                        "google/cloud/frobber/mocks/"
                        "mock_frobber_connection.gcpcxx.pb.h"),
+        std::make_pair("option_defaults_cc_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_option_defaults.gcpcxx.pb.cc"),
+        std::make_pair("option_defaults_header_path",
+                       "google/cloud/frobber/internal/"
+                       "frobber_option_defaults.gcpcxx.pb.h"),
+        std::make_pair("options_header_path",
+                       "google/cloud/frobber/frobber_options.gcpcxx.pb.h"),
         std::make_pair("product_namespace", "frobber"),
         std::make_pair("product_internal_namespace", "frobber_internal"),
         std::make_pair("proto_file_name",

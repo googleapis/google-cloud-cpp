@@ -22,6 +22,7 @@ google_cloud_cpp_generator_golden_tests = [
     "tests/golden_kitchen_sink_idempotency_policy_test.cc",
     "tests/golden_kitchen_sink_logging_decorator_test.cc",
     "tests/golden_kitchen_sink_metadata_decorator_test.cc",
+    "tests/golden_kitchen_sink_option_defaults_test.cc",
     "tests/golden_kitchen_sink_stub_factory_test.cc",
     "tests/golden_kitchen_sink_stub_test.cc",
     "tests/golden_thing_admin_client_test.cc",

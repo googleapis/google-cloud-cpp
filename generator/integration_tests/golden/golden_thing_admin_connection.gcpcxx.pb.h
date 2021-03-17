@@ -46,27 +46,11 @@ using GoldenThingAdminLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         golden_internal::GoldenThingAdminRetryTraits>;
 
-struct GoldenThingAdminRetryPolicyOption {
-  using Type = std::shared_ptr<GoldenThingAdminRetryPolicy>;
-};
+std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultGoldenThingAdminRetryPolicy();
 
-struct GoldenThingAdminBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+std::unique_ptr<BackoffPolicy> DefaultGoldenThingAdminBackoffPolicy();
 
-struct GoldenThingAdminPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-struct GoldenThingAdminIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GoldenThingAdminConnectionIdempotencyPolicy>;
-};
-
-using GoldenThingAdminPolicyOptionList =
-    OptionList<GoldenThingAdminRetryPolicyOption, GoldenThingAdminBackoffPolicyOption,
-               GoldenThingAdminIdempotencyPolicyOption>;
-
-Options ResolveGoldenThingAdminOptions(Options options);
+std::unique_ptr<PollingPolicy> DefaultGoldenThingAdminPollingPolicy();
 
 class GoldenThingAdminConnection {
  public:

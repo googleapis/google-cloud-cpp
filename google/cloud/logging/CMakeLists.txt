@@ -38,6 +38,8 @@ add_library(
     internal/logging_service_v2_logging_decorator.gcpcxx.pb.h
     internal/logging_service_v2_metadata_decorator.gcpcxx.pb.cc
     internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h
+    internal/logging_service_v2_option_defaults.gcpcxx.pb.cc
+    internal/logging_service_v2_option_defaults.gcpcxx.pb.h
     internal/logging_service_v2_stub.gcpcxx.pb.cc
     internal/logging_service_v2_stub.gcpcxx.pb.h
     internal/logging_service_v2_stub_factory.gcpcxx.pb.cc
@@ -48,6 +50,7 @@ add_library(
     logging_service_v2_connection.gcpcxx.pb.h
     logging_service_v2_connection_idempotency_policy.gcpcxx.pb.cc
     logging_service_v2_connection_idempotency_policy.gcpcxx.pb.h
+    logging_service_v2_options.gcpcxx.pb.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_logging

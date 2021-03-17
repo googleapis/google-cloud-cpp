@@ -14,6 +14,7 @@
 
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/logging/logging_service_v2_client.gcpcxx.pb.h"
+#include "google/cloud/logging/logging_service_v2_options.gcpcxx.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
@@ -71,9 +72,10 @@ TEST_F(LoggingIntegrationTest, WriteLogEntries) {
 
 TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
   options_.set<EndpointOption>("localhost:1");
-  auto client = LoggingServiceV2Client(MakeLoggingServiceV2Connection(
-      options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()));
+  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
+  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
+  auto client =
+      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
   ::google::logging::v2::ListLogEntriesRequest request;
   auto range = client.ListLogEntries(request);
   auto begin = range.begin();
@@ -84,9 +86,10 @@ TEST_F(LoggingIntegrationTest, ListLogEntriesFailure) {
 }
 
 TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
-  auto client = LoggingServiceV2Client(MakeLoggingServiceV2Connection(
-      options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()));
+  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
+  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
+  auto client =
+      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
   ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request;
   auto range = client.ListMonitoredResourceDescriptors(request);
   auto begin = range.begin();
@@ -98,9 +101,10 @@ TEST_F(LoggingIntegrationTest, ListMonitoredResourceDescriptors) {
 }
 
 TEST_F(LoggingIntegrationTest, ListLogsFailure) {
-  auto client = LoggingServiceV2Client(MakeLoggingServiceV2Connection(
-      options_, retry_policy_->clone(), backoff_policy_->clone(),
-      MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy()));
+  options_.set<LoggingServiceV2RetryPolicyOption>(retry_policy_->clone());
+  options_.set<LoggingServiceV2BackoffPolicyOption>(backoff_policy_->clone());
+  auto client =
+      LoggingServiceV2Client(MakeLoggingServiceV2Connection(options_));
   ::google::logging::v2::ListLogsRequest request;
   auto range = client.ListLogs(request);
   auto begin = range.begin();
