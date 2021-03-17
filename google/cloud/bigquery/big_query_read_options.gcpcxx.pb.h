@@ -30,15 +30,17 @@ namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-/// Options to use with `google::cloud::Options`.
+/// Option to use with `google::cloud::Options`.
 struct BigQueryReadRetryPolicyOption {
   using Type = std::shared_ptr<BigQueryReadRetryPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct BigQueryReadBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct BigQueryReadConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<BigQueryReadConnectionIdempotencyPolicy>;
 };

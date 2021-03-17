@@ -57,20 +57,23 @@ Status OptionsGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint({// clang-format off
-   {"/// Options to use with `google::cloud::Options`.\n"
+   {"/// Option to use with `google::cloud::Options`.\n"
     "struct $retry_policy_name$Option {\n"
     "  using Type = std::shared_ptr<$retry_policy_name$>;\n"
     "};\n"
     "\n"
+    "/// Option to use with `google::cloud::Options`.\n"
     "struct $service_name$BackoffPolicyOption {\n"
     "  using Type = std::shared_ptr<BackoffPolicy>;\n"
     "};\n"
     "\n"},
    {generator_internal::HasLongrunningMethod,
+    "/// Option to use with `google::cloud::Options`.\n"
     "struct $service_name$PollingPolicyOption {\n"
     "  using Type = std::shared_ptr<PollingPolicy>;\n"
     "};\n\n", ""},
-   {"struct $idempotency_class_name$Option {\n"
+   {"/// Option to use with `google::cloud::Options`.\n"
+    "struct $idempotency_class_name$Option {\n"
     "  using Type = std::shared_ptr<$idempotency_class_name$>;\n"
     "};\n\n"},
    {"using $service_name$PolicyOptionList =\n"

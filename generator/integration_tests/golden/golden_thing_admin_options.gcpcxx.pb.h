@@ -30,19 +30,22 @@ namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
-/// Options to use with `google::cloud::Options`.
+/// Option to use with `google::cloud::Options`.
 struct GoldenThingAdminRetryPolicyOption {
   using Type = std::shared_ptr<GoldenThingAdminRetryPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenThingAdminBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenThingAdminPollingPolicyOption {
   using Type = std::shared_ptr<PollingPolicy>;
 };
 
+/// Option to use with `google::cloud::Options`.
 struct GoldenThingAdminConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<GoldenThingAdminConnectionIdempotencyPolicy>;
 };
