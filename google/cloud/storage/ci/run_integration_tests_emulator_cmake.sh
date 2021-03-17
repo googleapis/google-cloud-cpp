@@ -17,6 +17,7 @@ set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
+source module /google/cloud/storage/tools/run_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"
@@ -30,9 +31,6 @@ BINARY_DIR="$(
 readonly BINARY_DIR
 shift
 ctest_args=("$@")
-
-# Configure run_emulators_utils.sh to find the instance admin emulator.
-source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.

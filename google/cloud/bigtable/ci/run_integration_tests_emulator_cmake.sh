@@ -33,8 +33,7 @@ ctest_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
-
-source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
+source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 # Use the same configuration parameters as we use for testing against
 # production. Easier to maintain just one copy.

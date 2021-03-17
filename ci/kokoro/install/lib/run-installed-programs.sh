@@ -13,6 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Make our include guard clean against set -o nounset.
+test -n "${CI_KOKORO_LIB_RUN_INSTALLED_PROGRAMS_SH__:-}" || declare -i CI_KOKORO_LIB_RUN_INSTALLED_PROGRAMS_SH__=0
+if ((CI_KOKORO_LIB_RUN_INSTALLED_PROGRAMS_SH__++ != 0)); then
+  return 0
+fi # include guard
+
 source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 source module /ci/lib/io.sh

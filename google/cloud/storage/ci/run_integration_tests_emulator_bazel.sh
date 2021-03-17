@@ -17,6 +17,7 @@ set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
+source module /google/cloud/storage/tools/run_emulator_utils.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
@@ -29,9 +30,6 @@ shift
 BAZEL_VERB="$1"
 shift
 bazel_test_args=("$@")
-
-# Configure run_emulator_utils.sh to run the GCS emulator.
-source "${PROJECT_ROOT}/google/cloud/storage/tools/run_emulator_utils.sh"
 
 # These can only run against production
 production_only_targets=(
