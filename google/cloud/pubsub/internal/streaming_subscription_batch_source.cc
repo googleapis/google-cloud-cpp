@@ -153,8 +153,8 @@ void StreamingSubscriptionBatchSource::OnInitialWrite(RetryLoopState const& rs,
                 s->OnInitialRead(std::move(rs), f.get());
             });
       });
-  // This is very rare, but if the session enters shutdown while the initial
-  // setup is in progress it can happen.
+  // This is very rare, but it can happen if the session enters shutdown while
+  // the initial setup is in progress.
   if (!scheduled) OnInitialError(std::move(rs));
 }
 
