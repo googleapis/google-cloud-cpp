@@ -1873,14 +1873,16 @@ template&lt;typename... Policies&gt; </div>
 </dl>
 <dl class="section user"><dt>Idempotency</dt><dd>This operation is always treated as non-idempotent.</dd></dl>
 <dl class="section user"><dt>Thread-safety</dt><dd>Two threads concurrently calling this member function on the same instance of this class are <b>not</b> guaranteed to work. Consider copying the object and using different copies in each thread.</dd></dl>
-<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START bigtable_truncate_table] [START bigtable_delete_rows]</span></div>
+<dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="comment">// [START bigtable_truncate_table]</span></div>
+<div class="line">  <span class="comment">// [START bigtable_delete_rows]</span></div>
 <div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">cbt</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable.html">google::cloud::bigtable</a>;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html">cbt::TableAdmin</a> admin, std::string <span class="keyword">const</span>&amp; table_id) {</div>
 <div class="line">    google::cloud::Status status = admin.<a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1TableAdmin.html#a23ee88d786cbeafec6ba92145c83fe6c">DropAllRows</a>(table_id);</div>
 <div class="line">    <span class="keywordflow">if</span> (!status.ok()) <span class="keywordflow">throw</span> std::runtime_error(status.message());</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;All rows successfully deleted\n&quot;</span>;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="comment">// [END bigtable_truncate_table] [END bigtable_delete_rows]</span></div>
+<div class="line">  <span class="comment">// [END bigtable_delete_rows]</span></div>
+<div class="line">  <span class="comment">// [END bigtable_truncate_table]</span></div>
 </div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="table__admin_8cc_source.html#l00767">767</a> of file <a class="el" href="table__admin_8cc_source.html">table_admin.cc</a>.</p>
