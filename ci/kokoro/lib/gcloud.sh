@@ -36,7 +36,7 @@ fi
 
 GCLOUD_BIN="/usr/local/google-cloud-sdk/bin/gcloud"
 if [ ! -x "${GCLOUD_BIN}" ]; then
-  # If the bin wasn't found at the above path, hope it's found in the path.
+  # If the bin wasn't found at the above path, hope it's found in ${PATH}.
   GCLOUD_BIN="gcloud"
 fi
 readonly GCLOUD_BIN

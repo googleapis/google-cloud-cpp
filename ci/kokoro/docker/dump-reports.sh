@@ -16,6 +16,7 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/kokoro/lib/docker-variables.sh
 
 # If w3m is installed there is nothing to do.
