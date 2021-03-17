@@ -17,27 +17,18 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_options.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/polling_loop.h"
 #include "google/cloud/internal/retry_loop.h"
-#include "google/cloud/internal/user_agent_prefix.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
 namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-std::string GoldenThingAdminConnectionOptionsTraits::default_endpoint() {
-  return "test.googleapis.com";
-}
-
-std::string GoldenThingAdminConnectionOptionsTraits::user_agent_prefix() {
-  return google::cloud::internal::UserAgentPrefix();
-}
-
-int GoldenThingAdminConnectionOptionsTraits::default_num_channels() { return 4; }
 
 GoldenThingAdminConnection::~GoldenThingAdminConnection() = default;
 
@@ -179,19 +170,18 @@ StreamRange<::google::longrunning::Operation> GoldenThingAdminConnection::ListBa
     });
 }
 
-namespace {
-std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultRetryPolicy() {
+std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultGoldenThingAdminRetryPolicy() {
   return GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
 }
 
-std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {
+std::unique_ptr<BackoffPolicy> DefaultGoldenThingAdminBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
   return ExponentialBackoffPolicy(std::chrono::seconds(1),
                                   std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
 
-std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
+std::unique_ptr<PollingPolicy> DefaultGoldenThingAdminPollingPolicy() {
   auto constexpr kBackoffScaling = 2.0;
   return GenericPollingPolicy<GoldenThingAdminLimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
              GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)),
@@ -200,28 +190,17 @@ std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {
       .clone();
 }
 
+namespace {
 class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
  public:
-  explicit GoldenThingAdminConnectionImpl(
+  GoldenThingAdminConnectionImpl(
       std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
-      std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::unique_ptr<PollingPolicy> polling_policy,
-      std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy)
+      Options const& options)
       : stub_(std::move(stub)),
-        retry_policy_prototype_(std::move(retry_policy)),
-        backoff_policy_prototype_(std::move(backoff_policy)),
-        polling_policy_prototype_(std::move(polling_policy)),
-        idempotency_policy_(std::move(idempotency_policy)) {}
-
-  explicit GoldenThingAdminConnectionImpl(
-      std::shared_ptr<golden_internal::GoldenThingAdminStub> stub)
-      : GoldenThingAdminConnectionImpl(
-          std::move(stub),
-          DefaultRetryPolicy(),
-          DefaultBackoffPolicy(),
-          DefaultPollingPolicy(),
-          MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy()) {}
+        retry_policy_prototype_(options.get<GoldenThingAdminRetryPolicyOption>()->clone()),
+        backoff_policy_prototype_(options.get<GoldenThingAdminBackoffPolicyOption>()->clone()),
+        polling_policy_prototype_(options.get<GoldenThingAdminPollingPolicyOption>()->clone()),
+        idempotency_policy_(options.get<GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone()) {}
 
   ~GoldenThingAdminConnectionImpl() override = default;
 
@@ -628,32 +607,20 @@ class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
 }  // namespace
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options) {
+    Options options) {
+  options = golden_internal::GoldenThingAdminDefaultOptions(
+      std::move(options));
   return std::make_shared<GoldenThingAdminConnectionImpl>(
-      golden_internal::CreateDefaultGoldenThingAdminStub(options));
-}
-
-std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    GoldenThingAdminConnectionOptions const& options,
-    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy) {
-  return std::make_shared<GoldenThingAdminConnectionImpl>(
-      golden_internal::CreateDefaultGoldenThingAdminStub(options),
-      std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy));
+      golden_internal::CreateDefaultGoldenThingAdminStub(options), options);
 }
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
-    std::unique_ptr<GoldenThingAdminRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<PollingPolicy> polling_policy,
-    std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy) {
+    Options options) {
+  options = golden_internal::GoldenThingAdminDefaultOptions(
+      std::move(options));
   return std::make_shared<GoldenThingAdminConnectionImpl>(
-      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
-      std::move(polling_policy), std::move(idempotency_policy));
+      std::move(stub), std::move(options));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

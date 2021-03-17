@@ -20,7 +20,11 @@
 #include "generator/integration_tests/golden/internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +33,11 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<GoldenThingAdminStub>
-CreateDefaultGoldenThingAdminStub(golden::GoldenThingAdminConnectionOptions const& options) {
-  auto channel =
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                options.CreateChannelArguments());
+CreateDefaultGoldenThingAdminStub(Options const& options) {
+  auto channel = grpc::CreateCustomChannel(
+      options.get<EndpointOption>(),
+      options.get<GrpcCredentialOption>(),
+      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       ::google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
@@ -44,11 +49,13 @@ CreateDefaultGoldenThingAdminStub(golden::GoldenThingAdminConnectionOptions cons
 
   stub = std::make_shared<GoldenThingAdminMetadata>(std::move(stub));
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(
+      options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<GoldenThingAdminLogging>(std::move(stub),
-                                                  options.tracing_options(),
-                                                  options.components());
+    stub = std::make_shared<GoldenThingAdminLogging>(
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

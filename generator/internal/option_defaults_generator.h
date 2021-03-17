@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,10 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CONNECTION_OPTIONS_GENERATOR_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CONNECTION_OPTIONS_GENERATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_OPTION_DEFAULTS_GENERATOR_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_OPTION_DEFAULTS_GENERATOR_H
 
 #include "google/cloud/status.h"
+#include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/service_code_generator.h"
 #include <google/protobuf/compiler/code_generator.h>
@@ -27,23 +28,22 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Generates the header file and cc file for ConnectionOptions.
+ * Generates the header file and cc file for the Stub factory function.
  */
-class ConnectionOptionsGenerator : public ServiceCodeGenerator {
+class OptionDefaultsGenerator : public ServiceCodeGenerator {
  public:
-  ConnectionOptionsGenerator(
+  OptionDefaultsGenerator(
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
       google::protobuf::compiler::GeneratorContext* context);
 
-  ~ConnectionOptionsGenerator() override = default;
+  ~OptionDefaultsGenerator() override = default;
 
-  ConnectionOptionsGenerator(ConnectionOptionsGenerator const&) = delete;
-  ConnectionOptionsGenerator& operator=(ConnectionOptionsGenerator const&) =
-      delete;
-  ConnectionOptionsGenerator(ConnectionOptionsGenerator&&) = default;
-  ConnectionOptionsGenerator& operator=(ConnectionOptionsGenerator&&) = default;
+  OptionDefaultsGenerator(OptionDefaultsGenerator const&) = delete;
+  OptionDefaultsGenerator& operator=(OptionDefaultsGenerator const&) = delete;
+  OptionDefaultsGenerator(OptionDefaultsGenerator&&) = default;
+  OptionDefaultsGenerator& operator=(OptionDefaultsGenerator&&) = default;
 
  private:
   Status GenerateHeader() override;
@@ -54,4 +54,4 @@ class ConnectionOptionsGenerator : public ServiceCodeGenerator {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CONNECTION_OPTIONS_GENERATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_OPTION_DEFAULTS_GENERATOR_H

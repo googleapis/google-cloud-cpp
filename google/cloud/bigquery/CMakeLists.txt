@@ -40,10 +40,13 @@ add_library(
     big_query_read_connection.gcpcxx.pb.h
     big_query_read_connection_idempotency_policy.gcpcxx.pb.cc
     big_query_read_connection_idempotency_policy.gcpcxx.pb.h
+    big_query_read_options.gcpcxx.pb.h
     internal/big_query_read_logging_decorator.gcpcxx.pb.cc
     internal/big_query_read_logging_decorator.gcpcxx.pb.h
     internal/big_query_read_metadata_decorator.gcpcxx.pb.cc
     internal/big_query_read_metadata_decorator.gcpcxx.pb.h
+    internal/big_query_read_option_defaults.gcpcxx.pb.cc
+    internal/big_query_read_option_defaults.gcpcxx.pb.h
     internal/big_query_read_stub.gcpcxx.pb.cc
     internal/big_query_read_stub.gcpcxx.pb.h
     internal/big_query_read_stub_factory.gcpcxx.pb.cc

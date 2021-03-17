@@ -35,8 +35,6 @@ add_library(
     internal/codegen_utils.h
     internal/connection_generator.cc
     internal/connection_generator.h
-    internal/connection_options_generator.cc
-    internal/connection_options_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
     internal/generator_interface.h
@@ -48,6 +46,10 @@ add_library(
     internal/metadata_decorator_generator.h
     internal/mock_connection_generator.cc
     internal/mock_connection_generator.h
+    internal/option_defaults_generator.cc
+    internal/option_defaults_generator.h
+    internal/options_generator.cc
+    internal/options_generator.h
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h

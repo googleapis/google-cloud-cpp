@@ -16,13 +16,14 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_kitchen_sink_options.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
@@ -86,9 +87,11 @@ std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  return golden::MakeGoldenKitchenSinkConnection(
-      std::move(mock), retry.clone(), backoff.clone(),
-      golden::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy());
+  Options options;
+  options.set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone());
+  options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone());
+  return golden::MakeGoldenKitchenSinkConnection(std::move(mock),
+                                                 std::move(options));
 }
 
 TEST(GoldenKitchenSinkConnectionTest, GenerateAccessTokenSuccess) {
@@ -309,6 +312,6 @@ TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden_internal
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google

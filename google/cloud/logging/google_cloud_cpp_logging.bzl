@@ -19,17 +19,20 @@
 google_cloud_cpp_logging_hdrs = [
     "internal/logging_service_v2_logging_decorator.gcpcxx.pb.h",
     "internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h",
+    "internal/logging_service_v2_option_defaults.gcpcxx.pb.h",
     "internal/logging_service_v2_stub.gcpcxx.pb.h",
     "internal/logging_service_v2_stub_factory.gcpcxx.pb.h",
     "logging_service_v2_client.gcpcxx.pb.h",
     "logging_service_v2_connection.gcpcxx.pb.h",
     "logging_service_v2_connection_idempotency_policy.gcpcxx.pb.h",
+    "logging_service_v2_options.gcpcxx.pb.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_logging_srcs = [
     "internal/logging_service_v2_logging_decorator.gcpcxx.pb.cc",
     "internal/logging_service_v2_metadata_decorator.gcpcxx.pb.cc",
+    "internal/logging_service_v2_option_defaults.gcpcxx.pb.cc",
     "internal/logging_service_v2_stub.gcpcxx.pb.cc",
     "internal/logging_service_v2_stub_factory.gcpcxx.pb.cc",
     "logging_service_v2_client.gcpcxx.pb.cc",

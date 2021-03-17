@@ -20,7 +20,11 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +33,11 @@ namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<GoldenKitchenSinkStub>
-CreateDefaultGoldenKitchenSinkStub(golden::GoldenKitchenSinkConnectionOptions const& options) {
-  auto channel =
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                options.CreateChannelArguments());
+CreateDefaultGoldenKitchenSinkStub(Options const& options) {
+  auto channel = grpc::CreateCustomChannel(
+      options.get<EndpointOption>(),
+      options.get<GrpcCredentialOption>(),
+      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       ::google::test::admin::database::v1::GoldenKitchenSink::NewStub(channel);
   std::shared_ptr<GoldenKitchenSinkStub> stub =
@@ -41,11 +46,13 @@ CreateDefaultGoldenKitchenSinkStub(golden::GoldenKitchenSinkConnectionOptions co
 
   stub = std::make_shared<GoldenKitchenSinkMetadata>(std::move(stub));
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(
+      options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<GoldenKitchenSinkLogging>(std::move(stub),
-                                                  options.tracing_options(),
-                                                  options.components());
+    stub = std::make_shared<GoldenKitchenSinkLogging>(
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

@@ -20,7 +20,11 @@
 #include "google/cloud/logging/internal/logging_service_v2_logging_decorator.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub.gcpcxx.pb.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
+#include "google/cloud/options.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +33,10 @@ namespace logging_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
-    logging::LoggingServiceV2ConnectionOptions const& options) {
-  auto channel =
-      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
-                                options.CreateChannelArguments());
+    Options const& options) {
+  auto channel = grpc::CreateCustomChannel(
+      options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
+      internal::MakeChannelArguments(options));
   auto service_grpc_stub =
       ::google::logging::v2::LoggingServiceV2::NewStub(channel);
   std::shared_ptr<LoggingServiceV2Stub> stub =
@@ -41,10 +45,11 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
 
   stub = std::make_shared<LoggingServiceV2Metadata>(std::move(stub));
 
-  if (options.tracing_enabled("rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<LoggingServiceV2Logging>(
-        std::move(stub), options.tracing_options(), options.components());
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        options.get<TracingComponentsOption>());
   }
   return stub;
 }

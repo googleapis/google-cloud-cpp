@@ -53,7 +53,7 @@ Status StubFactoryGenerator::GenerateHeader() {
 
   HeaderPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$($product_namespace$::$connection_options_name$ const& options);\n\n");
+    "CreateDefault$stub_class_name$(Options const& options);\n\n");
   // clang-format on
 
   HeaderCloseNamespaces();
@@ -75,7 +75,10 @@ Status StubFactoryGenerator::GenerateCc() {
   // includes
   CcLocalIncludes({vars("stub_factory_header_path"),
                    vars("logging_header_path"), vars("metadata_header_path"),
-                   vars("stub_header_path"), "google/cloud/log.h"});
+                   vars("stub_header_path"), "google/cloud/common_options.h",
+                   "google/cloud/grpc_options.h",
+                   "google/cloud/internal/algorithm.h",
+                   "google/cloud/options.h", "google/cloud/log.h"});
   CcSystemIncludes({"memory"});
   CcPrint("\n");
 
@@ -85,10 +88,11 @@ Status StubFactoryGenerator::GenerateCc() {
   // factory function implementation
   CcPrint(  // clang-format off
     "std::shared_ptr<$stub_class_name$>\n"
-    "CreateDefault$stub_class_name$($product_namespace$::$connection_options_name$ const& options) {\n"
-    "  auto channel =\n"
-    "      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),\n"
-    "                                options.CreateChannelArguments());\n"
+    "CreateDefault$stub_class_name$(Options const& options) {\n"
+    "  auto channel = grpc::CreateCustomChannel(\n"
+    "      options.get<EndpointOption>(),\n"
+    "      options.get<GrpcCredentialOption>(),\n"
+    "      internal::MakeChannelArguments(options));\n"
     "  auto service_grpc_stub =\n"
     "      $grpc_stub_fqn$::NewStub(channel);\n");
   if (HasLongrunningMethod()) {
@@ -116,11 +120,13 @@ Status StubFactoryGenerator::GenerateCc() {
     "\n"
     "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
     "\n"
-    "  if (options.tracing_enabled(\"rpc\")) {\n"
+    "  if (internal::Contains(\n"
+    "      options.get<TracingComponentsOption>(), \"rpc\")) {\n"
     "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
-    "    stub = std::make_shared<$logging_class_name$>(std::move(stub),\n"
-    "                                                  options.tracing_options(),\n"
-    "                                                  options.components());\n"
+    "    stub = std::make_shared<$logging_class_name$>(\n"
+    "        std::move(stub),\n"
+    "        options.get<GrpcTracingOptionsOption>(),\n"
+    "        options.get<TracingComponentsOption>());\n"
     "  }\n"
     "  return stub;\n"
     "}\n\n");

@@ -22,11 +22,12 @@
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
-#include "generator/internal/connection_options_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/mock_connection_generator.h"
+#include "generator/internal/option_defaults_generator.h"
+#include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_policy_generator.h"
 #include "generator/internal/stub_factory_generator.h"
@@ -466,6 +467,17 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "mocks/mock_",
                    ServiceNameToFilePath(descriptor.name()), "_connection",
                    GeneratedFileSuffix(), ".h");
+  vars["option_defaults_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
+                   GeneratedFileSuffix(), ".cc");
+  vars["option_defaults_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
+                   GeneratedFileSuffix(), ".h");
+  vars["options_header_path"] = absl::StrCat(
+      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_options", GeneratedFileSuffix(), ".h");
   vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["product_internal_namespace"] =
       BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
@@ -478,6 +490,10 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(vars["product_path"], "retry_traits", ".h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
+  vars["service_endpoint_env_var"] = absl::StrCat(
+      "GOOGLE_CLOUD_CPP_",
+      absl::AsciiStrToUpper(CamelCaseToSnakeCase(descriptor.name())),
+      "_ENDPOINT");
   vars["service_name"] = descriptor.name();
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
   vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
@@ -557,6 +573,12 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
+  code_generators.push_back(absl::make_unique<OptionDefaultsGenerator>(
+      service, service_vars, CreateMethodVars(*service, service_vars),
+      context));
+  code_generators.push_back(absl::make_unique<OptionsGenerator>(
       service, service_vars, CreateMethodVars(*service, service_vars),
       context));
   code_generators.push_back(absl::make_unique<StubGenerator>(

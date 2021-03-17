@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//#include "google/cloud/common_options.h"
+//#include "google/cloud/internal/setenv.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_thing_admin_options.gcpcxx.pb.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
@@ -157,25 +160,12 @@ std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
   GenericPollingPolicy<golden::GoldenThingAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
-  return golden::MakeGoldenThingAdminConnection(
-      std::move(mock), retry.clone(), backoff.clone(), polling.clone(),
-      golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());
-}
-
-TEST(GoldenThingAdminConnectionOptionsTest, DefaultEndpoint) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_EQ("test.googleapis.com", options.endpoint());
-}
-
-TEST(GoldenThingAdminConnectionOptionsTest, UserAgentPrefix) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_THAT(options.user_agent_prefix(),
-              HasSubstr("gcloud-cpp/" + version_string()));
-}
-
-TEST(GoldenThingAdminConnectionOptionsTest, DefaultNumChannels) {
-  golden::GoldenThingAdminConnectionOptions options;
-  EXPECT_EQ(4, options.num_channels());
+  Options options;
+  options.set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone());
+  options.set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone());
+  options.set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone());
+  return golden::MakeGoldenThingAdminConnection(std::move(mock),
+                                                std::move(options));
 }
 
 /// @test Verify that we can list databases in multiple pages.
@@ -1339,6 +1329,6 @@ TEST(GoldenThingAdminClientTest, ListBackupOperationsTooManyFailures) {
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
-}  // namespace golden_internal
+}  // namespace golden
 }  // namespace cloud
 }  // namespace google

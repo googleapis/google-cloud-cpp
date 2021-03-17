@@ -22,7 +22,7 @@
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.gcpcxx.pb.h"
 #include "google/cloud/logging/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/connection_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -32,15 +32,6 @@ namespace google {
 namespace cloud {
 namespace logging {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-struct LoggingServiceV2ConnectionOptionsTraits {
-  static std::string default_endpoint();
-  static std::string user_agent_prefix();
-  static int default_num_channels();
-};
-
-using LoggingServiceV2ConnectionOptions =
-    google::cloud::ConnectionOptions<LoggingServiceV2ConnectionOptionsTraits>;
 
 using LoggingServiceV2RetryPolicy =
     google::cloud::internal::TraitBasedRetryPolicy<
@@ -53,6 +44,11 @@ using LoggingServiceV2LimitedTimeRetryPolicy =
 using LoggingServiceV2LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
+
+std::unique_ptr<LoggingServiceV2RetryPolicy>
+DefaultLoggingServiceV2RetryPolicy();
+
+std::unique_ptr<BackoffPolicy> DefaultLoggingServiceV2BackoffPolicy();
 
 class LoggingServiceV2Connection {
  public:
@@ -76,22 +72,11 @@ class LoggingServiceV2Connection {
 };
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    LoggingServiceV2ConnectionOptions const& options =
-        LoggingServiceV2ConnectionOptions());
-
-std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    LoggingServiceV2ConnectionOptions const& options,
-    std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
-    std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace logging

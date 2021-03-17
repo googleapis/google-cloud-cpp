@@ -22,7 +22,7 @@
 #include "google/cloud/bigquery/internal/big_query_read_stub.gcpcxx.pb.h"
 #include "google/cloud/bigquery/retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/connection_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -32,15 +32,6 @@ namespace google {
 namespace cloud {
 namespace bigquery {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
-
-struct BigQueryReadConnectionOptionsTraits {
-  static std::string default_endpoint();
-  static std::string user_agent_prefix();
-  static int default_num_channels();
-};
-
-using BigQueryReadConnectionOptions =
-    google::cloud::ConnectionOptions<BigQueryReadConnectionOptionsTraits>;
 
 using BigQueryReadRetryPolicy = google::cloud::internal::TraitBasedRetryPolicy<
     bigquery_internal::BigQueryReadRetryTraits>;
@@ -52,6 +43,10 @@ using BigQueryReadLimitedTimeRetryPolicy =
 using BigQueryReadLimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::BigQueryReadRetryTraits>;
+
+std::unique_ptr<BigQueryReadRetryPolicy> DefaultBigQueryReadRetryPolicy();
+
+std::unique_ptr<BackoffPolicy> DefaultBigQueryReadBackoffPolicy();
 
 void BigQueryReadReadRowsStreamingUpdater(
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
@@ -78,22 +73,11 @@ class BigQueryReadConnection {
 };
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options =
-        BigQueryReadConnectionOptions());
-
-std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
-    BigQueryReadConnectionOptions const& options,
-    std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
-    std::unique_ptr<BigQueryReadRetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy,
-    std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-        idempotency_policy);
+    Options options = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace bigquery
