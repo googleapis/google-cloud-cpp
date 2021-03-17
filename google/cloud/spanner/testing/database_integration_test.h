@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include <gtest/gtest.h>
 
 namespace google {
@@ -27,7 +28,8 @@ namespace spanner_testing {
 /// An inlined, versioned namespace for the testing helpers.
 inline namespace SPANNER_CLIENT_NS {
 
-class DatabaseIntegrationTest : public ::testing::Test {
+class DatabaseIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  public:
   static void SetUpTestSuite();
   static void TearDownTestSuite();

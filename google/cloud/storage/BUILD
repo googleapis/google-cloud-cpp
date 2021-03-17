@@ -114,6 +114,7 @@ cc_library(
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",

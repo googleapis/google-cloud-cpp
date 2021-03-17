@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -37,7 +38,10 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::Not;
 
-TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
+using SchemaAdminIntegrationTest =
+    ::google::cloud::testing_util::IntegrationTest;
+
+TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
@@ -87,7 +91,7 @@ TEST(SchemaAdminIntegrationTest, SchemaCRUD) {
   EXPECT_THAT(deleted, IsOk());
 }
 
-TEST(SchemaAdminIntegrationTest, CreateSchema) {
+TEST_F(SchemaAdminIntegrationTest, CreateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
@@ -96,7 +100,7 @@ TEST(SchemaAdminIntegrationTest, CreateSchema) {
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(SchemaAdminIntegrationTest, GetSchema) {
+TEST_F(SchemaAdminIntegrationTest, GetSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
@@ -105,7 +109,7 @@ TEST(SchemaAdminIntegrationTest, GetSchema) {
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(SchemaAdminIntegrationTest, ListSchema) {
+TEST_F(SchemaAdminIntegrationTest, ListSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
@@ -115,7 +119,7 @@ TEST(SchemaAdminIntegrationTest, ListSchema) {
   EXPECT_THAT(*i, Not(IsOk()));
 }
 
-TEST(SchemaAdminIntegrationTest, DeleteSchema) {
+TEST_F(SchemaAdminIntegrationTest, DeleteSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
@@ -124,7 +128,7 @@ TEST(SchemaAdminIntegrationTest, DeleteSchema) {
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(SchemaAdminIntegrationTest, ValidateSchema) {
+TEST_F(SchemaAdminIntegrationTest, ValidateSchema) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));
@@ -133,7 +137,7 @@ TEST(SchemaAdminIntegrationTest, ValidateSchema) {
   EXPECT_THAT(response, Not(IsOk()));
 }
 
-TEST(SchemaAdminIntegrationTest, ValidateMessage) {
+TEST_F(SchemaAdminIntegrationTest, ValidateMessage) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection(
       pubsub::ConnectionOptions{}, TestRetryPolicy(), TestBackoffPolicy()));

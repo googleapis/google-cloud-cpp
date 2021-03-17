@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -31,7 +32,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-class RpcFailureThresholdTest : public ::testing::Test {
+class RpcFailureThresholdTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  public:
   void SetUp() override {
     auto project_id =

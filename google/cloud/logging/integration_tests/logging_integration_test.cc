@@ -16,6 +16,7 @@
 #include "google/cloud/logging/logging_service_v2_client.gcpcxx.pb.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -31,7 +32,8 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-class LoggingIntegrationTest : public ::testing::Test {
+class LoggingIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
     connection_options_.enable_tracing("rpc");
@@ -40,6 +42,7 @@ class LoggingIntegrationTest : public ::testing::Test {
     backoff_policy_ = absl::make_unique<ExponentialBackoffPolicy>(
         std::chrono::seconds(1), std::chrono::seconds(1), 2.0);
   }
+
   LoggingServiceV2ConnectionOptions connection_options_;
   std::unique_ptr<LoggingServiceV2RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;

@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -75,7 +76,8 @@ class TableTestEnvironment : public ::testing::Environment {
  * Fixture for integration tests that need to create tables and check their
  * contents.
  */
-class TableIntegrationTest : public ::testing::Test {
+class TableIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override;
 

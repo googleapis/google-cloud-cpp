@@ -20,6 +20,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -40,7 +41,8 @@ using ::testing::EndsWith;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-class DatabaseAdminClientTest : public ::testing::Test {
+class DatabaseAdminClientTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   // We can't use ASSERT* in the constructor, so defer initializing `instance_`
   // and `database_` until `SetUp()`.

@@ -23,6 +23,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
@@ -43,7 +44,8 @@ using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
 
-class SubscriberIntegrationTest : public ::testing::Test {
+class SubscriberIntegrationTest
+    : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
     auto project_id =

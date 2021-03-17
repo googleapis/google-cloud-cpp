@@ -21,6 +21,7 @@
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -46,7 +47,10 @@ bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
 }
 
-TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
+using SubscriptionAdminIntegrationTest =
+    ::google::cloud::testing_util::IntegrationTest;
+
+TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
@@ -190,7 +194,7 @@ TEST(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
               Not(Contains(subscription.FullName())));
 }
 
-TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -201,7 +205,7 @@ TEST(SubscriptionAdminIntegrationTest, CreateSubscriptionFailure) {
   ASSERT_FALSE(create_response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, GetSubscriptionFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, GetSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -211,7 +215,7 @@ TEST(SubscriptionAdminIntegrationTest, GetSubscriptionFailure) {
   ASSERT_FALSE(create_response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -222,7 +226,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSubscriptionFailure) {
   ASSERT_FALSE(create_response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -233,7 +237,7 @@ TEST(SubscriptionAdminIntegrationTest, ListSubscriptionsFailure) {
   EXPECT_FALSE(*i);
 }
 
-TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -243,7 +247,7 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSubscriptionFailure) {
   ASSERT_FALSE(delete_response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, ModifyPushConfigFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, ModifyPushConfigFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -254,7 +258,7 @@ TEST(SubscriptionAdminIntegrationTest, ModifyPushConfigFailure) {
   ASSERT_FALSE(delete_response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -264,7 +268,7 @@ TEST(SubscriptionAdminIntegrationTest, CreateSnapshotFailure) {
   ASSERT_FALSE(response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, GetSnapshotFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, GetSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -274,7 +278,7 @@ TEST(SubscriptionAdminIntegrationTest, GetSnapshotFailure) {
   ASSERT_FALSE(response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, ListSnapshotsFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, ListSnapshotsFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -285,7 +289,7 @@ TEST(SubscriptionAdminIntegrationTest, ListSnapshotsFailure) {
   EXPECT_FALSE(*i);
 }
 
-TEST(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -296,7 +300,7 @@ TEST(SubscriptionAdminIntegrationTest, UpdateSnapshotFailure) {
   ASSERT_FALSE(response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
+TEST_F(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -306,7 +310,7 @@ TEST(SubscriptionAdminIntegrationTest, DeleteSnapshotFailure) {
   ASSERT_FALSE(response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, SeekFailureTimestamp) {
+TEST_F(SubscriptionAdminIntegrationTest, SeekFailureTimestamp) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
@@ -317,7 +321,7 @@ TEST(SubscriptionAdminIntegrationTest, SeekFailureTimestamp) {
   ASSERT_FALSE(response.ok());
 }
 
-TEST(SubscriptionAdminIntegrationTest, SeekFailureSnapshot) {
+TEST_F(SubscriptionAdminIntegrationTest, SeekFailureSnapshot) {
   // Use an invalid endpoint to force a connection error.
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto client = SubscriptionAdminClient(MakeSubscriptionAdminConnection(
