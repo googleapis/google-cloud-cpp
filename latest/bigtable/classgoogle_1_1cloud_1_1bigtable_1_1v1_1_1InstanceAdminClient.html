@@ -94,6 +94,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc15fd04a19f080ee0ca59a20a0bc9a1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#acc15fd04a19f080ee0ca59a20a0bc9a1">reset</a> ()=0</td></tr>
 <tr class="memdesc:acc15fd04a19f080ee0ca59a20a0bc9a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset and create a new Stub().  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#acc15fd04a19f080ee0ca59a20a0bc9a1">More...</a><br /></td></tr>
 <tr class="separator:acc15fd04a19f080ee0ca59a20a0bc9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab14e9f8854fc1ca5b34818d795d8bc79"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab14e9f8854fc1ca5b34818d795d8bc79">BackgroundThreadsFactory</a> ()=0</td></tr>
+<tr class="memdesc:ab14e9f8854fc1ca5b34818d795d8bc79"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab14e9f8854fc1ca5b34818d795d8bc79">More...</a><br /></td></tr>
+<tr class="separator:ab14e9f8854fc1ca5b34818d795d8bc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -174,17 +177,14 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ac290b7cad287a02d7a9d31c64c8b1474"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6959819a3d486dfc51ca2feb1028a403"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::TestIamPermissionsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6959819a3d486dfc51ca2feb1028a403">AsyncTestIamPermissions</a> (grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
 <tr class="separator:a6959819a3d486dfc51ca2feb1028a403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</div></td></tr>
+<tr class="memitem:aacad6a9225a01341c8424fe4dfddb2fa"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">AsyncGetOperation</a> (grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:aacad6a9225a01341c8424fe4dfddb2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
 <tr class="memitem:ae3f77558669caa629f5357dd5a727481"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3f77558669caa629f5357dd5a727481">InstanceAdmin</a></td></tr>
 <tr class="separator:ae3f77558669caa629f5357dd5a727481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</h2></td></tr>
-<tr class="memitem:aacad6a9225a01341c8424fe4dfddb2fa"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">AsyncGetOperation</a> (grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:aacad6a9225a01341c8424fe4dfddb2fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">More...</a><br /></td></tr>
-<tr class="separator:aacad6a9225a01341c8424fe4dfddb2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's instance administration APIs. </p>
@@ -679,8 +679,6 @@ The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</h2></td>
 </table>
 </div><div class="memdoc">
 
-<p>The <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <a id="abc103bce20fa797d79cacc1a731f34da"></a>
@@ -1016,6 +1014,33 @@ The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</h2></td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab14e9f8854fc1ca5b34818d795d8bc79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab14e9f8854fc1ca5b34818d795d8bc79">&#9670;&nbsp;</a></span>BackgroundThreadsFactory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a> google::cloud::bigtable::v1::InstanceAdminClient::BackgroundThreadsFactory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The thread factory this client was created with. </p>
 
 </div>
 </div>
@@ -1921,7 +1946,7 @@ The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</h2></td>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="instance__admin__client_8h_source.html#l00092">92</a> of file <a class="el" href="instance__admin__client_8h_source.html">instance_admin_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="instance__admin__client_8h_source.html#l00098">98</a> of file <a class="el" href="instance__admin__client_8h_source.html">instance_admin_client.h</a>.</p>
 
 </div>
 </div>

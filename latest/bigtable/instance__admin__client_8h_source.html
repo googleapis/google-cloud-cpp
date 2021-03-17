@@ -120,247 +120,245 @@ $(function() {
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
 <div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#acc15fd04a19f080ee0ca59a20a0bc9a1">   85</a></span>&#160;  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#acc15fd04a19f080ee0ca59a20a0bc9a1">reset</a>() = 0;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="comment">// The member functions of this class are not intended for general use by</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="comment">// application developers (they are simply a dependency injection point). Make</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="comment">// them protected, so the mock classes can override them, and then make the</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="comment">// classes that do use them friends.</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3f77558669caa629f5357dd5a727481">   92</a></span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Client, <span class="keyword">typename</span> ResponseType&gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncLongrunningOp;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Client, <span class="keyword">typename</span> Response&gt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncLongrunningOperation;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListClusters;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListInstances;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListAppProfiles;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::LoggingInstanceAdminClient;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">virtual</span> grpc::Status ListInstances(</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      google::bigtable::admin::v2::ListInstancesRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      google::bigtable::admin::v2::ListInstancesResponse* response) = 0;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac36f20dd3c300b3f9b721a70f05581d3">  108</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac36f20dd3c300b3f9b721a70f05581d3">CreateInstance</a>(</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      google::bigtable::admin::v2::CreateInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae58bdcf632c6fcfa16f8b991e1ed3ad0">  113</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae58bdcf632c6fcfa16f8b991e1ed3ad0">UpdateInstance</a>(</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      google::bigtable::admin::v2::PartialUpdateInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab170ba18e28b7604237f0f85df4cbbea">  118</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab170ba18e28b7604237f0f85df4cbbea">GetInstance</a>(</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      google::bigtable::admin::v2::GetInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::bigtable::admin::v2::Instance</a>* response) = 0;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a52641ecdba463976c4d5f01b3ef5b4c4">  123</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a52641ecdba463976c4d5f01b3ef5b4c4">DeleteInstance</a>(</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      google::bigtable::admin::v2::DeleteInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      google::protobuf::Empty* response) = 0;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a687a18d75ed4e352053b1684a06fa631">  128</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a687a18d75ed4e352053b1684a06fa631">ListClusters</a>(</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      google::bigtable::admin::v2::ListClustersRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      google::bigtable::admin::v2::ListClustersResponse* response) = 0;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3a8db56c61bea87b623389f7fb23d6c">  133</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3a8db56c61bea87b623389f7fb23d6c">DeleteCluster</a>(</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      google::bigtable::admin::v2::DeleteClusterRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      google::protobuf::Empty* response) = 0;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#af88bbe71ca91eca0ff3732237f1ce6f4">  138</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#af88bbe71ca91eca0ff3732237f1ce6f4">CreateCluster</a>(</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      google::bigtable::admin::v2::CreateClusterRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a1ba03ff8d275e9b7e3f558023dcbe78f">  143</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a1ba03ff8d275e9b7e3f558023dcbe78f">GetCluster</a>(</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      google::bigtable::admin::v2::GetClusterRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      google::bigtable::admin::v2::Cluster* response) = 0;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a8887b16ab9cad18de717bc9484c0b7b2">  148</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a8887b16ab9cad18de717bc9484c0b7b2">UpdateCluster</a>(</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      google::bigtable::admin::v2::Cluster <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad8cd01d69b0698ebdcc3bd677cc38c25">  153</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad8cd01d69b0698ebdcc3bd677cc38c25">CreateAppProfile</a>(</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      google::bigtable::admin::v2::CreateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      google::bigtable::admin::v2::AppProfile* response) = 0;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a03b53d00c3e2e4df633be68d65dab51c">  158</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a03b53d00c3e2e4df633be68d65dab51c">GetAppProfile</a>(</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      google::bigtable::admin::v2::GetAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      google::bigtable::admin::v2::AppProfile* response) = 0;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab619ac5dbccfcee5d568d725cf6fcef8">  163</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab619ac5dbccfcee5d568d725cf6fcef8">ListAppProfiles</a>(</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      google::bigtable::admin::v2::ListAppProfilesRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      google::bigtable::admin::v2::ListAppProfilesResponse* response) = 0;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
-<div class="line"><a name="l00168"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a15fd7b33e52d14d767bea5db2b4d1a0b">  168</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a15fd7b33e52d14d767bea5db2b4d1a0b">UpdateAppProfile</a>(</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      google::bigtable::admin::v2::UpdateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
-<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a42fdfe2f373c4ef8f70442b16baf340c">  173</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a42fdfe2f373c4ef8f70442b16baf340c">DeleteAppProfile</a>(</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      google::bigtable::admin::v2::DeleteAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      google::protobuf::Empty* response) = 0;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6ffed31168a75d4bdb5254f065be60ab">  178</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6ffed31168a75d4bdb5254f065be60ab">GetIamPolicy</a>(</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      google::iam::v1::GetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      google::iam::v1::Policy* response) = 0;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0ba7f1f07e3ed346cfcecd740bb3ce48">  183</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0ba7f1f07e3ed346cfcecd740bb3ce48">SetIamPolicy</a>(</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      google::iam::v1::SetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      google::iam::v1::Policy* response) = 0;</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a05a19d28dd2834b1d8ce4d2e853a0b6f">  188</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a05a19d28dd2834b1d8ce4d2e853a0b6f">TestIamPermissions</a>(</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;      google::iam::v1::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      google::iam::v1::TestIamPermissionsResponse* response) = 0;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keyword">virtual</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a></div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab14e9f8854fc1ca5b34818d795d8bc79">   91</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab14e9f8854fc1ca5b34818d795d8bc79">BackgroundThreadsFactory</a>() = 0;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="comment">// The member functions of this class are not intended for general use by</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="comment">// application developers (they are simply a dependency injection point). Make</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="comment">// them protected, so the mock classes can override them, and then make the</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="comment">// classes that do use them friends.</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3f77558669caa629f5357dd5a727481">   98</a></span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">InstanceAdmin</a>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Client, <span class="keyword">typename</span> ResponseType&gt;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncLongrunningOp;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Client, <span class="keyword">typename</span> Response&gt;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncLongrunningOperation;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListClusters;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListInstances;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::AsyncListAppProfiles;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keyword">friend</span> <span class="keyword">class </span>internal::LoggingInstanceAdminClient;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="keyword">virtual</span> grpc::Status ListInstances(</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      google::bigtable::admin::v2::ListInstancesRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      google::bigtable::admin::v2::ListInstancesResponse* response) = 0;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac36f20dd3c300b3f9b721a70f05581d3">  114</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac36f20dd3c300b3f9b721a70f05581d3">CreateInstance</a>(</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      google::bigtable::admin::v2::CreateInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae58bdcf632c6fcfa16f8b991e1ed3ad0">  119</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae58bdcf632c6fcfa16f8b991e1ed3ad0">UpdateInstance</a>(</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      google::bigtable::admin::v2::PartialUpdateInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab170ba18e28b7604237f0f85df4cbbea">  124</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab170ba18e28b7604237f0f85df4cbbea">GetInstance</a>(</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      google::bigtable::admin::v2::GetInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::bigtable::admin::v2::Instance</a>* response) = 0;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a52641ecdba463976c4d5f01b3ef5b4c4">  129</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a52641ecdba463976c4d5f01b3ef5b4c4">DeleteInstance</a>(</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      google::bigtable::admin::v2::DeleteInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      google::protobuf::Empty* response) = 0;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a687a18d75ed4e352053b1684a06fa631">  134</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a687a18d75ed4e352053b1684a06fa631">ListClusters</a>(</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      google::bigtable::admin::v2::ListClustersRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      google::bigtable::admin::v2::ListClustersResponse* response) = 0;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3a8db56c61bea87b623389f7fb23d6c">  139</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3a8db56c61bea87b623389f7fb23d6c">DeleteCluster</a>(</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      google::bigtable::admin::v2::DeleteClusterRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      google::protobuf::Empty* response) = 0;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#af88bbe71ca91eca0ff3732237f1ce6f4">  144</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#af88bbe71ca91eca0ff3732237f1ce6f4">CreateCluster</a>(</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      google::bigtable::admin::v2::CreateClusterRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a1ba03ff8d275e9b7e3f558023dcbe78f">  149</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a1ba03ff8d275e9b7e3f558023dcbe78f">GetCluster</a>(</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      google::bigtable::admin::v2::GetClusterRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      google::bigtable::admin::v2::Cluster* response) = 0;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a8887b16ab9cad18de717bc9484c0b7b2">  154</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a8887b16ab9cad18de717bc9484c0b7b2">UpdateCluster</a>(</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      google::bigtable::admin::v2::Cluster <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad8cd01d69b0698ebdcc3bd677cc38c25">  159</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad8cd01d69b0698ebdcc3bd677cc38c25">CreateAppProfile</a>(</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      google::bigtable::admin::v2::CreateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      google::bigtable::admin::v2::AppProfile* response) = 0;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a03b53d00c3e2e4df633be68d65dab51c">  164</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a03b53d00c3e2e4df633be68d65dab51c">GetAppProfile</a>(</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      google::bigtable::admin::v2::GetAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;      google::bigtable::admin::v2::AppProfile* response) = 0;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab619ac5dbccfcee5d568d725cf6fcef8">  169</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab619ac5dbccfcee5d568d725cf6fcef8">ListAppProfiles</a>(</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      google::bigtable::admin::v2::ListAppProfilesRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      google::bigtable::admin::v2::ListAppProfilesResponse* response) = 0;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a15fd7b33e52d14d767bea5db2b4d1a0b">  174</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a15fd7b33e52d14d767bea5db2b4d1a0b">UpdateAppProfile</a>(</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      google::bigtable::admin::v2::UpdateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a42fdfe2f373c4ef8f70442b16baf340c">  179</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a42fdfe2f373c4ef8f70442b16baf340c">DeleteAppProfile</a>(</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      google::bigtable::admin::v2::DeleteAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      google::protobuf::Empty* response) = 0;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6ffed31168a75d4bdb5254f065be60ab">  184</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6ffed31168a75d4bdb5254f065be60ab">GetIamPolicy</a>(</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      google::iam::v1::GetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      google::iam::v1::Policy* response) = 0;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0ba7f1f07e3ed346cfcecd740bb3ce48">  189</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0ba7f1f07e3ed346cfcecd740bb3ce48">SetIamPolicy</a>(</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;      google::iam::v1::SetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      google::iam::v1::Policy* response) = 0;</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="keyword">virtual</span> grpc::Status GetOperation(</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      google::longrunning::GetOperationRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      google::longrunning::Operation* response) = 0;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;      google::bigtable::admin::v2::ListInstancesResponse&gt;&gt;</div>
-<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad6ed4606fe9ee34616ae482de65f1b7c">  206</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad6ed4606fe9ee34616ae482de65f1b7c">AsyncListInstances</a>(</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;      google::bigtable::admin::v2::ListInstancesRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::bigtable::admin::v2::Instance</a>&gt;&gt;</div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aaa852ff8e0574d1d5a6f3f2190cee7ec">  213</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aaa852ff8e0574d1d5a6f3f2190cee7ec">AsyncGetInstance</a>(</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      google::bigtable::admin::v2::GetInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      google::bigtable::admin::v2::Cluster&gt;&gt;</div>
-<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a804e548b4529a466bfd7a811347df6c4">  220</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a804e548b4529a466bfd7a811347df6c4">AsyncGetCluster</a>(grpc::ClientContext* context,</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                  google::bigtable::admin::v2::GetClusterRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                  grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a05a19d28dd2834b1d8ce4d2e853a0b6f">  194</a></span>&#160;  <span class="keyword">virtual</span> grpc::Status <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a05a19d28dd2834b1d8ce4d2e853a0b6f">TestIamPermissions</a>(</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;      google::iam::v1::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;      google::iam::v1::TestIamPermissionsResponse* response) = 0;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keyword">virtual</span> grpc::Status GetOperation(</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;      google::longrunning::GetOperationRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;      google::longrunning::Operation* response) = 0;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;      google::bigtable::admin::v2::ListInstancesResponse&gt;&gt;</div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad6ed4606fe9ee34616ae482de65f1b7c">  212</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad6ed4606fe9ee34616ae482de65f1b7c">AsyncListInstances</a>(</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      google::bigtable::admin::v2::ListInstancesRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::bigtable::admin::v2::Instance</a>&gt;&gt;</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aaa852ff8e0574d1d5a6f3f2190cee7ec">  219</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aaa852ff8e0574d1d5a6f3f2190cee7ec">AsyncGetInstance</a>(</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      google::bigtable::admin::v2::GetInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0157ced62647fd364f5e4c87bf4321eb">  226</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0157ced62647fd364f5e4c87bf4321eb">AsyncDeleteCluster</a>(</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      google::bigtable::admin::v2::DeleteClusterRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a2962866d509c97423dd9bdb266402ed3">  233</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a2962866d509c97423dd9bdb266402ed3">AsyncCreateCluster</a>(</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::CreateClusterRequest&amp; request,</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a96b39bd139ba6ffe65d58449877f4021">  240</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a96b39bd139ba6ffe65d58449877f4021">AsyncCreateInstance</a>(</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::CreateInstanceRequest&amp; request,</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a9200b893b308142836450aa2064a4d0a">  247</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a9200b893b308142836450aa2064a4d0a">AsyncUpdateInstance</a>(</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::PartialUpdateInstanceRequest&amp; request,</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3aefd589caf55d58c6bf746594daa6f9">  254</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3aefd589caf55d58c6bf746594daa6f9">AsyncUpdateCluster</a>(grpc::ClientContext* context,</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                     <span class="keyword">const</span> google::bigtable::admin::v2::Cluster&amp; request,</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                     grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      google::bigtable::admin::v2::Cluster&gt;&gt;</div>
+<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a804e548b4529a466bfd7a811347df6c4">  226</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a804e548b4529a466bfd7a811347df6c4">AsyncGetCluster</a>(grpc::ClientContext* context,</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                  google::bigtable::admin::v2::GetClusterRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                  grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
+<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0157ced62647fd364f5e4c87bf4321eb">  232</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a0157ced62647fd364f5e4c87bf4321eb">AsyncDeleteCluster</a>(</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      google::bigtable::admin::v2::DeleteClusterRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a2962866d509c97423dd9bdb266402ed3">  239</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a2962866d509c97423dd9bdb266402ed3">AsyncCreateCluster</a>(</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::CreateClusterRequest&amp; request,</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00246"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a96b39bd139ba6ffe65d58449877f4021">  246</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a96b39bd139ba6ffe65d58449877f4021">AsyncCreateInstance</a>(</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::CreateInstanceRequest&amp; request,</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00253"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a9200b893b308142836450aa2064a4d0a">  253</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a9200b893b308142836450aa2064a4d0a">AsyncUpdateInstance</a>(</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::PartialUpdateInstanceRequest&amp; request,</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
-<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3d1fc5854c133b7db646fc77e161e1f4">  260</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3d1fc5854c133b7db646fc77e161e1f4">AsyncDeleteInstance</a>(</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      google::bigtable::admin::v2::DeleteInstanceRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      google::bigtable::admin::v2::ListClustersResponse&gt;&gt;</div>
-<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aef7380ee7c41a30424179509ba57ebd0">  267</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aef7380ee7c41a30424179509ba57ebd0">AsyncListClusters</a>(</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::ListClustersRequest&amp; request,</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160; </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
-<div class="line"><a name="l00274"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a4afc02b30fc30bd4de0ca0753ef65462">  274</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a4afc02b30fc30bd4de0ca0753ef65462">AsyncGetAppProfile</a>(</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      google::bigtable::admin::v2::GetAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
-<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a353d462adae659cd1001b77b3d2bcb30">  281</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a353d462adae659cd1001b77b3d2bcb30">AsyncDeleteAppProfile</a>(</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      google::bigtable::admin::v2::DeleteAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;      google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
-<div class="line"><a name="l00288"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#adb1053fa6286e5e9eb88b10cabff5cb0">  288</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#adb1053fa6286e5e9eb88b10cabff5cb0">AsyncCreateAppProfile</a>(</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      google::bigtable::admin::v2::CreateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a252f4112408c81a7a198baa0cca87685">  295</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a252f4112408c81a7a198baa0cca87685">AsyncUpdateAppProfile</a>(</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::UpdateAppProfileRequest&amp; request,</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      google::bigtable::admin::v2::ListAppProfilesResponse&gt;&gt;</div>
-<div class="line"><a name="l00302"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#abc103bce20fa797d79cacc1a731f34da">  302</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#abc103bce20fa797d79cacc1a731f34da">AsyncListAppProfiles</a>(</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::ListAppProfilesRequest&amp; request,</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::iam::v1::Policy&gt;&gt;</div>
-<div class="line"><a name="l00309"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a92e8be8202c1b1696867d573c099b226">  309</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a92e8be8202c1b1696867d573c099b226">AsyncGetIamPolicy</a>(grpc::ClientContext* context,</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                    google::iam::v1::GetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                    grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00260"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3aefd589caf55d58c6bf746594daa6f9">  260</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3aefd589caf55d58c6bf746594daa6f9">AsyncUpdateCluster</a>(grpc::ClientContext* context,</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                     <span class="keyword">const</span> google::bigtable::admin::v2::Cluster&amp; request,</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                     grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
+<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3d1fc5854c133b7db646fc77e161e1f4">  266</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a3d1fc5854c133b7db646fc77e161e1f4">AsyncDeleteInstance</a>(</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      google::bigtable::admin::v2::DeleteInstanceRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      google::bigtable::admin::v2::ListClustersResponse&gt;&gt;</div>
+<div class="line"><a name="l00273"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aef7380ee7c41a30424179509ba57ebd0">  273</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aef7380ee7c41a30424179509ba57ebd0">AsyncListClusters</a>(</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::ListClustersRequest&amp; request,</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a4afc02b30fc30bd4de0ca0753ef65462">  280</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a4afc02b30fc30bd4de0ca0753ef65462">AsyncGetAppProfile</a>(</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      google::bigtable::admin::v2::GetAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::protobuf::Empty&gt;&gt;</div>
+<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a353d462adae659cd1001b77b3d2bcb30">  287</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a353d462adae659cd1001b77b3d2bcb30">AsyncDeleteAppProfile</a>(</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      google::bigtable::admin::v2::DeleteAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      google::bigtable::admin::v2::AppProfile&gt;&gt;</div>
+<div class="line"><a name="l00294"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#adb1053fa6286e5e9eb88b10cabff5cb0">  294</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#adb1053fa6286e5e9eb88b10cabff5cb0">AsyncCreateAppProfile</a>(</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;      google::bigtable::admin::v2::CreateAppProfileRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a252f4112408c81a7a198baa0cca87685">  301</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a252f4112408c81a7a198baa0cca87685">AsyncUpdateAppProfile</a>(</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::UpdateAppProfileRequest&amp; request,</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      google::bigtable::admin::v2::ListAppProfilesResponse&gt;&gt;</div>
+<div class="line"><a name="l00308"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#abc103bce20fa797d79cacc1a731f34da">  308</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#abc103bce20fa797d79cacc1a731f34da">AsyncListAppProfiles</a>(</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      <span class="keyword">const</span> google::bigtable::admin::v2::ListAppProfilesRequest&amp; request,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::iam::v1::Policy&gt;&gt;</div>
-<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac290b7cad287a02d7a9d31c64c8b1474">  315</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac290b7cad287a02d7a9d31c64c8b1474">AsyncSetIamPolicy</a>(grpc::ClientContext* context,</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                    google::iam::v1::SetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a92e8be8202c1b1696867d573c099b226">  315</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a92e8be8202c1b1696867d573c099b226">AsyncGetIamPolicy</a>(grpc::ClientContext* context,</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                    google::iam::v1::GetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                    grpc::CompletionQueue* cq) = 0;</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      google::iam::v1::TestIamPermissionsResponse&gt;&gt;</div>
-<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6959819a3d486dfc51ca2feb1028a403">  321</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6959819a3d486dfc51ca2feb1028a403">AsyncTestIamPermissions</a>(</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      grpc::ClientContext* context,</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      google::iam::v1::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request,</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
-<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">  331</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">AsyncGetOperation</a>(grpc::ClientContext* context,</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                    <span class="keyword">const</span> google::longrunning::GetOperationRequest&amp; request,</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                    grpc::CompletionQueue* cq) = 0;</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keyword">virtual</span> <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a> <a class="codeRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#abfdb139d228c66850af103e63c0f8290">BackgroundThreadsFactory</a>() {</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keywordflow">return</span> {};</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  }</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::iam::v1::Policy&gt;&gt;</div>
+<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac290b7cad287a02d7a9d31c64c8b1474">  321</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac290b7cad287a02d7a9d31c64c8b1474">AsyncSetIamPolicy</a>(grpc::ClientContext* context,</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                    google::iam::v1::SetIamPolicyRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                    grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;grpc::ClientAsyncResponseReaderInterface&lt;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      google::iam::v1::TestIamPermissionsResponse&gt;&gt;</div>
+<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6959819a3d486dfc51ca2feb1028a403">  327</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a6959819a3d486dfc51ca2feb1028a403">AsyncTestIamPermissions</a>(</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      grpc::ClientContext* context,</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      google::iam::v1::TestIamPermissionsRequest <span class="keyword">const</span>&amp; request,</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      grpc::CompletionQueue* cq) = 0;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="keyword">virtual</span> std::unique_ptr&lt;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      grpc::ClientAsyncResponseReaderInterface&lt;google::longrunning::Operation&gt;&gt;</div>
+<div class="line"><a name="l00337"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">  337</a></span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">AsyncGetOperation</a>(grpc::ClientContext* context,</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                    <span class="keyword">const</span> google::longrunning::GetOperationRequest&amp; request,</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                    grpc::CompletionQueue* cq) = 0;</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;};</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;std::shared_ptr&lt;InstanceAdminClient&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a065da25598f925993d74b7e42bbbb5ef">CreateDefaultInstanceAdminClient</a>(</div>
@@ -377,6 +375,7 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ab170ba18e28b7604237f0f85df4cbbea"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab170ba18e28b7604237f0f85df4cbbea">google::cloud::bigtable::v1::InstanceAdminClient::GetInstance</a></div><div class="ttdeci">virtual grpc::Status GetInstance(grpc::ClientContext *context, google::bigtable::admin::v2::GetInstanceRequest const &amp;request, google::bigtable::admin::v2::Instance *response)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdmin.html">google::cloud::bigtable::v1::InstanceAdmin</a></div><div class="ttdoc">Implements the APIs to administer Cloud Bigtable instances.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin_8h_source.html#l00124">instance_admin.h:124</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_abc103bce20fa797d79cacc1a731f34da"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#abc103bce20fa797d79cacc1a731f34da">google::cloud::bigtable::v1::InstanceAdminClient::AsyncListAppProfiles</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::ListAppProfilesResponse &gt; &gt; AsyncListAppProfiles(grpc::ClientContext *context, const google::bigtable::admin::v2::ListAppProfilesRequest &amp;request, grpc::CompletionQueue *cq)=0</div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ab14e9f8854fc1ca5b34818d795d8bc79"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ab14e9f8854fc1ca5b34818d795d8bc79">google::cloud::bigtable::v1::InstanceAdminClient::BackgroundThreadsFactory</a></div><div class="ttdeci">virtual ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory()=0</div><div class="ttdoc">The thread factory this client was created with.</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html">google::cloud::bigtable::v1::InstanceAdminClient</a></div><div class="ttdoc">Connects to Cloud Bigtable's instance administration APIs.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__client_8h_source.html#l00063">instance_admin_client.h:63</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1bigtable_1_1v1_html_a098b52714cb305f401b93f3c0d6c8449"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v1.html#a098b52714cb305f401b93f3c0d6c8449">google::cloud::bigtable::v1::Instance</a></div><div class="ttdeci">::google::bigtable::admin::v2::Instance Instance</div><div class="ttdef"><b>Definition:</b> <a href="instance__update__config_8h_source.html#l00030">instance_update_config.h:30</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_af88bbe71ca91eca0ff3732237f1ce6f4"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#af88bbe71ca91eca0ff3732237f1ce6f4">google::cloud::bigtable::v1::InstanceAdminClient::CreateCluster</a></div><div class="ttdeci">virtual grpc::Status CreateCluster(grpc::ClientContext *context, google::bigtable::admin::v2::CreateClusterRequest const &amp;request, google::longrunning::Operation *response)=0</div></div>
@@ -397,7 +396,6 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ad8cd01d69b0698ebdcc3bd677cc38c25"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ad8cd01d69b0698ebdcc3bd677cc38c25">google::cloud::bigtable::v1::InstanceAdminClient::CreateAppProfile</a></div><div class="ttdeci">virtual grpc::Status CreateAppProfile(grpc::ClientContext *context, google::bigtable::admin::v2::CreateAppProfileRequest const &amp;request, google::bigtable::admin::v2::AppProfile *response)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_a9200b893b308142836450aa2064a4d0a"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a9200b893b308142836450aa2064a4d0a">google::cloud::bigtable::v1::InstanceAdminClient::AsyncUpdateInstance</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt; AsyncUpdateInstance(grpc::ClientContext *context, const google::bigtable::admin::v2::PartialUpdateInstanceRequest &amp;request, grpc::CompletionQueue *cq)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_adb1053fa6286e5e9eb88b10cabff5cb0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#adb1053fa6286e5e9eb88b10cabff5cb0">google::cloud::bigtable::v1::InstanceAdminClient::AsyncCreateAppProfile</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::AppProfile &gt; &gt; AsyncCreateAppProfile(grpc::ClientContext *context, google::bigtable::admin::v2::CreateAppProfileRequest const &amp;request, grpc::CompletionQueue *cq)=0</div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1v1_html_abfdb139d228c66850af103e63c0f8290"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#abfdb139d228c66850af103e63c0f8290">BackgroundThreadsFactory</a></div><div class="ttdeci">std::function&lt; std::unique_ptr&lt; BackgroundThreads &gt;()&gt; BackgroundThreadsFactory</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_a92e8be8202c1b1696867d573c099b226"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a92e8be8202c1b1696867d573c099b226">google::cloud::bigtable::v1::InstanceAdminClient::AsyncGetIamPolicy</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::Policy &gt; &gt; AsyncGetIamPolicy(grpc::ClientContext *context, google::iam::v1::GetIamPolicyRequest const &amp;request, grpc::CompletionQueue *cq)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_a05a19d28dd2834b1d8ce4d2e853a0b6f"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a05a19d28dd2834b1d8ce4d2e853a0b6f">google::cloud::bigtable::v1::InstanceAdminClient::TestIamPermissions</a></div><div class="ttdeci">virtual grpc::Status TestIamPermissions(grpc::ClientContext *context, google::iam::v1::TestIamPermissionsRequest const &amp;request, google::iam::v1::TestIamPermissionsResponse *response)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ac290b7cad287a02d7a9d31c64c8b1474"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ac290b7cad287a02d7a9d31c64c8b1474">google::cloud::bigtable::v1::InstanceAdminClient::AsyncSetIamPolicy</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::iam::v1::Policy &gt; &gt; AsyncSetIamPolicy(grpc::ClientContext *context, google::iam::v1::SetIamPolicyRequest const &amp;request, grpc::CompletionQueue *cq)=0</div></div>
@@ -414,7 +412,7 @@ $(function() {
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_a4b2ea6fc44b713d38716747d5ba4fad4"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a4b2ea6fc44b713d38716747d5ba4fad4">google::cloud::bigtable::v1::InstanceAdminClient::Channel</a></div><div class="ttdeci">virtual std::shared_ptr&lt; grpc::Channel &gt; Channel()=0</div><div class="ttdoc">Return a new channel to handle admin operations.</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ae58bdcf632c6fcfa16f8b991e1ed3ad0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae58bdcf632c6fcfa16f8b991e1ed3ad0">google::cloud::bigtable::v1::InstanceAdminClient::UpdateInstance</a></div><div class="ttdeci">virtual grpc::Status UpdateInstance(grpc::ClientContext *context, google::bigtable::admin::v2::PartialUpdateInstanceRequest const &amp;request, google::longrunning::Operation *response)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_aef7380ee7c41a30424179509ba57ebd0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aef7380ee7c41a30424179509ba57ebd0">google::cloud::bigtable::v1::InstanceAdminClient::AsyncListClusters</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::admin::v2::ListClustersResponse &gt; &gt; AsyncListClusters(grpc::ClientContext *context, const google::bigtable::admin::v2::ListClustersRequest &amp;request, grpc::CompletionQueue *cq)=0</div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_aacad6a9225a01341c8424fe4dfddb2fa"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">google::cloud::bigtable::v1::InstanceAdminClient::AsyncGetOperation</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt; AsyncGetOperation(grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</div><div class="ttdoc">The ClientOptions this client was created with.</div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_aacad6a9225a01341c8424fe4dfddb2fa"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#aacad6a9225a01341c8424fe4dfddb2fa">google::cloud::bigtable::v1::InstanceAdminClient::AsyncGetOperation</a></div><div class="ttdeci">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt; AsyncGetOperation(grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</div></div>
 <div class="ttc" id="aclient__options_8h_html"><div class="ttname"><a href="client__options_8h.html">client_options.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_a1ba03ff8d275e9b7e3f558023dcbe78f"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#a1ba03ff8d275e9b7e3f558023dcbe78f">google::cloud::bigtable::v1::InstanceAdminClient::GetCluster</a></div><div class="ttdeci">virtual grpc::Status GetCluster(grpc::ClientContext *context, google::bigtable::admin::v2::GetClusterRequest const &amp;request, google::bigtable::admin::v2::Cluster *response)=0</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient_html_ae3a8db56c61bea87b623389f7fb23d6c"><div class="ttname"><a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1InstanceAdminClient.html#ae3a8db56c61bea87b623389f7fb23d6c">google::cloud::bigtable::v1::InstanceAdminClient::DeleteCluster</a></div><div class="ttdeci">virtual grpc::Status DeleteCluster(grpc::ClientContext *context, google::bigtable::admin::v2::DeleteClusterRequest const &amp;request, google::protobuf::Empty *response)=0</div></div>

@@ -176,6 +176,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a43644260ed7a639344cc99b5f7bfd199"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a43644260ed7a639344cc99b5f7bfd199">reset</a> ()=0</td></tr>
 <tr class="memdesc:a43644260ed7a639344cc99b5f7bfd199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset and create new Channels.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a43644260ed7a639344cc99b5f7bfd199">More...</a><br /></td></tr>
 <tr class="separator:a43644260ed7a639344cc99b5f7bfd199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ecec87bb4fe048de30dc992cdc9450"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a26ecec87bb4fe048de30dc992cdc9450">BackgroundThreadsFactory</a> ()=0</td></tr>
+<tr class="memdesc:a26ecec87bb4fe048de30dc992cdc9450"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a26ecec87bb4fe048de30dc992cdc9450">More...</a><br /></td></tr>
+<tr class="separator:a26ecec87bb4fe048de30dc992cdc9450"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -254,7 +257,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a7907124b83d4abb4297493174f0c8885"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The &lt;tt&gt;google.longrunning.Operations&lt;/tt&gt; async wrappers.</div></td></tr>
 <tr class="memitem:a02e0aa7d0c9971a98f8069023a03299f"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::longrunning::Operation &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a02e0aa7d0c9971a98f8069023a03299f">AsyncGetOperation</a> (grpc::ClientContext *context, const google::longrunning::GetOperationRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:a02e0aa7d0c9971a98f8069023a03299f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1AdminClient.html#a02e0aa7d0c9971a98f8069023a03299f">More...</a><br /></td></tr>
 <tr class="separator:a02e0aa7d0c9971a98f8069023a03299f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -1184,8 +1186,6 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <a id="a58e6b7969b4450c9c55e41064d00b1f5"></a>
@@ -1879,6 +1879,33 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="admin__client_8cc_source.html#l00332">332</a> of file <a class="el" href="admin__client_8cc_source.html">admin_client.cc</a>.</p>
+
+</div>
+</div>
+<a id="a26ecec87bb4fe048de30dc992cdc9450"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26ecec87bb4fe048de30dc992cdc9450">&#9670;&nbsp;</a></span>BackgroundThreadsFactory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a> google::cloud::bigtable::v1::AdminClient::BackgroundThreadsFactory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The thread factory this client was created with. </p>
 
 </div>
 </div>

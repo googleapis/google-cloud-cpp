@@ -95,6 +95,41 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a076df4a785a274522bf39af55a51ded5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a076df4a785a274522bf39af55a51ded5">reset</a> ()=0</td></tr>
 <tr class="memdesc:a076df4a785a274522bf39af55a51ded5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset and create new Channels.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a076df4a785a274522bf39af55a51ded5">More...</a><br /></td></tr>
 <tr class="separator:a076df4a785a274522bf39af55a51ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a16445a3a1d6918aa9f88421813de53"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a9a16445a3a1d6918aa9f88421813de53">BackgroundThreadsFactory</a> ()=0</td></tr>
+<tr class="memdesc:a9a16445a3a1d6918aa9f88421813de53"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a9a16445a3a1d6918aa9f88421813de53">More...</a><br /></td></tr>
+<tr class="separator:a9a16445a3a1d6918aa9f88421813de53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</div></td></tr>
+<tr class="memitem:aec84e83976ceda867eb2928bc11df659"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aec84e83976ceda867eb2928bc11df659">MutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowRequest const &amp;request, google::bigtable::v2::MutateRowResponse *response)=0</td></tr>
+<tr class="separator:aec84e83976ceda867eb2928bc11df659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6085f05199813ca938acfcad3df917e0"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::MutateRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a6085f05199813ca938acfcad3df917e0">AsyncMutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a6085f05199813ca938acfcad3df917e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae62c248228c4d727ae0dd02013207ca"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aae62c248228c4d727ae0dd02013207ca">CheckAndMutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::CheckAndMutateRowRequest const &amp;request, google::bigtable::v2::CheckAndMutateRowResponse *response)=0</td></tr>
+<tr class="separator:aae62c248228c4d727ae0dd02013207ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2307e90937d60b58c76223ed81e5b11c"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::CheckAndMutateRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a2307e90937d60b58c76223ed81e5b11c">AsyncCheckAndMutateRow</a> (grpc::ClientContext *context, const google::bigtable::v2::CheckAndMutateRowRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a2307e90937d60b58c76223ed81e5b11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c32333a3cbfa447ce8afdde2d5cbc3c"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a1c32333a3cbfa447ce8afdde2d5cbc3c">ReadModifyWriteRow</a> (grpc::ClientContext *context, google::bigtable::v2::ReadModifyWriteRowRequest const &amp;request, google::bigtable::v2::ReadModifyWriteRowResponse *response)=0</td></tr>
+<tr class="separator:a1c32333a3cbfa447ce8afdde2d5cbc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21cf5bbb7c60ca2e05f2ab648879a93d"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::ReadModifyWriteRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a21cf5bbb7c60ca2e05f2ab648879a93d">AsyncReadModifyWriteRow</a> (grpc::ClientContext *context, google::bigtable::v2::ReadModifyWriteRowRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a21cf5bbb7c60ca2e05f2ab648879a93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cd89e06b08c6c0246cdd0c56d3b2068"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a5cd89e06b08c6c0246cdd0c56d3b2068">ReadRows</a> (grpc::ClientContext *context, google::bigtable::v2::ReadRowsRequest const &amp;request)=0</td></tr>
+<tr class="separator:a5cd89e06b08c6c0246cdd0c56d3b2068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0fe5d9cef344743decd26153bf892e1"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncReaderInterface&lt; google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ab0fe5d9cef344743decd26153bf892e1">AsyncReadRows</a> (grpc::ClientContext *context, const google::bigtable::v2::ReadRowsRequest &amp;request, grpc::CompletionQueue *cq, void *tag)=0</td></tr>
+<tr class="separator:ab0fe5d9cef344743decd26153bf892e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68fe945a012392ad4ac95ad72ec1120"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ae68fe945a012392ad4ac95ad72ec1120">PrepareAsyncReadRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::ReadRowsRequest &amp;request, ::grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:ae68fe945a012392ad4ac95ad72ec1120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b6d807f45d26912ceef3ce774d86007"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a0b6d807f45d26912ceef3ce774d86007">SampleRowKeys</a> (grpc::ClientContext *context, google::bigtable::v2::SampleRowKeysRequest const &amp;request)=0</td></tr>
+<tr class="separator:a0b6d807f45d26912ceef3ce774d86007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4">AsyncSampleRowKeys</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::SampleRowKeysRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag)=0</td></tr>
+<tr class="separator:a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd173fe700b9c3c4afae6fef3d715f7e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#abd173fe700b9c3c4afae6fef3d715f7e">MutateRows</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowsRequest const &amp;request)=0</td></tr>
+<tr class="separator:abd173fe700b9c3c4afae6fef3d715f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4525593a1fdef2b7b80dffb50f9248b8"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4525593a1fdef2b7b80dffb50f9248b8">AsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag)=0</td></tr>
+<tr class="separator:a4525593a1fdef2b7b80dffb50f9248b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71b58d14a37662872e2ab574630a2f2b"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a71b58d14a37662872e2ab574630a2f2b">PrepareAsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a71b58d14a37662872e2ab574630a2f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -105,51 +140,6 @@ Friends</h2></td></tr>
 <tr class="memitem:ad412d520181f2cb36c1af7cb68455f7b"><td class="memTemplParams" colspan="2">template&lt;typename RowFunctor , typename FinishFunctor &gt; </td></tr>
 <tr class="memitem:ad412d520181f2cb36c1af7cb68455f7b"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ad412d520181f2cb36c1af7cb68455f7b">AsyncRowReader</a></td></tr>
 <tr class="separator:ad412d520181f2cb36c1af7cb68455f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
-<tr class="memitem:aec84e83976ceda867eb2928bc11df659"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aec84e83976ceda867eb2928bc11df659">MutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowRequest const &amp;request, google::bigtable::v2::MutateRowResponse *response)=0</td></tr>
-<tr class="memdesc:aec84e83976ceda867eb2928bc11df659"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aec84e83976ceda867eb2928bc11df659">More...</a><br /></td></tr>
-<tr class="separator:aec84e83976ceda867eb2928bc11df659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6085f05199813ca938acfcad3df917e0"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::MutateRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a6085f05199813ca938acfcad3df917e0">AsyncMutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:a6085f05199813ca938acfcad3df917e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a6085f05199813ca938acfcad3df917e0">More...</a><br /></td></tr>
-<tr class="separator:a6085f05199813ca938acfcad3df917e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae62c248228c4d727ae0dd02013207ca"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aae62c248228c4d727ae0dd02013207ca">CheckAndMutateRow</a> (grpc::ClientContext *context, google::bigtable::v2::CheckAndMutateRowRequest const &amp;request, google::bigtable::v2::CheckAndMutateRowResponse *response)=0</td></tr>
-<tr class="memdesc:aae62c248228c4d727ae0dd02013207ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#aae62c248228c4d727ae0dd02013207ca">More...</a><br /></td></tr>
-<tr class="separator:aae62c248228c4d727ae0dd02013207ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2307e90937d60b58c76223ed81e5b11c"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::CheckAndMutateRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a2307e90937d60b58c76223ed81e5b11c">AsyncCheckAndMutateRow</a> (grpc::ClientContext *context, const google::bigtable::v2::CheckAndMutateRowRequest &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:a2307e90937d60b58c76223ed81e5b11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a2307e90937d60b58c76223ed81e5b11c">More...</a><br /></td></tr>
-<tr class="separator:a2307e90937d60b58c76223ed81e5b11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c32333a3cbfa447ce8afdde2d5cbc3c"><td class="memItemLeft" align="right" valign="top">virtual grpc::Status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a1c32333a3cbfa447ce8afdde2d5cbc3c">ReadModifyWriteRow</a> (grpc::ClientContext *context, google::bigtable::v2::ReadModifyWriteRowRequest const &amp;request, google::bigtable::v2::ReadModifyWriteRowResponse *response)=0</td></tr>
-<tr class="memdesc:a1c32333a3cbfa447ce8afdde2d5cbc3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a1c32333a3cbfa447ce8afdde2d5cbc3c">More...</a><br /></td></tr>
-<tr class="separator:a1c32333a3cbfa447ce8afdde2d5cbc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21cf5bbb7c60ca2e05f2ab648879a93d"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncResponseReaderInterface&lt; google::bigtable::v2::ReadModifyWriteRowResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a21cf5bbb7c60ca2e05f2ab648879a93d">AsyncReadModifyWriteRow</a> (grpc::ClientContext *context, google::bigtable::v2::ReadModifyWriteRowRequest const &amp;request, grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:a21cf5bbb7c60ca2e05f2ab648879a93d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a21cf5bbb7c60ca2e05f2ab648879a93d">More...</a><br /></td></tr>
-<tr class="separator:a21cf5bbb7c60ca2e05f2ab648879a93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cd89e06b08c6c0246cdd0c56d3b2068"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a5cd89e06b08c6c0246cdd0c56d3b2068">ReadRows</a> (grpc::ClientContext *context, google::bigtable::v2::ReadRowsRequest const &amp;request)=0</td></tr>
-<tr class="memdesc:a5cd89e06b08c6c0246cdd0c56d3b2068"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a5cd89e06b08c6c0246cdd0c56d3b2068">More...</a><br /></td></tr>
-<tr class="separator:a5cd89e06b08c6c0246cdd0c56d3b2068"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0fe5d9cef344743decd26153bf892e1"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncReaderInterface&lt; google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ab0fe5d9cef344743decd26153bf892e1">AsyncReadRows</a> (grpc::ClientContext *context, const google::bigtable::v2::ReadRowsRequest &amp;request, grpc::CompletionQueue *cq, void *tag)=0</td></tr>
-<tr class="memdesc:ab0fe5d9cef344743decd26153bf892e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ab0fe5d9cef344743decd26153bf892e1">More...</a><br /></td></tr>
-<tr class="separator:ab0fe5d9cef344743decd26153bf892e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68fe945a012392ad4ac95ad72ec1120"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ae68fe945a012392ad4ac95ad72ec1120">PrepareAsyncReadRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::ReadRowsRequest &amp;request, ::grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:ae68fe945a012392ad4ac95ad72ec1120"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#ae68fe945a012392ad4ac95ad72ec1120">More...</a><br /></td></tr>
-<tr class="separator:ae68fe945a012392ad4ac95ad72ec1120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b6d807f45d26912ceef3ce774d86007"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a0b6d807f45d26912ceef3ce774d86007">SampleRowKeys</a> (grpc::ClientContext *context, google::bigtable::v2::SampleRowKeysRequest const &amp;request)=0</td></tr>
-<tr class="memdesc:a0b6d807f45d26912ceef3ce774d86007"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a0b6d807f45d26912ceef3ce774d86007">More...</a><br /></td></tr>
-<tr class="separator:a0b6d807f45d26912ceef3ce774d86007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4">AsyncSampleRowKeys</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::SampleRowKeysRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag)=0</td></tr>
-<tr class="memdesc:a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4">More...</a><br /></td></tr>
-<tr class="separator:a4ed8bbdc55a0f3eb5adf9a8a5dadf8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd173fe700b9c3c4afae6fef3d715f7e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#abd173fe700b9c3c4afae6fef3d715f7e">MutateRows</a> (grpc::ClientContext *context, google::bigtable::v2::MutateRowsRequest const &amp;request)=0</td></tr>
-<tr class="memdesc:abd173fe700b9c3c4afae6fef3d715f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#abd173fe700b9c3c4afae6fef3d715f7e">More...</a><br /></td></tr>
-<tr class="separator:abd173fe700b9c3c4afae6fef3d715f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4525593a1fdef2b7b80dffb50f9248b8"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4525593a1fdef2b7b80dffb50f9248b8">AsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag)=0</td></tr>
-<tr class="memdesc:a4525593a1fdef2b7b80dffb50f9248b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a4525593a1fdef2b7b80dffb50f9248b8">More...</a><br /></td></tr>
-<tr class="separator:a4525593a1fdef2b7b80dffb50f9248b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71b58d14a37662872e2ab574630a2f2b"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::MutateRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a71b58d14a37662872e2ab574630a2f2b">PrepareAsyncMutateRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::MutateRowsRequest &amp;request, ::grpc::CompletionQueue *cq)=0</td></tr>
-<tr class="memdesc:a71b58d14a37662872e2ab574630a2f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with.  <a href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DataClient.html#a71b58d14a37662872e2ab574630a2f2b">More...</a><br /></td></tr>
-<tr class="separator:a71b58d14a37662872e2ab574630a2f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's data manipulation APIs. </p>
@@ -224,8 +214,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a6d1fc004e4986e57ad594ff46f86629c">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
@@ -269,8 +257,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 </div>
 </div>
@@ -320,8 +306,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a8df10dfdf8afea7ac03c7ed8197cd396">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
@@ -365,8 +349,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#acd3286e12265734a096e2df5a87cd919">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
@@ -418,8 +400,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a23fbcc04bf065d0c36307b01f43843f7">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
 </div>
@@ -470,9 +450,34 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#a717d5bab8a6dab25408d60cebd82f15c">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
+
+</div>
+</div>
+<a id="a9a16445a3a1d6918aa9f88421813de53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a16445a3a1d6918aa9f88421813de53">&#9670;&nbsp;</a></span>BackgroundThreadsFactory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html#adf0a4e6e354c5f15054702c1d7fede1c">ClientOptions::BackgroundThreadsFactory</a> google::cloud::bigtable::v1::DataClient::BackgroundThreadsFactory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The thread factory this client was created with. </p>
 
 </div>
 </div>
@@ -546,8 +551,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <a id="a6ed027eb7e3ff50973669551fc47f3ee"></a>
@@ -617,8 +620,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <a id="abd173fe700b9c3c4afae6fef3d715f7e"></a>
@@ -654,8 +655,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 </div>
 </div>
@@ -698,8 +697,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#ad4a1d630d1dfedc3989813f4d62cefda">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
@@ -744,8 +741,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 <p>Implemented in <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1DefaultDataClient.html#af76a9e4fe5d31815bd9008ecb4dab0f4">google::cloud::bigtable::v1::DefaultDataClient</a>.</p>
 
@@ -818,8 +813,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <a id="a5cd89e06b08c6c0246cdd0c56d3b2068"></a>
@@ -855,8 +848,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
 
 </div>
 </div>
@@ -924,8 +915,6 @@ the &lt;tt&gt;google.bigtable.v2.Bigtable&lt;/tt&gt; wrappers.</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The thread factory from <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v1_1_1ClientOptions.html" title="Configuration options for the Bigtable Client.">ClientOptions</a></code> this client was created with. </p>
-
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
@@ -951,7 +940,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00099">99</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00105">105</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -975,7 +964,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00097">97</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00103">103</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
@@ -999,7 +988,7 @@ template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00092">92</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00098">98</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
 
 </div>
 </div>
