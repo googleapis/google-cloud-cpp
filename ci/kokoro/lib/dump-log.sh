@@ -13,6 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Make our include guard clean against set -o nounset.
+test -n "${CI_KOKORO_LIB_DUMP_LOG_SH__:-}" || declare -i CI_KOKORO_LIB_DUMP_LOG_SH__=0
+if ((CI_KOKORO_LIB_DUMP_LOG_SH__++ != 0)); then
+  return 0
+fi # include guard
+
 ################################################
 # Dump a log file to the console without going over CI system limits.
 # Globals:

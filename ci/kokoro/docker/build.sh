@@ -306,7 +306,7 @@ if [[ "${RUNNING_CI:-}" == "yes" ]]; then
 fi
 
 source module /ci/kokoro/lib/docker-variables.sh
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+source module /ci/kokoro/lib/dump-log.sh
 
 echo "================================================================"
 io::log_yellow "Building with ${NCPU} cores on ${PWD}."
