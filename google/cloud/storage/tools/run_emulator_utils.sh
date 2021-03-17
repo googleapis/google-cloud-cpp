@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 EMULATOR_PID=0
 

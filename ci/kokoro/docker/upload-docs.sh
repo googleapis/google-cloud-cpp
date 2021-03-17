@@ -16,7 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 if [[ $# -ne 2 ]]; then
   echo "Usage: $(basename "$0") <branch-name> <build-output>"

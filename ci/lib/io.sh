@@ -17,7 +17,7 @@
 #
 # Example:
 #
-#   source module lib/io.sh
+#   source module /ci/lib/io.sh
 #   io::log_yellow "Hello world"
 
 # Make our include guard clean against set -o nounset.

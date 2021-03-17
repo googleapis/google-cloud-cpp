@@ -17,8 +17,8 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module etc/repo-config.sh
-source module lib/io.sh
+source module /ci/etc/repo-config.sh
+source module /ci/lib/io.sh
 
 export CC=gcc
 export CXX=g++

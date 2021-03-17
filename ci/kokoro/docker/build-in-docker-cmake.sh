@@ -17,8 +17,8 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module etc/integration-tests-config.sh
-source module lib/io.sh
+source module /ci/etc/integration-tests-config.sh
+source module /ci/lib/io.sh
 
 if [[ $# != 2 ]]; then
   echo "Usage: $(basename "$0") <source-directory> <binary-directory>"

@@ -20,11 +20,11 @@
 #
 #   set -eu  # We commonly do this, but it's optional
 #   source "$(dirname "$0")/../../lib/init.sh"  # The path to this library
-#   source module lib/io.sh
-#   source module lib/foo.sh
+#   source module /ci/lib/io.sh
+#   source module /ci/lib/foo.sh
 #
 # Further more, a bash library may source other bash libraries directly by
-# using a `source module lib/foo.sh` line. I.e., there's no need for a bash
+# using a `source module /ci/lib/foo.sh` line. I.e., there's no need for a bash
 # library to source init -- it may assume that the binary that called the
 # library has already called init.sh
 
@@ -59,10 +59,10 @@ if [[ ! "$PATH" =~ ${PROJECT_ROOT}/ci/lib ]]; then
   PATH="${PROJECT_ROOT}/ci/lib:${PATH}"
 fi
 
-# Sets a search path array for the "modules" that can be sourced. When a
-# caller writes `source module lib/foo.sh`, this path/array will be searched in
-# order for the caller-provided 'lib/foo.sh'. The first one found will be used.
+# Sets the module search path to only the PROJECT_ROOT to force sourced module
+# paths to be relative to the project root, thus making it easy to find the
+# actual file being sourced. This is similar to how C++ includes are all
+# relative to the project root.
 MODULE_SEARCH_PATH=(
-  "${PROGRAM_DIR}"
-  "${PROJECT_ROOT}/ci"
+  "${PROJECT_ROOT}"
 )

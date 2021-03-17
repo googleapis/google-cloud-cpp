@@ -16,8 +16,8 @@
 set -eu
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
-source module etc/integration-tests-config.sh
-source module lib/pubsub_emulator.sh
+source module /ci/etc/integration-tests-config.sh
+source module /google/cloud/pubsub/ci/lib/pubsub_emulator.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"

@@ -19,7 +19,7 @@ if ((GOOGLE_CLOUD_SPANNER_CI_LIB_SPANNER_EMULATOR_SH__++ != 0)); then
   return 0
 fi # include guard
 
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 # Global variable that holds the PID of the Spanner emulator. This will be set
 # when the emulator is started, and it will be used to kill the emulator.
