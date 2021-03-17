@@ -16,9 +16,9 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module etc/integration-tests-config.sh
-source module etc/quickstart-config.sh
-source module lib/io.sh
+source module /ci/etc/integration-tests-config.sh
+source module /ci/etc/quickstart-config.sh
+source module /ci/lib/io.sh
 
 if [[ $# != 2 ]]; then
   # The arguments are ignored, but required for compatibility with

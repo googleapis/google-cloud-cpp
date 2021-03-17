@@ -16,7 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/lib/init.sh"
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 if [[ "${CHECK_GENERATED_CODE_HASH}" != "yes" ]]; then
   echo "Skipping the generated code hash check as it is disabled for this build."

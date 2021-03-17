@@ -16,8 +16,8 @@
 set -eu
 
 source "$(dirname "$0")/../../ci/lib/init.sh"
-source module etc/integration-tests-config.sh
-source module lib/io.sh
+source module /ci/etc/integration-tests-config.sh
+source module /ci/lib/io.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <binary-dir> [ctest-args]"

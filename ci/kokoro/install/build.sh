@@ -16,7 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 if [[ $# -eq 1 ]]; then
   export DISTRO="${1}"

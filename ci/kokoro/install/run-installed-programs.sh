@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-source module etc/integration-tests-config.sh
-source module etc/quickstart-config.sh
-source module lib/io.sh
+source module /ci/etc/integration-tests-config.sh
+source module /ci/etc/quickstart-config.sh
+source module /ci/lib/io.sh
 
 run_all_installed_quickstart_programs() {
   CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"

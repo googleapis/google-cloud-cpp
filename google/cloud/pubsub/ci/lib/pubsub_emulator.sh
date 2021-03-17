@@ -19,7 +19,7 @@ if ((GOOGLE_CLOUD_PUBSUB_CI_LIB_PUBSUB_EMULATOR_SH__++ != 0)); then
   return 0
 fi # include guard
 
-source module lib/io.sh
+source module /ci/lib/io.sh
 
 # Global variable that holds the PID of the Pubsub emulator. This will be set
 # when the emulator is started, and it will be used to kill the emulator.
