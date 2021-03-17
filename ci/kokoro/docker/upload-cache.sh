@@ -16,6 +16,7 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
+source module /ci/kokoro/lib/gcloud.sh
 source module /ci/lib/io.sh
 
 if [[ $# != 3 ]]; then
@@ -23,8 +24,6 @@ if [[ $# != 3 ]]; then
   exit 1
 fi
 
-GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 readonly CACHE_FOLDER="$1"

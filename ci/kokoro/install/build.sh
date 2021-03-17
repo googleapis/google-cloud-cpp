@@ -49,9 +49,8 @@ fi
 echo "================================================================"
 io::log "Load Google Container Registry configuration parameters."
 source module /ci/kokoro/lib/docker-variables.sh
+source module /ci/kokoro/lib/gcloud.sh
 
-GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 echo "================================================================"

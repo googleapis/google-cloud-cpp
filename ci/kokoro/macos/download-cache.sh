@@ -17,16 +17,15 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/lib/io.sh
+source module /ci/kokoro/lib/gcloud.sh
 
 if [[ $# != 2 ]]; then
   echo "Usage: $(basename "$0") <cache-folder> <cache-name>"
   exit 1
 fi
-GCLOUD=gcloud
 KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly KOKORO_GFILE_DIR
 
-source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
 
 readonly CACHE_FOLDER="$1"
