@@ -31,6 +31,10 @@ namespace cloud {
 namespace golden_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
 Options GoldenKitchenSinkDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT");
@@ -51,12 +55,14 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
 
   if (!options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
     options.set<golden::GoldenKitchenSinkRetryPolicyOption>(
-        golden::DefaultGoldenKitchenSinkRetryPolicy());
+        golden::GoldenKitchenSinkLimitedTimeRetryPolicy(
+            std::chrono::minutes(30)).clone());
   }
 
   if (!options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
     options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(
-        golden::DefaultGoldenKitchenSinkBackoffPolicy());
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling).clone());
   }
 
   if (!options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {

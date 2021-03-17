@@ -78,18 +78,6 @@ Status ConnectionGenerator::GenerateHeader() {
     //  clang-format on
   );
 
-  // default policy factory functions
-  HeaderPrint(
-      {// clang-format off
-   {"std::unique_ptr<$retry_policy_name$> Default$retry_policy_name$();\n"
-    "\n"
-    "std::unique_ptr<BackoffPolicy> Default$service_name$BackoffPolicy();\n"
-    "\n"},
-    {generator_internal::HasLongrunningMethod,
-    "std::unique_ptr<PollingPolicy> Default$service_name$PollingPolicy();\n"
-    "\n", ""}});
-                // clang-format on
-
   // streaming updater functions
   for (auto const& method : methods()) {
     HeaderPrintMethod(
@@ -100,7 +88,7 @@ Status ConnectionGenerator::GenerateHeader() {
     "    $response_type$ const& response,\n"
     "    $request_type$& request);\n\n"}
      }, IsStreamingRead)},
-             // clang-format on
+                // clang-format on
         __FILE__, __LINE__);
   }
 
@@ -284,31 +272,6 @@ Status ConnectionGenerator::GenerateCc() {
              IsStreamingRead)},
         __FILE__, __LINE__);
   }
-
-  // default policies
-  CcPrint(
-      {// clang-format off
-   {"std::unique_ptr<$retry_policy_name$> Default$retry_policy_name$() {\n"
-    "  return $limited_time_retry_policy_name$(std::chrono::minutes(30)).clone();\n"
-    "}\n"
-    "\n"
-    "std::unique_ptr<BackoffPolicy> Default$service_name$BackoffPolicy() {\n"
-    "  auto constexpr kBackoffScaling = 2.0;\n"
-    "  return ExponentialBackoffPolicy(std::chrono::seconds(1),\n"
-    "                                  std::chrono::minutes(5), kBackoffScaling)\n"
-    "      .clone();\n"
-    "}\n"
-    "\n"},
-    {generator_internal::HasLongrunningMethod,
-    "std::unique_ptr<PollingPolicy> Default$service_name$PollingPolicy() {\n"
-    "  auto constexpr kBackoffScaling = 2.0;\n"
-    "  return GenericPollingPolicy<$limited_time_retry_policy_name$, ExponentialBackoffPolicy>(\n"
-    "             $limited_time_retry_policy_name$(std::chrono::minutes(30)),\n"
-    "             ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
-    "                                      std::chrono::minutes(5), kBackoffScaling))\n"
-    "      .clone();\n"
-    "}\n\n", ""}});
-       // clang-format on
 
   // open anonymous namespace
   CcPrint("namespace {\n");

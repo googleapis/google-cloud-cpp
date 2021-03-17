@@ -170,26 +170,6 @@ StreamRange<::google::longrunning::Operation> GoldenThingAdminConnection::ListBa
     });
 }
 
-std::unique_ptr<GoldenThingAdminRetryPolicy> DefaultGoldenThingAdminRetryPolicy() {
-  return GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
-}
-
-std::unique_ptr<BackoffPolicy> DefaultGoldenThingAdminBackoffPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                  std::chrono::minutes(5), kBackoffScaling)
-      .clone();
-}
-
-std::unique_ptr<PollingPolicy> DefaultGoldenThingAdminPollingPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return GenericPollingPolicy<GoldenThingAdminLimitedTimeRetryPolicy, ExponentialBackoffPolicy>(
-             GoldenThingAdminLimitedTimeRetryPolicy(std::chrono::minutes(30)),
-             ExponentialBackoffPolicy(std::chrono::seconds(10),
-                                      std::chrono::minutes(5), kBackoffScaling))
-      .clone();
-}
-
 namespace {
 class GoldenThingAdminConnectionImpl : public GoldenThingAdminConnection {
  public:

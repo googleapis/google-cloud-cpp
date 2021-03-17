@@ -30,6 +30,7 @@ namespace cloud {
 namespace logging {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+/// Options to use with `google::cloud::Options`.
 struct LoggingServiceV2RetryPolicyOption {
   using Type = std::shared_ptr<LoggingServiceV2RetryPolicy>;
 };

@@ -31,6 +31,10 @@ namespace cloud {
 namespace iam_internal {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
 Options IAMCredentialsDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
     auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_ENDPOINT");
@@ -51,12 +55,15 @@ Options IAMCredentialsDefaultOptions(Options options) {
 
   if (!options.has<iam::IAMCredentialsRetryPolicyOption>()) {
     options.set<iam::IAMCredentialsRetryPolicyOption>(
-        iam::DefaultIAMCredentialsRetryPolicy());
+        iam::IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
 
   if (!options.has<iam::IAMCredentialsBackoffPolicyOption>()) {
     options.set<iam::IAMCredentialsBackoffPolicyOption>(
-        iam::DefaultIAMCredentialsBackoffPolicy());
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
   }
 
   if (!options.has<iam::IAMCredentialsConnectionIdempotencyPolicyOption>()) {

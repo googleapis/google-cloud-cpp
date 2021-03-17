@@ -45,11 +45,6 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
     google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
-std::unique_ptr<LoggingServiceV2RetryPolicy>
-DefaultLoggingServiceV2RetryPolicy();
-
-std::unique_ptr<BackoffPolicy> DefaultLoggingServiceV2BackoffPolicy();
-
 class LoggingServiceV2Connection {
  public:
   virtual ~LoggingServiceV2Connection() = 0;

@@ -54,17 +54,6 @@ IAMCredentialsConnection::SignJwt(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::unique_ptr<IAMCredentialsRetryPolicy> DefaultIAMCredentialsRetryPolicy() {
-  return IAMCredentialsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();
-}
-
-std::unique_ptr<BackoffPolicy> DefaultIAMCredentialsBackoffPolicy() {
-  auto constexpr kBackoffScaling = 2.0;
-  return ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                  std::chrono::minutes(5), kBackoffScaling)
-      .clone();
-}
-
 namespace {
 class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
  public:

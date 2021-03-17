@@ -30,6 +30,7 @@ namespace cloud {
 namespace iam {
 inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
+/// Options to use with `google::cloud::Options`.
 struct IAMCredentialsRetryPolicyOption {
   using Type = std::shared_ptr<IAMCredentialsRetryPolicy>;
 };

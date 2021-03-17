@@ -57,7 +57,8 @@ Status OptionsGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint({// clang-format off
-   {"struct $retry_policy_name$Option {\n"
+   {"/// Options to use with `google::cloud::Options`.\n"
+    "struct $retry_policy_name$Option {\n"
     "  using Type = std::shared_ptr<$retry_policy_name$>;\n"
     "};\n"
     "\n"
