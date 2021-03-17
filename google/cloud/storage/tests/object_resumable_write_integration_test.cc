@@ -197,6 +197,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
+  EXPECT_FALSE(status.ok()); // TODO(coryan) - DO NOT MERGE
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {

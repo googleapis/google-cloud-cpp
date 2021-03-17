@@ -44,7 +44,6 @@ class InstanceAdminAsyncFutureIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    ::google::cloud::testing_util::IntegrationTest::SetUp();
     if (google::cloud::internal::GetEnv(
             "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
             .value_or("") != "yes") {

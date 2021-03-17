@@ -20,9 +20,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 
-void IntegrationTest::TearDown() {
+IntegrationTest::~IntegrationTest() {
   if (HasFailure()) ::google::cloud::LogSink::Instance().Flush();
-  ::testing::Test::TearDown();
 }
 
 }  // namespace testing_util

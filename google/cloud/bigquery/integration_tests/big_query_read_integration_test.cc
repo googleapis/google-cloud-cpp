@@ -36,7 +36,6 @@ class BigQueryReadIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    ::google::cloud::testing_util::IntegrationTest::SetUp();
     connection_options_.enable_tracing("rpc");
     retry_policy_ =
         absl::make_unique<BigQueryReadLimitedErrorCountRetryPolicy>(1);

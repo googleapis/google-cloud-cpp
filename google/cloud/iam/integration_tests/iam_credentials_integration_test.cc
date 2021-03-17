@@ -36,7 +36,6 @@ class IamCredentialsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  protected:
   void SetUp() override {
-    ::google::cloud::testing_util::IntegrationTest::SetUp();
     rpc_tracing_options_.enable_tracing("rpc");
 
     iam_service_account_ = google::cloud::internal::GetEnv(

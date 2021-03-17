@@ -36,7 +36,6 @@ class RpcFailureThresholdTest
     : public ::google::cloud::testing_util::IntegrationTest {
  public:
   void SetUp() override {
-    ::google::cloud::testing_util::IntegrationTest::SetUp();
     auto project_id =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id.empty());
@@ -84,7 +83,6 @@ class RpcFailureThresholdTest
     auto drop_status = admin_client.DropDatabase(*db_);
     std::cout << " DONE\n";
     EXPECT_STATUS_OK(drop_status);
-    ::google::cloud::testing_util::IntegrationTest::TearDown();
   }
 
  protected:

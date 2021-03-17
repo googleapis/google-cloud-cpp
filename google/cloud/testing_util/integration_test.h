@@ -25,7 +25,7 @@ namespace testing_util {
 
 class IntegrationTest : public ::testing::Test {
  protected:
-  void TearDown() override;
+  ~IntegrationTest() override;
 };
 
 }  // namespace testing_util

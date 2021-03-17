@@ -105,7 +105,6 @@ std::string TableTestEnvironment::RandomInstanceId() {
 }
 
 void TableIntegrationTest::SetUp() {
-  ::google::cloud::testing_util::IntegrationTest::SetUp();
   admin_client_ = bigtable::CreateDefaultAdminClient(
       TableTestEnvironment::project_id(), ClientOptions());
   table_admin_ = absl::make_unique<bigtable::TableAdmin>(
