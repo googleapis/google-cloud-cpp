@@ -18,6 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
+source module /ci/kokoro/lib/gcloud.sh
 source module /ci/lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -286,10 +287,6 @@ if [[ "${BUILD_TESTING:-}" == "yes" ]]; then
     export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
     export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
 
-    # Changing the PATH disables the Bazel cache, so use an absolute path.
-    readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
-    source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
-
     trap delete_gcloud_config EXIT
     create_gcloud_config
     activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
@@ -315,7 +312,7 @@ if [[ "${BUILD_TESTING:-}" == "yes" ]]; then
     # create a grpc::Credentials object. Even though the account is deactivated
     # for use by `gcloud` the token remains valid for about 1 hour.
     GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN="$(
-      "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token
+      "${GCLOUD_BIN}" "${GCLOUD_ARGS[@]}" auth print-access-token
     )"
     export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
     readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN

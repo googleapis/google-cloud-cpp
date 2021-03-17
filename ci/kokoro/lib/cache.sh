@@ -13,6 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Make our include guard clean against set -o nounset.
+test -n "${CI_KOKORO_LIB_CACHE_SH__:-}" || declare -i CI_KOKORO_LIB_CACHE_SH__=0
+if ((CI_KOKORO_LIB_CACHE_SH__++ != 0)); then
+  return 0
+fi # include guard
+
+source module /ci/kokoro/lib/gcloud.sh
+
 readonly CACHE_KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 
 cache_download_enabled() {

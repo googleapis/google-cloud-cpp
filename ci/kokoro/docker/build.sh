@@ -305,14 +305,8 @@ if [[ "${RUNNING_CI:-}" == "yes" ]]; then
   docker version
 fi
 
-if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
-  echo "================================================================"
-  io::log_yellow "Load Google Container Registry configuration parameters."
-  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
-fi
-
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+source module /ci/kokoro/lib/docker-variables.sh
+source module /ci/kokoro/lib/dump-log.sh
 
 echo "================================================================"
 io::log_yellow "Building with ${NCPU} cores on ${PWD}."

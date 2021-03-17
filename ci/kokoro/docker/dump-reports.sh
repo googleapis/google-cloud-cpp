@@ -16,13 +16,8 @@
 
 set -eu
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../.."
-    pwd
-  )"
-fi
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+source "$(dirname "$0")/../../lib/init.sh"
+source module /ci/kokoro/lib/docker-variables.sh
 
 # If w3m is installed there is nothing to do.
 if ! type w3m >/dev/null 2>&1; then

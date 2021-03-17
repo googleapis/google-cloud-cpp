@@ -15,14 +15,9 @@
 
 set -eu
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(
-    cd "$(dirname "$0")/../../.."
-    pwd
-  )"
-fi
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+source "$(dirname "$0")/../../lib/init.sh"
+source module /ci/kokoro/lib/docker-variables.sh
+source module /ci/kokoro/lib/dump-log.sh
 
 if [[ "${BUILD_NAME:-}" != "coverage" ]]; then
   # Not a code coverage build, exit silently.

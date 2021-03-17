@@ -17,6 +17,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
+source module /ci/kokoro/lib/gcloud.sh
 source module /ci/lib/io.sh
 
 if [[ $# != 2 ]]; then
@@ -272,10 +273,6 @@ if should_run_integration_tests; then
     "--test_tag_filters=integration-test" \
     -- ... "${excluded_from_production_targets[@]}"
 
-  # Changing the PATH disables the Bazel cache, so use an absolute path.
-  readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
-  source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
-
   trap delete_gcloud_config EXIT
   create_gcloud_config
 
@@ -285,7 +282,7 @@ if should_run_integration_tests; then
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object. Even though the account is deactivated
   # for use by `gcloud` the token remains valid for about 1 hour.
-  ACCESS_TOKEN="$("${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
+  ACCESS_TOKEN="$("${GCLOUD_BIN}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
   readonly ACCESS_TOKEN
 
   # Deactivate the recently activated service accounts to prevent accidents.

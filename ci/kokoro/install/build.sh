@@ -46,19 +46,11 @@ else
   exit 1
 fi
 
-# ATTENTION: The gcr-configuration.sh script MUST be sourced first if present.
 echo "================================================================"
 io::log "Load Google Container Registry configuration parameters."
-
-if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
-  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
-fi
-# ATTENTION: The gcr-configuration.sh script MUST be sourced before this file.
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
-
-GCLOUD=gcloud
-source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
-source "${PROJECT_ROOT}/ci/kokoro/cache-functions.sh"
+source module /ci/kokoro/lib/docker-variables.sh
+source module /ci/kokoro/lib/gcloud.sh
+source module /ci/kokoro/lib/cache.sh
 
 echo "================================================================"
 io::log_yellow "Change working directory to project root."
