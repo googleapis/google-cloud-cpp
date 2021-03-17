@@ -22,7 +22,7 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
     pwd
   )"
 fi
-source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+source module /ci/kokoro/lib/docker-variables.sh
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 # Dump the emulator log file. Tests run in the google/cloud/bigtable/tests

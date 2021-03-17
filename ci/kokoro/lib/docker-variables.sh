@@ -14,7 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -eu
+# Make our include guard clean against set -o nounset.
+test -n "${CI_KOKORO_LIB_DOCKER_VARIABLES_SH__:-}" || declare -i CI_KOKORO_LIB_DOCKER_VARIABLES_SH__=0
+if ((CI_KOKORO_LIB_DOCKER_VARIABLES_SH__++ != 0)); then
+  return 0
+fi # include guard
+
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
 
 if [[ -z "${NCPU+x}" ]]; then
   # Mac doesn't have nproc. Run the equivalent.
