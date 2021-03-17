@@ -293,8 +293,8 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin const& admin,
     std::cout << "Column family metadata for <" << family_name << "> is "
               << pos->second.DebugString() << "\n";
   }
-  // [END bigtable_get_family_metadata]
   // [END bigtable_get_family]
+  // [END bigtable_get_family_metadata]
   (std::move(admin), argv.at(0), argv.at(1));
 }
 
@@ -425,8 +425,8 @@ void DropAllRows(google::cloud::bigtable::TableAdmin const& admin,
     if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows successfully deleted\n";
   }
-  // [END bigtable_truncate_table]
   // [END bigtable_delete_rows]
+  // [END bigtable_truncate_table]
   //! [drop all rows]
   (std::move(admin), argv.at(0));
 }
