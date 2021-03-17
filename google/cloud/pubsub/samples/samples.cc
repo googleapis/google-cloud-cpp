@@ -50,6 +50,83 @@ std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
                                                        "cloud-cpp-samples");
 }
 
+auto constexpr kWaitTimeout = std::chrono::minutes(1);
+
+void WaitForSession(google::cloud::future<google::cloud::Status> session,
+                    std::string const& name) {
+  std::cout << "\nWaiting for session [" << name << "]... " << std::flush;
+  auto result = session.wait_for(kWaitTimeout);
+  if (result == std::future_status::timeout) {
+    std::cout << "TIMEOUT" << std::endl;
+    throw std::runtime_error("session timeout");
+  }
+  std::cout << "DONE (" << session.get() << ")" << std::endl;
+}
+
+/// A (file) singleton to track received messages.
+class EventCounter {
+ public:
+  EventCounter() = default;
+
+  void Increment() {
+    std::lock_guard<std::mutex> lk(mu_);
+    ++counter_;
+    cv_.notify_all();
+  }
+
+  std::int64_t Current() {
+    std::lock_guard<std::mutex> lk(mu_);
+    return counter_;
+  }
+
+  template <typename Predicate>
+  void Wait(Predicate&& predicate,
+            google::cloud::future<google::cloud::Status> session,
+            std::string const& name) {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait_for(lk, kWaitTimeout,
+                 [this, &predicate] { return predicate(counter_); });
+    lk.unlock();
+    session.cancel();
+    WaitForSession(std::move(session), name);
+  }
+
+  template <typename Predicate>
+  void Wait(Predicate&& predicate) {
+    std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait_for(lk, kWaitTimeout,
+                 [this, &predicate] { return predicate(counter_); });
+  }
+
+  static EventCounter& Instance() {
+    static auto* const kInstance = new EventCounter;
+    return *kInstance;
+  }
+
+ private:
+  std::int64_t counter_ = 0;
+  std::mutex mu_;
+  std::condition_variable cv_;
+};
+
+/**
+ * Count received messages to gracefully shutdown the samples.
+ *
+ * This function is used in the examples to simplify their shutdown and testing.
+ * Most applications probably do not need to worry about gracefully shutting
+ * down a subscriber. However, the examples are tested as part of our CI process
+ * and do need to shutdown gracefully. To do so, we count the number of events
+ * received in a subscriber, and once enough messages (the count depends on the
+ * example) are received we cancel the session (the object returned by
+ * `pubsub::Subscriber::Subscribe()`) and wait for the session to shutdown.
+ *
+ * This function is named as a hint to the readers, so they can ignore when
+ * understanding the sample code.
+ */
+void PleaseIgnoreThisSimplifiesTestingTheSamples() {
+  EventCounter::Instance().Increment();
+}
+
 void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
                  std::vector<std::string> const& argv) {
   //! [START pubsub_quickstart_create_topic]
@@ -374,39 +451,24 @@ void UpdateDeadLetterSubscription(
 void ReceiveDeadLetterDeliveryAttempt(
     google::cloud::pubsub::Subscriber subscriber,
     std::vector<std::string> const&) {
+  auto const initial = EventCounter::Instance().Current();
   //! [dead-letter-delivery-attempt]
   // [START pubsub_dead_letter_delivery_attempt]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  [](pubsub::Subscriber subscriber) {
-    std::mutex mu;
-    std::condition_variable cv;
-    int message_count = 0;
-    auto session = subscriber.Subscribe(
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           std::cout << "Delivery attempt: " << h.delivery_attempt() << "\n";
-          std::unique_lock<std::mutex> lk(mu);
-          ++message_count;
-          lk.unlock();
-          cv.notify_one();
           std::move(h).ack();
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
         });
-    // Wait until at least one message has been received.
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&message_count] { return message_count > 0; });
-    lk.unlock();
-    // Cancel the subscription session.
-    session.cancel();
-    // Wait for the session to complete, no more callbacks can happen after this
-    // point.
-    auto status = session.get();
-    // Report any final status, blocking.
-    std::cout << "Message count: " << message_count << ", status: " << status
-              << "\n";
-  }(std::move(subscriber));
+  };
   // [END pubsub_dead_letter_delivery_attempt]
   //! [dead-letter-delivery-attempt]
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) { return count > initial; },
+      sample(std::move(subscriber)), __func__);
 }
 
 void RemoveDeadLetterPolicy(
@@ -1227,118 +1289,71 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
 
 void Subscribe(google::cloud::pubsub::Subscriber subscriber,
                std::vector<std::string> const&) {
+  auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_quickstart_subscriber]
   //! [START pubsub_subscriber_async_pull] [subscribe]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber) {
-    std::mutex mu;
-    std::condition_variable cv;
-    int message_count = 0;
-    auto session = subscriber.Subscribe(
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
-          std::unique_lock<std::mutex> lk(mu);
-          ++message_count;
-          lk.unlock();
-          cv.notify_one();
           std::move(h).ack();
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
         });
-    // Wait until at least one message has been received.
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&message_count] { return message_count > 0; });
-    lk.unlock();
-    // Cancel the subscription session.
-    session.cancel();
-    // Wait for the session to complete, no more callbacks can happen after this
-    // point.
-    auto status = session.get();
-    // Report any final status, blocking.
-    std::cout << "Message count: " << message_count << ", status: " << status
-              << "\n";
-  }
+  };
   //! [END pubsub_subscriber_async_pull] [subscribe]
   //! [END pubsub_quickstart_subscriber]
-  (std::move(subscriber));
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) { return count > initial; },
+      sample(std::move(subscriber)), __func__);
 }
 
 void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
                             std::vector<std::string> const&) {
+  auto current = EventCounter::Instance().Current();
   // [START pubsub_subscriber_error_listener]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber) {
-    std::mutex mu;
-    std::condition_variable cv;
-    bool done = false;
-    int message_count = 0;
-    auto session =
-        subscriber
-            .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
-              std::cout << "Received message " << m << "\n";
-              std::unique_lock<std::mutex> lk(mu);
-              ++message_count;
-              done = true;
-              lk.unlock();
-              cv.notify_one();
-              std::move(h).ack();
-            })
-            // Setup an error handler for the subscription session
-            .then([&](future<google::cloud::Status> f) {
-              std::cout << "Subscription session result: " << f.get() << "\n";
-              std::unique_lock<std::mutex> lk(mu);
-              done = true;
-              cv.notify_one();
-            });
-    // Most applications would just release the `session` object at this point,
-    // but we want to gracefully close down this example.
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&done] { return done; });
-    lk.unlock();
-    session.cancel();
-    session.get();
-    std::cout << "Message count:" << message_count << "\n";
-  }
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber
+        .Subscribe([&](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::cout << "Received message " << m << "\n";
+          std::move(h).ack();
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        })
+        // Setup an error handler for the subscription session
+        .then([](future<google::cloud::Status> f) {
+          std::cout << "Subscription session result: " << f.get() << "\n";
+        });
+  };
   // [END pubsub_subscriber_error_listener]
-  (std::move(subscriber));
+  auto session = sample(std::move(subscriber));
+  EventCounter::Instance().Wait(
+      [current](std::int64_t count) { return count > current; });
+  session.cancel();
+  session.get();
 }
 
 void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
                                std::vector<std::string> const&) {
+  auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_async_pull_custom_attributes]
   namespace pubsub = google::cloud::pubsub;
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](pubsub::Subscriber subscriber) {
-    std::mutex mu;
-    std::condition_variable cv;
-    int message_count = 0;
-    auto session = subscriber.Subscribe(
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message with attributes:\n";
           for (auto const& kv : m.attributes()) {
             std::cout << "  " << kv.first << ": " << kv.second << "\n";
           }
-          std::unique_lock<std::mutex> lk(mu);
-          ++message_count;
-          lk.unlock();
-          cv.notify_one();
           std::move(h).ack();
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
         });
-    // Most applications would just release the `session` object at this point,
-    // but we want to gracefully close down this example.
-    std::unique_lock<std::mutex> lk(mu);
-    cv.wait(lk, [&message_count] { return message_count > 0; });
-    lk.unlock();
-    session.cancel();
-    auto status = session.get();
-    std::cout << "Message count: " << message_count << ", status: " << status
-              << "\n";
-  }
+  };
   //! [END pubsub_subscriber_async_pull_custom_attributes]
-  (std::move(subscriber));
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) { return count > initial; },
+      sample(std::move(subscriber)), __func__);
 }
 
 void CustomThreadPoolPublisher(std::vector<std::string> const& argv) {
@@ -1561,8 +1576,7 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
-    // Create our own completion queue to run the background activity, such as
-    // flushing the publisher.
+    // Create our own completion queue to run the background activity.
     google::cloud::CompletionQueue cq;
     // Setup one or more of threads to service this completion queue. These must
     // remain running until all the work is done.
@@ -1591,17 +1605,17 @@ void CustomThreadPoolSubscriber(std::vector<std::string> const& argv) {
     };
 
     // Receive messages in the previously allocated thread pool.
-    auto result = subscriber.Subscribe(
+    auto session = subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message " << m << "\n";
           increase_count();
           std::move(h).ack();
         });
     await_count();
-    result.cancel();
+    session.cancel();
     // Report any final status, blocking until the subscription loop completes,
     // either with a failure or because it was canceled.
-    auto status = result.get();
+    auto status = session.get();
     std::cout << "Message count=" << count << ", status=" << status << "\n";
 
     // Shutdown the completion queue and join the threads
@@ -1619,11 +1633,12 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
         "subscriber-concurrency-control <project-id> <subscription-id>"};
   }
 
+  auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_concurrency_control] [subscriber-concurrency]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](std::string project_id, std::string subscription_id) {
+  auto sample = [](std::string project_id, std::string subscription_id) {
     // Create a subscriber with 16 threads handling I/O work, by default the
     // library creates `std::thread::hardware_concurrency()` threads.
     auto subscriber = pubsub::Subscriber(pubsub::MakeSubscriberConnection(
@@ -1631,38 +1646,28 @@ void SubscriberConcurrencyControl(std::vector<std::string> const& argv) {
         pubsub::SubscriberOptions{}.set_max_concurrency(8),
         pubsub::ConnectionOptions{}.set_background_thread_pool_size(16)));
 
-    std::mutex mu;
-    std::condition_variable cv;
-    int count = 0;
-    auto constexpr kExpectedMessageCount = 4;
-    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-      // This handler executes in the I/O threads, applications could use,
-      // std::async(), a thread-pool,
-      // google::cloud::CompletionQueue::RunAsync(), or any other mechanism to
-      // transfer the execution to other threads.
-      std::cout << "Received message " << m << "\n";
-      std::move(h).ack();
-      {
-        std::lock_guard<std::mutex> lk(mu);
-        if (++count < kExpectedMessageCount) return;
-      }
-      cv.notify_one();
-    };
-
     // Create a subscription where up to 8 messages are handled concurrently. By
     // default the library uses `std::thread::hardware_concurrency()` as the
     // maximum number of concurrent callbacks.
-    auto session = subscriber.Subscribe(std::move(handler));
-    {
-      std::unique_lock<std::mutex> lk(mu);
-      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
-    }
-    session.cancel();
-    auto status = session.get();
-    std::cout << "Message count: " << count << ", status: " << status << "\n";
-  }
+    auto session = subscriber.Subscribe(
+        [](pubsub::Message const& m, pubsub::AckHandler h) {
+          // This handler executes in the I/O threads, applications could use,
+          // std::async(), a thread-pool, or any other mechanism to transfer the
+          // execution to other threads.
+          std::cout << "Received message " << m << "\n";
+          std::move(h).ack();
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        });
+    return std::make_pair(subscriber, std::move(session));
+  };
   //! [END pubsub_subscriber_concurrency_control] [subscriber-concurrency]
-  (argv.at(0), argv.at(1));
+  auto p = sample(argv.at(0), argv.at(1));
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) {
+        auto constexpr kExpectedMessageCount = 4;
+        return count >= initial + kExpectedMessageCount;
+      },
+      std::move(p.second), __func__);
 }
 
 void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
@@ -1672,11 +1677,12 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
         "subscriber-retry-settings <project-id> <subscription-id>"};
   }
 
+  auto const initial = EventCounter::Instance().Current();
   //! [START pubsub_subscriber_flow_settings] [subscriber-flow-control]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](std::string project_id, std::string subscription_id) {
+  auto sample = [](std::string project_id, std::string subscription_id) {
     // Change the flow control watermarks, by default the client library uses
     // 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the
     // size watermarks. Recall that the library stops requesting messages if
@@ -1689,30 +1695,22 @@ void SubscriberFlowControlSettings(std::vector<std::string> const& argv) {
             .set_max_outstanding_messages(1000)
             .set_max_outstanding_bytes(8 * kMiB)));
 
-    std::mutex mu;
-    std::condition_variable cv;
-    int count = 0;
-    auto constexpr kExpectedMessageCount = 4;
-    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-      std::move(h).ack();
-      {
-        std::lock_guard<std::mutex> lk(mu);
-        std::cout << "Received message [" << count << "] " << m.data() << "\n";
-        if (++count < kExpectedMessageCount) return;
-      }
-      cv.notify_one();
-    };
-    auto session = subscriber.Subscribe(std::move(handler));
-    {
-      std::unique_lock<std::mutex> lk(mu);
-      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
-    }
-    session.cancel();
-    auto status = session.get();
-    std::cout << "Message count: " << count << ", status: " << status << "\n";
-  }
+    auto session = subscriber.Subscribe(
+        [](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::move(h).ack();
+          std::cout << "Received message " << m << "\n";
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        });
+    return std::make_pair(subscriber, std::move(session));
+  };
   //! [END pubsub_subscriber_flow_settings] [subscriber-flow-control]
-  (argv.at(0), argv.at(1));
+  auto p = sample(argv.at(0), argv.at(1));
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) {
+        auto constexpr kExpectedMessageCount = 4;
+        return count >= initial + kExpectedMessageCount;
+      },
+      std::move(p.second), __func__);
 }
 
 void SubscriberRetrySettings(std::vector<std::string> const& argv) {
@@ -1722,11 +1720,12 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
         "subscriber-retry-settings <project-id> <subscription-id>"};
   }
 
+  auto const initial = EventCounter::Instance().Current();
   //! [subscriber-retry-settings]
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](std::string project_id, std::string subscription_id) {
+  auto sample = [](std::string project_id, std::string subscription_id) {
     // By default a subscriber will retry for 60 seconds, with an initial
     // backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will
     // grow by 30% after each attempt. This changes those defaults.
@@ -1742,41 +1741,22 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
             /*scaling=*/2.0)
             .clone()));
 
-    std::mutex mu;
-    std::condition_variable cv;
-    int count = 0;
-    auto constexpr kExpectedMessageCount = 1;
-    auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
-      std::move(h).ack();
-      {
-        std::lock_guard<std::mutex> lk(mu);
-        std::cout << "Received message " << m << "\n";
-        if (++count < kExpectedMessageCount) return;
-      }
-      cv.notify_one();
-    };
-
-    auto session = subscriber.Subscribe(std::move(handler));
-    {
-      std::unique_lock<std::mutex> lk(mu);
-      cv.wait(lk, [&] { return count >= kExpectedMessageCount; });
-    }
-    session.cancel();
-    auto status = session.get();
-    std::cout << "Message count: " << count << ", status: " << status << "\n";
-  }
+    auto session = subscriber.Subscribe(
+        [](pubsub::Message const& m, pubsub::AckHandler h) {
+          std::move(h).ack();
+          std::cout << "Received message " << m << "\n";
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        });
+    return std::make_pair(subscriber, std::move(session));
+  };
   //! [subscriber-retry-settings]
-  (argv.at(0), argv.at(1));
-}
-
-void WaitForSession(google::cloud::future<google::cloud::Status> session) {
-  std::cout << "\nWaiting for session... " << std::flush;
-  auto result = session.wait_for(std::chrono::minutes(1));
-  if (result == std::future_status::timeout) {
-    std::cout << "TIMEOUT" << std::endl;
-    throw std::runtime_error("session timeout");
-  }
-  std::cout << "DONE (" << session.get() << ")" << std::endl;
+  auto p = sample(argv.at(0), argv.at(1));
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) {
+        auto constexpr kExpectedMessageCount = 1;
+        return count >= initial + kExpectedMessageCount;
+      },
+      std::move(p.second), __func__);
 }
 
 void AutoRunAvro(
@@ -1826,7 +1806,7 @@ void AutoRunAvro(
   PublishAvroRecords(publisher, {});
 
   session.cancel();
-  WaitForSession(std::move(session));
+  WaitForSession(std::move(session), "SubscribeAvroRecords");
 
   std::cout << "\nRunning DeleteSubscription() sample [avro]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
@@ -1895,7 +1875,7 @@ void AutoRunProtobuf(
   PublishProtobufRecords(publisher, {});
 
   session.cancel();
-  WaitForSession(std::move(session));
+  WaitForSession(std::move(session), "SubscribeProtobufRecords");
 
   std::cout << "\nRunning DeleteSubscription sample [proto]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
