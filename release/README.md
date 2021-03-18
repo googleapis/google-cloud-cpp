@@ -18,7 +18,7 @@ release notes.
 
 ### Verify CI passing
 Before beginning the release process, verify all CI builds are passing on
-master.
+main.
 
 ### Update the API baseline
 
@@ -42,36 +42,36 @@ Spanner, and the common libraries:
 ```bash
 # Summarize the output of this into CHANGELOG.md under the "Bigtable" header
 git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/bigtable
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/bigtable
 ```
 
 ```bash
 # Summarize the output of this into CHANGELOG.md under the "Pub/Sub" header
 git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/pubsub
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/pubsub
 ```
 
 ```bash
 # Summarize the output of this into CHANGELOG.md under the "Storage" header
 git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/storage
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/storage
 ```
 
 ```bash
 # Summarize the output of this into CHANGELOG.md under the "Spanner" header
 git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud/spanner
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud/spanner
 ```
 
 ```bash
 # Summarize the output of this into CHANGELOG.md under the "Common libraries" header
 git log --no-merges --format="format:* %s" \
-    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
-    upstream/master -- google/cloud \
+    $(git describe --tags --abbrev=0 upstream/main)..HEAD \
+    upstream/main -- google/cloud \
    ':(exclude)google/cloud/firestore/' \
    ':(exclude)google/cloud/bigtable/' \
    ':(exclude)google/cloud/pubsub/' \
@@ -94,7 +94,7 @@ to create the release at an specific point in the revision history.
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. These steps are handled automatically for us by the
 [`./release/release.sh`
-script](https://github.com/googleapis/google-cloud-cpp/blob/master/release/release.sh).
+script](https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh).
 
 *No PR is needed for this step.*
 
@@ -135,11 +135,11 @@ uploaded documentation will generally be live in an hour at the following URLs:
 * https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
 
-## Bump the version numbers in `master`
+## Bump the version numbers in `main`
 
 Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 *next* version (i.e., one version past the release you just did above), and
-send the PR for review against `master` You need to:
+send the PR for review against `main` You need to:
 
 - Update the version numbers in the top-level `CMakeLists.txt` file.
 - Run the cmake configuration step, this will update the different
@@ -154,7 +154,7 @@ We use the [GitHub Branch Settings][github-branch-settings] to protect the
 release branches against accidental mistakes. From time to time changes in the
 release branch naming conventions may require you to change these settings.
 Please note that we use more strict settings for release branches than for
-`master`, in particular:
+`main`, in particular:
 
 * We require at least one review, but stale reviews are dismissed.
 * The `Require status checks to pass before merging` option is set.

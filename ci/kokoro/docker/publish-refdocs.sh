@@ -61,8 +61,8 @@ upload_docs() {
     return 0
   fi
   pushd "${docs_dir}"
-  if [[ "${branch}" == "master" ]]; then
-    docs_version="master"
+  if [[ "${branch}" == "main" ]]; then
+    docs_version="main"
   else
     # Extract the version from index.html
     docs_version=$(sed -n 's:.*<span id="projectnumber">\(.*\)</span>.*:\1:p' \

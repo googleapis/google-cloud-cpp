@@ -57,6 +57,6 @@ tar caf google-cloud-cpp.tar.xz cov-int
 curl --form "token=${COVERITY_SCAN_TOKEN}" \
   --form email="${COVERITY_SCAN_EMAIL}" \
   --form file=@google-cloud-cpp.tar.xz \
-  --form version="master" \
+  --form version="main" \
   --form description="Automatically Compiled Coverity Scan" \
   https://scan.coverity.com/builds?project=googleapis%2Fgoogle-cloud-cpp

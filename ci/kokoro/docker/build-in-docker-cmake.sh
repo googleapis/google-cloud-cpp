@@ -112,8 +112,8 @@ fi
 
 if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
   cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on")
-  if [[ "${BRANCH:-}" == "master" ]]; then
-    cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on")
+  if [[ "${BRANCH:-}" == "main" ]]; then
+    cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS=on")
   fi
 fi
 

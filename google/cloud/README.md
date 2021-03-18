@@ -30,7 +30,7 @@ notice. These include `google/cloud/internal/`, and
 * Detailed header comments in our [public `.h`][source-link] files
 
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-common/latest/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud
 
 ## Contributing changes
 
