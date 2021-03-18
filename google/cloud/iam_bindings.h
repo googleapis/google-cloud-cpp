@@ -45,7 +45,7 @@ class IamBindings {
  public:
   IamBindings() = default;
 
-  explicit GOOGLE_CLOUD_CPP_IAM_DEPRECATED IamBindings(
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED explicit IamBindings(
       // NOLINTNEXTLINE(performance-unnecessary-value-param)
       std::vector<IamBinding> bindings) {
     for (auto& it : bindings) {
