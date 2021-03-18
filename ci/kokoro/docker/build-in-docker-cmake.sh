@@ -125,7 +125,7 @@ cmake_extra_flags+=("-GNinja")
 # unset. We also disable the shellcheck warning because we want ${CMAKE_FLAGS}
 # to expand as separate arguments.
 # shellcheck disable=SC2086
-"${CMAKE_DRIVER}" "${CMAKE_DRIVER_ARGS[@]}" cmake \
+"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} cmake \
   -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
   "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
   ${CMAKE_FLAGS:-} \
@@ -138,7 +138,7 @@ if [[ "${CLANG_TIDY:-}" == "yes" && ("${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB
   # w.r.t. the target branch.
   TARGET_BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-${BRANCH}}"
   io::log_yellow "Build clang-tidy prerequisites"
-  "${CMAKE_DRIVER}" "${CMAKE_DRIVER_ARGS[@]}" cmake \
+  "${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} cmake \
     --build "${BINARY_DIR}" --target google-cloud-cpp-protos
   io::log_yellow "Run clang-tidy on changed files in a presubmit build"
   HEADER_FILTER_REGEX=$(clang-tidy -dump-config |
@@ -173,7 +173,7 @@ fi
 
 echo "================================================================"
 io::log_yellow "started build"
-"${CMAKE_DRIVER}" "${CMAKE_DRIVER_ARGS[@]}" cmake \
+"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} cmake \
   --build "${BINARY_DIR}" -- -j "${NCPU}"
 io::log_yellow "finished build"
 
