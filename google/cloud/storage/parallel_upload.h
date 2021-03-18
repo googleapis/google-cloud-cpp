@@ -123,8 +123,8 @@ class ParallelObjectWriteStreambuf;
 
 // Type-erased function object to execute ComposeMany with most arguments
 // bound.
-using Composer = std::function<StatusOr<ObjectMetadata>(
-    std::vector<ComposeSourceObject> const&)>;
+using Composer =
+    std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>;
 
 struct ParallelUploadPersistentState {
   struct Stream {
@@ -221,10 +221,7 @@ class ParallelUploadStateImpl
   mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
   // Type-erased object for deleting temporary objects.
   std::shared_ptr<ScopedDeleter> deleter_;
-  // Type-erased function object to execute ComposeMany with most arguments
-  // bound.
-  std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
-      composer_;
+  Composer composer_;
   std::string destination_object_name_;
   std::int64_t expected_generation_;
   // Set when all streams are closed and composed but before cleanup.

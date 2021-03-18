@@ -244,13 +244,13 @@ ParallelUploadPersistentState ParallelUploadStateImpl::ToPersistentState()
 void ParallelUploadStateImpl::AllStreamsFinished(
     std::unique_lock<std::mutex>& lk) {
   if (!res_) {
-    std::vector<ComposeSourceObject> to_compose;
+    std::vector<ComposeSourceObject> to_compose(streams_.size());
     std::transform(
-        streams_.begin(), streams_.end(), std::back_inserter(to_compose),
+        streams_.begin(), streams_.end(), to_compose.begin(),
         [](StreamInfo const& stream) { return *stream.composition_arg; });
     // only execute ComposeMany if all the streams succeeded.
     lk.unlock();
-    auto res = composer_(to_compose);
+    auto res = composer_(std::move(to_compose));
     lk.lock();
     if (res) {
       deleter_->Enable(true);
