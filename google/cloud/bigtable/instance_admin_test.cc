@@ -557,7 +557,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
         new_binding.set_role("writer");
         new_binding.add_members("abc@gmail.com");
         new_binding.add_members("xyz@gmail.com");
-        new_binding.set_allocated_condition(new google::type::Expr);
+        *new_binding.mutable_condition() = google::type::Expr{};
 
         return grpc::Status::OK;
       });
