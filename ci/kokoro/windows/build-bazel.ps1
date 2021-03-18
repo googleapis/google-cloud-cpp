@@ -208,12 +208,18 @@ if (Integration-Tests-Enabled) {
         "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}",
         "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
     )
+    $excluded_rules=@(
+        "-//google/cloud/bigtable/examples:bigtable_grpc_credentials",
+        "-//google/cloud/storage/examples:storage_service_account_samples",
+        "-//google/cloud/storage/tests:service_account_integration_test",
+
+        # TODO(#6062) - enable gRPC integration tests again
+        "-//google/cloud/storage/examples:storage_grpc_samples",
+        "-//google/cloud/storage/tests:grpc_integration_test"
+    )
     bazel $common_flags test $test_flags $integration_flags `
         "--test_tag_filters=integration-test" `
-        -- ... `
-        -//google/cloud/bigtable/examples:bigtable_grpc_credentials `
-        -//google/cloud/storage/examples:storage_service_account_samples `
-        -//google/cloud/storage/tests:service_account_integration_test
+        -- ... $excluded_rules
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "Integration tests failed with exit code ${LastExitCode}."
         Exit ${LastExitCode}

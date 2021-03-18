@@ -115,18 +115,19 @@ INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestJson,
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestXml,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(ApiName::kApiXml));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestGrpc,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiGrpc));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawJson,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(ApiName::kApiRawJson));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawXml,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(ApiName::kApiRawXml));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawGrpc,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiRawGrpc));
+// TODO(#6062) - enable gRPC integration tests again
+// INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestGrpc,
+//                         ThroughputExperimentIntegrationTest,
+//                         ::testing::Values(ApiName::kApiGrpc));
+// INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawGrpc,
+//                         ThroughputExperimentIntegrationTest,
+//                         ::testing::Values(ApiName::kApiRawGrpc));
 
 }  // namespace
 }  // namespace storage_benchmarks

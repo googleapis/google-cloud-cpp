@@ -272,10 +272,12 @@ elif [[ "${BUILD_NAME}" = "gcs-grpc" ]]; then
   export DISTRO=fedora
   export DISTRO_VERSION=33
   # Integration tests were explicitly requested.
-  RUN_INTEGRATION_TESTS="yes"
+  # TODO(#6062) - restore the GCS+gRPC integration tests against production
+  #     RUN_INTEGRATION_TESTS="yes"
+  RUN_INTEGRATION_TESTS="no"
   GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Test gRPC data plane
-  # Run all GCS tests on prod - the emulator doesn't support gRPC
-  FORCE_TEST_IN_PRODUCTION="storage"
+  # TODO(#6062) - restore the GCS+gRPC integration tests against production
+  #     FORCE_TEST_IN_PRODUCTION="storage"
   GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=""
   export BUILD_TOOL="Bazel"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
