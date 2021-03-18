@@ -45,7 +45,7 @@ class IamBindings {
     }
   }
 
-  IamBindings(std::string const& role, std::set<std::string> const& members) {
+  IamBindings(std::string role, std::set<std::string> members) {
     bindings_.insert({std::move(role), std::move(members)});
   }
 
