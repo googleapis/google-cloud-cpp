@@ -158,12 +158,19 @@ if should_run_integration_tests; then
     "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
   )
 
+  excluded_rules=(
+    "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+    "-//google/cloud/storage/examples:storage_service_account_samples"
+    "-//google/cloud/storage/tests:service_account_integration_test"
+
+    # TODO(#6062) - enable gRPC integration tests again
+    "-//google/cloud/storage/examples:storage_grpc_samples"
+    "-//google/cloud/storage/tests:grpc_integration_test"
+  )
+
   "${BAZEL_BIN}" test \
     "${bazel_args[@]}" \
     "--test_tag_filters=integration-test" \
-    -- ... \
-    -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
-    -//google/cloud/storage/examples:storage_service_account_samples \
-    -//google/cloud/storage/tests:service_account_integration_test
+    -- ... "${excluded_rules[@]}"
 
 fi
