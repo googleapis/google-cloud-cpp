@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
-#include "google/cloud/bigquery/big_query_read_connection.gcpcxx.pb.h"
-#include "google/cloud/bigquery/big_query_read_options.gcpcxx.pb.h"
-#include "google/cloud/bigquery/internal/big_query_read_option_defaults.gcpcxx.pb.h"
-#include "google/cloud/bigquery/internal/big_query_read_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_connection.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_options.gcpcxx.pb.h"
+#include "google/cloud/bigquery/internal/bigquery_read_option_defaults.gcpcxx.pb.h"
+#include "google/cloud/bigquery/internal/bigquery_read_stub_factory.gcpcxx.pb.h"
 #include "google/cloud/internal/resumable_streaming_read_rpc.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"

@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
-#include "google/cloud/bigquery/big_query_read_client.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_client.gcpcxx.pb.h"
 #include <memory>
 
 namespace google {
