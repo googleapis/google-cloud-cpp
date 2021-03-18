@@ -23,6 +23,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

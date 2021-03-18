@@ -14,6 +14,8 @@
 
 #include "google/cloud/iam_bindings.h"
 #include <gmock/gmock.h>
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

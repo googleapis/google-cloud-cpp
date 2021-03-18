@@ -23,16 +23,17 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
- * Represent the result of a GetIamPolicy or SetIamPolicy request.
+ * A deprecated representation of IAM policies.
  *
- * This is a simple struct to hold the version, IamBindings, and ETag.
+ * @deprecated this class is deprecated. Any functions that use it have also
+ *     been deprecated. The class was defined before IAM conditional bindings,
+ *     and does not support them. Nor will it be able to support future IAM
+ *     features. Please use the alternative functions.
  *
- * @see
- * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
- *     for more information about IAM policies.
+ * @see [Identity and Access Management](https://cloud.google.com/iam)
+ * @see [Overview of IAM Conditions][iam-conditions]
  *
- * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
- *     about ETags.
+ * [iam-conditions]: https://cloud.google.com/iam/docs/conditions-overview
  */
 struct IamPolicy {
   std::int32_t version;
