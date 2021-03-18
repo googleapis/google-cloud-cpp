@@ -95,13 +95,13 @@ std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
 
 GrpcClient::GrpcClient(ClientOptions options)
     : options_(std::move(options)),
-      stub_(google::storage::v1::Storage::NewStub(CreateGrpcChannel(options))) {
-}
+      stub_(
+          google::storage::v1::Storage::NewStub(CreateGrpcChannel(options_))) {}
 
 GrpcClient::GrpcClient(ClientOptions options, int channel_id)
     : options_(std::move(options)),
       stub_(google::storage::v1::Storage::NewStub(
-          CreateGrpcChannel(options, channel_id))) {}
+          CreateGrpcChannel(options_, channel_id))) {}
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
     grpc::ClientContext& context, google::storage::v1::Object& result) {

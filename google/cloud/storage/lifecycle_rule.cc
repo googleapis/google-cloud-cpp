@@ -104,7 +104,6 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleCondition const& rhs) {
   }
   if (rhs.custom_time_before.has_value()) {
     os << sep << "custom_time_before=" << *rhs.custom_time_before;
-    sep = ", ";
   }
   return os << "}";
 }
@@ -141,11 +140,12 @@ void LifecycleRule::MergeConditions(LifecycleRuleCondition& result,
   }
   if (rhs.matches_storage_class.has_value()) {
     if (result.matches_storage_class.has_value()) {
-      std::vector<std::string> tmp;
-      std::vector<std::string> a = *std::move(result.matches_storage_class);
+      std::vector<std::string> a;
+      a.swap(*result.matches_storage_class);
       std::sort(a.begin(), a.end());
       std::vector<std::string> b = *rhs.matches_storage_class;
       std::sort(b.begin(), b.end());
+      std::vector<std::string> tmp;
       std::set_intersection(a.begin(), a.end(), b.begin(), b.end(),
                             std::back_inserter(tmp));
       result.matches_storage_class.emplace(std::move(tmp));
