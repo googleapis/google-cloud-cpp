@@ -553,16 +553,16 @@ TEST_F(ParallelUploadTest, BrokenStream) {
   EXPECT_THAT(res, StatusIs(PermanentError().code()));
 }
 
-TEST(FirstOccurenceTest, Basic) {
+TEST(FirstOccurrenceTest, Basic) {
   EXPECT_EQ(absl::optional<std::string>(),
-            ExtractFirstOccurenceOfType<std::string>(std::tuple<>()));
+            ExtractFirstOccurrenceOfType<std::string>(std::tuple<>()));
   EXPECT_EQ(absl::optional<std::string>(),
-            ExtractFirstOccurenceOfType<std::string>(std::make_tuple(5, 5.5)));
+            ExtractFirstOccurrenceOfType<std::string>(std::make_tuple(5, 5.5)));
   EXPECT_EQ(absl::optional<std::string>("foo"),
-            ExtractFirstOccurenceOfType<std::string>(
+            ExtractFirstOccurrenceOfType<std::string>(
                 std::make_tuple(std::string("foo"), std::string("bar"))));
   EXPECT_EQ(absl::optional<std::string>("foo"),
-            ExtractFirstOccurenceOfType<std::string>(
+            ExtractFirstOccurrenceOfType<std::string>(
                 std::make_tuple(5, 6, std::string("foo"), std::string("bar"))));
 }
 

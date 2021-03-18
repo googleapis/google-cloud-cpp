@@ -79,12 +79,12 @@ struct CreateParallelUploadShards;
  *     return the value of the first element of type T
  */
 template <typename T, typename Tuple, typename Enable = void>
-struct ExtractFirstOccurenceOfTypeImpl {
+struct ExtractFirstOccurrenceOfTypeImpl {
   absl::optional<T> operator()(Tuple const&) { return absl::optional<T>(); }
 };
 
 template <typename T, typename... Options>
-struct ExtractFirstOccurenceOfTypeImpl<
+struct ExtractFirstOccurrenceOfTypeImpl<
     T, std::tuple<Options...>,
     typename std::enable_if<
         Among<typename std::decay<Options>::type...>::template TPred<
@@ -95,8 +95,8 @@ struct ExtractFirstOccurenceOfTypeImpl<
 };
 
 template <typename T, typename Tuple>
-absl::optional<T> ExtractFirstOccurenceOfType(Tuple const& tuple) {
-  return ExtractFirstOccurenceOfTypeImpl<T, Tuple>()(tuple);
+absl::optional<T> ExtractFirstOccurrenceOfType(Tuple const& tuple) {
+  return ExtractFirstOccurrenceOfTypeImpl<T, Tuple>()(tuple);
 }
 
 /**
@@ -123,8 +123,8 @@ class ParallelObjectWriteStreambuf;
 
 // Type-erased function object to execute ComposeMany with most arguments
 // bound.
-using Composer = std::function<StatusOr<ObjectMetadata>(
-    std::vector<ComposeSourceObject> const&)>;
+using Composer =
+    std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>;
 
 struct ParallelUploadPersistentState {
   struct Stream {
@@ -221,10 +221,7 @@ class ParallelUploadStateImpl
   mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
   // Type-erased object for deleting temporary objects.
   std::shared_ptr<ScopedDeleter> deleter_;
-  // Type-erased function object to execute ComposeMany with most arguments
-  // bound.
-  std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
-      composer_;
+  Composer composer_;
   std::string destination_object_name_;
   std::int64_t expected_generation_;
   // Set when all streams are closed and composed but before cleanup.
@@ -453,7 +450,6 @@ class NonResumableParallelUploadState {
   std::shared_ptr<ParallelUploadStateImpl> impl_;
   std::vector<ObjectWriteStream> shards_;
 
-  friend class NonResumableParallelObjectWriteStreambuf;
   friend struct CreateParallelUploadShards;
 };
 
@@ -487,14 +483,14 @@ class ResumableParallelUploadState {
   static StatusOr<ResumableParallelUploadState> CreateNew(
       Client client, std::string const& bucket_name,
       std::string const& object_name, std::size_t num_shards,
-      std::string const& prefix, std::string const& extra_state,
+      std::string const& prefix, std::string extra_state,
       std::tuple<Options...> const& options);
 
   template <typename... Options>
   static StatusOr<ResumableParallelUploadState> Resume(
       Client client, std::string const& bucket_name,
       std::string const& object_name, std::size_t num_shards,
-      std::string const& prefix, std::string const& resumable_session_id,
+      std::string const& prefix, std::string resumable_session_id,
       std::tuple<Options...> options);
 
   /**
@@ -575,7 +571,6 @@ class ResumableParallelUploadState {
   std::shared_ptr<ParallelUploadStateImpl> impl_;
   std::vector<ObjectWriteStream> shards_;
 
-  friend class ResumableParallelObjectWriteStreambuf;
   friend struct CreateParallelUploadShards;
 };
 
@@ -634,7 +629,7 @@ StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
       "There should be exactly one UseResumableUploadSession argument");
   std::string resumable_session_id = std::get<0>(resumable_args).value();
   auto extra_state_arg =
-      ExtractFirstOccurenceOfType<ParallelUploadExtraPersistentState>(
+      ExtractFirstOccurrenceOfType<ParallelUploadExtraPersistentState>(
           std::tie(options...));
 
   auto forwarded_args =
@@ -678,8 +673,8 @@ NonResumableParallelUploadState::Create(Client client,
       Among<DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
             IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp, UserProject,
             WithObjectMetadata>::TPred>(options);
-  auto composer = [client, bucket_name, object_name, compose_options, prefix](
-                      std::vector<ComposeSourceObject> const& sources) mutable {
+  auto composer = [client, bucket_name, object_name, compose_options,
+                   prefix](std::vector<ComposeSourceObject> sources) mutable {
     return google::cloud::internal::apply(
         ComposeManyApplyHelper{client, std::move(bucket_name),
                                std::move(sources), prefix + ".compose_many",
@@ -750,9 +745,9 @@ Composer ResumableParallelUploadState::CreateComposer(
   auto get_metadata_options = StaticTupleFilter<
       Among<DestinationPredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser,
             UserIp, UserProject, WithObjectMetadata>::TPred>(options);
-  auto composer =
-      [client, bucket_name, object_name, compose_options, get_metadata_options,
-       prefix](std::vector<ComposeSourceObject> const& sources) mutable
+  auto composer = [client, bucket_name, object_name, compose_options,
+                   get_metadata_options,
+                   prefix](std::vector<ComposeSourceObject> sources) mutable
       -> StatusOr<ObjectMetadata> {
     auto res = google::cloud::internal::apply(
         ComposeManyApplyHelper{client, bucket_name, std::move(sources),
@@ -779,7 +774,7 @@ template <typename... Options>
 StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
-    std::string const& prefix, std::string const& extra_state,
+    std::string const& prefix, std::string extra_state,
     std::tuple<Options...> const& options) {
   using internal::StaticTupleFilter;
 
@@ -854,7 +849,7 @@ template <typename... Options>
 StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
-    std::string const& prefix, std::string const& resumable_session_id,
+    std::string const& prefix, std::string resumable_session_id,
     std::tuple<Options...> options) {
   using internal::StaticTupleFilter;
 
@@ -951,11 +946,11 @@ std::vector<std::uintmax_t> ComputeParallelFileUploadSplitPoints(
   MinStreamSize const default_min_stream_size(32 * 1024 * 1024);
 
   auto const min_stream_size =
-      (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
+      (std::max<std::uintmax_t>)(1, ExtractFirstOccurrenceOfType<MinStreamSize>(
                                         options)
                                         .value_or(default_min_stream_size)
                                         .value());
-  auto const max_streams = ExtractFirstOccurenceOfType<MaxStreams>(options)
+  auto const max_streams = ExtractFirstOccurrenceOfType<MaxStreams>(options)
                                .value_or(default_max_streams)
                                .value();
 
@@ -1056,7 +1051,7 @@ struct CreateParallelUploadShards {
     }
 
     auto const resumable_session_id_arg =
-        ExtractFirstOccurenceOfType<UseResumableUploadSession>(
+        ExtractFirstOccurrenceOfType<UseResumableUploadSession>(
             std::tie(options...));
     bool const new_session = !resumable_session_id_arg ||
                              resumable_session_id_arg.value().value().empty();
