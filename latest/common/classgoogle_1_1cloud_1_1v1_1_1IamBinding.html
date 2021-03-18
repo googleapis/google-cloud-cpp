@@ -75,28 +75,31 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a Binding which associates a <code>member</code> with a particular <code>role</code> which can be used for Identity and Access management for Cloud Platform Resources.  
+<p>Simplified view of roles and members for IAM.  
  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="iam__binding_8h_source.html">google/cloud/iam_binding.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a98555de0a328e49832f307aac8fb7a04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a98555de0a328e49832f307aac8fb7a04">IamBinding</a> (std::string <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a85c927bccf66d5813255cf57c779fb8e">role</a>, std::set&lt; std::string &gt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#ad12a2ff8bfabe04e6ae670eb863c2209">members</a>)</td></tr>
-<tr class="separator:a98555de0a328e49832f307aac8fb7a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c2b8fbd4fde4a7c3ec7ec958e3e3199"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a9c2b8fbd4fde4a7c3ec7ec958e3e3199">IamBinding</a> (std::string <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a85c927bccf66d5813255cf57c779fb8e">role</a>, std::set&lt; std::string &gt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#ad12a2ff8bfabe04e6ae670eb863c2209">members</a>)</td></tr>
+<tr class="separator:a9c2b8fbd4fde4a7c3ec7ec958e3e3199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85c927bccf66d5813255cf57c779fb8e"><td class="memItemLeft" align="right" valign="top">std::string const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#a85c927bccf66d5813255cf57c779fb8e">role</a> () const</td></tr>
 <tr class="separator:a85c927bccf66d5813255cf57c779fb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad12a2ff8bfabe04e6ae670eb863c2209"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#ad12a2ff8bfabe04e6ae670eb863c2209">members</a> () const</td></tr>
 <tr class="separator:ad12a2ff8bfabe04e6ae670eb863c2209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a Binding which associates a <code>member</code> with a particular <code>role</code> which can be used for Identity and Access management for Cloud Platform Resources. </p>
-<p>For more information about a Binding please refer to: <a href="https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding">https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding</a> </p>
+<div class="textblock"><p>Simplified view of roles and members for IAM. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this class is deprecated. Any functions that use it have also been deprecated. The class was defined before IAM conditional bindings, and does not support them. Nor will it be able to support future IAM features. Please use the alternative functions.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam">Identity and Access Management</a> </dd>
+<dd>
+<a href="https://cloud.google.com/iam/docs/conditions-overview">Overview of IAM Conditions</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00033">33</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00038">38</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a98555de0a328e49832f307aac8fb7a04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98555de0a328e49832f307aac8fb7a04">&#9670;&nbsp;</a></span>IamBinding()</h2>
+<a id="a9c2b8fbd4fde4a7c3ec7ec958e3e3199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c2b8fbd4fde4a7c3ec7ec958e3e3199">&#9670;&nbsp;</a></span>IamBinding()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -105,7 +108,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::v1::IamBinding::IamBinding </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> google::cloud::v1::IamBinding::IamBinding </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>role</em>, </td>
@@ -129,7 +132,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00035">35</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00040">40</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
 
 </div>
 </div>
@@ -157,7 +160,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00039">39</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00045">45</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
 
 </div>
 </div>
@@ -184,7 +187,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00038">38</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__binding_8h_source.html#l00044">44</a> of file <a class="el" href="iam__binding_8h_source.html">iam_binding.h</a>.</p>
 
 </div>
 </div>

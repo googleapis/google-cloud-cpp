@@ -71,7 +71,8 @@ $(function() {
 <div class="title">version.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;google/cloud/internal/port_platform.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/internal/attributes.h&quot;</code><br />
+<code>#include &quot;google/cloud/internal/port_platform.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/version_info.h&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
@@ -90,6 +91,8 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ae68c335d4393118fa75c4a793b6d5942"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a></td></tr>
+<tr class="separator:ae68c335d4393118fa75c4a793b6d5942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12cb015c90e80137216e681db52ecd24"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#a12cb015c90e80137216e681db52ecd24">GOOGLE_CLOUD_CPP_VCONCAT</a>(Ma,  Mi)&#160;&#160;&#160;v##Ma</td></tr>
 <tr class="separator:a12cb015c90e80137216e681db52ecd24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa36612ca0072a1e0e9b8cef5b11a5e45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a>(Ma,  Mi)&#160;&#160;&#160;<a class="el" href="version_8h.html#a12cb015c90e80137216e681db52ecd24">GOOGLE_CLOUD_CPP_VCONCAT</a>(Ma, Mi)</td></tr>
@@ -136,7 +139,7 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code" href="version_8h.html#a062de6a24c1b99774d3f43e7c369308a">GOOGLE_CLOUD_CPP_GENERATED_VEVAL</a>(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \</div>
 <div class="line">                                   GOOGLE_CLOUD_CPP_VERSION_MINOR)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00031">31</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00039">39</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -166,7 +169,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00028">28</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00036">36</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -196,7 +199,28 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00029">29</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00037">37</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+
+</div>
+</div>
+<a id="ae68c335d4393118fa75c4a793b6d5942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68c335d4393118fa75c4a793b6d5942">&#9670;&nbsp;</a></span>GOOGLE_CLOUD_CPP_IAM_DEPRECATED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define GOOGLE_CLOUD_CPP_IAM_DEPRECATED</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">  GOOGLE_CLOUD_CPP_DEPRECATED(                                             \</div>
+<div class="line">      <span class="stringliteral">&quot;this type predates IAM conditions and does not work with policies &quot;</span> \</div>
+<div class="line">      <span class="stringliteral">&quot;that include IAM conditions. The functions that use this type are &quot;</span> \</div>
+<div class="line">      <span class="stringliteral">&quot;deprecated and will be be removed on 2022-04-01 or shortly &quot;</span>        \</div>
+<div class="line">      <span class="stringliteral">&quot;after. See GitHub issue #5929 for more information.&quot;</span>)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00023">23</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -214,7 +238,7 @@ Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">  <a class="code" href="version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a>(GOOGLE_CLOUD_CPP_VERSION_MAJOR, \</div>
 <div class="line">                         GOOGLE_CLOUD_CPP_VERSION_MINOR)</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00024">24</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00032">32</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -244,7 +268,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00022">22</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00030">30</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -274,13 +298,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00023">23</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00031">31</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<div class="ttc" id="aversion_8h_html_a062de6a24c1b99774d3f43e7c369308a"><div class="ttname"><a href="version_8h.html#a062de6a24c1b99774d3f43e7c369308a">GOOGLE_CLOUD_CPP_GENERATED_VEVAL</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_GENERATED_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00029">version.h:29</a></div></div>
-<div class="ttc" id="aversion_8h_html_aa36612ca0072a1e0e9b8cef5b11a5e45"><div class="ttname"><a href="version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00023">version.h:23</a></div></div>
+<div class="ttc" id="aversion_8h_html_a062de6a24c1b99774d3f43e7c369308a"><div class="ttname"><a href="version_8h.html#a062de6a24c1b99774d3f43e7c369308a">GOOGLE_CLOUD_CPP_GENERATED_VEVAL</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_GENERATED_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00037">version.h:37</a></div></div>
+<div class="ttc" id="aversion_8h_html_aa36612ca0072a1e0e9b8cef5b11a5e45"><div class="ttname"><a href="version_8h.html#aa36612ca0072a1e0e9b8cef5b11a5e45">GOOGLE_CLOUD_CPP_VEVAL</a></div><div class="ttdeci">#define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi)</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00031">version.h:31</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

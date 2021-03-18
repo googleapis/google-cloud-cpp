@@ -123,13 +123,13 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1TracingOptions.html" title="The configuration parameters for RPC/protobuf tracing.">TracingOptions</a></code> to use when printing grpc protocol buffer messages.  <a href="structgoogle_1_1cloud_1_1v1_1_1GrpcTracingOptionsOption.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">IamBinding</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a Binding which associates a <code>member</code> with a particular <code>role</code> which can be used for Identity and Access management for Cloud Platform Resources.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplified view of roles and members for IAM.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html">IamBindings</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a container for providing users with a handful of operation to users which they can use to add and remove members to Binding which is used for defining IAM Policy for Cloud Platform Resources.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplified view of multiple roles and their members for IAM.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html">IamPolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represent the result of a GetIamPolicy or SetIamPolicy request.  <a href="structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A deprecated representation of IAM policies.  <a href="structgoogle_1_1cloud_1_1v1_1_1IamPolicy.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html">KmsKeyName</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class identifies a Google Cloud KMS Key.  <a href="classgoogle_1_1cloud_1_1v1_1_1KmsKeyName.html#details">More...</a><br /></td></tr>
@@ -484,7 +484,7 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Alias template for <a class="el" href="namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd" title="Alias template for google::cloud::optional.">google::cloud::optional</a>. </p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>this alias is deprecated; use <code>absl::optional&lt;T&gt;</code> directly. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>this alias is deprecated; use <code>absl::optional&lt;T&gt;</code> directly. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00031">31</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
@@ -873,7 +873,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00168">168</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00193">193</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -911,7 +911,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00053">53</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00054">54</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1019,7 +1019,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00164">164</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00189">189</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -1057,7 +1057,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00048">48</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00049">49</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1087,7 +1087,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00081">81</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00083">83</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
@@ -1317,7 +1317,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00176">176</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00201">201</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -1355,7 +1355,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00061">61</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00062">62</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1393,7 +1393,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00160">160</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00185">185</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -1431,7 +1431,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00043">43</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00044">44</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1599,7 +1599,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00172">172</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00197">197</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -1637,7 +1637,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00057">57</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00058">58</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1675,7 +1675,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00180">180</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00205">205</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -1713,7 +1713,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00065">65</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__policy_8h_source.html#l00066">66</a> of file <a class="el" href="iam__policy_8h_source.html">iam_policy.h</a>.</p>
 
 </div>
 </div>
@@ -1820,7 +1820,7 @@ template&lt;typename T &gt; </div>
 
 <p>A single integer representing the Major/Minor/Patch version. </p>
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00080">80</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00088">88</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -1850,7 +1850,7 @@ template&lt;typename T &gt; </div>
 <p>The Google Cloud Storage C++ Client major version. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00058">58</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00066">66</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -1880,7 +1880,7 @@ template&lt;typename T &gt; </div>
 <p>The Google Cloud Storage C++ Client minor version. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00065">65</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00073">73</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>
@@ -1910,7 +1910,7 @@ template&lt;typename T &gt; </div>
 <p>The Google Cloud Storage C++ Client patch version. </p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://semver.org/spec/v2.0.0.html">https://semver.org/spec/v2.0.0.html</a> for details. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00072">72</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="version_8h_source.html#l00080">80</a> of file <a class="el" href="version_8h_source.html">version.h</a>.</p>
 
 </div>
 </div>

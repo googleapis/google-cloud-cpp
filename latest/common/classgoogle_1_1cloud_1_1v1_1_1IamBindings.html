@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a container for providing users with a handful of operation to users which they can use to add and remove members to Binding which is used for defining IAM Policy for Cloud Platform Resources.  
+<p>Simplified view of multiple roles and their members for IAM.  
  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="iam__bindings_8h_source.html">google/cloud/iam_bindings.h</a>&gt;</code></p>
@@ -90,54 +90,57 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adc80880b9fa1a2ad75469e0507307b69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#adc80880b9fa1a2ad75469e0507307b69">IamBindings</a> ()=default</td></tr>
 <tr class="separator:adc80880b9fa1a2ad75469e0507307b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8801804664f3d3392c5dd11c1f45620f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a8801804664f3d3392c5dd11c1f45620f">IamBindings</a> (std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">IamBinding</a> &gt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6a4a65be49d3f8432c4b9345dcdf74fb">bindings</a>)</td></tr>
-<tr class="separator:a8801804664f3d3392c5dd11c1f45620f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa389fcc1738add449ce2b52c06585870"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa389fcc1738add449ce2b52c06585870">IamBindings</a> (std::string role, std::set&lt; std::string &gt; members)</td></tr>
-<tr class="separator:aa389fcc1738add449ce2b52c06585870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12371b5a090a8735a7d1c50eadeeb5a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9">begin</a> () const</td></tr>
-<tr class="memdesc:a12371b5a090a8735a7d1c50eadeeb5a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator referring to the first element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Represents a container for providing users with a handful of operation to users which they can use to...">IamBindings</a> container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a12371b5a090a8735a7d1c50eadeeb5a9">More...</a><br /></td></tr>
-<tr class="separator:a12371b5a090a8735a7d1c50eadeeb5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c7300b46ad365f0928f65063058d635"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a1c7300b46ad365f0928f65063058d635">end</a> () const</td></tr>
-<tr class="memdesc:a1c7300b46ad365f0928f65063058d635"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator referring to the past-the-end element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Represents a container for providing users with a handful of operation to users which they can use to...">IamBindings</a> container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a1c7300b46ad365f0928f65063058d635">More...</a><br /></td></tr>
-<tr class="separator:a1c7300b46ad365f0928f65063058d635"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d0ba32b574d2067e7ee36d3c0a184d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a4d0ba32b574d2067e7ee36d3c0a184d5">empty</a> () const</td></tr>
-<tr class="memdesc:a4d0ba32b574d2067e7ee36d3c0a184d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the Bindings container is empty.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a4d0ba32b574d2067e7ee36d3c0a184d5">More...</a><br /></td></tr>
-<tr class="separator:a4d0ba32b574d2067e7ee36d3c0a184d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae227e58f19687dc0c72b66251c54e565"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae227e58f19687dc0c72b66251c54e565">size</a> () const</td></tr>
-<tr class="memdesc:ae227e58f19687dc0c72b66251c54e565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of Bindings in container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae227e58f19687dc0c72b66251c54e565">More...</a><br /></td></tr>
-<tr class="separator:ae227e58f19687dc0c72b66251c54e565"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a4a65be49d3f8432c4b9345dcdf74fb"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::set&lt; std::string &gt; &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6a4a65be49d3f8432c4b9345dcdf74fb">bindings</a> () const</td></tr>
-<tr class="separator:a6a4a65be49d3f8432c4b9345dcdf74fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee885fb5292145b19d0826f08ae8c977"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aee885fb5292145b19d0826f08ae8c977">find</a> (std::string const &amp;role) const</td></tr>
-<tr class="memdesc:aee885fb5292145b19d0826f08ae8c977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the members for a role.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aee885fb5292145b19d0826f08ae8c977">More...</a><br /></td></tr>
-<tr class="separator:aee885fb5292145b19d0826f08ae8c977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0728ac3df3d3bff88c4d797473c8bf4"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4">at</a> (std::string const &amp;role) const</td></tr>
-<tr class="memdesc:ae0728ac3df3d3bff88c4d797473c8bf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the members for a role.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ae0728ac3df3d3bff88c4d797473c8bf4">More...</a><br /></td></tr>
-<tr class="separator:ae0728ac3df3d3bff88c4d797473c8bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a1afdac0e47a221ce4bc7d4812790d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af0a1afdac0e47a221ce4bc7d4812790d">AddMember</a> (std::string const &amp;role, std::string member)</td></tr>
+<tr class="memitem:a364d832feff634cc0e20dacd384d39c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a364d832feff634cc0e20dacd384d39c4">IamBindings</a> (std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">IamBinding</a> &gt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a4248f0ca7e8c73e6dcba7b6fec962fea">bindings</a>)</td></tr>
+<tr class="separator:a364d832feff634cc0e20dacd384d39c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74d529b7578eb38e51b877358f53f81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ab74d529b7578eb38e51b877358f53f81">IamBindings</a> (std::string role, std::set&lt; std::string &gt; members)</td></tr>
+<tr class="separator:ab74d529b7578eb38e51b877358f53f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6245028db8fae1c7ad7a090cd570dacb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6245028db8fae1c7ad7a090cd570dacb">begin</a> () const</td></tr>
+<tr class="memdesc:a6245028db8fae1c7ad7a090cd570dacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator referring to the first element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Simplified view of multiple roles and their members for IAM.">IamBindings</a> container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6245028db8fae1c7ad7a090cd570dacb">More...</a><br /></td></tr>
+<tr class="separator:a6245028db8fae1c7ad7a090cd570dacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a334d973880d1427cbe368a50e555b12a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a334d973880d1427cbe368a50e555b12a">end</a> () const</td></tr>
+<tr class="memdesc:a334d973880d1427cbe368a50e555b12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator referring to the past-the-end element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Simplified view of multiple roles and their members for IAM.">IamBindings</a> container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a334d973880d1427cbe368a50e555b12a">More...</a><br /></td></tr>
+<tr class="separator:a334d973880d1427cbe368a50e555b12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73163cfe69254f68e8c3f19af8391f1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a73163cfe69254f68e8c3f19af8391f1e">empty</a> () const</td></tr>
+<tr class="memdesc:a73163cfe69254f68e8c3f19af8391f1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the Bindings container is empty.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a73163cfe69254f68e8c3f19af8391f1e">More...</a><br /></td></tr>
+<tr class="separator:a73163cfe69254f68e8c3f19af8391f1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6ca7c511d1ac409eb5a8bca57698ce9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ac6ca7c511d1ac409eb5a8bca57698ce9">size</a> () const</td></tr>
+<tr class="memdesc:ac6ca7c511d1ac409eb5a8bca57698ce9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of Bindings in container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#ac6ca7c511d1ac409eb5a8bca57698ce9">More...</a><br /></td></tr>
+<tr class="separator:ac6ca7c511d1ac409eb5a8bca57698ce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4248f0ca7e8c73e6dcba7b6fec962fea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::map&lt; std::string, std::set&lt; std::string &gt; &gt; const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a4248f0ca7e8c73e6dcba7b6fec962fea">bindings</a> () const</td></tr>
+<tr class="separator:a4248f0ca7e8c73e6dcba7b6fec962fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e86aaaf6678e4710da1da291e8eb6b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a3e86aaaf6678e4710da1da291e8eb6b6">find</a> (std::string const &amp;role) const</td></tr>
+<tr class="memdesc:a3e86aaaf6678e4710da1da291e8eb6b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the members for a role.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a3e86aaaf6678e4710da1da291e8eb6b6">More...</a><br /></td></tr>
+<tr class="separator:a3e86aaaf6678e4710da1da291e8eb6b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a107fd3907d101d7720fcd3ea05d4dcf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a107fd3907d101d7720fcd3ea05d4dcf0">at</a> (std::string const &amp;role) const</td></tr>
+<tr class="memdesc:a107fd3907d101d7720fcd3ea05d4dcf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the members for a role.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a107fd3907d101d7720fcd3ea05d4dcf0">More...</a><br /></td></tr>
+<tr class="separator:a107fd3907d101d7720fcd3ea05d4dcf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a1afdac0e47a221ce4bc7d4812790d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af0a1afdac0e47a221ce4bc7d4812790d">AddMember</a> (std::string const &amp;role, std::string member)</td></tr>
 <tr class="memdesc:af0a1afdac0e47a221ce4bc7d4812790d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new member if a binding exists with given role otherwise inserts a new key-value pair of role and member to the container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af0a1afdac0e47a221ce4bc7d4812790d">More...</a><br /></td></tr>
 <tr class="separator:af0a1afdac0e47a221ce4bc7d4812790d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf13592337f3a4037a59f25440ae0574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#abf13592337f3a4037a59f25440ae0574">AddMembers</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">google::cloud::IamBinding</a> const &amp;iam_binding)</td></tr>
+<tr class="memitem:abf13592337f3a4037a59f25440ae0574"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#abf13592337f3a4037a59f25440ae0574">AddMembers</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">google::cloud::IamBinding</a> const &amp;iam_binding)</td></tr>
 <tr class="memdesc:abf13592337f3a4037a59f25440ae0574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new key-value pair of role and members to the container if there is none for the role of given binding else appends members of given binding to the associated role's key-value entry.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#abf13592337f3a4037a59f25440ae0574">More...</a><br /></td></tr>
 <tr class="separator:abf13592337f3a4037a59f25440ae0574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a574011c0ebec289402ac4c73064b6c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a574011c0ebec289402ac4c73064b6c06">AddMembers</a> (std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)</td></tr>
+<tr class="memitem:a574011c0ebec289402ac4c73064b6c06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a574011c0ebec289402ac4c73064b6c06">AddMembers</a> (std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)</td></tr>
 <tr class="memdesc:a574011c0ebec289402ac4c73064b6c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new key-value pair of role and members to the container if there no existing for given role else appends the given members to the give role's member set.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a574011c0ebec289402ac4c73064b6c06">More...</a><br /></td></tr>
 <tr class="separator:a574011c0ebec289402ac4c73064b6c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa284d4bba56800387d416d82faceeb63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa284d4bba56800387d416d82faceeb63">RemoveMember</a> (std::string const &amp;role, std::string const &amp;member)</td></tr>
+<tr class="memitem:aa284d4bba56800387d416d82faceeb63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa284d4bba56800387d416d82faceeb63">RemoveMember</a> (std::string const &amp;role, std::string const &amp;member)</td></tr>
 <tr class="memdesc:aa284d4bba56800387d416d82faceeb63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given member from the given role's member set if there exists one in container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#aa284d4bba56800387d416d82faceeb63">More...</a><br /></td></tr>
 <tr class="separator:aa284d4bba56800387d416d82faceeb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af47fc13f7e3944ead0df2440b38a3d8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af47fc13f7e3944ead0df2440b38a3d8d">RemoveMembers</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">google::cloud::IamBinding</a> const &amp;iam_binding)</td></tr>
+<tr class="memitem:af47fc13f7e3944ead0df2440b38a3d8d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af47fc13f7e3944ead0df2440b38a3d8d">RemoveMembers</a> (<a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">google::cloud::IamBinding</a> const &amp;iam_binding)</td></tr>
 <tr class="memdesc:af47fc13f7e3944ead0df2440b38a3d8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given binding's member from the given binding's role's member set if there exists one in container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#af47fc13f7e3944ead0df2440b38a3d8d">More...</a><br /></td></tr>
 <tr class="separator:af47fc13f7e3944ead0df2440b38a3d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a972cff96749fa8cd484c9df836ce5d3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a972cff96749fa8cd484c9df836ce5d3d">RemoveMembers</a> (std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)</td></tr>
+<tr class="memitem:a972cff96749fa8cd484c9df836ce5d3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a972cff96749fa8cd484c9df836ce5d3d">RemoveMembers</a> (std::string const &amp;role, std::set&lt; std::string &gt; const &amp;members)</td></tr>
 <tr class="memdesc:a972cff96749fa8cd484c9df836ce5d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given members from given role's member set if there exists one in container.  <a href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a972cff96749fa8cd484c9df836ce5d3d">More...</a><br /></td></tr>
 <tr class="separator:a972cff96749fa8cd484c9df836ce5d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a container for providing users with a handful of operation to users which they can use to add and remove members to Binding which is used for defining IAM Policy for Cloud Platform Resources. </p>
-<p>For more information about a Binding please refer to: <a href="https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding">https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding</a> </p>
+<div class="textblock"><p>Simplified view of multiple roles and their members for IAM. </p>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>this class is deprecated. Any functions that use it have also been deprecated. The class was defined before IAM conditional bindings, and does not support them. Nor will it be able to support future IAM features. Please use the alternative functions.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/iam">Identity and Access Management</a> </dd>
+<dd>
+<a href="https://cloud.google.com/iam/docs/conditions-overview">Overview of IAM Conditions</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00037">37</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00044">44</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a6c525109106742f61594fae3d01d76ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c525109106742f61594fae3d01d76ac">&#9670;&nbsp;</a></span>iterator</h2>
@@ -151,7 +154,7 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00052">52</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00061">61</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -181,8 +184,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8801804664f3d3392c5dd11c1f45620f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8801804664f3d3392c5dd11c1f45620f">&#9670;&nbsp;</a></span>IamBindings() <span class="overload">[2/3]</span></h2>
+<a id="a364d832feff634cc0e20dacd384d39c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a364d832feff634cc0e20dacd384d39c4">&#9670;&nbsp;</a></span>IamBindings() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +194,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::v1::IamBindings::IamBindings </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> google::cloud::v1::IamBindings::IamBindings </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBinding.html">IamBinding</a> &gt;&#160;</td>
           <td class="paramname"><em>bindings</em></td><td>)</td>
@@ -205,12 +208,12 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00042">42</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00048">48</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="aa389fcc1738add449ce2b52c06585870"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa389fcc1738add449ce2b52c06585870">&#9670;&nbsp;</a></span>IamBindings() <span class="overload">[3/3]</span></h2>
+<a id="ab74d529b7578eb38e51b877358f53f81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab74d529b7578eb38e51b877358f53f81">&#9670;&nbsp;</a></span>IamBindings() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,7 +222,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">google::cloud::v1::IamBindings::IamBindings </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> google::cloud::v1::IamBindings::IamBindings </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>role</em>, </td>
@@ -243,7 +246,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00048">48</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00056">56</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -283,7 +286,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00024">24</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00026">26</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
@@ -311,7 +314,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00028">28</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00030">30</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
@@ -350,12 +353,12 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00035">35</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00037">37</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
-<a id="ae0728ac3df3d3bff88c4d797473c8bf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0728ac3df3d3bff88c4d797473c8bf4">&#9670;&nbsp;</a></span>at()</h2>
+<a id="a107fd3907d101d7720fcd3ea05d4dcf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a107fd3907d101d7720fcd3ea05d4dcf0">&#9670;&nbsp;</a></span>at()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -364,7 +367,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::set&lt;std::string&gt; google::cloud::v1::IamBindings::at </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::set&lt;std::string&gt; google::cloud::v1::IamBindings::at </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>role</em></td><td>)</td>
@@ -380,12 +383,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Returns the members for a role. </p>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00090">90</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00110">110</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="a12371b5a090a8735a7d1c50eadeeb5a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12371b5a090a8735a7d1c50eadeeb5a9">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="a6245028db8fae1c7ad7a090cd570dacb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6245028db8fae1c7ad7a090cd570dacb">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -394,7 +397,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::begin </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -407,14 +410,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns an iterator referring to the first element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Represents a container for providing users with a handful of operation to users which they can use to...">IamBindings</a> container. </p>
+<p>Returns an iterator referring to the first element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Simplified view of multiple roles and their members for IAM.">IamBindings</a> container. </p>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00058">58</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00067">67</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="a6a4a65be49d3f8432c4b9345dcdf74fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a4a65be49d3f8432c4b9345dcdf74fb">&#9670;&nbsp;</a></span>bindings()</h2>
+<a id="a4248f0ca7e8c73e6dcba7b6fec962fea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4248f0ca7e8c73e6dcba7b6fec962fea">&#9670;&nbsp;</a></span>bindings()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -423,7 +426,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, std::set&lt;std::string&gt; &gt; const&amp; google::cloud::v1::IamBindings::bindings </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::map&lt;std::string, std::set&lt;std::string&gt; &gt; const&amp; google::cloud::v1::IamBindings::bindings </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -436,12 +439,12 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00080">80</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00098">98</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="a4d0ba32b574d2067e7ee36d3c0a184d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d0ba32b574d2067e7ee36d3c0a184d5">&#9670;&nbsp;</a></span>empty()</h2>
+<a id="a73163cfe69254f68e8c3f19af8391f1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73163cfe69254f68e8c3f19af8391f1e">&#9670;&nbsp;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -450,7 +453,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool google::cloud::v1::IamBindings::empty </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> bool google::cloud::v1::IamBindings::empty </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -466,12 +469,12 @@ Public Member Functions</h2></td></tr>
 <p>Returns whether the Bindings container is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd>bool whether the container is empty or not. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00071">71</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00084">84</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="a1c7300b46ad365f0928f65063058d635"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c7300b46ad365f0928f65063058d635">&#9670;&nbsp;</a></span>end()</h2>
+<a id="a334d973880d1427cbe368a50e555b12a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a334d973880d1427cbe368a50e555b12a">&#9670;&nbsp;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,7 +483,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::end </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -493,14 +496,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns an iterator referring to the past-the-end element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Represents a container for providing users with a handful of operation to users which they can use to...">IamBindings</a> container. </p>
+<p>Returns an iterator referring to the past-the-end element in <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html" title="Simplified view of multiple roles and their members for IAM.">IamBindings</a> container. </p>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00064">64</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00075">75</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
-<a id="aee885fb5292145b19d0826f08ae8c977"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee885fb5292145b19d0826f08ae8c977">&#9670;&nbsp;</a></span>find()</h2>
+<a id="a3e86aaaf6678e4710da1da291e8eb6b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e86aaaf6678e4710da1da291e8eb6b6">&#9670;&nbsp;</a></span>find()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -509,7 +512,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::find </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> <a class="el" href="classgoogle_1_1cloud_1_1v1_1_1IamBindings.html#a6c525109106742f61594fae3d01d76ac">iterator</a> google::cloud::v1::IamBindings::find </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
           <td class="paramname"><em>role</em></td><td>)</td>
@@ -525,7 +528,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Finds the members for a role. </p>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00087">87</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00105">105</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
@@ -564,7 +567,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00040">40</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00042">42</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
@@ -592,7 +595,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00058">58</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00060">60</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
@@ -631,12 +634,12 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00062">62</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8cc_source.html#l00064">64</a> of file <a class="el" href="iam__bindings_8cc_source.html">iam_bindings.cc</a>.</p>
 
 </div>
 </div>
-<a id="ae227e58f19687dc0c72b66251c54e565"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae227e58f19687dc0c72b66251c54e565">&#9670;&nbsp;</a></span>size()</h2>
+<a id="ac6ca7c511d1ac409eb5a8bca57698ce9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6ca7c511d1ac409eb5a8bca57698ce9">&#9670;&nbsp;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -645,7 +648,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t google::cloud::v1::IamBindings::size </td>
+          <td class="memname"><a class="el" href="version_8h.html#ae68c335d4393118fa75c4a793b6d5942">GOOGLE_CLOUD_CPP_IAM_DEPRECATED</a> std::size_t google::cloud::v1::IamBindings::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -661,7 +664,7 @@ Public Member Functions</h2></td></tr>
 <p>Return number of Bindings in container. </p>
 <dl class="section return"><dt>Returns</dt><dd>int the size of the container. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00078">78</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="iam__bindings_8h_source.html#l00093">93</a> of file <a class="el" href="iam__bindings_8h_source.html">iam_bindings.h</a>.</p>
 
 </div>
 </div>
