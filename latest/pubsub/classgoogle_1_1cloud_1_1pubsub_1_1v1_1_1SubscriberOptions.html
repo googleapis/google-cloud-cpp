@@ -127,7 +127,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example: setting the concurrency control parameters</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// Create a subscriber with 16 threads handling I/O work, by default the</span></div>
 <div class="line">    <span class="comment">// library creates `std::thread::hardware_concurrency()` threads.</span></div>
 <div class="line">    <span class="keyword">auto</span> subscriber = <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html">pubsub::Subscriber</a>(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">pubsub::MakeSubscriberConnection</a>(</div>
@@ -135,41 +135,25 @@ Public Member Functions</h2></td></tr>
 <div class="line">        <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">pubsub::SubscriberOptions</a>{}.<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a63bb8a9762387513df32435d1e2b9235">set_max_concurrency</a>(8),</div>
 <div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}.set_background_thread_pool_size(16)));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 4;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      <span class="comment">// This handler executes in the I/O threads, applications could use,</span></div>
-<div class="line">      <span class="comment">// std::async(), a thread-pool,</span></div>
-<div class="line">      <span class="comment">// google::cloud::CompletionQueue::RunAsync(), or any other mechanism to</span></div>
-<div class="line">      <span class="comment">// transfer the execution to other threads.</span></div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line"> </div>
 <div class="line">    <span class="comment">// Create a subscription where up to 8 messages are handled concurrently. By</span></div>
 <div class="line">    <span class="comment">// default the library uses `std::thread::hardware_concurrency()` as the</span></div>
 <div class="line">    <span class="comment">// maximum number of concurrent callbacks.</span></div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          <span class="comment">// This handler executes in the I/O threads, applications could use,</span></div>
+<div class="line">          <span class="comment">// std::async(), a thread-pool, or any other mechanism to transfer the</span></div>
+<div class="line">          <span class="comment">// execution to other threads.</span></div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section user"><dt>Example: setting the flow control parameters</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// Change the flow control watermarks, by default the client library uses</span></div>
 <div class="line">    <span class="comment">// 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the</span></div>
 <div class="line">    <span class="comment">// size watermarks. Recall that the library stops requesting messages if</span></div>
@@ -182,28 +166,14 @@ Public Member Functions</h2></td></tr>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">set_max_outstanding_messages</a>(1000)</div>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">set_max_outstanding_bytes</a>(8 * kMiB)));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 4;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Received message [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; m.<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a31c155ed366c2773b4eb829a27396467">data</a>() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="subscriber__options_8h_source.html#l00080">80</a> of file <a class="el" href="subscriber__options_8h_source.html">subscriber_options.h</a>.</p>
@@ -372,7 +342,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// Create a subscriber with 16 threads handling I/O work, by default the</span></div>
 <div class="line">    <span class="comment">// library creates `std::thread::hardware_concurrency()` threads.</span></div>
 <div class="line">    <span class="keyword">auto</span> subscriber = <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Subscriber.html">pubsub::Subscriber</a>(<a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a4d36a0acd0c273b491563d99b7f370fb">pubsub::MakeSubscriberConnection</a>(</div>
@@ -380,36 +350,20 @@ Public Member Functions</h2></td></tr>
 <div class="line">        <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">pubsub::SubscriberOptions</a>{}.<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a63bb8a9762387513df32435d1e2b9235">set_max_concurrency</a>(8),</div>
 <div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>{}.set_background_thread_pool_size(16)));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 4;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      <span class="comment">// This handler executes in the I/O threads, applications could use,</span></div>
-<div class="line">      <span class="comment">// std::async(), a thread-pool,</span></div>
-<div class="line">      <span class="comment">// google::cloud::CompletionQueue::RunAsync(), or any other mechanism to</span></div>
-<div class="line">      <span class="comment">// transfer the execution to other threads.</span></div>
-<div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line"> </div>
 <div class="line">    <span class="comment">// Create a subscription where up to 8 messages are handled concurrently. By</span></div>
 <div class="line">    <span class="comment">// default the library uses `std::thread::hardware_concurrency()` as the</span></div>
 <div class="line">    <span class="comment">// maximum number of concurrent callbacks.</span></div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          <span class="comment">// This handler executes in the I/O threads, applications could use,</span></div>
+<div class="line">          <span class="comment">// std::async(), a thread-pool, or any other mechanism to transfer the</span></div>
+<div class="line">          <span class="comment">// execution to other threads.</span></div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -473,7 +427,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// Change the flow control watermarks, by default the client library uses</span></div>
 <div class="line">    <span class="comment">// 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the</span></div>
 <div class="line">    <span class="comment">// size watermarks. Recall that the library stops requesting messages if</span></div>
@@ -486,28 +440,14 @@ Public Member Functions</h2></td></tr>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">set_max_outstanding_messages</a>(1000)</div>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">set_max_outstanding_bytes</a>(8 * kMiB)));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 4;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Received message [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; m.<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a31c155ed366c2773b4eb829a27396467">data</a>() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -541,7 +481,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// Change the flow control watermarks, by default the client library uses</span></div>
 <div class="line">    <span class="comment">// 0 and 1,000 for the message count watermarks, and 0 and 10MiB for the</span></div>
 <div class="line">    <span class="comment">// size watermarks. Recall that the library stops requesting messages if</span></div>
@@ -554,28 +494,14 @@ Public Member Functions</h2></td></tr>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a3c99d2b94c9925c6674aa787460e87d8">set_max_outstanding_messages</a>(1000)</div>
 <div class="line">            .<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">set_max_outstanding_bytes</a>(8 * kMiB)));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 4;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Received message [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;] &quot;</span> &lt;&lt; m.<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a31c155ed366c2773b4eb829a27396467">data</a>() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -649,7 +575,6 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">google::cloud::pubsub::v1::Message</a></div><div class="ttdoc">The C++ representation for a Cloud Pub/Sub messages.</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00078">message.h:78</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_1_1v1_html_a6833bef0c593e2cfde6e1c9f2d745b94"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">google::cloud::pubsub::v1::ConnectionOptions</a></div><div class="ttdeci">::google::cloud::ConnectionOptions&lt; ConnectionOptionsTraits &gt; ConnectionOptions</div><div class="ttdoc">Configure a connection for Cloud Pub/Sub services.</div><div class="ttdef"><b>Definition:</b> <a href="connection__options_8h_source.html#l00036">connection_options.h:37</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message_html_a31c155ed366c2773b4eb829a27396467"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html#a31c155ed366c2773b4eb829a27396467">google::cloud::pubsub::v1::Message::data</a></div><div class="ttdeci">PubsubMessageDataType const  &amp; data() const &amp;</div><div class="ttdef"><b>Definition:</b> <a href="message_8h_source.html#l00082">message.h:82</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1pubsub_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></div><div class="ttdoc">Contains all the Cloud Pubsub C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="ack__handler_8cc_source.html#l00020">ack_handler.cc:20</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html">google::cloud::pubsub::v1::SubscriberOptions</a></div><div class="ttdoc">Configure how a Subscriber handles incoming messages.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8h_source.html#l00080">subscriber_options.h:80</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions_html_a987b45e8ac4cc5c8b62e4b126d3abe5b"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SubscriberOptions.html#a987b45e8ac4cc5c8b62e4b126d3abe5b">google::cloud::pubsub::v1::SubscriberOptions::set_max_outstanding_bytes</a></div><div class="ttdeci">SubscriberOptions &amp; set_max_outstanding_bytes(std::int64_t bytes)</div><div class="ttdoc">Set the maximum number of outstanding bytes per streaming pull.</div><div class="ttdef"><b>Definition:</b> <a href="subscriber__options_8cc_source.html#l00029">subscriber_options.cc:29</a></div></div>

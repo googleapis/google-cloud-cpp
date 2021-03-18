@@ -580,7 +580,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Changing Retry Parameters Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">pubsub</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a>;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::future;</div>
 <div class="line">  <span class="keyword">using</span> google::cloud::StatusOr;</div>
-<div class="line">  [](std::string project_id, std::string subscription_id) {</div>
+<div class="line">  <span class="keyword">auto</span> sample = [](std::string project_id, std::string subscription_id) {</div>
 <div class="line">    <span class="comment">// By default a subscriber will retry for 60 seconds, with an initial</span></div>
 <div class="line">    <span class="comment">// backoff of 100ms, a maximum backoff of 60 seconds, and the backoff will</span></div>
 <div class="line">    <span class="comment">// grow by 30% after each attempt. This changes those defaults.</span></div>
@@ -596,29 +596,14 @@ Functions</h2></td></tr>
 <div class="line">            <span class="comment">/*scaling=*/</span>2.0)</div>
 <div class="line">            .clone()));</div>
 <div class="line"> </div>
-<div class="line">    std::mutex mu;</div>
-<div class="line">    std::condition_variable cv;</div>
-<div class="line">    <span class="keywordtype">int</span> count = 0;</div>
-<div class="line">    <span class="keyword">auto</span> constexpr kExpectedMessageCount = 1;</div>
-<div class="line">    <span class="keyword">auto</span> handler = [&amp;](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
-<div class="line">      std::move(h).ack();</div>
-<div class="line">      {</div>
-<div class="line">        std::lock_guard&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">        <span class="keywordflow">if</span> (++count &lt; kExpectedMessageCount) <span class="keywordflow">return</span>;</div>
-<div class="line">      }</div>
-<div class="line">      cv.notify_one();</div>
-<div class="line">    };</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(std::move(handler));</div>
-<div class="line">    {</div>
-<div class="line">      std::unique_lock&lt;std::mutex&gt; lk(mu);</div>
-<div class="line">      cv.wait(lk, [&amp;] { <span class="keywordflow">return</span> count &gt;= kExpectedMessageCount; });</div>
-<div class="line">    }</div>
-<div class="line">    session.cancel();</div>
-<div class="line">    <span class="keyword">auto</span> status = session.get();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Message count: &quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;, status: &quot;</span> &lt;&lt; status &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  }</div>
+<div class="line">    <span class="keyword">auto</span> session = subscriber.Subscribe(</div>
+<div class="line">        [](<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1Message.html">pubsub::Message</a> <span class="keyword">const</span>&amp; m, <a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1AckHandler.html">pubsub::AckHandler</a> h) {</div>
+<div class="line">          std::move(h).ack();</div>
+<div class="line">          std::cout &lt;&lt; <span class="stringliteral">&quot;Received message &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">          PleaseIgnoreThisSimplifiesTestingTheSamples();</div>
+<div class="line">        });</div>
+<div class="line">    <span class="keywordflow">return</span> std::make_pair(subscriber, std::move(session));</div>
+<div class="line">  };</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
