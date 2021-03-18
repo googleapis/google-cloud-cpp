@@ -19,5 +19,5 @@
 #elif __GNUC__
 #pragma GCC diagnostic push
 #else
-#warning "Unknown compiler, cannot pop diagnostics state"
+#warning "Unknown compiler, cannot push diagnostics state"
 #endif  // _MSC_VER
