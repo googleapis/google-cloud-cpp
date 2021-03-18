@@ -16,9 +16,9 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
-#include "google/cloud/bigquery/internal/big_query_read_option_defaults.gcpcxx.pb.h"
-#include "google/cloud/bigquery/big_query_read_connection.gcpcxx.pb.h"
-#include "google/cloud/bigquery/big_query_read_options.gcpcxx.pb.h"
+#include "google/cloud/bigquery/internal/bigquery_read_option_defaults.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_connection.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_options.gcpcxx.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
@@ -37,7 +37,7 @@ auto constexpr kBackoffScaling = 2.0;
 
 Options BigQueryReadDefaultOptions(Options options) {
   if (!options.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_BIG_QUERY_READ_ENDPOINT");
+    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT");
     options.set<EndpointOption>(env ? *env : "bigquerystorage.googleapis.com");
   }
   if (!options.has<GrpcCredentialOption>()) {

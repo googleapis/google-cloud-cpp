@@ -65,6 +65,10 @@ TEST(CamelCaseToSnakeCase, Success) {
   EXPECT_EQ("foo123", CamelCaseToSnakeCase("Foo123"));
 }
 
+TEST(CamelCaseToSnakeCase, Exceptions) {
+  EXPECT_EQ("bigquery_read", CamelCaseToSnakeCase("BigQueryRead"));
+}
+
 TEST(ServiceNameToFilePath, TrailingServiceInLastComponent) {
   EXPECT_EQ("google/spanner/admin/database/v1/database_admin",
             ServiceNameToFilePath(
