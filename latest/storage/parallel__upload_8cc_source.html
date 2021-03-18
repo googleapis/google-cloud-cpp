@@ -313,13 +313,13 @@ $(function() {
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;<span class="keywordtype">void</span> ParallelUploadStateImpl::AllStreamsFinished(</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    std::unique_lock&lt;std::mutex&gt;&amp; lk) {</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="keywordflow">if</span> (!res_) {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    std::vector&lt;ComposeSourceObject&gt; to_compose;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    std::vector&lt;ComposeSourceObject&gt; to_compose(streams_.size());</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    std::transform(</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        streams_.begin(), streams_.end(), std::back_inserter(to_compose),</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        streams_.begin(), streams_.end(), to_compose.begin(),</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        [](StreamInfo <span class="keyword">const</span>&amp; stream) { return *stream.composition_arg; });</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">// only execute ComposeMany if all the streams succeeded.</span></div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    lk.unlock();</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keyword">auto</span> res = composer_(to_compose);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keyword">auto</span> res = composer_(std::move(to_compose));</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    lk.lock();</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">if</span> (res) {</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      deleter_-&gt;Enable(<span class="keyword">true</span>);</div>
