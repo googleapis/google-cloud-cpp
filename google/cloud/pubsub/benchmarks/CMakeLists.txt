@@ -14,10 +14,7 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 function (pubsub_client_define_benchmarks)
     set(pubsub_client_benchmark_programs # cmake-format: sort

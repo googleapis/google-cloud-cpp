@@ -26,10 +26,7 @@ set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1")
 
 include(GoogleCloudCppCommon)
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(

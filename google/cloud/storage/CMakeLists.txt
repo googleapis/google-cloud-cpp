@@ -14,10 +14,7 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" OFF)
