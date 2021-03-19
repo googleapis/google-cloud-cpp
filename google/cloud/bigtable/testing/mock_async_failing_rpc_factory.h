@@ -27,6 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /**
  * Helper class to create the expectations for a failing async RPC call.
  *

@@ -22,6 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
  public:
   using ClientOptions = ::google::cloud::bigtable::ClientOptions;

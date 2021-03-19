@@ -24,6 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::zone_a_;

@@ -24,6 +24,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /**
  * Connects to Cloud Bigtable's administration APIs.
  *

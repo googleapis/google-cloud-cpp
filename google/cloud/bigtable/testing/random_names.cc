@@ -18,6 +18,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 // Unless otherwise noted, the maximum ID lengths discovered by trial and error.
 auto constexpr kMaxTableIdLength = 50;
 char const kRandomTableIdRE[] = R"re(^tbl-\d{4}-\d{2}-\d{2}-.*$)re";

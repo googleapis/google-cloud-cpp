@@ -29,6 +29,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /// Store the project and instance captured from the command-line arguments.
 class TableTestEnvironment : public ::testing::Environment {
  public:

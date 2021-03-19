@@ -19,6 +19,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 char const TableTestFixture::kProjectId[] = "foo-project";
 char const TableTestFixture::kInstanceId[] = "bar-instance";
 char const TableTestFixture::kTableId[] = "baz-table";

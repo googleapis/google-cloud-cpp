@@ -27,6 +27,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 using ReceivedMetadata = std::multimap<std::string, std::string>;
 
 inline void GetClientMetadata(grpc::ServerContext* context,

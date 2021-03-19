@@ -17,6 +17,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 namespace btadmin = google::bigtable::admin::v2;
 
 grpc::Status InProcessAdminClient::CreateTable(

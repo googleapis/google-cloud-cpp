@@ -20,6 +20,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);

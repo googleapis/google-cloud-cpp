@@ -22,6 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 class MockDataClient : public bigtable::DataClient {
  public:
   using ClientOptions = bigtable::ClientOptions;

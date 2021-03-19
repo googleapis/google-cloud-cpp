@@ -21,6 +21,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /// Create a random table ID given a PRNG generator.
 std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
                           std::chrono::system_clock::time_point tp =

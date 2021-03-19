@@ -23,6 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /**
  * Connect to an embedded Cloud Bigtable server implementing the data
  * manipulation APIs.

@@ -23,6 +23,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable_testing {
+
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
