@@ -37,12 +37,13 @@ namespace btadmin = google::bigtable::admin::v2;
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::ReturnRef;
 
 using MockAsyncListAppProfilesReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         btadmin::ListAppProfilesResponse>;
 using Functor = std::function<void(
     CompletionQueue&, std::vector<btadmin::AppProfile>&, grpc::Status&)>;
@@ -54,7 +55,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
   AsyncListAppProfilesTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new MockInstanceAdminClient),
         profiles_reader_1_(new MockAsyncListAppProfilesReader),
         profiles_reader_2_(new MockAsyncListAppProfilesReader),
         profiles_reader_3_(new MockAsyncListAppProfilesReader) {
@@ -69,7 +70,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockInstanceAdminClient> client_;
+  std::shared_ptr<MockInstanceAdminClient> client_;
   future<StatusOr<std::vector<btadmin::AppProfile>>> user_future_;
   std::unique_ptr<MockAsyncListAppProfilesReader> profiles_reader_1_;
   std::unique_ptr<MockAsyncListAppProfilesReader> profiles_reader_2_;

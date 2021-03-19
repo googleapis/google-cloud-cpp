@@ -21,11 +21,11 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 class MockDataClient : public bigtable::DataClient {
  public:
+  using ClientOptions = bigtable::ClientOptions;
+
   explicit MockDataClient(ClientOptions options = {})
       : options_(std::move(options)) {}
 
@@ -133,8 +133,7 @@ class MockDataClient : public bigtable::DataClient {
   ClientOptions options_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

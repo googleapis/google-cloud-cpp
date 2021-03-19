@@ -34,6 +34,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Return;
@@ -102,7 +103,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
             absl::make_unique<SharedBackoffPolicyMock>()),
         cq_impl_(new google::cloud::testing_util::FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new MockInstanceAdminClient),
         metadata_update_policy_("my_instance", MetadataParamTypes::NAME) {}
 
   // Description of a single expected RPC exchange.
@@ -116,7 +117,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
   };
 
   using MockAsyncListClustersReader =
-      google::cloud::bigtable::testing::MockAsyncResponseReader<
+      google::cloud::bigtable_testing::MockAsyncResponseReader<
           ListClustersResponse>;
 
   void ExpectInteraction(std::vector<Exchange> const& interaction) {
@@ -188,7 +189,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
   std::shared_ptr<google::cloud::testing_util::FakeCompletionQueueImpl>
       cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockInstanceAdminClient> client_;
+  std::shared_ptr<MockInstanceAdminClient> client_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::vector<std::unique_ptr<MockAsyncListClustersReader>> readers_to_delete_;
 };

@@ -19,16 +19,14 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 Status CleanupStaleTables(google::cloud::bigtable::TableAdmin admin) {
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   auto const max_table_id = RandomTableId(threshold);
   auto const re = std::regex(RandomTableIdRegex());
 
-  auto tables = admin.ListTables(TableAdmin::NAME_ONLY);
+  auto tables = admin.ListTables(bigtable::TableAdmin::NAME_ONLY);
   if (!tables) return std::move(tables).status();
   for (auto const& t : *tables) {
     std::vector<std::string> const components = absl::StrSplit(t.name(), '/');
@@ -85,7 +83,6 @@ Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin) {
   return Status{};
 }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

@@ -22,9 +22,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /// Common fixture for the bigtable::Table tests.
 class TableTestFixture : public ::testing::Test {
  protected:
@@ -49,8 +47,7 @@ class TableTestFixture : public ::testing::Test {
 google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
     std::string const& repr);
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

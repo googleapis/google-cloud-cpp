@@ -700,12 +700,12 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  google::cloud::bigtable::testing::CleanupStaleInstances(admin);
+  google::cloud::bigtable_testing::CleanupStaleInstances(admin);
 
   // Create a different instance id to run the replicated instance example.
   {
     auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
+        google::cloud::bigtable_testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateReplicatedInstance() example" << std::endl;
     CreateReplicatedInstance(admin, {id, zone_a, zone_b});
     std::cout << "\nRunning GetInstance() example" << std::endl;
@@ -716,7 +716,7 @@ void RunAll(std::vector<std::string> const& argv) {
   // Create a different instance id to run the development instance example.
   {
     auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
+        google::cloud::bigtable_testing::RandomInstanceId(generator);
     std::cout << "\nRunning CreateDevInstance() example" << std::endl;
     CreateDevInstance(admin, {id, zone_a});
     std::cout << "\nRunning UpdateInstance() example" << std::endl;
@@ -728,15 +728,15 @@ void RunAll(std::vector<std::string> const& argv) {
   // id
   {
     auto const id =
-        google::cloud::bigtable::testing::RandomInstanceId(generator);
+        google::cloud::bigtable_testing::RandomInstanceId(generator);
     auto const cluster_id =
-        google::cloud::bigtable::testing::RandomClusterId(generator);
+        google::cloud::bigtable_testing::RandomClusterId(generator);
     std::cout << "\nRunning RunInstanceOperations() example" << std::endl;
     RunInstanceOperations(admin, {id, cluster_id, zone_a});
   }
 
   auto const instance_id =
-      google::cloud::bigtable::testing::RandomInstanceId(generator);
+      google::cloud::bigtable_testing::RandomInstanceId(generator);
 
   std::cout << "\nRunning CheckInstanceExists() example [1]" << std::endl;
   CheckInstanceExists(admin, {instance_id});

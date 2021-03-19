@@ -308,12 +308,12 @@ void RunAll(std::vector<std::string> const& argv) {
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  google::cloud::bigtable_testing::CleanupStaleTables(admin);
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const table_id =
-      google::cloud::bigtable::testing::RandomTableId(generator);
+      google::cloud::bigtable_testing::RandomTableId(generator);
 
   std::cout << "\nCreating table to run the examples (" << table_id << ")"
             << std::endl;

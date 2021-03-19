@@ -20,9 +20,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /// Create a random table ID given a PRNG generator.
 std::string RandomTableId(google::cloud::internal::DefaultPRNG& generator,
                           std::chrono::system_clock::time_point tp =
@@ -67,8 +65,7 @@ std::string RandomInstanceId(std::chrono::system_clock::time_point tp);
 /// Return a regular expression suitable to match the random instance IDs
 std::string RandomInstanceIdRegex();
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

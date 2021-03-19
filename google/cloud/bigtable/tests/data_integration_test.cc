@@ -24,6 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::bigtable_testing::TableTestEnvironment;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
@@ -32,7 +33,7 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 
 using DataIntegrationTest =
-    ::google::cloud::bigtable::testing::TableIntegrationTest;
+    ::google::cloud::bigtable_testing::TableIntegrationTest;
 
 /// Use Table::Apply() to insert a single row.
 void Apply(Table& table, std::string const& row_key,
@@ -460,12 +461,11 @@ TEST_F(DataIntegrationTest, TableSampleRowKeysTest) {
 
   // Create kBatchSize * kBatchCount rows. Use a special client with tracing
   // disabled because it simply generates too much data.
-  auto bulk_table =
-      bigtable::Table(bigtable::CreateDefaultDataClient(
-                          testing::TableTestEnvironment::project_id(),
-                          testing::TableTestEnvironment::instance_id(),
-                          ClientOptions().disable_tracing("rpc")),
-                      testing::TableTestEnvironment::table_id());
+  auto bulk_table = bigtable::Table(
+      bigtable::CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                        TableTestEnvironment::instance_id(),
+                                        ClientOptions().disable_tracing("rpc")),
+      TableTestEnvironment::table_id());
   int constexpr kBatchCount = 10;
   int constexpr kBatchSize = 5000;
   int constexpr kColumnCount = 10;
@@ -608,8 +608,8 @@ TEST(ConnectionRefresh, Disabled) {
   auto client_options = bigtable::ClientOptions().set_max_conn_refresh_period(
       std::chrono::seconds(0));
   auto data_client = bigtable::CreateDefaultDataClient(
-      testing::TableTestEnvironment::project_id(),
-      testing::TableTestEnvironment::instance_id(), client_options);
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
+      client_options);
   // In general, it is hard to show that something has *not* happened, at best
   // we can show that its side-effects have not happened. In this case we want
   // to show that the channels have not been refreshed. A side-effect of
@@ -628,7 +628,7 @@ TEST(ConnectionRefresh, Disabled) {
     EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
   }
   // Make sure things still work.
-  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  bigtable::Table table(data_client, TableTestEnvironment::table_id());
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
@@ -648,8 +648,7 @@ TEST(ConnectionRefresh, Disabled) {
 
 TEST(ConnectionRefresh, Frequent) {
   auto data_client = bigtable::CreateDefaultDataClient(
-      testing::TableTestEnvironment::project_id(),
-      testing::TableTestEnvironment::instance_id(),
+      TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
       bigtable::ClientOptions().set_max_conn_refresh_period(
           std::chrono::milliseconds(100)));
 
@@ -663,7 +662,7 @@ TEST(ConnectionRefresh, Frequent) {
   }
 
   // Make sure things still work.
-  bigtable::Table table(data_client, testing::TableTestEnvironment::table_id());
+  bigtable::Table table(data_client, TableTestEnvironment::table_id());
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
@@ -679,7 +678,7 @@ TEST(ConnectionRefresh, Frequent) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new ::google::cloud::bigtable::testing::TableTestEnvironment);
+      new ::google::cloud::bigtable_testing::TableTestEnvironment);
 
   return RUN_ALL_TESTS();
 }

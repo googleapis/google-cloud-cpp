@@ -201,14 +201,14 @@ void RunAll(std::vector<std::string> const& argv) {
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
   std::string const prefix = "table-admin-snippets-";
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  google::cloud::bigtable_testing::CleanupStaleTables(admin);
   std::string const backup_prefix = "table-admin-snippets-backup-";
-  google::cloud::bigtable::testing::CleanupStaleBackups(admin);
+  google::cloud::bigtable_testing::CleanupStaleBackups(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id_1 = google::cloud::bigtable_testing::RandomTableId(generator);
 
   auto table_1 = admin.CreateTable(
       table_id_1, cbt::TableConfig(
@@ -220,7 +220,7 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!table_1) throw std::runtime_error(table_1.status().message());
 
   std::cout << "\nRunning CreateBackup() example" << std::endl;
-  auto backup_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto backup_id_1 = google::cloud::bigtable_testing::RandomTableId(generator);
   CreateBackup(admin, {table_id_1, cluster_id, backup_id_1,
                        absl::FormatTime(absl::Now() + absl::Hours(12))});
 

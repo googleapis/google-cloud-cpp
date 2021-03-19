@@ -23,7 +23,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using FilterIntegrationTest =
-    ::google::cloud::bigtable::testing::TableIntegrationTest;
+    ::google::cloud::bigtable_testing::TableIntegrationTest;
 
 /**
  * Create some complex rows in @p table.
@@ -610,7 +610,7 @@ TEST_F(FilterIntegrationTest, InterleaveFromRange) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new ::google::cloud::bigtable::testing::TableTestEnvironment);
+      new ::google::cloud::bigtable_testing::TableTestEnvironment);
 
   return RUN_ALL_TESTS();
 }

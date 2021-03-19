@@ -34,7 +34,7 @@ namespace {
 
 namespace btproto = google::bigtable::v2;
 
-using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::bigtable_testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
@@ -48,7 +48,7 @@ bool Unsatisfied(future<T> const& fut) {
   return std::future_status::timeout == fut.wait_for(1_ms);
 }
 
-class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
+class TableAsyncReadRowsTest : public bigtable_testing::TableTestFixture {
  protected:
   TableAsyncReadRowsTest()
       : TableTestFixture(
@@ -160,7 +160,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRow) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -211,7 +211,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -259,7 +259,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -271,7 +271,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
                 })");
       })
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r2"
@@ -328,7 +328,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -340,7 +340,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
                 })");
       })
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r2"
@@ -394,7 +394,7 @@ TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -406,7 +406,7 @@ TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
                 })");
       })
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -454,7 +454,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             // missing final commit
             R"(
                 chunks {
@@ -494,7 +494,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             // missing final commit
             R"(
                 chunks {
@@ -582,7 +582,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   // Make it a bit trickier by delivering the error while parsing second row.
   EXPECT_CALL(stream1, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -608,7 +608,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
 
   EXPECT_CALL(stream2, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r2"
@@ -668,7 +668,7 @@ TEST_F(TableAsyncReadRowsTest, ParserFailure) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             // Row not in increasing order.
             R"(
                 chunks {
@@ -734,7 +734,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -841,7 +841,7 @@ TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
   // while still keeping the two processed rows for the user.
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
                 chunks {
                   row_key: "r1"
@@ -910,7 +910,7 @@ TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
 TEST_F(TableAsyncReadRowsTest, DeepStack) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
-  auto large_response = bigtable::testing::ReadRowsResponseFromString(
+  auto large_response = bigtable_testing::ReadRowsResponseFromString(
       R"(
           chunks {
             row_key: "000"
@@ -979,7 +979,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce([](btproto::ReadRowsResponse* r, void*) {
-        *r = bigtable::testing::ReadRowsResponseFromString(
+        *r = bigtable_testing::ReadRowsResponseFromString(
             R"(
               chunks {
                 row_key: "000"

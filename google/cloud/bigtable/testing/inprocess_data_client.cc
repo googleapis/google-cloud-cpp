@@ -16,9 +16,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 namespace btproto = google::bigtable::v2;
 
 grpc::Status InProcessDataClient::MutateRow(
@@ -136,7 +134,6 @@ InProcessDataClient::AsyncSampleRowKeys(
   return Stub()->AsyncSampleRowKeys(context, request, cq, tag);
 }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

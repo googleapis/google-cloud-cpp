@@ -32,10 +32,10 @@ namespace {
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::bigtable_testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
-class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
+class AsyncBulkApplyTest : public bigtable_testing::TableTestFixture {
  protected:
   AsyncBulkApplyTest()
       : TableTestFixture(

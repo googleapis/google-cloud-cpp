@@ -25,17 +25,17 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
-using ::google::cloud::bigtable::testing::MockReadRowsReader;
+using ::google::cloud::bigtable_testing::MockReadRowsReader;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::Return;
 
-class TableReadRowTest : public bigtable::testing::TableTestFixture {
+class TableReadRowTest : public bigtable_testing::TableTestFixture {
  public:
   TableReadRowTest() : TableTestFixture(CompletionQueue{}) {}
 };
 
 TEST_F(TableReadRowTest, ReadRowSimple) {
-  auto const response = bigtable::testing::ReadRowsResponseFromString(R"(
+  auto const response = bigtable_testing::ReadRowsResponseFromString(R"(
       chunks {
         row_key: "r1"
         family_name { value: "fam" }

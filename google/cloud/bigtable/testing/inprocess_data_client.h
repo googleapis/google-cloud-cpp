@@ -22,9 +22,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /**
  * Connect to an embedded Cloud Bigtable server implementing the data
  * manipulation APIs.
@@ -129,6 +127,7 @@ class InProcessDataClient : public bigtable::DataClient {
   //@}
 
  private:
+  using ClientOptions = bigtable::ClientOptions;
   ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return options_.background_threads_factory();
   }
@@ -139,8 +138,7 @@ class InProcessDataClient : public bigtable::DataClient {
   ClientOptions options_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

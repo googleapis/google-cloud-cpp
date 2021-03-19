@@ -36,7 +36,7 @@ namespace bt = ::google::cloud::bigtable;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::bigtable_testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Not;
@@ -133,7 +133,7 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
   };
 };
 
-class MutationBatcherTest : public bigtable::testing::TableTestFixture {
+class MutationBatcherTest : public bigtable_testing::TableTestFixture {
  protected:
   MutationBatcherTest()
       : TableTestFixture(

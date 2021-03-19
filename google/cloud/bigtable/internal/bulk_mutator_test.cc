@@ -29,7 +29,7 @@ namespace {
 namespace btproto = google::bigtable::v2;
 using ::testing::Return;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::bigtable::testing::MockMutateRowsReader;
+using ::google::cloud::bigtable_testing::MockMutateRowsReader;
 
 std::unique_ptr<grpc::ClientContext> TestContext() {
   auto context = absl::make_unique<grpc::ClientContext>();
@@ -70,7 +70,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
   EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
 
   // Now prepare the client for the one request.
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce(reader.release()->MakeMockReturner());
 
@@ -102,7 +102,7 @@ TEST(MultipleRowsMutatorTest, BulkApplyAppProfileId) {
 
   // Now prepare the client for the one request.
   std::string expected_id = "test-id";
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce([expected_id](grpc::ClientContext*,
                               btproto::MutateRowsRequest const& req) {
@@ -152,7 +152,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   // indicates a partial failure.
 
   // Setup the client to response with r1 first, and r2 next.
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce(
           [](grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
@@ -254,7 +254,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(r2.release()->MakeMockReturner());
@@ -318,7 +318,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce(r1.release()->MakeMockReturner())
       .WillOnce(r2.release()->MakeMockReturner());
@@ -359,7 +359,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
     ASSERT_EQ(2, r.entries_size());
     EXPECT_EQ("bar", r.entries(0).row_key());
   };
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce([](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
         EXPECT_EQ(4, r.entries_size());
@@ -441,7 +441,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   // The BulkMutator should not issue a second request because the error is
   // PERMISSION_DENIED (not retryable).
 
-  bigtable::testing::MockDataClient client;
+  bigtable_testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows)
       .WillOnce([](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
         EXPECT_EQ(3, r.entries_size());

@@ -33,7 +33,7 @@ namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class AdminIAMPolicyIntegrationTest
-    : public bigtable::testing::TableIntegrationTest {
+    : public bigtable_testing::TableIntegrationTest {
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
@@ -47,9 +47,9 @@ class AdminIAMPolicyIntegrationTest
 
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
-        testing::TableTestEnvironment::project_id(), ClientOptions());
+        bigtable_testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
-        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
+        admin_client_, bigtable_testing::TableTestEnvironment::instance_id());
   }
 };
 
@@ -179,6 +179,6 @@ TEST_F(AdminIAMPolicyIntegrationTest, SetGetTestIamAPIsTest) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable_testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

@@ -53,7 +53,7 @@ using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
-using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+using MockAdminClient = ::google::cloud::bigtable_testing::MockAdminClient;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
@@ -1175,7 +1175,7 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
 }
 
 using MockAsyncCheckConsistencyResponse =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         btadmin::CheckConsistencyResponse>;
 
 /**
@@ -1364,7 +1364,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 };
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::CreateTableRequest, btadmin::Table>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateTable(_, _, _))
@@ -1379,7 +1379,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::DeleteTableRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteTable(_, _, _))
@@ -1393,7 +1393,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::CreateBackupRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateBackup(_, _, _))
@@ -1418,7 +1418,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::RestoreTableRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncRestoreTable(_, _, _))
@@ -1435,7 +1435,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::DropRowRangeRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
@@ -1449,7 +1449,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::DropRowRangeRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
@@ -1463,7 +1463,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::GenerateConsistencyTokenRequest,
       btadmin::GenerateConsistencyTokenResponse>
       rpc_factory;
@@ -1478,7 +1478,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::ListTablesRequest, btadmin::ListTablesResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncListTables(_, _, _))
@@ -1492,7 +1492,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncModifyColumnFamilies(_, _, _))
@@ -1505,7 +1505,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
 }
 
 using MockAsyncIamPolicyReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::Policy>;
 
 class AsyncGetIamPolicyTest : public ::testing::Test {
@@ -1591,7 +1591,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
 }
 
 using MockAsyncSetIamPolicyReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::Policy>;
 
 class AsyncSetIamPolicyTest : public ::testing::Test {
@@ -1685,7 +1685,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
 }
 
 using MockAsyncTestIamPermissionsReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::TestIamPermissionsResponse>;
 
 class AsyncTestIamPermissionsTest : public ::testing::Test {

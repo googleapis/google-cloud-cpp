@@ -41,7 +41,7 @@ auto mock_mutate_row = [](grpc::Status const& status) {
   };
 };
 
-class TableApplyTest : public bigtable::testing::TableTestFixture {
+class TableApplyTest : public bigtable_testing::TableTestFixture {
  public:
   TableApplyTest() : TableTestFixture(CompletionQueue{}) {}
 };

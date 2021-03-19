@@ -22,7 +22,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using DataAsyncFutureIntegrationTest = bigtable::testing::TableIntegrationTest;
+using DataAsyncFutureIntegrationTest = bigtable_testing::TableIntegrationTest;
 
 std::string const kFamily = "family1";
 
@@ -286,7 +286,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable_testing::TableTestEnvironment);
 
   return RUN_ALL_TESTS();
 }

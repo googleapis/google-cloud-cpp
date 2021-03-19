@@ -23,9 +23,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /**
  * Connects to Cloud Bigtable's administration APIs.
  *
@@ -230,6 +228,7 @@ class InProcessAdminClient : public bigtable::AdminClient {
   //@}
 
  private:
+  using ClientOptions = bigtable::ClientOptions;
   ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return options_.background_threads_factory();
   }
@@ -239,8 +238,7 @@ class InProcessAdminClient : public bigtable::AdminClient {
   ClientOptions options_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

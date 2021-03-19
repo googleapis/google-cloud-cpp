@@ -21,8 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+namespace bigtable_testing {
 using MockMutateRowsReader =
     MockResponseReader<google::bigtable::v2::MutateRowsResponse,
                        google::bigtable::v2::MutateRowsRequest>;
@@ -33,8 +32,7 @@ using MockMutateRowsReader =
 using MockAsyncApplyReader =
     MockAsyncResponseReader<google::bigtable::v2::MutateRowResponse>;
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

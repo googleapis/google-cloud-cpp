@@ -138,10 +138,10 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  google::cloud::bigtable_testing::CleanupStaleTables(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = google::cloud::bigtable_testing::RandomTableId(generator);
 
   std::cout << "\nRunning the HelloWorldTableAdmin() example" << std::endl;
   HelloWorldTableAdmin({project_id, instance_id, table_id});

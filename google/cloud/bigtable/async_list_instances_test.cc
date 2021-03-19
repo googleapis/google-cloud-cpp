@@ -36,10 +36,11 @@ namespace {
 namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using ::testing::_;
 using ::testing::ReturnRef;
 using MockAsyncListInstancesReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         btproto::ListInstancesResponse>;
 using google::cloud::testing_util::FakeCompletionQueueImpl;
 
@@ -53,7 +54,7 @@ class AsyncListInstancesTest : public ::testing::Test {
   AsyncListInstancesTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new MockInstanceAdminClient),
         instances_reader_1_(new MockAsyncListInstancesReader),
         instances_reader_2_(new MockAsyncListInstancesReader),
         instances_reader_3_(new MockAsyncListInstancesReader) {
@@ -68,7 +69,7 @@ class AsyncListInstancesTest : public ::testing::Test {
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockInstanceAdminClient> client_;
+  std::shared_ptr<MockInstanceAdminClient> client_;
   future<StatusOr<InstanceList>> user_future_;
   std::unique_ptr<MockAsyncListInstancesReader> instances_reader_1_;
   std::unique_ptr<MockAsyncListInstancesReader> instances_reader_2_;

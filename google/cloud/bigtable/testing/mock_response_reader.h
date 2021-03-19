@@ -27,8 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+namespace bigtable_testing {
 /**
  * Refactor code common to several mock objects.
  *
@@ -123,8 +122,7 @@ class MockClientAsyncReaderInterface
   MOCK_METHOD(void, Read, (Response*, void*), (override));
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

@@ -26,9 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /**
  * Helper class to create the expectations for a failing async RPC call.
  *
@@ -46,7 +44,7 @@ struct MockAsyncFailingRpcFactory {
           grpc::CompletionQueue*);
 
   MockAsyncFailingRpcFactory()
-      : reader(new google::cloud::bigtable::testing::MockAsyncResponseReader<
+      : reader(new google::cloud::bigtable_testing::MockAsyncResponseReader<
                ResponseType>) {}
 
   /// Refactor the boilerplate common to most tests.
@@ -80,11 +78,10 @@ struct MockAsyncFailingRpcFactory {
   }
 
   std::unique_ptr<
-      google::cloud::bigtable::testing::MockAsyncResponseReader<ResponseType>>
+      google::cloud::bigtable_testing::MockAsyncResponseReader<ResponseType>>
       reader;
 };
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

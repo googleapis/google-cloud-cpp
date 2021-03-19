@@ -16,9 +16,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 namespace btadmin = google::bigtable::admin::v2;
 
 grpc::Status InProcessAdminClient::CreateTable(
@@ -302,7 +300,6 @@ InProcessAdminClient::AsyncGetOperation(
       stub->AsyncGetOperation(context, request, cq).release());
 }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

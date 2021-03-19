@@ -23,9 +23,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
 std::string TableTestEnvironment::zone_a_;
@@ -60,7 +58,7 @@ void TableTestEnvironment::SetUp() {
   generator_ = google::cloud::internal::MakeDefaultPRNG();
 
   auto admin_client = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+      TableTestEnvironment::project_id(), bigtable::ClientOptions());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -85,7 +83,7 @@ void TableTestEnvironment::SetUp() {
 
 void TableTestEnvironment::TearDown() {
   auto admin_client = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+      TableTestEnvironment::project_id(), bigtable::ClientOptions());
   auto table_admin =
       bigtable::TableAdmin(admin_client, TableTestEnvironment::instance_id());
 
@@ -93,30 +91,30 @@ void TableTestEnvironment::TearDown() {
 }
 
 std::string TableTestEnvironment::RandomTableId() {
-  return google::cloud::bigtable::testing::RandomTableId(generator_);
+  return google::cloud::bigtable_testing::RandomTableId(generator_);
 }
 
 std::string TableTestEnvironment::RandomBackupId() {
-  return google::cloud::bigtable::testing::RandomBackupId(generator_);
+  return google::cloud::bigtable_testing::RandomBackupId(generator_);
 }
 
 std::string TableTestEnvironment::RandomInstanceId() {
-  return google::cloud::bigtable::testing::RandomInstanceId(generator_);
+  return google::cloud::bigtable_testing::RandomInstanceId(generator_);
 }
 
 void TableIntegrationTest::SetUp() {
   admin_client_ = bigtable::CreateDefaultAdminClient(
-      TableTestEnvironment::project_id(), ClientOptions());
+      TableTestEnvironment::project_id(), bigtable::ClientOptions());
   table_admin_ = absl::make_unique<bigtable::TableAdmin>(
       admin_client_, TableTestEnvironment::instance_id());
   data_client_ = bigtable::CreateDefaultDataClient(
       TableTestEnvironment::project_id(), TableTestEnvironment::instance_id(),
-      ClientOptions());
+      bigtable::ClientOptions());
 
   // In production, we cannot use `DropAllRows()` to cleanup the table because
   // the integration tests sometimes consume all the 'DropRowRangeGroup' quota.
   // Instead we delete the rows, when possible, using BulkApply().
-  BulkMutation bulk;
+  bigtable::BulkMutation bulk;
   auto table = GetTable();
   // Bigtable does not support more than 100,000 mutations in a BulkMutation.
   // If we had that many rows then just fallback on DropAllRows(). Most tests
@@ -124,13 +122,13 @@ void TableIntegrationTest::SetUp() {
   // DropAllRows() quota, and should be fast in most cases.
   std::size_t const maximum_mutations = 100000;
 
-  for (auto const& row :
-       table.ReadRows(RowRange::InfiniteRange(), Filter::PassAllFilter())) {
+  for (auto const& row : table.ReadRows(bigtable::RowRange::InfiniteRange(),
+                                        bigtable::Filter::PassAllFilter())) {
     if (!row) {
       break;
     }
     bulk.emplace_back(
-        SingleRowMutation(row->row_key(), bigtable::DeleteFromRow()));
+        bigtable::SingleRowMutation(row->row_key(), bigtable::DeleteFromRow()));
     if (bulk.size() > maximum_mutations) {
       break;
     }
@@ -203,7 +201,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
-  std::map<RowKeyType, bigtable::SingleRowMutation> mutations;
+  std::map<bigtable::RowKeyType, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     using std::chrono::duration_cast;
     using std::chrono::microseconds;
@@ -228,7 +226,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
   // Create the expected_cells and actual_cells with same timestamp
   std::vector<bigtable::Cell> return_cells;
   std::transform(cells.begin(), cells.end(), std::back_inserter(return_cells),
-                 [](Cell& cell) {
+                 [](bigtable::Cell& cell) {
                    return bigtable::Cell(
                        std::move(cell.row_key()), std::move(cell.family_name()),
                        std::move(cell.column_qualifier()), 0,
@@ -261,9 +259,11 @@ std::string TableIntegrationTest::RandomBackupId() {
   return TableTestEnvironment::RandomBackupId();
 }
 
-}  // namespace testing
+}  // namespace bigtable_testing
 
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
+namespace bigtable {
+
+int CellCompare(Cell const& lhs, Cell const& rhs) {
   auto compare_row_key = internal::CompareRowKey(lhs.row_key(), rhs.row_key());
   if (compare_row_key != 0) {
     return compare_row_key;

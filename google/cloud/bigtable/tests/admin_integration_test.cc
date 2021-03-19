@@ -38,7 +38,7 @@ using ::testing::Not;
 
 namespace btadmin = google::bigtable::admin::v2;
 
-class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
+class AdminIntegrationTest : public bigtable_testing::TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
@@ -52,10 +52,10 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
+            bigtable_testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
-        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
+        admin_client, bigtable_testing::TableTestEnvironment::instance_id());
   }
 };
 
@@ -127,7 +127,7 @@ TEST_F(AdminIntegrationTest, DropRowsByPrefix) {
   CreateCells(table, created_cells);
   // Delete all the records for a row
   EXPECT_STATUS_OK(table_admin_->DropRowsByPrefix(
-      bigtable::testing::TableTestEnvironment::table_id(), row_key1_prefix));
+      bigtable_testing::TableTestEnvironment::table_id(), row_key1_prefix));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   CheckEqualUnordered(expected_cells, actual_cells);
@@ -151,7 +151,7 @@ TEST_F(AdminIntegrationTest, DropAllRows) {
   CreateCells(table, created_cells);
   // Delete all the records from a table
   EXPECT_STATUS_OK(table_admin_->DropAllRows(
-      bigtable::testing::TableTestEnvironment::table_id()));
+      bigtable_testing::TableTestEnvironment::table_id()));
   auto actual_cells = ReadRows(table, bigtable::Filter::PassAllFilter());
 
   ASSERT_TRUE(actual_cells.empty());
@@ -238,8 +238,8 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTable) {
 TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // WaitForConsistencyCheck() only makes sense on a replicated table, we need
   // to create an instance with at least 2 clusters to test it.
-  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
-  std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
+  auto project_id = bigtable_testing::TableTestEnvironment::project_id();
+  std::string id = bigtable_testing::TableTestEnvironment::RandomInstanceId();
   std::string const random_table_id = RandomTableId();
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
@@ -258,10 +258,10 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // than 30 characters.
   auto display_name = ("IT " + id).substr(0, 30);
   auto cluster_config_1 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
+      bigtable::ClusterConfig(bigtable_testing::TableTestEnvironment::zone_a(),
                               3, bigtable::ClusterConfig::HDD);
   auto cluster_config_2 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
+      bigtable::ClusterConfig(bigtable_testing::TableTestEnvironment::zone_b(),
                               3, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
       id, display_name,
@@ -325,10 +325,10 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
 
   std::shared_ptr<bigtable::AdminClient> admin_client =
       bigtable::CreateDefaultAdminClient(
-          bigtable::testing::TableTestEnvironment::project_id(),
+          bigtable_testing::TableTestEnvironment::project_id(),
           bigtable::ClientOptions().enable_tracing("rpc"));
   auto table_admin = absl::make_unique<bigtable::TableAdmin>(
-      admin_client, bigtable::testing::TableTestEnvironment::instance_id());
+      admin_client, bigtable_testing::TableTestEnvironment::instance_id());
 
   // verify new table id in current table list
   auto previous_table_list = table_admin->ListTables(btadmin::Table::NAME_ONLY);
@@ -415,6 +415,6 @@ TEST_F(AdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable_testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

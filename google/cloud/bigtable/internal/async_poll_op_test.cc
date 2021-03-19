@@ -34,11 +34,12 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::bigtable::testing::MockAsyncResponseReader;
+using ::google::cloud::bigtable_testing::MockAdminClient;
+using ::google::cloud::bigtable_testing::MockAsyncResponseReader;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
 using MockAsyncLongrunningOpReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
@@ -53,7 +54,7 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
   response.set_allocated_response(any.release());
 }
 
-class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
+class AsyncPollOpTest : public bigtable_testing::TableTestFixture {
  protected:
   AsyncPollOpTest()
       : TableTestFixture(
@@ -61,12 +62,12 @@ class AsyncPollOpTest : public bigtable::testing::TableTestFixture {
         polling_policy_(
             bigtable::DefaultPollingPolicy(internal::kBigtableLimits)),
         metadata_update_policy_("test_operation_id", MetadataParamTypes::NAME),
-        client_(new testing::MockAdminClient(
+        client_(new MockAdminClient(
             ClientOptions().DisableBackgroundThreads(cq_))) {}
 
   std::shared_ptr<PollingPolicy const> polling_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<testing::MockAdminClient> client_;
+  std::shared_ptr<MockAdminClient> client_;
 };
 
 TEST_F(AsyncPollOpTest, AsyncPollOpTestSuccess) {

@@ -28,9 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /// Store the project and instance captured from the command-line arguments.
 class TableTestEnvironment : public ::testing::Environment {
  public:
@@ -169,8 +167,7 @@ class TableIntegrationTest
   std::shared_ptr<bigtable::DataClient> data_client_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

@@ -27,7 +27,8 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
+class MetadataUpdatePolicyTest
+    : public bigtable_testing::EmbeddedServerTestFixture {};
 
 using ::testing::HasSubstr;
 

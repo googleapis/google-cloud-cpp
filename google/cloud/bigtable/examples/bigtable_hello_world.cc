@@ -154,7 +154,7 @@ void RunAll(std::vector<std::string> const& argv) {
       instance_id);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = google::cloud::bigtable_testing::RandomTableId(generator);
 
   std::cout << "\nRunning the BigtableHelloWorld() example" << std::endl;
   BigtableHelloWorld({project_id, instance_id, table_id});

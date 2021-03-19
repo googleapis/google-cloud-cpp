@@ -39,7 +39,7 @@ namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class AdminBackupIntegrationTest
-    : public bigtable::testing::TableIntegrationTest {
+    : public bigtable_testing::TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
@@ -55,12 +55,12 @@ class AdminBackupIntegrationTest
 
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::CreateDefaultAdminClient(
-            bigtable::testing::TableTestEnvironment::project_id(),
+            bigtable_testing::TableTestEnvironment::project_id(),
             bigtable::ClientOptions());
     table_admin_ = absl::make_unique<bigtable::TableAdmin>(
-        admin_client, bigtable::testing::TableTestEnvironment::instance_id());
+        admin_client, bigtable_testing::TableTestEnvironment::instance_id());
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        bigtable::testing::TableTestEnvironment::project_id(),
+        bigtable_testing::TableTestEnvironment::project_id(),
         bigtable::ClientOptions());
     instance_admin_ =
         absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
@@ -183,6 +183,6 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable_testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

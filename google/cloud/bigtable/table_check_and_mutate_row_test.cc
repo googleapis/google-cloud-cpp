@@ -28,7 +28,7 @@ namespace {
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
-class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
+class TableCheckAndMutateRowTest : public bigtable_testing::TableTestFixture {
  public:
   TableCheckAndMutateRowTest() : TableTestFixture(CompletionQueue{}) {}
 };

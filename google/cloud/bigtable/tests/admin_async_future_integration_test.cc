@@ -35,7 +35,7 @@ namespace btadmin = google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 
 class AdminAsyncFutureIntegrationTest
-    : public bigtable::testing::TableIntegrationTest {
+    : public bigtable_testing::TableIntegrationTest {
  protected:
   std::shared_ptr<AdminClient> admin_client_;
   std::unique_ptr<TableAdmin> table_admin_;
@@ -49,9 +49,9 @@ class AdminAsyncFutureIntegrationTest
 
     TableIntegrationTest::SetUp();
     admin_client_ = CreateDefaultAdminClient(
-        testing::TableTestEnvironment::project_id(), ClientOptions());
+        bigtable_testing::TableTestEnvironment::project_id(), ClientOptions());
     table_admin_ = absl::make_unique<TableAdmin>(
-        admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
+        admin_client_, bigtable_testing::TableTestEnvironment::instance_id());
   }
 };
 
@@ -189,7 +189,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropRowsByPrefixTest) {
   future<void> chain =
       table_admin_
           ->AsyncDropRowsByPrefix(
-              cq, bigtable::testing::TableTestEnvironment::table_id(),
+              cq, bigtable_testing::TableTestEnvironment::table_id(),
               row_key1_prefix)
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
@@ -227,8 +227,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropAllRowsTest) {
 
   future<void> chain =
       table_admin_
-          ->AsyncDropAllRows(
-              cq, bigtable::testing::TableTestEnvironment::table_id())
+          ->AsyncDropAllRows(cq,
+                             bigtable_testing::TableTestEnvironment::table_id())
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
             EXPECT_STATUS_OK(delete_result);
@@ -246,10 +246,10 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncDropAllRowsTest) {
 /// @test Verify that `bigtable::TableAdmin` AsyncCheckConsistency works as
 /// expected.
 TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
-  std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
+  std::string id = bigtable_testing::TableTestEnvironment::RandomInstanceId();
   std::string const table_id = RandomTableId();
 
-  auto project_id = bigtable::testing::TableTestEnvironment::project_id();
+  auto project_id = bigtable_testing::TableTestEnvironment::project_id();
 
   auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
       project_id, bigtable::ClientOptions());
@@ -270,10 +270,10 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
 
   // Replication needs at least two clusters
   auto cluster_config_1 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
+      bigtable::ClusterConfig(bigtable_testing::TableTestEnvironment::zone_a(),
                               3, bigtable::ClusterConfig::HDD);
   auto cluster_config_2 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
+      bigtable::ClusterConfig(bigtable_testing::TableTestEnvironment::zone_b(),
                               3, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
       id, display_name,
@@ -363,6 +363,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::bigtable::testing::TableTestEnvironment);
+      new google::cloud::bigtable_testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

@@ -21,11 +21,10 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
  public:
+  using ClientOptions = ::google::cloud::bigtable::ClientOptions;
   explicit MockInstanceAdminClient(ClientOptions options = {})
       : options_(std::move(options)) {}
 
@@ -307,8 +306,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
   ClientOptions options_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

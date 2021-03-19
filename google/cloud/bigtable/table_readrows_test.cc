@@ -24,19 +24,19 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::bigtable::testing::MockReadRowsReader;
+using ::google::cloud::bigtable_testing::MockReadRowsReader;
 using ::testing::DoAll;
 using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::WithoutArgs;
 
-class TableReadRowsTest : public bigtable::testing::TableTestFixture {
+class TableReadRowsTest : public bigtable_testing::TableTestFixture {
  public:
   TableReadRowsTest() : TableTestFixture(CompletionQueue{}) {}
 };
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
-  auto response = bigtable::testing::ReadRowsResponseFromString(R"(
+  auto response = bigtable_testing::ReadRowsResponseFromString(R"(
       chunks {
         row_key: "r1"
         family_name { value: "fam" }
@@ -66,7 +66,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
 }
 
 TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
-  auto response = bigtable::testing::ReadRowsResponseFromString(R"(
+  auto response = bigtable_testing::ReadRowsResponseFromString(R"(
       chunks {
         row_key: "r1"
         family_name { value: "fam" }
@@ -77,7 +77,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       }
       )");
 
-  auto response_retry = bigtable::testing::ReadRowsResponseFromString(R"(
+  auto response_retry = bigtable_testing::ReadRowsResponseFromString(R"(
       chunks {
         row_key: "r2"
         family_name { value: "fam" }

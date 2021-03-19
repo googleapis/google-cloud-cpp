@@ -26,9 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 using ReceivedMetadata = std::multimap<std::string, std::string>;
 
 inline void GetClientMetadata(grpc::ServerContext* context,
@@ -104,8 +102,8 @@ class EmbeddedServerTestFixture : public ::testing::Test {
 
   std::string project_id_ = kProjectId;
   std::string instance_id_ = kInstanceId;
-  std::shared_ptr<DataClient> data_client_;
-  std::shared_ptr<AdminClient> admin_client_;
+  std::shared_ptr<bigtable::DataClient> data_client_;
+  std::shared_ptr<bigtable::AdminClient> admin_client_;
   std::shared_ptr<bigtable::Table> table_;
   std::shared_ptr<bigtable::TableAdmin> admin_;
   std::thread wait_thread_;
@@ -115,8 +113,7 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   std::unique_ptr<grpc::Server> server_;
 };
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

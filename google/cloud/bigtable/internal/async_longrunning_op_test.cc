@@ -33,12 +33,13 @@ namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::bigtable::v2::SampleRowKeysResponse;
+using ::google::cloud::bigtable_testing::MockAdminClient;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::WithParamInterface;
 
 using MockAsyncLongrunningOpReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
@@ -53,7 +54,7 @@ void OperationFinishedSuccessfully(google::longrunning::Operation& response,
   response.set_allocated_response(any.release());
 }
 
-class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
+class AsyncLongrunningOpFutureTest : public bigtable_testing::TableTestFixture,
                                      public WithParamInterface<bool> {
  public:
   AsyncLongrunningOpFutureTest()
@@ -63,7 +64,7 @@ class AsyncLongrunningOpFutureTest : public bigtable::testing::TableTestFixture,
 
 TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   auto const success = GetParam();
-  auto client = std::make_shared<testing::MockAdminClient>(
+  auto client = std::make_shared<MockAdminClient>(
       ClientOptions().DisableBackgroundThreads(cq_));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
@@ -126,7 +127,7 @@ INSTANTIATE_TEST_SUITE_P(EndToEnd, AsyncLongrunningOpFutureTest,
 class AsyncLongrunningOperationTest : public ::testing::Test {
  public:
   AsyncLongrunningOperationTest()
-      : client_(std::make_shared<testing::MockAdminClient>()),
+      : client_(std::make_shared<MockAdminClient>()),
         cq_impl_(std::make_shared<FakeCompletionQueueImpl>()),
         cq_(cq_impl_),
         longrunning_reader_(absl::make_unique<MockAsyncLongrunningOpReader>()),
@@ -161,8 +162,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
               return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>(longrunning_reader_.get());
             });
-    internal::AsyncLongrunningOperation<testing::MockAdminClient,
-                                        SampleRowKeysResponse>
+    internal::AsyncLongrunningOperation<MockAdminClient, SampleRowKeysResponse>
         operation(client_, std::move(op));
     auto fut = operation(cq_, std::move(context_));
 
@@ -175,7 +175,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
     return fut.get();
   }
 
-  std::shared_ptr<testing::MockAdminClient> client_;
+  std::shared_ptr<MockAdminClient> client_;
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::unique_ptr<MockAsyncLongrunningOpReader> longrunning_reader_;
@@ -252,8 +252,7 @@ TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
   grpc::Status placeholder_status;
   OperationFinishedSuccessfully(op, placeholder_status);
 
-  internal::AsyncLongrunningOperation<testing::MockAdminClient,
-                                      SampleRowKeysResponse>
+  internal::AsyncLongrunningOperation<MockAdminClient, SampleRowKeysResponse>
       operation(client_, std::move(op));
   auto fut = operation(cq_, std::move(context_));
   EXPECT_TRUE(cq_impl_->empty());

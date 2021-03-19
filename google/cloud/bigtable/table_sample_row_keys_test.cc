@@ -26,12 +26,12 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
-using ::google::cloud::bigtable::testing::MockSampleRowKeysReader;
+using ::google::cloud::bigtable_testing::MockSampleRowKeysReader;
 using ::testing::Return;
 using ::testing::Unused;
 
 class TableSampleRowKeysTest
-    : public ::google::cloud::bigtable::testing::TableTestFixture {
+    : public ::google::cloud::bigtable_testing::TableTestFixture {
  public:
   TableSampleRowKeysTest() : TableTestFixture(CompletionQueue{}) {}
 };

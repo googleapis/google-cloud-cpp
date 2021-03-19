@@ -37,12 +37,13 @@ namespace btproto = google::bigtable::admin::v2;
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::_;
 using ::testing::ReturnRef;
 
 using MockAsyncListClustersReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         btproto::ListClustersResponse>;
 using Functor =
     std::function<void(CompletionQueue&, ClusterList&, grpc::Status&)>;
@@ -54,7 +55,7 @@ class AsyncListClustersTest : public ::testing::Test {
   AsyncListClustersTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new testing::MockInstanceAdminClient),
+        client_(new MockInstanceAdminClient),
         metadata_update_policy_("my_instance", MetadataParamTypes::NAME),
         clusters_reader_1_(new MockAsyncListClustersReader),
         clusters_reader_2_(new MockAsyncListClustersReader),
@@ -70,7 +71,7 @@ class AsyncListClustersTest : public ::testing::Test {
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockInstanceAdminClient> client_;
+  std::shared_ptr<MockInstanceAdminClient> client_;
   future<StatusOr<ClusterList>> user_future_;
   MetadataUpdatePolicy metadata_update_policy_;
   std::unique_ptr<MockAsyncListClustersReader> clusters_reader_1_;

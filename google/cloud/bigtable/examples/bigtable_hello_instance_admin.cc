@@ -183,9 +183,9 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  google::cloud::bigtable::testing::CleanupStaleInstances(admin);
+  google::cloud::bigtable_testing::CleanupStaleInstances(admin);
   auto const instance_id =
-      google::cloud::bigtable::testing::RandomInstanceId(generator);
+      google::cloud::bigtable_testing::RandomInstanceId(generator);
   auto const cluster_id = instance_id + "-c1";
 
   std::cout << "\nRunning the BigtableHelloInstance() example" << std::endl;

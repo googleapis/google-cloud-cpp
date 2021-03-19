@@ -37,7 +37,7 @@ namespace {
 namespace btadmin = ::google::bigtable::admin::v2;
 
 using MockAdminClient =
-    ::google::cloud::bigtable::testing::MockInstanceAdminClient;
+    ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
@@ -668,7 +668,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
 }
 
 using MockAsyncIamPolicyReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::Policy>;
 
 class AsyncGetIamPolicyTest : public ::testing::Test {
@@ -1032,7 +1032,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
 }
 
 using MockAsyncDeleteClusterReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::protobuf::Empty>;
 
 class AsyncDeleteClusterTest : public ::testing::Test {
@@ -1117,7 +1117,7 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
 }
 
 using MockAsyncSetIamPolicyReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::Policy>;
 
 class AsyncSetIamPolicyTest : public ::testing::Test {
@@ -1273,7 +1273,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
 }
 
 using MockAsyncTestIamPermissionsReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::bigtable_testing::MockAsyncResponseReader<
         ::google::iam::v1::TestIamPermissionsResponse>;
 
 class AsyncTestIamPermissionsTest : public ::testing::Test {
@@ -1394,7 +1394,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateAppProfile) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::CreateAppProfileRequest, btadmin::AppProfile>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateAppProfile(_, _, _))
@@ -1411,7 +1411,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateAppProfile) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncDeleteAppProfile) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::DeleteAppProfileRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteAppProfile(_, _, _))
@@ -1432,7 +1432,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteAppProfile) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncDeleteInstance) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::DeleteInstanceRequest, google::protobuf::Empty>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncDeleteInstance(_, _, _))
@@ -1451,7 +1451,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteInstance) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncGetAppProfile) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::GetAppProfileRequest, btadmin::AppProfile>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetAppProfile(_, _, _))
@@ -1466,7 +1466,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetAppProfile) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncGetCluster) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::GetClusterRequest, btadmin::Cluster>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetCluster(_, _, _))
@@ -1481,7 +1481,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetCluster) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncGetInstance) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::GetInstanceRequest, btadmin::Instance>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncGetInstance(_, _, _))
@@ -1495,7 +1495,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetInstance) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateCluster) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::CreateClusterRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateCluster(_, _, _))
@@ -1517,7 +1517,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateCluster) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateInstance) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::CreateInstanceRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCreateInstance(_, _, _))
@@ -1534,7 +1534,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateInstance) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncUpdateAppProfile) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::UpdateAppProfileRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateAppProfile(_, _, _))
@@ -1551,7 +1551,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateAppProfile) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncUpdateCluster) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::Cluster, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateCluster(_, _, _))
@@ -1572,7 +1572,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateCluster) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncUpdateInstance) {
   using ::testing::_;
-  ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
+  ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory<
       btadmin::PartialUpdateInstanceRequest, google::longrunning::Operation>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncUpdateInstance(_, _, _))

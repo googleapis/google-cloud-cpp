@@ -21,14 +21,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+namespace bigtable_testing {
 using MockSampleRowKeysReader =
     MockResponseReader<google::bigtable::v2::SampleRowKeysResponse,
                        google::bigtable::v2::SampleRowKeysRequest>;
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

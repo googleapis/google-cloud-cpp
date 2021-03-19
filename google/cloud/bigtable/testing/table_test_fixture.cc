@@ -18,9 +18,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 char const TableTestFixture::kProjectId[] = "foo-project";
 char const TableTestFixture::kInstanceId[] = "bar-instance";
 char const TableTestFixture::kTableId[] = "baz-table";
@@ -43,7 +41,7 @@ google::bigtable::v2::ReadRowsResponse ReadRowsResponseFromString(
 
 std::shared_ptr<MockDataClient> TableTestFixture::SetupMockClient() {
   auto client = std::make_shared<MockDataClient>(
-      ClientOptions().DisableBackgroundThreads(cq_));
+      bigtable::ClientOptions().DisableBackgroundThreads(cq_));
   EXPECT_CALL(*client, project_id())
       .WillRepeatedly(::testing::ReturnRef(project_id_));
   EXPECT_CALL(*client, instance_id())
@@ -58,7 +56,6 @@ TableTestFixture::TableTestFixture(CompletionQueue cq)
       cq_(cq),
       client_(SetupMockClient()) {}
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

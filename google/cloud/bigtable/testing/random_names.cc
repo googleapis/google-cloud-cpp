@@ -17,9 +17,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 // Unless otherwise noted, the maximum ID lengths discovered by trial and error.
 auto constexpr kMaxTableIdLength = 50;
 char const kRandomTableIdRE[] = R"re(^tbl-\d{4}-\d{2}-\d{2}-.*$)re";
@@ -99,7 +97,6 @@ std::string RandomInstanceId(std::chrono::system_clock::time_point tp) {
 
 std::string RandomInstanceIdRegex() { return kRandomInstanceIdRE; }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

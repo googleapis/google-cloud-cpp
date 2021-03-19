@@ -19,9 +19,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 char const EmbeddedServerTestFixture::kProjectId[] = "foo-project";
 char const EmbeddedServerTestFixture::kInstanceId[] = "bar-instance";
 char const EmbeddedServerTestFixture::kTableId[] = "baz-table";
@@ -48,7 +46,8 @@ void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
   grpc::ChannelArguments channel_arguments;
-  channel_arguments.SetUserAgentPrefix(ClientOptions::UserAgentPrefix());
+  channel_arguments.SetUserAgentPrefix(
+      bigtable::ClientOptions::UserAgentPrefix());
   std::string project_id = kProjectId;
   std::string instance_id = kInstanceId;
   std::string table_id = kTableId;
@@ -72,7 +71,6 @@ void EmbeddedServerTestFixture::TearDown() {
   wait_thread_.join();
 }
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

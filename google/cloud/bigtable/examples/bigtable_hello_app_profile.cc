@@ -122,10 +122,10 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  google::cloud::bigtable_testing::CleanupStaleTables(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id = google::cloud::bigtable_testing::RandomTableId(generator);
   auto schema = admin.CreateTable(
       table_id,
       cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));

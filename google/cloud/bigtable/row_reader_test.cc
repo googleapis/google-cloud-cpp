@@ -35,7 +35,7 @@ namespace {
 using ::google::bigtable::v2::ReadRowsRequest;
 using ::google::bigtable::v2::ReadRowsResponse_CellChunk;
 using ::google::cloud::bigtable::Row;
-using ::google::cloud::bigtable::testing::MockReadRowsReader;
+using ::google::cloud::bigtable_testing::MockReadRowsReader;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::testing::_;
 using ::testing::Contains;
@@ -147,7 +147,7 @@ Matcher<const ReadRowsRequest&> RequestWithRowsLimit(std::int64_t n) {
   return Property(&ReadRowsRequest::rows_limit, Eq(n));
 }
 
-class RowReaderTest : public bigtable::testing::TableTestFixture {
+class RowReaderTest : public bigtable_testing::TableTestFixture {
  public:
   RowReaderTest()
       : TableTestFixture(CompletionQueue{}),
@@ -419,7 +419,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
   auto* stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   auto parser = absl::make_unique<ReadRowsParserMock>();
   parser->SetRows({"r1"});
-  auto response = bigtable::testing::ReadRowsResponseFromString("chunks {}");
+  auto response = bigtable_testing::ReadRowsResponseFromString("chunks {}");
   {
     ::testing::InSequence s;
     EXPECT_CALL(*client_, ReadRows).WillOnce(stream->MakeMockReturner());

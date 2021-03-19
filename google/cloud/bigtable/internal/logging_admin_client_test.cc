@@ -24,6 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::bigtable_testing::MockAdminClient;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -40,7 +41,7 @@ class LoggingAdminClientTest : public ::testing::Test {
 };
 
 TEST_F(LoggingAdminClientTest, CreateTable) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, CreateTable).WillOnce(Return(grpc::Status()));
 
@@ -58,7 +59,7 @@ TEST_F(LoggingAdminClientTest, CreateTable) {
 }
 
 TEST_F(LoggingAdminClientTest, ListTables) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, ListTables).WillOnce(Return(grpc::Status()));
 
@@ -76,7 +77,7 @@ TEST_F(LoggingAdminClientTest, ListTables) {
 }
 
 TEST_F(LoggingAdminClientTest, GetTable) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, GetTable).WillOnce(Return(grpc::Status()));
 
@@ -94,7 +95,7 @@ TEST_F(LoggingAdminClientTest, GetTable) {
 }
 
 TEST_F(LoggingAdminClientTest, DeleteTable) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, DeleteTable).WillOnce(Return(grpc::Status()));
 
@@ -112,7 +113,7 @@ TEST_F(LoggingAdminClientTest, DeleteTable) {
 }
 
 TEST_F(LoggingAdminClientTest, CreateBackup) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, CreateBackup).WillOnce(Return(grpc::Status()));
 
@@ -130,7 +131,7 @@ TEST_F(LoggingAdminClientTest, CreateBackup) {
 }
 
 TEST_F(LoggingAdminClientTest, GetBackup) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, GetBackup).WillOnce(Return(grpc::Status()));
 
@@ -148,7 +149,7 @@ TEST_F(LoggingAdminClientTest, GetBackup) {
 }
 
 TEST_F(LoggingAdminClientTest, UpdateBackup) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, UpdateBackup).WillOnce(Return(grpc::Status()));
 
@@ -166,7 +167,7 @@ TEST_F(LoggingAdminClientTest, UpdateBackup) {
 }
 
 TEST_F(LoggingAdminClientTest, DeleteBackup) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, DeleteBackup).WillOnce(Return(grpc::Status()));
 
@@ -184,7 +185,7 @@ TEST_F(LoggingAdminClientTest, DeleteBackup) {
 }
 
 TEST_F(LoggingAdminClientTest, ListBackups) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, ListBackups).WillOnce(Return(grpc::Status()));
 
@@ -202,7 +203,7 @@ TEST_F(LoggingAdminClientTest, ListBackups) {
 }
 
 TEST_F(LoggingAdminClientTest, RestoreTable) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, RestoreTable).WillOnce(Return(grpc::Status()));
 
@@ -220,7 +221,7 @@ TEST_F(LoggingAdminClientTest, RestoreTable) {
 }
 
 TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, ModifyColumnFamilies).WillOnce(Return(grpc::Status()));
 
@@ -238,7 +239,7 @@ TEST_F(LoggingAdminClientTest, ModifyColumnFamilies) {
 }
 
 TEST_F(LoggingAdminClientTest, DropRowRange) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, DropRowRange).WillOnce(Return(grpc::Status()));
 
@@ -256,7 +257,7 @@ TEST_F(LoggingAdminClientTest, DropRowRange) {
 }
 
 TEST_F(LoggingAdminClientTest, GenerateConsistencyToken) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, GenerateConsistencyToken).WillOnce(Return(grpc::Status()));
 
@@ -275,7 +276,7 @@ TEST_F(LoggingAdminClientTest, GenerateConsistencyToken) {
 }
 
 TEST_F(LoggingAdminClientTest, CheckConsistency) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, CheckConsistency).WillOnce(Return(grpc::Status()));
 
@@ -293,7 +294,7 @@ TEST_F(LoggingAdminClientTest, CheckConsistency) {
 }
 
 TEST_F(LoggingAdminClientTest, GetOperation) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, GetOperation).WillOnce(Return(grpc::Status()));
 
@@ -311,7 +312,7 @@ TEST_F(LoggingAdminClientTest, GetOperation) {
 }
 
 TEST_F(LoggingAdminClientTest, GetIamPolicy) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, GetIamPolicy).WillOnce(Return(grpc::Status()));
 
@@ -329,7 +330,7 @@ TEST_F(LoggingAdminClientTest, GetIamPolicy) {
 }
 
 TEST_F(LoggingAdminClientTest, SetIamPolicy) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, SetIamPolicy).WillOnce(Return(grpc::Status()));
 
@@ -347,7 +348,7 @@ TEST_F(LoggingAdminClientTest, SetIamPolicy) {
 }
 
 TEST_F(LoggingAdminClientTest, TestIamPermissions) {
-  auto mock = std::make_shared<testing::MockAdminClient>();
+  auto mock = std::make_shared<MockAdminClient>();
 
   EXPECT_CALL(*mock, TestIamPermissions).WillOnce(Return(grpc::Status()));
 

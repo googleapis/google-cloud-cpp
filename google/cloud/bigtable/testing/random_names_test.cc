@@ -19,8 +19,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+namespace bigtable_testing {
 namespace {
 
 using ::google::cloud::internal::DefaultPRNG;
@@ -90,7 +89,6 @@ TEST(BigtableRandomNames, RandomInstanceId) {
 }
 
 }  // namespace
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

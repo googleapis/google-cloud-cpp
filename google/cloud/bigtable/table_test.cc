@@ -24,11 +24,12 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btproto = ::google::bigtable::v2;
-using google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::bigtable_testing::MockAsyncFailingRpcFactory;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
 /// Define types and functions used in the tests.
 namespace {
-class TableTest : public ::google::cloud::bigtable::testing::TableTestFixture {
+class TableTest : public ::google::cloud::bigtable_testing::TableTestFixture {
  public:
   TableTest() : TableTestFixture(CompletionQueue{}) {}
 };
@@ -119,7 +120,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   ValidContextMdAsyncTest()
       : cq_impl_(new FakeCompletionQueueImpl),
         cq_(cq_impl_),
-        client_(new ::google::cloud::bigtable::testing::MockDataClient(
+        client_(new ::google::cloud::bigtable_testing::MockDataClient(
             ClientOptions().DisableBackgroundThreads(cq_))) {
     EXPECT_CALL(*client_, project_id())
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
@@ -151,14 +152,14 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
   std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
   CompletionQueue cq_;
-  std::shared_ptr<testing::MockDataClient> client_;
+  std::shared_ptr<bigtable_testing::MockDataClient> client_;
   std::unique_ptr<Table> table_;
 };
 
 TEST_F(ValidContextMdAsyncTest, AsyncApply) {
   using ::testing::_;
-  testing::MockAsyncFailingRpcFactory<btproto::MutateRowRequest,
-                                      btproto::MutateRowResponse>
+  MockAsyncFailingRpcFactory<btproto::MutateRowRequest,
+                             btproto::MutateRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncMutateRow(_, _, _))
       .WillOnce(rpc_factory.Create(
@@ -173,8 +174,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncApply) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
   using ::testing::_;
-  testing::MockAsyncFailingRpcFactory<btproto::CheckAndMutateRowRequest,
-                                      btproto::CheckAndMutateRowResponse>
+  MockAsyncFailingRpcFactory<btproto::CheckAndMutateRowRequest,
+                             btproto::CheckAndMutateRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
       .WillOnce(rpc_factory.Create(
@@ -191,8 +192,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
 
 TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
   using ::testing::_;
-  testing::MockAsyncFailingRpcFactory<btproto::ReadModifyWriteRowRequest,
-                                      btproto::ReadModifyWriteRowResponse>
+  MockAsyncFailingRpcFactory<btproto::ReadModifyWriteRowRequest,
+                             btproto::ReadModifyWriteRowResponse>
       rpc_factory;
   EXPECT_CALL(*client_, AsyncReadModifyWriteRow(_, _, _))
       .WillOnce(rpc_factory.Create(

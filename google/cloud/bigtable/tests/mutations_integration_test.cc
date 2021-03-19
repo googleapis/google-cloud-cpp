@@ -27,7 +27,8 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::testing::Not;
 
 using MutationIntegrationTest =
-    ::google::cloud::bigtable::testing::TableIntegrationTest;
+    ::google::cloud::bigtable_testing::TableIntegrationTest;
+
 /**
  * This function creates Cell by ignoring the timestamp.
  * In this case Cloud Bigtable will insert the default server
@@ -449,7 +450,7 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
 int main(int argc, char* argv[]) {
   ::testing::InitGoogleMock(&argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new ::google::cloud::bigtable::testing::TableTestEnvironment);
+      new ::google::cloud::bigtable_testing::TableTestEnvironment);
 
   return RUN_ALL_TESTS();
 }

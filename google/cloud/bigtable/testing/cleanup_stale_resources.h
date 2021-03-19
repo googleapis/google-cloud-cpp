@@ -20,9 +20,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
-
+namespace bigtable_testing {
 /**
  * Remove stale test tables.
  *
@@ -59,8 +57,7 @@ Status CleanupStaleBackups(google::cloud::bigtable::TableAdmin admin);
  */
 Status CleanupStaleInstances(google::cloud::bigtable::InstanceAdmin admin);
 
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google
 

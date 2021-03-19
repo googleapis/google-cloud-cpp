@@ -21,8 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-namespace testing {
+namespace bigtable_testing {
 namespace {
 
 using ::google::cloud::internal::DefaultPRNG;
@@ -30,7 +29,7 @@ using ::testing::HasSubstr;
 using ::testing::ReturnRef;
 
 TEST(CleanupStaleResources, CleanupOldTables) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+  using MockAdminClient = ::google::cloud::bigtable_testing::MockAdminClient;
   namespace btadmin = google::bigtable::admin::v2;
 
   auto const expired_tp =
@@ -82,7 +81,7 @@ TEST(CleanupStaleResources, CleanupOldTables) {
 }
 
 TEST(CleanupStaleResources, CleanupStaleBackups) {
-  using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+  using MockAdminClient = ::google::cloud::bigtable_testing::MockAdminClient;
   using google::protobuf::util::TimeUtil;
   namespace btadmin = google::bigtable::admin::v2;
 
@@ -150,7 +149,7 @@ TEST(CleanupStaleResources, CleanupStaleBackups) {
 
 TEST(CleanupStaleResources, CleanupOldInstances) {
   using MockAdminClient =
-      ::google::cloud::bigtable::testing::MockInstanceAdminClient;
+      ::google::cloud::bigtable_testing::MockInstanceAdminClient;
   namespace btadmin = google::bigtable::admin::v2;
 
   auto const expired_tp =
@@ -202,7 +201,6 @@ TEST(CleanupStaleResources, CleanupOldInstances) {
 }
 
 }  // namespace
-}  // namespace testing
-}  // namespace bigtable
+}  // namespace bigtable_testing
 }  // namespace cloud
 }  // namespace google

@@ -24,6 +24,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::bigtable_testing::MockDataClient;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -40,7 +41,7 @@ class LoggingDataClientTest : public ::testing::Test {
 };
 
 TEST_F(LoggingDataClientTest, MutateRow) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, MutateRow).WillOnce(Return(grpc::Status()));
 
@@ -58,7 +59,7 @@ TEST_F(LoggingDataClientTest, MutateRow) {
 }
 
 TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, CheckAndMutateRow).WillOnce(Return(grpc::Status()));
 
@@ -76,7 +77,7 @@ TEST_F(LoggingDataClientTest, CheckAndMutateRow) {
 }
 
 TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, ReadModifyWriteRow).WillOnce(Return(grpc::Status()));
 
@@ -94,7 +95,7 @@ TEST_F(LoggingDataClientTest, ReadModifyWriteRow) {
 }
 
 TEST_F(LoggingDataClientTest, ReadRows) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, ReadRows)
       .WillOnce([](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
@@ -114,7 +115,7 @@ TEST_F(LoggingDataClientTest, ReadRows) {
 }
 
 TEST_F(LoggingDataClientTest, SampleRowKeys) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, SampleRowKeys)
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&) {
@@ -134,7 +135,7 @@ TEST_F(LoggingDataClientTest, SampleRowKeys) {
 }
 
 TEST_F(LoggingDataClientTest, MutateRows) {
-  auto mock = std::make_shared<testing::MockDataClient>();
+  auto mock = std::make_shared<MockDataClient>();
 
   EXPECT_CALL(*mock, MutateRows)
       .WillOnce([](grpc::ClientContext*, btproto::MutateRowsRequest const&) {

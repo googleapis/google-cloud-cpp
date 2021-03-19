@@ -37,12 +37,13 @@ namespace {
 namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable_testing::MockInstanceAdminClient;
 using MockAsyncLongrunningOpReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    google::cloud::bigtable_testing::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 class AsyncStartPollAfterRetryUnaryRpcTest
-    : public bigtable::testing::TableTestFixture {
+    : public bigtable_testing::TableTestFixture {
  public:
   AsyncStartPollAfterRetryUnaryRpcTest()
       : TableTestFixture(CompletionQueue(
@@ -64,7 +65,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         metadata_update_policy(
             "projects/" + k_project_id + "/instances/" + k_instance_id,
             MetadataParamTypes::PARENT),
-        client(std::make_shared<testing::MockInstanceAdminClient>(
+        client(std::make_shared<MockInstanceAdminClient>(
             ClientOptions().DisableBackgroundThreads(cq_))),
         create_cluster_reader(
             absl::make_unique<MockAsyncLongrunningOpReader>()),
@@ -172,7 +173,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy;
   MetadataUpdatePolicy metadata_update_policy;
-  std::shared_ptr<testing::MockInstanceAdminClient> client;
+  std::shared_ptr<MockInstanceAdminClient> client;
   std::unique_ptr<MockAsyncLongrunningOpReader> create_cluster_reader;
   std::unique_ptr<MockAsyncLongrunningOpReader> get_operation_reader;
 };

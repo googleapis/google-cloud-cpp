@@ -542,15 +542,15 @@ void RunAll(std::vector<std::string> const& argv) {
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
-  google::cloud::bigtable::testing::CleanupStaleTables(admin);
+  google::cloud::bigtable_testing::CleanupStaleTables(admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
   // GetTable() and "table does exist")
-  auto table_id_1 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id_1 = google::cloud::bigtable_testing::RandomTableId(generator);
   // This table does not exist and used to test the negative case (e.g.
   // GetTable() but "table does not exist")
-  auto table_id_2 = google::cloud::bigtable::testing::RandomTableId(generator);
+  auto table_id_2 = google::cloud::bigtable_testing::RandomTableId(generator);
 
   auto table_1 = admin.CreateTable(
       table_id_1, cbt::TableConfig(
