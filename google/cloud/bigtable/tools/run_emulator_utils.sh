@@ -93,7 +93,7 @@ function wait_until_emulator_connects() {
   delay=1
   connected=no
   local -r attempts=$(seq 1 8)
-  for attempt in ${attempts}; do
+  for _ in ${attempts}; do
     if env BIGTABLE_EMULATOR_HOST="${address}" \
       "${CBT_CMD}" "${CBT_ARGS[@]}" "${subcmd}" >/dev/null 2>&1; then
       connected=yes
@@ -112,16 +112,19 @@ function wait_until_emulator_connects() {
 }
 
 function start_emulators() {
+  local -r initial_port="${1:-0}"
+  local -r initial_instance_admin_port="${2:-0}"
+
   echo "Launching Cloud Bigtable emulators in the background"
   trap kill_emulators EXIT
 
   # The tests typically run in a Docker container, where the ports are largely
   # free; when using in manual tests, you can set EMULATOR_PORT.
-  "${CBT_EMULATOR_CMD}" -port 0 >emulator.log 2>&1 </dev/null &
+  "${CBT_EMULATOR_CMD}" -port "${initial_port}" >emulator.log 2>&1 </dev/null &
   EMULATOR_PID=$!
   local -r emulator_port="$(wait_for_port emulator.log)"
 
-  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" >instance-admin-emulator.log 2>&1 </dev/null &
+  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${initial_instance_admin_port}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
   local -r instance_admin_port="$(wait_for_port instance-admin-emulator.log)"
 
