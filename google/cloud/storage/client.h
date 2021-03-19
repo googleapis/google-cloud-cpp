@@ -1160,29 +1160,8 @@ class Client {
    * option, or it provides the `#NewResumableUploadSession()` option then a new
    * resumable upload session is created.
    *
-   * To perform efficient uploads applications should consider using unbuffered
-   * I/O operations on the returned stream (aka `std::ostream::write()`).
-   * Application developers should consider the following properties of
-   * resumable uploads to use this API efficiently:
-   *
-   * - Resumable uploads are performed in "chunks" sent to GCS, these chunks
-   *   are committed and saved at least until the session is deleted (or garbage
-   *   collected, approximately after 7 days.)
-   * - The size of these chunks (except the last one) must be a multiple of the
-   *   upload quantum (256KiB).
-   * - Uploading a chunk that is not a multiple of the quantum implicitly
-   *   finalizes the upload.
-   *
-   * The library, therefore, *must* buffer any data that does not fill a full
-   * quantum. If you are interested in avoiding data copies you should always
-   * provide the library with buffers that fit in this quantum.
-   *
-   * In addition, applications should consider providing large buffers as the
-   * library waits until GCS confirms that the chunk is uploaded before
-   * returning control to the application. Naturally there is a tradeoff between
-   * copying data to prepare large buffers vs. sending many small buffers and
-   * paying the network costs for each.  We recommend that you use buffers in
-   * the 16MiB to 64MiB range for best performance.
+   * More information about buffering and recommendations around performance in
+   * the `ObjectWriteStream` class documentation.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
