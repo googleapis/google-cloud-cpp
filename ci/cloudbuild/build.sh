@@ -72,9 +72,12 @@ readonly BUILD_NAME="$1"
 # If a DISTRO other than "local" was requested, submit the job to Cloud Build
 # to run in the specified distro.
 if [ "${DISTRO}" != "local" ]; then
-  # Quick check to surface invalid distro early.
+  # Quick checks to surface invalid arguments early
   if [ ! -r "ci/cloudbuild/Dockerfile.${DISTRO}" ]; then
     echo "Unknown distro: ${DISTRO}"
+    exit 1
+  elif [ ! -x "ci/cloudbuild/builds/${BUILD_NAME}.sh" ]; then
+    echo "Unknown build name: ${BUILD_NAME}"
     exit 1
   fi
   io::log "====> Submitting cloud build job for ${BUILD_NAME} on ${DISTRO}"

@@ -16,6 +16,7 @@
 
 set -eu
 
-cmake -GNinja -S . -B cmake-out
-cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test"
+export CC=clang
+export CXX=clang++
+
+bazel test --config=ubsan --test_tag_filters=-integration-test ...

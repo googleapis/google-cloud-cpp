@@ -16,7 +16,7 @@
 
 set -eu
 
-export CC=clang
-export CXX=clang++
+export CC=gcc
+export CXX=g++
 
-bazel test --config=asan --test_tag_filters=-integration-test ...
+bazel test --test_tag_filters=-integration-test ...
