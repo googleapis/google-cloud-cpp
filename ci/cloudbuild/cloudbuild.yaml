@@ -17,8 +17,8 @@ options:
   diskSizeGb: '512'
 
 substitutions:
-  _DISTRO: "fedora"
-  _BUILD_NAME: "none"
+  _DISTRO: "unknown"
+  _BUILD_NAME: "unknown"
 
 timeout: 3600s
 
@@ -27,31 +27,19 @@ steps:
   entrypoint: 'bash'
   args: [
     '-c',
-    'docker pull us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1 || exit 0'
+    'docker pull us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1 || exit 0'
   ]
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'build',
     '-f', 'ci/cloudbuild/Dockerfile.${_DISTRO}',
-    '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1',
-    '--cache-from', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1',
+    '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
+    '--cache-from', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
     'ci'
   ]
-# - name: 'gcr.io/kaniko-project/executor:latest'
-#   args: [
-#     '--context=dir:///workspace/ci',
-#     '--dockerfile=ci/cloudbuild/Dockerfile.${_DISTRO}',
-#     '--cache=true',
-#     '--destination=gcr.io/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1',
-#     # '--destination=us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1',
-#   ]
-
-# - name: 'gcr.io/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1'
-- name: 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1'
+- name: 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
-  env:
-    - 'BUILD_ID=${BUILD_ID}'
 
 images:
 - 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1'
