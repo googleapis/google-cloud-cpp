@@ -29,7 +29,7 @@ fi # include guard
 # Callers may use these IO_COLOR_* variables directly, but it is recommended to
 # use the logging functions below instead. For example, prefer io::log_green
 # over IO_COLOR_GREEN.
-if command -v tput >/dev/null && [[ -n "${TERM:-}" ]]; then
+if [ -t 0 ] && command -v tput >/dev/null; then
   readonly IO_COLOR_RED="$(tput setaf 1)"
   readonly IO_COLOR_GREEN="$(tput setaf 2)"
   readonly IO_COLOR_YELLOW="$(tput setaf 3)"
