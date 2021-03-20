@@ -42,4 +42,4 @@ steps:
   args: [ '${_BUILD_NAME}' ]
 
 images:
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-docker-repo/${_DISTRO}-image:tag1'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1'
