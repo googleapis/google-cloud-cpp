@@ -19,4 +19,3 @@ set -eu
 # This noop buld is useful for quickly testing our GCB pipeline without having
 # to wait for a real build to fully complete.
 echo ">>>> NOOP <<<<"
-
