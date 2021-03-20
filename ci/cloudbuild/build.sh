@@ -37,12 +37,16 @@ source "$(dirname "$0")/../lib/init.sh"
 source module ci/lib/io.sh
 cd "${PROJECT_ROOT}"
 
-# Use getop to parse and normalize all the args.
-readonly OPTS="d:"
-readonly LONGOPTS="distro:"
+function print_usage() {
+  # Extracts the usage from the file comment starting at line 17.
+  sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
+  basename -s .sh ci/cloudbuild/builds/*.sh | sort | xargs printf "    %s\n"
+}
+
+# Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="${OPTS}" \
-  --longoptions="${LONGOPTS}" \
+  --options="d:" \
+  --longoptions="distro:" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
@@ -63,9 +67,7 @@ done
 readonly DISTRO
 
 if (($# == 0)); then
-  # Extracts the usage from the file comment starting at line 17.
-  sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
-  basename -s .sh ci/cloudbuild/builds/*.sh | sort | xargs printf "    %s\n"
+  print_usage
   exit 1
 fi
 readonly BUILD_NAME="$1"
@@ -76,9 +78,11 @@ if [ "${DISTRO}" != "local" ]; then
   # Quick checks to surface invalid arguments early
   if [ ! -r "ci/cloudbuild/Dockerfile.${DISTRO}" ]; then
     echo "Unknown distro: ${DISTRO}"
+    print_usage
     exit 1
   elif [ ! -x "ci/cloudbuild/builds/${BUILD_NAME}.sh" ]; then
     echo "Unknown build name: ${BUILD_NAME}"
+    print_usage
     exit 1
   fi
   io::log "====> Submitting cloud build job for ${BUILD_NAME} on ${DISTRO}"
