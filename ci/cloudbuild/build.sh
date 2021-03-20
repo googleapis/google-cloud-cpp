@@ -28,10 +28,12 @@
 #
 #   Options:
 #     -d|--distro <name>    The distro name to use.
+#
+#   Build names:
 
 set -euo pipefail
 
-source $(dirname $0)/../lib/init.sh
+source "$(dirname "$0")/../lib/init.sh"
 source module ci/lib/io.sh
 cd "${PROJECT_ROOT}"
 
@@ -45,26 +47,25 @@ PARSED="$(getopt -a \
   -- "$@")"
 eval set -- "${PARSED}"
 
-DISTRO="local"  # By default, run builds in the local environment
+DISTRO="local" # By default, run builds in the local environment
 while true; do
   case "$1" in
-    -d|--distro)
-      DISTRO="$2"
-      shift 2
-      ;;
-    --)
-      shift
-      break
-      ;;
+  -d | --distro)
+    DISTRO="$2"
+    shift 2
+    ;;
+  --)
+    shift
+    break
+    ;;
   esac
 done
 readonly DISTRO
 
-if (( $# == 0 )); then
+if (($# == 0)); then
   # Extracts the usage from the file comment starting at line 17.
   sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
-  printf "\n  Valid build names:\n"
-  printf "    %s\n" $(basename -s .sh ci/cloudbuild/builds/*.sh | sort)
+  basename -s .sh ci/cloudbuild/builds/*.sh | sort | xargs printf "    %s\n"
   exit 1
 fi
 readonly BUILD_NAME="$1"
@@ -82,7 +83,8 @@ if [ "${DISTRO}" != "local" ]; then
   fi
   io::log "====> Submitting cloud build job for ${BUILD_NAME} on ${DISTRO}"
   exec gcloud builds submit --config ci/cloudbuild/cloudbuild.yaml \
-    --substitutions=_DISTRO=${DISTRO},_BUILD_NAME="${BUILD_NAME}" .
+    "--substitutions=_DISTRO=${DISTRO},_BUILD_NAME=${BUILD_NAME}" \
+    .
 fi
 
 io::log "====> STARTING BUILD: ${BUILD_NAME}"
