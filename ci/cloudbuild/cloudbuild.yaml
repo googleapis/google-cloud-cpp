@@ -23,23 +23,13 @@ substitutions:
 timeout: 3600s
 
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
+- name: 'gcr.io/kaniko-project/executor:edge'
   args: [
-    '-c',
-    'docker pull us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1 || exit 0'
+    '--context=dir:///workspace/ci',
+    '--dockerfile=ci/cloudbuild/${_DISTRO}.Dockerfile',
+    '--cache=true',
+    '--destination=gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
   ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: [
-    'build',
-    '-f', 'ci/cloudbuild/${_DISTRO}.Dockerfile',
-    '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
-    '--cache-from', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
-    'ci'
-  ]
-- name: 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1'
+- name: 'gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
-
-images:
-- 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1'
