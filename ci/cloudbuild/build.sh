@@ -18,40 +18,71 @@
 #
 # This script runs builds using Google Cloud Build. It expects a single
 # argument of the build name to run. Valid build names are the basenames of the
-# scripts in the `builds/` directory. If this script is invoked from a user at
-# a terminal it submits the Cloud Build job on the user's behalf. If the script
-# is invoked from within a Cloud Build environment (determined by checking
-# ${BUILD_ID}), then it'll kick off the named build.
+# scripts in the `builds/` directory. An optional `--distro=<distro>` flag may
+# be specified to indicate which `Dockerfile.<distro>` to run the named build
+# in, and this build is submitted to Cloud Build to run. A distro of "local"
+# (the default) indicates to run the build locally, without docker, using the
+# invoking user's operating system and environment.
 #
-# Usage: ./build.sh <build-name>
+# Usage: ./build.sh [options] <build-name>
+#
+#   Options:
+#     -d|--distro <name>    The distro name to use.
 
-set -eu
+set -euo pipefail
 
 source $(dirname $0)/../lib/init.sh
 source module ci/lib/io.sh
 cd "${PROJECT_ROOT}"
 
-# Extracts the usage from the file comment starting at line 17.
-readonly USAGE="$(sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}")"
+# Use getop to parse and normalize all the args.
+readonly OPTS="d:"
+readonly LONGOPTS="distro:"
+PARSED="$(getopt -a \
+  --options="${OPTS}" \
+  --longoptions="${LONGOPTS}" \
+  --name="${PROGRAM_NAME}" \
+  -- "$@")"
+eval set -- "${PARSED}"
+
+DISTRO="local"  # By default, run builds in the local environment
+while true; do
+  case "$1" in
+    -d|--distro)
+      DISTRO="$2"
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+  esac
+done
+readonly DISTRO
+
 if (( $# == 0 )); then
-  echo "${USAGE}"
+  # Extracts the usage from the file comment starting at line 17.
+  sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
   printf "\n  Valid build names:\n"
   printf "    %s\n" $(basename -s .sh ci/cloudbuild/builds/*.sh | sort)
-  exit 0
+  exit 1
 fi
-
 readonly BUILD_NAME="$1"
 
-# If BUILD_ID is unset, assume this script was invoked by a user and submit the
-# cloud build job that was requsted.
-if [ -z "${BUILD_ID:-}" ]; then
-  io::log "====> Submitting cloud build job for ${BUILD_NAME}"
+# If a DISTRO other than "local" was requested, submit the job to Cloud Build
+# to run in the specified distro.
+if [ "${DISTRO}" != "local" ]; then
+  # Quick check to surface invalid distro early.
+  if [ ! -r "ci/cloudbuild/Dockerfile.${DISTRO}" ]; then
+    echo "Unknown distro: ${DISTRO}"
+    exit 1
+  fi
+  io::log "====> Submitting cloud build job for ${BUILD_NAME} on ${DISTRO}"
   exec gcloud builds submit --config ci/cloudbuild/cloudbuild.yaml \
-    --substitutions=_DISTRO=fedora,_BUILD_NAME="${BUILD_NAME}" .
+    --substitutions=_DISTRO=${DISTRO},_BUILD_NAME="${BUILD_NAME}" .
 fi
 
 io::log "====> STARTING BUILD: ${BUILD_NAME}"
-
 readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
 time {
   "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
