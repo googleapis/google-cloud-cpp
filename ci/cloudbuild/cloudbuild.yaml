@@ -32,7 +32,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'build',
-    '-f', 'ci/cloudbuild/Dockerfile.${_DISTRO}',
+    '-f', 'ci/cloudbuild/${_DISTRO}.Dockerfile',
     '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
     '--cache-from', 'us-central1-docker.pkg.dev/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:tag1',
     'ci'

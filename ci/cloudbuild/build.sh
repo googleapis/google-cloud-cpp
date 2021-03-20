@@ -19,7 +19,7 @@
 # This script runs builds using Google Cloud Build. It expects a single
 # argument of the build name to run. Valid build names are the basenames of the
 # scripts in the `builds/` directory. An optional `--distro=<distro>` flag may
-# be specified to indicate which `Dockerfile.<distro>` to run the named build
+# be specified to indicate which `<distro>.Dockerfile` to run the named build
 # in, and this build is submitted to Cloud Build to run. A distro of "local"
 # (the default) indicates to run the build locally, without docker, using the
 # invoking user's operating system and environment.
@@ -76,7 +76,7 @@ readonly BUILD_NAME="$1"
 # to run in the specified distro.
 if [ "${DISTRO}" != "local" ]; then
   # Quick checks to surface invalid arguments early
-  if [ ! -r "ci/cloudbuild/Dockerfile.${DISTRO}" ]; then
+  if [ ! -r "ci/cloudbuild/${DISTRO}.Dockerfile" ]; then
     echo "Unknown distro: ${DISTRO}"
     print_usage
     exit 1
