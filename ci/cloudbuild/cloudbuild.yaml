@@ -15,7 +15,7 @@
 options:
   machineType: 'N1_HIGHCPU_32'
   diskSizeGb: '512'
-  env: ['HOME=/h']
+  env: [ 'HOME=/h' ]
   volumes:
     - name: 'home'
       path: '/h'
@@ -43,7 +43,7 @@ steps:
   # Restores the cached homedir into /h in parallel with the previous step.
   # Failures are ignored.
 - name: 'gcr.io/cloud-builders/gsutil'
-  waitFor: '-'
+  waitFor: [ '-' ]
   entrypoint: 'bash'
   args: [
     '-c',
