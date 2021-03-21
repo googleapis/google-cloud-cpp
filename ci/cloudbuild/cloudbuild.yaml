@@ -52,8 +52,8 @@ steps:
   - '-c'
   - |-
     cache_urls=(
-      "gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}"
-      "gs://${_CACHE_BUCKET}/google-cloud-cpp/base/${_DISTRO}-${_BUILD_NAME}"
+      'gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
+      'gs://${_CACHE_BUCKET}/google-cloud-cpp/base/${_DISTRO}-${_BUILD_NAME}'
     )
     for url in "${cache_urls[@]}"; do
       echo "Fetching cache url ${url}"
@@ -73,5 +73,5 @@ steps:
   args:
   - '-c'
   - |-
-    url="gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}"
+    url='gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
     gsutil -q -m rsync -r -c -e /h "${url}/h"
