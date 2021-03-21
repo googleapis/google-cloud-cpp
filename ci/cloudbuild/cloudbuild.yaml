@@ -15,21 +15,51 @@
 options:
   machineType: 'N1_HIGHCPU_32'
   diskSizeGb: '512'
+  env: ['HOME=/h']
+  volumes:
+    - name: 'home'
+      path: '/h'
 
+# Variables that can be overridden from the `gcloud builds ...` command using
+# the `--substitutions=_FOO=bar` flag.
 substitutions:
   _DISTRO: "unknown"
   _BUILD_NAME: "unknown"
+  _CACHE_BUCKET: 'cloud-cpp-cloudbuild-cache'
 
 timeout: 3600s
 
 steps:
+  # Builds the docker image that will be used by the following steps. Uses
+  # kaniko to cache each layer to speed up building of the image.
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/${_DISTRO}.Dockerfile',
     '--cache=true',
-    '--destination=gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
+    '--destination=gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
   ]
-- name: 'gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
+
+  # Restores the cached homedir into /h in parallel with the previous step.
+  # Failures are ignored.
+- name: 'gcr.io/cloud-builders/gsutil'
+  waitFor: '-'
+  entrypoint: 'bash'
+  args: [
+    '-c',
+    'gsutil -m rsync -r -c -e "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h" /h || exit 0'
+  ]
+
+  # Runs the specified build inside the docker image that was created in the
+  # first step.
+- name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
+
+  # Caches the homedir, /h, in the specified GCS bucket.
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: 'bash'
+  args: [
+    '-c',
+    'gsutil -m rsync -r -c -e /h "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h"'
+  ]

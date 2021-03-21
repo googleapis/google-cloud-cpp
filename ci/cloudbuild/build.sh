@@ -27,7 +27,9 @@
 # Usage: ./build.sh [options] <build-name>
 #
 #   Options:
-#     -d|--distro <name>    The distro name to use.
+#     -d|--distro=<name>        The distro name to use
+#     -c|--cache_bucket=<name>  The GCS bucket to use for the build cache
+#     -h|--help                 Print this help message
 #
 #   Build names:
 
@@ -45,18 +47,27 @@ function print_usage() {
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="d:" \
-  --longoptions="distro:" \
+  --options="d:c:h" \
+  --longoptions="distro:,cache_bucket:,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 DISTRO="local" # By default, run builds in the local environment
+CACHE_BUCKET=""
 while true; do
   case "$1" in
   -d | --distro)
     DISTRO="$2"
     shift 2
+    ;;
+  -c | --cache_bucket)
+    CACHE_BUCKET="$2"
+    shift 2
+    ;;
+  -h | --help)
+    print_usage
+    exit 0
     ;;
   --)
     shift
@@ -65,6 +76,7 @@ while true; do
   esac
 done
 readonly DISTRO
+readonly CACHE_BUCKET
 
 if (($# == 0)); then
   print_usage
@@ -85,9 +97,15 @@ if [ "${DISTRO}" != "local" ]; then
     print_usage
     exit 1
   fi
-  io::log "====> Submitting cloud build job for ${BUILD_NAME} on ${DISTRO}"
-  exec gcloud builds submit --config ci/cloudbuild/cloudbuild.yaml \
-    "--substitutions=_DISTRO=${DISTRO},_BUILD_NAME=${BUILD_NAME}" \
+  subs="_DISTRO=${DISTRO}"
+  subs+=",_BUILD_NAME=${BUILD_NAME}"
+  if [ -n "${CACHE_BUCKET}" ]; then
+    subs+=",_CACHE_BUCKET=${CACHE_BUCKET}"
+  fi
+  io::log "====> Submitting cloud build job for ${subs}"
+  exec gcloud builds submit \
+    --config ci/cloudbuild/cloudbuild.yaml \
+    --substitutions "${subs}" \
     .
 fi
 
