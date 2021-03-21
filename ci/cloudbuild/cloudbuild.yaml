@@ -47,7 +47,7 @@ steps:
   entrypoint: 'bash'
   args: [
     '-c',
-    'gsutil -m rsync -r -c -e "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h" /h || exit 0'
+    'gsutil -q -m rsync -r -c -e "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h" /h || exit 0'
   ]
 
   # Runs the specified build inside the docker image that was created in the
@@ -61,5 +61,5 @@ steps:
   entrypoint: 'bash'
   args: [
     '-c',
-    'gsutil -m rsync -r -c -e /h "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h"'
+    'gsutil -q -m rsync -r -c -e /h "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h"'
   ]
