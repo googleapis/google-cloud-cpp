@@ -99,6 +99,7 @@ if [ "${DISTRO}" != "local" ]; then
   fi
   subs="_DISTRO=${DISTRO}"
   subs+=",_BUILD_NAME=${BUILD_NAME}"
+  subs+=",_CACHE_TYPE=manual-$(id -un)"
   if [ -n "${CACHE_BUCKET}" ]; then
     subs+=",_CACHE_BUCKET=${CACHE_BUCKET}"
   fi

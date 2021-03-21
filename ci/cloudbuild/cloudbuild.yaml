@@ -23,9 +23,10 @@ options:
 # Variables that can be overridden from the `gcloud builds ...` command using
 # the `--substitutions=_FOO=bar` flag.
 substitutions:
-  _DISTRO: "unknown"
-  _BUILD_NAME: "unknown"
+  _DISTRO: 'unknown'
+  _BUILD_NAME: 'unknown'
   _CACHE_BUCKET: 'cloud-cpp-cloudbuild-cache'
+  _CACHE_TYPE: '${_PR_NUMBER:-base}'
 
 timeout: 3600s
 
@@ -41,14 +42,24 @@ steps:
   ]
 
   # Restores the cached homedir into /h in parallel with the previous step.
-  # Failures are ignored.
+  # First tries to fetch cache-type-specific path (i.e., a cache specific to
+  # the current PR, if a PR triggered build), followed by the "base" cache for
+  # the specified build name. Failures are ignored.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
   entrypoint: 'bash'
-  args: [
-    '-c',
-    'gsutil -q -m rsync -r -c -e "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h" /h || exit 0'
-  ]
+  args:
+  - '-c'
+  - |-
+    cache_urls=(
+      "gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}"
+      "gs://${_CACHE_BUCKET}/google-cloud-cpp/base/${_DISTRO}-${_BUILD_NAME}"
+    )
+    for url in "${cache_urls[@]}"; do
+      echo "Fetching cache url ${url}"
+      gsutil -q -m rsync -r -c -e "${url}/h" /h && break
+    done
+    exit 0
 
   # Runs the specified build inside the docker image that was created in the
   # first step.
@@ -59,7 +70,8 @@ steps:
   # Caches the homedir, /h, in the specified GCS bucket.
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: 'bash'
-  args: [
-    '-c',
-    'gsutil -q -m rsync -r -c -e /h "gs://${_CACHE_BUCKET}/${PROJECT_ID}/${_DISTRO}-${_BUILD_NAME}/h"'
-  ]
+  args:
+  - '-c'
+  - |-
+    url="gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}"
+    gsutil -q -m rsync -r -c -e /h "${url}/h"
