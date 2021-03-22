@@ -48,6 +48,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
   entrypoint: 'bash'
+  dir: '/h'
   args:
   - '-c'
   - |-
@@ -57,7 +58,9 @@ steps:
     )
     for url in "${cache_urls[@]}"; do
       echo "Fetching cache url ${url}"
-      gsutil -q -m rsync -r -c -e "${url}/h" /h && break
+      gsutil -m cp "${url}/cache.tar.gz" . || continue
+      du -sh cache.tar.gz  # Prints helpful info in the logs
+      tar -zxf cache.tar.gz && break
     done
     exit 0
 
@@ -67,27 +70,15 @@ steps:
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
 
-  # Removes files in /h with non-UTF-8 filenames to prevent `gsutil rsync` from
-  # crashing: https://github.com/GoogleCloudPlatform/gsutil/issues/922
-- name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
-  entrypoint: 'bash'
-  args:
-  - '-c'
-  - |-
-    for f in $(find /h); do
-      if ! iconv -f UTF-8 <<<"${f}" > /dev/null; then
-        printf "Removing non-UTF-8 filename: %s\n" "${f}"
-        rm -rf -- "${f}"
-      fi
-    done
-
-  # Caches the homedir, /h, in the specified GCS bucket.
+  # Caches the homedir, /h, in the specified GCS bucket. Excludes the bazel
+  # cache because it's too big and GCB disks are too slow.
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: 'bash'
+  dir: '/h'
   args:
   - '-c'
   - |-
-    du -sh /h
-    printf "Total files: %d\n" $(find /home/jgm | wc -l)
+    tar --exclude ".cache/bazel/*" -czf cache.tar.gz .*
+    du -sh cache.tar.gz  # Prints helpful info in the logs
     url='gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
-    gsutil -q -m rsync -r -c -e /h "${url}/h"
+    gsutil -m cp cache.tar.gz "${url}/cache.tar.gz"
