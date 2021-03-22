@@ -49,11 +49,12 @@ steps:
   waitFor: [ '-' ]
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
-  args:
-  - 'restore'
-  - '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp'
-  - '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
-  - '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}'
+  args: [
+    'restore',
+    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}',
+    '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}'
+  ]
 
   # Runs the specified build inside the docker image that was created in the
   # first step.
@@ -66,10 +67,12 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
-  args:
-  - 'save'
-  - '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp'
-  - '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
-  - '--path=.ccache'
-  - '--path=.cache/vcpkg'
-  - '--path=.cache/google-cloud-cpp'
+  args: [
+    'save',
+    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}',
+    '--path=.ccache',
+    '--path=.cache/ccache',
+    '--path=.cache/vcpkg',
+    '--path=.cache/google-cloud-cpp'
+  ]
