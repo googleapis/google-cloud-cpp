@@ -112,6 +112,7 @@ function save_cache() {
   fi
   io::log "Saving ( ${paths[*]} ) to ${PRIMARY_CACHE_URL}"
   tar -czf - "${paths[@]}" | gsutil cp - "${PRIMARY_CACHE_URL}"
+  gsutil stat "${PRIMARY_CACHE_URL}"
 }
 
 function restore_cache() {
