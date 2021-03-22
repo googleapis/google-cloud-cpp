@@ -99,7 +99,6 @@ elif [[ -z "${KEY}" ]]; then
 fi
 
 readonly PRIMARY_CACHE_URL="${BUCKET_URL}/${KEY}/cache.tar.gz"
-readonly FALLBACK_CACHE_URL="${BUCKET_URL}/${FALLBACK_KEY}/cache.tar.gz"
 
 function save_cache() {
   # Filters PATHS to only those that exist.
@@ -113,16 +112,21 @@ function save_cache() {
 }
 
 function restore_cache() {
-  for url in "${PRIMARY_CACHE_URL}" "${FALLBACK_CACHE_URL}"; do
+  local urls=("${PRIMARY_CACHE_URL}")
+  if [[ -n "${FALLBACK_KEY}" ]]; then
+    urls+=("${BUCKET_URL}/${FALLBACK_KEY}/cache.tar.gz")
+  fi
+  for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
       gsutil cp "${url}" - | tar -zxf - || continue
+      break
     fi
   done
   return 0
 }
 
-io::log "====> ${PROGRAM_NAME}"
+io::log "====> ${PROGRAM_NAME}: $*"
 readonly TIMEFORMAT="==> 🕑 ${PROGRAM_NAME} completed in %R seconds"
 time {
   case "$1" in
