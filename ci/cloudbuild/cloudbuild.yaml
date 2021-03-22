@@ -87,5 +87,7 @@ steps:
   args:
   - '-c'
   - |-
+    du -sh /h
+    printf "Total files: %d\n" $(find /home/jgm | wc -l)
     url='gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
     gsutil -q -m rsync -r -c -e /h "${url}/h"
