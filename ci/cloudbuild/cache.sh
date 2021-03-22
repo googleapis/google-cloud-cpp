@@ -102,29 +102,24 @@ readonly PRIMARY_CACHE_URL="${BUCKET_URL}/${KEY}/cache.tar.gz"
 readonly FALLBACK_CACHE_URL="${BUCKET_URL}/${FALLBACK_KEY}/cache.tar.gz"
 
 function save_cache() {
-  paths=()
-  for p in "${PATHS[@]}"; do
-    if [[ -r "${p}" ]]; then paths+=("${p}"); fi
-  done
+  # Filters PATHS to only those that exist.
+  paths=($(ls -d "${PATHS[@]}" 2>/dev/null))
   if ((${#paths[@]} == 0)); then
     io::log "No paths to cache found."
     return 0
   fi
-  io::log "Saving ${PATHS[*]} to ${PRIMARY_CACHE_URL}"
-  tar -czf cache.tar.gz "${PATHS[@]}"
-  io::log "  Cache size: $(du -sh cache.tar.gz)"
-  gsutil -m cp cache.tar.gz "${url}"
+  io::log "Saving ${paths[*]} to ${PRIMARY_CACHE_URL}"
+  tar -czf - "${paths[@]}" | gsutil cp - "${PRIMARY_CACHE_URL}"
 }
 
 function restore_cache() {
   for url in "${PRIMARY_CACHE_URL}" "${FALLBACK_CACHE_URL}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      gsutil -m cp "${url}" cache.tar.gz || continue
-      io::log "  Cache size: $(du -sh cache.tar.gz)"
-      tar -zxf cache.tar.gz && break
+      gsutil cp "${url}" - | tar -zxf - || continue
     fi
   done
+  return 0
 }
 
 io::log "====> ${PROGRAM_NAME}"
