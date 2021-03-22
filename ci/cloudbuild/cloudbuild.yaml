@@ -67,6 +67,20 @@ steps:
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
 
+  # Removes files in /h with non-UTF-8 filenames to prevent `gsutil rsync` from
+  # crashing: https://github.com/GoogleCloudPlatform/gsutil/issues/922
+- name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |-
+    for f in $(find /h); do
+      if ! iconv -f UTF-8 <<<"${f}" > /dev/null; then
+        printf "Removing non-UTF-8 filename: %s\n" "${f}"
+        rm -rf -- "${f}"
+      fi
+    done
+
   # Caches the homedir, /h, in the specified GCS bucket.
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: 'bash'
