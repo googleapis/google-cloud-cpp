@@ -15,21 +15,58 @@
 options:
   machineType: 'N1_HIGHCPU_32'
   diskSizeGb: '512'
+  env: [ 'HOME=/h' ]
+  volumes:
+    - name: 'home'
+      path: '/h'
 
+# Variables that can be overridden from the `gcloud builds ...` command using
+# the `--substitutions=_FOO=bar` flag.
 substitutions:
-  _DISTRO: "unknown"
-  _BUILD_NAME: "unknown"
+  _DISTRO: 'unknown'
+  _BUILD_NAME: 'unknown'
+  _CACHE_BUCKET: 'cloud-cpp-cloudbuild-cache'
+  _CACHE_TYPE: '${_PR_NUMBER:-base}'
 
 timeout: 3600s
 
 steps:
+  # Builds the docker image that will be used by the main build step.
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/${_DISTRO}.Dockerfile',
     '--cache=true',
-    '--destination=gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
+    '--destination=gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
   ]
-- name: 'gcr.io/$PROJECT_ID/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
+
+  # Restores the homedir cache into /h in parallel with the previous step.
+- name: 'gcr.io/cloud-builders/gsutil'
+  waitFor: [ '-' ]
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  dir: '/h'
+  args: [
+    'restore',
+    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
+    '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}/h'
+  ]
+
+  # Runs the specified build in the image that was created in the first step.
+- name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
+
+  # Caches some directories in the homedir, in the specified GCS bucket.
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  dir: '/h'
+  args: [
+    'save',
+    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
+    '--path=.ccache',
+    '--path=.cache/ccache',
+    '--path=.cache/vcpkg',
+    '--path=.cache/google-cloud-cpp'
+  ]
