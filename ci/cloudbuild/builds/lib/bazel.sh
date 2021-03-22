@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,18 +19,19 @@
 # Make our include guard clean against set -o nounset.
 test -n "${CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__:-}" || declare -i CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__=0
 if ((CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__++ != 0)); then
-   return 0
+  return 0
 fi # include guard
 
-# Outputs a list of args that should be given to all bazel invocations.
+# Outputs a list of args that should be given to all bazel invocations. To read
+# this into an array use `mapfile -t my_array < <(bazel::common_args)`
 function bazel::common_args() {
-  local args=("--test_output=errors" "--verbose_failures=true" "--keep_going") 
-  if [[ -n "${BAZEL_REMOTE_CACHE}" ]]; then
+  local args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
+  if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
     args+=("--google_default_credentials")
     # See https://docs.bazel.build/versions/master/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
     args+=("--experimental_guard_against_concurrent_changes")
   fi
-  echo "${args[@]}"
+  printf "%s\n" "${args[@]}"
 }
