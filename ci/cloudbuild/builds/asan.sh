@@ -16,7 +16,13 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module ci/cloudbuild/builds/lib/bazel.sh
+
 export CC=clang
 export CXX=clang++
 
-bazel test --config=asan --test_tag_filters=-integration-test ...
+args=($(bazel::common_args))
+args+=("--config=asan")
+args+=("--test_tag_filters=-integration-test")
+bazel test "${args[@]}" ...

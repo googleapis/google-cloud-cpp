@@ -56,6 +56,9 @@ steps:
 - name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
+  env: [
+    'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}'
+  ]
 
   # Caches some directories in the homedir, in the specified GCS bucket.
 - name: 'gcr.io/cloud-builders/gsutil'
