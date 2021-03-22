@@ -16,6 +16,9 @@
 
 set -eu
 
+source "$(dirname "$0")/../../lib/init.sh"
+source module ci/cloudbuild/builds/lib/cmake.sh
+
 cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=clang-tidy -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
