@@ -47,22 +47,13 @@ steps:
   # the specified build name. Failures are ignored.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
-  entrypoint: 'bash'
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
   args:
-  - '-c'
-  - |-
-    cache_urls=(
-      'gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
-      'gs://${_CACHE_BUCKET}/google-cloud-cpp/base/${_DISTRO}-${_BUILD_NAME}'
-    )
-    for url in "${cache_urls[@]}"; do
-      echo "Fetching cache url ${url}"
-      gsutil -m cp "${url}/cache.tar.gz" . || continue
-      du -sh cache.tar.gz  # Prints helpful info in the logs
-      tar -zxf cache.tar.gz && break
-    done
-    exit 0
+  - 'restore'
+  - '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp'
+  - '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
+  - '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}'
 
   # Runs the specified build inside the docker image that was created in the
   # first step.
@@ -73,12 +64,12 @@ steps:
   # Caches the homedir, /h, in the specified GCS bucket. Excludes the bazel
   # cache because it's too big and GCB disks are too slow.
 - name: 'gcr.io/cloud-builders/gsutil'
-  entrypoint: 'bash'
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
   args:
-  - '-c'
-  - |-
-    tar --exclude ".cache/bazel/*" -czf cache.tar.gz .*
-    du -sh cache.tar.gz  # Prints helpful info in the logs
-    url='gs://${_CACHE_BUCKET}/google-cloud-cpp/${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
-    gsutil -m cp cache.tar.gz "${url}/cache.tar.gz"
+  - 'save'
+  - '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp'
+  - '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}'
+  - '--path=.ccache'
+  - '--path=.cache/vcpkg'
+  - '--path=.cache/google-cloud-cpp'
