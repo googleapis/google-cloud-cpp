@@ -33,7 +33,6 @@ set -euo pipefail
 
 source "$(dirname "$0")/../lib/init.sh"
 source module ci/lib/io.sh
-cd "${PROJECT_ROOT}"
 
 function print_usage() {
   # Extracts the usage from the file comment starting at line 17.
@@ -132,14 +131,14 @@ io::log "====> ${PROGRAM_NAME}"
 readonly TIMEFORMAT="==> 🕑 ${PROGRAM_NAME} completed in %R seconds"
 time {
   case "$1" in
-    save)
-      save_cache
-      ;;
-    restore)
-      restore_cache
-      ;;
-    *)
-      print_usage
-      ;;
+  save)
+    save_cache
+    ;;
+  restore)
+    restore_cache
+    ;;
+  *)
+    print_usage
+    ;;
   esac
 }
