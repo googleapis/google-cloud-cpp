@@ -102,12 +102,15 @@ readonly PRIMARY_CACHE_URL="${BUCKET_URL}/${KEY}/cache.tar.gz"
 
 function save_cache() {
   # Filters PATHS to only those that exist.
-  paths=($(ls -d "${PATHS[@]}" 2>/dev/null))
+  paths=()
+  for p in "${PATHS[@]}"; do
+    test -r "${p}" && paths+=("${p}")
+  done
   if ((${#paths[@]} == 0)); then
     io::log "No paths to cache found."
     return 0
   fi
-  io::log "Saving ${paths[*]} to ${PRIMARY_CACHE_URL}"
+  io::log "Saving ( ${paths[*]} ) to ${PRIMARY_CACHE_URL}"
   tar -czf - "${paths[@]}" | gsutil cp - "${PRIMARY_CACHE_URL}"
 }
 

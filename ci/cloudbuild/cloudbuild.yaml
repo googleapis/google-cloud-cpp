@@ -31,8 +31,7 @@ substitutions:
 timeout: 3600s
 
 steps:
-  # Builds the docker image that will be used by the following steps. Uses
-  # kaniko to cache each layer to speed up building of the image.
+  # Builds the docker image that will be used by the main build step.
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
     '--context=dir:///workspace/ci',
@@ -41,10 +40,7 @@ steps:
     '--destination=gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}',
   ]
 
-  # Restores the cached homedir into /h in parallel with the previous step.
-  # First tries to fetch cache-type-specific path (i.e., a cache specific to
-  # the current PR, if a PR triggered build), followed by the "base" cache for
-  # the specified build name. Failures are ignored.
+  # Restores the homedir cache into /h in parallel with the previous step.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
@@ -52,25 +48,23 @@ steps:
   args: [
     'restore',
     '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
-    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}',
-    '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}'
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
+    '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}/h'
   ]
 
-  # Runs the specified build inside the docker image that was created in the
-  # first step.
+  # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/google-cloud-cpp-cloudbuild-docker/${_DISTRO}-image:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '${_BUILD_NAME}' ]
 
-  # Caches the homedir, /h, in the specified GCS bucket. Excludes the bazel
-  # cache because it's too big and GCB disks are too slow.
+  # Caches some directories in the homedir, in the specified GCS bucket.
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
   args: [
     'save',
     '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
-    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}',
+    '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
     '--path=.ccache',
     '--path=.cache/ccache',
     '--path=.cache/vcpkg',
