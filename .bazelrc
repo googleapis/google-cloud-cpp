@@ -72,7 +72,8 @@ build:xsan --linkopt=-stdlib=libc++
 build:xsan --linkopt=-lc++
 build:xsan --linkopt=-lc++abi
 build:xsan --linkopt=-fsanitize-link-c++-runtime
-build:xsan --linkcopt=-fsanitize=undefined
+build:xsan --linkopt=-fsanitize=float-divide-by-zero
+build:xsan --linkopt=-fsanitize=nullability
 build:xsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
 
 # --config msan: Memory Sanitizer
