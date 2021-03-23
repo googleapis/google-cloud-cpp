@@ -31,12 +31,20 @@ build:asan --strip=never
 build:asan --copt=-Og
 build:asan --copt=-g
 build:asan --copt=-fsanitize=address
-build:asan --copt=-fsanitize=float-divide-by-zero
-build:asan --copt=-fsanitize=nullability
 build:asan --copt=-fno-omit-frame-pointer
 build:asan --linkopt=-fsanitize=address
 build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 build:asan --action_env=LSAN_OPTIONS=report_objects=1
+
+# --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
+build:xsan --strip=never
+build:xsan --copt=-Og
+build:xsan --copt=-g
+build:xsan --copt=-fsanitize=float-divide-by-zero
+build:xsan --copt=-fsanitize=nullability
+build:xsan --copt=-fno-omit-frame-pointer
+build:xsan --linkopt=-fsanitize=nullability
+build:xsan --action_env=UBSAN_OPTIONS=print_stacktrace=1
 
 # --config tsan: Thread Sanitizer
 build:tsan --strip=never
