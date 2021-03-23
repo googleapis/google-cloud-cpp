@@ -726,7 +726,7 @@ string(
            " google_cloud_iam_protos"
            " google_cloud_pubsub_protos"
            " google_cloud_cpp_storage_protos"
-           " google_cloud_cpp_oo_protos"
+           " google_cloud_cpp_logging_protos"
            " google_cloud_cpp_iam_v1_iam_policy_protos"
            " google_cloud_cpp_iam_v1_options_protos"
            " google_cloud_cpp_iam_v1_policy_protos"
