@@ -1,0 +1,19 @@
+---
+createTime: '2021-03-21T21:03:51.588652971Z'
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^master$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 82ea0d45-6073-481d-a1bd-4daa329edd7a
+name: ubsan
+substitutions:
+  _BUILD_NAME: ubsan
+  _DISTRO: fedora
+tags:
+- bazel
+- fedora
+- pr
+- ubsan
