@@ -65,27 +65,20 @@ PARSED="$(getopt -a \
   -- "$@")"
 eval set -- "${PARSED}"
 
-while true; do
-  case "$1" in
-  -d | --describe)
-    describe_trigger "$2"
-    exit
-    ;;
-  -i | --import)
-    import_trigger "$2"
-    exit
-    ;;
-  -l | --list)
-    list_triggers
-    exit
-    ;;
-  -h | --help)
-    print_usage
-    exit
-    ;;
-  *)
-    print_usage
-    exit
-    ;;
-  esac
-done
+case "$1" in
+-d | --describe)
+  describe_trigger "$2"
+  ;;
+-i | --import)
+  import_trigger "$2"
+  ;;
+-l | --list)
+  list_triggers
+  ;;
+-h | --help)
+  print_usage
+  ;;
+*)
+  print_usage
+  ;;
+esac
