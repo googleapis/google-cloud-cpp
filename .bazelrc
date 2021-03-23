@@ -43,7 +43,7 @@ build:xsan --copt=-g
 build:xsan --copt=-fsanitize=float-divide-by-zero
 build:xsan --copt=-fsanitize=nullability
 build:xsan --copt=-fno-omit-frame-pointer
-build:xsan --linkopt=-fsanitize=nullability
+build:xsan --linkopt=-fsanitize=undefined
 build:xsan --action_env=UBSAN_OPTIONS=print_stacktrace=1
 
 # --config tsan: Thread Sanitizer
