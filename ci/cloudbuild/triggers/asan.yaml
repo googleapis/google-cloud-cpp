@@ -1,0 +1,20 @@
+---
+createTime: '2021-03-21T17:51:13.620749264Z'
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^master$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: 502b5d9e-a6cf-415a-9121-317cfb45d37e
+name: asan
+substitutions:
+  _BUILD_NAME: asan
+  _DISTRO: fedora
+tags:
+- asan
+- bazel
+- fedora
+- clang
+- pr

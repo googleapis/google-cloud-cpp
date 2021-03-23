@@ -1,0 +1,20 @@
+---
+createTime: '2021-03-20T22:56:56.896890729Z'
+disabled: true
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^master$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+id: eb9be3d8-db81-4fb1-95eb-e86afb6de32a
+name: clang-tidy
+substitutions:
+  _BUILD_NAME: clang-tidy
+  _DISTRO: fedora
+tags:
+- fedora
+- clang
+- clang-tidy
+- pr
