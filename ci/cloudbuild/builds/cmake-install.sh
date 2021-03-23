@@ -36,7 +36,7 @@ io::log "Verifying installed directories"
 # Finds all the installed leaf directories (i.e., directories with exactly two
 # links: . and ..). We only look at leaf directories, because obviously all
 # parent directories must also exist.
-actual_dirs=($(env -C "${INSTALL_PREFIX}" find -type d -links 2))
+mapfile -t actual_dirs < <(env -C "${INSTALL_PREFIX}" find -type d -links 2)
 expected_dirs=(
   ./include/google/api
   ./include/google/bigtable/admin/v2
@@ -103,7 +103,7 @@ expected_dirs=(
 )
 
 # Assume a successful exit. Any test can set this to 1 to indicate failure.
-status=0
+exit_code=0
 
 # Fails on any difference between the expected vs actually installed dirs.
 discrepancies="$(comm -3 \
@@ -112,34 +112,34 @@ discrepancies="$(comm -3 \
 if [[ -n "${discrepancies}" ]]; then
   io::log "Found install discrepancies: expected vs actual"
   echo "${discrepancies}"
-  status=1
+  exit_code=1
 fi
 
 io::log "Validating installed pkg-config files"
 export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
-for pc in $(find "${INSTALL_PREFIX}" -name '*.pc'); do
+while IFS= read -r -d '' pc; do
   # Ignores the warning noise from system .pc files, but we redo the validation
   # with warnings enabled if the validation of our .pc fails.
-  if ! pkg-config --validate "${pc}" > /dev/null 2>&1; then
+  if ! pkg-config --validate "${pc}" >/dev/null 2>&1; then
     echo "Invalid ${pc}"
     pkg-config --validate "${pc}" || true
     echo "---"
     cat "${pc}"
     echo "---"
-    status=1
+    exit_code=1
   fi
-done
+done < <(find "${INSTALL_PREFIX}" -name '*.pc' -print0)
 
 io::log "Validating installed file extensions"
 # All installed libraries have the same version, so pick one.
 version=$(pkg-config google_cloud_cpp_common --modversion)
 version_major=$(cut -d. -f1 <<<"${version}")
 allow_re="\.(h|inc|proto|cmake|pc|a|so|so\.${version}|so\.${version_major})\$"
-for f in $(find "${INSTALL_PREFIX}" -type f); do
+while IFS= read -r -d '' f; do
   if ! grep -qP "${allow_re}" <<<"${f}"; then
     echo "File with unexpected suffix installed: ${f}"
-    status=1
+    exit_code=1
   fi
-done
+done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
-exit "${status}"
+exit "${exit_code}"
