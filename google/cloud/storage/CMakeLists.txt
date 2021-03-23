@@ -131,6 +131,8 @@ add_library(
     internal/logging_client.h
     internal/logging_resumable_upload_session.cc
     internal/logging_resumable_upload_session.h
+    internal/make_jwt_assertion.cc
+    internal/make_jwt_assertion.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
     internal/notification_metadata_parser.cc
@@ -432,6 +434,7 @@ if (BUILD_TESTING)
         internal/http_response_test.cc
         internal/logging_client_test.cc
         internal/logging_resumable_upload_session_test.cc
+        internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
