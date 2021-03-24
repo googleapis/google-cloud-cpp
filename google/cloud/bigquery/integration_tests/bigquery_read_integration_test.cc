@@ -46,10 +46,10 @@ class BigQueryReadIntegrationTest
     idempotency_policy_ = MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
   }
 
-  static int CountRowsFromStream(
+  static std::int64_t CountRowsFromStream(
       StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>&
           stream) {
-    int num_rows = 0;
+    std::int64_t num_rows = 0;
     for (auto const& row : stream) {
       if (row.ok()) {
         num_rows += row->row_count();
@@ -164,7 +164,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
   EXPECT_GT(session_response->streams().size(), 0);
 
   auto read_response = client.ReadRows(session_response->streams(0).name(), 0);
-  int num_rows = CountRowsFromStream(read_response);
+  auto num_rows = CountRowsFromStream(read_response);
   EXPECT_GT(num_rows, 0);
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
@@ -192,7 +192,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoSuccess) {
   read_request.set_read_stream(session_response->streams(0).name());
   read_request.set_offset(0);
   auto read_response = client.ReadRows(read_request);
-  int num_rows = CountRowsFromStream(read_response);
+  auto num_rows = CountRowsFromStream(read_response);
   EXPECT_GT(num_rows, 0);
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
@@ -216,7 +216,7 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
 
   // Read all rows using 1 stream.
   auto read_response = client.ReadRows(session_response->streams(0).name(), 0);
-  int num_rows = CountRowsFromStream(read_response);
+  auto num_rows = CountRowsFromStream(read_response);
   EXPECT_GT(num_rows, 0);
 
   // Create another ReadSession with exactly 1 stream.
@@ -234,11 +234,11 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
 
   auto primary_read_response =
       client.ReadRows(split_response->primary_stream().name(), 0);
-  int primary_num_rows = CountRowsFromStream(primary_read_response);
+  auto primary_num_rows = CountRowsFromStream(primary_read_response);
 
   auto remainder_read_response =
       client.ReadRows(split_response->remainder_stream().name(), 0);
-  int remainder_num_rows = CountRowsFromStream(remainder_read_response);
+  auto remainder_num_rows = CountRowsFromStream(remainder_read_response);
   EXPECT_EQ(num_rows, primary_num_rows + remainder_num_rows);
 
   auto const log_lines = ClearLogLines();
