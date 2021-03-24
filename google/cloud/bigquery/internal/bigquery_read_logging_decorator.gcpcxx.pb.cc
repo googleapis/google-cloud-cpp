@@ -51,15 +51,15 @@ BigQueryReadLogging::CreateReadSession(
 std::unique_ptr<internal::StreamingReadRpc<
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadLogging::ReadRows(
-    grpc::ClientContext& context,
+    std::unique_ptr<grpc::ClientContext> context,
     ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](std::unique_ptr<grpc::ClientContext> context,
              ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
                  request)
           -> std::unique_ptr<internal::StreamingReadRpc<
               ::google::cloud::bigquery::storage::v1::ReadRowsResponse>> {
-        auto stream = child_->ReadRows(context, request);
+        auto stream = child_->ReadRows(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
           stream = absl::make_unique<internal::StreamingReadRpcLogging<
               ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
@@ -68,7 +68,7 @@ BigQueryReadLogging::ReadRows(
         }
         return stream;
       },
-      context, request, __func__, tracing_options_);
+      std::move(context), request, __func__, tracing_options_);
 }
 
 StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

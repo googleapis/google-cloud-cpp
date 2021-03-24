@@ -84,13 +84,12 @@ DefaultGoldenKitchenSinkStub::ListLogs(
 
 std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
 DefaultGoldenKitchenSinkStub::TailLogEntries(
-    grpc::ClientContext&,
+    std::unique_ptr<grpc::ClientContext> client_context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto stream = grpc_stub_->TailLogEntries(context.get(), request);
+  auto stream = grpc_stub_->TailLogEntries(client_context.get(), request);
   return absl::make_unique<internal::StreamingReadRpcImpl<
       ::google::test::admin::database::v1::TailLogEntriesResponse>>(
-      std::move(context), std::move(stream));
+      std::move(client_context), std::move(stream));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

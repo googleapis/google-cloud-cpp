@@ -168,8 +168,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
 
     auto factory = [stub](
         ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-      auto context = absl::make_unique<grpc::ClientContext>();
-      return stub->TailLogEntries(*context, request);
+      return stub->TailLogEntries(absl::make_unique<grpc::ClientContext>(),
+          request);
     };
 
     auto resumable =

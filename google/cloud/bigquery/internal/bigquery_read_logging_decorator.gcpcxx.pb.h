@@ -45,7 +45,7 @@ class BigQueryReadLogging : public BigQueryReadStub {
 
   std::unique_ptr<internal::StreamingReadRpc<
       ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(grpc::ClientContext& context,
+  ReadRows(std::unique_ptr<grpc::ClientContext> context,
            ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
                request) override;
 

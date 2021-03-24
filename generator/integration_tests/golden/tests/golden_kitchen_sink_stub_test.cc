@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
@@ -243,7 +244,6 @@ class MockTailLogEntriesResponse
 
 TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
   grpc::Status status;
-  grpc::ClientContext context;
   auto* success_response = new MockTailLogEntriesResponse;
   auto* failure_response = new MockTailLogEntriesResponse;
   EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
@@ -256,10 +256,12 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
       .WillOnce(Return(success_response))
       .WillOnce(Return(failure_response));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success_stream = stub.TailLogEntries(context, request);
+  auto success_stream =
+      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   auto success_status = absl::get<Status>(success_stream->Read());
   EXPECT_THAT(success_status, IsOk());
-  auto failure_stream = stub.TailLogEntries(context, request);
+  auto failure_stream =
+      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   auto failure_status = absl::get<Status>(failure_stream->Read());
   EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
 }

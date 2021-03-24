@@ -70,7 +70,7 @@ class MockGoldenKitchenSinkStub
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
-      (grpc::ClientContext & context,
+      (std::unique_ptr<grpc::ClientContext> context,
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
