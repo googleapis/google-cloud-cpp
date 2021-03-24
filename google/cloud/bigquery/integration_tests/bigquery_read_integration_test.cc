@@ -46,18 +46,6 @@ class BigQueryReadIntegrationTest
     idempotency_policy_ = MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
   }
 
-  static std::int64_t CountRowsFromStream(
-      StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>&
-          stream) {
-    std::int64_t num_rows = 0;
-    for (auto const& row : stream) {
-      if (row.ok()) {
-        num_rows += row->row_count();
-      }
-    }
-    return num_rows;
-  }
-
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
   Options options_;
   std::unique_ptr<BigQueryReadRetryPolicy> retry_policy_;
@@ -67,6 +55,18 @@ class BigQueryReadIntegrationTest
  private:
   testing_util::ScopedLog log_;
 };
+
+std::int64_t CountRowsFromStream(
+    StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>&
+        stream) {
+  std::int64_t num_rows = 0;
+  for (auto const& row : stream) {
+    if (row.ok()) {
+      num_rows += row->row_count();
+    }
+  }
+  return num_rows;
+}
 
 TEST_F(BigQueryReadIntegrationTest, CreateReadSessionFailure) {
   auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
@@ -124,7 +124,7 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionSuccess) {
       "usa_1910_current");
   auto response = client.CreateReadSession(
       "projects/cloud-cpp-testing-resources", read_session, 2);
-  EXPECT_THAT(response, IsOk());
+  ASSERT_THAT(response, IsOk());
   EXPECT_GT(response->streams().size(), 0);
   EXPECT_LT(response->streams().size(), 3);
 }
@@ -141,7 +141,7 @@ TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoSuccess) {
       "usa_1910_current");
   *request.mutable_read_session() = read_session;
   auto response = client.CreateReadSession(request);
-  EXPECT_THAT(response, IsOk());
+  ASSERT_THAT(response, IsOk());
   EXPECT_GT(response->streams().size(), 0);
 }
 
@@ -160,7 +160,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
   read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
   *session_request.mutable_read_session() = read_session;
   auto session_response = client.CreateReadSession(session_request);
-  EXPECT_THAT(session_response, IsOk());
+  ASSERT_THAT(session_response, IsOk());
   EXPECT_GT(session_response->streams().size(), 0);
 
   auto read_response = client.ReadRows(session_response->streams(0).name(), 0);
@@ -185,7 +185,7 @@ TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoSuccess) {
   read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
   *session_request.mutable_read_session() = read_session;
   auto session_response = client.CreateReadSession(session_request);
-  EXPECT_THAT(session_response, IsOk());
+  ASSERT_THAT(session_response, IsOk());
   EXPECT_GT(session_response->streams().size(), 0);
 
   ::google::cloud::bigquery::storage::v1::ReadRowsRequest read_request;
