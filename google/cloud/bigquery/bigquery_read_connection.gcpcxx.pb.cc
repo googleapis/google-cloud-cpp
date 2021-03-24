@@ -101,7 +101,7 @@ class BigQueryReadConnectionImpl : public BigQueryReadConnection {
         [stub](::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
                    request) {
           auto context = absl::make_unique<grpc::ClientContext>();
-          return stub->ReadRows(*context, request);
+          return stub->ReadRows(std::move(context), request);
         };
 
     auto resumable = internal::MakeResumableStreamingReadRpc<

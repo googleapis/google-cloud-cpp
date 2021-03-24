@@ -43,10 +43,10 @@ BigQueryReadMetadata::CreateReadSession(
 std::unique_ptr<internal::StreamingReadRpc<
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadMetadata::ReadRows(
-    grpc::ClientContext& context,
+    std::unique_ptr<grpc::ClientContext> context,
     ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  SetMetadata(context, "read_stream=" + request.read_stream());
-  return child_->ReadRows(context, request);
+  SetMetadata(*context, "read_stream=" + request.read_stream());
+  return child_->ReadRows(std::move(context), request);
 }
 
 StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

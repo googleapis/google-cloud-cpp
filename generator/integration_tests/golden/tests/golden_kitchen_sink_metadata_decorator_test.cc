@@ -66,7 +66,7 @@ class MockGoldenKitchenSinkStub
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
-      (grpc::ClientContext & context,
+      (std::unique_ptr<grpc::ClientContext> context,
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
@@ -186,11 +186,12 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
   EXPECT_CALL(*mock_response, Read)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
   EXPECT_CALL(*mock_, TailLogEntries)
-      .WillOnce([mock_response, this](grpc::ClientContext& context,
-                                      google::test::admin::database::v1::
-                                          TailLogEntriesRequest const&) {
+      .WillOnce([mock_response, this](
+                    std::unique_ptr<grpc::ClientContext> context,
+                    google::test::admin::database::v1::
+                        TailLogEntriesRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
-            context,
+            *context,
             "google.test.admin.database.v1.GoldenKitchenSink.TailLogEntries",
             expected_api_client_header_));
         return std::unique_ptr<internal::StreamingReadRpc<
@@ -198,9 +199,9 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
             mock_response);
       });
   GoldenKitchenSinkMetadata stub(mock_);
-  grpc::ClientContext context;
+  auto context = absl::make_unique<grpc::ClientContext>();
   google::test::admin::database::v1::TailLogEntriesRequest request;
-  auto response = stub.TailLogEntries(context, request);
+  auto response = stub.TailLogEntries(std::move(context), request);
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
 }
 

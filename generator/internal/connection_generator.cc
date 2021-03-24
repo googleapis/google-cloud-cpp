@@ -408,7 +408,7 @@ Status ConnectionGenerator::GenerateCc() {
     "    auto factory = [stub](\n"
     "        $request_type$ const& request) {\n"
     "      auto context = absl::make_unique<grpc::ClientContext>();\n"
-    "      return stub->$method_name$(*context, request);\n"
+    "      return stub->$method_name$(std::move(context), request);\n"
     "    };\n"
     "\n"
     "    auto resumable =\n"

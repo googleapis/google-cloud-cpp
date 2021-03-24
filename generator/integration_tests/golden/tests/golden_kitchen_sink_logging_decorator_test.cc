@@ -14,6 +14,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
@@ -67,7 +68,7 @@ class MockGoldenKitchenSinkStub
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
-      (grpc::ClientContext & context,
+      (std::unique_ptr<grpc::ClientContext> context,
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
@@ -212,9 +213,10 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.TailLogEntries(
-      context, google::test::admin::database::v1::TailLogEntriesRequest());
+      std::move(context),
+      google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
@@ -232,9 +234,10 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  grpc::ClientContext context;
+  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.TailLogEntries(
-      context, google::test::admin::database::v1::TailLogEntriesRequest());
+      std::move(context),
+      google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();

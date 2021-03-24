@@ -82,7 +82,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
              {// clang-format off
    {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "    $method_name$(\n"
-    "    grpc::ClientContext& context,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
                // clang-format on
                "\n"}},
@@ -179,12 +179,12 @@ Status MetadataDecoratorGenerator::GenerateCc() {
                  // clang-format off
    {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "$metadata_class_name$::$method_name$(\n"
-    "    grpc::ClientContext& context,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},
    {HasRoutingHeader,
-    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
-    "  SetMetadata(context, {});\n"},
-   {"  return child_->$method_name$(context, request);\n"
+    "  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
+    "  SetMetadata(*context, {});\n"},
+   {"  return child_->$method_name$(std::move(context), request);\n"
     "}\n"
     "\n",}
                  // clang-format on

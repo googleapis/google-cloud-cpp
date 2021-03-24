@@ -47,13 +47,12 @@ DefaultBigQueryReadStub::CreateReadSession(
 std::unique_ptr<internal::StreamingReadRpc<
     ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 DefaultBigQueryReadStub::ReadRows(
-    grpc::ClientContext&,
+    std::unique_ptr<grpc::ClientContext> client_context,
     ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto stream = grpc_stub_->ReadRows(context.get(), request);
+  auto stream = grpc_stub_->ReadRows(client_context.get(), request);
   return absl::make_unique<internal::StreamingReadRpcImpl<
       ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
-      std::move(context), std::move(stream));
+      std::move(client_context), std::move(stream));
 }
 
 StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>

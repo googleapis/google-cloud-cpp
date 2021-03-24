@@ -65,10 +65,10 @@ GoldenKitchenSinkMetadata::ListLogs(
 
 std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkMetadata::TailLogEntries(
-    grpc::ClientContext& context,
+    std::unique_ptr<grpc::ClientContext> context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  SetMetadata(context, {});
-  return child_->TailLogEntries(context, request);
+  SetMetadata(*context, {});
+  return child_->TailLogEntries(std::move(context), request);
 }
 
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
