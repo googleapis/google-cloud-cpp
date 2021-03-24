@@ -163,7 +163,12 @@ ExternalProject_Add(
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
-    PATCH_COMMAND "" # patch -p1 --input=/v/external/googleapis.patch
+             # Scaffolding for patching googleapis after download. For example:
+             # PATCH_COMMAND patch -p1 --input=/v/external/googleapis.patch
+             # NOTE: This should only be used while developing with a new
+             # protobuf message. No changes to `PATCH_COMMAND` should ever be
+             # committed to the main branch.
+    PATCH_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
