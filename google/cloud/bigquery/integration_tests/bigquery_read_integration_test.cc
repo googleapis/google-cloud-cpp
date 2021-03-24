@@ -46,6 +46,18 @@ class BigQueryReadIntegrationTest
     idempotency_policy_ = MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
   }
 
+  static int CountRowsFromStream(
+      StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>&
+          stream) {
+    int num_rows = 0;
+    for (auto const& row : stream) {
+      if (row.ok()) {
+        num_rows += row->row_count();
+      }
+    }
+    return num_rows;
+  }
+
   std::vector<std::string> ClearLogLines() { return log_.ExtractLines(); }
   Options options_;
   std::unique_ptr<BigQueryReadRetryPolicy> retry_policy_;
@@ -98,6 +110,137 @@ TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoFailure) {
   ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest request;
   auto response = client.SplitReadStream(request);
   EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("SplitReadStream")));
+}
+
+TEST_F(BigQueryReadIntegrationTest, CreateReadSessionSuccess) {
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  ::google::cloud::bigquery::storage::v1::ReadSession read_session;
+  read_session.set_data_format(
+      google::cloud::bigquery::storage::v1::DataFormat::AVRO);
+  read_session.set_table(
+      "projects/bigquery-public-data/datasets/usa_names/tables/"
+      "usa_1910_current");
+  auto response = client.CreateReadSession(
+      "projects/cloud-cpp-testing-resources", read_session, 2);
+  EXPECT_THAT(response, IsOk());
+  EXPECT_GT(response->streams().size(), 0);
+  EXPECT_LT(response->streams().size(), 3);
+}
+
+TEST_F(BigQueryReadIntegrationTest, CreateReadSessionProtoSuccess) {
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
+  request.set_parent("projects/cloud-cpp-testing-resources");
+  ::google::cloud::bigquery::storage::v1::ReadSession read_session;
+  read_session.set_data_format(
+      google::cloud::bigquery::storage::v1::DataFormat::AVRO);
+  read_session.set_table(
+      "projects/bigquery-public-data/datasets/usa_names/tables/"
+      "usa_1910_current");
+  *request.mutable_read_session() = read_session;
+  auto response = client.CreateReadSession(request);
+  EXPECT_THAT(response, IsOk());
+  EXPECT_GT(response->streams().size(), 0);
+}
+
+TEST_F(BigQueryReadIntegrationTest, ReadRowsSuccess) {
+  options_.set<TracingComponentsOption>({"rpc", "rpc-streams"});
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest
+      session_request;
+  session_request.set_parent("projects/cloud-cpp-testing-resources");
+  ::google::cloud::bigquery::storage::v1::ReadSession read_session;
+  read_session.set_data_format(
+      google::cloud::bigquery::storage::v1::DataFormat::AVRO);
+  read_session.set_table(
+      "projects/bigquery-public-data/datasets/usa_names/tables/"
+      "usa_1910_current");
+  read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
+  *session_request.mutable_read_session() = read_session;
+  auto session_response = client.CreateReadSession(session_request);
+  EXPECT_THAT(session_response, IsOk());
+  EXPECT_GT(session_response->streams().size(), 0);
+
+  auto read_response = client.ReadRows(session_response->streams(0).name(), 0);
+  int num_rows = CountRowsFromStream(read_response);
+  EXPECT_GT(num_rows, 0);
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
+}
+
+TEST_F(BigQueryReadIntegrationTest, ReadRowsProtoSuccess) {
+  options_.set<TracingComponentsOption>({"rpc", "rpc-streams"});
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+  ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest
+      session_request;
+  session_request.set_parent("projects/cloud-cpp-testing-resources");
+  ::google::cloud::bigquery::storage::v1::ReadSession read_session;
+  read_session.set_data_format(
+      google::cloud::bigquery::storage::v1::DataFormat::AVRO);
+  read_session.set_table(
+      "projects/bigquery-public-data/datasets/usa_names/tables/"
+      "usa_1910_current");
+  read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
+  *session_request.mutable_read_session() = read_session;
+  auto session_response = client.CreateReadSession(session_request);
+  EXPECT_THAT(session_response, IsOk());
+  EXPECT_GT(session_response->streams().size(), 0);
+
+  ::google::cloud::bigquery::storage::v1::ReadRowsRequest read_request;
+  read_request.set_read_stream(session_response->streams(0).name());
+  read_request.set_offset(0);
+  auto read_response = client.ReadRows(read_request);
+  int num_rows = CountRowsFromStream(read_response);
+  EXPECT_GT(num_rows, 0);
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ReadRows")));
+}
+
+TEST_F(BigQueryReadIntegrationTest, SplitReadStreamProtoSuccess) {
+  auto client = BigQueryReadClient(MakeBigQueryReadConnection(options_));
+
+  // Create ReadSession with exactly 1 stream.
+  ::google::cloud::bigquery::storage::v1::ReadSession read_session;
+  read_session.set_data_format(
+      google::cloud::bigquery::storage::v1::DataFormat::AVRO);
+  read_session.set_table(
+      "projects/bigquery-public-data/datasets/usa_names/tables/"
+      "usa_1910_current");
+  read_session.mutable_read_options()->set_row_restriction("state = \"WA\"");
+  auto session_response = client.CreateReadSession(
+      "projects/cloud-cpp-testing-resources", read_session, 1);
+  ASSERT_THAT(session_response, IsOk());
+  EXPECT_EQ(session_response->streams().size(), 1);
+
+  // Read all rows using 1 stream.
+  auto read_response = client.ReadRows(session_response->streams(0).name(), 0);
+  int num_rows = CountRowsFromStream(read_response);
+  EXPECT_GT(num_rows, 0);
+
+  // Create another ReadSession with exactly 1 stream.
+  auto session_response_2 = client.CreateReadSession(
+      "projects/cloud-cpp-testing-resources", read_session, 1);
+  ASSERT_THAT(session_response_2, IsOk());
+  EXPECT_EQ(session_response_2->streams().size(), 1);
+
+  // Split the stream in half.
+  ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest split_request;
+  split_request.set_name(session_response_2->streams(0).name());
+  split_request.set_fraction(0.5);
+  auto split_response = client.SplitReadStream(split_request);
+  ASSERT_THAT(split_response, IsOk());
+
+  auto primary_read_response =
+      client.ReadRows(split_response->primary_stream().name(), 0);
+  int primary_num_rows = CountRowsFromStream(primary_read_response);
+
+  auto remainder_read_response =
+      client.ReadRows(split_response->remainder_stream().name(), 0);
+  int remainder_num_rows = CountRowsFromStream(remainder_read_response);
+  EXPECT_EQ(num_rows, primary_num_rows + remainder_num_rows);
+
   auto const log_lines = ClearLogLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("SplitReadStream")));
 }
