@@ -213,9 +213,8 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.TailLogEntries(
-      std::move(context),
+      absl::make_unique<grpc::ClientContext>(),
       google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
@@ -234,9 +233,8 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  auto context = absl::make_unique<grpc::ClientContext>();
   auto response = stub.TailLogEntries(
-      std::move(context),
+      absl::make_unique<grpc::ClientContext>(),
       google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 

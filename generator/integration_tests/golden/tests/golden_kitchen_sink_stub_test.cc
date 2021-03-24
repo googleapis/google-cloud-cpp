@@ -256,12 +256,12 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
       .WillOnce(Return(success_response))
       .WillOnce(Return(failure_response));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto success_stream = stub.TailLogEntries(std::move(context), request);
+  auto success_stream =
+      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   auto success_status = absl::get<Status>(success_stream->Read());
   EXPECT_THAT(success_status, IsOk());
-  context = absl::make_unique<grpc::ClientContext>();
-  auto failure_stream = stub.TailLogEntries(std::move(context), request);
+  auto failure_stream =
+      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   auto failure_status = absl::get<Status>(failure_stream->Read());
   EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
 }

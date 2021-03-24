@@ -199,9 +199,9 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
             mock_response);
       });
   GoldenKitchenSinkMetadata stub(mock_);
-  auto context = absl::make_unique<grpc::ClientContext>();
   google::test::admin::database::v1::TailLogEntriesRequest request;
-  auto response = stub.TailLogEntries(std::move(context), request);
+  auto response =
+      stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
 }
 
