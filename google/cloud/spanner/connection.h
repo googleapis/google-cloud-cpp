@@ -97,6 +97,7 @@ class Connection {
   /// Wrap the arguments to `ExecutePartitionedDml()`.
   struct ExecutePartitionedDmlParams {
     SqlStatement statement;
+    QueryOptions query_options;
   };
 
   /// Wrap the arguments to `PartitionQuery()`.
@@ -110,6 +111,7 @@ class Connection {
   struct ExecuteBatchDmlParams {
     Transaction transaction;
     std::vector<SqlStatement> statements;
+    QueryOptions query_options;
   };
 
   /// Wrap the arguments to `Commit()`.

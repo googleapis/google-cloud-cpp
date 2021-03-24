@@ -129,6 +129,10 @@ MATCHER(HasBadSession, "bound to a session that's marked bad") {
   });
 }
 
+MATCHER_P(HasPriority, priority, "request has expected priority") {
+  return arg.request_options().priority() == priority;
+}
+
 // Ideally this would be a matcher, but matcher args are `const` and `RowStream`
 // only has non-const methods.
 bool ContainsNoRows(spanner::RowStream& rows) {
@@ -335,15 +339,21 @@ TEST(ConnectionImplTest, ReadSuccess) {
     values: { string_value: "42" }
     values: { string_value: "Ann" }
   )pb";
-  EXPECT_CALL(*mock, StreamingRead(_, _))
+  EXPECT_CALL(
+      *mock,
+      StreamingRead(
+          _, HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW)))
       .WillOnce(Return(ByMove(MakeFailingReader(retry_status))))
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
+  spanner::ReadOptions read_options;
+  read_options.request_priority = spanner::RequestPriority::kLow;
   auto rows = conn->Read(
       {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
        "table",
        spanner::KeySet::All(),
-       {"UserId", "UserName"}});
+       {"UserId", "UserName"},
+       read_options});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -701,15 +711,23 @@ TEST(ConnectionImplTest, QueryOptions) {
       &spanner_proto::ExecuteSqlRequest::query_options;
   std::vector<absl::optional<std::string>> const optimizer_versions = {
       {}, "", "some-version"};
+  auto constexpr kRequestOptionsProp =
+      &spanner_proto::ExecuteSqlRequest::request_options;
+  spanner_proto::RequestOptions ro;
+  ro.set_priority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW);
 
   for (auto const& version : optimizer_versions) {
     spanner_proto::ExecuteSqlRequest::QueryOptions qo;
     if (version) qo.set_optimizer_version(*version);
-    auto m = Property(kQueryOptionsProp, IsProtoEqual(qo));
+    auto m = AllOf(Property(kQueryOptionsProp, IsProtoEqual(qo)),
+                   Property(kRequestOptionsProp, IsProtoEqual(ro)));
     auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
     auto txn = MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-    auto query_options = spanner::QueryOptions().set_optimizer_version(version);
+    auto query_options =
+        spanner::QueryOptions{}
+            .set_optimizer_version(version)
+            .set_request_priority(spanner::RequestPriority::kLow);
     auto params = spanner::Connection::SqlParams{txn, spanner::SqlStatement{},
                                                  query_options};
     auto db = spanner::Database("placeholder_project", "placeholder_instance",
@@ -1264,7 +1282,11 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   )pb";
   spanner_proto::ExecuteBatchDmlResponse response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
-  EXPECT_CALL(*mock, ExecuteBatchDml(_, _))
+  EXPECT_CALL(
+      *mock,
+      ExecuteBatchDml(
+          _,
+          HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_MEDIUM)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
@@ -1276,7 +1298,10 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
 
   auto conn = MakeConnectionImpl(db, {mock});
   auto txn = spanner::MakeReadWriteTransaction();
-  auto result = conn->ExecuteBatchDml({txn, request});
+  auto result =
+      conn->ExecuteBatchDml({txn, request,
+                             spanner::QueryOptions{}.set_request_priority(
+                                 spanner::RequestPriority::kMedium)});
   EXPECT_STATUS_OK(result);
   EXPECT_STATUS_OK(result->status);
   EXPECT_EQ(result->stats.size(), request.size());
@@ -1803,8 +1828,13 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
   auto conn = MakeConnectionImpl(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
-  EXPECT_CALL(*mock, Commit(_, AllOf(HasSession("test-session-name"),
-                                     HasNakedTransactionId("test-txn-id"))))
+  EXPECT_CALL(
+      *mock,
+      Commit(_,
+             AllOf(HasSession("test-session-name"),
+                   HasNakedTransactionId("test-txn-id"),
+                   HasPriority(
+                       spanner_proto::RequestOptions_Priority_PRIORITY_HIGH))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
@@ -1813,7 +1843,10 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
   auto txn = spanner::MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
 
-  auto commit = conn->Commit({txn});
+  auto commit = conn->Commit({txn,
+                              {},
+                              spanner::CommitOptions{}.set_request_priority(
+                                  spanner::RequestPriority::kHigh)});
   EXPECT_STATUS_OK(commit);
 }
 
@@ -1837,7 +1870,7 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
                               {},
                               spanner::CommitOptions{}.set_return_stats(true)});
-  EXPECT_STATUS_OK(commit);
+  ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
 }

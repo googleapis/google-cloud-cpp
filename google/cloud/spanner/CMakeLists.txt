@@ -122,6 +122,7 @@ add_library(
     read_options.h
     read_partition.cc
     read_partition.h
+    request_priority.h
     results.cc
     results.h
     retry_policy.h

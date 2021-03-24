@@ -491,8 +491,9 @@ class Client {
    * @par Example
    * @snippet samples.cc execute-batch-dml
    */
-  StatusOr<BatchDmlResult> ExecuteBatchDml(
-      Transaction transaction, std::vector<SqlStatement> statements);
+  StatusOr<BatchDmlResult> ExecuteBatchDml(Transaction transaction,
+                                           std::vector<SqlStatement> statements,
+                                           QueryOptions const& opts = {});
 
   /**
    * Commits a read-write transaction.
@@ -628,7 +629,8 @@ class Client {
    * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
    * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
    */
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+      SqlStatement statement, QueryOptions const& opts = {});
 
  private:
   QueryOptions OverlayQueryOptions(QueryOptions const&);

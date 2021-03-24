@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_COMMIT_OPTIONS_H
 
+#include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
+#include "absl/types/optional.h"
 
 namespace google {
 namespace cloud {
@@ -42,8 +44,21 @@ class CommitOptions {
   /// Whether the `CommitResult` should contain `CommitStats`.
   bool return_stats() const { return return_stats_; }
 
+  /// Set the priority of the `spanner::Client::Commit()` call.
+  CommitOptions& set_request_priority(
+      absl::optional<RequestPriority> request_priority) {
+    request_priority_ = std::move(request_priority);
+    return *this;
+  }
+
+  /// The priority of the `spanner::Client::Commit()` call.
+  absl::optional<RequestPriority> request_priority() const {
+    return request_priority_;
+  }
+
  private:
   bool return_stats_ = false;
+  absl::optional<RequestPriority> request_priority_;
 };
 
 }  // namespace SPANNER_CLIENT_NS
