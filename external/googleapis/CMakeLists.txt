@@ -163,6 +163,7 @@ ExternalProject_Add(
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
+    PATCH_COMMAND "" # patch -p1 --input=/v/external/googleapis.patch
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""

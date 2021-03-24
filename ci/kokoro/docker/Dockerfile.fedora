@@ -20,7 +20,7 @@ ARG NCPU=4
 RUN dnf makecache && \
     dnf install -y ccache clang clang-tools-extra cmake diffutils findutils \
         gcc-c++ git libcxx-devel libcxxabi-devel libasan libubsan libtsan \
-        llvm make openssl-devel pkgconfig python python3.8 python3-devel \
+        llvm make openssl-devel patch pkgconfig python python3.8 python3-devel \
         python-pip tar unzip wget which zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell

@@ -20,12 +20,12 @@ ARG NCPU=4
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker abi-dumper ccache \
-        clang clang-analyzer clang-tools-extra \
-        cmake diffutils doxygen findutils gcc-c++ git \
-        grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel libcurl-devel \
-        make ninja-build npm openssl-devel pkgconfig protobuf-compiler python \
-        python3.8 python-pip ShellCheck tar unzip w3m wget which zlib-devel
+    dnf install -y abi-compliance-checker abi-dumper ccache clang \
+        clang-analyzer clang-tools-extra cmake diffutils doxygen \
+        findutils gcc-c++ git grpc-devel grpc-plugins lcov libcxx-devel \
+        libcxxabi-devel libcurl-devel make ninja-build npm openssl-devel \
+        patch pkgconfig protobuf-compiler python python3.8 python-pip \
+        ShellCheck tar unzip w3m wget which zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
