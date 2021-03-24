@@ -369,7 +369,7 @@ Friends</h2></td></tr>
 <div class="line">  <span class="keywordflow">if</span> (!actual) <span class="keywordflow">throw</span> std::runtime_error(actual.status().message());</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The IAM policy for instance &quot;</span> &lt;&lt; instance_id &lt;&lt; <span class="stringliteral">&quot; is:\n&quot;</span></div>
-<div class="line">            &lt;&lt; actual-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; actual-&gt;DebugString();</div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd>The <a href="https://cloud.google.com/spanner/docs/iam">Cloud Spanner documentation</a> for a description of the roles and permissions supported by Cloud Spanner. </dd>
@@ -407,7 +407,7 @@ Friends</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The instance &quot;</span> &lt;&lt; instance-&gt;name()</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; exists and its metadata is:\n&quot;</span></div>
-<div class="line">            &lt;&lt; instance-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; instance-&gt;DebugString();</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -444,7 +444,7 @@ Friends</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The instanceConfig &quot;</span> &lt;&lt; instance_config-&gt;name()</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; exists and its metadata is:\n&quot;</span></div>
-<div class="line">            &lt;&lt; instance_config-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; instance_config-&gt;DebugString();</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
 
@@ -479,10 +479,10 @@ Friends</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">    ++count;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Instance config [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;]:\n&quot;</span></div>
-<div class="line">              &lt;&lt; instance_config-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">              &lt;&lt; instance_config-&gt;DebugString();</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">if</span> (count == 0) {</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;No instance configs found in project &quot;</span> &lt;&lt; project_id;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;No instance configs found in project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
@@ -525,11 +525,10 @@ Friends</h2></td></tr>
 <div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; instance : client.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminClient.html#ae25435431307cf585a178bfde02e6374">ListInstances</a>(project_id, <span class="stringliteral">&quot;&quot;</span>)) {</div>
 <div class="line">    <span class="keywordflow">if</span> (!instance) <span class="keywordflow">throw</span> std::runtime_error(instance.status().message());</div>
 <div class="line">    ++count;</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Instance [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;]:\n&quot;</span></div>
-<div class="line">              &lt;&lt; instance-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Instance [&quot;</span> &lt;&lt; count &lt;&lt; <span class="stringliteral">&quot;]:\n&quot;</span> &lt;&lt; instance-&gt;DebugString();</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">if</span> (count == 0) {</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;No instances found in project &quot;</span> &lt;&lt; project_id;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;No instances found in project &quot;</span> &lt;&lt; project_id &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --></dd></dl>
@@ -660,7 +659,7 @@ Friends</h2></td></tr>
 <div class="line">  <span class="keywordflow">if</span> (!result) <span class="keywordflow">throw</span> std::runtime_error(result.status().message());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Successfully added &quot;</span> &lt;&lt; new_reader</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; to the database reader role:\n&quot;</span></div>
-<div class="line">            &lt;&lt; result-&gt;DebugString() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; result-&gt;DebugString();</div>
 <div class="line">}</div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd>The <a href="https://cloud.google.com/spanner/docs/iam">Cloud Spanner documentation</a> for a description of the roles and permissions supported by Cloud Spanner. </dd>

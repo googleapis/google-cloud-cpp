@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['mock_5fdatabase_5fadmin_5fconnection_2eh_869',['mock_database_admin_connection.h',['../mock__database__admin__connection_8h.html',1,'']]],
-  ['mock_5fexecute_5fquery_2ecc_870',['mock_execute_query.cc',['../mock__execute__query_8cc.html',1,'']]],
-  ['mock_5finstance_5fadmin_5fconnection_2eh_871',['mock_instance_admin_connection.h',['../mock__instance__admin__connection_8h.html',1,'']]],
-  ['mock_5fspanner_5fconnection_2eh_872',['mock_spanner_connection.h',['../mock__spanner__connection_8h.html',1,'']]],
-  ['mutations_2ecc_873',['mutations.cc',['../mutations_8cc.html',1,'']]],
-  ['mutations_2eh_874',['mutations.h',['../mutations_8h.html',1,'']]]
+  ['log_2ecc_878',['log.cc',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8cc.html',1,'']]],
+  ['log_2eh_879',['log.h',['https://googleapis.dev/cpp/google-cloud-common/latest/log_8h.html',1,'']]]
 ];
