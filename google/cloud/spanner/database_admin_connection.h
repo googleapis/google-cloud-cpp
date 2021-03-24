@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/encryption_config.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/polling_policy.h"
@@ -115,6 +116,8 @@ class DatabaseAdminConnection {
     Database database;
     /// Any additional statements to execute after creating the database.
     std::vector<std::string> extra_statements;
+    /// How to encrypt the database.
+    EncryptionConfig encryption_config;
   };
 
   /// Wrap the arguments for `GetDatabase()`.
@@ -183,6 +186,8 @@ class DatabaseAdminConnection {
     /// at `version_time`. If `version_time` is not specified, the system will
     /// set `version_time` to the `create_time` of the backup.
     absl::optional<Timestamp> version_time;
+    /// How to encrypt the backup.
+    EncryptionConfig encryption_config;
   };
 
   /// Wrap the arguments for `GetBackup()`.
@@ -210,6 +215,8 @@ class DatabaseAdminConnection {
     Database database;
     /// The source backup for the restore.
     std::string backup_full_name;
+    /// How to encrypt the database.
+    EncryptionConfig encryption_config;
   };
 
   /// Wrap the arguments for `UpdateBackup()`.

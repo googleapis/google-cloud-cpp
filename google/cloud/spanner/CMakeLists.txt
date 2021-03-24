@@ -54,6 +54,7 @@ add_library(
     database_admin_connection.cc
     database_admin_connection.h
     date.h
+    encryption_config.h
     iam_updater.h
     instance.cc
     instance.h

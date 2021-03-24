@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/encryption_config.h"
 #include "google/cloud/spanner/iam_updater.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -133,6 +134,8 @@ class DatabaseAdminClient {
    * or dashes (`-`), that is, they must belong to the `[a-z0-9_-]` character
    * set.
    *
+   * @p encryption_config How to encrypt the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -147,7 +150,8 @@ class DatabaseAdminClient {
    *     for the regular expression that must be satisfied by the database id.
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(Database db, std::vector<std::string> extra_statements = {});
+  CreateDatabase(Database db, std::vector<std::string> extra_statements = {},
+                 EncryptionConfig encryption_config = DefaultEncryption());
 
   /**
    * Retrieve metadata information about a database.
@@ -226,6 +230,8 @@ class DatabaseAdminClient {
    * The new database must be in the same project and in an instance with the
    * same instance configuration as the instance containing the backup.
    *
+   * @p encryption_config How to encrypt the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -233,7 +239,8 @@ class DatabaseAdminClient {
    * @snippet samples.cc restore-database
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(Database db, Backup const& backup);
+  RestoreDatabase(Database db, Backup const& backup,
+                  EncryptionConfig encryption_config = DefaultEncryption());
 
   /**
    * Create a new database by restoring from a completed backup.
@@ -244,12 +251,15 @@ class DatabaseAdminClient {
    * The new database must be in the same project and in an instance with the
    * same instance configuration as the instance containing the backup.
    *
+   * @p encryption_config How to encrypt the database.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(Database db,
-                  google::spanner::admin::database::v1::Backup const& backup);
+                  google::spanner::admin::database::v1::Backup const& backup,
+                  EncryptionConfig encryption_config = DefaultEncryption());
 
   /**
    * Gets the IAM policy for a database.
@@ -375,6 +385,8 @@ class DatabaseAdminClient {
    * at @p version_time, if set. Otherwise, the version_time will be the
    * create_time of the backup.
    *
+   * @p encryption_config How to encrypt the backup.
+   *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
    *
@@ -383,7 +395,8 @@ class DatabaseAdminClient {
    */
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       Database db, std::string backup_id, Timestamp expire_time,
-      absl::optional<Timestamp> version_time = absl::nullopt);
+      absl::optional<Timestamp> version_time = absl::nullopt,
+      EncryptionConfig encryption_config = DefaultEncryption());
 
   /**
    * Creates a new Cloud Spanner backup for the given database.

@@ -32,6 +32,7 @@ google_cloud_cpp_spanner_hdrs = [
     "database_admin_client.h",
     "database_admin_connection.h",
     "date.h",
+    "encryption_config.h",
     "iam_updater.h",
     "instance.h",
     "instance_admin_client.h",

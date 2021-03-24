@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -39,7 +40,12 @@ using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::EndsWith;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
+
+// Constants used to identify the encryption key.
+auto constexpr kKeyRing = "spanner-cmek";
+auto constexpr kKeyName = "spanner-cmek-test-key";
 
 class DatabaseAdminClientTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -57,10 +63,19 @@ class DatabaseAdminClientTest
     ASSERT_FALSE(project_id.empty());
 
     auto generator = google::cloud::internal::MakeDefaultPRNG();
+
     auto instance_id =
         spanner_testing::PickRandomInstance(generator, project_id);
     ASSERT_STATUS_OK(instance_id);
     instance_ = Instance(project_id, *instance_id);
+
+    auto location = spanner_testing::InstanceLocation(instance_);
+    if (emulator_) {
+      if (!location) location = "emulator";
+    } else {
+      ASSERT_STATUS_OK(location);
+    }
+    location_ = *std::move(location);
 
     database_ =
         Database(instance_, spanner_testing::RandomDatabaseName(generator));
@@ -82,6 +97,7 @@ class DatabaseAdminClientTest
   };
 
   Instance instance_;
+  std::string location_;
   Database database_;
   DatabaseAdminClient client_;
   bool emulator_;
@@ -90,26 +106,37 @@ class DatabaseAdminClientTest
 
 /// @test Verify the basic CRUD operations for databases work.
 TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
-  // We test Client::ListDatabases() by verifying that (a) it does not return a
-  // randomly generated database name before we create a database with that
+  // We test Client::ListDatabases() by verifying that (a) it does not return
+  // a randomly generated database name before we create a database with that
   // name, (b) it *does* return that database name once created, and (c) it no
-  // longer returns that name once the database is dropped. Implicitly that also
-  // tests that Client::DropDatabase() and client::CreateDatabase() do
+  // longer returns that name once the database is dropped. Implicitly that
+  // also tests that Client::DropDatabase() and client::CreateDatabase() do
   // something, which is nice.
   EXPECT_FALSE(DatabaseExists()) << "Database " << database_
                                  << " already exists, this is unexpected as "
                                     "the database id is selected at random.";
 
-  auto database_future =
-      client_.CreateDatabase(database_, /*extra_statements=*/{});
-  auto database = database_future.get();
+  auto database =
+      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
   ASSERT_STATUS_OK(database);
-
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
+  EXPECT_FALSE(database->has_encryption_config());
+  EXPECT_THAT(database->encryption_info(), IsEmpty());
 
   auto get_result = client_.GetDatabase(database_);
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
+  EXPECT_FALSE(get_result->has_encryption_config());
+  if (emulator_) {
+    EXPECT_THAT(get_result->encryption_info(), IsEmpty());
+  } else {
+    EXPECT_EQ(get_result->encryption_info().size(), 1);
+    if (!get_result->encryption_info().empty()) {
+      EXPECT_EQ(get_result->encryption_info()[0].encryption_type(),
+                google::spanner::admin::database::v1::EncryptionInfo::
+                    GOOGLE_DEFAULT_ENCRYPTION);
+    }
+  }
 
   if (!emulator_) {
     auto current_policy = client_.GetIamPolicy(database_);
@@ -182,8 +209,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           SingerInfo BYTES(MAX)
         ) PRIMARY KEY (SingerId)
       )""");
-  auto update_future = client_.UpdateDatabase(database_, statements);
-  auto metadata = update_future.get();
+  auto metadata = client_.UpdateDatabase(database_, statements).get();
   ASSERT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_.database_id()));
   EXPECT_EQ(statements.size(), metadata->statements_size());
@@ -254,10 +280,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreateFailure) {
 /// @test Verify setting version_retention_period via UpdateDatabase().
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   // Create the database.
-  auto database = client_
-                      .CreateDatabase(database_,
-                                      /*extra_statements=*/{})
-                      .get();
+  auto database =
+      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
@@ -330,10 +354,8 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
 /// @test Verify setting bad version_retention_period via UpdateDatabase().
 TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   // Create the database.
-  auto database = client_
-                      .CreateDatabase(database_,
-                                      /*extra_statements=*/{})
-                      .get();
+  auto database =
+      client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
   if (emulator_) {
@@ -372,6 +394,65 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
 
   auto drop = client_.DropDatabase(database_);
   EXPECT_THAT(drop, IsOk());
+}
+
+// @test Verify we can create a database with an encryption key.
+TEST_F(DatabaseAdminClientTest, CreateWithEncryptionKey) {
+  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
+  KmsKeyName encryption_key(instance_.project_id(), location_, kKeyRing,
+                            kKeyName);
+  auto database = client_
+                      .CreateDatabase(database_, /*extra_statements=*/{},
+                                      CustomerManagedEncryption(encryption_key))
+                      .get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_EQ(database->name(), database_.FullName());
+  EXPECT_TRUE(database->has_encryption_config());
+  if (database->has_encryption_config()) {
+    EXPECT_EQ(database->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  auto get_result = client_.GetDatabase(database_);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(database->name(), get_result->name());
+  EXPECT_TRUE(get_result->has_encryption_config());
+  if (get_result->has_encryption_config()) {
+    EXPECT_EQ(get_result->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  // Verify that encryption config is returned via ListDatabases().
+  auto list_db = [&] {
+    for (auto const& db : client_.ListDatabases(database_.instance())) {
+      if (db && db->name() == database_.FullName()) return db;
+    }
+    return StatusOr<google::spanner::admin::database::v1::Database>{
+        Status{StatusCode::kNotFound, "disappeared"}};
+  }();
+  ASSERT_THAT(list_db, IsOk());
+  EXPECT_TRUE(list_db->has_encryption_config());
+  if (list_db->has_encryption_config()) {
+    EXPECT_EQ(list_db->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  EXPECT_STATUS_OK(client_.DropDatabase(database_));
+}
+
+// @test Verify creating a database fails if a nonexistent encryption key is
+// supplied.
+TEST_F(DatabaseAdminClientTest, CreateWithNonexistentEncryptionKey) {
+  if (emulator_) GTEST_SKIP() << "emulator does not support CMEK";
+  KmsKeyName nonexistent_encryption_key(instance_.project_id(), location_,
+                                        kKeyRing, "ceci-n-est-pas-une-cle");
+  auto database =
+      client_
+          .CreateDatabase(database_, /*extra_statements=*/{},
+                          CustomerManagedEncryption(nonexistent_encryption_key))
+          .get();
+  EXPECT_THAT(database, StatusIs(StatusCode::kFailedPrecondition,
+                                 HasSubstr("KMS Key provided is not usable")));
 }
 
 }  // namespace
