@@ -15,6 +15,7 @@
 options:
   machineType: 'N1_HIGHCPU_32'
   diskSizeGb: '512'
+  dynamic_substitutions: true
   env: [ 'HOME=/h' ]
   volumes:
     - name: 'home'
@@ -25,8 +26,8 @@ options:
 substitutions:
   _DISTRO: 'unknown'
   _BUILD_NAME: 'unknown'
-  _CACHE_BUCKET: 'cloud-cpp-cloudbuild-cache'
-  _CACHE_TYPE: '${_PR_NUMBER:-base}'
+  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
+  _CACHE_TYPE: '${_PR_NUMBER:-main}'
 
 timeout: 3600s
 
@@ -47,9 +48,9 @@ steps:
   dir: '/h'
   args: [
     'restore',
-    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
     '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
-    '--fallback_key=base/${_DISTRO}-${_BUILD_NAME}/h'
+    '--fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h'
   ]
 
   # Runs the specified build in the image that was created in the first step.
@@ -66,7 +67,7 @@ steps:
   dir: '/h'
   args: [
     'save',
-    '--bucket_url=gs://${_CACHE_BUCKET}/google-cloud-cpp',
+    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
     '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
     '--path=.ccache',
     '--path=.cache/ccache',

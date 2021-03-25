@@ -27,9 +27,9 @@
 # Usage: ./build.sh [options] <build-name>
 #
 #   Options:
-#     -d|--distro=<name>        The distro name to use
-#     -c|--cache_bucket=<name>  The GCS bucket to use for the build cache
-#     -h|--help                 Print this help message
+#     -d|--distro=<name>   The distro name to use
+#     -p|--project=<name>  The Cloud Project ID to use
+#     -h|--help            Print this help message
 #
 #   Build names:
 
@@ -47,22 +47,22 @@ function print_usage() {
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="d:c:h" \
-  --longoptions="distro:,cache_bucket:,help" \
+  --options="d:p:h" \
+  --longoptions="distro:,project:,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 DISTRO="local" # By default, run builds in the local environment
-CACHE_BUCKET=""
+PROJECT_ID=""
 while true; do
   case "$1" in
   -d | --distro)
     DISTRO="$2"
     shift 2
     ;;
-  -c | --cache_bucket)
-    CACHE_BUCKET="$2"
+  -p | --project)
+    PROJECT_ID="$2"
     shift 2
     ;;
   -h | --help)
@@ -76,7 +76,7 @@ while true; do
   esac
 done
 readonly DISTRO
-readonly CACHE_BUCKET
+readonly PROJECT_ID
 
 if (($# == 0)); then
   print_usage
@@ -100,14 +100,15 @@ if [ "${DISTRO}" != "local" ]; then
   subs="_DISTRO=${DISTRO}"
   subs+=",_BUILD_NAME=${BUILD_NAME}"
   subs+=",_CACHE_TYPE=manual-$(id -un)"
-  if [ -n "${CACHE_BUCKET}" ]; then
-    subs+=",_CACHE_BUCKET=${CACHE_BUCKET}"
-  fi
   io::log "====> Submitting cloud build job for ${subs}"
-  exec gcloud builds submit \
-    --config ci/cloudbuild/cloudbuild.yaml \
-    --substitutions "${subs}" \
-    .
+  args=(
+    "--config=ci/cloudbuild/cloudbuild.yaml"
+    "--substitutions=${subs}"
+  )
+  if [[ -n "${PROJECT_ID}" ]]; then
+    args+=("--project=${PROJECT_ID}")
+  fi
+  exec gcloud builds submit "${args[@]}" .
 fi
 
 io::log "====> STARTING BUILD: ${BUILD_NAME}"
