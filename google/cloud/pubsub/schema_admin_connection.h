@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CONNECTION_H
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
@@ -121,13 +121,12 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 
 namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-std::shared_ptr<pubsub_experimental::SchemaAdminConnection>
-MakeSchemaAdminConnection(
+std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options, std::shared_ptr<SchemaStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
@@ -137,4 +136,4 @@ MakeSchemaAdminConnection(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CONNECTION_H

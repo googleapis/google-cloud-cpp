@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/experimental/schema_admin_connection.h"
+#include "schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
 #include "google/cloud/pubsub/internal/schema_logging.h"
 #include "google/cloud/pubsub/internal/schema_metadata.h"
@@ -30,8 +30,7 @@ namespace {
 using google::cloud::internal::Idempotency;
 using google::cloud::internal::RetryLoop;
 
-class SchemaAdminConnectionImpl
-    : public pubsub_experimental::SchemaAdminConnection {
+class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
  public:
   explicit SchemaAdminConnectionImpl(
       std::shared_ptr<pubsub_internal::SchemaStub> stub,
@@ -66,7 +65,7 @@ class SchemaAdminConnectionImpl
         request, __func__);
   }
 
-  pubsub_experimental::ListSchemasRange ListSchemas(
+  pubsub::ListSchemasRange ListSchemas(
       google::pubsub::v1::ListSchemasRequest const& request) override {
     auto& stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
@@ -87,7 +86,7 @@ class SchemaAdminConnectionImpl
               },
               request, function_name);
         };
-    return internal::MakePaginationRange<pubsub_experimental::ListSchemasRange>(
+    return internal::MakePaginationRange<pubsub::ListSchemasRange>(
         std::move(request), list_functor,
         [](google::pubsub::v1::ListSchemasResponse response) {
           std::vector<google::pubsub::v1::Schema> items;
@@ -140,8 +139,7 @@ class SchemaAdminConnectionImpl
 };
 }  // namespace
 
-std::shared_ptr<pubsub_experimental::SchemaAdminConnection>
-MakeSchemaAdminConnection(
+std::shared_ptr<pubsub::SchemaAdminConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options, std::shared_ptr<SchemaStub> stub,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
@@ -158,7 +156,7 @@ MakeSchemaAdminConnection(
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 SchemaAdminConnection::~SchemaAdminConnection() = default;
@@ -177,6 +175,6 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

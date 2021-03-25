@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/experimental/schema_admin_connection.h"
+#include "schema_admin_connection.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
@@ -212,6 +212,6 @@ TEST(SchemaAdminConnectionTest, ValidateMessage) {
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

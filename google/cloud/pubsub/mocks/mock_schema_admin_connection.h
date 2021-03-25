@@ -12,26 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_MOCK_SCHEMA_ADMIN_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_MOCK_SCHEMA_ADMIN_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_SCHEMA_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_SCHEMA_ADMIN_CONNECTION_H
 
-#include "google/cloud/pubsub/experimental/schema_admin_connection.h"
+#include "google/cloud/pubsub/schema_admin_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
  * A googlemock-based mock for
- * [pubsub_experimental::SchemaAdminConnection][mocked-link]
+ * [pubsub::SchemaAdminConnection][mocked-link]
  *
  * [mocked-link]: @ref
- * google::cloud::pubsub_experimental::v1::SchemaAdminConnection
+ * google::cloud::pubsub::v1::SchemaAdminConnection
  */
-class MockSchemaAdminConnection
-    : public pubsub_experimental::SchemaAdminConnection {
+class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
  public:
   MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CreateSchema,
               (google::pubsub::v1::CreateSchemaRequest const&), (override));
@@ -55,8 +54,8 @@ class MockSchemaAdminConnection
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_MOCK_SCHEMA_ADMIN_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_SCHEMA_ADMIN_CONNECTION_H

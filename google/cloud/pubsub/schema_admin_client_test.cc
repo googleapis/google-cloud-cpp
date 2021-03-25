@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/experimental/schema_admin_client.h"
-#include "google/cloud/pubsub/experimental/mock_schema_admin_connection.h"
+#include "schema_admin_client.h"
+#include "google/cloud/pubsub/mocks/mock_schema_admin_connection.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -21,7 +21,7 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
@@ -31,8 +31,7 @@ using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 
 TEST(SchemaAdminClient, CreateAvroProtobuf) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
 
   auto constexpr kExpectedText = R"pb(
@@ -58,8 +57,7 @@ TEST(SchemaAdminClient, CreateAvroProtobuf) {
 }
 
 TEST(SchemaAdminClient, CreateSchemaProtobuf) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
 
   auto constexpr kExpectedText = R"pb(
@@ -85,8 +83,7 @@ TEST(SchemaAdminClient, CreateSchemaProtobuf) {
 }
 
 TEST(SchemaAdminClient, GetSchemaDefault) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
 
   auto constexpr kExpectedText = R"pb(
@@ -110,8 +107,7 @@ TEST(SchemaAdminClient, GetSchemaDefault) {
 }
 
 TEST(SchemaAdminClient, GetSchemaFull) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
 
   auto constexpr kExpectedText = R"pb(
@@ -135,8 +131,7 @@ TEST(SchemaAdminClient, GetSchemaFull) {
 }
 
 TEST(SchemaAdminClient, ListSchemasDefault) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const s1("test-project", "schema-1");
   Schema const s2("test-project", "schema-2");
 
@@ -174,8 +169,7 @@ TEST(SchemaAdminClient, ListSchemasDefault) {
 }
 
 TEST(SchemaAdminClient, ListSchemasFull) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const s1("test-project", "schema-1");
   Schema const s2("test-project", "schema-2");
 
@@ -213,8 +207,7 @@ TEST(SchemaAdminClient, ListSchemasFull) {
 }
 
 TEST(SchemaAdminClient, DeleteSchema) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
   Schema const schema("test-project", "test-schema");
 
   auto constexpr kExpectedText = R"pb(
@@ -234,8 +227,7 @@ TEST(SchemaAdminClient, DeleteSchema) {
 }
 
 TEST(SchemaAdminClient, ValidateSchemaAvro) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
 
   auto constexpr kExpectedText = R"pb(
     parent: "projects/test-project"
@@ -257,8 +249,7 @@ TEST(SchemaAdminClient, ValidateSchemaAvro) {
 }
 
 TEST(SchemaAdminClient, ValidateSchemaProtobuf) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
 
   auto constexpr kExpectedText = R"pb(
     parent: "projects/test-project"
@@ -281,8 +272,7 @@ TEST(SchemaAdminClient, ValidateSchemaProtobuf) {
 }
 
 TEST(SchemaAdminClient, ValidateMessageWithNamedSchema) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
 
   auto constexpr kExpectedText = R"pb(
     parent: "projects/test-project"
@@ -307,8 +297,7 @@ TEST(SchemaAdminClient, ValidateMessageWithNamedSchema) {
 }
 
 TEST(SchemaAdminClient, ValidateMessageWithAvro) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
 
   auto constexpr kExpectedText = R"pb(
     parent: "projects/test-project"
@@ -333,8 +322,7 @@ TEST(SchemaAdminClient, ValidateMessageWithAvro) {
 }
 
 TEST(SchemaAdminClient, ValidateMessageWithProtobuf) {
-  auto mock =
-      std::make_shared<pubsub_experimental::MockSchemaAdminConnection>();
+  auto mock = std::make_shared<pubsub::MockSchemaAdminConnection>();
 
   auto constexpr kExpectedText = R"pb(
     parent: "projects/test-project"
@@ -360,6 +348,6 @@ TEST(SchemaAdminClient, ValidateMessageWithProtobuf) {
 
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google

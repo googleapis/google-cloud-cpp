@@ -124,10 +124,10 @@ TEST(TopicBuilder, SetKmsKeyName) {
 }
 
 TEST(TopicBuilder, SetSchema) {
-  auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
-                          .experimental_set_schema(pubsub_experimental::Schema(
-                              "test-project", "test-schema"))
-                          .BuildUpdateRequest();
+  auto const actual =
+      TopicBuilder(Topic("test-project", "test-topic"))
+          .set_schema(pubsub::Schema("test-project", "test-schema"))
+          .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
     topic {
@@ -141,7 +141,7 @@ TEST(TopicBuilder, SetSchema) {
 
 TEST(TopicBuilder, SetEncoding) {
   auto const actual = TopicBuilder(Topic("test-project", "test-topic"))
-                          .experimental_set_encoding(google::pubsub::v1::JSON)
+                          .set_encoding(google::pubsub::v1::JSON)
                           .BuildUpdateRequest();
   google::pubsub::v1::UpdateTopicRequest expected;
   std::string const text = R"pb(
