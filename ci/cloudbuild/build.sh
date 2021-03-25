@@ -112,7 +112,7 @@ if [ "${DISTRO}" != "local" ]; then
   exec gcloud builds submit "${args[@]}" .
 fi
 
-io::log_h1 "STARTING BUILD: ${BUILD_NAME}"
+io::log_h1 "Starting build: ${BUILD_NAME}"
 readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
 time {
   "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
