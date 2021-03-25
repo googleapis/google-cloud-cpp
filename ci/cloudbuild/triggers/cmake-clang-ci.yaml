@@ -9,7 +9,7 @@ github:
 id: 4eed46f7-2acb-405f-8734-826f1c887d19
 name: cmake-clang-ci
 substitutions:
-  _BUILD_NAME: cmake+clang
+  _BUILD_NAME: cmake-clang
   _DISTRO: fedora
 tags:
 - fedora
