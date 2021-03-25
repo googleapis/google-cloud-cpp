@@ -18,9 +18,6 @@
 
 pubsub_client_unit_tests = [
     "ack_handler_test.cc",
-    "experimental/schema_admin_client_test.cc",
-    "experimental/schema_admin_connection_test.cc",
-    "experimental/schema_test.cc",
     "internal/batching_publisher_connection_test.cc",
     "internal/default_batch_sink_test.cc",
     "internal/emulator_overrides_test.cc",
@@ -46,6 +43,9 @@ pubsub_client_unit_tests = [
     "publisher_connection_test.cc",
     "publisher_option_test.cc",
     "publisher_test.cc",
+    "schema_admin_client_test.cc",
+    "schema_admin_connection_test.cc",
+    "schema_test.cc",
     "snapshot_builder_test.cc",
     "snapshot_test.cc",
     "subscriber_connection_test.cc",

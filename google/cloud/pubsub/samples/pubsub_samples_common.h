@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H
 
-#include "google/cloud/pubsub/experimental/schema_admin_client.h"
 #include "google/cloud/pubsub/publisher.h"
+#include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
@@ -58,8 +58,8 @@ CreateSubscriptionAdminCommand(std::string const& name,
                                std::vector<std::string> const& arg_names,
                                SubscriptionAdminCommand const& command);
 
-using SchemaAdminCommand = std::function<void(
-    pubsub_experimental::SchemaAdminClient, std::vector<std::string> const&)>;
+using SchemaAdminCommand = std::function<void(pubsub::SchemaAdminClient,
+                                              std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
     std::string const& name, std::vector<std::string> const& arg_names,

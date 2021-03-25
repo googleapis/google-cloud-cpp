@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
 
-#include "google/cloud/pubsub/experimental/schema.h"
+#include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
 #include <google/pubsub/v1/pubsub.pb.h>
@@ -87,25 +87,21 @@ class TopicBuilder {
     return std::move(set_kms_key_name(std::move(key_name)));
   }
 
-  TopicBuilder& experimental_set_schema(
-      pubsub_experimental::Schema const& schema) & {
+  TopicBuilder& set_schema(pubsub::Schema const& schema) & {
     proto_.mutable_schema_settings()->set_schema(schema.FullName());
     paths_.insert("schema_settings.schema");
     return *this;
   }
-  TopicBuilder&& experimental_set_schema(
-      pubsub_experimental::Schema const& schema) && {
-    return std::move(experimental_set_schema(schema));
+  TopicBuilder&& set_schema(pubsub::Schema const& schema) && {
+    return std::move(set_schema(schema));
   }
-  TopicBuilder& experimental_set_encoding(
-      google::pubsub::v1::Encoding encoding) & {
+  TopicBuilder& set_encoding(google::pubsub::v1::Encoding encoding) & {
     proto_.mutable_schema_settings()->set_encoding(encoding);
     paths_.insert("schema_settings.encoding");
     return *this;
   }
-  TopicBuilder&& experimental_set_encoding(
-      google::pubsub::v1::Encoding encoding) && {
-    return std::move(experimental_set_encoding(encoding));
+  TopicBuilder&& set_encoding(google::pubsub::v1::Encoding encoding) && {
+    return std::move(set_encoding(encoding));
   }
 
  private:

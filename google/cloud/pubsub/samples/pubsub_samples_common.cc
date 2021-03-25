@@ -125,8 +125,8 @@ google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
       }
       throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
-    google::cloud::pubsub_experimental::SchemaAdminClient client(
-        google::cloud::pubsub_experimental::MakeSchemaAdminConnection());
+    google::cloud::pubsub::SchemaAdminClient client(
+        google::cloud::pubsub::MakeSchemaAdminConnection());
     command(std::move(client), std::move(argv));
   };
   return google::cloud::testing_util::Commands::value_type{name,

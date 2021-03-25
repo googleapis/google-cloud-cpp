@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
 
-#include "google/cloud/pubsub/experimental/schema.h"
-#include "google/cloud/pubsub/experimental/schema_admin_connection.h"
 #include "google/cloud/pubsub/version.h"
+#include "schema.h"
+#include "schema_admin_connection.h"
 #include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace pubsub_experimental {
+namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
@@ -245,8 +245,8 @@ class SchemaAdminClient {
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
-}  // namespace pubsub_experimental
+}  // namespace pubsub
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_EXPERIMENTAL_SCHEMA_ADMIN_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SCHEMA_ADMIN_CLIENT_H
