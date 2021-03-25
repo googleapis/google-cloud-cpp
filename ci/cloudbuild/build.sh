@@ -24,11 +24,12 @@
 # (the default) indicates to run the build locally, without docker, using the
 # invoking user's operating system and environment.
 #
-# Usage: ./build.sh [options] <build-name>
+# Usage: build.sh [options] <build-name>
 #
 #   Options:
 #     -d|--distro=<name>   The distro name to use
 #     -p|--project=<name>  The Cloud Project ID to use
+#     -l|--local           Run the build in the local environment
 #     -h|--help            Print this help message
 #
 #   Build names:
@@ -47,14 +48,15 @@ function print_usage() {
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="d:p:h" \
-  --longoptions="distro:,project:,help" \
+  --options="d:p:lh" \
+  --longoptions="distro:,project:,local,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
-DISTRO="local" # By default, run builds in the local environment
+DISTRO=""
 PROJECT_ID=""
+LOCAL_BUILD="false"
 while true; do
   case "$1" in
   -d | --distro)
@@ -64,6 +66,10 @@ while true; do
   -p | --project)
     PROJECT_ID="$2"
     shift 2
+    ;;
+  -l | --local)
+    LOCAL_BUILD="true"
+    shift
     ;;
   -h | --help)
     print_usage
@@ -84,9 +90,11 @@ if (($# == 0)); then
 fi
 readonly BUILD_NAME="$1"
 
-# If a DISTRO other than "local" was requested, submit the job to Cloud Build
-# to run in the specified distro.
-if [ "${DISTRO}" != "local" ]; then
+if [[ "${LOCAL_BUILD}" = "true" ]]; then
+  io::log_h1 "Starting local build: ${BUILD_NAME}"
+  readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
+  time "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
+elif [[ -n "${DISTRO}" ]]; then
   # Quick checks to surface invalid arguments early
   if [ ! -r "ci/cloudbuild/${DISTRO}.Dockerfile" ]; then
     echo "Unknown distro: ${DISTRO}"
@@ -101,7 +109,8 @@ if [ "${DISTRO}" != "local" ]; then
   subs="_DISTRO=${DISTRO}"
   subs+=",_BUILD_NAME=${BUILD_NAME}"
   subs+=",_CACHE_TYPE=manual-${account}"
-  io::log_h1 "Submitting cloud build job for ${subs}"
+  io::log_h1 "Starting cloud build: ${BUILD_NAME}"
+  io::log "Substitutions ${subs}"
   args=(
     "--config=ci/cloudbuild/cloudbuild.yaml"
     "--substitutions=${subs}"
@@ -110,10 +119,8 @@ if [ "${DISTRO}" != "local" ]; then
     args+=("--project=${PROJECT_ID}")
   fi
   exec gcloud builds submit "${args[@]}" .
+else
+  echo "Invalid arguments"
+  print_usage
+  exit 1
 fi
-
-io::log_h1 "Starting build: ${BUILD_NAME}"
-readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
-time {
-  "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
-}
