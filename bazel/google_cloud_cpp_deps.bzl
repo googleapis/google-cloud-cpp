@@ -80,6 +80,14 @@ def google_cloud_cpp_deps():
             strip_prefix = "googleapis-6598bb829c9e9a534be674649ffd1b4671a821f9",
             sha256 = "117fda09e4ce0fc329393eb55914aaca564b81c6234e1e6c1e1588e5032bf45c",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
+            # Scaffolding for patching googleapis after download. For example:
+            #   patches = ["googleapis.patch"]
+            # NOTE: This should only be used while developing with a new
+            # protobuf message. No changes to `patches` should ever be
+            # committed to the main branch.
+            patch_tool = "patch",
+            patch_args = ["-p1"],
+            patches = [],
         )
 
     # Load protobuf.

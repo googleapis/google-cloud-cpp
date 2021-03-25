@@ -157,12 +157,22 @@ foreach (proto ${EXTERNAL_GOOGLEAPIS_PROTO_FILES})
 endforeach ()
 
 include(ExternalProject)
+
 ExternalProject_Add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
+    PATCH_COMMAND
+        ""
+        # ~~~
+        # Scaffolding for patching googleapis after download. For example:
+        #   PATCH_COMMAND patch -p1 --input=/v/external/googleapis.patch
+        # NOTE: This should only be used while developing with a new
+        # protobuf message. No changes to `PATCH_COMMAND` should ever be
+        # committed to the main branch.
+        # ~~~
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
