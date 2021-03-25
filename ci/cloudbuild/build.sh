@@ -101,7 +101,7 @@ if [ "${DISTRO}" != "local" ]; then
   subs="_DISTRO=${DISTRO}"
   subs+=",_BUILD_NAME=${BUILD_NAME}"
   subs+=",_CACHE_TYPE=manual-${account}"
-  io::log "====> Submitting cloud build job for ${subs}"
+  io::log_h1 "Submitting cloud build job for ${subs}"
   args=(
     "--config=ci/cloudbuild/cloudbuild.yaml"
     "--substitutions=${subs}"
@@ -112,7 +112,7 @@ if [ "${DISTRO}" != "local" ]; then
   exec gcloud builds submit "${args[@]}" .
 fi
 
-io::log "====> STARTING BUILD: ${BUILD_NAME}"
+io::log_h1 "STARTING BUILD: ${BUILD_NAME}"
 readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
 time {
   "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
