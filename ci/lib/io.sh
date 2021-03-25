@@ -72,3 +72,28 @@ function io::log_yellow() {
 function io::log_red() {
   io::internal::log_impl "${IO_COLOR_RED}" "$@"
 }
+
+# Logs an "H1" heading. This looks like a blank line, followed by the message
+# in a double-lined box.
+#
+# ========================================
+# |   This is an example of io::log_h1   |
+# ========================================
+function io::log_h1() {
+  local msg="|   $*   |"
+  local line
+  line="$(printf -- "=%.0s" $(seq 1 ${#msg}))"
+  printf "\n%s\n%s\n%s\n" "${line}" "${msg}" "${line}"
+}
+
+# Logs an "H2" heading. Same as H1, but uses a single-lined box.
+#
+# ----------------------------------------
+# |   This is an example of io::log_h2   |
+# ----------------------------------------
+function io::log_h2() {
+  local msg="|   $*   |"
+  local line
+  line="$(printf -- "-%.0s" $(seq 1 ${#msg}))"
+  printf "\n%s\n%s\n%s\n" "${line}" "${msg}" "${line}"
+}

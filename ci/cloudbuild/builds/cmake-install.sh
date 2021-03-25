@@ -32,7 +32,7 @@ cmake -GNinja \
   -S . -B cmake-out
 cmake --build cmake-out --target install
 
-io::log "Verifying installed directories"
+io::log_h2 "Verifying installed directories"
 # Finds all the installed leaf directories (i.e., directories with exactly two
 # links: . and ..). We only look at leaf directories, because obviously all
 # parent directories must also exist.
@@ -115,7 +115,7 @@ if [[ -n "${discrepancies}" ]]; then
   exit_code=1
 fi
 
-io::log "Validating installed pkg-config files"
+io::log_h2 "Validating installed pkg-config files"
 export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
 while IFS= read -r -d '' pc; do
   # Ignores the warning noise from system .pc files, but we redo the validation
@@ -130,7 +130,7 @@ while IFS= read -r -d '' pc; do
   fi
 done < <(find "${INSTALL_PREFIX}" -name '*.pc' -print0)
 
-io::log "Validating installed file extensions"
+io::log_h2 "Validating installed file extensions"
 # All installed libraries have the same version, so pick one.
 version=$(pkg-config google_cloud_cpp_common --modversion)
 version_major=$(cut -d. -f1 <<<"${version}")
