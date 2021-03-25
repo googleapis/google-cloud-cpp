@@ -97,9 +97,10 @@ if [ "${DISTRO}" != "local" ]; then
     print_usage
     exit 1
   fi
+  account="$(gcloud config list account --format "value(core.account)")"
   subs="_DISTRO=${DISTRO}"
   subs+=",_BUILD_NAME=${BUILD_NAME}"
-  subs+=",_CACHE_TYPE=manual-$(id -un)"
+  subs+=",_CACHE_TYPE=manual-${account})"
   io::log "====> Submitting cloud build job for ${subs}"
   args=(
     "--config=ci/cloudbuild/cloudbuild.yaml"
