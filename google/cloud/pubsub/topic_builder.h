@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_TOPIC_BUILDER_H
 
+#include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/topic.h"
 #include "google/cloud/pubsub/version.h"
-#include "schema.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <set>
 #include <string>
