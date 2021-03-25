@@ -10,7 +10,7 @@ github:
 id: f5da0822-6bf4-40a3-b063-a194db1773ba
 name: cmake-gcc
 substitutions:
-  _BUILD_NAME: cmake+gcc
+  _BUILD_NAME: cmake-gcc
   _DISTRO: fedora
 tags:
 - fedora
