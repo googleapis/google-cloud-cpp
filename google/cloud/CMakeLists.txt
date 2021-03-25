@@ -14,6 +14,7 @@
 # limitations under the License.
 # ~~~
 
+include(IncludeNlohmannJson)
 find_package(absl CONFIG REQUIRED)
 
 # Generate the version information from the CMake values.
@@ -128,6 +129,8 @@ add_library(
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/credentials.cc
+    internal/credentials.cc
+    internal/credentials.h
     internal/credentials.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
@@ -187,8 +190,14 @@ add_library(
     version.cc
     version.h)
 target_link_libraries(
-    google_cloud_cpp_common PUBLIC absl::any absl::flat_hash_map absl::memory
-                                   absl::optional absl::time Threads::Threads)
+    google_cloud_cpp_common
+    PUBLIC absl::any
+           absl::flat_hash_map
+           absl::memory
+           absl::optional
+           absl::time
+           Threads::Threads
+           nlohmann_json::nlohmann_json)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -405,6 +414,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/grpc_channel_credentials_authentication.h
         internal/grpc_impersonate_service_account.cc
         internal/grpc_impersonate_service_account.h
+        internal/grpc_service_account_authentication.cc
+        internal/grpc_service_account_authentication.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/minimal_iam_credentials_stub.cc
@@ -431,6 +442,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::time
                google-cloud-cpp::iam_protos
                google-cloud-cpp::rpc_status_protos
+               google-cloud-cpp::iam_protos
                google-cloud-cpp::common
                gRPC::grpc++
                gRPC::grpc)
@@ -526,6 +538,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/grpc_access_token_authentication_test.cc
             internal/grpc_async_access_token_cache_test.cc
             internal/grpc_channel_credentials_authentication_test.cc
+            internal/grpc_service_account_authentication_test.cc
             internal/log_wrapper_test.cc
             internal/minimal_iam_credentials_stub_test.cc
             internal/polling_loop_test.cc

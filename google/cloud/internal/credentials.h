@@ -163,6 +163,31 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
     std::string target_service_account, Options opts = {});
 
+/**
+ * Creates service account credentials from a JSON object in string form.
+ *
+ * The @p json_object  is expected to be in the format described by [aip/4112].
+ * Such an object contains the identity of a service account, as well as a
+ * private key that can be used to sign tokens, showing the caller was holding
+ * the private key.
+ *
+ * In GCP one can create several "keys" for each service account, and these
+ * keys are downloaded as a JSON "key file". The contents of such a file are
+ * in the format required by this function. Remember that key files and their
+ * contents should be treated as any other secret with security implications,
+ * think of them as passwords (because they are!), don't store them or output
+ * them where unauthorized persons may read them.
+ *
+ * As stated above, most applications should probably use default credentials,
+ * maybe pointing them to a file with these contents. Using this function may be
+ * useful when the json object is obtained from a Cloud Secret Manager or a
+ * similar service.
+ *
+ * [aip/4112]: https://google.aip.dev/auth/4112
+ */
+std::shared_ptr<Credentials> MakeServiceAccountCredentials(
+    std::string json_object);
+
 /// Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
 struct DelegatesOption {
   using Type = std::vector<std::string>;
@@ -197,6 +222,7 @@ class InsecureCredentialsConfig;
 class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
 class ImpersonateServiceAccountConfig;
+class ServiceAccountConfig;
 
 class CredentialsVisitor {
  public:
@@ -205,6 +231,7 @@ class CredentialsVisitor {
   virtual void visit(GoogleDefaultCredentialsConfig&) = 0;
   virtual void visit(AccessTokenConfig&) = 0;
   virtual void visit(ImpersonateServiceAccountConfig&) = 0;
+  virtual void visit(ServiceAccountConfig&) = 0;
 
   static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
 };
@@ -236,7 +263,6 @@ class AccessTokenConfig : public Credentials {
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
-
   AccessToken access_token_;
 };
 
@@ -264,6 +290,20 @@ class ImpersonateServiceAccountConfig : public Credentials {
   std::chrono::seconds lifetime_;
   std::vector<std::string> scopes_;
   std::vector<std::string> delegates_;
+};
+
+class ServiceAccountConfig : public Credentials {
+ public:
+  explicit ServiceAccountConfig(std::string json_object)
+      : json_object_(std::move(json_object)) {}
+
+  std::string const& json_object() const& { return json_object_; }
+  std::string&& json_object() && { return std::move(json_object_); }
+
+ private:
+  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+
+  std::string json_object_;
 };
 
 }  // namespace internal

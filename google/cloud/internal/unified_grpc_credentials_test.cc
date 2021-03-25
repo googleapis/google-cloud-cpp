@@ -13,8 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
+#include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {

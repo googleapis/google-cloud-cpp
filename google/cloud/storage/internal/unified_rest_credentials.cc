@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/error_credentials.h"
 #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -29,6 +30,7 @@ using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
+using ::google::cloud::internal::ServiceAccountConfig;
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::internal::Credentials> const& credentials) {
@@ -53,6 +55,16 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
     }
     void visit(ImpersonateServiceAccountConfig& config) override {
       result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
+    }
+    void visit(ServiceAccountConfig& cfg) override {
+      auto credentials = google::cloud::storage::oauth2::
+          CreateServiceAccountCredentialsFromJsonContents(cfg.json_object());
+      if (credentials) {
+        result = *std::move(credentials);
+        return;
+      }
+      result =
+          std::make_shared<ErrorCredentials>(std::move(credentials).status());
     }
   } visitor;
 

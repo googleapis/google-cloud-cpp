@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -28,8 +29,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::internal::MakeAccessTokenCredentials;
 using ::google::cloud::internal::MakeGoogleDefaultCredentials;
+using ::google::cloud::internal::MakeServiceAccountCredentials;
 using ::google::cloud::internal::UnifiedCredentialsOption;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::StartsWith;
@@ -42,14 +45,11 @@ class UnifiedCredentialsIntegrationTest
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}) {}
 
   void SetUp() override {
-    bucket_name_ = google::cloud::internal::GetEnv(
-                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                       .value_or("");
-    project_id_ =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    bucket_name_ =
+        GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
+    project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     service_account_ =
-        google::cloud::internal::GetEnv(
-            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
+        GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
             .value_or("");
 
     ASSERT_FALSE(bucket_name_.empty());
@@ -139,6 +139,23 @@ TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountImpersonation) {
   auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
       MakeImpersonateServiceAccountCredentials(MakeGoogleDefaultCredentials(),
                                                service_account())));
+
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
+TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccount) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
+  if (!keyfile.has_value()) GTEST_SKIP();
+
+  auto contents = [](std::string const& filename) {
+    std::ifstream is(filename);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }(keyfile.value());
+
+  auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(contents)));
 
   ASSERT_NO_FATAL_FAILURE(
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));

@@ -54,6 +54,11 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
       std::move(opts));
 }
 
+std::shared_ptr<Credentials> MakeServiceAccountCredentials(
+    std::string json_object) {
+  return std::make_shared<ServiceAccountConfig>(std::move(json_object));
+}
+
 ImpersonateServiceAccountConfig::ImpersonateServiceAccountConfig(
     std::shared_ptr<Credentials> base_credentials,
     std::string target_service_account, Options opts)
