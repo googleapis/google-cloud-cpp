@@ -58,7 +58,6 @@ expected_dirs=(
   ./include/google/cloud/internal
   ./include/google/cloud/logging/internal
   ./include/google/cloud/logging/mocks
-  ./include/google/cloud/pubsub/experimental
   ./include/google/cloud/pubsub/internal
   ./include/google/cloud/pubsub/mocks
   ./include/google/cloud/spanner/internal
