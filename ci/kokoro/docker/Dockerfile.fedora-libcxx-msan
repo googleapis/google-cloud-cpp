@@ -20,8 +20,8 @@ ARG NCPU=4
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y ccache clang clang-tools-extra cmake findutils gcc-c++ \
-        git llvm llvm-devel make ninja-build openssl-devel python python3.8 \
-        python3-devel python3-lit python-pip tar unzip which wget xz
+        git llvm llvm-devel make ninja-build openssl-devel patch python \
+        python3.8 python3-devel python3-lit python-pip tar unzip which wget xz
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
