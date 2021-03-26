@@ -17,19 +17,22 @@
 # ## Run builds using Google Cloud Build ##
 #
 # This script runs the builds defined in `ci/cloudbuild/builds/` on the local
-# machine (if `--local` is specified) or in the cloud using Google Cloud Build
-# (the default). A single argument indicating the build name is required. The
-# distro indicates the `<distro>.Dockerfile` to use for the build (ignored if
-# using `--local`). The distro is looked up from the specified build's trigger
-# file (`ci/cloudbuild/triggers/<build-name>.yaml`), but the distro can be
+# machine (if `--local` is specified), in the local docker (if `--docker` is
+# specified), or in the cloud using Google Cloud Build (the default). A single
+# argument indicating the build name is required. The distro indicates the
+# `<distro>.Dockerfile` to use for the build (ignored if using `--local`). The
+# distro is looked up from the specified build's trigger file
+# (`ci/cloudbuild/triggers/<build-name>.yaml`), but the distro can be
 # overridden with the optional `--distro=<arg>` flag.
 #
 # Usage: build.sh [options] <build-name>
 #
 #   Options:
-#     --distro=<name>   The distro name to use
-#     -p|--project=<name>  The Cloud Project ID to use
+#     --distro=<name>      The distro name to use
 #     -l|--local           Run the build in the local environment
+#     -d|--docker          Run the build in a local docker
+#     -s|--docker-shell    Run a shell in the build's docker container
+#     -p|--project=<name>  The Cloud Project ID to use
 #     -h|--help            Print this help message
 #
 #   Build names:
@@ -48,8 +51,8 @@ function print_usage() {
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="p:lh" \
-  --longoptions="distro:,project:,local,help" \
+  --options="p:ldsh" \
+  --longoptions="distro:,project:,local,docker,docker-shell,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
@@ -57,6 +60,8 @@ eval set -- "${PARSED}"
 DISTRO=""
 PROJECT_ID=""
 LOCAL_BUILD="false"
+DOCKER_BUILD="false"
+DOCKER_SHELL="false"
 while true; do
   case "$1" in
   --distro)
@@ -71,6 +76,15 @@ while true; do
     LOCAL_BUILD="true"
     shift
     ;;
+  -d | --docker)
+    DOCKER_BUILD="true"
+    shift
+    ;;
+  -s | --docker-shell)
+    DOCKER_BUILD="true"
+    DOCKER_SHELL="true"
+    shift
+    ;;
   -h | --help)
     print_usage
     exit 0
@@ -83,14 +97,25 @@ while true; do
 done
 readonly PROJECT_ID
 
-if (($# == 0)); then
-  echo "Missing build name"
+if (($# != 1)); then
+  echo "Must specify exactly one build name"
   print_usage
   exit 1
 fi
 readonly BUILD_NAME="$1"
 
+# --local is the most fundamental build mode, in that all other builds
+# eventually call this one. For example, a --docker build will build the
+# specified docker image, then in a container from that image it will run the
+# --local build. Similarly, the GCB build will submit the build to GCB, which
+# will call the --local build.
 if [[ "${LOCAL_BUILD}" = "true" ]]; then
+  test -n "${DISTRO}" && io::log_red "Local build ignoring --distro=${DISTRO}"
+  if [[ "${DOCKER_BUILD}" = "true" ]]; then
+    echo "Only one of --local or --docker may be specified"
+    print_usage
+    exit 1
+  fi
   io::log_h1 "Starting local build: ${BUILD_NAME}"
   readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
   time "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
@@ -109,6 +134,44 @@ if [[ -z "${DISTRO}" ]]; then
 fi
 readonly DISTRO
 
+# Uses docker to locally build the specified image and run the build command.
+# Docker builds store their outputs on the host system in `build-out/`.
+if [[ "${DOCKER_BUILD}" = "true" ]]; then
+  io::log_h1 "Starting docker build: ${BUILD_NAME}"
+  out_dir="${PROJECT_ROOT}/build-out/${DISTRO}-${BUILD_NAME}"
+  out_home="${out_dir}/h"
+  out_cmake="${out_dir}/cmake-out"
+  mkdir -p "${out_home}" "${out_cmake}"
+  image="gcb-${DISTRO}:latest"
+  io::log_h2 "Building docker image: ${image}"
+  docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
+    -f "ci/cloudbuild/${DISTRO}.Dockerfile" ci
+  io::log_h2 "Starting container for ${image} running ${BUILD_NAME}"
+  run_flags=(
+    "--interactive"
+    "--tty"
+    "--rm"
+    "--user=$(id -u):$(id -g)"
+    "--env=USER=$(id -un)"
+    # Mounts an empty volume over "build-out" to isolate builds from each
+    # other. Doesn't affect GCB builds, but it helps our local docker builds.
+    "--volume=/workspace/build-out"
+    "--volume=${PROJECT_ROOT}:/workspace:Z"
+    "--workdir=/workspace"
+    "--volume=${out_cmake}:/workspace/cmake-out:Z"
+    "--volume=${out_home}:/h:Z"
+    "--env=HOME=/h"
+  )
+  cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
+  if [[ "${DOCKER_SHELL}" = "true" ]]; then
+    io::log "Starting shell, to manually run the requested build use:"
+    echo "==> ${cmd[*]}"
+    cmd=("bash")
+  fi
+  docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
+  exit
+fi
+
 # Surface invalid arguments early rather than waiting for GCB to fail.
 if [ ! -r "${PROGRAM_DIR}/${DISTRO}.Dockerfile" ]; then
   echo "Unknown distro: ${DISTRO}"
@@ -120,11 +183,12 @@ elif [ ! -x "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh" ]; then
   exit 1
 fi
 
+# Uses Google Cloud build to run the specified build.
+io::log_h1 "Starting cloud build: ${BUILD_NAME}"
 account="$(gcloud config list account --format "value(core.account)")"
 subs="_DISTRO=${DISTRO}"
 subs+=",_BUILD_NAME=${BUILD_NAME}"
 subs+=",_CACHE_TYPE=manual-${account}"
-io::log_h1 "Starting cloud build: ${BUILD_NAME}"
 io::log "Substitutions ${subs}"
 args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"
@@ -133,4 +197,4 @@ args=(
 if [[ -n "${PROJECT_ID}" ]]; then
   args+=("--project=${PROJECT_ID}")
 fi
-exec gcloud builds submit "${args[@]}" .
+gcloud builds submit "${args[@]}" .

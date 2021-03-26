@@ -1,3 +1,4 @@
+build-out/
 ci/
 cmake-out/
 cmake-build-debug/
