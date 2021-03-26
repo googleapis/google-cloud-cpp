@@ -2,6 +2,7 @@
 .build/
 _build/
 build-output/
+build-out/
 cmake-out/
 
 # Common bazel output directories
