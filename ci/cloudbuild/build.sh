@@ -110,7 +110,7 @@ readonly BUILD_NAME="$1"
 # --local build. Similarly, the GCB build will submit the build to GCB, which
 # will call the --local build.
 if [[ "${LOCAL_BUILD}" = "true" ]]; then
-  test -n "${DISTRO}" && io::log_red "Ignoring --distro for local build"
+  test -n "${DISTRO}" && io::log_red "Local build ignoring --distro=${DISTRO}"
   if [[ "${DOCKER_BUILD}" = "true" ]]; then
     echo "Only one of --local or --docker may be specified"
     print_usage
@@ -162,7 +162,7 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
     "--volume=${out_home}:/h:Z"
     "--env=HOME=/h"
   )
-  cmd=(./ci/cloudbuild/build.sh --local "${BUILD_NAME}")
+  cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${DOCKER_SHELL}" = "true" ]]; then
     io::log "Starting shell, to manually run the requested build use:"
     echo "==> ${cmd[*]}"
