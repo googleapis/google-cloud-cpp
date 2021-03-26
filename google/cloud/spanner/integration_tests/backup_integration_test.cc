@@ -436,6 +436,15 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
   }
   EXPECT_THAT(database->encryption_info(), IsEmpty());
 
+  auto database_get = database_admin_client_.GetDatabase(db);
+  ASSERT_STATUS_OK(database_get);
+  EXPECT_EQ(database_get->name(), database->name());
+  EXPECT_TRUE(database_get->has_encryption_config());
+  if (database_get->has_encryption_config()) {
+    EXPECT_EQ(database_get->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
   auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
@@ -477,6 +486,15 @@ TEST_F(BackupTest, BackupTestWithCMEK) {
   EXPECT_TRUE(restored_database->has_encryption_config());
   if (restored_database->has_encryption_config()) {
     EXPECT_EQ(restored_database->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  auto restored_get = database_admin_client_.GetDatabase(restore_db);
+  ASSERT_STATUS_OK(restored_get);
+  EXPECT_EQ(restored_get->name(), restored_database->name());
+  EXPECT_TRUE(restored_get->has_encryption_config());
+  if (restored_get->has_encryption_config()) {
+    EXPECT_EQ(restored_get->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
 

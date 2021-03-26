@@ -908,19 +908,6 @@ void CreateDatabaseWithEncryptionKey(
   std::cout << "Database " << db->name() << " created";
   std::cout << " using encryption key " << encryption_key.FullName();
   std::cout << ".\n";
-
-  // Verify the encryption key matches the value used during creation.
-  auto get_database = client.GetDatabase(database);
-  if (!get_database) throw std::runtime_error(get_database.status().message());
-  if (!get_database->has_encryption_config()) {
-    throw std::runtime_error("Encryption Config is not present");
-  }
-  auto const& kms_key_name = get_database->encryption_config().kms_key_name();
-  if (kms_key_name != encryption_key.FullName()) {
-    throw std::runtime_error("Encryption key name mismatch: expected " +
-                             encryption_key.FullName() + " actual " +
-                             kms_key_name);
-  }
 }
 // [END spanner_create_database_with_encryption_key]
 //! [create-database-with-encryption-key]
@@ -965,20 +952,6 @@ void CreateBackupWithEncryptionKey(
       << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << " using encryption key " << encryption_key.FullName() << ".\n";
-
-  // Verify the encryption key matches the value used during backup.
-  auto get_backup = client.GetBackup(
-      google::cloud::spanner::Backup(database.instance(), backup_id));
-  if (!get_backup) throw std::runtime_error(get_backup.status().message());
-  if (!get_backup->has_encryption_info()) {
-    throw std::runtime_error("Encryption Info is not present");
-  }
-  auto const& kms_key_version = get_backup->encryption_info().kms_key_version();
-  if (kms_key_version.rfind(encryption_key.FullName() + "/", 0) != 0) {
-    throw std::runtime_error("Encryption key name mismatch: expected " +
-                             encryption_key.FullName() + " actual " +
-                             kms_key_version);
-  }
 }
 // [END spanner_create_backup_with_encryption_key]
 //! [create-backup-with-encryption-key]
@@ -1033,19 +1006,6 @@ void RestoreDatabaseWithEncryptionKey(
   std::cout << " from backup " << backup.FullName();
   std::cout << " using encryption key " << encryption_key.FullName();
   std::cout << ".\n";
-
-  // Verify the encryption key matches the value used during restoration.
-  auto get_database = client.GetDatabase(database);
-  if (!get_database) throw std::runtime_error(get_database.status().message());
-  if (!get_database->has_encryption_config()) {
-    throw std::runtime_error("Encryption Config is not present");
-  }
-  auto const& kms_key_name = get_database->encryption_config().kms_key_name();
-  if (kms_key_name != encryption_key.FullName()) {
-    throw std::runtime_error("Encryption key name mismatch: expected " +
-                             encryption_key.FullName() + " actual " +
-                             kms_key_name);
-  }
 }
 // [END spanner_restore_backup_with_encryption_key]
 //! [restore-database-with-encryption-key]
