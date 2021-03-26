@@ -27,17 +27,17 @@ void ProcessRowsInAvroFormat(
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <project-id> <table>\n";
+    std::cerr << "Usage: " << argv[0] << " <project-name> <table-name>\n";
     return 1;
   }
 
-  // project_id should be in the format "projects/<your-gcp-project>"
-  std::string const project_id = argv[1];
-  // table_id should be in the format:
+  // project_name should be in the format "projects/<your-gcp-project>"
+  std::string const project_name = argv[1];
+  // table_name should be in the format:
   // "projects/<project-table-resides-in>/datasets/<dataset-table_resides-in>/tables/<table
-  // name>" The project values in project_id and table_id do not have to be
+  // name>" The project values in project_name and table_name do not have to be
   // identical.
-  std::string const table_id = argv[2];
+  std::string const table_name = argv[2];
 
   // Create a namespace alias to make the code easier to read.
   namespace bigquery = google::cloud::bigquery;
@@ -48,9 +48,9 @@ int main(int argc, char* argv[]) try {
   ::google::cloud::bigquery::storage::v1::ReadSession read_session;
   read_session.set_data_format(
       google::cloud::bigquery::storage::v1::DataFormat::AVRO);
-  read_session.set_table(table_id);
+  read_session.set_table(table_name);
   auto session = client.CreateReadSession(
-      "projects/cloud-cpp-testing-resources", read_session, kMaxReadStreams);
+      project_name, read_session, kMaxReadStreams);
   if (!session) throw std::runtime_error(session.status().message());
 
   // Read rows from the ReadSession.
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) try {
     }
   }
 
-  std::cout << num_rows << " rows read from table: " << table_id << "\n";
+  std::cout << num_rows << " rows read from table: " << table_name << "\n";
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
