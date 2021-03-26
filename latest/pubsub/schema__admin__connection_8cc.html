@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Pub/Sub C++ Client: experimental/schema_admin_connection.cc File Reference</title>
+<title>Google Cloud Pub/Sub C++ Client: schema_admin_connection.cc File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,10 +61,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_8c0381a6091af7a47ae909a45b674508.html">experimental</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
@@ -74,7 +70,7 @@ $(function() {
 <div class="title">schema_admin_connection.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="schema__admin__connection_8h_source.html">google/cloud/pubsub/experimental/schema_admin_connection.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="schema__admin__connection_8h_source.html">schema_admin_connection.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="default__retry__policies_8h_source.html">google/cloud/pubsub/internal/default_retry_policies.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="schema__logging_8h_source.html">google/cloud/pubsub/internal/schema_logging.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="schema__metadata_8h_source.html">google/cloud/pubsub/internal/schema_metadata.h</a>&quot;</code><br />
@@ -92,16 +88,18 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud.html">google::cloud</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud"><td class="mdescLeft">&#160;</td><td class="mdescRight">The namespace Google Cloud Platform C++ client libraries. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub__experimental"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub__experimental.html">google::cloud::pubsub_experimental</a></td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub.html">google::cloud::pubsub</a></td></tr>
+<tr class="memdesc:namespacegoogle_1_1cloud_1_1pubsub"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains all the Cloud Pubsub C++ client types and functions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html">google::cloud::pubsub_experimental::v1</a></td></tr>
+<tr class="memitem:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html">google::cloud::pubsub::v1</a></td></tr>
+<tr class="memdesc:namespacegoogle_1_1cloud_1_1pubsub_1_1v1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Pubsub C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adbb736f423b4b9562f6cb83a4a6aaa70"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SchemaAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html#adbb736f423b4b9562f6cb83a4a6aaa70">google::cloud::pubsub_experimental::v1::MakeSchemaAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
-<tr class="memdesc:adbb736f423b4b9562f6cb83a4a6aaa70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminConnection.html" title="A connection to Cloud Pub/Sub for schema-related administrative operations.">SchemaAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub__experimental_1_1v1_1_1SchemaAdminClient.html" title="Performs schema admin operations in Cloud Pub/Sub.">SchemaAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub__experimental_1_1v1.html#adbb736f423b4b9562f6cb83a4a6aaa70">More...</a><br /></td></tr>
-<tr class="separator:adbb736f423b4b9562f6cb83a4a6aaa70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac545798a510760927dca2d5a68bf8290"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; SchemaAdminConnection &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#ac545798a510760927dca2d5a68bf8290">google::cloud::pubsub::v1::MakeSchemaAdminConnection</a> (<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a> const  &amp;options=<a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a6833bef0c593e2cfde6e1c9f2d745b94">pubsub::ConnectionOptions</a>(), std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a9a5d41617ced93c869b06b5fca46fad2">pubsub::RetryPolicy</a> const  &gt; retry_policy={}, std::unique_ptr&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#a3187e9e2cded8d6fc87ebc02f3e242a9">pubsub::BackoffPolicy</a> const  &gt; backoff_policy={})</td></tr>
+<tr class="memdesc:ac545798a510760927dca2d5a68bf8290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SchemaAdminConnection.html" title="A connection to Cloud Pub/Sub for schema-related administrative operations.">SchemaAdminConnection</a></code> object to work with <code><a class="el" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SchemaAdminClient.html" title="Performs schema admin operations in Cloud Pub/Sub.">SchemaAdminClient</a></code>.  <a href="namespacegoogle_1_1cloud_1_1pubsub_1_1v1.html#ac545798a510760927dca2d5a68bf8290">More...</a><br /></td></tr>
+<tr class="separator:ac545798a510760927dca2d5a68bf8290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

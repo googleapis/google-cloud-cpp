@@ -88,8 +88,8 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="schema__admin__client_8h.html">google/cloud/pubsub/experimental/schema_admin_client.h</a>&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="publisher_8h.html">google/cloud/pubsub/publisher.h</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="publisher_8h.html">google/cloud/pubsub/publisher.h</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="schema__admin__client_8h.html">google/cloud/pubsub/schema_admin_client.h</a>&quot;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="subscriber_8h.html">google/cloud/pubsub/subscriber.h</a>&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="subscription__admin__client_8h.html">google/cloud/pubsub/subscription_admin_client.h</a>&quot;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="topic__admin__client_8h.html">google/cloud/pubsub/topic_admin_client.h</a>&quot;</span></div>
@@ -131,8 +131,8 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                               std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; arg_names,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                               SubscriptionAdminCommand <span class="keyword">const</span>&amp; command);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">using</span> SchemaAdminCommand = std::function&lt;void(</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    pubsub_experimental::SchemaAdminClient, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;)&gt;;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">using</span> SchemaAdminCommand = std::function&lt;void(<a class="code" href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SchemaAdminClient.html">pubsub::SchemaAdminClient</a>,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                              std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;)&gt;;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::string <span class="keyword">const</span>&amp; name, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; arg_names,</div>
@@ -147,6 +147,7 @@ $(function() {
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SAMPLES_PUBSUB_SAMPLES_COMMON_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SchemaAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1SchemaAdminClient.html">google::cloud::pubsub::v1::SchemaAdminClient</a></div><div class="ttdoc">Performs schema admin operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="schema__admin__client_8h_source.html#l00062">schema_admin_client.h:62</a></div></div>
 <div class="ttc" id="asubscription__admin__client_8h_html"><div class="ttname"><a href="subscription__admin__client_8h.html">subscription_admin_client.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1pubsub_1_1v1_1_1TopicAdminClient.html">google::cloud::pubsub::v1::TopicAdminClient</a></div><div class="ttdoc">Performs topic admin operations in Cloud Pub/Sub.</div><div class="ttdef"><b>Definition:</b> <a href="topic__admin__client_8h_source.html#l00059">topic_admin_client.h:59</a></div></div>
 <div class="ttc" id="asubscriber_8h_html"><div class="ttname"><a href="subscriber_8h.html">subscriber.h</a></div></div>
