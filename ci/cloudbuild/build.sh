@@ -163,7 +163,7 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
     "--env=HOME=/h"
   )
   cmd=(./ci/cloudbuild/build.sh --local "${BUILD_NAME}")
-  if [[ "${DOCKER_SHELL}"  = "true" ]]; then
+  if [[ "${DOCKER_SHELL}" = "true" ]]; then
     io::log "Starting shell, to manually run the requested build use:"
     echo "==> ${cmd[*]}"
     cmd=("bash")
