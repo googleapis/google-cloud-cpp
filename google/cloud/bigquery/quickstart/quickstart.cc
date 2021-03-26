@@ -49,8 +49,8 @@ int main(int argc, char* argv[]) try {
   read_session.set_data_format(
       google::cloud::bigquery::storage::v1::DataFormat::AVRO);
   read_session.set_table(table_name);
-  auto session = client.CreateReadSession(
-      project_name, read_session, kMaxReadStreams);
+  auto session =
+      client.CreateReadSession(project_name, read_session, kMaxReadStreams);
   if (!session) throw std::runtime_error(session.status().message());
 
   // Read rows from the ReadSession.
