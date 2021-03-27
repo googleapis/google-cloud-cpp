@@ -116,6 +116,21 @@ if [[ "${LOCAL_BUILD}" = "true" ]]; then
     print_usage
     exit 1
   fi
+  function mem_total() {
+    awk '$1 == "MemTotal:" {printf "%0.2f GiB", $2/1024/1024}' /proc/meminfo
+  }
+  io::log_h1 "Machine Info"
+  TZ=/etc/localtime printf "%10s %s (%s)\n" "local:" "$(date)" "$(date +%z)"
+  printf "%10s %s\n" "utc:" "$(date -u)"
+  printf "%10s %s\n" "kernel:" "$(uname -v)"
+  printf "%10s %s\n" "os:" "$(grep PRETTY_NAME /etc/os-release)"
+  printf "%10s %s\n" "nproc:" "$(nproc)"
+  printf "%10s %s\n" "mem:" "$(mem_total)"
+  printf "%10s %s\n" "gcc:" "$(gcc --version 2>&1 | head -1)"
+  printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
+  printf "%10s %s\n" "cc:" "$(cc --version 2>&1 | head -1)"
+  printf "%10s %s\n" "cmake:" "$(cmake --version 2>&1 | head -1)"
+  printf "%10s %s\n" "bazel:" "$(bazel --version 2>&1 | head -1)"
   io::log_h1 "Starting local build: ${BUILD_NAME}"
   readonly TIMEFORMAT="==> 🕑 ${BUILD_NAME} completed in %R seconds"
   time "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh"
