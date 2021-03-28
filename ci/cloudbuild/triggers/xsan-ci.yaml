@@ -1,18 +1,10 @@
----
-createTime: '2021-03-23T16:27:32.983843488Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: ^master$
-id: 7af338de-c46d-41ff-a96b-f58e3b720fc5
 name: xsan-ci
 substitutions:
   _BUILD_NAME: xsan
   _DISTRO: fedora
-tags:
-- xsan
-- bazel
-- fedora
-- ci

@@ -1,18 +1,10 @@
----
-createTime: '2021-03-22T02:46:10.927625019Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
   push:
     branch: ^master$
-id: 4eed46f7-2acb-405f-8734-826f1c887d19
 name: cmake-clang-ci
 substitutions:
   _BUILD_NAME: cmake-clang
   _DISTRO: fedora
-tags:
-- fedora
-- clang
-- cmake
-- ci
