@@ -15,11 +15,16 @@
 # limitations under the License.
 #
 # This script manages Google Cloud Build triggers. The triggers are defined by
-# yaml files that live in the `triggers/` directory.
+# yaml files that live in the `triggers/` directory. The `--generate-ci=name`
+# and `--generate-pr=name` flags output YAML configs for CI or PR builds
+# respectively. The output should be saved in `<name>.yaml` files, and then it
+# can be manually tweaked to adjust things like the docker image, tags, etc.
 #
 # Usage: ./trigger.sh [options]
 #
 #   Options:
+#     --generate-ci=name  Outputs a YAML CI config for the given build name
+#     --generate-pr=name  Outputs a YAML PR config for the given build name
 #     -l|--list           List all triggers for this repo on the server
 #     -d|--describe=name  Describe the named trigger
 #     -i|--import=file    Uploads the local yaml file to create/update a trigger
@@ -38,6 +43,39 @@ function print_usage() {
 readonly CLOUD_PROJECT="cloud-cpp-testing-resources"
 readonly GITHUB_NAME="google-cloud-cpp"
 
+function generate_ci() {
+  local name="$1"
+  cat <<EOF
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^master$
+name: ${name}-ci
+substitutions:
+  _BUILD_NAME: ${name}
+  _DISTRO: fedora
+EOF
+}
+
+function generate_pr() {
+  local name="$1"
+  cat <<EOF
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^master$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+name: ${name}
+substitutions:
+  _BUILD_NAME: ${name}
+  _DISTRO: fedora
+EOF
+}
+
 function list_triggers() {
   gcloud beta builds triggers list \
     --project "${CLOUD_PROJECT}" \
@@ -53,19 +91,24 @@ function describe_trigger() {
 function import_trigger() {
   local file="$1"
   gcloud beta builds triggers import \
-    --source "${file}" --project "${CLOUD_PROJECT}" | tee "${file}.IMPORTED"
-  mv "${file}.IMPORTED" "${file}"
+    --project "${CLOUD_PROJECT}" --source "${file}"
 }
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="d:i:lh" \
-  --longoptions="describe:,import:,list,help" \
+  --longoptions="generate-ci:,generate-pr:,describe:,import:,list,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 case "$1" in
+--generate-ci)
+  generate_ci "$2"
+  ;;
+--generate-pr)
+  generate_pr "$2"
+  ;;
 -d | --describe)
   describe_trigger "$2"
   ;;

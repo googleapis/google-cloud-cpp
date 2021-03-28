@@ -1,12 +1,10 @@
-disabled: true
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
   owner: googleapis
-  pullRequest:
+  push:
     branch: ^master$
-    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: clang-tidy
+name: ubsan-ci
 substitutions:
-  _BUILD_NAME: clang-tidy
+  _BUILD_NAME: ubsan
   _DISTRO: fedora

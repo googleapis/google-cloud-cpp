@@ -1,5 +1,3 @@
----
-createTime: '2021-03-21T21:02:18.738169993Z'
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -7,13 +5,7 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-id: 74b4ff4d-a52d-4f22-a92c-58e0971aa0a5
 name: cmake-clang
 substitutions:
   _BUILD_NAME: cmake-clang
   _DISTRO: fedora
-tags:
-- fedora
-- clang
-- pr
-- cmake
