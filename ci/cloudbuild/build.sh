@@ -119,9 +119,13 @@ if [[ "${LOCAL_BUILD}" = "true" ]]; then
   function mem_total() {
     awk '$1 == "MemTotal:" {printf "%0.2f GiB", $2/1024/1024}' /proc/meminfo
   }
+  function google_time() {
+    # Extracts the time that Google thinks it is.
+    curl -sI google.com | grep "^Date:" | cut -f2- -d:
+  }
   io::log_h1 "Machine Info"
-  TZ=/etc/localtime printf "%10s %s (%s)\n" "local:" "$(date)" "$(date +%z)"
-  printf "%10s %s\n" "utc:" "$(date -u)"
+  printf "%10s %s\n" "utc:" "$(date -u --rfc-3339=seconds)"
+  printf "%10s %s\n" "google:" "$(date -ud "$(google_time)" --rfc-3339=seconds)"
   printf "%10s %s\n" "kernel:" "$(uname -v)"
   printf "%10s %s\n" "os:" "$(grep PRETTY_NAME /etc/os-release)"
   printf "%10s %s\n" "nproc:" "$(nproc)"
@@ -168,6 +172,7 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
     "--rm"
     "--user=$(id -u):$(id -g)"
     "--env=USER=$(id -un)"
+    "--env=TZ=:UTC"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
