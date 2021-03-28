@@ -16,7 +16,7 @@ options:
   machineType: 'N1_HIGHCPU_32'
   diskSizeGb: '512'
   dynamic_substitutions: true
-  env: [ 'HOME=/h', 'TZ=:UTC' ]
+  env: [ 'HOME=/h', 'TZ=UTC0' ]
   volumes:
     - name: 'home'
       path: '/h'

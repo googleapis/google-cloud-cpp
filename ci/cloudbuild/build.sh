@@ -124,7 +124,7 @@ if [[ "${LOCAL_BUILD}" = "true" ]]; then
     curl -sI google.com | grep "^Date:" | cut -f2- -d:
   }
   io::log_h1 "Machine Info"
-  printf "%10s %s\n" "utc:" "$(date -u --rfc-3339=seconds)"
+  printf "%10s %s\n" "host:" "$(date -u --rfc-3339=seconds)"
   printf "%10s %s\n" "google:" "$(date -ud "$(google_time)" --rfc-3339=seconds)"
   printf "%10s %s\n" "kernel:" "$(uname -v)"
   printf "%10s %s\n" "os:" "$(grep PRETTY_NAME /etc/os-release)"
@@ -172,7 +172,7 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
     "--rm"
     "--user=$(id -u):$(id -g)"
     "--env=USER=$(id -un)"
-    "--env=TZ=:UTC"
+    "--env=TZ=UTC0"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
