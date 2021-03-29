@@ -1,0 +1,10 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^master$
+name: quickstart-bazel-ci
+substitutions:
+  _BUILD_NAME: quickstart-bazel
+  _DISTRO: ubuntu-bionic
