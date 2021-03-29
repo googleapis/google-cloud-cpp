@@ -117,7 +117,7 @@ class Options {
    * @tparam T the option type
    */
   template <typename T>
-  bool has() {
+  bool has() const {
     return m_.find(typeid(T)) != m_.end();
   }
 
