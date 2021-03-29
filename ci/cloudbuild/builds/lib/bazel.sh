@@ -25,7 +25,12 @@ fi # include guard
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
 function bazel::common_args() {
-  local args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
+  local args=(
+    "--test_output=errors"
+    "--verbose_failures=true"
+    "--keep_going"
+    "--experimental_convenience_symlinks=ignore"
+  )
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
     args+=("--google_default_credentials")
