@@ -16,16 +16,17 @@ easier. See `trigger.sh --help` for more details.
 
 ## Testing principles
 
-We want our code to work for our customers. We don't their exact environment
-and configuration, so we need to test our code in a variety of different
-environments and configurations. The main dimensions that we need to test are:
+We want our code to work for our customers. We don't know their exact
+environment and configuration, so we need to test our code in a variety of
+different environments and configurations. The main dimensions that we need to
+test are:
 
 - OS Platform: Windows, macOS, Linux x `N` different distros
-- Compilers: clang, gcc, msvc
-- Build tool: bazel, CMake
+- Compilers: Clang, GCC, MSVC
+- Build tool: Bazel, CMake
 - Configuration: release, debug, with/without exceptions, dynamic vs static
-- C++ Language: C++11, ..., C++17 (soon to be C++20)
-- Installation: cmake, pkg-config
+- C++ Language: C++11, ..., C++20
+- Installation: CMake, pkg-config
 
 In addition to these main dimensions, we also want to use tools and analyzers
 to help us catch bugs: clang-tidy, clang static analyzer, asan, msan, tsan,
