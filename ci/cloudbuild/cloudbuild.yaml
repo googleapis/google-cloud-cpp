@@ -59,7 +59,8 @@ steps:
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '--local', '${_BUILD_NAME}' ]
   env: [
-    'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}'
+    'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
+    'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
   ]
 
   # Caches some directories in the homedir, in the specified GCS bucket.

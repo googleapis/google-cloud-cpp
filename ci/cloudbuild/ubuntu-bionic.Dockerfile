@@ -63,6 +63,7 @@ RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV PATH=/usr/local/google-cloud-sdk/bin/:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
 
