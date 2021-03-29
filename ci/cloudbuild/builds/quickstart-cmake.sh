@@ -46,5 +46,6 @@ for lib in $(quickstart::libraries); do
   flag="-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
   cmake -H"${src_dir}" -B"${bin_dir}" "${flag}"
   cmake --build "${bin_dir}"
-  "${bin_dir}/quickstart" $(quickstart::arguments "${lib}")
+  mapfile -t run_args < <(quickstart::arguments "${lib}")
+  "${bin_dir}/quickstart" "${run_args[@]}"
 done
