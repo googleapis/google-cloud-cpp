@@ -25,7 +25,7 @@ all: quickstart
 
 # Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
-BIGQUERY_DEPS := bigquery_client
+BIGQUERY_DEPS := google_cloud_cpp_bigquery
 BIGQUERY_CXXFLAGS   := $(shell pkg-config $(BIGQUERY_DEPS) --cflags)
 BIGQUERY_CXXLDFLAGS := $(shell pkg-config $(BIGQUERY_DEPS) --libs-only-L)
 BIGQUERY_LIBS       := $(shell pkg-config $(BIGQUERY_DEPS) --libs-only-l)

@@ -27,12 +27,12 @@ void ProcessRowsInAvroFormat(
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <project-name> <table-name>\n";
+    std::cerr << "Usage: " << argv[0] << " <project-id> <table-name>\n";
     return 1;
   }
 
   // project_name should be in the format "projects/<your-gcp-project>"
-  std::string const project_name = argv[1];
+  std::string const project_name = "projects/" + std::string(argv[1]);
   // table_name should be in the format:
   // "projects/<project-table-resides-in>/datasets/<dataset-table_resides-in>/tables/<table
   // name>" The project values in project_name and table_name do not have to be
