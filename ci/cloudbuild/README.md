@@ -34,7 +34,8 @@ ubsan, etc. The full matrix of all combinations is infeasible to test
 completely, so we follow the following principles to minimize the test space
 while achieving high likelihood of the code working for our customers.
 
-* We want to test _something_ on each dimension
+* For simple dimensions (e.g. things that are "on/off") we want at least one
+  build for each 'value' of the setting.
 * On dimensions with versions, we want to test something _old_ and something
   _new_ (specific versions will change over time)
 * Integration tests should prefer running against an emulator in _most_ cases
