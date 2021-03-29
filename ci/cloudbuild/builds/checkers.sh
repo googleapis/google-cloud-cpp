@@ -19,7 +19,8 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
-# `check-style.sh` (below) uses `git ls-files`, so we need a valid .git dir.
+# `check-style.sh` (below) uses `git ls-files`, so we need a valid .git dir, so
+# we create one, add all the files, and commit it (locally).
 if [[ -d .git ]]; then
   io::log_green "Found .git directory"
 else
@@ -33,7 +34,8 @@ else
 fi
 
 io::log_h2 "Checking Style"
-CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="yes" ci/check-style.sh
+CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="${GOOGLE_CLOUD_BUILD:-no}" \
+  ci/check-style.sh
 
 io::log_h2 "Verifying Markdown"
 CHECK_MARKDOWN=yes ci/check-markdown.sh
