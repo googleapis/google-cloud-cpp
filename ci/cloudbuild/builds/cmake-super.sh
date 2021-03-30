@@ -22,7 +22,10 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 export CC=gcc
 export CXX=g++
 
-cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=yes \
+cmake -GNinja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=yes \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -Hsuper -Bcmake-out
 cmake --build cmake-out
 # Testing is automatically done by the super build itself. See
