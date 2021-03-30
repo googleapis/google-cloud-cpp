@@ -1,0 +1,10 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^master$
+name: clang-old-ci
+substitutions:
+  _BUILD_NAME: clang-old
+  _DISTRO: fedora
