@@ -199,55 +199,57 @@ $(function() {
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;                                     SqlStatement statement,</div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;                                     QueryOptions <span class="keyword">const</span>&amp; opts = {});</div>
 <div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;  StatusOr&lt;BatchDmlResult&gt; ExecuteBatchDml(</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;      Transaction transaction, std::vector&lt;SqlStatement&gt; statements);</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;      std::function&lt;StatusOr&lt;Mutations&gt;(Transaction)&gt; <span class="keyword">const</span>&amp; mutator,</div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;      std::unique_ptr&lt;TransactionRerunPolicy&gt; rerun_policy,</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;      std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;      CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160; </div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;      std::function&lt;StatusOr&lt;Mutations&gt;(Transaction)&gt; <span class="keyword">const</span>&amp; mutator,</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;      CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160; </div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">Mutations</a> mutations,</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;                                CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(Transaction transaction, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">Mutations</a> mutations,</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;                                CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160; </div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;  Status Rollback(Transaction transaction);</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160; </div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;  StatusOr&lt;PartitionedDmlResult&gt; ExecutePartitionedDml(SqlStatement statement);</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160; </div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;  QueryOptions OverlayQueryOptions(QueryOptions <span class="keyword">const</span>&amp;);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;  std::shared_ptr&lt;Connection&gt; conn_;</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;  ClientOptions opts_;</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;};</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160; </div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;std::shared_ptr&lt;spanner::Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">spanner::Database</a> <span class="keyword">const</span>&amp; db,</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;                                                    Options opts = {});</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;std::shared_ptr&lt;Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(</div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    Database <span class="keyword">const</span>&amp; db, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; connection_options,</div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;    SessionPoolOptions session_pool_options = SessionPoolOptions());</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160; </div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;std::shared_ptr&lt;Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;    Database <span class="keyword">const</span>&amp; db, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; connection_options,</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    SessionPoolOptions session_pool_options,</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;    std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy);</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160; </div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160; </div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CLIENT_H</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;  StatusOr&lt;BatchDmlResult&gt; ExecuteBatchDml(Transaction transaction,</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;                                           std::vector&lt;SqlStatement&gt; statements,</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;                                           Options opts = {});</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160; </div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;      std::function&lt;StatusOr&lt;Mutations&gt;(Transaction)&gt; <span class="keyword">const</span>&amp; mutator,</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;      std::unique_ptr&lt;TransactionRerunPolicy&gt; rerun_policy,</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;      std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;      CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160; </div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;      std::function&lt;StatusOr&lt;Mutations&gt;(Transaction)&gt; <span class="keyword">const</span>&amp; mutator,</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;      CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(<a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">Mutations</a> mutations,</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;                                CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160; </div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;  StatusOr&lt;CommitResult&gt; Commit(Transaction transaction, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">Mutations</a> mutations,</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;                                CommitOptions <span class="keyword">const</span>&amp; options = {});</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;  Status Rollback(Transaction transaction);</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160; </div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;  StatusOr&lt;PartitionedDmlResult&gt; ExecutePartitionedDml(</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;      SqlStatement statement, QueryOptions <span class="keyword">const</span>&amp; opts = {});</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160; </div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;  QueryOptions OverlayQueryOptions(QueryOptions <span class="keyword">const</span>&amp;);</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;  std::shared_ptr&lt;Connection&gt; conn_;</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;  ClientOptions opts_;</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;};</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160; </div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;std::shared_ptr&lt;spanner::Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Database.html">spanner::Database</a> <span class="keyword">const</span>&amp; db,</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;                                                    Options opts = {});</div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;std::shared_ptr&lt;Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;    Database <span class="keyword">const</span>&amp; db, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; connection_options,</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;    SessionPoolOptions session_pool_options = SessionPoolOptions());</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160; </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;std::shared_ptr&lt;Connection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">MakeConnection</a>(</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    Database <span class="keyword">const</span>&amp; db, <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; connection_options,</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    SessionPoolOptions session_pool_options,</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;    std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy);</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160; </div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_CLIENT_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aresults_8h_html"><div class="ttname"><a href="results_8h.html">results.h</a></div></div>
 <div class="ttc" id="astatus_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status_8h.html">status.h</a></div></div>
@@ -286,8 +288,8 @@ $(function() {
 <div class="ttc" id="aclient__options_8h_html"><div class="ttname"><a href="client__options_8h.html">client_options.h</a></div></div>
 <div class="ttc" id="aconnection__options_8h_html"><div class="ttname"><a href="connection__options_8h.html">connection_options.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a48ad4cf1788737e8c76d7e67c13d6a33"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a48ad4cf1788737e8c76d7e67c13d6a33">google::cloud::spanner::v1::Client::Client</a></div><div class="ttdeci">Client()=delete</div><div class="ttdoc">No default construction. Use Client(std::shared_ptr&lt;Connection&gt;)</div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ab50e7b556f8be0494d55fbff1806653c"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">google::cloud::spanner::v1::MakeConnection</a></div><div class="ttdeci">std::shared_ptr&lt; spanner::Connection &gt; MakeConnection(spanner::Database const &amp;db, Options opts)</div><div class="ttdoc">Returns a Connection object that can be used for interacting with Spanner.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00327">client.cc:327</a></div></div>
-<div class="ttc" id="astructgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html">google::cloud::spanner::v1::ReadOptions</a></div><div class="ttdoc">Options passed to Client::Read or Client::PartitionRead.</div><div class="ttdef"><b>Definition:</b> <a href="read__options_8h_source.html#l00028">read_options.h:28</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ab50e7b556f8be0494d55fbff1806653c"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ab50e7b556f8be0494d55fbff1806653c">google::cloud::spanner::v1::MakeConnection</a></div><div class="ttdeci">std::shared_ptr&lt; spanner::Connection &gt; MakeConnection(spanner::Database const &amp;db, Options opts)</div><div class="ttdoc">Returns a Connection object that can be used for interacting with Spanner.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00330">client.cc:330</a></div></div>
+<div class="ttc" id="astructgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html">google::cloud::spanner::v1::ReadOptions</a></div><div class="ttdoc">Options passed to Client::Read or Client::PartitionRead.</div><div class="ttdef"><b>Definition:</b> <a href="read__options_8h_source.html#l00030">read_options.h:30</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a74d5527f75e7e7117fc6582ac3ec3b01"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a74d5527f75e7e7117fc6582ac3ec3b01">google::cloud::spanner::v1::Client::operator=</a></div><div class="ttdeci">Client &amp; operator=(Client const &amp;)=default</div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">google::cloud::spanner::v1::RowStream</a></div><div class="ttdoc">Represents the stream of Rows returned from spanner::Client::Read() or spanner::Client::ExecuteQuery(...</div><div class="ttdef"><b>Definition:</b> <a href="results_8h_source.html#l00073">results.h:73</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a4902b2cd24fa30e7a28fb64a223b68a1"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a4902b2cd24fa30e7a28fb64a223b68a1">google::cloud::spanner::v1::Client::Client</a></div><div class="ttdeci">Client(std::shared_ptr&lt; Connection &gt; conn, ClientOptions opts={})</div><div class="ttdoc">Constructs a Client object using the specified conn and opts.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00126">client.h:126</a></div></div>

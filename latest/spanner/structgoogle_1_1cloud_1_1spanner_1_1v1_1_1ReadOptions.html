@@ -88,11 +88,14 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a8c8b93c2dfbc5e9827274774a69ed7d3"><td class="memItemLeft" align="right" valign="top">std::int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a8c8b93c2dfbc5e9827274774a69ed7d3">limit</a> = 0</td></tr>
 <tr class="memdesc:a8c8b93c2dfbc5e9827274774a69ed7d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limit on the number of rows to yield, or 0 for no limit.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a8c8b93c2dfbc5e9827274774a69ed7d3">More...</a><br /></td></tr>
 <tr class="separator:a8c8b93c2dfbc5e9827274774a69ed7d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a165065589c69c3fac6da6af988af5f4e"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">request_priority</a></td></tr>
+<tr class="memdesc:a165065589c69c3fac6da6af988af5f4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Priority for the read request.  <a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">More...</a><br /></td></tr>
+<tr class="separator:a165065589c69c3fac6da6af988af5f4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Options passed to <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#aacc341173c9c42bba0d0ee772054a874" title="Reads rows from the database using key lookups and scans, as a simple key/value style alternative to ...">Client::Read</a></code> or <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#abb890671663af5bbfc3e409d98db98cf" title="Creates a set of partitions that can be used to execute a read operation in parallel.">Client::PartitionRead</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00028">28</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00030">30</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ab13e4b98e903452afd1c9aa51c8e360a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab13e4b98e903452afd1c9aa51c8e360a">&#9670;&nbsp;</a></span>index_name</h2>
@@ -109,7 +112,7 @@ Public Attributes</h2></td></tr>
 <p>If non-empty, the name of an index on a database table. </p>
 <p>This index is used instead of the table primary key when interpreting the <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1KeySet.html" title="The KeySet class is a regular type that represents a collection of Keys.">KeySet</a></code>and sorting result rows. </p>
 
-<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00034">34</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00036">36</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
 
 </div>
 </div>
@@ -128,7 +131,25 @@ Public Attributes</h2></td></tr>
 <p>Limit on the number of rows to yield, or 0 for no limit. </p>
 <p>A limit cannot be specified when calling <code>PartitionRead</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00040">40</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00042">42</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a165065589c69c3fac6da6af988af5f4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a165065589c69c3fac6da6af988af5f4e">&#9670;&nbsp;</a></span>request_priority</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a>&gt; google::cloud::spanner::v1::ReadOptions::request_priority</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Priority for the read request. </p>
+
+<p class="definition">Definition at line <a class="el" href="read__options_8h_source.html#l00047">47</a> of file <a class="el" href="read__options_8h_source.html">read_options.h</a>.</p>
 
 </div>
 </div>

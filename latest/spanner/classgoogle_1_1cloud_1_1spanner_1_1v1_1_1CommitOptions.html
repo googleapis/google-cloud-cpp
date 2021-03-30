@@ -91,6 +91,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6b3f10af75779d2726a2c4401877c9a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a6b3f10af75779d2726a2c4401877c9a7">return_stats</a> () const</td></tr>
 <tr class="memdesc:a6b3f10af75779d2726a2c4401877c9a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitResult.html" title="The result of committing a Transaction.">CommitResult</a></code> should contain <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitStats.html" title="Statistics returned for a committed Transaction.">CommitStats</a></code>.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a6b3f10af75779d2726a2c4401877c9a7">More...</a><br /></td></tr>
 <tr class="separator:a6b3f10af75779d2726a2c4401877c9a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26908ec7ced613bded4913a1e8e8d418"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html">CommitOptions</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a26908ec7ced613bded4913a1e8e8d418">set_request_priority</a> (<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a> &gt; <a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a92f14beb913c87ecf79d4f43a02ce621">request_priority</a>)</td></tr>
+<tr class="memdesc:a26908ec7ced613bded4913a1e8e8d418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the priority of the <code>spanner::Client::Commit()</code> call.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a26908ec7ced613bded4913a1e8e8d418">More...</a><br /></td></tr>
+<tr class="separator:a26908ec7ced613bded4913a1e8e8d418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92f14beb913c87ecf79d4f43a02ce621"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a92f14beb913c87ecf79d4f43a02ce621">request_priority</a> () const</td></tr>
+<tr class="memdesc:a92f14beb913c87ecf79d4f43a02ce621"><td class="mdescLeft">&#160;</td><td class="mdescRight">The priority of the <code>spanner::Client::Commit()</code> call.  <a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a92f14beb913c87ecf79d4f43a02ce621">More...</a><br /></td></tr>
+<tr class="separator:a92f14beb913c87ecf79d4f43a02ce621"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Set options on calls to <code>spanner::Client::Commit()</code>. </p>
@@ -104,7 +110,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html">spanner::CommitOptions</a>{}.<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a5826e1bb14d84f0f1442e91098efbf75">set_return_stats</a>(<span class="keyword">true</span>));</div>
 </div><!-- fragment --></dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00031">31</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00033">33</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa791a0fb242f2de86fe84f6b39edcdf2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa791a0fb242f2de86fe84f6b39edcdf2">&#9670;&nbsp;</a></span>CommitOptions()</h2>
@@ -134,6 +140,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a92f14beb913c87ecf79d4f43a02ce621"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92f14beb913c87ecf79d4f43a02ce621">&#9670;&nbsp;</a></span>request_priority()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt;<a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a>&gt; google::cloud::spanner::v1::CommitOptions::request_priority </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The priority of the <code>spanner::Client::Commit()</code> call. </p>
+
+<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00055">55</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
+
+</div>
+</div>
 <a id="a6b3f10af75779d2726a2c4401877c9a7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b3f10af75779d2726a2c4401877c9a7">&#9670;&nbsp;</a></span>return_stats()</h2>
 
@@ -159,7 +194,37 @@ Public Member Functions</h2></td></tr>
 
 <p>Whether the <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitResult.html" title="The result of committing a Transaction.">CommitResult</a></code> should contain <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitStats.html" title="Statistics returned for a committed Transaction.">CommitStats</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00043">43</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00045">45</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
+
+</div>
+</div>
+<a id="a26908ec7ced613bded4913a1e8e8d418"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26908ec7ced613bded4913a1e8e8d418">&#9670;&nbsp;</a></span>set_request_priority()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html">CommitOptions</a>&amp; google::cloud::spanner::v1::CommitOptions::set_request_priority </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#af18c5300be7dd3ffb1c356157bf147cd">absl::optional</a>&lt; <a class="el" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294">RequestPriority</a> &gt;&#160;</td>
+          <td class="paramname"><em>request_priority</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the priority of the <code>spanner::Client::Commit()</code> call. </p>
+
+<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00048">48</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
 
 </div>
 </div>
@@ -189,16 +254,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Set whether the <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitResult.html" title="The result of committing a Transaction.">CommitResult</a></code> should contain <code><a class="el" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitStats.html" title="Statistics returned for a committed Transaction.">CommitStats</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00037">37</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="commit__options_8h_source.html#l00039">39</a> of file <a class="el" href="commit__options_8h_source.html">commit_options.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_af7ee8a3ff3c995c766c892644d16c24b"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#af7ee8a3ff3c995c766c892644d16c24b">google::cloud::spanner::v1::UpdateMutationBuilder</a></div><div class="ttdeci">spanner_internal::WriteMutationBuilder&lt; spanner_internal::UpdateOp &gt; UpdateMutationBuilder</div><div class="ttdoc">A helper class to construct &quot;update&quot; mutations.</div><div class="ttdef"><b>Definition:</b> <a href="mutations_8h_source.html#l00248">mutations.h:249</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ae374cb411ab9c8e4d7cdc18400fa6070"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae374cb411ab9c8e4d7cdc18400fa6070">google::cloud::spanner::v1::Mutations</a></div><div class="ttdeci">std::vector&lt; Mutation &gt; Mutations</div><div class="ttdoc">An ordered sequence of mutations to pass to Client::Commit() or return from the Client::Commit() muta...</div><div class="ttdef"><b>Definition:</b> <a href="mutations_8h_source.html#l00099">mutations.h:99</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions_html_a5826e1bb14d84f0f1442e91098efbf75"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a5826e1bb14d84f0f1442e91098efbf75">google::cloud::spanner::v1::CommitOptions::set_return_stats</a></div><div class="ttdeci">CommitOptions &amp; set_return_stats(bool return_stats)</div><div class="ttdoc">Set whether the CommitResult should contain CommitStats.</div><div class="ttdef"><b>Definition:</b> <a href="commit__options_8h_source.html#l00037">commit_options.h:37</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a9796d8bf838966aafbdbcbf974b9e0a6"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a9796d8bf838966aafbdbcbf974b9e0a6">google::cloud::spanner::v1::Client::Commit</a></div><div class="ttdeci">StatusOr&lt; CommitResult &gt; Commit(std::function&lt; StatusOr&lt; Mutations &gt;(Transaction)&gt; const &amp;mutator, std::unique_ptr&lt; TransactionRerunPolicy &gt; rerun_policy, std::unique_ptr&lt; BackoffPolicy &gt; backoff_policy, CommitOptions const &amp;options={})</div><div class="ttdoc">Commits a read-write transaction.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00189">client.cc:189</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html">google::cloud::spanner::v1::CommitOptions</a></div><div class="ttdoc">Set options on calls to spanner::Client::Commit().</div><div class="ttdef"><b>Definition:</b> <a href="commit__options_8h_source.html#l00031">commit_options.h:31</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions_html_a5826e1bb14d84f0f1442e91098efbf75"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html#a5826e1bb14d84f0f1442e91098efbf75">google::cloud::spanner::v1::CommitOptions::set_return_stats</a></div><div class="ttdeci">CommitOptions &amp; set_return_stats(bool return_stats)</div><div class="ttdoc">Set whether the CommitResult should contain CommitStats.</div><div class="ttdef"><b>Definition:</b> <a href="commit__options_8h_source.html#l00039">commit_options.h:39</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client_html_a9796d8bf838966aafbdbcbf974b9e0a6"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html#a9796d8bf838966aafbdbcbf974b9e0a6">google::cloud::spanner::v1::Client::Commit</a></div><div class="ttdeci">StatusOr&lt; CommitResult &gt; Commit(std::function&lt; StatusOr&lt; Mutations &gt;(Transaction)&gt; const &amp;mutator, std::unique_ptr&lt; TransactionRerunPolicy &gt; rerun_policy, std::unique_ptr&lt; BackoffPolicy &gt; backoff_policy, CommitOptions const &amp;options={})</div><div class="ttdoc">Commits a read-write transaction.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00191">client.cc:191</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1CommitOptions.html">google::cloud::spanner::v1::CommitOptions</a></div><div class="ttdoc">Set options on calls to spanner::Client::Commit().</div><div class="ttdef"><b>Definition:</b> <a href="commit__options_8h_source.html#l00033">commit_options.h:33</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.8.20

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['severity_1364',['Severity',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#ac4c72b23eec2946858a43c41386b1dd4',1,'google::cloud::v1']]],
-  ['statuscode_1365',['StatusCode',['https://googleapis.dev/cpp/google-cloud-common/latest/namespacegoogle_1_1cloud_1_1v1.html#a3555ac1a663dcca8417ae42c54266ba2',1,'google::cloud::v1']]]
+  ['requestpriority_1379',['RequestPriority',['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294',1,'google::cloud::spanner::RequestPriority()'],['../namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a436ba17461fe99078e81abba5c68c294',1,'google::cloud::spanner::v1::RequestPriority()']]]
 ];
