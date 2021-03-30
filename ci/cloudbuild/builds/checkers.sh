@@ -19,8 +19,10 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 
-# `check-style.sh` (below) uses `git ls-files`, so we need a valid .git dir, so
-# we create one, add all the files, and commit it (locally).
+# `check-style.sh` (below) uses `git ls-files`. Unfortunately Google Cloud
+# Build does not preserve the `.git` directory. To keep `check-style.sh` usable
+# in multiple CI systems, we initialize `.git/` with all the files in the
+# current directory.`
 if [[ -d .git ]]; then
   io::log_green "Found .git directory"
 else
