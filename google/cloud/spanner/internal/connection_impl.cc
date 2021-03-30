@@ -813,7 +813,10 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     *request.add_statements() = ToProto(std::move(sql));
   }
   request.mutable_request_options()->set_priority(
-      ProtoRequestPriority(params.query_options.request_priority()));
+      params.options.has<spanner::RequestPriorityOption>()
+          ? ProtoRequestPriority(
+                params.options.lookup<spanner::RequestPriorityOption>())
+          : spanner_proto::RequestOptions_Priority_PRIORITY_UNSPECIFIED);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {

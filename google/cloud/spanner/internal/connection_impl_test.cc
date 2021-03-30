@@ -1300,7 +1300,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   auto txn = spanner::MakeReadWriteTransaction();
   auto result =
       conn->ExecuteBatchDml({txn, request,
-                             spanner::QueryOptions{}.set_request_priority(
+                             Options{}.set<spanner::RequestPriorityOption>(
                                  spanner::RequestPriority::kMedium)});
   EXPECT_STATUS_OK(result);
   EXPECT_STATUS_OK(result->status);

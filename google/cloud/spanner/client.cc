@@ -182,9 +182,10 @@ StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
 
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
     Transaction transaction, std::vector<SqlStatement> statements,
-    QueryOptions const& opts) {
-  return conn_->ExecuteBatchDml({std::move(transaction), std::move(statements),
-                                 OverlayQueryOptions(opts)});
+    Options opts) {
+  internal::CheckExpectedOptions<RequestOptionList>(opts, __func__);
+  return conn_->ExecuteBatchDml(
+      {std::move(transaction), std::move(statements), std::move(opts)});
 }
 
 StatusOr<CommitResult> Client::Commit(

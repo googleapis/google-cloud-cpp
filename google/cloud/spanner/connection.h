@@ -111,7 +111,7 @@ class Connection {
   struct ExecuteBatchDmlParams {
     Transaction transaction;
     std::vector<SqlStatement> statements;
-    QueryOptions query_options;
+    Options options;
   };
 
   /// Wrap the arguments to `Commit()`.
