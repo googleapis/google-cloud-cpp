@@ -29,7 +29,19 @@ BAZEL_BIN="$1"
 shift
 BAZEL_VERB="$1"
 shift
-bazel_test_args=("$@")
+
+bazel_test_args=()
+excluded_targets=()
+
+# Separate caller-provided excluded targets (starting with "-//..."), so that
+# we can make sure those appear on the command line after `--`.
+for arg in "$@"; do
+  if [[ "${arg}" = -//* ]]; then
+    excluded_targets+=("${arg}")
+  else
+    bazel_test_args+=("${arg}")
+  fi
+done
 
 # These can only run against production
 production_only_targets=(
@@ -41,7 +53,7 @@ production_only_targets=(
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \
-  "${production_only_targets[@]}"
+  "${production_only_targets[@]}" "${excluded_targets[@]}"
 
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
@@ -62,7 +74,7 @@ if [[ "$exit_status" -ne 0 ]]; then
   exit "${exit_status}"
 fi
 
-excluded_targets=(
+excluded_targets+=(
   # This test does not work with Bazel, because it depends on dynamic loading
   # and some CMake magic. It is also skipped against production, so most Bazel
   # builds run it but it is a no-op.

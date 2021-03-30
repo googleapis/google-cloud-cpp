@@ -39,10 +39,6 @@ args+=(
   "--test_env=CLOUD_STORAGE_ENABLE_TRACING=rpc"
 )
 
-# TODO(#6083): Enable storage integration tests. The difficulty with these is
-# providing the GOOGLE_CLOUD_CPP_TEST_KEY_FILE_{JSON,P12} files, which we may
-# need to provide via Secret Manager.
-
 io::log_h2 "Runnning Generator integration tests (with emulator)"
 env \
   GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes \
@@ -77,6 +73,34 @@ env \
 
 # TODO(#6083): Run //google/cloud/bigtable/examples:bigtable_grpc_credentials
 # separately w/ an access token.
+
+io::log_h2 "Runnning Storage integration tests (with emulator)"
+storage_args=(
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+
+  # TODO(#6083): Enable tests that require
+  # GOOGLE_CLOUD_CPP_TEST_KEY_FILE_{JSON,P12} files.
+  # "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
+  # "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
+  "-//google/cloud/storage/tests:key_file_integration_test"
+
+  # Skip these tests until we can figure out how to get them to work. These run
+  # against production, not the emulator.
+  "-//google/cloud/storage/examples:storage_policy_doc_samples"
+  "-//google/cloud/storage/examples:storage_signed_url_v2_samples"
+  "-//google/cloud/storage/examples:storage_signed_url_v4_samples"
+)
+"./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+  bazel test "${args[@]}" "${storage_args[@]}"
 
 io::log_h2 "Runnning Spanner integration tests"
 # TODO(#6083): Add support for:
