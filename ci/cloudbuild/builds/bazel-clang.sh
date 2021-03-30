@@ -22,6 +22,8 @@ source module ci/cloudbuild/builds/lib/bazel.sh
 export CC=clang
 export CXX=clang++
 
+bazel::fetch_dependencies
+
 mapfile -t args < <(bazel::common_args)
 args+=("--test_tag_filters=-integration-test")
 bazel test "${args[@]}" ...
