@@ -46,11 +46,9 @@ function bazel::common_args() {
 # from time to time due to transient network problems. Running `bazel fetch` at
 # the beginning of the build prevents such transient failures from flaking the
 # build.
-function bazel::fetch_dependencies() {
-  "./ci/retry-command.sh" 3 120 bazel fetch ... \
+"./ci/retry-command.sh" 3 120 bazel fetch ... \
     @local_config_platform//... \
     @local_config_cc_toolchains//... \
     @local_config_sh//... \
     @go_sdk//... \
     @remotejdk11_linux//:jdk
-}
