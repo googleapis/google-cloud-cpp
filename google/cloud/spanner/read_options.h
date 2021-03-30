@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_READ_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_READ_OPTIONS_H
 
+#include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
 #include <string>
 
@@ -38,10 +40,17 @@ struct ReadOptions {
    * A limit cannot be specified when calling `PartitionRead`.
    */
   std::int64_t limit = 0;
+
+  /**
+   * Priority for the read request.
+   */
+  absl::optional<RequestPriority> request_priority;
 };
 
 inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {
-  return lhs.limit == rhs.limit && lhs.index_name == rhs.index_name;
+  return lhs.limit == rhs.limit &&
+         lhs.request_priority == rhs.request_priority &&
+         lhs.index_name == rhs.index_name;
 }
 
 inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {

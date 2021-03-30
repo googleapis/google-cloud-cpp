@@ -41,6 +41,7 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/polling_policy.h"
+#include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/options.h"
@@ -154,6 +155,18 @@ using SessionPoolOptionList = OptionList<
     SessionPoolMinSessionsOption, SessionPoolMaxSessionsPerChannelOption,
     SessionPoolMaxIdleSessionsOption, SessionPoolActionOnExhaustionOption,
     SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
+
+/**
+ * Option for `google::cloud::Options` to set a `spanner::RequestPriority`.
+ */
+struct RequestPriorityOption {
+  using Type = spanner::RequestPriority;
+};
+
+/**
+ * List of all Request options.
+ */
+using RequestOptionList = OptionList<RequestPriorityOption>;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

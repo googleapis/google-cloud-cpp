@@ -22,9 +22,10 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-TEST(QueryOptionsTest, OptimizerVersion) {
+TEST(QueryOptionsTest, Values) {
   QueryOptions const default_constructed{};
   EXPECT_FALSE(default_constructed.optimizer_version().has_value());
+  EXPECT_FALSE(default_constructed.request_priority().has_value());
 
   auto copy = default_constructed;
   EXPECT_EQ(copy, default_constructed);
@@ -35,6 +36,14 @@ TEST(QueryOptionsTest, OptimizerVersion) {
   EXPECT_NE(copy, default_constructed);
 
   copy.set_optimizer_version(absl::optional<std::string>{});
+  EXPECT_EQ(copy, default_constructed);
+
+  copy.set_request_priority(RequestPriority::kLow);
+  EXPECT_NE(copy, default_constructed);
+  copy.set_request_priority(RequestPriority::kHigh);
+  EXPECT_NE(copy, default_constructed);
+
+  copy.set_request_priority(absl::optional<RequestPriority>{});
   EXPECT_EQ(copy, default_constructed);
 }
 
