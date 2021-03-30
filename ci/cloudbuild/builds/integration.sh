@@ -26,6 +26,11 @@ export CXX=clang++
 export CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
 
+io::log_h2 "Troubleshoot signed URL tests"
+gsutil -p "${GOOGLE_CLOUD_PROJECT}" ls gs://cloud-cpp-testing-bucket
+io::log_h2 "Troubleshoot signed URL tests [2]"
+gsutil -D signurl gs://cloud-cpp-testing-bucket/gcs2cbt-sample-data.csv 2>&1 | sed 's/Bearer .*/Bearer [censored]/'
+
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
@@ -39,21 +44,21 @@ args+=(
   "--test_env=CLOUD_STORAGE_ENABLE_TRACING=rpc"
 )
 
-io::log_h2 "Runnning Generator integration tests (with emulator)"
+io::log_h2 "Running Generator integration tests (with emulator)"
 env \
   GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes \
   GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH=/workspace \
   "./generator/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}"
 
-io::log_h2 "Runnning Pub/Sub integration tests (with emulator)"
+io::log_h2 "Running Pub/Sub integration tests (with emulator)"
 "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}"
 
 # TODO(#441) - remove the `retry-command.sh` below.
 # Sometimes the integration tests manage to crash the Bigtable emulator. Use a
 # (short) timeout to run the test and try 3 times.
-io::log_h2 "Runnning Bigtable integration tests (with emulator)"
+io::log_h2 "Running Bigtable integration tests (with emulator)"
 bigtable_args=(
   "--test_timeout=100"
   "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
@@ -74,7 +79,7 @@ env \
 # TODO(#6083): Run //google/cloud/bigtable/examples:bigtable_grpc_credentials
 # separately w/ an access token.
 
-io::log_h2 "Runnning Storage integration tests (with emulator)"
+io::log_h2 "Running Storage integration tests (with emulator)"
 storage_args=(
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
@@ -102,7 +107,7 @@ storage_args=(
 "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}" "${storage_args[@]}"
 
-io::log_h2 "Runnning Spanner integration tests"
+io::log_h2 "Running Spanner integration tests"
 # TODO(#6083): Add support for:
 # - GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS
 # - GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT
