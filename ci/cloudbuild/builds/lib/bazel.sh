@@ -25,18 +25,22 @@ fi # include guard
 
 source module ci/lib/io.sh
 
-io::log_h2 "Prefetching bazel deps"
+io::log "Prefetching bazel deps..."
 # Bazel downloads all the dependencies of a project, as well as a number of
 # development tools during startup. In automated builds these downloads fail
 # from time to time due to transient network problems. Running `bazel fetch` at
 # the beginning of the build prevents such transient failures from flaking the
 # build.
-"./ci/retry-command.sh" 3 120 bazel fetch ... \
-  @local_config_platform//... \
-  @local_config_cc_toolchains//... \
-  @local_config_sh//... \
-  @go_sdk//... \
-  @remotejdk11_linux//:jdk
+TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
+time {
+  "./ci/retry-command.sh" 3 120 bazel fetch ... \
+    @local_config_platform//... \
+    @local_config_cc_toolchains//... \
+    @local_config_sh//... \
+    @go_sdk//... \
+    @remotejdk11_linux//:jdk
+}
+echo
 
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
