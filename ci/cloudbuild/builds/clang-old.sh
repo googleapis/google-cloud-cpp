@@ -27,4 +27,3 @@ export CXX=clang++
 cmake -GNinja -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
   -Hsuper -Bcmake-out
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test"
