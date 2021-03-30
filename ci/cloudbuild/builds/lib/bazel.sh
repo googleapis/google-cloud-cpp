@@ -14,13 +14,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This bash library has various helper functions for our bazel-based builds.
+# This bash library has various helper functions for our bazel-based builds
+# and automatically pre-fetches all dependencies for the project.
 
 # Make our include guard clean against set -o nounset.
 test -n "${CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__:-}" || declare -i CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__=0
 if ((CI_CLOUDBUILD_BUILDS_LIB_BAZEL_SH__++ != 0)); then
   return 0
 fi # include guard
+
+source module ci/lib/io.sh
+
+io::log_h2 "Prefetching bazel deps"
+# Bazel downloads all the dependencies of a project, as well as a number of
+# development tools during startup. In automated builds these downloads fail
+# from time to time due to transient network problems. Running `bazel fetch` at
+# the beginning of the build prevents such transient failures from flaking the
+# build.
+"./ci/retry-command.sh" 3 120 bazel fetch ... \
+  @local_config_platform//... \
+  @local_config_cc_toolchains//... \
+  @local_config_sh//... \
+  @go_sdk//... \
+  @remotejdk11_linux//:jdk
 
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
@@ -40,15 +56,3 @@ function bazel::common_args() {
   fi
   printf "%s\n" "${args[@]}"
 }
-
-# Bazel downloads all the dependencies of a project, as well as a number of
-# development tools during startup. In automated builds these downloads fail
-# from time to time due to transient network problems. Running `bazel fetch` at
-# the beginning of the build prevents such transient failures from flaking the
-# build.
-"./ci/retry-command.sh" 3 120 bazel fetch ... \
-    @local_config_platform//... \
-    @local_config_cc_toolchains//... \
-    @local_config_sh//... \
-    @go_sdk//... \
-    @remotejdk11_linux//:jdk
