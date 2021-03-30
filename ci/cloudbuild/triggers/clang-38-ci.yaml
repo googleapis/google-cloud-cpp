@@ -4,7 +4,7 @@ github:
   owner: googleapis
   push:
     branch: ^master$
-name: gcc-old-ci
+name: clang-38-ci
 substitutions:
-  _BUILD_NAME: gcc-old
+  _BUILD_NAME: clang-38
   _DISTRO: fedora
