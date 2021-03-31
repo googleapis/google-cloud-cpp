@@ -36,7 +36,7 @@ args+=(
   "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
   "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING"
   "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc"
-  "--test_env=CLOUD_STORAGE_ENABLE_TRACING=rpc"
+  "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client"
 )
 
 io::log_h2 "Running Generator integration tests (with emulator)"
