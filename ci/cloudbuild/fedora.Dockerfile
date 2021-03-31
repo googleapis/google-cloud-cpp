@@ -137,6 +137,7 @@ COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 ENV CLOUDSDK_PYTHON=python3.8
 RUN /var/tmp/ci/install-cloud-sdk.sh
+ENV PATH=/usr/local/google-cloud-sdk/bin/:${PATH}
 # The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
 # Bazel needs the '-devel' version with javac.
 RUN dnf makecache && dnf install -y java-latest-openjdk-devel
