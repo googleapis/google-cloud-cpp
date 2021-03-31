@@ -93,11 +93,6 @@ storage_args=(
   # "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
   "-//google/cloud/storage/tests:key_file_integration_test"
 
-  # Skip these tests until we can figure out how to get them to work. These run
-  # against production, not the emulator.
-  "-//google/cloud/storage/examples:storage_policy_doc_samples"
-  "-//google/cloud/storage/examples:storage_signed_url_v2_samples"
-  "-//google/cloud/storage/examples:storage_signed_url_v4_samples"
 )
 "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}" "${storage_args[@]}"

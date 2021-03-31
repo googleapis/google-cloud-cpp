@@ -26,27 +26,31 @@ void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
   //! [create signed policy document]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& signing_account) {
     StatusOr<gcs::PolicyDocumentResult> document =
-        client.CreateSignedPolicyDocument(gcs::PolicyDocument{
-            std::chrono::system_clock::now() + std::chrono::minutes(15),
-            {
-                gcs::PolicyDocumentCondition::StartsWith("key", ""),
-                gcs::PolicyDocumentCondition::ExactMatchObject(
-                    "acl", "bucket-owner-read"),
-                gcs::PolicyDocumentCondition::ExactMatchObject(
-                    "bucket", std::move(bucket_name)),
-                gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
-                                                         "image/jpeg"),
-                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),
-            }});
+        client.CreateSignedPolicyDocument(
+            gcs::PolicyDocument{
+                std::chrono::system_clock::now() + std::chrono::minutes(15),
+                {
+                    gcs::PolicyDocumentCondition::StartsWith("key", ""),
+                    gcs::PolicyDocumentCondition::ExactMatchObject(
+                        "acl", "bucket-owner-read"),
+                    gcs::PolicyDocumentCondition::ExactMatchObject(
+                        "bucket", std::move(bucket_name)),
+                    gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
+                                                             "image/jpeg"),
+                    gcs::PolicyDocumentCondition::ContentLengthRange(0,
+                                                                     1000000),
+                }},
+            gcs::SigningAccount(signing_account));
     if (!document) throw std::runtime_error(document.status().message());
 
     std::cout << "The signed document is: " << *document << "\n\n"
               << "You can use this with an HTML form.\n";
   }
   //! [create signed policy document]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
@@ -54,28 +58,32 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
   //! [create signed policy document v4]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string const& bucket_name) {
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& signing_account) {
     StatusOr<gcs::PolicyDocumentV4Result> document =
-        client.GenerateSignedPostPolicyV4(gcs::PolicyDocumentV4{
-            std::move(bucket_name),
-            "scan_0001.jpg",
-            std::chrono::minutes(15),
-            std::chrono::system_clock::now(),
-            {
-                gcs::PolicyDocumentCondition::StartsWith("key", ""),
-                gcs::PolicyDocumentCondition::ExactMatchObject(
-                    "acl", "bucket-owner-read"),
-                gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
-                                                         "image/jpeg"),
-                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),
-            }});
+        client.GenerateSignedPostPolicyV4(
+            gcs::PolicyDocumentV4{
+                std::move(bucket_name),
+                "scan_0001.jpg",
+                std::chrono::minutes(15),
+                std::chrono::system_clock::now(),
+                {
+                    gcs::PolicyDocumentCondition::StartsWith("key", ""),
+                    gcs::PolicyDocumentCondition::ExactMatchObject(
+                        "acl", "bucket-owner-read"),
+                    gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
+                                                             "image/jpeg"),
+                    gcs::PolicyDocumentCondition::ContentLengthRange(0,
+                                                                     1000000),
+                }},
+            gcs::SigningAccount(signing_account));
     if (!document) throw std::runtime_error(document.status().message());
 
     std::cout << "The signed document is: " << *document << "\n\n"
               << "You can use this with an HTML form.\n";
   }
   //! [create signed policy document v4]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
@@ -84,14 +92,15 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
+     std::string const& object_name, std::string const& signing_account) {
     auto document = client.GenerateSignedPostPolicyV4(
         gcs::PolicyDocumentV4{
             bucket_name,
             object_name,
             /*expiration=*/std::chrono::minutes(10),
         },
-        gcs::AddExtensionFieldOption("x-goog-meta-test", "data"));
+        gcs::AddExtensionFieldOption("x-goog-meta-test", "data"),
+        gcs::SigningAccount(signing_account));
     if (!document) throw std::runtime_error(document.status().message());
 
     // Create the HTML form for the computed policy.
@@ -109,7 +118,7 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
     std::cout << "A sample HTML form:\n" << os.str() << "\n";
   }
   // [END storage_generate_signed_post_policy_v4]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -119,9 +128,14 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const signing_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
+          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto const object_name =
@@ -139,15 +153,16 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning the CreatedSignedPolicyDocumentV2() example"
             << std::endl;
-  CreateSignedPolicyDocumentV2(client, {bucket_name});
+  CreateSignedPolicyDocumentV2(client, {bucket_name, signing_account});
 
   std::cout << "\nRunning the CreatedSignedPolicyDocumentV4() example"
             << std::endl;
-  CreateSignedPolicyDocumentV4(client, {bucket_name});
+  CreateSignedPolicyDocumentV4(client, {bucket_name, signing_account});
 
   std::cout << "\nRunning the CreatePolicyDocumentFormV4() example"
             << std::endl;
-  CreatePolicyDocumentFormV4(client, {bucket_name, object_name});
+  CreatePolicyDocumentFormV4(client,
+                             {bucket_name, object_name, signing_account});
 
   if (!examples::UsingEmulator()) std::this_thread::sleep_until(pause);
   (void)examples::RemoveBucketAndContents(client, bucket_name);
@@ -159,14 +174,15 @@ int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   examples::Example example({
       examples::CreateCommandEntry("create-signed-policy-document-v2",
-                                   {"<bucket-name>"},
+                                   {"<bucket-name>", "<signing-account>"},
                                    CreateSignedPolicyDocumentV2),
       examples::CreateCommandEntry("create-signed-policy-document-v4",
-                                   {"<bucket-name>"},
+                                   {"<bucket-name>", "<signing-account>"},
                                    CreateSignedPolicyDocumentV4),
-      examples::CreateCommandEntry("create-policy-document-form-v4",
-                                   {"<bucket-name>", "<object-name>"},
-                                   CreatePolicyDocumentFormV4),
+      examples::CreateCommandEntry(
+          "create-policy-document-form-v4",
+          {"<bucket-name>", "<object-name>", "<signing-account>"},
+          CreatePolicyDocumentFormV4),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
