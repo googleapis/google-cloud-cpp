@@ -40,7 +40,7 @@ time {
     @go_sdk//... \
     @remotejdk11_linux//:jdk
 }
-echo
+echo >&2
 
 # Outputs a list of args that should be given to all bazel invocations. To read
 # this into an array use `mapfile -t my_array < <(bazel::common_args)`
