@@ -25,11 +25,12 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
+     std::string const& object_name, std::string const& signing_account) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "GET", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
-                            std::chrono::minutes(15)));
+                            std::chrono::minutes(15)),
+        gcs::SigningAccount(signing_account));
 
     if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
@@ -37,7 +38,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client,
               << "curl '" << *signed_url << "'\n";
   }
   //! [sign url v2] [END storage_generate_signed_url_v2]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreatePutSignedUrlV2(google::cloud::storage::Client client,
@@ -46,12 +47,13 @@ void CreatePutSignedUrlV2(google::cloud::storage::Client client,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
-     std::string const& object_name) {
+     std::string const& object_name, std::string const& signing_account) {
     StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
         "PUT", std::move(bucket_name), std::move(object_name),
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)),
-        gcs::ContentType("application/octet-stream"));
+        gcs::ContentType("application/octet-stream"),
+        gcs::SigningAccount(signing_account));
 
     if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
@@ -60,7 +62,7 @@ void CreatePutSignedUrlV2(google::cloud::storage::Client client,
               << " --upload-file my-file '" << *signed_url << "'\n";
   }
   //! [create put signed url v2]
-  (std::move(client), argv.at(0), argv.at(1));
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
@@ -71,12 +73,17 @@ void RunAll(std::vector<std::string> const& argv) {
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const bucket_name = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                                .value();
+  auto const signing_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
+          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const object_name =
       examples::MakeRandomObjectName(generator, "cloud-cpp-test-examples-");
@@ -89,10 +96,10 @@ void RunAll(std::vector<std::string> const& argv) {
   }
 
   std::cout << "\nRunning CreatePutSignedUrlV2() example" << std::endl;
-  CreatePutSignedUrlV2(client, {bucket_name, object_name});
+  CreatePutSignedUrlV2(client, {bucket_name, object_name, signing_account});
 
   std::cout << "\nRunning CreateGetSignedUrlV2() example" << std::endl;
-  CreateGetSignedUrlV2(client, {bucket_name, object_name});
+  CreateGetSignedUrlV2(client, {bucket_name, object_name, signing_account});
 }
 
 }  // namespace
@@ -102,7 +109,7 @@ int main(int argc, char* argv[]) {
   auto make_entry = [](std::string const& name,
                        examples::ClientCommand const& cmd) {
     return examples::CreateCommandEntry(
-        name, {"<bucket-name>", "<object-name>"}, cmd);
+        name, {"<bucket-name>", "<object-name>", "<signing-account>"}, cmd);
   };
   examples::Example example({
       make_entry("create-get-signed-url-v2", CreateGetSignedUrlV2),
