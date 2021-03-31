@@ -1700,20 +1700,24 @@ It is the application's responsibility to construct a POST request based on the 
 <dl class="section user"><dt>Helper Functions</dt><dd>The following functions create a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html" title="Define a condition for a policy document.">PolicyDocumentCondition</a></code> with less opportunities for typos: <code>StartsWith()</code>, <code>ExactMatchObject()</code>, <code>ExactMatch()</code>, <code>ContentLengthRange()</code>.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name) {</div>
+<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;gcs::PolicyDocumentResult&gt; document =</div>
-<div class="line">        client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#aafc31d641c82fe498421f72f393c2a88">CreateSignedPolicyDocument</a>(<a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html">gcs::PolicyDocument</a>{</div>
-<div class="line">            std::chrono::system_clock::now() + std::chrono::minutes(15),</div>
-<div class="line">            {</div>
-<div class="line">                gcs::PolicyDocumentCondition::StartsWith(<span class="stringliteral">&quot;key&quot;</span>, <span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ExactMatchObject(</div>
-<div class="line">                    <span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;bucket-owner-read&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ExactMatchObject(</div>
-<div class="line">                    <span class="stringliteral">&quot;bucket&quot;</span>, std::move(bucket_name)),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ExactMatch(<span class="stringliteral">&quot;Content-Type&quot;</span>,</div>
-<div class="line">                                                         <span class="stringliteral">&quot;image/jpeg&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),</div>
-<div class="line">            }});</div>
+<div class="line">        client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#aafc31d641c82fe498421f72f393c2a88">CreateSignedPolicyDocument</a>(</div>
+<div class="line">            <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html">gcs::PolicyDocument</a>{</div>
+<div class="line">                std::chrono::system_clock::now() + std::chrono::minutes(15),</div>
+<div class="line">                {</div>
+<div class="line">                    gcs::PolicyDocumentCondition::StartsWith(<span class="stringliteral">&quot;key&quot;</span>, <span class="stringliteral">&quot;&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ExactMatchObject(</div>
+<div class="line">                        <span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;bucket-owner-read&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ExactMatchObject(</div>
+<div class="line">                        <span class="stringliteral">&quot;bucket&quot;</span>, std::move(bucket_name)),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ExactMatch(<span class="stringliteral">&quot;Content-Type&quot;</span>,</div>
+<div class="line">                                                             <span class="stringliteral">&quot;image/jpeg&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ContentLengthRange(0,</div>
+<div class="line">                                                                     1000000),</div>
+<div class="line">                }},</div>
+<div class="line">            <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line">    <span class="keywordflow">if</span> (!document) <span class="keywordflow">throw</span> std::runtime_error(document.status().message());</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed document is: &quot;</span> &lt;&lt; *document &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -1796,11 +1800,12 @@ The application must ensure that any URL created with this function is a valid r
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; object_name) {</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;std::string&gt; signed_url = client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a60d380937256b9cd64542c784fe3b493">CreateV2SignedUrl</a>(</div>
 <div class="line">        <span class="stringliteral">&quot;GET&quot;</span>, std::move(bucket_name), std::move(object_name),</div>
 <div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1ExpirationTime.html">gcs::ExpirationTime</a>(std::chrono::system_clock::now() +</div>
-<div class="line">                            std::chrono::minutes(15)));</div>
+<div class="line">                            std::chrono::minutes(15)),</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!signed_url) <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -1811,12 +1816,13 @@ The application must ensure that any URL created with this function is a valid r
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; object_name) {</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;std::string&gt; signed_url = client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a60d380937256b9cd64542c784fe3b493">CreateV2SignedUrl</a>(</div>
 <div class="line">        <span class="stringliteral">&quot;PUT&quot;</span>, std::move(bucket_name), std::move(object_name),</div>
 <div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1ExpirationTime.html">gcs::ExpirationTime</a>(std::chrono::system_clock::now() +</div>
 <div class="line">                            std::chrono::minutes(15)),</div>
-<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1ContentType.html">gcs::ContentType</a>(<span class="stringliteral">&quot;application/octet-stream&quot;</span>));</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1ContentType.html">gcs::ContentType</a>(<span class="stringliteral">&quot;application/octet-stream&quot;</span>),</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!signed_url) <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -1901,10 +1907,11 @@ The application must ensure that any URL created with this function is a valid r
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; object_name) {</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;std::string&gt; signed_url = client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a67485dbcc05e183529735c975a7ac888">CreateV4SignedUrl</a>(</div>
 <div class="line">        <span class="stringliteral">&quot;GET&quot;</span>, std::move(bucket_name), std::move(object_name),</div>
-<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SignedUrlDuration.html">gcs::SignedUrlDuration</a>(std::chrono::minutes(15)));</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SignedUrlDuration.html">gcs::SignedUrlDuration</a>(std::chrono::minutes(15)),</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!signed_url) <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -1915,11 +1922,12 @@ The application must ensure that any URL created with this function is a valid r
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
 <div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line">     std::string <span class="keyword">const</span>&amp; object_name) {</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;std::string&gt; signed_url = client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a67485dbcc05e183529735c975a7ac888">CreateV4SignedUrl</a>(</div>
 <div class="line">        <span class="stringliteral">&quot;PUT&quot;</span>, std::move(bucket_name), std::move(object_name),</div>
 <div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SignedUrlDuration.html">gcs::SignedUrlDuration</a>(std::chrono::minutes(15)),</div>
-<div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#af03fa6916f60dae42e4a50d2bddcb518">gcs::AddExtensionHeader</a>(<span class="stringliteral">&quot;content-type&quot;</span>, <span class="stringliteral">&quot;application/octet-stream&quot;</span>));</div>
+<div class="line">        <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#af03fa6916f60dae42e4a50d2bddcb518">gcs::AddExtensionHeader</a>(<span class="stringliteral">&quot;content-type&quot;</span>, <span class="stringliteral">&quot;application/octet-stream&quot;</span>),</div>
+<div class="line">        <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (!signed_url) <span class="keywordflow">throw</span> std::runtime_error(signed_url.status().message());</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed url is: &quot;</span> &lt;&lt; *signed_url &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -2592,21 +2600,25 @@ It is the application's responsibility to construct a POST request based on the 
 <dl class="section user"><dt>Helper Functions</dt><dd>The following functions create a <code><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html" title="Define a condition for a policy document.">PolicyDocumentCondition</a></code> with less opportunities for typos: <code>StartsWith()</code>, <code>ExactMatchObject()</code>, <code>ExactMatch()</code>, <code>ContentLengthRange()</code>.</dd></dl>
 <dl class="section user"><dt>Example</dt><dd><div class="fragment"><div class="line">  <span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">gcs</a> = <a class="code" href="namespacegoogle_1_1cloud_1_1storage.html">google::cloud::storage</a>;</div>
 <div class="line">  using ::google::cloud::StatusOr;</div>
-<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name) {</div>
+<div class="line">  [](<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
+<div class="line">     std::string <span class="keyword">const</span>&amp; signing_account) {</div>
 <div class="line">    StatusOr&lt;gcs::PolicyDocumentV4Result&gt; document =</div>
-<div class="line">        client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a0aeb0d477fd00129c9f5aa91d9dc926b">GenerateSignedPostPolicyV4</a>(<a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html">gcs::PolicyDocumentV4</a>{</div>
-<div class="line">            std::move(bucket_name),</div>
-<div class="line">            <span class="stringliteral">&quot;scan_0001.jpg&quot;</span>,</div>
-<div class="line">            std::chrono::minutes(15),</div>
-<div class="line">            std::chrono::system_clock::now(),</div>
-<div class="line">            {</div>
-<div class="line">                gcs::PolicyDocumentCondition::StartsWith(<span class="stringliteral">&quot;key&quot;</span>, <span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ExactMatchObject(</div>
-<div class="line">                    <span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;bucket-owner-read&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ExactMatch(<span class="stringliteral">&quot;Content-Type&quot;</span>,</div>
-<div class="line">                                                         <span class="stringliteral">&quot;image/jpeg&quot;</span>),</div>
-<div class="line">                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),</div>
-<div class="line">            }});</div>
+<div class="line">        client.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a0aeb0d477fd00129c9f5aa91d9dc926b">GenerateSignedPostPolicyV4</a>(</div>
+<div class="line">            <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4.html">gcs::PolicyDocumentV4</a>{</div>
+<div class="line">                std::move(bucket_name),</div>
+<div class="line">                <span class="stringliteral">&quot;scan_0001.jpg&quot;</span>,</div>
+<div class="line">                std::chrono::minutes(15),</div>
+<div class="line">                std::chrono::system_clock::now(),</div>
+<div class="line">                {</div>
+<div class="line">                    gcs::PolicyDocumentCondition::StartsWith(<span class="stringliteral">&quot;key&quot;</span>, <span class="stringliteral">&quot;&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ExactMatchObject(</div>
+<div class="line">                        <span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;bucket-owner-read&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ExactMatch(<span class="stringliteral">&quot;Content-Type&quot;</span>,</div>
+<div class="line">                                                             <span class="stringliteral">&quot;image/jpeg&quot;</span>),</div>
+<div class="line">                    gcs::PolicyDocumentCondition::ContentLengthRange(0,</div>
+<div class="line">                                                                     1000000),</div>
+<div class="line">                }},</div>
+<div class="line">            <a class="code" href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">gcs::SigningAccount</a>(signing_account));</div>
 <div class="line">    <span class="keywordflow">if</span> (!document) <span class="keywordflow">throw</span> std::runtime_error(document.status().message());</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The signed document is: &quot;</span> &lt;&lt; *document &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span></div>
@@ -6791,6 +6803,7 @@ template&lt;typename... Options&gt; </div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_html_a457fd54e504ebad9b9b84c73a3ae9f63"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a457fd54e504ebad9b9b84c73a3ae9f63">google::cloud::storage::v1::oauth2::GoogleDefaultCredentials</a></div><div class="ttdeci">StatusOr&lt; std::shared_ptr&lt; Credentials &gt; &gt; GoogleDefaultCredentials(ChannelOptions const &amp;options)</div><div class="ttdoc">Produces a Credentials type based on the runtime environment.</div><div class="ttdef"><b>Definition:</b> <a href="google__credentials_8cc_source.html#l00151">google_credentials.cc:151</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1KmsKeyName_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1KmsKeyName.html">google::cloud::storage::v1::KmsKeyName</a></div><div class="ttdoc">Configure the Customer-Managed Encryption Key (CMEK) for an upload.</div><div class="ttdef"><b>Definition:</b> <a href="well__known__parameters_8h_source.html#l00273">well_known_parameters.h:274</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata_html_ab7bd9362e7a6fda9a18d7759f2b8e721"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#ab7bd9362e7a6fda9a18d7759f2b8e721">google::cloud::storage::v1::BucketMetadata::set_storage_class</a></div><div class="ttdeci">BucketMetadata &amp; set_storage_class(std::string v)</div><div class="ttdoc">Sets the retention period.</div><div class="ttdef"><b>Definition:</b> <a href="bucket__metadata_8h_source.html#l00805">bucket_metadata.h:805</a></div></div>
+<div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SigningAccount.html">google::cloud::storage::v1::SigningAccount</a></div><div class="ttdoc">Specify the service account used to sign a blob.</div><div class="ttdef"><b>Definition:</b> <a href="signed__url__options_8h_source.html#l00185">signed_url_options.h:186</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html_a19815e9062dfd4b6927a8864dc109815"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a19815e9062dfd4b6927a8864dc109815">google::cloud::storage::v1::Client::ListHmacKeys</a></div><div class="ttdeci">ListHmacKeysReader ListHmacKeys(Options &amp;&amp;... options)</div><div class="ttdoc">List the available HMAC keys.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l02565">client.h:2565</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1OverrideDefaultProject.html">google::cloud::storage::v1::OverrideDefaultProject</a></div><div class="ttdoc">Override the default project.</div><div class="ttdef"><b>Definition:</b> <a href="override__default__project_8h_source.html#l00033">override_default_project.h:34</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1SignedUrlDuration_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1SignedUrlDuration.html">google::cloud::storage::v1::SignedUrlDuration</a></div><div class="ttdoc">Define the duration for a V4 signed URL.</div><div class="ttdef"><b>Definition:</b> <a href="signed__url__options_8h_source.html#l00170">signed_url_options.h:171</a></div></div>
