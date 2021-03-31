@@ -70,11 +70,15 @@ env \
   ./ci/retry-command.sh 3 0 \
   "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}" "${bigtable_args[@]}"
-
 # TODO(#6083): Run //google/cloud/bigtable/examples:bigtable_grpc_credentials
 # separately w/ an access token.
 
 io::log_h2 "Running Storage integration tests (with emulator)"
+key_base="key-$(date +"%Y-%m")"
+readonly KEY_DIR="/dev/shm"
+readonly SECRETS_BUCKET="gs://cloud-cpp-testing-resources-secrets"
+gsutil cp "${SECRETS_BUCKET}/${key_base}.json" "${KEY_DIR}/${key_base}.json"
+gsutil cp "${SECRETS_BUCKET}/${key_base}.p12" "${KEY_DIR}/${key_base}.p12"
 storage_args=(
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=${GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG:-}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
@@ -86,13 +90,8 @@ storage_args=(
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
   "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-
-  # TODO(#6083): Enable tests that require
-  # GOOGLE_CLOUD_CPP_TEST_KEY_FILE_{JSON,P12} files.
-  # "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${TEST_KEY_FILE_JSON}"
-  # "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
-  "-//google/cloud/storage/tests:key_file_integration_test"
-
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
 )
 "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}" "${storage_args[@]}"
