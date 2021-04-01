@@ -66,7 +66,20 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.26.0 - TBD
+## v1.27.0 - TBD
+
+## v1.26.0 - 2021-04
+
+### BigQuery
+
+**NOTE** This release includes an **experimental** BigQuery Storage Read client
+library. This library is **NOT GA** and is likely to have breaking changes in
+the coming months. Feel free to take a look, file issues, ask questions, and
+even experiment with it, but do not ship production code using it yet.
+
+* feature(bigquery): add quickstart (#6116)
+* feature(bigquery): add success case integration tests (#6102)
+* feature(bigquery): storage library generation (#5989)
 
 ### Bigtable:
 **BREAKING CHANGES**:
@@ -75,6 +88,49 @@
   `BackgroundThreadsFactory()` member function, requiring anyone who derives
   from those classes to implement that function. This would typically only
   affect users who create mock clients for testing purposes.
+* fix(bigtable): multiple region tags on same line (#6051)
+* feat(common): experimental logging configuration (#6049)
+* feat(bigtable): Bind CompletionQueue with Table (#6012)
+* feat: bind `CompletionQueue` with `TableAdmin` (#6004)
+* feat: bind `CompletionQueue` with `InstanceAdmin` (#5967)
+* feat(bigtable): enable keepalive pings by default (#5969)
+
+### Pub/Sub
+* feat(pubsub): schemas are no longer experimental (#6115)
+* fix(pubsub): deadlocks for cancel during session startup (#6055)
+* feat(common): experimental logging configuration (#6049)
+* doc(pubsub): fix region tags for two examples (#5944)
+
+### Storage
+
+* doc(storage): always use signing account in examples (#6149)
+* feat(storage): self-signed JWTs for service accounts (#6096)
+* doc(storage): better description for ObjectWriteStream (#6075)
+* cleanup: deprecate some IAM types (#6069)
+* fix(storage): move disabling consts (#6064)
+* fix(storage): use after move problems (#6066)
+* feat(common): experimental logging configuration (#6049)
+* doc(storage): describe how to use optional parameters (#5983)
+* fix(storage): correctly set customTime on inserts (#5980)
+* fix(storage): do not update upload session ids (#5979)
+* feat(storage): implement storage::GrpcClient::TestBucketIamPermissions (#5957)
+* feat(storage): implement storage::GrpcClient::DeleteResumableUpload (#5941)
+
+### Spanner
+
+* feature(spanner): request priority (#6103)
+* feature(spanner): update CMEK samples (#6120)
+* feature(spanner): customer-managed encryption (#6087)
+* feat(common): experimental logging configuration (#6049)
+* feat(spanner): connection factories now prefer `Options` (#6046)
+* feat(common): make Options public (#6042)
+* doc(spanner): fix expected option lists (#6029)
+
+### Common libraries
+
+* feat(common): experimental logging configuration (#6049)
+* feat(common): log the last N entries (#6048)
+* feat(common): make `google::cloud::Options` public (#6042)
 
 ## v1.25.0 - 2021-03
 
