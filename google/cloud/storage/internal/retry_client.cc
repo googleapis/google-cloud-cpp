@@ -86,7 +86,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     if (idempotency == Idempotency::kNonIdempotent) {
       std::ostringstream os;
       os << "Error in non-idempotent operation " << error_message << ": "
-         << last_status;
+         << last_status.message();
       return error(std::move(os).str());
     }
     if (!retry_policy.OnFailure(last_status)) {
@@ -95,7 +95,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
         // policy is exhausted, we call these "permanent errors", and they
         // get a special message.
         std::ostringstream os;
-        os << "Permanent error in " << error_message << ": " << last_status;
+        os << "Permanent error in " << error_message << ": "
+           << last_status.message();
         return error(std::move(os).str());
       }
       // Exit the loop immediately instead of sleeping before trying again.
@@ -105,7 +106,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     std::this_thread::sleep_for(delay);
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in " << error_message << ": " << last_status;
+  os << "Retry policy exhausted in " << error_message << ": "
+     << last_status.message();
   return error(std::move(os).str());
 }
 }  // namespace
