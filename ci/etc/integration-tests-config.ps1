@@ -38,8 +38,11 @@ $env:GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${env:GOOGLE_CLOUD_PROJE
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
 $env:GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
-# Cloud Pub/Sub only needs GOOGLE_CLOUD_PROJECT
+# Cloud Pub/Sub configuration parameters
 $env:GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
+
+# Cloud BigQuery configuration parameters
+$env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
 
 # Cloud IAM configuration parameters
 $env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}
