@@ -81,9 +81,7 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
       : bigtable_emulator_host_("BIGTABLE_EMULATOR_HOST",
                                 "testendpoint.googleapis.com"),
         bigtable_instance_admin_emulator_host_(
-            "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", {}),
-        google_cloud_enable_direct_path_("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                         {}) {}
+            "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", {}) {}
 
  protected:
   static std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
@@ -93,8 +91,6 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host_;
   google::cloud::testing_util::ScopedEnvironment
       bigtable_instance_admin_emulator_host_;
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path_;
 };
 
 TEST_F(ClientOptionsDefaultEndpointTest, Default) {
@@ -146,51 +142,9 @@ TEST_F(ClientOptionsDefaultEndpointTest, DataNoEnv) {
   EXPECT_EQ("bigtable.googleapis.com", internal::DefaultDataEndpoint());
 }
 
-TEST_F(ClientOptionsDefaultEndpointTest, DataDirectPathMismatched) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path(
-          "GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-          "bad-name-for-bigtable,bigtable-no-no,bar");
-
-  EXPECT_EQ("bigtable.googleapis.com", internal::DefaultDataEndpoint());
-}
-
-TEST_F(ClientOptionsDefaultEndpointTest, DataDirectPath) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                      "bigtable-mismatch,bigtable");
-
-  EXPECT_EQ("directpath-bigtable.googleapis.com",
-            internal::DefaultDataEndpoint());
-}
-
-TEST_F(ClientOptionsDefaultEndpointTest, DataEmulatorOverridesDirectPath) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", "127.0.0.1:1234");
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                      "bigtable");
-
-  EXPECT_EQ("127.0.0.1:1234", internal::DefaultDataEndpoint());
-}
-
 TEST_F(ClientOptionsDefaultEndpointTest, AdminNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
-
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
-}
-
-TEST_F(ClientOptionsDefaultEndpointTest, AdminDirectPathNoEffect) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                      "bigtable");
 
   EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultAdminEndpoint());
 }
@@ -215,17 +169,6 @@ TEST_F(ClientOptionsDefaultEndpointTest, AdminInstanceAdminNoEffect) {
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
   google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
       "BIGTABLE_EMULATOR_HOST", {});
-
-  EXPECT_EQ("bigtableadmin.googleapis.com",
-            internal::DefaultInstanceAdminEndpoint());
-}
-
-TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminDirectPathNoEffect) {
-  google::cloud::testing_util::ScopedEnvironment bigtable_emulator_host(
-      "BIGTABLE_EMULATOR_HOST", {});
-  google::cloud::testing_util::ScopedEnvironment
-      google_cloud_enable_direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
-                                      "bigtable");
 
   EXPECT_EQ("bigtableadmin.googleapis.com",
             internal::DefaultInstanceAdminEndpoint());
