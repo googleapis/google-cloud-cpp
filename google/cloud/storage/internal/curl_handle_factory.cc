@@ -86,7 +86,6 @@ PooledCurlHandleFactory::~PooledCurlHandleFactory() {
 }
 
 CurlPtr PooledCurlHandleFactory::CreateHandle() {
-  std::cerr << __func__ << "()" << std::endl;
   std::unique_lock<std::mutex> lk(mu_);
   if (!handles_.empty()) {
     auto* handle = handles_.back();
@@ -103,7 +102,6 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
 }
 
 void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  std::cerr << __func__ << "()" << std::endl;
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
   auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
