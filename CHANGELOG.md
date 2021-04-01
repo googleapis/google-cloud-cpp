@@ -88,7 +88,8 @@ even experiment with it, but do not ship production code using it yet.
   `BackgroundThreadsFactory()` member function, requiring anyone who derives
   from those classes to implement that function. This would typically only
   affect users who create mock clients for testing purposes.
-* fix(bigtable): multiple region tags on same line (#6051)
+
+**OTHER CHANGES**:
 * feat(common): experimental logging configuration (#6049)
 * feat(bigtable): Bind CompletionQueue with Table (#6012)
 * feat: bind `CompletionQueue` with `TableAdmin` (#6004)
