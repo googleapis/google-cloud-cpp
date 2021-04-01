@@ -18,9 +18,9 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
+#include <deque>
 #include <mutex>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
@@ -114,8 +114,8 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
  private:
   std::size_t maximum_size_;
   mutable std::mutex mu_;
-  std::vector<CURL*> handles_;
-  std::vector<CURLM*> multi_handles_;
+  std::deque<CURL*> handles_;
+  std::deque<CURLM*> multi_handles_;
   std::string last_client_ip_address_;
   ChannelOptions options_;
 };
