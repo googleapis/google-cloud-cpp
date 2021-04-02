@@ -39,23 +39,29 @@ absl::optional<std::string> GetEmulator() {
 }
 
 std::string JsonEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint_) + "/storage/" +
+  return GetEmulator().value_or(options.endpoint()) + "/storage/" +
          options.version();
 }
 
 std::string JsonUploadEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint_) + "/upload/storage/" +
+  return GetEmulator().value_or(options.endpoint()) + "/upload/storage/" +
          options.version();
 }
 
 std::string XmlEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint_);
+  return GetEmulator().value_or(options.endpoint());
 }
 
 std::string IamEndpoint(ClientOptions const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
   return options.iam_endpoint();
+}
+
+Options MakeOptions(ClientOptions o) {
+  auto opts = std::move(o.opts_);
+  opts.set<internal::SslRootPathOption>(o.channel_options().ssl_root_path());
+  return opts;
 }
 
 }  // namespace internal
@@ -115,25 +121,32 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
-    : credentials_(std::move(credentials)),
-      endpoint_("https://storage.googleapis.com"),
-      iam_endpoint_("https://iamcredentials.googleapis.com/v1"),
-      version_("v1"),
-      enable_http_tracing_(false),
-      enable_raw_client_tracing_(false),
-      connection_pool_size_(DefaultConnectionPoolSize()),
-      download_buffer_size_(
-          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE),
-      upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE),
-      maximum_simple_upload_size_(
-          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE),
-      download_stall_timeout_(
-          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT),
+    : opts_(Options{}
+                .set<internal::Oauth2CredentialsOption>(std::move(credentials))
+                .set<internal::GcsRestEndpointOption>(
+                    "https://storage.googleapis.com")
+                .set<internal::GcsIamEndpointOption>(
+                    "https://iamcredentials.googleapis.com/v1")
+                .set<internal::TargetApiVersionOption>("v1")
+                .set<internal::ConnectionPoolSizeOption>(
+                    DefaultConnectionPoolSize())
+                .set<internal::DownloadBufferSizeOption>(
+                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
+                .set<internal::UploadBufferSizeOption>(
+                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
+                .set<internal::MaximumSimpleUploadSizeOption>(
+                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
+                .set<internal::EnableCurlSslLockingOption>(true)
+                .set<internal::EnableCurlSigpipeHandlerOption>(true)
+                .set<internal::MaximumCurlSocketRecvSizeOption>(0)
+                .set<internal::MaximumCurlSocketSendSizeOption>(0)
+                .set<internal::DownloadStallTimeoutOption>(std::chrono::seconds(
+                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))),
       channel_options_(std::move(channel_options)) {
   auto emulator = internal::GetEmulator();
   if (emulator.has_value()) {
-    endpoint_ = *emulator;
-    iam_endpoint_ = *emulator + "/iamapi";
+    set_endpoint(*emulator);
+    set_iam_endpoint(*emulator + "/iamapi");
   }
   SetupFromEnvironment();
 }
@@ -163,26 +176,45 @@ void ClientOptions::SetupFromEnvironment() {
 
   auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT");
   if (project_id.has_value()) {
-    project_id_ = std::move(*project_id);
+    set_project_id(std::move(*project_id));
   }
 }
 
-ClientOptions& ClientOptions::SetDownloadBufferSize(std::size_t size) {
-  if (size == 0) {
-    download_buffer_size_ =
-        GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE;
+bool ClientOptions::enable_http_tracing() const {
+  return opts_.get<TracingComponentsOption>().count("http") != 0;
+}
+
+ClientOptions& ClientOptions::set_enable_http_tracing(bool enable) {
+  if (enable) {
+    opts_.lookup<TracingComponentsOption>().insert("http");
   } else {
-    download_buffer_size_ = size;
+    opts_.lookup<TracingComponentsOption>().erase("http");
   }
   return *this;
 }
 
-ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
-  if (size == 0) {
-    upload_buffer_size_ = GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE;
+bool ClientOptions::enable_raw_client_tracing() const {
+  return opts_.get<TracingComponentsOption>().count("raw-client") != 0;
+}
+
+ClientOptions& ClientOptions::set_enable_raw_client_tracing(bool enable) {
+  if (enable) {
+    opts_.lookup<TracingComponentsOption>().insert("raw-client");
   } else {
-    upload_buffer_size_ = size;
+    opts_.lookup<TracingComponentsOption>().erase("raw-client");
   }
+  return *this;
+}
+
+ClientOptions& ClientOptions::SetDownloadBufferSize(std::size_t size) {
+  opts_.set<internal::DownloadBufferSizeOption>(
+      size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE : size);
+  return *this;
+}
+
+ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
+  opts_.set<internal::UploadBufferSizeOption>(
+      size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE : size);
   return *this;
 }
 
