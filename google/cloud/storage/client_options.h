@@ -17,6 +17,8 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/options.h"
 #include <chrono>
 #include <memory>
 #include <string>
@@ -31,6 +33,73 @@ std::string JsonEndpoint(ClientOptions const&);
 std::string JsonUploadEndpoint(ClientOptions const&);
 std::string XmlEndpoint(ClientOptions const&);
 std::string IamEndpoint(ClientOptions const&);
+
+Options MakeOptions(ClientOptions);
+
+/// Configure the IAM endpoint for the GCS client library.
+struct GcsRestEndpointOption {
+  using Type = std::string;
+};
+
+struct GcsIamEndpointOption {
+  using Type = std::string;
+};
+
+/// Configure oauth2::Credentials for the GCS client library.
+struct Oauth2CredentialsOption {
+  using Type = std::shared_ptr<oauth2::Credentials>;
+};
+
+/// This is only intended for testing against staging or development versions
+/// of the service. It should *remain* in the internal:: namespace.
+struct TargetApiVersionOption {
+  using Type = std::string;
+};
+
+struct ProjectIdOption {
+  using Type = std::string;
+};
+
+struct ConnectionPoolSizeOption {
+  using Type = std::size_t;
+};
+
+struct DownloadBufferSizeOption {
+  using Type = std::size_t;
+};
+
+struct UploadBufferSizeOption {
+  using Type = std::size_t;
+};
+
+struct MaximumSimpleUploadSizeOption {
+  using Type = std::size_t;
+};
+
+struct EnableCurlSslLockingOption {
+  using Type = bool;
+};
+
+struct EnableCurlSigpipeHandlerOption {
+  using Type = bool;
+};
+
+struct MaximumCurlSocketRecvSizeOption {
+  using Type = std::size_t;
+};
+
+struct MaximumCurlSocketSendSizeOption {
+  using Type = std::size_t;
+};
+
+struct DownloadStallTimeoutOption {
+  using Type = std::chrono::seconds;
+};
+
+struct SslRootPathOption {
+  using Type = std::string;
+};
+
 }  // namespace internal
 
 /**
@@ -93,64 +162,72 @@ class ClientOptions {
       ChannelOptions const& channel_options);
 
   std::shared_ptr<oauth2::Credentials> credentials() const {
-    return credentials_;
+    return opts_.get<internal::Oauth2CredentialsOption>();
   }
-  ClientOptions& set_credentials(
-      std::shared_ptr<oauth2::Credentials> credentials) {
-    credentials_ = std::move(credentials);
+  ClientOptions& set_credentials(std::shared_ptr<oauth2::Credentials> c) {
+    opts_.set<internal::Oauth2CredentialsOption>(std::move(c));
     return *this;
   }
 
-  std::string const& endpoint() const { return endpoint_; }
+  std::string const& endpoint() const {
+    return opts_.get<internal::GcsRestEndpointOption>();
+  }
   ClientOptions& set_endpoint(std::string endpoint) {
-    endpoint_ = std::move(endpoint);
+    opts_.set<internal::GcsRestEndpointOption>(std::move(endpoint));
     return *this;
   }
 
-  std::string const& iam_endpoint() const { return iam_endpoint_; }
+  std::string const& iam_endpoint() const {
+    return opts_.get<internal::GcsIamEndpointOption>();
+  }
   ClientOptions& set_iam_endpoint(std::string endpoint) {
-    iam_endpoint_ = std::move(endpoint);
+    opts_.set<internal::GcsIamEndpointOption>(std::move(endpoint));
     return *this;
   }
 
-  std::string const& version() const { return version_; }
+  std::string const& version() const {
+    return opts_.get<internal::TargetApiVersionOption>();
+  }
   ClientOptions& set_version(std::string version) {
-    version_ = std::move(version);
+    opts_.set<internal::TargetApiVersionOption>(std::move(version));
     return *this;
   }
 
-  bool enable_http_tracing() const { return enable_http_tracing_; }
-  ClientOptions& set_enable_http_tracing(bool enable) {
-    enable_http_tracing_ = enable;
-    return *this;
-  }
+  bool enable_http_tracing() const;
+  ClientOptions& set_enable_http_tracing(bool enable);
 
-  bool enable_raw_client_tracing() const { return enable_raw_client_tracing_; }
-  ClientOptions& set_enable_raw_client_tracing(bool enable) {
-    enable_raw_client_tracing_ = enable;
-    return *this;
-  }
+  bool enable_raw_client_tracing() const;
+  ClientOptions& set_enable_raw_client_tracing(bool enable);
 
-  std::string const& project_id() const { return project_id_; }
+  std::string const& project_id() const {
+    return opts_.get<internal::ProjectIdOption>();
+  }
   ClientOptions& set_project_id(std::string v) {
-    project_id_ = std::move(v);
+    opts_.set<internal::ProjectIdOption>(std::move(v));
     return *this;
   }
 
-  std::size_t connection_pool_size() const { return connection_pool_size_; }
+  std::size_t connection_pool_size() const {
+    return opts_.get<internal::ConnectionPoolSizeOption>();
+  }
   ClientOptions& set_connection_pool_size(std::size_t size) {
-    connection_pool_size_ = size;
+    opts_.set<internal::ConnectionPoolSizeOption>(size);
     return *this;
   }
 
-  std::size_t download_buffer_size() const { return download_buffer_size_; }
+  std::size_t download_buffer_size() const {
+    return opts_.get<internal::DownloadBufferSizeOption>();
+  }
   ClientOptions& SetDownloadBufferSize(std::size_t size);
 
-  std::size_t upload_buffer_size() const { return upload_buffer_size_; }
+  std::size_t upload_buffer_size() const {
+    return opts_.get<internal::UploadBufferSizeOption>();
+  }
   ClientOptions& SetUploadBufferSize(std::size_t size);
 
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
   ClientOptions& add_user_agent_prefix(std::string prefix) {
+    opts_.lookup<UserAgentProductsOption>().push_back(prefix);
     if (!user_agent_prefix_.empty()) {
       prefix += '/';
       prefix += user_agent_prefix_;
@@ -164,10 +241,10 @@ class ClientOptions {
   }
 
   std::size_t maximum_simple_upload_size() const {
-    return maximum_simple_upload_size_;
+    return opts_.get<internal::MaximumSimpleUploadSizeOption>();
   }
   ClientOptions& set_maximum_simple_upload_size(std::size_t v) {
-    maximum_simple_upload_size_ = v;
+    opts_.set<internal::MaximumSimpleUploadSizeOption>(v);
     return *this;
   }
 
@@ -176,32 +253,34 @@ class ClientOptions {
    * callbacks for locking.
    */
   bool enable_ssl_locking_callbacks() const {
-    return enable_ssl_locking_callbacks_;
+    return opts_.get<internal::EnableCurlSslLockingOption>();
   }
   ClientOptions& set_enable_ssl_locking_callbacks(bool v) {
-    enable_ssl_locking_callbacks_ = v;
+    opts_.set<internal::EnableCurlSslLockingOption>(v);
     return *this;
   }
 
-  bool enable_sigpipe_handler() const { return enable_sigpipe_handler_; }
+  bool enable_sigpipe_handler() const {
+    return opts_.get<internal::EnableCurlSigpipeHandlerOption>();
+  }
   ClientOptions& set_enable_sigpipe_handler(bool v) {
-    enable_sigpipe_handler_ = v;
+    opts_.set<internal::EnableCurlSigpipeHandlerOption>(v);
     return *this;
   }
 
   std::size_t maximum_socket_recv_size() const {
-    return maximum_socket_recv_size_;
+    return opts_.get<internal::MaximumCurlSocketRecvSizeOption>();
   }
   ClientOptions& set_maximum_socket_recv_size(std::size_t v) {
-    maximum_socket_recv_size_ = v;
+    opts_.set<internal::MaximumCurlSocketRecvSizeOption>(v);
     return *this;
   }
 
   std::size_t maximum_socket_send_size() const {
-    return maximum_socket_send_size_;
+    return opts_.get<internal::MaximumCurlSocketSendSizeOption>();
   }
   ClientOptions& set_maximum_socket_send_size(std::size_t v) {
-    maximum_socket_send_size_ = v;
+    opts_.set<internal::MaximumCurlSocketSendSizeOption>(v);
     return *this;
   }
 
@@ -219,10 +298,10 @@ class ClientOptions {
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
    */
   std::chrono::seconds download_stall_timeout() const {
-    return download_stall_timeout_;
+    return opts_.get<internal::DownloadStallTimeoutOption>();
   }
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
-    download_stall_timeout_ = v;
+    opts_.set<internal::DownloadStallTimeoutOption>(std::move(v));
     return *this;
   }
   //@}
@@ -232,27 +311,18 @@ class ClientOptions {
   friend std::string internal::JsonUploadEndpoint(ClientOptions const&);
   friend std::string internal::XmlEndpoint(ClientOptions const&);
   friend std::string internal::IamEndpoint(ClientOptions const&);
+  friend Options internal::MakeOptions(ClientOptions);
 
   void SetupFromEnvironment();
 
-  std::shared_ptr<oauth2::Credentials> credentials_;
-  std::string endpoint_;
-  std::string iam_endpoint_;
-  std::string version_;
-  bool enable_http_tracing_;
-  bool enable_raw_client_tracing_;
-  std::string project_id_;
-  std::size_t connection_pool_size_;
-  std::size_t download_buffer_size_;
-  std::size_t upload_buffer_size_;
-  std::string user_agent_prefix_;
-  std::size_t maximum_simple_upload_size_;
-  bool enable_ssl_locking_callbacks_ = true;
-  bool enable_sigpipe_handler_ = true;
-  std::size_t maximum_socket_recv_size_ = 0;
-  std::size_t maximum_socket_send_size_ = 0;
-  std::chrono::seconds download_stall_timeout_;
+  Options opts_;
+
+  // Used for backwards compatibility. The value here is merged with the values
+  // in `opts_` by internal::MakeOptions(ClientOptions const&);
   ChannelOptions channel_options_;
+
+  // Only used for backwards compatibility, the value in `opts_.
+  std::string user_agent_prefix_;
 };
 
 }  // namespace STORAGE_CLIENT_NS

@@ -28,6 +28,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 namespace {
@@ -298,6 +299,29 @@ TEST_F(ClientOptionsTest, SetMaximumDownloadStall) {
   EXPECT_NE(0, default_value.count());
   client_options.set_download_stall_timeout(std::chrono::seconds(60));
   EXPECT_EQ(60, client_options.download_stall_timeout().count());
+}
+
+TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
+  google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
+  auto const opts = internal::MakeOptions(
+      ClientOptions(oauth2::CreateAnonymousCredentials()));
+  EXPECT_EQ("https://storage.googleapis.com",
+            opts.get<internal::GcsRestEndpointOption>());
+  EXPECT_EQ("https://iam.googleapis.com",
+            opts.get<internal::GcsIamEndpointOption>());
+  EXPECT_TRUE(opts.has<internal::Oauth2CredentialsOption>());
+  EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
+  EXPECT_EQ("test-project-id", opts.get<internal::ProjectIdOption>());
+  EXPECT_LT(0, opts.get<internal::ConnectionPoolSizeOption>());
+  EXPECT_LT(0, opts.get<internal::DownloadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<internal::UploadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<internal::MaximumSimpleUploadSizeOption>());
+  EXPECT_TRUE(opts.has<internal::EnableCurlSslLockingOption>());
+  EXPECT_TRUE(opts.has<internal::EnableCurlSigpipeHandlerOption>());
+  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketSendSizeOption>());
+  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketRecvSizeOption>());
+  EXPECT_LT(0, opts.get<internal::DownloadStallTimeoutOption>().count());
+  EXPECT_THAT(opts.get<internal::SslRootPathOption>(), IsEmpty());
 }
 
 }  // namespace
