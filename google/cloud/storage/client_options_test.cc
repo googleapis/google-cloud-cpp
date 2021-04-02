@@ -307,7 +307,7 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
       ClientOptions(oauth2::CreateAnonymousCredentials()));
   EXPECT_EQ("https://storage.googleapis.com",
             opts.get<internal::GcsRestEndpointOption>());
-  EXPECT_EQ("https://iam.googleapis.com",
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
             opts.get<internal::GcsIamEndpointOption>());
   EXPECT_TRUE(opts.has<internal::Oauth2CredentialsOption>());
   EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
