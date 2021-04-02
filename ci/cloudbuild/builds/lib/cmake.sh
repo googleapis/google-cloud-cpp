@@ -24,6 +24,11 @@ fi # include guard
 
 source module ci/lib/io.sh
 
+# Adds an elapsed seconds counter at the beginning of the ninja output to help
+# us see where builds are taking the most time. See also
+# https://ninja-build.org/manual.html#_environment_variables
+export NINJA_STATUS="T+%es [%f/%t] "
+
 # This block is run the first (and only) time this script is sourced. It first
 # clears the ccache stats. Then it registers an exit handler that will display
 # the ccache stats when the calling script exits.
