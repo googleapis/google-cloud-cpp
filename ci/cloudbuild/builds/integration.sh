@@ -46,6 +46,15 @@ env \
   "./generator/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}"
 
+io::log_h2 "Running IAM Credentials integration tests"
+iam_args=(
+  "--test_tag_filters=integration-test"
+  "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}"
+  "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
+)
+echo bazel test "${args[@]}" "${iam_args[@]}" google/cloud/iam/...
+bazel test "${args[@]}" "${iam_args[@]}" google/cloud/iam/...
+
 io::log_h2 "Running Pub/Sub integration tests (with emulator)"
 "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
   bazel test "${args[@]}"
