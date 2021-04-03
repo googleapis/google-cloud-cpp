@@ -18,7 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/str_split.h"
-#include "absl/time/time.h"  // NOLINT
+#include "absl/time/time.h"  // NOLINT(modernize-deprecated-headers)
 #include <chrono>
 #include <stdexcept>
 #include <thread>
@@ -90,7 +90,7 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
       // when the token expires.
       if (instance.status().code() ==
           google::cloud::StatusCode::kUnauthenticated) {
-        std::cout << "error [" << instance.status().code() << "]";
+        std::cout << "error [" << instance.status() << "]";
         if (!expired) {
           std::cout << ": unexpected, but could be a race condition."
                     << " Trying again\n";
