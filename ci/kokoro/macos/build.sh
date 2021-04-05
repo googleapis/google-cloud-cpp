@@ -60,13 +60,9 @@ fi
 # it is just partially installed. This gives us a more consistent environment.
 echo "================================================================"
 io::log_yellow "Update or reinstall 'google-cloud-sdk'."
-
-brew_env=()
-if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
-  brew_env+=("HOMEBREW_NO_AUTO_UPDATE=1")
-fi
-env ${brew_env[@]+"${brew_env[@]}"} brew reinstall google-cloud-sdk
-env ${brew_env[@]+"${brew_env[@]}"} brew doctor
+rm -fr "${HOME}/.pyenv"
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew install google-cloud-sdk
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew doctor
 
 echo "================================================================"
 io::log_yellow "change working directory to project root."
