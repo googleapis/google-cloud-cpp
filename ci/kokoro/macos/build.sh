@@ -60,9 +60,9 @@ fi
 # it is just partially installed. This gives us a more consistent environment.
 echo "================================================================"
 io::log_yellow "Update or reinstall 'google-cloud-sdk'."
-rm -fr "${HOME}/.pyenv"
 env "HOMEBREW_NO_AUTO_UPDATE=1" brew install google-cloud-sdk
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew doctor
+# Continue despite `brew doctor` errors and warnings.
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew doctor || true
 
 echo "================================================================"
 io::log_yellow "change working directory to project root."
