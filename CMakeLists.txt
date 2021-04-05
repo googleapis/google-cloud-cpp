@@ -45,9 +45,6 @@ if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
             "GOOGLE_CLOUD_CPP_CXX_STANDARD is retired, use CMAKE_CXX_STANDARD")
 endif ()
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-include(SelectMSVCRuntime)
-
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
     # gcc-4.8 is the first release that claims C++11 support.
@@ -68,7 +65,19 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+
+    if (CMAKE_VERSION VERSION_LESS 3.15)
+        message(
+            FATAL_ERROR
+                "MSVC builds require CMake >= 3.15."
+                " Previous versions of CMake lack a standard mechanism to"
+                " select the runtime C++ library.")
+    endif ()
 endif ()
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include(SelectMSVCRuntime)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
        "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"

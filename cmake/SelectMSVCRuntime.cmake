@@ -29,30 +29,10 @@
 #
 
 if (MSVC)
-    # TODO(#5852) - if we require CMake >= 3.15 we can remove this conditional
-    # and the hacks below.
-    if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
-        if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
-            set(CMAKE_MSVC_RUNTIME_LIBRARY
-                "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-        else ()
-            set(CMAKE_MSVC_RUNTIME_LIBRARY
-                "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-        endif ()
-    elseif (VCPKG_TARGET_TRIPLET MATCHES "-static$")
-        message(
-            WARNING
-                [===[
-CMake is too old to use CMAKE_MSVC_RUNTIME_LIBRARY.
-Attempting to set CMAKE_CXX_FLAGS* to get consistent CRT versions.
-]===])
-        foreach (flag_var
-                 CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
-                 CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-            if (${flag_var} MATCHES "/MD")
-                string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
-            endif ()
-        endforeach (flag_var)
-        unset(flag_var)
+    if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
+        set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    else ()
+        set(CMAKE_MSVC_RUNTIME_LIBRARY
+            "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
     endif ()
 endif ()
