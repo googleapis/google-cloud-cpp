@@ -80,7 +80,7 @@ build_quickstart() {
   echo
   io::log_yellow "Configure CMake for ${library}'s quickstart."
   "${cmake}" "-GNinja" "-DCMAKE_MAKE_PROGRAM=${ninja}" \
-      "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
+    "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
   io::log_yellow "Compiling ${library}'s quickstart."
