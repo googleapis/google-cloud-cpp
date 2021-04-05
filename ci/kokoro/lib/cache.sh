@@ -62,6 +62,7 @@ cache_download_tarball() {
   echo "================================================================"
   io::log "gsutil configuration"
   gsutil version -l
+  echo "================================================================"
   io::log "Downloading build cache ${FILENAME} from ${GCS_FOLDER}"
   env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     gsutil "${CACHE_GSUTIL_DEBUG:--q}" \
@@ -92,6 +93,8 @@ cache_upload_tarball() {
   echo "================================================================"
   io::log "gsutil configuration"
   gsutil version -l
+
+  echo "================================================================"
   io::log "Uploading build cache ${FILENAME} to ${GCS_FOLDER}"
 
   trap cache_gcloud_cleanup RETURN

@@ -25,7 +25,7 @@ io::log_yellow "Update or install dependencies."
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
-vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
+vcpkg_sha="2afee4c5aad8f936ea2bbe58dcdff96d2eadc258"
 vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
 echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
