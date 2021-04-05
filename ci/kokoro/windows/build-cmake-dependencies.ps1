@@ -49,8 +49,8 @@ if ($args.count -ge 1) {
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
 
-$vcpkg_version = "5214a247018b3bf2d793cea188ea2f2c150daddd"
-$vcpkg_tool_version = "2021-01-13-768d8f95c9e752603d2c5901c7a7c7fbdb08af35"
+$vcpkg_version = "2afee4c5aad8f936ea2bbe58dcdff96d2eadc258"
+$vcpkg_tool_version = "2021-02-24-d67989bce1043b98092ac45996a8230a059a2d7e"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
 # Download the right version of `vcpkg`
