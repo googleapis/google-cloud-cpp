@@ -30,7 +30,7 @@ inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::internal::GetEnv;
 
-namespace internal {
+namespace {
 
 absl::optional<std::string> GetEmulator() {
   auto emulator = GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
@@ -38,38 +38,9 @@ absl::optional<std::string> GetEmulator() {
   return GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
 }
 
-std::string JsonEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint()) + "/storage/" +
-         options.version();
-}
-
-std::string JsonUploadEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint()) + "/upload/storage/" +
-         options.version();
-}
-
-std::string XmlEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint());
-}
-
-std::string IamEndpoint(ClientOptions const& options) {
-  auto emulator = GetEmulator();
-  if (emulator) return *emulator + "/iamapi";
-  return options.iam_endpoint();
-}
-
-Options MakeOptions(ClientOptions o) {
-  auto opts = std::move(o.opts_);
-  opts.set<internal::SslRootPathOption>(o.channel_options().ssl_root_path());
-  return opts;
-}
-
-}  // namespace internal
-
-namespace {
 StatusOr<std::shared_ptr<oauth2::Credentials>> StorageDefaultCredentials(
     ChannelOptions const& channel_options) {
-  auto emulator = internal::GetEmulator();
+  auto emulator = GetEmulator();
   if (emulator.has_value()) {
     return StatusOr<std::shared_ptr<oauth2::Credentials>>(
         oauth2::CreateAnonymousCredentials());
@@ -108,6 +79,87 @@ std::size_t DefaultConnectionPoolSize() {
 
 }  // namespace
 
+namespace internal {
+
+std::string JsonEndpoint(ClientOptions const& options) {
+  return GetEmulator().value_or(options.endpoint()) + "/storage/" +
+         options.version();
+}
+
+std::string JsonUploadEndpoint(ClientOptions const& options) {
+  return GetEmulator().value_or(options.endpoint()) + "/upload/storage/" +
+         options.version();
+}
+
+std::string XmlEndpoint(ClientOptions const& options) {
+  return GetEmulator().value_or(options.endpoint());
+}
+
+std::string IamEndpoint(ClientOptions const& options) {
+  auto emulator = GetEmulator();
+  if (emulator) return *emulator + "/iamapi";
+  return options.iam_endpoint();
+}
+
+Options MakeOptions(ClientOptions o) {
+  auto opts = std::move(o.opts_);
+  opts.set<internal::SslRootPathOption>(o.channel_options().ssl_root_path());
+  return opts;
+}
+
+Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
+                         Options opts) {
+  auto o =
+      Options{}
+          .set<Oauth2CredentialsOption>(std::move(credentials))
+          .set<GcsRestEndpointOption>("https://storage.googleapis.com")
+          .set<GcsIamEndpointOption>("https://iamcredentials.googleapis.com/v1")
+          .set<TargetApiVersionOption>("v1")
+          .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
+          .set<DownloadBufferSizeOption>(
+              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
+          .set<UploadBufferSizeOption>(
+              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
+          .set<MaximumSimpleUploadSizeOption>(
+              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
+          .set<EnableCurlSslLockingOption>(true)
+          .set<EnableCurlSigpipeHandlerOption>(true)
+          .set<MaximumCurlSocketRecvSizeOption>(0)
+          .set<MaximumCurlSocketSendSizeOption>(0)
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(
+              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT));
+
+  o = google::cloud::internal::MergeOptions(std::move(o), std::move(opts));
+  auto emulator = GetEmulator();
+  if (emulator.has_value()) {
+    o.set<GcsRestEndpointOption>(*emulator).set<GcsIamEndpointOption>(
+        *emulator + "/iamapi");
+  }
+
+  auto tracing =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
+  if (tracing.has_value()) {
+    std::set<std::string> const enabled = absl::StrSplit(*tracing, ',');
+    if (enabled.end() != enabled.find("http")) {
+      GCP_LOG(INFO) << "Enabling logging for http";
+      o.lookup<TracingComponentsOption>().insert("http");
+    }
+    if (enabled.end() != enabled.find("raw-client")) {
+      GCP_LOG(INFO) << "Enabling logging for RawClient functions";
+      o.lookup<TracingComponentsOption>().insert("raw-client");
+    }
+  }
+
+  auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT");
+  if (project_id.has_value()) {
+    o.set<ProjectIdOption>(std::move(*project_id));
+  }
+
+  return o;
+}
+
+}  // namespace internal
+
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
   return CreateDefaultClientOptions(ChannelOptions{});
 }
@@ -121,64 +173,8 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
-    : opts_(Options{}
-                .set<internal::Oauth2CredentialsOption>(std::move(credentials))
-                .set<internal::GcsRestEndpointOption>(
-                    "https://storage.googleapis.com")
-                .set<internal::GcsIamEndpointOption>(
-                    "https://iamcredentials.googleapis.com/v1")
-                .set<internal::TargetApiVersionOption>("v1")
-                .set<internal::ConnectionPoolSizeOption>(
-                    DefaultConnectionPoolSize())
-                .set<internal::DownloadBufferSizeOption>(
-                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE)
-                .set<internal::UploadBufferSizeOption>(
-                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE)
-                .set<internal::MaximumSimpleUploadSizeOption>(
-                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE)
-                .set<internal::EnableCurlSslLockingOption>(true)
-                .set<internal::EnableCurlSigpipeHandlerOption>(true)
-                .set<internal::MaximumCurlSocketRecvSizeOption>(0)
-                .set<internal::MaximumCurlSocketSendSizeOption>(0)
-                .set<internal::DownloadStallTimeoutOption>(std::chrono::seconds(
-                    GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))),
-      channel_options_(std::move(channel_options)) {
-  auto emulator = internal::GetEmulator();
-  if (emulator.has_value()) {
-    set_endpoint(*emulator);
-    set_iam_endpoint(*emulator + "/iamapi");
-  }
-  SetupFromEnvironment();
-}
-
-void ClientOptions::SetupFromEnvironment() {
-  auto enable_clog =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_CLOG");
-  if (enable_clog.has_value()) {
-    google::cloud::LogSink::EnableStdClog();
-  }
-  // This is overkill right now, eventually we will have different components
-  // that can be traced (http being the first), so we parse the environment
-  // variable.
-  auto tracing =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_ENABLE_TRACING");
-  if (tracing.has_value()) {
-    std::set<std::string> const enabled = absl::StrSplit(*tracing, ',');
-    if (enabled.end() != enabled.find("http")) {
-      GCP_LOG(INFO) << "Enabling logging for http";
-      set_enable_http_tracing(true);
-    }
-    if (enabled.end() != enabled.find("raw-client")) {
-      GCP_LOG(INFO) << "Enabling logging for RawClient functions";
-      set_enable_raw_client_tracing(true);
-    }
-  }
-
-  auto project_id = google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT");
-  if (project_id.has_value()) {
-    set_project_id(std::move(*project_id));
-  }
-}
+    : opts_(internal::FillWithDefaults(std::move(credentials))),
+      channel_options_(std::move(channel_options)) {}
 
 bool ClientOptions::enable_http_tracing() const {
   return opts_.get<TracingComponentsOption>().count("http") != 0;

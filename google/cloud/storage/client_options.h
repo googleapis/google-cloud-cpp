@@ -35,6 +35,8 @@ std::string XmlEndpoint(ClientOptions const&);
 std::string IamEndpoint(ClientOptions const&);
 
 Options MakeOptions(ClientOptions);
+Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
+                         Options = {});
 
 /// Configure the IAM endpoint for the GCS client library.
 struct GcsRestEndpointOption {
@@ -312,8 +314,6 @@ class ClientOptions {
   friend std::string internal::XmlEndpoint(ClientOptions const&);
   friend std::string internal::IamEndpoint(ClientOptions const&);
   friend Options internal::MakeOptions(ClientOptions);
-
-  void SetupFromEnvironment();
 
   Options opts_;
 
