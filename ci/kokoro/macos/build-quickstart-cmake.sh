@@ -47,7 +47,7 @@ fi
 
 "${vcpkg_bin}" remove --outdated --recurse
 "${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
-  "${vcpkg_bin}" install crc32c grpc # google-cloud-cpp
+  "${vcpkg_bin}" install google-cloud-cpp
 
 # TODO(coryan) - DO NOT MERGE
 exit 0
