@@ -33,7 +33,9 @@ readonly NCPU
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew install openssl cmake ninja
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew install openssl
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew install cmake || cmake --version
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew install ninja || ninja --version
 
 echo "================================================================"
 io::log_yellow "ccache stats"
