@@ -47,9 +47,9 @@ fi
 
 "${vcpkg_bin}" remove --outdated --recurse
 "${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
-  "${vcpkg_bin}" install google-cloud-cpp
+  "${vcpkg_bin}" install crc32c # google-cloud-cpp
 
-# TODO(coryan) - do not merge
+# TODO(coryan) - DO NOT MERGE
 exit 0
 
 run_quickstart="false"
@@ -76,9 +76,9 @@ build_quickstart() {
   local -r source_dir="google/cloud/${library}/quickstart"
   local -r binary_dir="cmake-out/quickstart-${library}"
   local cmake
-  cmake="$("${vcpkg_dir}/vcpkg" fetch cmake)"
+  cmake="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch cmake)"
   local ninja
-  ninja="$("${vcpkg_dir}/vcpkg" fetch ninja)"
+  ninja="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja)"
 
   echo
   io::log_yellow "Configure CMake for ${library}'s quickstart."
