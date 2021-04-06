@@ -25,7 +25,7 @@ io::log_yellow "Update or install dependencies."
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
-vcpkg_sha="5214a247018b3bf2d793cea188ea2f2c150daddd"
+vcpkg_sha="2afee4c5aad8f936ea2bbe58dcdff96d2eadc258"
 vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
 echo "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
@@ -65,21 +65,26 @@ readonly run_quickstart
 echo "================================================================"
 cd "${PROJECT_ROOT}"
 cmake_flags=(
-  "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
+  "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
 )
 
 build_quickstart() {
   local -r library="$1"
   local -r source_dir="google/cloud/${library}/quickstart"
   local -r binary_dir="cmake-out/quickstart-${library}"
+  local cmake
+  cmake="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch cmake)"
+  local ninja
+  ninja="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja)"
 
   echo
   io::log_yellow "Configure CMake for ${library}'s quickstart."
-  cmake "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
+  "${cmake}" "-GNinja" "-DCMAKE_MAKE_PROGRAM=${ninja}" \
+    "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
   io::log_yellow "Compiling ${library}'s quickstart."
-  cmake --build "${binary_dir}"
+  "${cmake}" --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo

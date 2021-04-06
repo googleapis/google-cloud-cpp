@@ -56,6 +56,19 @@ else
   exit 1
 fi
 
+# In some versions of Kokoro `google-cloud-sdk` is not installed by default, or
+# it is just partially installed. This gives us a more consistent environment.
+echo "================================================================"
+io::log_yellow "Update or reinstall 'google-cloud-sdk'."
+brew --version
+# Ignore errors, maybe the local version is functional.
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew reinstall google-cloud-sdk ||
+  env "HOMEBREW_NO_AUTO_UPDATE=1" brew cask install google-cloud-sdk ||
+  true
+
+# Continue despite `brew doctor` errors and warnings.
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew doctor || true
+
 echo "================================================================"
 io::log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
@@ -71,15 +84,15 @@ io::log_yellow "building with ${NCPU} cores on ${PWD}."
 
 script_flags=()
 
-if [[ "${BUILD_NAME}" = "bazel" ]]; then
+if [[ "${BUILD_NAME}" == "bazel" ]]; then
   export BUILD_TOOL="Bazel"
   driver_script="ci/kokoro/macos/build-bazel.sh"
-elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
+elif [[ "${BUILD_NAME}" == "cmake-super" ]]; then
   driver_script="ci/kokoro/macos/build-cmake.sh"
   script_flags+=("super" "cmake-out/macos")
-elif [[ "${BUILD_NAME}" = "quickstart-cmake" ]]; then
+elif [[ "${BUILD_NAME}" == "quickstart-cmake" ]]; then
   driver_script="ci/kokoro/macos/build-quickstart-cmake.sh"
-elif [[ "${BUILD_NAME}" = "quickstart-bazel" ]]; then
+elif [[ "${BUILD_NAME}" == "quickstart-bazel" ]]; then
   export BUILD_TOOL="Bazel"
   driver_script="ci/kokoro/macos/build-quickstart-bazel.sh"
 else
