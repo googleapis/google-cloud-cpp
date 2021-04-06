@@ -173,8 +173,10 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
   io::log_yellow "cleaning up artifacts."
+  ls -l /tmpfs/src/github/google-cloud-cpp/cmake-out || echo "not found"
   find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 |
     xargs -0 -t rm -rf || true
+  io::log_yellow "cleaning up artifacts DONE."
 else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
 fi

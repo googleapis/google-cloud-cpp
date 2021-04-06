@@ -174,3 +174,5 @@ if should_run_integration_tests; then
     -- ... "${excluded_rules[@]}"
 
 fi
+
+"${BAZEL_BIN}" shutdown

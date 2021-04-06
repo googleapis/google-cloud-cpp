@@ -119,6 +119,8 @@ build_quickstart() {
       "${BAZEL_BIN}" run "${bazel_args[@]}" "--spawn_strategy=local" \
       :quickstart -- "${args[@]}"
   fi
+
+  "${BAZEL_BIN}" shutdown "${bazel_args[@]}"
 }
 
 errors=""
