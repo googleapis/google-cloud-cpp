@@ -33,11 +33,7 @@ readonly NCPU
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-brew_env=()
-if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
-  brew_env+=("HOMEBREW_NO_AUTO_UPDATE=1")
-fi
-env ${brew_env[@]+"${brew_env[@]}"} brew install openssl cmake ninja
+env "HOMEBREW_NO_AUTO_UPDATE=1" brew install openssl cmake ninja
 
 echo "================================================================"
 io::log_yellow "ccache stats"
