@@ -49,6 +49,9 @@ fi
 "${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
   "${vcpkg_bin}" install google-cloud-cpp
 
+# TODO(coryan) - do not merge
+exit 0
+
 run_quickstart="false"
 readonly CONFIG_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly CREDENTIALS_FILE="${CONFIG_DIR}/kokoro-run-key.json"
