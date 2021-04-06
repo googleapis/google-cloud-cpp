@@ -120,7 +120,7 @@ build_quickstart() {
       :quickstart -- "${args[@]}"
   fi
 
-  "${BAZEL_BIN}" shutdown "${bazel_args[@]}"
+  "${BAZEL_BIN}" shutdown
 }
 
 errors=""
