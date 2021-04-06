@@ -37,7 +37,7 @@ brew_env=()
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   brew_env+=("HOMEBREW_NO_AUTO_UPDATE=1")
 fi
-env ${brew_env[@]+"${brew_env[@]}"} brew install openssl
+env ${brew_env[@]+"${brew_env[@]}"} brew install openssl cmake ninja
 
 echo "================================================================"
 io::log_yellow "ccache stats"
@@ -54,7 +54,7 @@ cmake_flags=(
 
 echo "================================================================"
 io::log_yellow "Configure CMake."
-cmake "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
+cmake -GNinja "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
 
 echo "================================================================"
 io::log_yellow "Compiling with ${NCPU} cpus."
