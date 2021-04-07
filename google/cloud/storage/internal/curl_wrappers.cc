@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/log.h"
 #include <openssl/crypto.h>
@@ -236,12 +237,12 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
   return size;
 }
 
-void CurlInitializeOnce(ClientOptions const& options) {
+void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
   std::call_once(ssl_locking_initialized, InitializeSslLocking,
-                 options.enable_ssl_locking_callbacks());
+                 options.get<EnableCurlSslLockingOption>());
   std::call_once(sigpipe_handler_initialized, InitializeSigPipeHandler,
-                 options.enable_sigpipe_handler());
+                 options.get<EnableCurlSigpipeHandlerOption>());
 }
 
 std::string ExtractUrlHostpart(std::string url) {

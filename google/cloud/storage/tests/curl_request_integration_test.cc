@@ -301,9 +301,8 @@ TEST(CurlRequestTest, UserAgent) {
   // Also verifying the telemetry header is present.
   CurlRequestBuilder builder(HttpBinEndpoint() + "/headers",
                              storage::internal::GetDefaultCurlHandleFactory());
-  auto options =
-      ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
-          .add_user_agent_prefix("test-user-agent-prefix");
+  auto options = google::cloud::Options{}.set<UserAgentProductsOption>(
+      {"test-user-agent-prefix"});
   builder.ApplyClientOptions(options);
   builder.AddHeader("Accept: application/json");
   builder.AddHeader("charsets: utf-8");
@@ -504,8 +503,7 @@ TEST(CurlRequestTest, Logging) {
         HttpBinEndpoint() + "/post?foo=bar",
         storage::internal::GetDefaultCurlHandleFactory());
     auto options =
-        ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
-            .set_enable_http_tracing(true);
+        google::cloud::Options{}.set<TracingComponentsOption>({"http"});
     builder.ApplyClientOptions(options);
     builder.AddHeader("Accept: application/json");
     builder.AddHeader("charsets: utf-8");

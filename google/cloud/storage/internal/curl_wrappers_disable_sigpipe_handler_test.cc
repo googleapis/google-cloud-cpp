@@ -44,8 +44,7 @@ TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
   // curl_global_init(). Unfortunately 7.29.0 is the default on CentOS-7, and
   // the tests here fails. We simply skip the test with this ancient library.
   auto initial_handler = std::signal(SIGPIPE, &test_handler);
-  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_sigpipe_handler(false));
+  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(false));
   auto actual = std::signal(SIGPIPE, initial_handler);
   EXPECT_EQ(actual, &test_handler);
 #endif  // defined(SIGPIPE)

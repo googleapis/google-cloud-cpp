@@ -38,14 +38,12 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
-    ClientOptions const& options) {
-  if (options.connection_pool_size() == 0) {
-    return std::make_shared<DefaultCurlHandleFactory>(
-        options.channel_options());
+std::shared_ptr<CurlHandleFactory> CreateHandleFactory(Options const& options) {
+  auto const pool_size = options.get<ConnectionPoolSizeOption>();
+  if (pool_size == 0) {
+    return std::make_shared<DefaultCurlHandleFactory>(options);
   }
-  return std::make_shared<PooledCurlHandleFactory>(
-      options.connection_pool_size(), options.channel_options());
+  return std::make_shared<PooledCurlHandleFactory>(pool_size, options);
 }
 
 std::string UrlEscapeString(std::string const& value) {
@@ -108,12 +106,13 @@ bool XmlEnabled() {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method) {
-  auto auth_header = options_.credentials()->AuthorizationHeader();
+  auto auth_header =
+      opts_.get<Oauth2CredentialsOption>()->AuthorizationHeader();
   if (!auth_header.ok()) {
     return std::move(auth_header).status();
   }
   builder.SetMethod(method)
-      .ApplyClientOptions(options_)
+      .ApplyClientOptions(opts_)
       .AddHeader(auth_header.value())
       .AddHeader(x_goog_api_client_header_);
   return Status();
@@ -241,22 +240,24 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
           std::move(request.template GetOption<CustomHeader>())));
 }
 
-CurlClient::CurlClient(ClientOptions options)
-    : options_(std::move(options)),
+CurlClient::CurlClient(google::cloud::Options options)
+    : opts_(std::move(options)),
+      backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(opts_)),
       x_goog_api_client_header_("x-goog-api-client: " + x_goog_api_client()),
-      storage_endpoint_(JsonEndpoint(options_)),
+      storage_endpoint_(JsonEndpoint(opts_)),
       storage_host_(ExtractUrlHostpart(storage_endpoint_)),
-      upload_endpoint_(JsonUploadEndpoint(options_)),
-      xml_endpoint_(XmlEndpoint(options_)),
+      upload_endpoint_(JsonUploadEndpoint(opts_)),
+      xml_endpoint_(XmlEndpoint(opts_)),
       xml_host_(ExtractUrlHostpart(xml_endpoint_)),
-      iam_endpoint_(IamEndpoint(options_)),
+      iam_endpoint_(IamEndpoint(opts_)),
       xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
-      storage_factory_(CreateHandleFactory(options_)),
-      upload_factory_(CreateHandleFactory(options_)),
-      xml_upload_factory_(CreateHandleFactory(options_)),
-      xml_download_factory_(CreateHandleFactory(options_)) {
-  CurlInitializeOnce(options);
+      storage_factory_(CreateHandleFactory(opts_)),
+      upload_factory_(CreateHandleFactory(opts_)),
+      xml_upload_factory_(CreateHandleFactory(opts_)),
+      xml_download_factory_(CreateHandleFactory(opts_)) {
+  CurlInitializeOnce(opts_);
 }
 
 StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(

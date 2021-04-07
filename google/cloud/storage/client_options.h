@@ -29,12 +29,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 class ClientOptions;
 namespace internal {
-std::string JsonEndpoint(ClientOptions const&);
-std::string JsonUploadEndpoint(ClientOptions const&);
-std::string XmlEndpoint(ClientOptions const&);
-std::string IamEndpoint(ClientOptions const&);
+std::string JsonEndpoint(Options const&);
+std::string JsonUploadEndpoint(Options const&);
+std::string XmlEndpoint(Options const&);
+std::string IamEndpoint(Options const&);
 
 Options MakeOptions(ClientOptions);
+ClientOptions MakeBackwardsCompatibleClientOptions(Options);
 Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
                          Options = {});
 
@@ -309,11 +310,10 @@ class ClientOptions {
   //@}
 
  private:
-  friend std::string internal::JsonEndpoint(ClientOptions const&);
-  friend std::string internal::JsonUploadEndpoint(ClientOptions const&);
-  friend std::string internal::XmlEndpoint(ClientOptions const&);
-  friend std::string internal::IamEndpoint(ClientOptions const&);
   friend Options internal::MakeOptions(ClientOptions);
+  friend ClientOptions internal::MakeBackwardsCompatibleClientOptions(Options);
+
+  explicit ClientOptions(Options o);
 
   Options opts_;
 
