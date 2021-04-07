@@ -34,8 +34,7 @@ TEST(CurlWrappers, LockingDisabledTest) {
   // Install a trivial callback, this should disable the installation of the
   // normal callbacks in the the curl wrappers.
   CRYPTO_set_locking_callback(test_cb);
-  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_ssl_locking_callbacks(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(true));
   EXPECT_FALSE(SslLockingCallbacksInstalled());
 }
 }  // namespace

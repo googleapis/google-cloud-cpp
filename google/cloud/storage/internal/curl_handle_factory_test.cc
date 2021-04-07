@@ -30,7 +30,7 @@ using ::testing::IsEmpty;
 class OverriddenDefaultCurlHandleFactory : public DefaultCurlHandleFactory {
  public:
   OverriddenDefaultCurlHandleFactory() = default;
-  explicit OverriddenDefaultCurlHandleFactory(ChannelOptions const& options)
+  explicit OverriddenDefaultCurlHandleFactory(Options const& options)
       : DefaultCurlHandleFactory(options) {}
 
  protected:
@@ -51,7 +51,7 @@ class OverriddenPooledCurlHandleFactory : public PooledCurlHandleFactory {
   explicit OverriddenPooledCurlHandleFactory(std::size_t maximum_size)
       : PooledCurlHandleFactory(maximum_size) {}
   OverriddenPooledCurlHandleFactory(std::size_t maximum_size,
-                                    ChannelOptions const& options)
+                                    Options const& options)
       : PooledCurlHandleFactory(maximum_size, options) {}
 
  protected:
@@ -74,8 +74,7 @@ TEST(CurlHandleFactoryTest,
 }
 
 TEST(CurlHandleFactoryTest, DefaultFactoryChannelOptionsCallsSetOptions) {
-  ChannelOptions options;
-  options.set_ssl_root_path("foo");
+  auto options = Options{}.set<SslRootPathOption>("foo");
   OverriddenDefaultCurlHandleFactory object_under_test(options);
 
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
@@ -92,8 +91,7 @@ TEST(CurlHandleFactoryTest, PooledFactoryNoChannelOptionsDoesntCallSetOptions) {
 }
 
 TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
-  ChannelOptions options;
-  options.set_ssl_root_path("foo");
+  auto options = Options{}.set<SslRootPathOption>("foo");
   OverriddenPooledCurlHandleFactory object_under_test(2, options);
 
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));

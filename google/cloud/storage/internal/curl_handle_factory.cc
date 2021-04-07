@@ -28,10 +28,9 @@ void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
 }
 
 void CurlHandleFactory::SetCurlOptions(CURL* handle,
-                                       ChannelOptions const& options) {
-  if (!options.ssl_root_path().empty()) {
-    SetCurlStringOption(handle, CURLOPT_CAINFO,
-                        options.ssl_root_path().c_str());
+                                       std::string const& ssl_root_path) {
+  if (!ssl_root_path.empty()) {
+    SetCurlStringOption(handle, CURLOPT_CAINFO, ssl_root_path.c_str());
   }
 }
 
@@ -43,8 +42,8 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
 }
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
-    ChannelOptions const& options) {
-  if (!options.ssl_root_path().empty()) {
+    Options const& options) {
+  if (!options.get<SslRootPathOption>().empty()) {
     return std::make_shared<DefaultCurlHandleFactory>(options);
   }
   return GetDefaultCurlHandleFactory();
@@ -52,7 +51,7 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
 
 CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
-  SetCurlOptions(curl.get(), options_);
+  SetCurlOptions(curl.get(), ssl_root_path_);
   return curl;
 }
 
@@ -73,8 +72,8 @@ CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
 void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) { m.reset(); }
 
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
-                                                 ChannelOptions options)
-    : maximum_size_(maximum_size), options_(std::move(options)) {}
+                                                 Options const& o)
+    : maximum_size_(maximum_size), ssl_root_path_(o.get<SslRootPathOption>()) {}
 
 PooledCurlHandleFactory::~PooledCurlHandleFactory() {
   for (auto* h : handles_) {
@@ -93,11 +92,11 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
     (void)curl_easy_reset(handle);
     handles_.pop_back();
     CurlPtr curl(handle, &curl_easy_cleanup);
-    SetCurlOptions(curl.get(), options_);
+    SetCurlOptions(curl.get(), ssl_root_path_);
     return curl;
   }
   CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
-  SetCurlOptions(curl.get(), options_);
+  SetCurlOptions(curl.get(), ssl_root_path_);
   return curl;
 }
 

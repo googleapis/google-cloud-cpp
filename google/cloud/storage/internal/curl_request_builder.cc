@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/build_info.h"
 
 namespace google {
@@ -68,13 +70,18 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
 }
 
 CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
-    ClientOptions const& options) {
+    Options const& options) {
   ValidateBuilderState(__func__);
-  logging_enabled_ = options.enable_http_tracing();
-  socket_options_.recv_buffer_size_ = options.maximum_socket_recv_size();
-  socket_options_.send_buffer_size_ = options.maximum_socket_send_size();
-  user_agent_prefix_ = options.user_agent_prefix() + user_agent_prefix_;
-  download_stall_timeout_ = options.download_stall_timeout();
+  logging_enabled_ = google::cloud::internal::Contains(
+      options.get<TracingComponentsOption>(), "http");
+  socket_options_.recv_buffer_size_ =
+      options.get<MaximumCurlSocketRecvSizeOption>();
+  socket_options_.send_buffer_size_ =
+      options.get<MaximumCurlSocketSendSizeOption>();
+  auto agents = options.get<UserAgentProductsOption>();
+  agents.push_back(user_agent_prefix_);
+  user_agent_prefix_ = absl::StrJoin(agents, " ");
+  download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
   return *this;
 }
 

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -81,30 +82,34 @@ std::size_t DefaultConnectionPoolSize() {
 
 namespace internal {
 
-std::string JsonEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint()) + "/storage/" +
-         options.version();
+std::string JsonEndpoint(Options const& options) {
+  return GetEmulator().value_or(options.get<GcsRestEndpointOption>()) +
+         "/storage/" + options.get<TargetApiVersionOption>();
 }
 
-std::string JsonUploadEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint()) + "/upload/storage/" +
-         options.version();
+std::string JsonUploadEndpoint(Options const& options) {
+  return GetEmulator().value_or(options.get<GcsRestEndpointOption>()) +
+         "/upload/storage/" + options.get<TargetApiVersionOption>();
 }
 
-std::string XmlEndpoint(ClientOptions const& options) {
-  return GetEmulator().value_or(options.endpoint());
+std::string XmlEndpoint(Options const& options) {
+  return GetEmulator().value_or(options.get<GcsRestEndpointOption>());
 }
 
-std::string IamEndpoint(ClientOptions const& options) {
+std::string IamEndpoint(Options const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
-  return options.iam_endpoint();
+  return options.get<GcsIamEndpointOption>();
 }
 
 Options MakeOptions(ClientOptions o) {
   auto opts = std::move(o.opts_);
   opts.set<internal::SslRootPathOption>(o.channel_options().ssl_root_path());
   return opts;
+}
+
+ClientOptions MakeBackwardsCompatibleClientOptions(Options opts) {
+  return ClientOptions(std::move(opts));
 }
 
 Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
@@ -175,6 +180,13 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
     : opts_(internal::FillWithDefaults(std::move(credentials))),
       channel_options_(std::move(channel_options)) {}
+
+ClientOptions::ClientOptions(Options o)
+    : opts_(std::move(o)),
+      user_agent_prefix_(
+          absl::StrJoin(opts_.get<UserAgentProductsOption>(), " ")) {
+  channel_options_.set_ssl_root_path(opts_.get<internal::SslRootPathOption>());
+}
 
 bool ClientOptions::enable_http_tracing() const {
   return opts_.get<TracingComponentsOption>().count("http") != 0;

@@ -163,7 +163,7 @@ class CurlRequestBuilder {
   CurlRequestBuilder& SetMethod(std::string const& method);
 
   /// Copy interesting configuration parameters from the client options.
-  CurlRequestBuilder& ApplyClientOptions(ClientOptions const& options);
+  CurlRequestBuilder& ApplyClientOptions(Options const& options);
 
   /// Sets the CURLSH* handle to share resources.
   CurlRequestBuilder& SetCurlShare(CURLSH* share);
