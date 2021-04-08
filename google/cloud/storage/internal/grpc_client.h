@@ -29,16 +29,15 @@ namespace internal {
 /// Determine if using DirectPath for GCS has been enabled through
 /// GOOGLE_CLOUD_DIRECT_PATH.
 bool DirectPathEnabled();
-
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&);
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&,
+Options FillWithDefaultsGrpc(Options = {});
+std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(Options const&,
                                                           int channel_id);
 
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
-  explicit GrpcClient(ClientOptions options);
-  explicit GrpcClient(ClientOptions options, int channel_id);
+  static std::shared_ptr<GrpcClient> Create(Options options);
+  static std::shared_ptr<GrpcClient> Create(Options options, int channel_id);
   ~GrpcClient() override = default;
 
   //@{
@@ -318,8 +317,11 @@ class GrpcClient : public RawClient,
   static std::string MD5FromProto(std::string const&);
   static std::string MD5ToProto(std::string const&);
 
+ protected:
+  explicit GrpcClient(Options const& options, int channel_id);
+
  private:
-  ClientOptions options_;
+  ClientOptions backwards_compatibility_options_;
   std::shared_ptr<google::storage::v1::Storage::Stub> stub_;
 };
 

@@ -73,18 +73,17 @@ StorageIntegrationTest::MakeIntegrationTestClient(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto options = ClientOptions::CreateDefaultClientOptions();
-  if (!options) {
-    return std::move(options).status();
-  }
+  if (!options) return std::move(options).status();
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMetadata()) {
-    return Client(std::make_shared<internal::GrpcClient>(*options),
+    return Client(internal::GrpcClient::Create(Options{}), *retry_policy,
                   *backoff_policy);
   }
   if (UseGrpcForMedia()) {
-    return Client(std::make_shared<internal::HybridClient>(*options),
-                  *backoff_policy);
+    return Client(
+        internal::HybridClient::Create(options->credentials(), Options{}),
+        *retry_policy, *backoff_policy);
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 

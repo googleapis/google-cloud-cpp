@@ -134,7 +134,7 @@ Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
           .set<DownloadStallTimeoutOption>(std::chrono::seconds(
               GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT));
 
-  o = google::cloud::internal::MergeOptions(std::move(o), std::move(opts));
+  o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   auto emulator = GetEmulator();
   if (emulator.has_value()) {
     o.set<GcsRestEndpointOption>(*emulator).set<GcsIamEndpointOption>(

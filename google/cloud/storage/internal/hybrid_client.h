@@ -29,8 +29,13 @@ namespace internal {
 
 class HybridClient : public RawClient {
  public:
-  explicit HybridClient(ClientOptions options);
-  explicit HybridClient(ClientOptions options, int channel_id);
+  static std::shared_ptr<RawClient> Create(
+      std::shared_ptr<oauth2::Credentials> credentials, Options options) {
+    return Create(std::move(credentials), std::move(options), /*channel_id=*/0);
+  }
+  static std::shared_ptr<RawClient> Create(
+      std::shared_ptr<oauth2::Credentials> credentials, Options options,
+      int channel_id);
   ~HybridClient() override = default;
 
   ClientOptions const& client_options() const override;
@@ -146,6 +151,9 @@ class HybridClient : public RawClient {
       DeleteNotificationRequest const&) override;
 
  private:
+  explicit HybridClient(std::shared_ptr<oauth2::Credentials> credentials,
+                        Options options, int channel_id);
+
   std::shared_ptr<GrpcClient> grpc_;
   std::shared_ptr<CurlClient> curl_;
 };

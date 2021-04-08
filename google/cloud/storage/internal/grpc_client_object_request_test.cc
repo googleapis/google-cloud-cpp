@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -434,8 +435,9 @@ TEST(GrpcClientObjectRequest, ReadObjectRangeRequestReadLastZero) {
 
   testing_util::ScopedEnvironment grpc_endpoint{
       "GOOGLE_CLOUD_CPP_STORAGE_GRPC_ENDPOINT", "locahost:1"};
-  GrpcClient client{ClientOptions{oauth2::CreateAnonymousCredentials()}};
-  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client.ReadObject(req);
+  auto client = GrpcClient::Create(
+      Options{}.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials()));
+  StatusOr<std::unique_ptr<ObjectReadSource>> reader = client->ReadObject(req);
   EXPECT_THAT(reader, StatusIs(StatusCode::kOutOfRange));
 }
 

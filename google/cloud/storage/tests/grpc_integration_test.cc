@@ -459,9 +459,8 @@ TEST_P(GrpcIntegrationTest, GetObjectMediaNotFound) {
 
   auto object_name = MakeRandomObjectName();
 
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
-  auto channel = google::cloud::storage::internal::CreateGrpcChannel(*options);
+  auto channel = google::cloud::storage::internal::CreateGrpcChannel(
+      FillWithDefaultsGrpc(), /*channel_id=*/0);
   auto stub = google::storage::v1::Storage::NewStub(channel);
 
   grpc::ClientContext context;
