@@ -4,7 +4,6 @@ metadata:
   name: google-cloud-cpp-bigquery-notifier
 spec:
   notification:
-    filter: >
-      build.build_trigger_id in ["39670f28-2623-4300-b427-91a0b627a074"]
+    filter: has(build.build_trigger_id)
     delivery:
       table: projects/936212892354/datasets/cloudbuild/tables/google_cloud_cpp
