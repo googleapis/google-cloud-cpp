@@ -21,6 +21,7 @@ import gcs as gcs_type
 import grpc_server
 import httpbin
 import utils
+import collections
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
@@ -30,6 +31,7 @@ from google.protobuf import json_format
 
 db = None
 grpc_port = 0
+retry_test_sessions = {}
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -39,6 +41,64 @@ root.debug = False
 @root.route("/")
 def index():
     return "OK"
+
+# Notes:
+# curl -X POST "http://localhost:9000/setup_retry_test" -H 'Content-Type: application/json' -d '{"test-id":"23423", "test-instructions":["return-503"]}'
+# curl -H "x-test-id: 23423" "http://localhost:9000/storage/v1/b?project=test"
+
+
+
+@root.route("/setup_retry_test", methods=["POST"])
+def setup_retry_test():
+    global retry_test_sessions
+    # payload parameters
+    # id
+    # instructions
+    payload = json.loads(flask.request.data)
+    test_id = payload.get("test-id", None)
+    test_instruction_set = payload.get("test-instructions", None)
+    if not test_id:
+      return flask.Response("test-id is not defined", status=400)
+    if not test_instruction_set:
+      return flask.Response("test-instructions is not defined", status=400)
+    retry_test_sessions[test_id] = collections.deque(test_instruction_set)
+    return flask.Response("OK", status=200)
+
+@root.route("/end_retry_test", methods=["POST"])
+def end_retry_test():
+    global retry_test_sessions
+    # payload parameters
+    # id
+    payload = json.loads(flask.request.data)
+    test_id = payload.get("id", None)
+    if not test_id:
+      return flask.Response("test-id is not defined", status=400)
+
+    instruction_set = retry_test_sessions.get(test_id, None)
+    if not instruction_set:
+        return flask.Response("{} test-id was not found".format(test_id), status=404)
+    if len(instruction_set) == 0:
+        return flask.Response("OK", status=200)
+
+    return flask.Response("Failed to reach: {}".format(instruction_set), status=400)
+
+
+def handle_retry_instruction(request):
+    global retry_test_sessions
+    test_id = request.headers.get("x-test-id", None)
+    if not test_id:
+        return None
+    instruction_set = retry_test_sessions.get(test_id, None)
+    if not instruction_set:
+        return flask.Response("{} test-id was not found".format(test_id), status=404)
+
+    if len(instruction_set) > 0:
+      next_instruction = instruction_set.popleft()
+      instruction_parts = next_instruction.split('-')
+      error_code = instruction_parts[1]
+      return flask.Response("Caused a {}".format(error_code), status=error_code)
+
+    return None
 
 
 @root.route("/start_grpc")
@@ -99,6 +159,9 @@ gcs.debug = False
 
 @gcs.route("/b", methods=["GET"])
 def bucket_list():
+    error_out = handle_retry_instruction(flask.request)
+    if error_out:
+        return error_out
     db.insert_test_bucket(None)
     project = flask.request.args.get("project")
     projection = flask.request.args.get("projection", "noAcl")
