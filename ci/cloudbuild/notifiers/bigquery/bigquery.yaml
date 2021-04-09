@@ -1,0 +1,9 @@
+apiVersion: cloud-build-notifiers/v1
+kind: BigQueryNotifier
+metadata:
+  name: google-cloud-cpp-bigquery-notifier
+spec:
+  notification:
+    filter: build.substitutions["REPO_NAME"] == "google-cloud-cpp"
+    delivery:
+      table: projects/936212892354/datasets/cloudbuild/tables/google_cloud_cpp
