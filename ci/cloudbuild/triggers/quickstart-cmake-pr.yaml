@@ -8,6 +8,6 @@ github:
 name: quickstart-cmake-pr
 substitutions:
   _BUILD_NAME: quickstart-cmake
-  _DISTRO: fedora
+  _DISTRO: ubuntu-bionic
 tags:
 - pr

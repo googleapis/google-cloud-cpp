@@ -7,6 +7,6 @@ github:
 name: tsan-ci
 substitutions:
   _BUILD_NAME: tsan
-  _DISTRO: fedora
+  _DISTRO: ubuntu-bionic
 tags:
 - ci

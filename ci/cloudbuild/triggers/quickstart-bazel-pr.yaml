@@ -8,6 +8,6 @@ github:
 name: quickstart-bazel-pr
 substitutions:
   _BUILD_NAME: quickstart-bazel
-  _DISTRO: fedora
+  _DISTRO: ubuntu-bionic
 tags:
 - pr

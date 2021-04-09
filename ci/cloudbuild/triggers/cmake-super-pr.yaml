@@ -8,6 +8,6 @@ github:
 name: cmake-super-pr
 substitutions:
   _BUILD_NAME: cmake-super
-  _DISTRO: fedora
+  _DISTRO: ubuntu-bionic
 tags:
 - pr
