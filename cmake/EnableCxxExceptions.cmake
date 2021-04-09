@@ -21,10 +21,14 @@ option(GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS "Enable C++ Exception Support" ON)
 if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     message(
         WARNING
-            "C++ Exceptions disabled, any operation that normally"
-            " raises exceptions will instead log the error and call"
-            " std::abort().  In addition, some examples and tests will not be"
-            " compiled.")
+            "You have disabled C++ exceptions. In general, `google-cloud-cpp`"
+            " uses an outcome type (`google::cloud::StatusOr<>`) to signal"
+            " errors, and thus fully supports applications with exceptions"
+            " disabled. In functions where application developers *request*"
+            " an exception on errors (e.g. `StatusOr<>::value()`), the library"
+            " calls `std::abort()` instead."
+            " In addition, some examples and tests will not be compiled as"
+            " they use exceptions for clarity.")
     if (MSVC)
         set(GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG "/EHs-c-")
     else ()
