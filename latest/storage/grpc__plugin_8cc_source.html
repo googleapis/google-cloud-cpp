@@ -110,22 +110,27 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ada148b71273e4f19243f21d4742b9ab2">   41</a></span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::Client</a> <a class="code" href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">DefaultGrpcClient</a>(</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::ClientOptions</a> options, <span class="keywordtype">int</span> channel_id) {</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">if</span> (UseGrpcForMetadata()) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(std::make_shared&lt;storage::internal::GrpcClient&gt;(</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::move(options), channel_id));</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(std::make_shared&lt;storage::internal::HybridClient&gt;(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      std::move(options), channel_id));</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">// namespace STORAGE_CLIENT_NS</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}  <span class="comment">// namespace storage_experimental</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(storage::internal::GrpcClient::Create(</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        google::cloud::storage::internal::MakeOptions(std::move(options)),</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        channel_id));</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">auto</span> credentials = options.<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a1dab0ec04443993f4aafd08a1cde40e0">credentials</a>();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">storage::Client</a>(storage::internal::HybridClient::Create(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      std::move(credentials),</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      google::cloud::storage::internal::MakeOptions(std::move(options)),</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      channel_id));</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}  <span class="comment">// namespace STORAGE_CLIENT_NS</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}  <span class="comment">// namespace storage_experimental</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}  <span class="comment">// namespace google</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00210">client.h:210</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage__experimental_1_1v1_html_ac090c76c650be677fdf7ce42744af607"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage__experimental_1_1v1.html#ac090c76c650be677fdf7ce42744af607">google::cloud::storage_experimental::v1::DefaultGrpcClient</a></div><div class="ttdeci">StatusOr&lt; google::cloud::storage::Client &gt; DefaultGrpcClient()</div><div class="ttdoc">Create a google::cloud::storage::Client object configured to use gRPC.</div><div class="ttdef"><b>Definition:</b> <a href="grpc__plugin_8cc_source.html#l00034">grpc_plugin.cc:34</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::v1::ClientOptions</a></div><div class="ttdoc">Describes the configuration for a storage::Client object.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00148">client_options.h:148</a></div></div>
 <div class="ttc" id="agrpc__plugin_8h_html"><div class="ttname"><a href="grpc__plugin_8h.html">grpc_plugin.h</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions_html_a1dab0ec04443993f4aafd08a1cde40e0"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a1dab0ec04443993f4aafd08a1cde40e0">google::cloud::storage::v1::ClientOptions::credentials</a></div><div class="ttdeci">std::shared_ptr&lt; oauth2::Credentials &gt; credentials() const</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00167">client_options.h:167</a></div></div>
 <div class="ttc" id="aversion_8h_html_a6dee12cbe749461e34aef0e0f9b3fe28"><div class="ttname"><a href="version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28">STORAGE_CLIENT_NS</a></div><div class="ttdeci">#define STORAGE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00030">version.h:30</a></div></div>
 <div class="ttc" id="anamespacegoogle_html"><div class="ttname"><a href="namespacegoogle.html">google</a></div></div>
 <!-- start footer part -->

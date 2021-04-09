@@ -181,8 +181,8 @@ $(function() {
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">return</span> ClientOptions(std::move(opts));</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;Options FillWithDefaults(std::shared_ptr&lt;oauth2::Credentials&gt; credentials,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                         Options opts) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;Options DefaultOptions(std::shared_ptr&lt;oauth2::Credentials&gt; credentials,</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                       Options opts) {</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  <span class="keyword">auto</span> o =</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      Options{}</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;          .set&lt;Oauth2CredentialsOption&gt;(std::move(credentials))</div>
@@ -203,7 +203,7 @@ $(function() {
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;          .set&lt;DownloadStallTimeoutOption&gt;(std::chrono::seconds(</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;              <a class="code" href="client__options_8cc.html#a39da51214909a41359b3d80fb36a3f71">GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT</a>));</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  o = google::cloud::internal::MergeOptions(std::move(o), std::move(opts));</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  <span class="keyword">auto</span> emulator = GetEmulator();</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  <span class="keywordflow">if</span> (emulator.has_value()) {</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    o.set&lt;GcsRestEndpointOption&gt;(*emulator).set&lt;GcsIamEndpointOption&gt;(</div>
@@ -247,7 +247,7 @@ $(function() {
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#ade9a4d3a1992ffc46b5a4ddf1a55ee01">  179</a></span>&#160;ClientOptions::ClientOptions(std::shared_ptr&lt;oauth2::Credentials&gt; credentials,</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                             <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ChannelOptions.html">ChannelOptions</a> channel_options)</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    : opts_(internal::FillWithDefaults(std::move(credentials))),</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    : opts_(internal::DefaultOptions(std::move(credentials))),</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      channel_options_(std::move(channel_options)) {}</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a7149ba2c946cc52f39604e21a102c602">ClientOptions::ClientOptions</a>(Options o)</div>

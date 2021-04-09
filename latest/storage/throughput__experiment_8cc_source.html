@@ -318,8 +318,8 @@ $(function() {
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;std::shared_ptr&lt;grpc::ChannelInterface&gt; CreateGcsChannel(<span class="keywordtype">int</span> thread_id) {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="preprocessor">#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC</span></div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">gcs::ClientOptions</a> options{<a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a457fd54e504ebad9b9b84c73a3ae9f63">gcs::oauth2::GoogleDefaultCredentials</a>().value()};</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  <span class="keywordflow">return</span> gcs::internal::CreateGrpcChannel(options, thread_id);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  <span class="keywordflow">return</span> gcs::internal::CreateGrpcChannel(gcs::internal::DefaultOptionsGrpc(),</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                                          thread_id);</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;  grpc::ChannelArguments args;</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  args.SetInt(<span class="stringliteral">&quot;grpc.channel_id&quot;</span>, thread_id);</div>
