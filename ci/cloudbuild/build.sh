@@ -57,32 +57,32 @@ PARSED="$(getopt -a \
   -- "$@")"
 eval set -- "${PARSED}"
 
-DISTRO=""
-PROJECT_ID=""
-LOCAL_BUILD="false"
-DOCKER_BUILD="false"
-DOCKER_SHELL="false"
+DISTRO_FLAG=""
+PROJECT_FLAG=""
+LOCAL_FLAG="false"
+DOCKER_FLAG="false"
+SHELL_FLAG="false"
 while true; do
   case "$1" in
   --distro)
-    DISTRO="$2"
+    DISTRO_FLAG="$2"
     shift 2
     ;;
   -p | --project)
-    PROJECT_ID="$2"
+    PROJECT_FLAG="$2"
     shift 2
     ;;
   -l | --local)
-    LOCAL_BUILD="true"
+    LOCAL_FLAG="true"
     shift
     ;;
   -d | --docker)
-    DOCKER_BUILD="true"
+    DOCKER_FLAG="true"
     shift
     ;;
   -s | --docker-shell)
-    DOCKER_BUILD="true"
-    DOCKER_SHELL="true"
+    DOCKER_FLAG="true"
+    SHELL_FLAG="true"
     shift
     ;;
   -h | --help)
@@ -95,7 +95,7 @@ while true; do
     ;;
   esac
 done
-readonly PROJECT_ID
+readonly PROJECT_FLAG
 
 if (($# != 1)); then
   echo "Must specify exactly one build name"
@@ -109,9 +109,9 @@ readonly BUILD_NAME="$1"
 # specified docker image, then in a container from that image it will run the
 # --local build. Similarly, the GCB build will submit the build to GCB, which
 # will call the --local build.
-if [[ "${LOCAL_BUILD}" = "true" ]]; then
-  test -n "${DISTRO}" && io::log_red "Local build ignoring --distro=${DISTRO}"
-  if [[ "${DOCKER_BUILD}" = "true" ]]; then
+if [[ "${LOCAL_FLAG}" = "true" ]]; then
+  test -n "${DISTRO_FLAG}" && io::log_red "Local build ignoring --distro=${DISTRO_FLAG}"
+  if [[ "${DOCKER_FLAG}" = "true" ]]; then
     echo "Only one of --local or --docker may be specified"
     print_usage
     exit 1
@@ -142,29 +142,29 @@ if [[ "${LOCAL_BUILD}" = "true" ]]; then
 fi
 
 # If --distro wasn't specified, look it up from the build's trigger file.
-if [[ -z "${DISTRO}" ]]; then
+if [[ -z "${DISTRO_FLAG}" ]]; then
   trigger_file="ci/cloudbuild/triggers/${BUILD_NAME}-ci.yaml"
-  DISTRO="$(grep _DISTRO "${trigger_file}" | awk '{print $2}' || true)"
-  if [[ -z "${DISTRO}" ]]; then
+  DISTRO_FLAG="$(grep _DISTRO "${trigger_file}" | awk '{print $2}' || true)"
+  if [[ -z "${DISTRO_FLAG}" ]]; then
     echo "Missing --distro=<arg>, and none found in ${trigger_file}"
     print_usage
     exit 1
   fi
 fi
-readonly DISTRO
+readonly DISTRO_FLAG
 
 # Uses docker to locally build the specified image and run the build command.
 # Docker builds store their outputs on the host system in `build-out/`.
-if [[ "${DOCKER_BUILD}" = "true" ]]; then
+if [[ "${DOCKER_FLAG}" = "true" ]]; then
   io::log_h1 "Starting docker build: ${BUILD_NAME}"
-  out_dir="${PROJECT_ROOT}/build-out/${DISTRO}-${BUILD_NAME}"
+  out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_NAME}"
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
   mkdir -p "${out_home}" "${out_cmake}"
-  image="gcb-${DISTRO}:latest"
+  image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
   docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
-    -f "ci/cloudbuild/${DISTRO}.Dockerfile" ci
+    -f "ci/cloudbuild/${DISTRO_FLAG}.Dockerfile" ci
   io::log_h2 "Starting container for ${image} running ${BUILD_NAME}"
   run_flags=(
     "--interactive"
@@ -183,7 +183,7 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
     "--env=HOME=/h"
   )
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
-  if [[ "${DOCKER_SHELL}" = "true" ]]; then
+  if [[ "${SHELL_FLAG}" = "true" ]]; then
     io::log "Starting shell, to manually run the requested build use:"
     echo "==> ${cmd[*]}"
     cmd=("bash")
@@ -193,8 +193,8 @@ if [[ "${DOCKER_BUILD}" = "true" ]]; then
 fi
 
 # Surface invalid arguments early rather than waiting for GCB to fail.
-if [ ! -r "${PROGRAM_DIR}/${DISTRO}.Dockerfile" ]; then
-  echo "Unknown distro: ${DISTRO}"
+if [ ! -r "${PROGRAM_DIR}/${DISTRO_FLAG}.Dockerfile" ]; then
+  echo "Unknown distro: ${DISTRO_FLAG}"
   print_usage
   exit 1
 elif [ ! -x "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh" ]; then
@@ -206,7 +206,7 @@ fi
 # Uses Google Cloud build to run the specified build.
 io::log_h1 "Starting cloud build: ${BUILD_NAME}"
 account="$(gcloud config list account --format "value(core.account)")"
-subs="_DISTRO=${DISTRO}"
+subs="_DISTRO=${DISTRO_FLAG}"
 subs+=",_BUILD_NAME=${BUILD_NAME}"
 subs+=",_CACHE_TYPE=manual-${account}"
 io::log "Substitutions ${subs}"
@@ -214,7 +214,7 @@ args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"
   "--substitutions=${subs}"
 )
-if [[ -n "${PROJECT_ID}" ]]; then
-  args+=("--project=${PROJECT_ID}")
+if [[ -n "${PROJECT_FLAG}" ]]; then
+  args+=("--project=${PROJECT_FLAG}")
 fi
 gcloud builds submit "${args[@]}" .
