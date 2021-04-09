@@ -33,11 +33,11 @@ run_args=(
   "--image=us-east1-docker.pkg.dev/gcb-release/cloud-build-notifiers/bigquery:latest"
   "--no-allow-unauthenticated"
   "--update-env-vars=CONFIG_PATH=${BUCKET}/bigquery.yaml,PROJECT_ID=936212892354"
-  "--project cloud-cpp-testing-resources"
-  "--platform managed"
-  "--region us-central1"
+  "--project=cloud-cpp-testing-resources"
+  "--platform=managed"
+  "--region=us-central1"
 )
 gcloud run deploy "${SERVICE}" "${run_args[@]}"
 
-io::log_yellow "You can view the status at: " \
-  "https://pantheon.corp.google.com/run?project=cloud-cpp-testing-resources"
+io::log_yellow "You can view the status at:" \
+  "https://console.cloud.google.com/run?project=cloud-cpp-testing-resources"
