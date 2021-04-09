@@ -41,7 +41,7 @@ class CurlClient : public RawClient,
       std::shared_ptr<oauth2::Credentials> credentials, Options options) {
     // Cannot use std::make_shared because the constructor is private.
     return std::shared_ptr<CurlClient>(new CurlClient(
-        FillWithDefaults(std::move(credentials), std::move(options))));
+        DefaultOptions(std::move(credentials), std::move(options))));
   }
   static std::shared_ptr<CurlClient> Create(ClientOptions options) {
     auto credentials = options.credentials();

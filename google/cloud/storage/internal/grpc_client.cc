@@ -59,9 +59,9 @@ bool DirectPathEnabled() {
                         [](absl::string_view v) { return v == "storage"; });
 }
 
-Options FillWithDefaultsGrpc(Options options) {
-  options = FillWithDefaults(std::make_shared<oauth2::AnonymousCredentials>(),
-                             std::move(options));
+Options DefaultOptionsGrpc(Options options) {
+  options = DefaultOptions(std::make_shared<oauth2::AnonymousCredentials>(),
+                           std::move(options));
   auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
   if (env.has_value()) {
     options.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
@@ -99,7 +99,7 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options options,
                                                int channel_id) {
   // Cannot use std::make_shared<> as the constructor is private.
   return std::shared_ptr<GrpcClient>(
-      new GrpcClient(FillWithDefaultsGrpc(std::move(options)), channel_id));
+      new GrpcClient(DefaultOptionsGrpc(std::move(options)), channel_id));
 }
 
 GrpcClient::GrpcClient(Options const& options, int channel_id)

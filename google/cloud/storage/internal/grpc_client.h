@@ -29,7 +29,7 @@ namespace internal {
 /// Determine if using DirectPath for GCS has been enabled through
 /// GOOGLE_CLOUD_DIRECT_PATH.
 bool DirectPathEnabled();
-Options FillWithDefaultsGrpc(Options = {});
+Options DefaultOptionsGrpc(Options = {});
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(Options const&,
                                                           int channel_id);
 

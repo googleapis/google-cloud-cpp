@@ -37,7 +37,7 @@ class MockCurlClient : public CurlClient {
 
   MockCurlClient()
       : CurlClient(
-            internal::FillWithDefaults(oauth2::CreateAnonymousCredentials())) {}
+            internal::DefaultOptions(oauth2::CreateAnonymousCredentials())) {}
 
   MOCK_METHOD(StatusOr<ResumableUploadResponse>, UploadChunk,
               (UploadChunkRequest const&), (override));

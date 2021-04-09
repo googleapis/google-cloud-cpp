@@ -36,8 +36,8 @@ std::string IamEndpoint(Options const&);
 
 Options MakeOptions(ClientOptions);
 ClientOptions MakeBackwardsCompatibleClientOptions(Options);
-Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
-                         Options = {});
+Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                       Options opts = {});
 
 /// Configure the IAM endpoint for the GCS client library.
 struct GcsRestEndpointOption {

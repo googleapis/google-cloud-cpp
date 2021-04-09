@@ -327,15 +327,15 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_THAT(opts.get<internal::SslRootPathOption>(), IsEmpty());
 }
 
-TEST_F(ClientOptionsTest, FillWithDefaults) {
-  auto o = internal::FillWithDefaults(oauth2::CreateAnonymousCredentials(), {});
+TEST_F(ClientOptionsTest, DefaultOptions) {
+  auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("https://storage.googleapis.com",
             o.get<internal::GcsRestEndpointOption>());
 
   // Verify any set values are respected overriden.
-  o = internal::FillWithDefaults(oauth2::CreateAnonymousCredentials(),
-                                 Options{}.set<internal::GcsRestEndpointOption>(
-                                     "https://private.googleapis.com"));
+  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                               Options{}.set<internal::GcsRestEndpointOption>(
+                                   "https://private.googleapis.com"));
   EXPECT_EQ("https://private.googleapis.com",
             o.get<internal::GcsRestEndpointOption>());
 }

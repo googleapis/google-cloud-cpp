@@ -112,8 +112,8 @@ ClientOptions MakeBackwardsCompatibleClientOptions(Options opts) {
   return ClientOptions(std::move(opts));
 }
 
-Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
-                         Options opts) {
+Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                       Options opts) {
   auto o =
       Options{}
           .set<Oauth2CredentialsOption>(std::move(credentials))
@@ -178,7 +178,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
-    : opts_(internal::FillWithDefaults(std::move(credentials))),
+    : opts_(internal::DefaultOptions(std::move(credentials))),
       channel_options_(std::move(channel_options)) {}
 
 ClientOptions::ClientOptions(Options o)
