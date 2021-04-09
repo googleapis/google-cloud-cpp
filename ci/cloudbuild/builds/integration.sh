@@ -23,7 +23,6 @@ source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
-export CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
 
 mapfile -t args < <(bazel::common_args)
