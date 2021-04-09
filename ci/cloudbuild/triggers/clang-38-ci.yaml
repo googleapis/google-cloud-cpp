@@ -8,3 +8,5 @@ name: clang-38-ci
 substitutions:
   _BUILD_NAME: clang-38
   _DISTRO: fedora
+tags:
+- ci

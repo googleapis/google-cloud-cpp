@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: clang-38
+name: checkers-pr
 substitutions:
-  _BUILD_NAME: clang-38
+  _BUILD_NAME: checkers
   _DISTRO: fedora
+tags:
+- pr

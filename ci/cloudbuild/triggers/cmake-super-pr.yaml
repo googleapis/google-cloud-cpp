@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: cmake-super
+name: cmake-super-pr
 substitutions:
   _BUILD_NAME: cmake-super
-  _DISTRO: ubuntu-bionic
+  _DISTRO: fedora
+tags:
+- pr

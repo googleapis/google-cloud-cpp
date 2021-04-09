@@ -15,16 +15,15 @@
 # limitations under the License.
 #
 # This script manages Google Cloud Build triggers. The triggers are defined by
-# yaml files that live in the `triggers/` directory. The `--generate-ci=name`
-# and `--generate-pr=name` flags output YAML configs for CI or PR builds
-# respectively. The output should be saved in `<name>.yaml` files, and then it
-# can be manually tweaked to adjust things like the docker image, tags, etc.
+# yaml files that live in the `triggers/` directory. The `--generate=<name>`
+# argument creates files named `triggers/name-pr.yaml` and
+# `triggers/name-pr.yaml`. These files can then be uploaded to GCB to start
+# running with the `--import` flag.
 #
 # Usage: ./trigger.sh [options]
 #
 #   Options:
-#     --generate-ci=name  Outputs a YAML CI config for the given build name
-#     --generate-pr=name  Outputs a YAML PR config for the given build name
+#     --generate=name     Outputs CI and PR YAML configs for the named build
 #     -l|--list           List all triggers for this repo on the server
 #     -d|--describe=name  Describe the named trigger
 #     -i|--import=file    Uploads the local yaml file to create/update a trigger
@@ -45,7 +44,7 @@ readonly GITHUB_NAME="google-cloud-cpp"
 
 function generate_ci() {
   local name="$1"
-  cat <<EOF
+  cat >"${PROGRAM_DIR}/triggers/${name}-ci.yaml" <<EOF
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -56,12 +55,14 @@ name: ${name}-ci
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
+tags:
+- ci
 EOF
 }
 
 function generate_pr() {
   local name="$1"
-  cat <<EOF
+  cat >"${PROGRAM_DIR}/triggers/${name}-pr.yaml" <<EOF
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -69,10 +70,12 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: ${name}
+name: ${name}-pr
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
+tags:
+- pr
 EOF
 }
 
@@ -97,16 +100,14 @@ function import_trigger() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="d:i:lh" \
-  --longoptions="generate-ci:,generate-pr:,describe:,import:,list,help" \
+  --longoptions="generate:,describe:,import:,list,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 case "$1" in
---generate-ci)
+--generate)
   generate_ci "$2"
-  ;;
---generate-pr)
   generate_pr "$2"
   ;;
 -d | --describe)

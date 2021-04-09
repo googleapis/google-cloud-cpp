@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: quickstart-bazel
+name: gcc-54-pr
 substitutions:
-  _BUILD_NAME: quickstart-bazel
-  _DISTRO: ubuntu-bionic
+  _BUILD_NAME: gcc-54
+  _DISTRO: fedora
+tags:
+- pr

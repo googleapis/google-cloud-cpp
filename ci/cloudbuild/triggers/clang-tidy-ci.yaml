@@ -8,3 +8,5 @@ name: clang-tidy-ci
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora
+tags:
+- ci

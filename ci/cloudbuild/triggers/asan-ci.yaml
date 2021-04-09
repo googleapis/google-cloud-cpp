@@ -8,3 +8,5 @@ name: asan-ci
 substitutions:
   _BUILD_NAME: asan
   _DISTRO: fedora
+tags:
+- ci

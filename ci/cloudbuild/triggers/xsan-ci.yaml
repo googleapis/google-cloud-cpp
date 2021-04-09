@@ -8,3 +8,5 @@ name: xsan-ci
 substitutions:
   _BUILD_NAME: xsan
   _DISTRO: fedora
+tags:
+- ci

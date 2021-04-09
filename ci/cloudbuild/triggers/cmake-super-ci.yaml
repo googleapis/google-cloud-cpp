@@ -7,4 +7,6 @@ github:
 name: cmake-super-ci
 substitutions:
   _BUILD_NAME: cmake-super
-  _DISTRO: ubuntu-bionic
+  _DISTRO: fedora
+tags:
+- ci
