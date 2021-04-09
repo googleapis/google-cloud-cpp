@@ -8,6 +8,6 @@ github:
 name: clang-38-pr
 substitutions:
   _BUILD_NAME: clang-38
-  _DISTRO: fedora
+  _DISTRO: ubuntu-xenial
 tags:
 - pr

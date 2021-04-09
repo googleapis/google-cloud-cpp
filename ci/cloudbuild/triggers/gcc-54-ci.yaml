@@ -7,6 +7,6 @@ github:
 name: gcc-54-ci
 substitutions:
   _BUILD_NAME: gcc-54
-  _DISTRO: fedora
+  _DISTRO: ubuntu-xenial
 tags:
 - ci
