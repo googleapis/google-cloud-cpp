@@ -1,12 +1,12 @@
-This directory contains the config and `deploy.sh` script for use of the Cloud
-Build BigQuery notifier. The high-level description of how this works (as I
-understand it), is the following:
+This directory contains files needed to use the Cloud Build BigQuery notifier.
+The high-level description of how this works (as I understand it) is the
+following:
 
 * We use Google Cloud Build (GCB) to run many of our builds. See
-  https://pantheon.corp.google.com/cloud-build/dashboard?project=cloud-cpp-testing-resources
+  https://console.cloud.google.com/cloud-build/dashboard?project=cloud-cpp-testing-resources
 * GCB sends build status notifications to the Pub/Sub
   `projects/cloud-cpp-testing-resources/topics/cloud-builds` topic. See
-  https://pantheon.corp.google.com/cloudpubsub/topic/detail/cloud-builds?project=cloud-cpp-testing-resources 
+  https://console.cloud.google.com/cloudpubsub/topic/detail/cloud-builds?project=cloud-cpp-testing-resources
 * We run the GCB BigQuery Notifier as a Cloud Run service, which subscribes to
   the build notifications and writes them to a BigQuery table.
 
