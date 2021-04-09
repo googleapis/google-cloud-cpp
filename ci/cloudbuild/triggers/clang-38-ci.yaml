@@ -7,6 +7,6 @@ github:
 name: clang-38-ci
 substitutions:
   _BUILD_NAME: clang-38
-  _DISTRO: fedora
+  _DISTRO: ubuntu-xenial
 tags:
 - ci
