@@ -1,4 +1,3 @@
-disabled: true
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -6,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: clang-tidy
+name: cmake-install-pr
 substitutions:
-  _BUILD_NAME: clang-tidy
+  _BUILD_NAME: cmake-install
   _DISTRO: fedora
+tags:
+- pr

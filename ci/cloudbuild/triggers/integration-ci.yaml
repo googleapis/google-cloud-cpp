@@ -8,3 +8,5 @@ name: integration-ci
 substitutions:
   _BUILD_NAME: integration
   _DISTRO: fedora
+tags:
+- ci

@@ -8,3 +8,5 @@ name: cmake-gcc-ci
 substitutions:
   _BUILD_NAME: cmake-gcc
   _DISTRO: fedora
+tags:
+- ci

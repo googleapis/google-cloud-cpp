@@ -8,3 +8,5 @@ name: tsan-ci
 substitutions:
   _BUILD_NAME: tsan
   _DISTRO: ubuntu-bionic
+tags:
+- ci

@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: quickstart-bazel
+name: clang-38-pr
 substitutions:
-  _BUILD_NAME: quickstart-bazel
-  _DISTRO: ubuntu-bionic
+  _BUILD_NAME: clang-38
+  _DISTRO: fedora
+tags:
+- pr

@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: asan
+name: checkers-pr
 substitutions:
-  _BUILD_NAME: asan
+  _BUILD_NAME: checkers
   _DISTRO: fedora
+tags:
+- pr

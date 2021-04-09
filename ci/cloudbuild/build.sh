@@ -143,7 +143,7 @@ fi
 
 # If --distro wasn't specified, look it up from the build's trigger file.
 if [[ -z "${DISTRO}" ]]; then
-  trigger_file="ci/cloudbuild/triggers/${BUILD_NAME}.yaml"
+  trigger_file="ci/cloudbuild/triggers/${BUILD_NAME}-ci.yaml"
   DISTRO="$(grep _DISTRO "${trigger_file}" | awk '{print $2}' || true)"
   if [[ -z "${DISTRO}" ]]; then
     echo "Missing --distro=<arg>, and none found in ${trigger_file}"
