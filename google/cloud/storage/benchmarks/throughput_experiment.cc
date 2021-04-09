@@ -248,8 +248,8 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
 
 std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  gcs::ClientOptions options{gcs::oauth2::GoogleDefaultCredentials().value()};
-  return gcs::internal::CreateGrpcChannel(options, thread_id);
+  return gcs::internal::CreateGrpcChannel(gcs::internal::DefaultOptionsGrpc(),
+                                          thread_id);
 #else
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", thread_id);

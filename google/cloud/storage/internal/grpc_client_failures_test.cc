@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -49,11 +50,10 @@ class GrpcClientFailuresTest
     std::string const grpc_config = GetParam();
     google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                     grpc_config);
-    ClientOptions client_options(oauth2::CreateAnonymousCredentials());
     if (grpc_config == "metadata") {
-      client_.reset(new GrpcClient(std::move(client_options)));
+      client_ = GrpcClient::Create({});
     } else {
-      client_.reset(new HybridClient(std::move(client_options)));
+      client_ = HybridClient::Create(oauth2::CreateAnonymousCredentials(), {});
     }
   }
 

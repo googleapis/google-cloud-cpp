@@ -112,8 +112,8 @@ ClientOptions MakeBackwardsCompatibleClientOptions(Options opts) {
   return ClientOptions(std::move(opts));
 }
 
-Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
-                         Options opts) {
+Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                       Options opts) {
   auto o =
       Options{}
           .set<Oauth2CredentialsOption>(std::move(credentials))
@@ -134,7 +134,7 @@ Options FillWithDefaults(std::shared_ptr<oauth2::Credentials> credentials,
           .set<DownloadStallTimeoutOption>(std::chrono::seconds(
               GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT));
 
-  o = google::cloud::internal::MergeOptions(std::move(o), std::move(opts));
+  o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   auto emulator = GetEmulator();
   if (emulator.has_value()) {
     o.set<GcsRestEndpointOption>(*emulator).set<GcsIamEndpointOption>(
@@ -178,7 +178,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
-    : opts_(internal::FillWithDefaults(std::move(credentials))),
+    : opts_(internal::DefaultOptions(std::move(credentials))),
       channel_options_(std::move(channel_options)) {}
 
 ClientOptions::ClientOptions(Options o)

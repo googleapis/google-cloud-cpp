@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -40,6 +41,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+auto constexpr kDirectPathConfig = R"json({
+    "loadBalancingConfig": [{
+      "grpclb": {
+        "childPolicy": [{
+          "pick_first": {}
+        }]
+      }
+    }]
+  })json";
+
 bool DirectPathEnabled() {
   auto const direct_path_settings =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
@@ -48,60 +59,54 @@ bool DirectPathEnabled() {
                         [](absl::string_view v) { return v == "storage"; });
 }
 
-std::string GrpcEndpoint() {
+Options DefaultOptionsGrpc(Options options) {
+  options = DefaultOptions(std::make_shared<oauth2::AnonymousCredentials>(),
+                           std::move(options));
   auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
   if (env.has_value()) {
-    return env.value();
+    options.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
+    options.set<EndpointOption>(*env);
   }
-  return "storage.googleapis.com";
-}
+  if (!options.has<GrpcCredentialOption>()) {
+    // Try to avoid calling grpc::GoogleDefaultCredentials() because it tries to
+    // open files and generates warnings in the CI system as they do not exist.
+    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
+  }
+  if (!options.has<EndpointOption>()) {
+    options.set<EndpointOption>("storage.googleapis.com");
+  }
 
-std::shared_ptr<grpc::ChannelCredentials> GrpcCredentials(
-    ClientOptions const& options) {
-  auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
-  if (env.has_value()) {
-    return grpc::InsecureChannelCredentials();
-  }
-  if (dynamic_cast<oauth2::AnonymousCredentials*>(
-          options.credentials().get()) != nullptr) {
-    return grpc::InsecureChannelCredentials();
-  }
-  return grpc::GoogleDefaultCredentials();
+  return options;
 }
 
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
-    ClientOptions const& options) {
-  return CreateGrpcChannel(options, 0);
-}
-
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
-    ClientOptions const& options, int channel_id) {
+    Options const& options, int channel_id) {
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", channel_id);
   if (DirectPathEnabled()) {
-    args.SetServiceConfigJSON(R"json({
-      "loadBalancingConfig": [{
-        "grpclb": {
-          "childPolicy": [{
-            "pick_first": {}
-          }]
-        }
-      }]
-    })json");
+    args.SetServiceConfigJSON(kDirectPathConfig);
   }
-  return grpc::CreateCustomChannel(GrpcEndpoint(), GrpcCredentials(options),
+  return grpc::CreateCustomChannel(options.get<EndpointOption>(),
+                                   options.get<GrpcCredentialOption>(),
                                    std::move(args));
 }
 
-GrpcClient::GrpcClient(ClientOptions options)
-    : options_(std::move(options)),
-      stub_(
-          google::storage::v1::Storage::NewStub(CreateGrpcChannel(options_))) {}
+std::shared_ptr<GrpcClient> GrpcClient::Create(Options options) {
+  return Create(std::move(options), /*channel_id=*/0);
+}
 
-GrpcClient::GrpcClient(ClientOptions options, int channel_id)
-    : options_(std::move(options)),
+std::shared_ptr<GrpcClient> GrpcClient::Create(Options options,
+                                               int channel_id) {
+  // Cannot use std::make_shared<> as the constructor is private.
+  return std::shared_ptr<GrpcClient>(
+      new GrpcClient(DefaultOptionsGrpc(std::move(options)), channel_id));
+}
+
+GrpcClient::GrpcClient(Options const& options, int channel_id)
+    : backwards_compatibility_options_(
+          MakeBackwardsCompatibleClientOptions(options)),
       stub_(google::storage::v1::Storage::NewStub(
-          CreateGrpcChannel(options_, channel_id))) {}
+          CreateGrpcChannel(options, channel_id))) {}
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
     grpc::ClientContext& context, google::storage::v1::Object& result) {
@@ -127,7 +132,9 @@ StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
       {}};
 }
 
-ClientOptions const& GrpcClient::client_options() const { return options_; }
+ClientOptions const& GrpcClient::client_options() const {
+  return backwards_compatibility_options_;
+}
 
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -49,7 +50,9 @@ class MockGrpcClient : public GrpcClient {
   }
 
   MockGrpcClient()
-      : GrpcClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
+      : GrpcClient(Options{}.set<GrpcCredentialOption>(
+                       grpc::InsecureChannelCredentials()),
+                   /*channel_id=*/0) {}
 
   MOCK_METHOD(std::unique_ptr<GrpcClient::UploadWriter>, CreateUploadWriter,
               (grpc::ClientContext&, google::storage::v1::Object&), (override));

@@ -327,6 +327,19 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_THAT(opts.get<internal::SslRootPathOption>(), IsEmpty());
 }
 
+TEST_F(ClientOptionsTest, DefaultOptions) {
+  auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_EQ("https://storage.googleapis.com",
+            o.get<internal::GcsRestEndpointOption>());
+
+  // Verify any set values are respected overriden.
+  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                               Options{}.set<internal::GcsRestEndpointOption>(
+                                   "https://private.googleapis.com"));
+  EXPECT_EQ("https://private.googleapis.com",
+            o.get<internal::GcsRestEndpointOption>());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
