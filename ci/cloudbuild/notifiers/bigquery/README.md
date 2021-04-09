@@ -1,10 +1,18 @@
+# Configuration files for Cloud Build BigQuery notifier
+
+Sometimes we need to analyze our build results, looking for patterns of build
+latency, flakiness, etc. These analyses often require looking at the results
+over long periods of time, so the usual dashboards and squinting may not work.
+Putting the results in some sort of database works better for that purpose.
+The Cloud Build BigQuery notifier allows us to store build results in BigQuery.
+
 This directory contains files needed to use the Cloud Build BigQuery notifier.
 The high-level description of how this works (as I understand it) is the
 following:
 
 * We use Google Cloud Build (GCB) to run many of our builds. See
   https://console.cloud.google.com/cloud-build/dashboard?project=cloud-cpp-testing-resources
-* GCB sends build status notifications to the Pub/Sub
+* GCB sends build status notifications to the Cloud Pub/Sub
   `projects/cloud-cpp-testing-resources/topics/cloud-builds` topic. See
   https://console.cloud.google.com/cloudpubsub/topic/detail/cloud-builds?project=cloud-cpp-testing-resources
 * We run the GCB BigQuery Notifier as a Cloud Run service, which subscribes to
