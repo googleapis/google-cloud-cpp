@@ -6,7 +6,8 @@ build-out/
 cmake-out/
 
 # Common bazel output directories
-bazel-*
+/bazel-*
+/google/cloud/*/quickstart/bazel-*
 !bazel-*.cfg
 
 # Used by some IDEs and LSP plugins

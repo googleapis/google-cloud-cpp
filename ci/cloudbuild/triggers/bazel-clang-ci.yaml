@@ -1,0 +1,10 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^master$
+name: bazel-clang-ci
+substitutions:
+  _BUILD_NAME: bazel-clang
+  _DISTRO: fedora
