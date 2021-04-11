@@ -30,7 +30,7 @@ git clone git@github:<github-username>/google-cloud-cpp.git
 cd google-cloud-cpp
 ```
 
-## Download and boostrap `vcpkg`
+## Download and bootstrap `vcpkg`
 
 [vcpkg] is a package manager for C++ that builds from source and installs any
 binary artifacts in `$HOME`. We recommend using `vcpkg` for local development.
