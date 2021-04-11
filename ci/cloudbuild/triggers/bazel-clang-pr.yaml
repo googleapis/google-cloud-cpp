@@ -5,7 +5,9 @@ github:
   pullRequest:
     branch: ^master$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: bazel-gcc
+name: bazel-clang-pr
 substitutions:
-  _BUILD_NAME: bazel-gcc
+  _BUILD_NAME: bazel-clang
   _DISTRO: fedora
+tags:
+- pr
