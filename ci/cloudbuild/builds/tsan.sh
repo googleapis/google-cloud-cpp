@@ -18,6 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/integration.sh
 
 # Compile with the ThreadSanitizer enabled.
 # We need to use clang-9 for the TSAN build because:
@@ -29,5 +30,7 @@ export CXX=clang++-9
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=tsan")
-args+=("--test_tag_filters=-integration-test")
-bazel test "${args[@]}" ...
+bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+
+mapfile -t integration_args < <(integration::args)
+integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
