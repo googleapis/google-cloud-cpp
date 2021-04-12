@@ -8,5 +8,6 @@ name: cmake-install-ci
 substitutions:
   _BUILD_NAME: cmake-install
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci

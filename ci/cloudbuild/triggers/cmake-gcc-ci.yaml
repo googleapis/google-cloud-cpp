@@ -8,5 +8,6 @@ name: cmake-gcc-ci
 substitutions:
   _BUILD_NAME: cmake-gcc
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci

@@ -9,5 +9,6 @@ name: tsan-pr
 substitutions:
   _BUILD_NAME: tsan
   _DISTRO: ubuntu-bionic
+  _TRIGGER_TYPE: pr
 tags:
 - pr

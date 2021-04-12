@@ -8,5 +8,6 @@ name: checkers-ci
 substitutions:
   _BUILD_NAME: checkers
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci

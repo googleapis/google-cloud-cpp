@@ -8,5 +8,6 @@ name: cmake-clang-ci
 substitutions:
   _BUILD_NAME: cmake-clang
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci

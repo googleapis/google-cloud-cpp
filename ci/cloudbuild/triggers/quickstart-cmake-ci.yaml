@@ -8,5 +8,6 @@ name: quickstart-cmake-ci
 substitutions:
   _BUILD_NAME: quickstart-cmake
   _DISTRO: ubuntu-bionic
+  _TRIGGER_TYPE: ci
 tags:
 - ci

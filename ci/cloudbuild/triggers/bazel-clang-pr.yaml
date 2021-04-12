@@ -9,5 +9,6 @@ name: bazel-clang-pr
 substitutions:
   _BUILD_NAME: bazel-clang
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr
