@@ -9,5 +9,6 @@ name: clang-tidy-pr
 substitutions:
   _BUILD_NAME: clang-tidy
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr

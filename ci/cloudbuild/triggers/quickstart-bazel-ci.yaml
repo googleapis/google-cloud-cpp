@@ -8,5 +8,6 @@ name: quickstart-bazel-ci
 substitutions:
   _BUILD_NAME: quickstart-bazel
   _DISTRO: ubuntu-bionic
+  _TRIGGER_TYPE: ci
 tags:
 - ci

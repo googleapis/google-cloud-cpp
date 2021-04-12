@@ -35,7 +35,9 @@ substitutions:
   _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
   _CACHE_TYPE: '${_PR_NUMBER:-main}'
   _IMAGE: 'cloudbuild/${_DISTRO}'
+  _TRIGGER_TYPE: 'manual'
 
+tags: [ '${_TRIGGER_TYPE}', '${_BUILD_NAME}', '${_DISTRO}' ]
 timeout: 3600s
 
 steps:
