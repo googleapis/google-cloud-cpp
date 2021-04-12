@@ -79,6 +79,7 @@ steps:
     '--key=${_CACHE_TYPE}/${_DISTRO}-${_BUILD_NAME}/h',
     '--path=.ccache',
     '--path=.cache/ccache',
+    '--path=.cache/ctcache',
     '--path=.cache/vcpkg',
     '--path=.cache/google-cloud-cpp'
   ]

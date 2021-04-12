@@ -131,6 +131,14 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.0.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
+# Install ctcache to speed up our clang-tidy build
+WORKDIR /var/tmp/build
+RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
+    cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
+    cd /var/tmp && rm -fr build
+
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci

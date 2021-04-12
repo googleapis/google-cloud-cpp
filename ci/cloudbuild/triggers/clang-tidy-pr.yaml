@@ -1,4 +1,3 @@
-disabled: true
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
