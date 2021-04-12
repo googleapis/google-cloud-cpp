@@ -153,3 +153,7 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh
+
+# Some of the above libraries may have installed in /usr/local, so make sure
+# those library directories will be found.
+RUN ldconfig /usr/local/lib*
