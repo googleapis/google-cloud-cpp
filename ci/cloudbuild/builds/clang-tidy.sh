@@ -19,6 +19,16 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 
-cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=clang-tidy -S . -B cmake-out
+export CC=clang
+export CXX=clang++
+export CTCACHE_DIR=~/.cache/ctcache
+
+# See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
+cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
+
+io::log_h2 "clang-tidy cache"
+printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
+printf "%s: %s\n" " num files" "$(find "${CTCACHE_DIR}" | wc -l)"
+echo
