@@ -18,11 +18,14 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=xsan")
-args+=("--test_tag_filters=-integration-test")
-bazel test "${args[@]}" ...
+bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+
+mapfile -t integration_args < <(integration::args)
+integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
