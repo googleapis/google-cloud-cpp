@@ -36,9 +36,9 @@ using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
-using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::UnorderedElementsAreArray;
 
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -724,7 +724,8 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   StatusOr<std::vector<std::string>> actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
+  EXPECT_THAT(*actual_permissions,
+              UnorderedElementsAreArray(expected_permissions));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -799,7 +800,8 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   StatusOr<std::vector<std::string>> actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
+  EXPECT_THAT(*actual_permissions,
+              UnorderedElementsAreArray(expected_permissions));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -1156,7 +1158,8 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
   StatusOr<std::vector<std::string>> actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
+  EXPECT_THAT(*actual_permissions,
+              UnorderedElementsAreArray(expected_permissions));
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
