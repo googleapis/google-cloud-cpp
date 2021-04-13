@@ -125,7 +125,7 @@ RUN mkdir -p /h/.ccache; \
     fi; \
     true # Ignore all errors, failures in caching should not break the build
 ## [END IGNORED]
-RUN cmake -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=OFF -H. -Bcmake-out
+RUN cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j "${NCPU:-4}"
 RUN cmake --build cmake-out --target install
 # ```

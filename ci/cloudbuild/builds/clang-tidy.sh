@@ -24,7 +24,9 @@ export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
-cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper -S . -B cmake-out
+cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
+  -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON \
+  -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 

@@ -86,6 +86,7 @@ if [[ "${BUILD_TESTING:-}" == "no" ]]; then
 fi
 
 if [[ "${CLANG_TIDY:-}" == "yes" ]]; then
+  cmake_extra_flags+=("-DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON")
   cmake_extra_flags+=("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON")
   # On pre-submit builds we run clang-tidy on only the changed files (see below)
   # in other cases (interactive builds, continuous builds) we run clang-tidy as
