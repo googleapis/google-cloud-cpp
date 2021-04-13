@@ -1,5 +1,5 @@
 af8e0e7f47e6a0778dbb7a2c72fb1434  generator/integration_tests/golden/golden_kitchen_sink_client.gcpcxx.pb.cc
-06472f5172a1485c63c3181802ca8363  generator/integration_tests/golden/golden_kitchen_sink_client.gcpcxx.pb.h
+4baaff405dac5f2c530bdf2a22376320  generator/integration_tests/golden/golden_kitchen_sink_client.gcpcxx.pb.h
 eb7a32b0b6202101bcb4fcf038404ee2  generator/integration_tests/golden/golden_kitchen_sink_connection.gcpcxx.pb.cc
 0baf99d3c955586ffa95b58ea6ec460d  generator/integration_tests/golden/golden_kitchen_sink_connection.gcpcxx.pb.h
 687657c74d693c6f79e12c0e8f5f2185  generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc
