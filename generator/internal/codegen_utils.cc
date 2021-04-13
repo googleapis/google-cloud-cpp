@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "absl/container/flat_hash_set.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -87,13 +88,13 @@ void ProcessArgCopyrightYear(
 
 void ProcessArgOmitRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  std::vector<std::string> omitted_rpcs;
+  absl::flat_hash_set<std::string> omitted_rpcs;
   auto iter = std::find_if(command_line_args.begin(), command_line_args.end(),
                            [](std::pair<std::string, std::string> const& p) {
                              return p.first == "omit_rpc";
                            });
   while (iter != command_line_args.end()) {
-    omitted_rpcs.push_back(iter->second);
+    omitted_rpcs.insert(iter->second);
     command_line_args.erase(iter);
     iter = std::find_if(command_line_args.begin(), command_line_args.end(),
                         [](std::pair<std::string, std::string> const& p) {
