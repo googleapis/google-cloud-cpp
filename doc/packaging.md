@@ -1034,7 +1034,7 @@ We can now compile, test, and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=OFF -H. -Bcmake-out
+cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
 cmake --build cmake-out -- -j "${NCPU:-4}"
 sudo cmake --build cmake-out --target install
 ```

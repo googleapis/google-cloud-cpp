@@ -68,6 +68,15 @@
 
 ## v1.27.0 - TBD
 
+### Misc.
+
+**BREAKING CHANGES**:
+* In #6243 we stopped compiling the code in `generator/` by default in CMake
+  builds. In most cases this should just be a performance win as this code is
+  not used by client libraries. However, if anyone was relying on the
+  `generator/` being compiled, it can be re-enabled with
+  `-DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON`
+
 ## v1.26.0 - 2021-04
 
 ### BigQuery
