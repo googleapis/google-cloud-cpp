@@ -39,7 +39,7 @@ cmake --build cmake-out --target install
 ## [END packaging.md]
 
 # Tells pkg-config where the artifacts are, so the Makefile builds work.
-export PKG_CONFIG_PATH="${PREFIX}/lib64/pkgconfig:${PKG_CONFIG_PATH:-}"
+export PKG_CONFIG_PATH="${PREFIX}/lib64/pkgconfig:${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
 
 # Verify that the installed artifacts are usable by running the quickstarts.
 for lib in $(quickstart::libraries); do
