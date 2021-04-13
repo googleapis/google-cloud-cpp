@@ -60,8 +60,32 @@ load(":google_cloud_cpp_generator_unit_tests.bzl", "google_cloud_cpp_generator_u
 
 cc_binary(
     name = "protoc-gen-cpp_codegen",
-    srcs = ["main.cc"],
+    srcs = ["plugin_main.cc"],
     includes = ["."],
     visibility = ["//visibility:public"],
     deps = [":google_cloud_cpp_generator"],
+)
+
+proto_library(
+    name = "generator_config_proto",
+    srcs = ["generator_config.proto"],
+)
+
+cc_proto_library(
+    name = "generator_config_cc_proto",
+    deps = [":generator_config_proto"],
+)
+
+cc_binary(
+    name = "google-cloud-cpp-codegen",
+    srcs = ["standalone_main.cc"],
+    includes = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generator_config_cc_proto",
+        ":google_cloud_cpp_generator",
+        "@com_google_absl//absl/flags:commandlineflag",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
 )
