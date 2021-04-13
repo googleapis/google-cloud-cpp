@@ -5,9 +5,11 @@
 # Note: This file does not prevent us from accessing other files from within a
 # running docker *container*. Those will be availble from our mounted volume.
 # https://docs.docker.com/engine/reference/builder/#dockerignore-file
-*
-!*.*
-!etc
 
-# Ignore staging files for the kokoro/install builds
-kokoro/install/ccache-contents/
+# Start by ignoring everything, then only allow a few things.
+*
+
+# Don't ignore a few scripts that are invoked from within Dockerfiles.
+!/install-cloud-sdk.sh
+!/install-bazel.sh
+!/etc/install-config.sh
