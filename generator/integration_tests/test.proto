@@ -805,6 +805,23 @@ service GoldenKitchenSink {
     };
     option (google.api.method_signature) = "resource_names";
   }
+
+  // Does nothing and should be ommited by command line arg.
+  rpc Omitted1(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/omit:omit"
+      body: "*"
+    };
+  }
+
+  // Does nothing and should be ommited by command line arg.
+  rpc Omitted2(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/omit:omit"
+      body: "*"
+    };
+  }
+
 }
 
 message GenerateAccessTokenRequest {

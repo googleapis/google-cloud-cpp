@@ -42,6 +42,8 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
     return false;
   }
 
+  std::cerr << "parameters = " << parameters << "\n";
+
   StatusOr<std::vector<std::pair<std::string, std::string>>> command_line_args =
       generator_internal::ProcessCommandLineArgs(parameters);
   if (!command_line_args.ok()) {

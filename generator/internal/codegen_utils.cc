@@ -157,6 +157,27 @@ ProcessCommandLineArgs(std::string const& parameters) {
     copyright_year->second = CurrentCopyrightYear();
   }
 
+  std::vector<std::string> omitted_rpcs;
+
+  auto iter = std::find_if(command_line_args.begin(), command_line_args.end(),
+                           [](std::pair<std::string, std::string> const& p) {
+                             return p.first == "omit_rpc";
+                           });
+  while (iter != command_line_args.end()) {
+    omitted_rpcs.push_back(iter->second);
+    command_line_args.erase(iter);
+    iter = std::find_if(command_line_args.begin(), command_line_args.end(),
+                        [](std::pair<std::string, std::string> const& p) {
+                          return p.first == "omit_rpc";
+                        });
+  }
+
+  if (!omitted_rpcs.empty()) {
+    command_line_args.emplace_back(
+        "omitted_rpcs",
+        absl::StrJoin(omitted_rpcs.begin(), omitted_rpcs.end(), ","));
+  }
+
   return command_line_args;
 }
 
