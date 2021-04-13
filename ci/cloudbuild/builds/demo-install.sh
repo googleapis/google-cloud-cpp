@@ -31,7 +31,7 @@ source module ci/lib/io.sh
 ## [START packaging.md]
 
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
-export PREFIX="${HOME}/google-cloud-cpp-installed"
+PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
