@@ -32,6 +32,81 @@ std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
       {"big_query", "bigquery"}};
   return kExceptions;
 }
+
+Status ProcessArgProductPath(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto product_path =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "product_path";
+                   });
+  if (product_path == command_line_args.end() || product_path->second.empty()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "--cpp_codegen_opt=product_path=<path> must be specified.");
+  }
+
+  auto& path = product_path->second;
+  if (path.front() == '/') {
+    path = path.substr(1);
+  }
+  if (path.back() != '/') {
+    path += '/';
+  }
+  return {};
+}
+
+Status ProcessArgGoogleapisCommitHash(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto googleapis_commit_hash =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "googleapis_commit_hash";
+                   });
+  if (googleapis_commit_hash == command_line_args.end() ||
+      googleapis_commit_hash->second.empty()) {
+    return Status(
+        StatusCode::kInvalidArgument,
+        "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
+  }
+  return {};
+}
+
+void ProcessArgCopyrightYear(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto copyright_year =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "copyright_year";
+                   });
+  if (copyright_year == command_line_args.end()) {
+    command_line_args.emplace_back("copyright_year", CurrentCopyrightYear());
+  } else if (copyright_year->second.empty()) {
+    copyright_year->second = CurrentCopyrightYear();
+  }
+}
+
+void ProcessArgOmitRpc(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  std::vector<std::string> omitted_rpcs;
+  auto iter = std::find_if(command_line_args.begin(), command_line_args.end(),
+                           [](std::pair<std::string, std::string> const& p) {
+                             return p.first == "omit_rpc";
+                           });
+  while (iter != command_line_args.end()) {
+    omitted_rpcs.push_back(iter->second);
+    command_line_args.erase(iter);
+    iter = std::find_if(command_line_args.begin(), command_line_args.end(),
+                        [](std::pair<std::string, std::string> const& p) {
+                          return p.first == "omit_rpc";
+                        });
+  }
+  if (!omitted_rpcs.empty()) {
+    command_line_args.emplace_back(
+        "omitted_rpcs",
+        absl::StrJoin(omitted_rpcs.begin(), omitted_rpcs.end(), ","));
+  }
+}
+
 }  // namespace
 std::string CurrentCopyrightYear() {
   static std::string const kCurrentCopyrightYear =
@@ -115,69 +190,14 @@ ProcessCommandLineArgs(std::string const& parameters) {
   std::vector<std::pair<std::string, std::string>> command_line_args;
   google::protobuf::compiler::ParseGeneratorParameter(parameters,
                                                       &command_line_args);
+  auto status = ProcessArgProductPath(command_line_args);
+  if (!status.ok()) return status;
 
-  auto product_path =
-      std::find_if(command_line_args.begin(), command_line_args.end(),
-                   [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "product_path";
-                   });
-  if (product_path == command_line_args.end() || product_path->second.empty()) {
-    return Status(StatusCode::kInvalidArgument,
-                  "--cpp_codegen_opt=product_path=<path> must be specified.");
-  }
+  status = ProcessArgGoogleapisCommitHash(command_line_args);
+  if (!status.ok()) return status;
 
-  auto& path = product_path->second;
-  if (path.front() == '/') {
-    path = path.substr(1);
-  }
-  if (path.back() != '/') {
-    path += '/';
-  }
-
-  auto googleapis_commit_hash =
-      std::find_if(command_line_args.begin(), command_line_args.end(),
-                   [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "googleapis_commit_hash";
-                   });
-  if (googleapis_commit_hash == command_line_args.end() ||
-      googleapis_commit_hash->second.empty()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "--cpp_codegen_opt=googleapis_commit_hash=<hash> must be specified.");
-  }
-
-  auto copyright_year =
-      std::find_if(command_line_args.begin(), command_line_args.end(),
-                   [](std::pair<std::string, std::string> const& p) {
-                     return p.first == "copyright_year";
-                   });
-  if (copyright_year == command_line_args.end()) {
-    command_line_args.emplace_back("copyright_year", CurrentCopyrightYear());
-  } else if (copyright_year->second.empty()) {
-    copyright_year->second = CurrentCopyrightYear();
-  }
-
-  std::vector<std::string> omitted_rpcs;
-
-  auto iter = std::find_if(command_line_args.begin(), command_line_args.end(),
-                           [](std::pair<std::string, std::string> const& p) {
-                             return p.first == "omit_rpc";
-                           });
-  while (iter != command_line_args.end()) {
-    omitted_rpcs.push_back(iter->second);
-    command_line_args.erase(iter);
-    iter = std::find_if(command_line_args.begin(), command_line_args.end(),
-                        [](std::pair<std::string, std::string> const& p) {
-                          return p.first == "omit_rpc";
-                        });
-  }
-
-  if (!omitted_rpcs.empty()) {
-    command_line_args.emplace_back(
-        "omitted_rpcs",
-        absl::StrJoin(omitted_rpcs.begin(), omitted_rpcs.end(), ","));
-  }
-
+  ProcessArgCopyrightYear(command_line_args);
+  ProcessArgOmitRpc(command_line_args);
   return command_line_args;
 }
 
