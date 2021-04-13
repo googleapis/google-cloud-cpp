@@ -100,6 +100,8 @@ class GeneratorIntegrationTest
     product_path_ = "generator/integration_tests/golden/";
     googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
     copyright_year_ = CurrentCopyrightYear();
+    omit_rpc1_ = "Omitted1";
+    omit_rpc2_ = "Omitted2";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -112,6 +114,8 @@ class GeneratorIntegrationTest
     args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
                       googleapis_commit_hash_);
     args.emplace_back("--cpp_codegen_opt=copyright_year=" + copyright_year_);
+    args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc1_);
+    args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc2_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -132,6 +136,8 @@ class GeneratorIntegrationTest
   std::string golden_path_;
   std::string googleapis_commit_hash_;
   std::string copyright_year_;
+  std::string omit_rpc1_;
+  std::string omit_rpc2_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {

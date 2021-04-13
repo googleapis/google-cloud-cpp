@@ -155,6 +155,40 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                    request,
                ::grpc::CompletionQueue* cq),
               (override));
+  MOCK_METHOD(::grpc::Status, Omitted1,
+              (::grpc::ClientContext * context,
+               const ::google::protobuf::Empty& request,
+               ::google::protobuf::Empty* response),
+              (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      AsyncOmitted1Raw,
+      (::grpc::ClientContext * context,
+       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      PrepareAsyncOmitted1Raw,
+      (::grpc::ClientContext * context,
+       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(::grpc::Status, Omitted2,
+              (::grpc::ClientContext * context,
+               const ::google::protobuf::Empty& request,
+               ::google::protobuf::Empty* response),
+              (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      AsyncOmitted2Raw,
+      (::grpc::ClientContext * context,
+       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface< ::google::protobuf::Empty>*,
+      PrepareAsyncOmitted2Raw,
+      (::grpc::ClientContext * context,
+       const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
+      (override));
 };
 
 class GoldenKitchenSinkStubTest : public ::testing::Test {

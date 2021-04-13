@@ -120,7 +120,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
     "            std::chrono::minutes(5), kBackoffScaling).clone());\n"
     "  }\n"
     "\n"},
-   {generator_internal::HasLongrunningMethod,
+   {[this]{return HasLongrunningMethod();},
     "  if (!options.has<$product_namespace$::$service_name$PollingPolicyOption>()) {\n"
     "    options.set<$product_namespace$::$service_name$PollingPolicyOption>(\n"
     "        GenericPollingPolicy<$product_namespace$::$limited_time_retry_policy_name$,\n"
