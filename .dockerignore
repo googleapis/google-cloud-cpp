@@ -5,6 +5,7 @@
 .idea/
 .build/
 _build/
+build-out/
 build-output/
 cmake-build-*/
 cmake-out/
