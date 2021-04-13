@@ -14,28 +14,62 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# ## Run builds using Google Cloud Build ##
-#
-# This script runs the builds defined in `ci/cloudbuild/builds/` on the local
-# machine (if `--local` is specified), in the local docker (if `--docker` is
-# specified), or in the cloud using Google Cloud Build (the default). A single
-# argument indicating the build name is required. The distro indicates the
-# `<distro>.Dockerfile` to use for the build (ignored if using `--local`). The
-# distro is looked up from the specified build's trigger file
-# (`ci/cloudbuild/triggers/<build-name>.yaml`), but the distro can be
-# overridden with the optional `--distro=<arg>` flag.
-#
-# Usage: build.sh [options] <build-name>
+# Usage: build.sh [options] [build-name]
 #
 #   Options:
 #     --distro=<name>      The distro name to use
+#     -t|--trigger         The trigger file to extract the build name and distro
 #     -l|--local           Run the build in the local environment
 #     -d|--docker          Run the build in a local docker
 #     -s|--docker-shell    Run a shell in the build's docker container
 #     -p|--project=<name>  The Cloud Project ID to use
 #     -h|--help            Print this help message
 #
-#   Build names:
+# This script runs named builds, where builds are defined as a build script
+# (which lives in `ci/cloudbuild/builds/`) and a distro (which is defined in
+# `ci/cloudbuild/<distro>.Dockerfile`). Trigger files (which live in
+# `ci/cloudbuild/triggers/`) associate build scripts with the distro they're
+# intended to run on. For example, the "asan-pr" build is defined in the
+# `ci/cloudbuild/triggers/asan-pr.yaml` file, which specifies that the
+# `ci/cloudbuild/builds/asan.sh` script should be run on the
+# `ci/cloudbuild/fedora.Dockerfile` image. There are a couple ways to specify
+# builds:
+#
+# 1. Explicitly name the distro and build script. For example:
+#    $ build.sh --distro fedora asan
+#
+# 2. Name the trigger file, which contains the distro and build script:
+#    $ build.sh --trigger asan-pr
+#
+# Note: command-line flags may be specified with or without an equals sign
+# (e.g. `-t=foo` is the same as `-t foo`), and in any order.
+#
+# Usage examples:
+#
+#   Runs the asan build from the asan-pr.yaml file on GCB
+#   $ build.sh -t asan-pr
+#
+#   Runs the asan build from the asan-pr.yaml file in docker
+#   $ build.sh -t asan-pr --docker
+#
+#   Opens a shell in the docker container for the asan-pr.yaml build
+#   NOTE: The `-s` flag is useful for debugging builds.
+#   $ build.sh -t asan-pr --docker-shell
+#   $ build.sh -t asan-pr --docker -s  # equivalent
+#   $ build.sh -t asan-pr -s  # equivalent
+#
+#   Runs the asan build from the asan-pr.yaml file in the local environment
+#   $ build.sh -t asan-pr --local
+#
+#   Runs builds/cmake-install.sh script in the demo-centos-7.Dockerfile
+#   $ build.sh cmake-install --distro demo-centos-7 --docker
+#
+#   Runs the integration tests in the cloud-cpp-testing-resources project
+#   $ build.sh -t integration-pr --project cloud-cpp-testing-resources
+#
+#   Runs the checkers in your local docker
+#   NOTE: This is a good way to format your code and check for style issues.
+#   $ build.sh -t checkers-pr --docker
 
 set -euo pipefail
 
@@ -46,19 +80,19 @@ cd "${PROJECT_ROOT}"
 function print_usage() {
   # Extracts the usage from the file comment starting at line 17.
   sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
-  basename -s .sh ci/cloudbuild/builds/*.sh | sort | xargs printf "    %s\n"
 }
 
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
-  --options="p:ldsh" \
-  --longoptions="distro:,project:,local,docker,docker-shell,help" \
+  --options="p:t:ldsh" \
+  --longoptions="distro:,project:,trigger:,local,docker,docker-shell,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 DISTRO_FLAG=""
 PROJECT_FLAG=""
+TRIGGER_FLAG=""
 LOCAL_FLAG="false"
 DOCKER_FLAG="false"
 SHELL_FLAG="false"
@@ -70,6 +104,10 @@ while true; do
     ;;
   -p | --project)
     PROJECT_FLAG="$2"
+    shift 2
+    ;;
+  -t | --trigger)
+    TRIGGER_FLAG="$2"
     shift 2
     ;;
   -l | --local)
@@ -97,12 +135,28 @@ while true; do
 done
 readonly PROJECT_FLAG
 
-if (($# != 1)); then
-  echo "Must specify exactly one build name"
+# If `--trigger=name` was specified, use the _BUILD_NAME and _DISTRO in the
+# trigger file as defaults.
+BUILD_NAME="${1:-}"
+if [[ -n "${TRIGGER_FLAG}" ]]; then
+  trigger_file="${PROGRAM_DIR}/triggers/${TRIGGER_FLAG}.yaml"
+  if [[ ! -r "${trigger_file}" ]]; then
+    io::log_red "Cannot open ${trigger_file}"
+    exit 1
+  fi
+  build="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"
+  distro="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"
+  test -z "${BUILD_NAME}" && BUILD_NAME="${build}"
+  test -z "${DISTRO_FLAG}" && DISTRO_FLAG="${distro}"
+fi
+readonly BUILD_NAME
+readonly DISTRO_FLAG
+
+if [[ -z "${BUILD_NAME}" ]]; then
+  io::log_red "No build name specified. Specify a build name or use --trigger"
   print_usage
   exit 1
 fi
-readonly BUILD_NAME="$1"
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
@@ -112,7 +166,7 @@ readonly BUILD_NAME="$1"
 if [[ "${LOCAL_FLAG}" = "true" ]]; then
   test -n "${DISTRO_FLAG}" && io::log_red "Local build ignoring --distro=${DISTRO_FLAG}"
   if [[ "${DOCKER_FLAG}" = "true" ]]; then
-    echo "Only one of --local or --docker may be specified"
+    io::log_red "Only one of --local or --docker may be specified"
     print_usage
     exit 1
   fi
@@ -141,17 +195,11 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
   exit
 fi
 
-# If --distro wasn't specified, look it up from the build's trigger file.
 if [[ -z "${DISTRO_FLAG}" ]]; then
-  trigger_file="ci/cloudbuild/triggers/${BUILD_NAME}-ci.yaml"
-  DISTRO_FLAG="$(grep _DISTRO "${trigger_file}" | awk '{print $2}' || true)"
-  if [[ -z "${DISTRO_FLAG}" ]]; then
-    echo "Missing --distro=<arg>, and none found in ${trigger_file}"
-    print_usage
-    exit 1
-  fi
+  io::log_red "No distro specified. Use --distro or --trigger"
+  print_usage
+  exit 1
 fi
-readonly DISTRO_FLAG
 
 # Uses docker to locally build the specified image and run the build command.
 # Docker builds store their outputs on the host system in `build-out/`.
@@ -194,11 +242,11 @@ fi
 
 # Surface invalid arguments early rather than waiting for GCB to fail.
 if [ ! -r "${PROGRAM_DIR}/${DISTRO_FLAG}.Dockerfile" ]; then
-  echo "Unknown distro: ${DISTRO_FLAG}"
+  io::log_red "Unknown distro: ${DISTRO_FLAG}"
   print_usage
   exit 1
 elif [ ! -x "${PROGRAM_DIR}/builds/${BUILD_NAME}.sh" ]; then
-  echo "Unknown build name: ${BUILD_NAME}"
+  io::log_red "Unknown build name: ${BUILD_NAME}"
   print_usage
   exit 1
 fi
