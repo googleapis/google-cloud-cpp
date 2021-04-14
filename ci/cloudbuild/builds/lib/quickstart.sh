@@ -37,7 +37,7 @@ source module ci/lib/io.sh
 # `google-cloud-cpp` library was installed.
 #
 # Example:
-#   
+#
 #   quickstart::run_cmake_and_make "/usr/local"
 function quickstart::run_cmake_and_make() {
   local prefix="$1"
