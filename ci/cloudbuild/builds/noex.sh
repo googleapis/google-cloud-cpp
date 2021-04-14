@@ -17,19 +17,11 @@
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
-source module ci/cloudbuild/builds/lib/bazel.sh
+source module ci/cloudbuild/builds/lib/cmake.sh
 
 export CC=gcc
 export CXX=g++
 
-mapfile -t args < <(bazel::common_args)
-args+=("--copt=-fno-exceptions")
-
-# Skip examples that require exceptions for error handling.
-bazel test "${args[@]}" --test_tag_filters=-integration-test ... -- \
-  -//google/cloud/bigtable/examples:all \
-  -//google/cloud/examples:all \
-  -//google/cloud/iam/samples:all \
-  -//google/cloud/pubsub/samples:all \
-  -//google/cloud/storage/examples:all \
-  -//google/cloud/spanner/samples:all
+cmake -GNinja -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO -S . -B cmake-out
+cmake --build cmake-out
+env -C cmake-out ctest -LE "integration-test"
