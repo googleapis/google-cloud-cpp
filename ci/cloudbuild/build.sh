@@ -27,13 +27,13 @@
 #
 # This script runs named builds, where builds are defined as a build script
 # (which lives in `ci/cloudbuild/builds/`) and a distro (which is defined in
-# `ci/cloudbuild/<distro>.Dockerfile`). Trigger files (which live in
-# `ci/cloudbuild/triggers/`) associate build scripts with the distro they're
+# `ci/cloudbuild/dockerfiles/<distro>.Dockerfile`). Trigger files (which live
+# in `ci/cloudbuild/triggers/`) associate build scripts with the distro they're
 # intended to run on. For example, the "asan-pr" build is defined in the
 # `ci/cloudbuild/triggers/asan-pr.yaml` file, which specifies that the
 # `ci/cloudbuild/builds/asan.sh` script should be run on the
-# `ci/cloudbuild/fedora.Dockerfile` image. There are a couple ways to specify
-# builds:
+# `ci/cloudbuild/dockerfiles/fedora.Dockerfile` image. There are a couple ways
+# to specify builds:
 #
 # 1. Explicitly name the distro and build script. For example:
 #    $ build.sh --distro fedora asan
@@ -212,7 +212,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
   docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
-    -f "ci/cloudbuild/${DISTRO_FLAG}.Dockerfile" ci
+    -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
   io::log_h2 "Starting container for ${image} running ${BUILD_NAME}"
   run_flags=(
     "--interactive"
@@ -241,7 +241,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
 fi
 
 # Surface invalid arguments early rather than waiting for GCB to fail.
-if [ ! -r "${PROGRAM_DIR}/${DISTRO_FLAG}.Dockerfile" ]; then
+if [ ! -r "${PROGRAM_DIR}/dockerfiles/${DISTRO_FLAG}.Dockerfile" ]; then
   io::log_red "Unknown distro: ${DISTRO_FLAG}"
   print_usage
   exit 1
