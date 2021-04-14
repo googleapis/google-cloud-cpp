@@ -17,6 +17,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -44,28 +45,7 @@ using ms = std::chrono::milliseconds;
  *
  * https://cloud.google.com/storage/docs/json_api/v1/objects
  */
-class ObjectTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        LimitedErrorCountRetryPolicy(2),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
-};
+class ObjectTest : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(ObjectTest, InsertObjectMedia) {
   std::string text = R"""({
@@ -82,8 +62,9 @@ TEST_F(ObjectTest, InsertObjectMedia) {
         return make_status_or(expected);
       });
 
-  auto actual = client_->InsertObject("test-bucket-name", "test-object-name",
-                                      "test object contents");
+  auto client = ClientForMock();
+  auto actual = client.InsertObject("test-bucket-name", "test-object-name",
+                                    "test object contents");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -107,8 +88,9 @@ TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
 }
 
 TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client_, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
+      client, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
       [](Client& client) {
         return client
             .InsertObject("test-bucket-name", "test-object-name",
@@ -150,8 +132,9 @@ TEST_F(ObjectTest, GetObjectMetadata) {
         EXPECT_EQ("test-object-name", r.object_name());
         return make_status_or(expected);
       });
+  auto client = ClientForMock();
   auto actual =
-      client_->GetObjectMetadata("test-bucket-name", "test-object-name");
+      client.GetObjectMetadata("test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -167,8 +150,9 @@ TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
 }
 
 TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client_, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
+      client, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
       [](Client& client) {
         return client.GetObjectMetadata("test-bucket-name", "test-object-name")
             .status();
@@ -184,7 +168,8 @@ TEST_F(ObjectTest, DeleteObject) {
         EXPECT_EQ("test-object-name", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  auto status = client_->DeleteObject("test-bucket-name", "test-object-name");
+  auto client = ClientForMock();
+  auto status = client.DeleteObject("test-bucket-name", "test-object-name");
   EXPECT_STATUS_OK(status);
 }
 
@@ -202,8 +187,9 @@ TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
 }
 
 TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client_, EXPECT_CALL(*mock_, DeleteObject(_)),
+      client, EXPECT_CALL(*mock_, DeleteObject(_)),
       [](Client& client) {
         return client.DeleteObject("test-bucket-name", "test-object-name");
       },
@@ -269,8 +255,9 @@ TEST_F(ObjectTest, UpdateObject) {
       .set_content_language("new-language")
       .set_content_type("new-type");
   update.mutable_metadata().emplace("test-label", "test-value");
+  auto client = ClientForMock();
   auto actual =
-      client_->UpdateObject("test-bucket-name", "test-object-name", update);
+      client.UpdateObject("test-bucket-name", "test-object-name", update);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -295,8 +282,9 @@ TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
 }
 
 TEST_F(ObjectTest, UpdateObjectPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client_, EXPECT_CALL(*mock_, UpdateObject(_)),
+      client, EXPECT_CALL(*mock_, UpdateObject(_)),
       [](Client& client) {
         return client
             .UpdateObject("test-bucket-name", "test-object-name",
@@ -340,11 +328,11 @@ TEST_F(ObjectTest, PatchObject) {
         EXPECT_THAT(r.payload(), HasSubstr("x-made-up-lang"));
         return make_status_or(expected);
       });
-  auto actual =
-      client_->PatchObject("test-bucket-name", "test-object-name",
-                           ObjectMetadataPatchBuilder()
-                               .SetContentDisposition("new-disposition")
-                               .SetContentLanguage("x-made-up-lang"));
+  auto client = ClientForMock();
+  auto actual = client.PatchObject("test-bucket-name", "test-object-name",
+                                   ObjectMetadataPatchBuilder()
+                                       .SetContentDisposition("new-disposition")
+                                       .SetContentLanguage("x-made-up-lang"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -371,8 +359,9 @@ TEST_F(ObjectTest, PatchObjectTooManyFailures) {
 }
 
 TEST_F(ObjectTest, PatchObjectPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client_, EXPECT_CALL(*mock_, PatchObject(_)),
+      client, EXPECT_CALL(*mock_, PatchObject(_)),
       [](Client& client) {
         return client
             .PatchObject(
@@ -397,8 +386,9 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
       .WillOnce(transient_error)
       .WillOnce(transient_error);
 
+  auto client = ClientForMock();
   Status status =
-      client_->ReadObject("test-bucket-name", "test-object-name").status();
+      client.ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(TransientError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
@@ -415,8 +405,9 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   };
   EXPECT_CALL(*mock_, ReadObject(_)).WillOnce(permanent_error);
 
+  auto client = ClientForMock();
   Status status =
-      client_->ReadObject("test-bucket-name", "test-object-name").status();
+      client.ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(PermanentError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));

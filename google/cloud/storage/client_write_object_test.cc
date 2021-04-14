@@ -17,6 +17,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/temp_file.h"
@@ -54,29 +55,8 @@ using ms = std::chrono::milliseconds;
  * Test the functions in Storage::Client related to writing objects.'Objects:
  * *'.
  */
-class WriteObjectTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials())
-          .SetUploadBufferSize(2 *
-                               internal::UploadChunkRequest::kChunkSizeQuantum);
-};
+class WriteObjectTest
+    : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(WriteObjectTest, WriteObject) {
   std::string text = R"""({
@@ -109,7 +89,8 @@ TEST_F(WriteObjectTest, WriteObject) {
             std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       });
 
-  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
+  auto client = ClientForMock();
+  auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   stream << "Hello World!";
   stream.Close();
   ObjectMetadata actual = stream.metadata().value();
@@ -142,7 +123,8 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
         PermanentError());
   };
   EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(returner);
-  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
+  auto client = ClientForMock();
+  auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
   EXPECT_THAT(stream.metadata(), StatusIs(PermanentError().code()));
 }
@@ -159,7 +141,8 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
       .WillRepeatedly(Return(PermanentError()));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
-  auto stream = client_->WriteObject("test-bucket-name", "test-object-name");
+  auto client = ClientForMock();
+  auto stream = client.WriteObject("test-bucket-name", "test-object-name");
 
   // make sure it is actually sent
   std::vector<char> data(client_options_.upload_buffer_size() + 1, 'X');
@@ -243,8 +226,9 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
   std::istream stream(&filebuf);
 
   ASSERT_TRUE(stream);
+  auto client = ClientForMock();
   auto res = testing::ClientTester::UploadStreamResumable(
-      *client_, stream,
+      client, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(expected, *res);
@@ -259,7 +243,17 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   std::uint64_t bytes_written = 0;
   auto last_response_value = StatusOr<internal::ResumableUploadResponse>(
       Status(StatusCode::kUnknown, ""));
-  EXPECT_CALL(*mock_, CreateResumableSession(_))
+
+  // This test needs a specially tuned MockClient and ClientOptions.
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client_options =
+      ClientOptions(oauth2::CreateAnonymousCredentials())
+          .SetUploadBufferSize(2 *
+                               internal::UploadChunkRequest::kChunkSizeQuantum);
+  EXPECT_CALL(*mock, client_options())
+      .WillRepeatedly(::testing::ReturnRef(client_options));
+
+  EXPECT_CALL(*mock, CreateResumableSession)
       .WillOnce([&](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
@@ -302,8 +296,11 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   std::istream stream(&filebuf);
 
   ASSERT_TRUE(stream);
+  auto client = testing::ClientFromMock(
+      mock, ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                     std::chrono::milliseconds(1), 2.0));
   auto res = testing::ClientTester::UploadStreamResumable(
-      *client_, stream,
+      client, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
   EXPECT_THAT(
       res,
@@ -353,9 +350,9 @@ TEST_F(WriteObjectTest, UploadFile) {
             std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
       });
 
-  auto res =
-      client_->UploadFile(temp_file.name(), "test-bucket-name",
-                          "test-object-name", UseResumableUploadSession());
+  auto client = ClientForMock();
+  auto res = client.UploadFile(temp_file.name(), "test-bucket-name",
+                               "test-object-name", UseResumableUploadSession());
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(expected, *res);
 }

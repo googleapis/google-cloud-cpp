@@ -16,10 +16,10 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -33,7 +33,6 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 constexpr char kJsonKeyfileContents[] = R"""({
       "type": "service_account",
@@ -59,45 +58,18 @@ std::string Dec64(std::string const& s) {
   return std::string(res.begin(), res.end());
 };
 
-/**
- * Test the CreateSignedPolicyDocument function in storage::Client.
- */
-class CreateSignedPolicyDocTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-        kJsonKeyfileContents);
-    ASSERT_STATUS_OK(creds);
-    client_.reset(new Client(*creds));
-  }
-
-  std::unique_ptr<Client> client_;
-};
+StatusOr<Client> CreateClientForTest() {
+  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
+      kJsonKeyfileContents);
+  if (!creds) return std::move(creds).status();
+  return Client(*creds);
+}
 
 /**
  * Test the RPCs in CreateSignedPolicyDocument function in storage::Client.
  */
-class CreateSignedPolicyDocRPCTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::static_pointer_cast<internal::RawClient>(mock_),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
-};
+class CreateSignedPolicyDocRPCTest
+    : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
@@ -116,9 +88,12 @@ PolicyDocument CreatePolicyDocumentForTest() {
   return result;
 }
 
-TEST_F(CreateSignedPolicyDocTest, Sign) {
+/// Test the CreateSignedPolicyDocument function in storage::Client.
+TEST(CreateSignedPolicyDocTest, Sign) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
   auto actual =
-      client_->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com", actual->access_id);
@@ -160,8 +135,9 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
         return make_status_or(
             internal::SignBlobResponse{"test-key-id", expected_signed_blob});
       });
+  auto client = ClientForMock();
   auto actual =
-      client_->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
 }
@@ -181,8 +157,9 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
 /// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
 /// policies.
 TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      *client_, EXPECT_CALL(*mock_, SignBlob(_)),
+      client, EXPECT_CALL(*mock_, SignBlob(_)),
       [](Client& client) {
         return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
             .status();
@@ -208,8 +185,10 @@ PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
   return result;
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), AddExtensionFieldOption(),
       PredefinedAcl(), Scheme());
   ASSERT_STATUS_OK(actual);
@@ -253,8 +232,10 @@ TEST_F(CreateSignedPolicyDocTest, SignV4) {
   EXPECT_EQ("GOOG4-RSA-SHA256", actual->signing_algorithm);
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(),
       AddExtensionField("my-field", "my-value"));
   ASSERT_STATUS_OK(actual);
@@ -262,8 +243,10 @@ TEST_F(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
   EXPECT_THAT(Dec64(actual->policy), HasSubstr("{\"my-field\":\"my-value\"}"));
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), PredefinedAcl::BucketOwnerRead());
   ASSERT_STATUS_OK(actual);
 
@@ -271,16 +254,20 @@ TEST_F(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
               HasSubstr("{\"acl\":\"bucket-owner-read\"}"));
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"));
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("https://mydomain.tld/", actual->url);
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"),
       Scheme("http"));
   ASSERT_STATUS_OK(actual);
@@ -288,8 +275,10 @@ TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
   EXPECT_EQ("http://mydomain.tld/", actual->url);
 }
 
-TEST_F(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
-  auto actual = client_->GenerateSignedPostPolicyV4(
+TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
+  auto client = CreateClientForTest();
+  ASSERT_STATUS_OK(client);
+  auto actual = client->GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), VirtualHostname(true));
   ASSERT_STATUS_OK(actual);
 
