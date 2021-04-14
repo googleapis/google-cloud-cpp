@@ -596,7 +596,8 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos)
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::rpc_status_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_spanner_protos
