@@ -231,7 +231,7 @@ TEST_F(CurlResumableUploadIntegrationTest, ResetWithParameters) {
   ASSERT_STATUS_OK(client_options);
   auto raw_client =
       CurlClient::Create(client_options->set_project_id(project_id_));
-  Client client(raw_client);
+  auto client = ClientImplDetails::CreateClient(raw_client);
   auto object_name = MakeRandomObjectName();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name = MakeRandomBucketName();

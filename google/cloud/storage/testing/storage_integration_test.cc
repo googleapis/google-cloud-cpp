@@ -77,11 +77,12 @@ StorageIntegrationTest::MakeIntegrationTestClient(
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMetadata()) {
-    return Client(internal::GrpcClient::Create(Options{}), *retry_policy,
-                  *backoff_policy);
+    return internal::ClientImplDetails::CreateClient(
+        internal::GrpcClient::Create(Options{}), *retry_policy,
+        *backoff_policy);
   }
   if (UseGrpcForMedia()) {
-    return Client(
+    return internal::ClientImplDetails::CreateClient(
         internal::HybridClient::Create(options->credentials(), Options{}),
         *retry_policy, *backoff_policy);
   }

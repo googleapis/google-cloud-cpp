@@ -26,6 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::Return;
@@ -86,8 +87,8 @@ class ClientTest : public ::testing::Test {
 TEST_F(ClientTest, OverrideRetryPolicy) {
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock_),
-                ObservableRetryPolicy(3)};
+  auto client = internal::ClientImplDetails::CreateClient(
+      std::shared_ptr<internal::RawClient>(mock_), ObservableRetryPolicy(3));
 
   // Reset the counters at the beginning of the test.
 
@@ -105,8 +106,9 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock_),
-                ObservableBackoffPolicy(ms(20), ms(100), 2.0)};
+  auto client = internal::ClientImplDetails::CreateClient(
+      std::shared_ptr<internal::RawClient>(mock_),
+      ObservableBackoffPolicy(ms(20), ms(100), 2.0));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
@@ -122,9 +124,9 @@ TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client{std::shared_ptr<internal::RawClient>(mock_),
-                ObservableBackoffPolicy(ms(20), ms(100), 2.0),
-                ObservableRetryPolicy(3)};
+  auto client = internal::ClientImplDetails::CreateClient(
+      std::shared_ptr<internal::RawClient>(mock_),
+      ObservableBackoffPolicy(ms(20), ms(100), 2.0), ObservableRetryPolicy(3));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
@@ -143,8 +145,9 @@ TEST_F(ClientTest, DefaultDecorators) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   Client tested(options);
 
-  EXPECT_TRUE(tested.raw_client() != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
   ASSERT_TRUE(retry != nullptr);
 
   auto* curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
@@ -159,8 +162,9 @@ TEST_F(ClientTest, LoggingDecorators) {
   options.set_enable_raw_client_tracing(true);
   Client tested(options);
 
-  EXPECT_TRUE(tested.raw_client() != nullptr);
-  auto* retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
   ASSERT_TRUE(retry != nullptr);
 
   auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
