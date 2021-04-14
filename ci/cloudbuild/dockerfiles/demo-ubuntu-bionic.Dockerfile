@@ -157,3 +157,7 @@ RUN wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
 # ```
 
 ## [END packaging.md]
+
+# Some of the above libraries may have installed in /usr/local, so make sure
+# those library directories will be found.
+RUN ldconfig /usr/local/lib*
