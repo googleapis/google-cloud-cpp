@@ -1,0 +1,12 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^master$
+name: noex-ci
+substitutions:
+  _BUILD_NAME: noex
+  _DISTRO: fedora
+tags:
+- ci
