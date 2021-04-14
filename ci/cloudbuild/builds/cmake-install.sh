@@ -18,7 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
-source module ci/etc/quickstart-config.sh
+source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
 export CC=clang
@@ -143,28 +143,7 @@ while IFS= read -r -d '' f; do
   fi
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
-# Verify that our installed artifacts are usable by compiling our quickstart
-# binaries against our installed artifacts.
-for lib in $(quickstart::libraries); do
-  mapfile -t run_args < <(quickstart::arguments "${lib}")
-  io::log_h2 "Building quickstart: ${lib}"
-  if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
-    run_args=() # Empties these args so we don't execute quickstarts below
-    io::log_yellow "Not executing quickstarts," \
-      "which can only run in GCB project 'cloud-cpp-testing-resources'"
-  fi
-
-  io::log "[ CMake ]"
-  src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
-  bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
-  cmake -H"${src_dir}" -B"${bin_dir}" "-DCMAKE_PREFIX_PATH=${INSTALL_PREFIX}"
-  cmake --build "${bin_dir}"
-  test "${#run_args[@]}" -ne 0 && "${bin_dir}/quickstart" "${run_args[@]}"
-
-  echo
-  io::log "[ Make ]"
-  make -C "${src_dir}"
-  test "${#run_args[@]}" -ne 0 && "${src_dir}/quickstart" "${run_args[@]}"
-done
+# Tests the installed artifacts by building and running the quickstarts.
+quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 
 exit "${exit_code}"
