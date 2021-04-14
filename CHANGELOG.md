@@ -68,6 +68,12 @@
 
 ## v1.27.0 - TBD
 
+## v1.26.1 - 2021-04
+
+### Storage
+
+* fix(storage): disable self-signed JWT authentication (#6238)
+
 ## v1.26.0 - 2021-04
 
 ### BigQuery
