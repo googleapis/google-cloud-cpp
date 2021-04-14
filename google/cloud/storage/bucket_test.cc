@@ -17,6 +17,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -45,28 +46,7 @@ using ::testing::ReturnRef;
  *
  * https://cloud.google.com/storage/docs/json_api/v1/buckets
  */
-class BucketTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        LimitedErrorCountRetryPolicy(2),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
-};
+class BucketTest : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(BucketTest, CreateBucket) {
   std::string text = R"""({
@@ -97,7 +77,8 @@ TEST_F(BucketTest, CreateBucket) {
         EXPECT_EQ("test-project-name", r.project_id());
         return make_status_or(expected);
       });
-  auto actual = client_->CreateBucket(
+  auto client = ClientForMock();
+  auto actual = client.CreateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -117,8 +98,9 @@ TEST_F(BucketTest, CreateBucketTooManyFailures) {
 }
 
 TEST_F(BucketTest, CreateBucketPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      *client_, EXPECT_CALL(*mock_, CreateBucket(_)),
+      client, EXPECT_CALL(*mock_, CreateBucket(_)),
       [](Client& client) {
         return client
             .CreateBucketForProject("test-bucket-name", "test-project-name",
@@ -151,7 +133,8 @@ TEST_F(BucketTest, GetBucketMetadata) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(expected);
       });
-  auto actual = client_->GetBucketMetadata("foo-bar-baz");
+  auto client = ClientForMock();
+  auto actual = client.GetBucketMetadata("foo-bar-baz");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -166,8 +149,9 @@ TEST_F(BucketTest, GetMetadataTooManyFailures) {
 }
 
 TEST_F(BucketTest, GetMetadataPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      *client_, EXPECT_CALL(*mock_, GetBucketMetadata(_)),
+      client, EXPECT_CALL(*mock_, GetBucketMetadata(_)),
       [](Client& client) {
         return client.GetBucketMetadata("test-bucket-name").status();
       },
@@ -181,7 +165,8 @@ TEST_F(BucketTest, DeleteBucket) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  auto status = client_->DeleteBucket("foo-bar-baz");
+  auto client = ClientForMock();
+  auto status = client.DeleteBucket("foo-bar-baz");
   ASSERT_STATUS_OK(status);
 }
 
@@ -197,8 +182,9 @@ TEST_F(BucketTest, DeleteBucketTooManyFailures) {
 }
 
 TEST_F(BucketTest, DeleteBucketPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client_, EXPECT_CALL(*mock_, DeleteBucket(_)),
+      client, EXPECT_CALL(*mock_, DeleteBucket(_)),
       [](Client& client) { return client.DeleteBucket("test-bucket-name"); },
       "DeleteBucket");
 }
@@ -228,7 +214,8 @@ TEST_F(BucketTest, UpdateBucket) {
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
         return make_status_or(expected);
       });
-  auto actual = client_->UpdateBucket(
+  auto client = ClientForMock();
+  auto actual = client.UpdateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -252,8 +239,9 @@ TEST_F(BucketTest, UpdateBucketTooManyFailures) {
 }
 
 TEST_F(BucketTest, UpdateBucketPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      *client_, EXPECT_CALL(*mock_, UpdateBucket(_)),
+      client, EXPECT_CALL(*mock_, UpdateBucket(_)),
       [](Client& client) {
         return client.UpdateBucket("test-bucket-name", BucketMetadata())
             .status();
@@ -284,7 +272,8 @@ TEST_F(BucketTest, PatchBucket) {
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
         return make_status_or(expected);
       });
-  auto actual = client_->PatchBucket(
+  auto client = ClientForMock();
+  auto actual = client.PatchBucket(
       "test-bucket-name",
       BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -309,8 +298,9 @@ TEST_F(BucketTest, PatchBucketTooManyFailures) {
 }
 
 TEST_F(BucketTest, PatchBucketPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      *client_, EXPECT_CALL(*mock_, PatchBucket(_)),
+      client, EXPECT_CALL(*mock_, PatchBucket(_)),
       [](Client& client) {
         return client
             .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder())
@@ -330,7 +320,8 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
         return make_status_or(expected);
       });
-  auto actual = client_->GetBucketIamPolicy("test-bucket-name");
+  auto client = ClientForMock();
+  auto actual = client.GetBucketIamPolicy("test-bucket-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -345,8 +336,9 @@ TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
 }
 
 TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<IamPolicy>(
-      *client_, EXPECT_CALL(*mock_, GetBucketIamPolicy(_)),
+      client, EXPECT_CALL(*mock_, GetBucketIamPolicy(_)),
       [](Client& client) {
         return client.GetBucketIamPolicy("test-bucket-name").status();
       },
@@ -365,7 +357,8 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
         EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
         return make_status_or(expected);
       });
-  auto actual = client_->SetBucketIamPolicy("test-bucket-name", expected);
+  auto client = ClientForMock();
+  auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -387,8 +380,9 @@ TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
 }
 
 TEST_F(BucketTest, SetBucketIamPolicyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<IamPolicy>(
-      *client_, EXPECT_CALL(*mock_, SetBucketIamPolicy(_)),
+      client, EXPECT_CALL(*mock_, SetBucketIamPolicy(_)),
       [](Client& client) {
         return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
             .status();
@@ -409,8 +403,9 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
             EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
             return make_status_or(expected);
           });
-  auto actual = client_->TestBucketIamPermissions("test-bucket-name",
-                                                  {"storage.buckets.delete"});
+  auto client = ClientForMock();
+  auto actual = client.TestBucketIamPermissions("test-bucket-name",
+                                                {"storage.buckets.delete"});
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, ElementsAreArray(expected.permissions));
 }
@@ -426,9 +421,10 @@ TEST_F(BucketTest, TestBucketIamPermissionsTooManyFailures) {
 }
 
 TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<
       internal::TestBucketIamPermissionsResponse>(
-      *client_, EXPECT_CALL(*mock_, TestBucketIamPermissions(_)),
+      client, EXPECT_CALL(*mock_, TestBucketIamPermissions(_)),
       [](Client& client) {
         return client.TestBucketIamPermissions("test-bucket-name", {}).status();
       },
@@ -459,7 +455,8 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
             EXPECT_EQ(42, r.metageneration());
             return make_status_or(expected);
           });
-  auto metadata = client_->LockBucketRetentionPolicy("test-bucket-name", 42U);
+  auto client = ClientForMock();
+  auto metadata = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(expected, *metadata);
 }
@@ -475,8 +472,9 @@ TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
 }
 
 TEST_F(BucketTest, LockBucketRetentionPolicyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      *client_, EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_)),
+      client, EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_)),
       [](Client& client) {
         return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
             .status();
