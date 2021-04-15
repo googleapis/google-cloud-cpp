@@ -45,7 +45,7 @@ timeout: 3600s
 
 availableSecrets:
   secretManager:
-  - versionName: projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/1
+  - versionName: projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/latest
     env: 'CODECOV_TOKEN'
 
 steps:
