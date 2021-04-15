@@ -22,6 +22,7 @@
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <fstream>
+#include <future>
 #include <iostream>
 #include <sstream>
 
@@ -74,14 +75,8 @@ int main(int argc, char** argv) {
     GCP_LOG(ERROR) << "Failed to parse config file: " << config_file << "\n";
   }
 
-  int result = 0;
-  for (int i = 0; result == 0 && i < config->service().size(); ++i) {
-    google::protobuf::compiler::CommandLineInterface cli;
-    google::cloud::generator::Generator generator;
-    cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt", &generator,
-                          "Codegen C++ Generator");
-    google::cloud::cpp::generator::ServiceConfiguration service =
-        config->service(i);
+  std::vector<std::future<google::cloud::Status>> tasks;
+  for (auto const& service : config->service()) {
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.
     args.emplace_back("");
@@ -98,16 +93,40 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
     }
     args.emplace_back(service.service_proto_path());
-
-    std::vector<char const*> c_args;
-    c_args.reserve(args.size());
-    for (auto const& arg : args) {
-      c_args.push_back(arg.c_str());
-    }
-
     GCP_LOG(INFO) << "Generating service code using: "
-                  << absl::StrJoin(c_args.begin(), c_args.end(), ";") << "\n";
-    result = cli.Run(static_cast<int>(c_args.size()), c_args.data());
+                  << absl::StrJoin(args.begin(), args.end(), ";") << "\n";
+
+    tasks.push_back(std::async(std::launch::async, [args] {
+      google::protobuf::compiler::CommandLineInterface cli;
+      google::cloud::generator::Generator generator;
+      cli.RegisterGenerator("--cpp_codegen_out", "--cpp_codegen_opt",
+                            &generator, "Codegen C++ Generator");
+      std::vector<char const*> c_args;
+      c_args.reserve(args.size());
+      for (auto const& arg : args) {
+        c_args.push_back(arg.c_str());
+      }
+
+      if (cli.Run(static_cast<int>(c_args.size()), c_args.data()) != 0)
+        return google::cloud::Status(google::cloud::StatusCode::kInternal,
+                                     absl::StrCat("Generating service from ",
+                                                  c_args.back(), " failed."));
+
+      return google::cloud::Status{};
+    }));
   }
-  return result;
+
+  std::string error_message;
+  for (auto& t : tasks) {
+    auto result = t.get();
+    if (!result.ok()) {
+      absl::StrAppend(&error_message, result.message(), "\n");
+    }
+  }
+
+  if (!error_message.empty()) {
+    GCP_LOG(ERROR) << error_message;
+    return 1;
+  }
+  return 0;
 }
