@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
@@ -33,8 +35,8 @@ ABSL_FLAG(std::string, googleapis_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
-namespace {
 
+namespace {
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
   std::ifstream input(filepath);
@@ -60,9 +62,16 @@ int main(int argc, char** argv) {
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
 
+  GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
+  GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
+  GCP_LOG(INFO) << "googleapis_commit_hash = " << googleapis_commit_hash
+                << "\n";
+  GCP_LOG(INFO) << "config_file = " << config_file << "\n";
+  GCP_LOG(INFO) << "output_path = " << output_path << "\n";
+
   auto config = GetConfig(config_file);
   if (!config.ok()) {
-    std::cerr << "Failed to parse config file: " << config_file << "\n";
+    GCP_LOG(ERROR) << "Failed to parse config file: " << config_file << "\n";
   }
 
   int result = 0;
@@ -96,6 +105,8 @@ int main(int argc, char** argv) {
       c_args.push_back(arg.c_str());
     }
 
+    GCP_LOG(INFO) << "Generating service code using: "
+                  << absl::StrJoin(c_args.begin(), c_args.end(), ";") << "\n";
     result = cli.Run(static_cast<int>(c_args.size()), c_args.data());
   }
   return result;
