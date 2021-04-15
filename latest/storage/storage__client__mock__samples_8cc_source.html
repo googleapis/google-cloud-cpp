@@ -112,7 +112,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  EXPECT_CALL(*mock, client_options())</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;      .WillRepeatedly(ReturnRef(client_options));</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client(mock);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  std::string <span class="keyword">const</span> text = <span class="stringliteral">&quot;this is a mock http response&quot;</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  std::size_t offset = 0;</div>
@@ -159,7 +159,7 @@ $(function() {
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  EXPECT_CALL(*mock, client_options())</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      .WillRepeatedly(ReturnRef(client_options));</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client(mock);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">gcs::ObjectMetadata</a> expected_metadata;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
@@ -208,7 +208,7 @@ $(function() {
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  EXPECT_CALL(*mock, client_options())</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      .WillRepeatedly(ReturnRef(client_options));</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client(mock);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  std::string text = <span class="stringliteral">&quot;this is a mock http response&quot;</span>;</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  EXPECT_CALL(*mock, ReadObject(_))</div>
@@ -244,7 +244,7 @@ $(function() {
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  EXPECT_CALL(*mock, client_options())</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      .WillRepeatedly(ReturnRef(client_options));</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">gcs::Client</a> client(mock);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160; </div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  EXPECT_CALL(*mock, CreateResumableSession(_))</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      .WillOnce([](gcs::internal::ResumableUploadRequest <span class="keyword">const</span>&amp; request) {</div>
@@ -279,7 +279,6 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">google::cloud::storage::v1::ObjectMetadata</a></div><div class="ttdoc">Represents the metadata for a Google Cloud Storage Object.</div><div class="ttdef"><b>Definition:</b> <a href="object__metadata_8h_source.html#l00091">object_metadata.h:91</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html">google::cloud::storage::v1::ObjectReadStream</a></div><div class="ttdoc">Defines a std::basic_istream&lt;char&gt; to read from a GCS Object.</div><div class="ttdef"><b>Definition:</b> <a href="object__stream_8h_source.html#l00051">object_stream.h:51</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00210">client.h:210</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html">google::cloud::storage::v1::ClientOptions</a></div><div class="ttdoc">Describes the configuration for a storage::Client object.</div><div class="ttdef"><b>Definition:</b> <a href="client__options_8h_source.html#l00148">client_options.h:148</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_html_aec685561bf9c69b308c6059d7b3762db"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#aec685561bf9c69b308c6059d7b3762db">google::cloud::storage::v1::oauth2::CreateAnonymousCredentials</a></div><div class="ttdeci">std::shared_ptr&lt; Credentials &gt; CreateAnonymousCredentials()</div><div class="ttdoc">Creates an AnonymousCredentials.</div><div class="ttdef"><b>Definition:</b> <a href="google__credentials_8cc_source.html#l00180">google_credentials.cc:180</a></div></div>
 <div class="ttc" id="awell__known__parameters_8h_html"><div class="ttname"><a href="well__known__parameters_8h.html">well_known_parameters.h</a></div></div>

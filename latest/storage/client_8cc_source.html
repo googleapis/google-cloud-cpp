@@ -167,7 +167,7 @@ $(function() {
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keyword">auto</span> <span class="keyword">const</span> fs = google::cloud::internal::file_size(file_name);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">if</span> (fs &lt;= raw_client()-&gt;client_options().maximum_simple_upload_size()) {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">if</span> (fs &lt;= raw_client_-&gt;client_options().maximum_simple_upload_size()) {</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    size = <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(fs);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
@@ -267,7 +267,7 @@ $(function() {
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;StatusOr&lt;ObjectMetadata&gt; Client::UploadStreamResumable(</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    std::istream&amp; source, internal::ResumableUploadRequest <span class="keyword">const</span>&amp; request) {</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  StatusOr&lt;std::unique_ptr&lt;internal::ResumableUploadSession&gt;&gt; session_status =</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      raw_client()-&gt;CreateResumableSession(request);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      raw_client_-&gt;CreateResumableSession(request);</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordflow">if</span> (!session_status) {</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordflow">return</span> std::move(session_status).status();</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  }</div>
@@ -289,7 +289,7 @@ $(function() {
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="comment">// GCS requires chunks to be a multiple of 256KiB.</span></div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keyword">auto</span> chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      raw_client()-&gt;client_options().upload_buffer_size());</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      raw_client_-&gt;client_options().upload_buffer_size());</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  StatusOr&lt;internal::ResumableUploadResponse&gt; upload_response(</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      internal::ResumableUploadResponse{});</div>
@@ -389,12 +389,12 @@ $(function() {
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordflow">if</span> (signing_account.has_value()) {</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="keywordflow">return</span> signing_account.value();</div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  }</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordflow">return</span> raw_client()-&gt;client_options().credentials()-&gt;AccountEmail();</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordflow">return</span> raw_client_-&gt;client_options().credentials()-&gt;AccountEmail();</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;}</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;StatusOr&lt;Client::SignBlobResponseRaw&gt; Client::SignBlobImpl(</div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    SigningAccount <span class="keyword">const</span>&amp; signing_account, std::string <span class="keyword">const</span>&amp; string_to_sign) {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keyword">auto</span> credentials = raw_client()-&gt;client_options().credentials();</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keyword">auto</span> credentials = raw_client_-&gt;client_options().credentials();</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  std::string signing_account_email = SigningEmail(signing_account);</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  <span class="comment">// First try to sign locally.</span></div>
@@ -408,7 +408,7 @@ $(function() {
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="comment">// credentials account. In either case, try to sign using the API.</span></div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  internal::SignBlobRequest sign_request(</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      signing_account_email, internal::Base64Encode(string_to_sign), {});</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keyword">auto</span> response = raw_client()-&gt;SignBlob(sign_request);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  <span class="keyword">auto</span> response = raw_client_-&gt;SignBlob(sign_request);</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  <span class="keywordflow">if</span> (!response) {</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    <span class="keywordflow">return</span> response.status();</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  }</div>
@@ -570,7 +570,7 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectReadStream.html">google::cloud::storage::v1::ObjectReadStream</a></div><div class="ttdoc">Defines a std::basic_istream&lt;char&gt; to read from a GCS Object.</div><div class="ttdef"><b>Definition:</b> <a href="object__stream_8h_source.html#l00051">object_stream.h:51</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentV4Result.html">google::cloud::storage::v1::PolicyDocumentV4Result</a></div><div class="ttdoc">Define a policy document result V4.</div><div class="ttdef"><b>Definition:</b> <a href="policy__document_8h_source.html#l00192">policy_document.h:192</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00210">client.h:210</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00208">client.h:208</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_html_af6c301b7d4aa23e8f9bfa7cddb882882"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#af6c301b7d4aa23e8f9bfa7cddb882882">google::cloud::storage::v1::CreateRandomPrefixName</a></div><div class="ttdeci">std::string CreateRandomPrefixName(std::string const &amp;prefix)</div><div class="ttdoc">Create a random prefix for object names.</div><div class="ttdef"><b>Definition:</b> <a href="client_8cc_source.html#l00436">client.cc:436</a></div></div>
 <div class="ttc" id="aservice__account__credentials_8h_html"><div class="ttname"><a href="service__account__credentials_8h.html">service_account_credentials.h</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadFromOffset_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadFromOffset.html">google::cloud::storage::v1::ReadFromOffset</a></div><div class="ttdoc">Download all the data from the GCS object starting at the given offset.</div><div class="ttdef"><b>Definition:</b> <a href="download__options_8h_source.html#l00053">download_options.h:54</a></div></div>

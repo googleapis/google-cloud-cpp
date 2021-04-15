@@ -920,92 +920,95 @@ $(function() {
 <div class="line"><a name="l01093"></a><span class="lineno"> 1093</span>&#160;    <span class="comment">// Everything ready - we&#39;ve got the shared state and the files open, let&#39;s</span></div>
 <div class="line"><a name="l01094"></a><span class="lineno"> 1094</span>&#160;    <span class="comment">// prepare the returned objects.</span></div>
 <div class="line"><a name="l01095"></a><span class="lineno"> 1095</span>&#160;    <span class="keyword">auto</span> upload_buffer_size =</div>
-<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;        client.raw_client()-&gt;client_options().upload_buffer_size();</div>
-<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160; </div>
-<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;    file_split_points.emplace_back(file_size);</div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;    assert(file_split_points.size() == state-&gt;shards().size());</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;    std::vector&lt;ParallelUploadFileShard&gt; res;</div>
-<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;    std::uintmax_t offset = 0;</div>
-<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;    std::size_t shard_idx = 0;</div>
-<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> shard_end : file_split_points) {</div>
-<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;      res.emplace_back(ParallelUploadFileShard(</div>
-<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;          state-&gt;impl_, std::move(state-&gt;shards()[shard_idx++]), file_name,</div>
-<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;          offset, shard_end - offset, upload_buffer_size));</div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;      offset = shard_end;</div>
-<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;    }</div>
-<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;<span class="preprocessor">#if defined(__clang__) &amp;&amp; \</span></div>
-<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;<span class="preprocessor">    (__clang_major__ &lt; 4 || (__clang_major__ == 3 &amp;&amp; __clang_minor__ &lt;= 8))</span></div>
-<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;    <span class="comment">// The extra std::move() is required to workaround a Clang &lt;= 3.8 bug, which</span></div>
-<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;    <span class="comment">// tries to copy the result otherwise.</span></div>
-<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;    <span class="keywordflow">return</span> std::move(res);</div>
-<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;    <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;  }</div>
-<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;};</div>
-<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160; </div>
-<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Options&gt;</div>
-<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160;StatusOr&lt;std::vector&lt;ParallelUploadFileShard&gt;&gt; CreateUploadShards(</div>
-<div class="line"><a name="l01123"></a><span class="lineno"> 1123</span>&#160;    Client client, std::string file_name, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
-<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;    std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; prefix,</div>
-<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;    Options&amp;&amp;... options) {</div>
-<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;  <span class="keywordflow">return</span> CreateParallelUploadShards::Create(</div>
-<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;      std::move(client), std::move(file_name), bucket_name, object_name, prefix,</div>
-<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;      std::forward&lt;Options&gt;(options)...);</div>
-<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;}</div>
-<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160; </div>
-<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160;}  <span class="comment">// namespace internal</span></div>
-<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160; </div>
-<div class="line"><a name="l01162"></a><span class="lineno"> 1162</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Options&gt;</div>
-<div class="line"><a name="l01163"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1"> 1163</a></span>&#160;StatusOr&lt;ObjectMetadata&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1">ParallelUploadFile</a>(</div>
-<div class="line"><a name="l01164"></a><span class="lineno"> 1164</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">Client</a> client, std::string file_name, std::string bucket_name,</div>
-<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;    std::string object_name, std::string prefix, <span class="keywordtype">bool</span> ignore_cleanup_failures,</div>
-<div class="line"><a name="l01166"></a><span class="lineno"> 1166</span>&#160;    Options&amp;&amp;... options) {</div>
-<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;  <span class="keyword">auto</span> shards = internal::CreateParallelUploadShards::Create(</div>
-<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;      std::move(client), std::move(file_name), std::move(bucket_name),</div>
-<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;      std::move(object_name), std::move(prefix),</div>
-<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;      std::forward&lt;Options&gt;(options)...);</div>
-<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;  <span class="keywordflow">if</span> (!shards) {</div>
-<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;    <span class="keywordflow">return</span> shards.status();</div>
-<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;  }</div>
-<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160; </div>
-<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;  std::vector&lt;std::thread&gt; threads;</div>
-<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;  threads.reserve(shards-&gt;size());</div>
-<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; shard : *shards) {</div>
-<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;    threads.emplace_back([&amp;shard] {</div>
-<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;      <span class="comment">// We can safely ignore the status - if something fails we&#39;ll know</span></div>
-<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;      <span class="comment">// when obtaining final metadata.</span></div>
-<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;      shard.Upload();</div>
-<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;    });</div>
-<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;  }</div>
-<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; thread : threads) {</div>
-<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;    thread.join();</div>
+<div class="line"><a name="l01096"></a><span class="lineno"> 1096</span>&#160;        google::cloud::storage::internal::ClientImplDetails::GetRawClient(</div>
+<div class="line"><a name="l01097"></a><span class="lineno"> 1097</span>&#160;            client)</div>
+<div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160;            -&gt;client_options()</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;            .upload_buffer_size();</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160; </div>
+<div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160;    file_split_points.emplace_back(file_size);</div>
+<div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160;    assert(file_split_points.size() == state-&gt;shards().size());</div>
+<div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;    std::vector&lt;ParallelUploadFileShard&gt; res;</div>
+<div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;    std::uintmax_t offset = 0;</div>
+<div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160;    std::size_t shard_idx = 0;</div>
+<div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> shard_end : file_split_points) {</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;      res.emplace_back(ParallelUploadFileShard(</div>
+<div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;          state-&gt;impl_, std::move(state-&gt;shards()[shard_idx++]), file_name,</div>
+<div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160;          offset, shard_end - offset, upload_buffer_size));</div>
+<div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;      offset = shard_end;</div>
+<div class="line"><a name="l01111"></a><span class="lineno"> 1111</span>&#160;    }</div>
+<div class="line"><a name="l01112"></a><span class="lineno"> 1112</span>&#160;<span class="preprocessor">#if defined(__clang__) &amp;&amp; \</span></div>
+<div class="line"><a name="l01113"></a><span class="lineno"> 1113</span>&#160;<span class="preprocessor">    (__clang_major__ &lt; 4 || (__clang_major__ == 3 &amp;&amp; __clang_minor__ &lt;= 8))</span></div>
+<div class="line"><a name="l01114"></a><span class="lineno"> 1114</span>&#160;    <span class="comment">// The extra std::move() is required to workaround a Clang &lt;= 3.8 bug, which</span></div>
+<div class="line"><a name="l01115"></a><span class="lineno"> 1115</span>&#160;    <span class="comment">// tries to copy the result otherwise.</span></div>
+<div class="line"><a name="l01116"></a><span class="lineno"> 1116</span>&#160;    <span class="keywordflow">return</span> std::move(res);</div>
+<div class="line"><a name="l01117"></a><span class="lineno"> 1117</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01118"></a><span class="lineno"> 1118</span>&#160;    <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l01119"></a><span class="lineno"> 1119</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01120"></a><span class="lineno"> 1120</span>&#160;  }</div>
+<div class="line"><a name="l01121"></a><span class="lineno"> 1121</span>&#160;};</div>
+<div class="line"><a name="l01122"></a><span class="lineno"> 1122</span>&#160; </div>
+<div class="line"><a name="l01124"></a><span class="lineno"> 1124</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Options&gt;</div>
+<div class="line"><a name="l01125"></a><span class="lineno"> 1125</span>&#160;StatusOr&lt;std::vector&lt;ParallelUploadFileShard&gt;&gt; CreateUploadShards(</div>
+<div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160;    Client client, std::string file_name, std::string <span class="keyword">const</span>&amp; bucket_name,</div>
+<div class="line"><a name="l01127"></a><span class="lineno"> 1127</span>&#160;    std::string <span class="keyword">const</span>&amp; object_name, std::string <span class="keyword">const</span>&amp; prefix,</div>
+<div class="line"><a name="l01128"></a><span class="lineno"> 1128</span>&#160;    Options&amp;&amp;... options) {</div>
+<div class="line"><a name="l01129"></a><span class="lineno"> 1129</span>&#160;  <span class="keywordflow">return</span> CreateParallelUploadShards::Create(</div>
+<div class="line"><a name="l01130"></a><span class="lineno"> 1130</span>&#160;      std::move(client), std::move(file_name), bucket_name, object_name, prefix,</div>
+<div class="line"><a name="l01131"></a><span class="lineno"> 1131</span>&#160;      std::forward&lt;Options&gt;(options)...);</div>
+<div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160;}</div>
+<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160; </div>
+<div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160;}  <span class="comment">// namespace internal</span></div>
+<div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160; </div>
+<div class="line"><a name="l01165"></a><span class="lineno"> 1165</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Options&gt;</div>
+<div class="line"><a name="l01166"></a><span class="lineno"><a class="line" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1"> 1166</a></span>&#160;StatusOr&lt;ObjectMetadata&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1">ParallelUploadFile</a>(</div>
+<div class="line"><a name="l01167"></a><span class="lineno"> 1167</span>&#160;    <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">Client</a> client, std::string file_name, std::string bucket_name,</div>
+<div class="line"><a name="l01168"></a><span class="lineno"> 1168</span>&#160;    std::string object_name, std::string prefix, <span class="keywordtype">bool</span> ignore_cleanup_failures,</div>
+<div class="line"><a name="l01169"></a><span class="lineno"> 1169</span>&#160;    Options&amp;&amp;... options) {</div>
+<div class="line"><a name="l01170"></a><span class="lineno"> 1170</span>&#160;  <span class="keyword">auto</span> shards = internal::CreateParallelUploadShards::Create(</div>
+<div class="line"><a name="l01171"></a><span class="lineno"> 1171</span>&#160;      std::move(client), std::move(file_name), std::move(bucket_name),</div>
+<div class="line"><a name="l01172"></a><span class="lineno"> 1172</span>&#160;      std::move(object_name), std::move(prefix),</div>
+<div class="line"><a name="l01173"></a><span class="lineno"> 1173</span>&#160;      std::forward&lt;Options&gt;(options)...);</div>
+<div class="line"><a name="l01174"></a><span class="lineno"> 1174</span>&#160;  <span class="keywordflow">if</span> (!shards) {</div>
+<div class="line"><a name="l01175"></a><span class="lineno"> 1175</span>&#160;    <span class="keywordflow">return</span> shards.status();</div>
+<div class="line"><a name="l01176"></a><span class="lineno"> 1176</span>&#160;  }</div>
+<div class="line"><a name="l01177"></a><span class="lineno"> 1177</span>&#160; </div>
+<div class="line"><a name="l01178"></a><span class="lineno"> 1178</span>&#160;  std::vector&lt;std::thread&gt; threads;</div>
+<div class="line"><a name="l01179"></a><span class="lineno"> 1179</span>&#160;  threads.reserve(shards-&gt;size());</div>
+<div class="line"><a name="l01180"></a><span class="lineno"> 1180</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; shard : *shards) {</div>
+<div class="line"><a name="l01181"></a><span class="lineno"> 1181</span>&#160;    threads.emplace_back([&amp;shard] {</div>
+<div class="line"><a name="l01182"></a><span class="lineno"> 1182</span>&#160;      <span class="comment">// We can safely ignore the status - if something fails we&#39;ll know</span></div>
+<div class="line"><a name="l01183"></a><span class="lineno"> 1183</span>&#160;      <span class="comment">// when obtaining final metadata.</span></div>
+<div class="line"><a name="l01184"></a><span class="lineno"> 1184</span>&#160;      shard.Upload();</div>
+<div class="line"><a name="l01185"></a><span class="lineno"> 1185</span>&#160;    });</div>
 <div class="line"><a name="l01186"></a><span class="lineno"> 1186</span>&#160;  }</div>
-<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;  <span class="keyword">auto</span> res = (*shards)[0].WaitForCompletion().get();</div>
-<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;  <span class="keyword">auto</span> cleanup_res = (*shards)[0].EagerCleanup();</div>
-<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;  <span class="keywordflow">if</span> (!cleanup_res.ok() &amp;&amp; !ignore_cleanup_failures) {</div>
-<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;    <span class="keywordflow">return</span> cleanup_res;</div>
-<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;  }</div>
-<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;  <span class="keywordflow">return</span> res;</div>
-<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;}</div>
-<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160; </div>
-<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;}  <span class="comment">// namespace STORAGE_CLIENT_NS</span></div>
-<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;}  <span class="comment">// namespace storage</span></div>
-<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;}  <span class="comment">// namespace google</span></div>
-<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160; </div>
-<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H</span></div>
+<div class="line"><a name="l01187"></a><span class="lineno"> 1187</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; thread : threads) {</div>
+<div class="line"><a name="l01188"></a><span class="lineno"> 1188</span>&#160;    thread.join();</div>
+<div class="line"><a name="l01189"></a><span class="lineno"> 1189</span>&#160;  }</div>
+<div class="line"><a name="l01190"></a><span class="lineno"> 1190</span>&#160;  <span class="keyword">auto</span> res = (*shards)[0].WaitForCompletion().get();</div>
+<div class="line"><a name="l01191"></a><span class="lineno"> 1191</span>&#160;  <span class="keyword">auto</span> cleanup_res = (*shards)[0].EagerCleanup();</div>
+<div class="line"><a name="l01192"></a><span class="lineno"> 1192</span>&#160;  <span class="keywordflow">if</span> (!cleanup_res.ok() &amp;&amp; !ignore_cleanup_failures) {</div>
+<div class="line"><a name="l01193"></a><span class="lineno"> 1193</span>&#160;    <span class="keywordflow">return</span> cleanup_res;</div>
+<div class="line"><a name="l01194"></a><span class="lineno"> 1194</span>&#160;  }</div>
+<div class="line"><a name="l01195"></a><span class="lineno"> 1195</span>&#160;  <span class="keywordflow">return</span> res;</div>
+<div class="line"><a name="l01196"></a><span class="lineno"> 1196</span>&#160;}</div>
+<div class="line"><a name="l01197"></a><span class="lineno"> 1197</span>&#160; </div>
+<div class="line"><a name="l01198"></a><span class="lineno"> 1198</span>&#160;}  <span class="comment">// namespace STORAGE_CLIENT_NS</span></div>
+<div class="line"><a name="l01199"></a><span class="lineno"> 1199</span>&#160;}  <span class="comment">// namespace storage</span></div>
+<div class="line"><a name="l01200"></a><span class="lineno"> 1200</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l01201"></a><span class="lineno"> 1201</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l01202"></a><span class="lineno"> 1202</span>&#160; </div>
+<div class="line"><a name="l01203"></a><span class="lineno"> 1203</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astatus__or_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/status__or_8h.html">status_or.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1MinStreamSize_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1MinStreamSize.html">google::cloud::storage::v1::MinStreamSize</a></div><div class="ttdoc">A parameter type indicating the minimum stream size to ParallelUploadFile.</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l00062">parallel_upload.h:62</a></div></div>
-<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00210">client.h:210</a></div></div>
+<div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1Client_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html">google::cloud::storage::v1::Client</a></div><div class="ttdoc">The Google Cloud Storage (GCS) Client.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l00208">client.h:208</a></div></div>
 <div class="ttc" id="afuture_8h.html_html"><div class="ttname"><a href="https://googleapis.dev/cpp/google-cloud-common/latest/future_8h.html">future.h</a></div></div>
 <div class="ttc" id="aversion_8h_html"><div class="ttname"><a href="version_8h.html">version.h</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1MinStreamSize_html_a6b5c4fadfe5ee5f00e6e546f18a0ee76"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1MinStreamSize.html#a6b5c4fadfe5ee5f00e6e546f18a0ee76">google::cloud::storage::v1::MinStreamSize::MinStreamSize</a></div><div class="ttdeci">MinStreamSize(std::uintmax_t value)</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l00065">parallel_upload.h:65</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_html_aa7c3ff7d43779f608cb2e814cb4386f1"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1">google::cloud::storage::v1::ParallelUploadFile</a></div><div class="ttdeci">StatusOr&lt; ObjectMetadata &gt; ParallelUploadFile(Client client, std::string file_name, std::string bucket_name, std::string object_name, std::string prefix, bool ignore_cleanup_failures, Options &amp;&amp;... options)</div><div class="ttdoc">Perform a parallel upload of a given file.</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l01163">parallel_upload.h:1163</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_html_aa7c3ff7d43779f608cb2e814cb4386f1"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa7c3ff7d43779f608cb2e814cb4386f1">google::cloud::storage::v1::ParallelUploadFile</a></div><div class="ttdeci">StatusOr&lt; ObjectMetadata &gt; ParallelUploadFile(Client client, std::string file_name, std::string bucket_name, std::string object_name, std::string prefix, bool ignore_cleanup_failures, Options &amp;&amp;... options)</div><div class="ttdoc">Perform a parallel upload of a given file.</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l01166">parallel_upload.h:1166</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams_html"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams.html">google::cloud::storage::v1::MaxStreams</a></div><div class="ttdoc">A parameter type indicating the maximum number of streams to ParallelUploadFile.</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l00045">parallel_upload.h:45</a></div></div>
 <div class="ttc" id="aversion_8h_html_a6dee12cbe749461e34aef0e0f9b3fe28"><div class="ttname"><a href="version_8h.html#a6dee12cbe749461e34aef0e0f9b3fe28">STORAGE_CLIENT_NS</a></div><div class="ttdeci">#define STORAGE_CLIENT_NS</div><div class="ttdef"><b>Definition:</b> <a href="version_8h_source.html#l00030">version.h:30</a></div></div>
-<div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_html_a848d7fcfc556c5e45fc552ea81e68054"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a848d7fcfc556c5e45fc552ea81e68054">google::cloud::storage::v1::ComposeMany</a></div><div class="ttdeci">StatusOr&lt; ObjectMetadata &gt; ComposeMany(Client &amp;client, std::string const &amp;bucket_name, std::vector&lt; ComposeSourceObject &gt; source_objects, std::string const &amp;prefix, std::string destination_object_name, bool ignore_cleanup_failures, Options &amp;&amp;... options)</div><div class="ttdoc">Compose existing objects into a new object in the same bucket.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l03417">client.h:3417</a></div></div>
+<div class="ttc" id="anamespacegoogle_1_1cloud_1_1storage_1_1v1_html_a848d7fcfc556c5e45fc552ea81e68054"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a848d7fcfc556c5e45fc552ea81e68054">google::cloud::storage::v1::ComposeMany</a></div><div class="ttdeci">StatusOr&lt; ObjectMetadata &gt; ComposeMany(Client &amp;client, std::string const &amp;bucket_name, std::vector&lt; ComposeSourceObject &gt; source_objects, std::string const &amp;prefix, std::string destination_object_name, bool ignore_cleanup_failures, Options &amp;&amp;... options)</div><div class="ttdoc">Compose existing objects into a new object in the same bucket.</div><div class="ttdef"><b>Definition:</b> <a href="client_8h_source.html#l03467">client.h:3467</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams_html_a64cb13a3c0a0662be0233b583e320297"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams.html#a64cb13a3c0a0662be0233b583e320297">google::cloud::storage::v1::MaxStreams::MaxStreams</a></div><div class="ttdeci">MaxStreams(std::size_t value)</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l00048">parallel_upload.h:48</a></div></div>
 <div class="ttc" id="aclassgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams_html_a6070a9316cdc83f296b63b27d1a2cc8e"><div class="ttname"><a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1MaxStreams.html#a6070a9316cdc83f296b63b27d1a2cc8e">google::cloud::storage::v1::MaxStreams::value</a></div><div class="ttdeci">std::size_t value() const</div><div class="ttdef"><b>Definition:</b> <a href="parallel__upload_8h_source.html#l00049">parallel_upload.h:49</a></div></div>
 <div class="ttc" id="aobject__stream_8h_html"><div class="ttname"><a href="object__stream_8h.html">object_stream.h</a></div></div>

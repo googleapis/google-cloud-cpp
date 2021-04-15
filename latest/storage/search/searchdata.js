@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "bcdegiloprstv",
   7: "js",
   8: "gkr",
-  9: "fmnost",
+  9: "fmnos",
   10: "gs",
   11: "deg"
 };
