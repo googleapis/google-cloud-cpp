@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
 
-  auto config = GetConfig(absl::GetFlag(FLAGS_config_file));
+  auto config = GetConfig(config_file);
   if (!config.ok()) {
     std::cerr << "Failed to parse config file: "
               << absl::GetFlag(FLAGS_config_file) << "\n";
