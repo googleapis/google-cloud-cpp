@@ -56,7 +56,6 @@ struct MockAsyncFailingRpcFactory {
                                             grpc::ClientContext* context,
                                             RequestType const& request,
                                             grpc::CompletionQueue*) {
-      using ::testing::_;
       EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
           *context, method, google::cloud::internal::ApiClientHeader()));
       RequestType expected;
@@ -68,7 +67,7 @@ struct MockAsyncFailingRpcFactory {
       differencer.ReportDifferencesToString(&delta);
       EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-      EXPECT_CALL(*reader, Finish(_, _, _))
+      EXPECT_CALL(*reader, Finish)
           .WillOnce([](ResponseType* response, grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");

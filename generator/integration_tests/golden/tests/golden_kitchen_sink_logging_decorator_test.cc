@@ -27,7 +27,6 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
