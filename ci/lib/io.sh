@@ -26,36 +26,38 @@ if ((CI_LIB_IO_SH__++ != 0)); then
   return 0
 fi # include guard
 
-# Callers may use these IO_COLOR_* variables directly, but it is recommended to
-# use the logging functions below instead. For example, prefer io::log_green
-# over IO_COLOR_GREEN.
+# Callers may use these IO_* variables directly, but should prefer to use the
+# logging functions below instead. For example, prefer `io::log_green "..."`
+# over `echo "${IO_COLOR_GREEN}...${IO_RESET}"`.
 if [ -t 0 ] && command -v tput >/dev/null; then
+  readonly IO_BOLD="$(tput bold)"
   readonly IO_COLOR_RED="$(tput setaf 1)"
   readonly IO_COLOR_GREEN="$(tput setaf 2)"
   readonly IO_COLOR_YELLOW="$(tput setaf 3)"
-  readonly IO_COLOR_RESET="$(tput sgr0)"
+  readonly IO_RESET="$(tput sgr0)"
 else
+  readonly IO_BOLD=""
   readonly IO_COLOR_RED=""
   readonly IO_COLOR_GREEN=""
   readonly IO_COLOR_YELLOW=""
-  readonly IO_COLOR_RESET=""
+  readonly IO_RESET=""
 fi
 
-# Logs a message using the given color. The first argument must be one of the
-# IO_COLOR_* variables defined above, such as "${IO_COLOR_YELLOW}". The
-# remaining arguments will be logged in the given color. The log message will
-# also have an RFC-3339 timestamp prepended (in UTC).
+# Logs a message using the given terminal capability. The first argument
+# must be one of the IO_* variables defined above, such as "${IO_COLOR_RED}".
+# The remaining arguments will be logged using the given capability. The
+# log message will also have an RFC-3339 timestamp prepended (in UTC).
 function io::internal::log_impl() {
-  local color="$1"
+  local termcap="$1"
   shift
   local timestamp
   timestamp="$(date -u "+%Y-%m-%dT%H:%M:%SZ")"
-  echo "${color}${timestamp}:" "$@" "${IO_COLOR_RESET}"
+  echo "${termcap}${timestamp}: $*${IO_RESET}"
 }
 
 # Logs the given message with normal coloring and a timestamp.
 function io::log() {
-  io::internal::log_impl "${IO_COLOR_RESET}" "$@"
+  io::internal::log_impl "${IO_RESET}" "$@"
 }
 
 # Logs the given message in green with a timestamp.
@@ -71,6 +73,12 @@ function io::log_yellow() {
 # Logs the given message in red with a timestamp.
 function io::log_red() {
   io::internal::log_impl "${IO_COLOR_RED}" "$@"
+}
+
+# Logs the arguments, in bold with a timestamp, like they were a command
+# executed under "set -x" in the shell (i.e., with a ${PS4} prefix).
+function io::log_cmdline() {
+  io::internal::log_impl "${IO_BOLD}" "${PS4}$*"
 }
 
 # Logs an "H1" heading. This looks like a blank line, followed by the message

@@ -32,9 +32,7 @@ readonly BINARY_DIR="$2"
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 
-echo
 io::log_yellow "Starting docker build with ${NCPU} cores"
-echo
 
 echo "================================================================"
 readonly BAZEL_BIN="/usr/local/bin/bazel"
@@ -110,7 +108,7 @@ io::log_yellow "Verify generator golden file md5 hashes"
 
 echo "================================================================"
 io::log "Compiling and running unit tests"
-echo "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
+io::log_cmdline "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
 "${BAZEL_BIN}" ${BAZEL_VERB} \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 

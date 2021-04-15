@@ -29,9 +29,7 @@ fi
 readonly SOURCE_DIR="$1"
 readonly BINARY_DIR="$2"
 
-echo
 io::log_yellow "Starting docker build with ${NCPU} cores"
-echo
 
 # Run the configure / compile / test cycle inside a docker image.
 # This script is designed to work in the context created by the
@@ -586,7 +584,7 @@ if [[ "${CHECK_STYLE:-}" == "yes" && "${RUNNING_CI}" == "yes" ]]; then
   git diff --ignore-submodules=all --color --exit-code .
 fi
 
-if command -v ccache; then
+if command -v ccache >/dev/null 2>&1; then
   echo "================================================================"
   io::log_yellow "ccache stats"
   ccache --show-stats
