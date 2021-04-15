@@ -32,7 +32,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
@@ -68,7 +67,7 @@ TEST_F(BucketTest, CreateBucket) {
   mock_options.set_project_id("test-project-name");
 
   EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock_, CreateBucket(_))
+  EXPECT_CALL(*mock_, CreateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
@@ -87,7 +86,7 @@ TEST_F(BucketTest, CreateBucket) {
 
 TEST_F(BucketTest, CreateBucketTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketMetadata>(
-      mock_, EXPECT_CALL(*mock_, CreateBucket(_)),
+      mock_, EXPECT_CALL(*mock_, CreateBucket),
       [](Client& client) {
         return client
             .CreateBucketForProject("test-bucket-name", "test-project-name",
@@ -100,7 +99,7 @@ TEST_F(BucketTest, CreateBucketTooManyFailures) {
 TEST_F(BucketTest, CreateBucketPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      client, EXPECT_CALL(*mock_, CreateBucket(_)),
+      client, EXPECT_CALL(*mock_, CreateBucket),
       [](Client& client) {
         return client
             .CreateBucketForProject("test-bucket-name", "test-project-name",
@@ -127,7 +126,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetBucketMetadataRequest const& r) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
@@ -141,7 +140,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
 
 TEST_F(BucketTest, GetMetadataTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetBucketMetadata(_)),
+      mock_, EXPECT_CALL(*mock_, GetBucketMetadata),
       [](Client& client) {
         return client.GetBucketMetadata("test-bucket-name").status();
       },
@@ -151,7 +150,7 @@ TEST_F(BucketTest, GetMetadataTooManyFailures) {
 TEST_F(BucketTest, GetMetadataPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      client, EXPECT_CALL(*mock_, GetBucketMetadata(_)),
+      client, EXPECT_CALL(*mock_, GetBucketMetadata),
       [](Client& client) {
         return client.GetBucketMetadata("test-bucket-name").status();
       },
@@ -159,7 +158,7 @@ TEST_F(BucketTest, GetMetadataPermanentFailure) {
 }
 
 TEST_F(BucketTest, DeleteBucket) {
-  EXPECT_CALL(*mock_, DeleteBucket(_))
+  EXPECT_CALL(*mock_, DeleteBucket)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteBucketRequest const& r) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
@@ -172,7 +171,7 @@ TEST_F(BucketTest, DeleteBucket) {
 
 TEST_F(BucketTest, DeleteBucketTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteBucket(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteBucket),
       [](Client& client) { return client.DeleteBucket("test-bucket-name"); },
       [](Client& client) {
         return client.DeleteBucket("test-bucket-name",
@@ -184,7 +183,7 @@ TEST_F(BucketTest, DeleteBucketTooManyFailures) {
 TEST_F(BucketTest, DeleteBucketPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteBucket(_)),
+      client, EXPECT_CALL(*mock_, DeleteBucket),
       [](Client& client) { return client.DeleteBucket("test-bucket-name"); },
       "DeleteBucket");
 }
@@ -206,7 +205,7 @@ TEST_F(BucketTest, UpdateBucket) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, UpdateBucket(_))
+  EXPECT_CALL(*mock_, UpdateBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.metadata().name());
@@ -224,7 +223,7 @@ TEST_F(BucketTest, UpdateBucket) {
 
 TEST_F(BucketTest, UpdateBucketTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketMetadata>(
-      mock_, EXPECT_CALL(*mock_, UpdateBucket(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateBucket),
       [](Client& client) {
         return client.UpdateBucket("test-bucket-name", BucketMetadata())
             .status();
@@ -241,7 +240,7 @@ TEST_F(BucketTest, UpdateBucketTooManyFailures) {
 TEST_F(BucketTest, UpdateBucketPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      client, EXPECT_CALL(*mock_, UpdateBucket(_)),
+      client, EXPECT_CALL(*mock_, UpdateBucket),
       [](Client& client) {
         return client.UpdateBucket("test-bucket-name", BucketMetadata())
             .status();
@@ -265,7 +264,7 @@ TEST_F(BucketTest, PatchBucket) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, PatchBucket(_))
+  EXPECT_CALL(*mock_, PatchBucket)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce([&expected](internal::PatchBucketRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket());
@@ -282,7 +281,7 @@ TEST_F(BucketTest, PatchBucket) {
 
 TEST_F(BucketTest, PatchBucketTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketMetadata>(
-      mock_, EXPECT_CALL(*mock_, PatchBucket(_)),
+      mock_, EXPECT_CALL(*mock_, PatchBucket),
       [](Client& client) {
         return client
             .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder())
@@ -300,7 +299,7 @@ TEST_F(BucketTest, PatchBucketTooManyFailures) {
 TEST_F(BucketTest, PatchBucketPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      client, EXPECT_CALL(*mock_, PatchBucket(_)),
+      client, EXPECT_CALL(*mock_, PatchBucket),
       [](Client& client) {
         return client
             .PatchBucket("test-bucket-name", BucketMetadataPatchBuilder())
@@ -314,7 +313,7 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
   bindings.AddMember("roles/storage.admin", "test-user");
   IamPolicy expected{0, bindings, "XYZ="};
 
-  EXPECT_CALL(*mock_, GetBucketIamPolicy(_))
+  EXPECT_CALL(*mock_, GetBucketIamPolicy)
       .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
       .WillOnce([&expected](internal::GetBucketIamPolicyRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -328,7 +327,7 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
 
 TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<IamPolicy>(
-      mock_, EXPECT_CALL(*mock_, GetBucketIamPolicy(_)),
+      mock_, EXPECT_CALL(*mock_, GetBucketIamPolicy),
       [](Client& client) {
         return client.GetBucketIamPolicy("test-bucket-name").status();
       },
@@ -338,7 +337,7 @@ TEST_F(BucketTest, GetBucketIamPolicyTooManyFailures) {
 TEST_F(BucketTest, GetBucketIamPolicyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<IamPolicy>(
-      client, EXPECT_CALL(*mock_, GetBucketIamPolicy(_)),
+      client, EXPECT_CALL(*mock_, GetBucketIamPolicy),
       [](Client& client) {
         return client.GetBucketIamPolicy("test-bucket-name").status();
       },
@@ -350,7 +349,7 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
   bindings.AddMember("roles/storage.admin", "test-user");
   IamPolicy expected{0, bindings, "XYZ="};
 
-  EXPECT_CALL(*mock_, SetBucketIamPolicy(_))
+  EXPECT_CALL(*mock_, SetBucketIamPolicy)
       .WillOnce(Return(StatusOr<IamPolicy>(TransientError())))
       .WillOnce([&expected](internal::SetBucketIamPolicyRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -365,7 +364,7 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
 
 TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<IamPolicy>(
-      mock_, EXPECT_CALL(*mock_, SetBucketIamPolicy(_)),
+      mock_, EXPECT_CALL(*mock_, SetBucketIamPolicy),
       [](Client& client) {
         return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
             .status();
@@ -382,7 +381,7 @@ TEST_F(BucketTest, SetBucketIamPolicyTooManyFailures) {
 TEST_F(BucketTest, SetBucketIamPolicyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<IamPolicy>(
-      client, EXPECT_CALL(*mock_, SetBucketIamPolicy(_)),
+      client, EXPECT_CALL(*mock_, SetBucketIamPolicy),
       [](Client& client) {
         return client.SetBucketIamPolicy("test-bucket-name", IamPolicy{})
             .status();
@@ -394,7 +393,7 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
   internal::TestBucketIamPermissionsResponse expected;
   expected.permissions.emplace_back("storage.buckets.delete");
 
-  EXPECT_CALL(*mock_, TestBucketIamPermissions(_))
+  EXPECT_CALL(*mock_, TestBucketIamPermissions)
       .WillOnce(Return(StatusOr<internal::TestBucketIamPermissionsResponse>(
           TransientError())))
       .WillOnce(
@@ -413,7 +412,7 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
 TEST_F(BucketTest, TestBucketIamPermissionsTooManyFailures) {
   testing::TooManyFailuresStatusTest<
       internal::TestBucketIamPermissionsResponse>(
-      mock_, EXPECT_CALL(*mock_, TestBucketIamPermissions(_)),
+      mock_, EXPECT_CALL(*mock_, TestBucketIamPermissions),
       [](Client& client) {
         return client.TestBucketIamPermissions("test-bucket-name", {}).status();
       },
@@ -424,7 +423,7 @@ TEST_F(BucketTest, TestBucketIamPermissionsPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<
       internal::TestBucketIamPermissionsResponse>(
-      client, EXPECT_CALL(*mock_, TestBucketIamPermissions(_)),
+      client, EXPECT_CALL(*mock_, TestBucketIamPermissions),
       [](Client& client) {
         return client.TestBucketIamPermissions("test-bucket-name", {}).status();
       },
@@ -447,7 +446,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
 })""";
   auto expected = internal::BucketMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_))
+  EXPECT_CALL(*mock_, LockBucketRetentionPolicy)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(
           [expected](internal::LockBucketRetentionPolicyRequest const& r) {
@@ -463,7 +462,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
 
 TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketMetadata>(
-      mock_, EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_)),
+      mock_, EXPECT_CALL(*mock_, LockBucketRetentionPolicy),
       [](Client& client) {
         return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
             .status();
@@ -474,7 +473,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicyTooManyFailures) {
 TEST_F(BucketTest, LockBucketRetentionPolicyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketMetadata>(
-      client, EXPECT_CALL(*mock_, LockBucketRetentionPolicy(_)),
+      client, EXPECT_CALL(*mock_, LockBucketRetentionPolicy),
       [](Client& client) {
         return client.LockBucketRetentionPolicy("test-bucket-name", 1U)
             .status();

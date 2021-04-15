@@ -31,7 +31,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -56,7 +55,7 @@ TEST_F(NotificationsTest, ListNotifications) {
           .value(),
   };
 
-  EXPECT_CALL(*mock_, ListNotifications(_))
+  EXPECT_CALL(*mock_, ListNotifications)
       .WillOnce(Return(
           StatusOr<internal::ListNotificationsResponse>(TransientError())))
       .WillOnce([&expected](internal::ListNotificationsRequest const& r) {
@@ -73,7 +72,7 @@ TEST_F(NotificationsTest, ListNotifications) {
 
 TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::ListNotificationsResponse>(
-      mock_, EXPECT_CALL(*mock_, ListNotifications(_)),
+      mock_, EXPECT_CALL(*mock_, ListNotifications),
       [](Client& client) {
         return client.ListNotifications("test-bucket-name").status();
       },
@@ -83,7 +82,7 @@ TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
 TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::ListNotificationsResponse>(
-      client, EXPECT_CALL(*mock_, ListNotifications(_)),
+      client, EXPECT_CALL(*mock_, ListNotifications),
       [](Client& client) {
         return client.ListNotifications("test-bucket-name").status();
       },
@@ -101,7 +100,7 @@ TEST_F(NotificationsTest, CreateNotification) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, CreateNotification(_))
+  EXPECT_CALL(*mock_, CreateNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -124,7 +123,7 @@ TEST_F(NotificationsTest, CreateNotification) {
 
 TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
-      mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
+      mock_, EXPECT_CALL(*mock_, CreateNotification),
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
@@ -138,7 +137,7 @@ TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
 TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<NotificationMetadata>(
-      client, EXPECT_CALL(*mock_, CreateNotification(_)),
+      client, EXPECT_CALL(*mock_, CreateNotification),
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
@@ -160,7 +159,7 @@ TEST_F(NotificationsTest, GetNotification) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, GetNotification(_))
+  EXPECT_CALL(*mock_, GetNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -177,7 +176,7 @@ TEST_F(NotificationsTest, GetNotification) {
 
 TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetNotification(_)),
+      mock_, EXPECT_CALL(*mock_, GetNotification),
       [](Client& client) {
         return client.GetNotification("test-bucket-name", "test-notification-1")
             .status();
@@ -188,7 +187,7 @@ TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
 TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<NotificationMetadata>(
-      client, EXPECT_CALL(*mock_, GetNotification(_)),
+      client, EXPECT_CALL(*mock_, GetNotification),
       [](Client& client) {
         return client.GetNotification("test-bucket-name", "test-notification-1")
             .status();
@@ -197,7 +196,7 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 }
 
 TEST_F(NotificationsTest, DeleteNotification) {
-  EXPECT_CALL(*mock_, DeleteNotification(_))
+  EXPECT_CALL(*mock_, DeleteNotification)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -212,7 +211,7 @@ TEST_F(NotificationsTest, DeleteNotification) {
 
 TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteNotification),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
                                          "test-notification-1");
@@ -223,7 +222,7 @@ TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
 TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      client, EXPECT_CALL(*mock_, DeleteNotification),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
                                          "test-notification-1");

@@ -28,13 +28,12 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
-using ::testing::_;
 namespace spanner_proto = ::google::spanner::v1;
 
 // This ugly macro and the supporting template member function refactor most
 // of this test to one-liners.
 #define SESSION_TEST(X, Y) \
-  ExpectSession(EXPECT_CALL(*mock_, X(_, _)), Y(), #X, &MetadataSpannerStub::X)
+  ExpectSession(EXPECT_CALL(*mock_, X), Y(), #X, &MetadataSpannerStub::X)
 
 class MetadataSpannerStubTest : public ::testing::Test {
  protected:
@@ -88,7 +87,7 @@ class MetadataSpannerStubTest : public ::testing::Test {
 };
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {
-  EXPECT_CALL(*mock_, CreateSession(_, _))
+  EXPECT_CALL(*mock_, CreateSession)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::CreateSessionRequest const&) {
         EXPECT_STATUS_OK(
@@ -106,7 +105,7 @@ TEST_F(MetadataSpannerStubTest, CreateSession) {
 }
 
 TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
-  EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock_, BatchCreateSessions)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::BatchCreateSessionsRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -125,7 +124,7 @@ TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
 }
 
 TEST_F(MetadataSpannerStubTest, GetSession) {
-  EXPECT_CALL(*mock_, GetSession(_, _))
+  EXPECT_CALL(*mock_, GetSession)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::GetSessionRequest const&) {
         EXPECT_STATUS_OK(
@@ -147,7 +146,7 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
 }
 
 TEST_F(MetadataSpannerStubTest, ListSessions) {
-  EXPECT_CALL(*mock_, ListSessions(_, _))
+  EXPECT_CALL(*mock_, ListSessions)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ListSessionsRequest const&) {
         EXPECT_STATUS_OK(
@@ -165,7 +164,7 @@ TEST_F(MetadataSpannerStubTest, ListSessions) {
 }
 
 TEST_F(MetadataSpannerStubTest, DeleteSession) {
-  EXPECT_CALL(*mock_, DeleteSession(_, _))
+  EXPECT_CALL(*mock_, DeleteSession)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::DeleteSessionRequest const&) {
         EXPECT_STATUS_OK(
@@ -191,7 +190,7 @@ TEST_F(MetadataSpannerStubTest, ExecuteSql) {
 }
 
 TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
-  EXPECT_CALL(*mock_, ExecuteStreamingSql(_, _))
+  EXPECT_CALL(*mock_, ExecuteStreamingSql)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ExecuteSqlRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -218,7 +217,7 @@ TEST_F(MetadataSpannerStubTest, ExecuteBatchDml) {
 }
 
 TEST_F(MetadataSpannerStubTest, StreamingRead) {
-  EXPECT_CALL(*mock_, StreamingRead(_, _))
+  EXPECT_CALL(*mock_, StreamingRead)
       .WillOnce([this](grpc::ClientContext& context,
                        spanner_proto::ReadRequest const&) {
         EXPECT_STATUS_OK(

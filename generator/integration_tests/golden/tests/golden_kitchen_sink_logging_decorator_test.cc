@@ -90,7 +90,7 @@ class LoggingDecoratorTest : public ::testing::Test {
 
 TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
   ::google::test::admin::database::v1::GenerateAccessTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateAccessToken(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
@@ -102,8 +102,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
 }
 
 TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
-  EXPECT_CALL(*mock_, GenerateAccessToken(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
@@ -117,7 +116,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
 
 TEST_F(LoggingDecoratorTest, GenerateIdToken) {
   ::google::test::admin::database::v1::GenerateIdTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
@@ -129,7 +128,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdToken) {
 }
 
 TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
-  EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
@@ -143,7 +142,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
 
 TEST_F(LoggingDecoratorTest, WriteLogEntries) {
   ::google::test::admin::database::v1::WriteLogEntriesResponse response;
-  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
@@ -155,7 +154,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntries) {
 }
 
 TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
-  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
@@ -169,7 +168,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
 
 TEST_F(LoggingDecoratorTest, ListLogs) {
   ::google::test::admin::database::v1::ListLogsResponse response;
-  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
@@ -181,7 +180,7 @@ TEST_F(LoggingDecoratorTest, ListLogs) {
 }
 
 TEST_F(LoggingDecoratorTest, ListLogsError) {
-  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
@@ -207,7 +206,7 @@ class MockTailLogEntriesStreamingReadRpc
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
   auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+  EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
@@ -227,7 +226,7 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+  EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(

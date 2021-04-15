@@ -37,7 +37,6 @@ using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -80,7 +79,7 @@ TEST(PartialResultSetResume, Success) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, MakeReader(_))
+  EXPECT_CALL(mock_factory, MakeReader)
       .WillOnce([&response](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = absl::make_unique<MockPartialResultSetReader>();
@@ -130,7 +129,7 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, MakeReader(_))
+  EXPECT_CALL(mock_factory, MakeReader)
       .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = absl::make_unique<MockPartialResultSetReader>();
@@ -194,7 +193,7 @@ TEST(PartialResultSetResume, PermanentError) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, MakeReader(_))
+  EXPECT_CALL(mock_factory, MakeReader)
       .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = absl::make_unique<MockPartialResultSetReader>();
@@ -246,7 +245,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &r0));
 
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, MakeReader(_))
+  EXPECT_CALL(mock_factory, MakeReader)
       .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = absl::make_unique<MockPartialResultSetReader>();
@@ -274,7 +273,7 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
 
 TEST(PartialResultSetResume, TooManyTransients) {
   MockFactory mock_factory;
-  EXPECT_CALL(mock_factory, MakeReader(_))
+  EXPECT_CALL(mock_factory, MakeReader)
       .Times(AtLeast(2))
       .WillRepeatedly([](std::string const& token) {
         EXPECT_TRUE(token.empty());

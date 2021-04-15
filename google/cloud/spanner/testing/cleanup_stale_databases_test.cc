@@ -27,7 +27,6 @@ namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::UnorderedElementsAreArray;
 namespace gcsa = ::google::spanner::admin::database::v1;
 namespace spanner = ::google::cloud::spanner;
@@ -35,7 +34,7 @@ namespace spanner = ::google::cloud::spanner;
 TEST(CleanupStaleDatabases, Empty) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
-  EXPECT_CALL(*mock, ListDatabases(_))
+  EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
           [&expected_instance](
               spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
@@ -62,7 +61,7 @@ TEST(CleanupStaleDatabases, Empty) {
 TEST(CleanupStaleDatabases, ListError) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   spanner::Instance const expected_instance("test-project", "test-instance");
-  EXPECT_CALL(*mock, ListDatabases(_))
+  EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
           [&expected_instance](
               spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
@@ -107,7 +106,7 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
   };
 
   spanner::Instance const expected_instance("test-project", "test-instance");
-  EXPECT_CALL(*mock, ListDatabases(_))
+  EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
           [&](spanner::DatabaseAdminConnection::ListDatabasesParams const& p) {
             EXPECT_EQ(expected_instance, p.instance);
@@ -138,7 +137,7 @@ TEST(CleanupStaleDatabases, RemovesMatching) {
           });
 
   std::vector<std::string> dropped;
-  EXPECT_CALL(*mock, DropDatabase(_))
+  EXPECT_CALL(*mock, DropDatabase)
       .WillRepeatedly(
           [&](spanner::DatabaseAdminConnection::DropDatabaseParams const& p) {
             EXPECT_EQ(p.database.instance(), expected_instance);

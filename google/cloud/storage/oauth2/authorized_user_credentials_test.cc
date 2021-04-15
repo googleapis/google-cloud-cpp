@@ -35,7 +35,6 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AllOf;
 using ::testing::An;
 using ::testing::HasSubstr;
@@ -61,7 +60,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
     "expires_in": 1234
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce([response](std::string const& payload) {
         EXPECT_THAT(payload, HasSubstr("grant_type=refresh_token"));
         EXPECT_THAT(payload, HasSubstr("client_id=a-client-id.example.com"));
@@ -119,7 +118,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
     "expires_in": 1000
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce(Return(HttpResponse{200, r1, {}}))
       .WillOnce(Return(HttpResponse{200, r2, {}}));
 
@@ -160,7 +159,7 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
 /// @test Mock a failed refresh response.
 TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
       .WillOnce(Return(HttpResponse{400, "", {}}));
 

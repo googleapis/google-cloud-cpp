@@ -28,7 +28,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -73,7 +72,7 @@ class MockMediaReader : public grpc::ClientReaderInterface<
 
 TEST(GrpcObjectReadSource, Simple) {
   auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("0123456789");
         return true;
@@ -107,7 +106,7 @@ TEST(GrpcObjectReadSource, Simple) {
 
 TEST(GrpcObjectReadSource, EmptyWithError) {
   auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*mock, Read).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish())
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
@@ -126,7 +125,7 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
 
 TEST(GrpcObjectReadSource, DataWithError) {
   auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("0123456789");
         return true;
@@ -162,7 +161,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
   std::string const expected_2(trailer_size, 'A');
   ASSERT_LT(expected_1.size(), expected_2.size());
   std::string const contents = expected_1 + expected_2;
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([&contents](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content(contents);
         return true;
@@ -198,7 +197,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 TEST(GrpcObjectReadSource, UseSpillBufferMany) {
   auto mock = absl::make_unique<MockMediaReader>();
   std::string const contents = "0123456789";
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([&contents](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content(contents);
         return true;
@@ -241,7 +240,7 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
   auto mock = absl::make_unique<MockMediaReader>();
   std::string const expected_md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
   std::string const expected_crc32c = "ImIEBA==";
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([&](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("The quick brown");
         response->mutable_object_checksums()->set_md5_hash(
@@ -290,7 +289,7 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
   auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce(Return(true))
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content("The quick brown ");
@@ -330,7 +329,7 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
 
 TEST(GrpcObjectReadSource, HandleExtraRead) {
   auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
+  EXPECT_CALL(*mock, Read)
       .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
         response->mutable_checksummed_data()->set_content(
             "The quick brown fox jumps over the lazy dog");

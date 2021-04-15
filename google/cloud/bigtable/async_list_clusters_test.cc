@@ -38,7 +38,6 @@ namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::ReturnRef;
 
 using MockAsyncListClustersReader =
@@ -113,7 +112,7 @@ std::vector<std::string> ClusterNames(ClusterList const& response) {
 
 /// @test One successful page with 1 one cluster.
 TEST_F(AsyncListClustersTest, Simple) {
-  EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
+  EXPECT_CALL(*client_, AsyncListClusters)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListClustersRequest const& request,
                        grpc::CompletionQueue*) {
@@ -127,7 +126,7 @@ TEST_F(AsyncListClustersTest, Simple) {
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_1_.get());
       });
-  EXPECT_CALL(*clusters_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_1_, Finish)
       .WillOnce(
           create_list_clusters_lambda("", {"cluster_1"}, {"failed_loc_1"}));
 
@@ -146,7 +145,7 @@ TEST_F(AsyncListClustersTest, Simple) {
 
 /// @test Test 3 pages, no failures, multiple clusters and failed locations.
 TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
-  EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
+  EXPECT_CALL(*client_, AsyncListClusters)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListClustersRequest const& request,
                        grpc::CompletionQueue*) {
@@ -186,14 +185,14 @@ TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_3_.get());
       });
-  EXPECT_CALL(*clusters_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_1_, Finish)
       .WillOnce(create_list_clusters_lambda("token_1", {"cluster_1"},
                                             {"failed_loc_1"}));
-  EXPECT_CALL(*clusters_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_2_, Finish)
       .WillOnce(create_list_clusters_lambda("token_2",
                                             {"cluster_2", "cluster_3"},
                                             {"failed_loc_1", "failed_loc_2"}));
-  EXPECT_CALL(*clusters_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_3_, Finish)
       .WillOnce(
           create_list_clusters_lambda("", {"cluster_4"}, {"failed_loc_1"}));
 
@@ -229,7 +228,7 @@ TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
 
 /// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListClustersTest, FailuresAreRetried) {
-  EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
+  EXPECT_CALL(*client_, AsyncListClusters)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListClustersRequest const& request,
                        grpc::CompletionQueue*) {
@@ -269,15 +268,15 @@ TEST_F(AsyncListClustersTest, FailuresAreRetried) {
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_3_.get());
       });
-  EXPECT_CALL(*clusters_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_1_, Finish)
       .WillOnce(create_list_clusters_lambda("token_1", {"cluster_1"},
                                             {"failed_loc_1"}));
-  EXPECT_CALL(*clusters_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_2_, Finish)
       .WillOnce(
           [](btproto::ListClustersResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
           });
-  EXPECT_CALL(*clusters_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*clusters_reader_3_, Finish)
       .WillOnce(
           create_list_clusters_lambda("", {"cluster_2"}, {"failed_loc_2"}));
 

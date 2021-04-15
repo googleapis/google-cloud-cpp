@@ -32,7 +32,6 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -54,7 +53,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
   auto expected =
       storage::internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, InsertObjectMedia(_))
+  EXPECT_CALL(*mock_, InsertObjectMedia)
       .WillOnce([&expected](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
@@ -71,7 +70,7 @@ TEST_F(ObjectTest, InsertObjectMedia) {
 
 TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock_, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
+      mock_, EXPECT_CALL(*mock_, InsertObjectMedia),
       [](Client& client) {
         return client
             .InsertObject("test-bucket-name", "test-object-name",
@@ -90,7 +89,7 @@ TEST_F(ObjectTest, InsertObjectMediaTooManyFailures) {
 TEST_F(ObjectTest, InsertObjectMediaPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      client, EXPECT_CALL(*mock_, InsertObjectMedia(_)),
+      client, EXPECT_CALL(*mock_, InsertObjectMedia),
       [](Client& client) {
         return client
             .InsertObject("test-bucket-name", "test-object-name",
@@ -125,7 +124,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetObjectMetadataRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -141,7 +140,7 @@ TEST_F(ObjectTest, GetObjectMetadata) {
 
 TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
+      mock_, EXPECT_CALL(*mock_, GetObjectMetadata),
       [](Client& client) {
         return client.GetObjectMetadata("test-bucket-name", "test-object-name")
             .status();
@@ -152,7 +151,7 @@ TEST_F(ObjectTest, GetObjectMetadataTooManyFailures) {
 TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      client, EXPECT_CALL(*mock_, GetObjectMetadata(_)),
+      client, EXPECT_CALL(*mock_, GetObjectMetadata),
       [](Client& client) {
         return client.GetObjectMetadata("test-bucket-name", "test-object-name")
             .status();
@@ -161,7 +160,7 @@ TEST_F(ObjectTest, GetObjectMetadataPermanentFailure) {
 }
 
 TEST_F(ObjectTest, DeleteObject) {
-  EXPECT_CALL(*mock_, DeleteObject(_))
+  EXPECT_CALL(*mock_, DeleteObject)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -175,7 +174,7 @@ TEST_F(ObjectTest, DeleteObject) {
 
 TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteObject(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteObject),
       [](Client& client) {
         return client.DeleteObject("test-bucket-name", "test-object-name");
       },
@@ -189,7 +188,7 @@ TEST_F(ObjectTest, DeleteObjectTooManyFailures) {
 TEST_F(ObjectTest, DeleteObjectPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteObject(_)),
+      client, EXPECT_CALL(*mock_, DeleteObject),
       [](Client& client) {
         return client.DeleteObject("test-bucket-name", "test-object-name");
       },
@@ -221,7 +220,7 @@ TEST_F(ObjectTest, UpdateObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, UpdateObject(_))
+  EXPECT_CALL(*mock_, UpdateObject)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -264,7 +263,7 @@ TEST_F(ObjectTest, UpdateObject) {
 
 TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock_, EXPECT_CALL(*mock_, UpdateObject(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateObject),
       [](Client& client) {
         return client
             .UpdateObject("test-bucket-name", "test-object-name",
@@ -284,7 +283,7 @@ TEST_F(ObjectTest, UpdateObjectTooManyFailures) {
 TEST_F(ObjectTest, UpdateObjectPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      client, EXPECT_CALL(*mock_, UpdateObject(_)),
+      client, EXPECT_CALL(*mock_, UpdateObject),
       [](Client& client) {
         return client
             .UpdateObject("test-bucket-name", "test-object-name",
@@ -319,7 +318,7 @@ TEST_F(ObjectTest, PatchObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, PatchObject(_))
+  EXPECT_CALL(*mock_, PatchObject)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce([&expected](internal::PatchObjectRequest const& r) {
         EXPECT_EQ("test-bucket-name", r.bucket_name());
@@ -339,7 +338,7 @@ TEST_F(ObjectTest, PatchObject) {
 
 TEST_F(ObjectTest, PatchObjectTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectMetadata>(
-      mock_, EXPECT_CALL(*mock_, PatchObject(_)),
+      mock_, EXPECT_CALL(*mock_, PatchObject),
       [](Client& client) {
         return client
             .PatchObject(
@@ -361,7 +360,7 @@ TEST_F(ObjectTest, PatchObjectTooManyFailures) {
 TEST_F(ObjectTest, PatchObjectPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectMetadata>(
-      client, EXPECT_CALL(*mock_, PatchObject(_)),
+      client, EXPECT_CALL(*mock_, PatchObject),
       [](Client& client) {
         return client
             .PatchObject(
@@ -381,7 +380,7 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
   auto transient_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(TransientError());
   };
-  EXPECT_CALL(*mock_, ReadObject(_))
+  EXPECT_CALL(*mock_, ReadObject)
       .WillOnce(transient_error)
       .WillOnce(transient_error)
       .WillOnce(transient_error);
@@ -403,7 +402,7 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   auto permanent_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(PermanentError());
   };
-  EXPECT_CALL(*mock_, ReadObject(_)).WillOnce(permanent_error);
+  EXPECT_CALL(*mock_, ReadObject).WillOnce(permanent_error);
 
   auto client = ClientForMock();
   Status status =
@@ -434,7 +433,7 @@ TEST_F(ObjectTest, DeleteByPrefix) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce([](internal::ListObjectsRequest const& req)
                     -> StatusOr<internal::ListObjectsResponse> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -449,7 +448,7 @@ TEST_F(ObjectTest, DeleteByPrefix) {
         response.items.emplace_back(CreateObject(3));
         return response;
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("object-1", r.object_name());
@@ -477,7 +476,7 @@ TEST_F(ObjectTest, DeleteByPrefixNoOptions) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce([](internal::ListObjectsRequest const& req)
                     -> StatusOr<internal::ListObjectsResponse> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -488,7 +487,7 @@ TEST_F(ObjectTest, DeleteByPrefixNoOptions) {
         response.items.emplace_back(CreateObject(3));
         return response;
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("object-1", r.object_name());
@@ -516,7 +515,7 @@ TEST_F(ObjectTest, DeleteByPrefixListFailure) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(Return(StatusOr<internal::ListObjectsResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
   auto client = testing::ClientFromMock(mock);
@@ -531,7 +530,7 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce([](internal::ListObjectsRequest const& req)
                     -> StatusOr<internal::ListObjectsResponse> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -542,7 +541,7 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
         response.items.emplace_back(CreateObject(3));
         return response;
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("object-1", r.object_name());
@@ -601,7 +600,7 @@ TEST_F(ObjectTest, ComposeManyOne) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce([](internal::ComposeObjectRequest const& req)
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -613,14 +612,14 @@ TEST_F(ObjectTest, ComposeManyOne) {
 
         return MockObject("test-bucket", "test-object", 42);
       });
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
         EXPECT_EQ("", request.contents());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix", r.object_name());
@@ -638,7 +637,7 @@ TEST_F(ObjectTest, ComposeManyThree) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce([](internal::ComposeObjectRequest const& req)
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -654,14 +653,14 @@ TEST_F(ObjectTest, ComposeManyThree) {
 
         return MockObject("test-bucket", "test-object", 42);
       });
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
         EXPECT_EQ("", request.contents());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix", r.object_name());
@@ -684,7 +683,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
 
   // Test 63 sources.
 
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce([](internal::ComposeObjectRequest const& req)
                     -> StatusOr<ObjectMetadata> {
         EXPECT_EQ("test-bucket", req.bucket_name());
@@ -728,14 +727,14 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
 
         return MockObject(req.bucket_name(), req.object_name(), 42);
       });
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
         EXPECT_EQ("", request.contents());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-1", r.object_name());
@@ -774,13 +773,13 @@ TEST_F(ObjectTest, ComposeManyComposeFails) {
 
   // Test 63 sources - second composition fails.
 
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce(Return(make_status_or(
           MockObject("test-bucket", "prefix.compose-tmp-0", 42))))
       .WillOnce(Return(
           StatusOr<ObjectMetadata>(Status(StatusCode::kPermissionDenied, ""))));
 
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
@@ -789,7 +788,7 @@ TEST_F(ObjectTest, ComposeManyComposeFails) {
       });
 
   // Cleanup is still expected
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-0", r.object_name());
@@ -822,7 +821,7 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
 
   // Test 63 sources - second composition fails.
 
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce(Return(make_status_or(
           MockObject("test-bucket", "prefix.compose-tmp-0", 42))))
       .WillOnce(Return(make_status_or(
@@ -830,10 +829,10 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
       .WillOnce(Return(make_status_or(MockObject("test-bucket", "dest", 42))));
 
   // Cleanup is still expected
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
@@ -862,7 +861,7 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
 
   // Test 63 sources - second composition fails.
 
-  EXPECT_CALL(*mock, ComposeObject(_))
+  EXPECT_CALL(*mock, ComposeObject)
       .WillOnce(Return(make_status_or(
           MockObject("test-bucket", "prefix.compose-tmp-0", 42))))
       .WillOnce(Return(make_status_or(
@@ -870,11 +869,11 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
       .WillOnce(Return(make_status_or(MockObject("test-bucket", "dest", 42))));
 
   // Cleanup is still expected
-  EXPECT_CALL(*mock, DeleteObject(_))
+  EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
 
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
@@ -901,7 +900,7 @@ TEST_F(ObjectTest, ComposeManyLockingPrefixFails) {
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
 
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce(Return(
           Status(StatusCode::kFailedPrecondition, "Generation mismatch")));
   auto client = testing::ClientFromMock(mock);

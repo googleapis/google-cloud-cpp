@@ -30,7 +30,6 @@ namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::Not;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -95,7 +94,7 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
           .value(),
   };
 
-  EXPECT_CALL(*mock_, ListBucketAcl(_))
+  EXPECT_CALL(*mock_, ListBucketAcl)
       .WillOnce(
           Return(StatusOr<internal::ListBucketAclResponse>(TransientError())))
       .WillOnce([&expected](internal::ListBucketAclRequest const& r) {
@@ -113,7 +112,7 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, ListBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::ListBucketAclResponse>(
-      mock_, EXPECT_CALL(*mock_, ListBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, ListBucketAcl),
       [](Client& client) {
         return client.ListBucketAcl("test-bucket-name").status();
       },
@@ -123,7 +122,7 @@ TEST_F(BucketAccessControlsTest, ListBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, ListBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::ListBucketAclResponse>(
-      client, EXPECT_CALL(*mock_, ListBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, ListBucketAcl),
       [](Client& client) {
         return client.ListBucketAcl("test-bucket-name").status();
       },
@@ -138,7 +137,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
       })""")
                       .value();
 
-  EXPECT_CALL(*mock_, CreateBucketAcl(_))
+  EXPECT_CALL(*mock_, CreateBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -161,7 +160,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, CreateBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketAccessControl>(
-      mock_, EXPECT_CALL(*mock_, CreateBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, CreateBucketAcl),
       [](Client& client) {
         return client
             .CreateBucketAcl("test-bucket-name", "user-test-user-1", "READER")
@@ -179,7 +178,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketAccessControl>(
-      client, EXPECT_CALL(*mock_, CreateBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, CreateBucketAcl),
       [](Client& client) {
         return client
             .CreateBucketAcl("test-bucket-name", "user-test-user", "READER")
@@ -189,7 +188,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAclPermanentFailure) {
 }
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
-  EXPECT_CALL(*mock_, DeleteBucketAcl(_))
+  EXPECT_CALL(*mock_, DeleteBucketAcl)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -204,7 +203,7 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteBucketAcl),
       [](Client& client) {
         return client.DeleteBucketAcl("test-bucket-name", "user-test-user-1");
       },
@@ -218,7 +217,7 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, DeleteBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, DeleteBucketAcl),
       [](Client& client) {
         return client.DeleteBucketAcl("test-bucket-name", "user-test-user");
       },
@@ -234,7 +233,7 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, GetBucketAcl(_))
+  EXPECT_CALL(*mock_, GetBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::GetBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -252,7 +251,7 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, GetBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketAccessControl>(
-      mock_, EXPECT_CALL(*mock_, GetBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, GetBucketAcl),
       [](Client& client) {
         return client.GetBucketAcl("test-bucket-name", "user-test-user-1")
             .status();
@@ -263,7 +262,7 @@ TEST_F(BucketAccessControlsTest, GetBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, GetBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketAccessControl>(
-      client, EXPECT_CALL(*mock_, GetBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, GetBucketAcl),
       [](Client& client) {
         return client.GetBucketAcl("test-bucket-name", "user-test-user-1")
             .status();
@@ -280,7 +279,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, UpdateBucketAcl(_))
+  EXPECT_CALL(*mock_, UpdateBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::UpdateBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -300,7 +299,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, UpdateBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketAccessControl>(
-      mock_, EXPECT_CALL(*mock_, UpdateBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateBucketAcl),
       [](Client& client) {
         return client
             .UpdateBucketAcl("test-bucket", BucketAccessControl()
@@ -323,7 +322,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, UpdateBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketAccessControl>(
-      client, EXPECT_CALL(*mock_, UpdateBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, UpdateBucketAcl),
       [](Client& client) {
         return client
             .UpdateBucketAcl("test-bucket", BucketAccessControl()
@@ -343,7 +342,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, PatchBucketAcl(_))
+  EXPECT_CALL(*mock_, PatchBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&result](internal::PatchBucketAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -365,7 +364,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
 
 TEST_F(BucketAccessControlsTest, PatchBucketAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<BucketAccessControl>(
-      mock_, EXPECT_CALL(*mock_, PatchBucketAcl(_)),
+      mock_, EXPECT_CALL(*mock_, PatchBucketAcl),
       [](Client& client) {
         return client
             .PatchBucketAcl("test-bucket", "user-test-user-1",
@@ -385,7 +384,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAclTooManyFailures) {
 TEST_F(BucketAccessControlsTest, PatchBucketAclPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<BucketAccessControl>(
-      client, EXPECT_CALL(*mock_, PatchBucketAcl(_)),
+      client, EXPECT_CALL(*mock_, PatchBucketAcl),
       [](Client& client) {
         return client
             .PatchBucketAcl("test-bucket", "user-test-user-1",

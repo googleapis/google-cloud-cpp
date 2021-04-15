@@ -27,7 +27,6 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
-using ::testing::_;
 namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class InstanceAdminMetadataTest : public ::testing::Test {
@@ -49,7 +48,7 @@ class InstanceAdminMetadataTest : public ::testing::Test {
 };
 
 TEST_F(InstanceAdminMetadataTest, GetInstance) {
-  EXPECT_CALL(*mock_, GetInstance(_, _))
+  EXPECT_CALL(*mock_, GetInstance)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::GetInstanceRequest const&) {
         EXPECT_STATUS_OK(
@@ -71,7 +70,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
 }
 
 TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
-  EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
+  EXPECT_CALL(*mock_, GetInstanceConfig)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::GetInstanceConfigRequest const&) {
         EXPECT_STATUS_OK(
@@ -93,7 +92,7 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
 }
 
 TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
-  EXPECT_CALL(*mock_, ListInstanceConfigs(_, _))
+  EXPECT_CALL(*mock_, ListInstanceConfigs)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListInstanceConfigsRequest const&) {
         EXPECT_STATUS_OK(
@@ -113,7 +112,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
 }
 
 TEST_F(InstanceAdminMetadataTest, CreateInstance) {
-  EXPECT_CALL(*mock_, CreateInstance(_, _))
+  EXPECT_CALL(*mock_, CreateInstance)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::CreateInstanceRequest const&) {
         EXPECT_STATUS_OK(
@@ -134,7 +133,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
 }
 
 TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
-  EXPECT_CALL(*mock_, UpdateInstance(_, _))
+  EXPECT_CALL(*mock_, UpdateInstance)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::UpdateInstanceRequest const&) {
         EXPECT_STATUS_OK(
@@ -155,7 +154,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
 }
 
 TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
-  EXPECT_CALL(*mock_, DeleteInstance(_, _))
+  EXPECT_CALL(*mock_, DeleteInstance)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::DeleteInstanceRequest const&) {
         EXPECT_STATUS_OK(
@@ -175,7 +174,7 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
 }
 
 TEST_F(InstanceAdminMetadataTest, ListInstances) {
-  EXPECT_CALL(*mock_, ListInstances(_, _))
+  EXPECT_CALL(*mock_, ListInstances)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListInstancesRequest const&) {
         EXPECT_STATUS_OK(
@@ -195,7 +194,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
 }
 
 TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
-  EXPECT_CALL(*mock_, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(
@@ -216,7 +215,7 @@ TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
 }
 
 TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
-  EXPECT_CALL(*mock_, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(
@@ -236,7 +235,7 @@ TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
 }
 
 TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
-  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock_, TestIamPermissions)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::TestIamPermissionsRequest const&) {
         EXPECT_STATUS_OK(

@@ -27,7 +27,6 @@ namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::Not;
 using ::testing::Return;
 
@@ -92,7 +91,7 @@ class MetadataDecoratorTest : public ::testing::Test {
 };
 
 TEST_F(MetadataDecoratorTest, GenerateAccessToken) {
-  EXPECT_CALL(*mock_, GenerateAccessToken(_, _))
+  EXPECT_CALL(*mock_, GenerateAccessToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            GenerateAccessTokenRequest const&) {
@@ -113,7 +112,7 @@ TEST_F(MetadataDecoratorTest, GenerateAccessToken) {
 }
 
 TEST_F(MetadataDecoratorTest, GenerateIdToken) {
-  EXPECT_CALL(*mock_, GenerateIdToken(_, _))
+  EXPECT_CALL(*mock_, GenerateIdToken)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            GenerateIdTokenRequest const&) {
@@ -133,7 +132,7 @@ TEST_F(MetadataDecoratorTest, GenerateIdToken) {
 }
 
 TEST_F(MetadataDecoratorTest, WriteLogEntries) {
-  EXPECT_CALL(*mock_, WriteLogEntries(_, _))
+  EXPECT_CALL(*mock_, WriteLogEntries)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            WriteLogEntriesRequest const&) {
@@ -152,7 +151,7 @@ TEST_F(MetadataDecoratorTest, WriteLogEntries) {
 }
 
 TEST_F(MetadataDecoratorTest, ListLogs) {
-  EXPECT_CALL(*mock_, ListLogs(_, _))
+  EXPECT_CALL(*mock_, ListLogs)
       .WillOnce([this](
                     grpc::ClientContext& context,
                     google::test::admin::database::v1::ListLogsRequest const&) {

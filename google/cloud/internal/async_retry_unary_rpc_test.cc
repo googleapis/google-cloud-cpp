@@ -34,7 +34,6 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -87,7 +86,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
   auto reader = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
         // Initialize a value to make sure it is carried all the way back to
         // the caller.
@@ -95,7 +94,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
         *status = grpc::Status::OK;
       });
 
-  EXPECT_CALL(mock, AsyncGetTable(_, _, _))
+  EXPECT_CALL(mock, AsyncGetTable)
       .WillOnce([&reader](grpc::ClientContext*,
                           btadmin::GetTableRequest const& request,
                           grpc::CompletionQueue*) {
@@ -139,12 +138,12 @@ TEST(AsyncRetryUnaryRpcTest, VoidImmediatelySucceeds) {
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;
   auto reader = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce([](google::protobuf::Empty*, grpc::Status* status, void*) {
         *status = grpc::Status::OK;
       });
 
-  EXPECT_CALL(mock, AsyncDeleteTable(_, _, _))
+  EXPECT_CALL(mock, AsyncDeleteTable)
       .WillOnce([&reader](grpc::ClientContext*,
                           btadmin::DeleteTableRequest const& request,
                           grpc::CompletionQueue*) {
@@ -187,12 +186,12 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
 
   using ReaderType = MockAsyncResponseReader<btadmin::Table>;
   auto reader = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce([](btadmin::Table*, grpc::Status* status, void*) {
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
       });
 
-  EXPECT_CALL(mock, AsyncGetTable(_, _, _))
+  EXPECT_CALL(mock, AsyncGetTable)
       .WillOnce([&reader](grpc::ClientContext*,
                           btadmin::GetTableRequest const& request,
                           grpc::CompletionQueue*) {
@@ -242,13 +241,13 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   };
 
   auto r1 = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*r1, Finish(_, _, _)).WillOnce(finish_failure);
+  EXPECT_CALL(*r1, Finish).WillOnce(finish_failure);
   auto r2 = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*r2, Finish(_, _, _)).WillOnce(finish_failure);
+  EXPECT_CALL(*r2, Finish).WillOnce(finish_failure);
   auto r3 = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*r3, Finish(_, _, _)).WillOnce(finish_failure);
+  EXPECT_CALL(*r3, Finish).WillOnce(finish_failure);
 
-  EXPECT_CALL(mock, AsyncGetTable(_, _, _))
+  EXPECT_CALL(mock, AsyncGetTable)
       .WillOnce([&r1](grpc::ClientContext*,
                       btadmin::GetTableRequest const& request,
                       grpc::CompletionQueue*) {
@@ -318,13 +317,13 @@ TEST(AsyncRetryUnaryRpcTest, TransientOnNonIdempotent) {
 
   using ReaderType = MockAsyncResponseReader<google::protobuf::Empty>;
   auto reader = absl::make_unique<ReaderType>();
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce([](google::protobuf::Empty*, grpc::Status* status, void*) {
         *status =
             grpc::Status(grpc::StatusCode::UNAVAILABLE, "maybe-try-again");
       });
 
-  EXPECT_CALL(mock, AsyncDeleteTable(_, _, _))
+  EXPECT_CALL(mock, AsyncDeleteTable)
       .WillOnce([&reader](grpc::ClientContext*,
                           btadmin::DeleteTableRequest const& request,
                           grpc::CompletionQueue*) {

@@ -38,7 +38,6 @@ namespace btadmin = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::ReturnRef;
 
 using MockAsyncListAppProfilesReader =
@@ -107,7 +106,7 @@ std::vector<std::string> AppProfileNames(
 
 /// @test One successful page with 1 one profile.
 TEST_F(AsyncListAppProfilesTest, Simple) {
-  EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
+  EXPECT_CALL(*client_, AsyncListAppProfiles)
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -120,7 +119,7 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
       });
-  EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_1_, Finish)
       .WillOnce(create_list_profiles_lambda("", {"profile_1"}));
 
   Start();
@@ -137,7 +136,7 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
 
 /// @test Test 3 pages, no failures, multiple profiles.
 TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
-  EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
+  EXPECT_CALL(*client_, AsyncListAppProfiles)
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -174,12 +173,12 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
       });
-  EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_1_, Finish)
       .WillOnce(create_list_profiles_lambda("token_1", {"profile_1"}));
-  EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_2_, Finish)
       .WillOnce(
           create_list_profiles_lambda("token_2", {"profile_2", "profile_3"}));
-  EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_3_, Finish)
       .WillOnce(create_list_profiles_lambda("", {"profile_4"}));
 
   Start();
@@ -210,7 +209,7 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
 
 /// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
-  EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
+  EXPECT_CALL(*client_, AsyncListAppProfiles)
       .WillOnce([this](grpc::ClientContext* context,
                        btadmin::ListAppProfilesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -247,14 +246,14 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
       });
-  EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_1_, Finish)
       .WillOnce(create_list_profiles_lambda("token_1", {"profile_1"}));
-  EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_2_, Finish)
       .WillOnce(
           [](btadmin::ListAppProfilesResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
           });
-  EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*profiles_reader_3_, Finish)
       .WillOnce(create_list_profiles_lambda("", {"profile_2"}));
 
   Start();

@@ -25,13 +25,11 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::testing::_;
-
 /// @test Verify Subscriber::Subscribe() works, including mocks.
 TEST(SubscriberTest, SubscribeSimple) {
   Subscription const subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
-  EXPECT_CALL(*mock, Subscribe(_))
+  EXPECT_CALL(*mock, Subscribe)
       .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
         {
           auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
@@ -67,7 +65,7 @@ TEST(SubscriberTest, SubscribeSimple) {
 TEST(SubscriberTest, SubscribeWithOptions) {
   Subscription const subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_mocks::MockSubscriberConnection>();
-  EXPECT_CALL(*mock, Subscribe(_))
+  EXPECT_CALL(*mock, Subscribe)
       .WillOnce([&](SubscriberConnection::SubscribeParams const&) {
         return make_ready_future(Status{});
       });

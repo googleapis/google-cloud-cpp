@@ -28,7 +28,6 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::Return;
 using ::testing::ReturnRef;
 
@@ -94,7 +93,7 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock_, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
@@ -112,7 +111,7 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock_, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");
@@ -130,7 +129,7 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
-  EXPECT_CALL(*mock_, GetBucketMetadata(_))
+  EXPECT_CALL(*mock_, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())))
       .WillOnce(Return(make_status_or(BucketMetadata{})));
   (void)client.GetBucketMetadata("foo-bar-baz");

@@ -175,7 +175,7 @@ class LoggingDecoratorTest : public ::testing::Test {
 TEST_F(LoggingDecoratorTest, GetDatabaseSuccess) {
   google::test::admin::database::v1::Database database;
   database.set_name("my_database");
-  EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(database));
+  EXPECT_CALL(*mock_, GetDatabase).WillOnce(Return(database));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -189,7 +189,7 @@ TEST_F(LoggingDecoratorTest, GetDatabaseSuccess) {
 }
 
 TEST_F(LoggingDecoratorTest, GetDatabase) {
-  EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetDatabase).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -203,7 +203,7 @@ TEST_F(LoggingDecoratorTest, GetDatabase) {
 }
 
 TEST_F(LoggingDecoratorTest, ListDatabases) {
-  EXPECT_CALL(*mock_, ListDatabases(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListDatabases).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -217,7 +217,7 @@ TEST_F(LoggingDecoratorTest, ListDatabases) {
 }
 
 TEST_F(LoggingDecoratorTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateDatabase).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -231,8 +231,7 @@ TEST_F(LoggingDecoratorTest, CreateDatabase) {
 }
 
 TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
-  EXPECT_CALL(*mock_, UpdateDatabaseDdl(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, UpdateDatabaseDdl).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -246,7 +245,7 @@ TEST_F(LoggingDecoratorTest, UpdateDatabaseDdl) {
 }
 
 TEST_F(LoggingDecoratorTest, DropDatabase) {
-  EXPECT_CALL(*mock_, DropDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, DropDatabase).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -260,7 +259,7 @@ TEST_F(LoggingDecoratorTest, DropDatabase) {
 }
 
 TEST_F(LoggingDecoratorTest, GetDatabaseDdl) {
-  EXPECT_CALL(*mock_, GetDatabaseDdl(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetDatabaseDdl).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -274,7 +273,7 @@ TEST_F(LoggingDecoratorTest, GetDatabaseDdl) {
 }
 
 TEST_F(LoggingDecoratorTest, SetIamPolicy) {
-  EXPECT_CALL(*mock_, SetIamPolicy(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, SetIamPolicy).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -288,7 +287,7 @@ TEST_F(LoggingDecoratorTest, SetIamPolicy) {
 }
 
 TEST_F(LoggingDecoratorTest, GetIamPolicy) {
-  EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetIamPolicy).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -302,8 +301,7 @@ TEST_F(LoggingDecoratorTest, GetIamPolicy) {
 }
 
 TEST_F(LoggingDecoratorTest, TestIamPermissions) {
-  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, TestIamPermissions).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -317,7 +315,7 @@ TEST_F(LoggingDecoratorTest, TestIamPermissions) {
 }
 
 TEST_F(LoggingDecoratorTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateBackup).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -331,7 +329,7 @@ TEST_F(LoggingDecoratorTest, CreateBackup) {
 }
 
 TEST_F(LoggingDecoratorTest, GetBackup) {
-  EXPECT_CALL(*mock_, GetBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetBackup).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -345,7 +343,7 @@ TEST_F(LoggingDecoratorTest, GetBackup) {
 }
 
 TEST_F(LoggingDecoratorTest, UpdateBackup) {
-  EXPECT_CALL(*mock_, UpdateBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, UpdateBackup).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -359,7 +357,7 @@ TEST_F(LoggingDecoratorTest, UpdateBackup) {
 }
 
 TEST_F(LoggingDecoratorTest, DeleteBackup) {
-  EXPECT_CALL(*mock_, DeleteBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, DeleteBackup).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -373,7 +371,7 @@ TEST_F(LoggingDecoratorTest, DeleteBackup) {
 }
 
 TEST_F(LoggingDecoratorTest, ListBackups) {
-  EXPECT_CALL(*mock_, ListBackups(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListBackups).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -387,7 +385,7 @@ TEST_F(LoggingDecoratorTest, ListBackups) {
 }
 
 TEST_F(LoggingDecoratorTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, RestoreDatabase).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -401,7 +399,7 @@ TEST_F(LoggingDecoratorTest, RestoreDatabase) {
 }
 
 TEST_F(LoggingDecoratorTest, ListDatabaseOperations) {
-  EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
+  EXPECT_CALL(*mock_, ListDatabaseOperations)
       .WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
@@ -417,8 +415,7 @@ TEST_F(LoggingDecoratorTest, ListDatabaseOperations) {
 }
 
 TEST_F(LoggingDecoratorTest, ListBackupOperations) {
-  EXPECT_CALL(*mock_, ListBackupOperations(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListBackupOperations).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -433,7 +430,7 @@ TEST_F(LoggingDecoratorTest, ListBackupOperations) {
 }
 
 TEST_F(LoggingDecoratorTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetOperation).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
@@ -447,7 +444,7 @@ TEST_F(LoggingDecoratorTest, GetOperation) {
 }
 
 TEST_F(LoggingDecoratorTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CancelOperation).WillOnce(Return(TransientError()));
 
   GoldenThingAdminLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;

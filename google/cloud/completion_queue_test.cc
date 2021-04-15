@@ -35,7 +35,6 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -222,13 +221,13 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
   CompletionQueue cq(mock_cq);
 
   auto mock_reader = absl::make_unique<MockTableReader>();
-  EXPECT_CALL(*mock_reader, Finish(_, _, _))
+  EXPECT_CALL(*mock_reader, Finish)
       .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
         table->set_name("test-table-name");
         *status = grpc::Status::OK;
       });
   MockClient mock_client;
-  EXPECT_CALL(mock_client, AsyncGetTable(_, _, _))
+  EXPECT_CALL(mock_client, AsyncGetTable)
       .WillOnce([&mock_reader](grpc::ClientContext*,
                                btadmin::GetTableRequest const& request,
                                grpc::CompletionQueue*) {
@@ -272,12 +271,12 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   CompletionQueue cq(mock_cq);
 
   auto mock_reader = absl::make_unique<MockRowReader>();
-  EXPECT_CALL(*mock_reader, StartCall(_)).Times(1);
-  EXPECT_CALL(*mock_reader, Read(_, _)).Times(2);
-  EXPECT_CALL(*mock_reader, Finish(_, _)).Times(1);
+  EXPECT_CALL(*mock_reader, StartCall).Times(1);
+  EXPECT_CALL(*mock_reader, Read).Times(2);
+  EXPECT_CALL(*mock_reader, Finish).Times(1);
 
   MockClient mock_client;
-  EXPECT_CALL(mock_client, AsyncReadRows(_, _, _))
+  EXPECT_CALL(mock_client, AsyncReadRows)
       .WillOnce([&mock_reader](grpc::ClientContext*,
                                btproto::ReadRowsRequest const& request,
                                grpc::CompletionQueue*) {

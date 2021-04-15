@@ -30,7 +30,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
 
@@ -46,7 +45,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
           R"""({"email_address": "test-service-account@test-domain.com"})""")
           .value();
 
-  EXPECT_CALL(*mock_, GetServiceAccount(_))
+  EXPECT_CALL(*mock_, GetServiceAccount)
       .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))
       .WillOnce(
           [&expected](internal::GetProjectServiceAccountRequest const& r) {
@@ -63,7 +62,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
   testing::TooManyFailuresStatusTest<ServiceAccount>(
-      mock_, EXPECT_CALL(*mock_, GetServiceAccount(_)),
+      mock_, EXPECT_CALL(*mock_, GetServiceAccount),
       [](Client& client) {
         return client.GetServiceAccountForProject("test-project").status();
       },
@@ -73,7 +72,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
 TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ServiceAccount>(
-      client, EXPECT_CALL(*mock_, GetServiceAccount(_)),
+      client, EXPECT_CALL(*mock_, GetServiceAccount),
       [](Client& client) {
         return client.GetServiceAccountForProject("test-project").status();
       },
@@ -86,7 +85,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
           R"""({"secretKey": "dGVzdC1zZWNyZXQ=", "resource": {}})""")
           .value();
 
-  EXPECT_CALL(*mock_, CreateHmacKey(_))
+  EXPECT_CALL(*mock_, CreateHmacKey)
       .WillOnce(
           Return(StatusOr<internal::CreateHmacKeyResponse>(TransientError())))
       .WillOnce([&expected](internal::CreateHmacKeyRequest const& r) {
@@ -106,7 +105,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
 
 TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::CreateHmacKeyResponse>(
-      mock_, EXPECT_CALL(*mock_, CreateHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, CreateHmacKey),
       [](Client& client) {
         return client.CreateHmacKey("test-service-account").status();
       },
@@ -116,7 +115,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
 TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::CreateHmacKeyResponse>(
-      client, EXPECT_CALL(*mock_, CreateHmacKey(_)),
+      client, EXPECT_CALL(*mock_, CreateHmacKey),
       [](Client& client) {
         return client.CreateHmacKey("test-service-account").status();
       },
@@ -124,7 +123,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKey) {
-  EXPECT_CALL(*mock_, DeleteHmacKey(_))
+  EXPECT_CALL(*mock_, DeleteHmacKey)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -140,7 +139,7 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteHmacKey),
       [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
@@ -148,7 +147,7 @@ TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
 TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      client, EXPECT_CALL(*mock_, DeleteHmacKey(_)),
+      client, EXPECT_CALL(*mock_, DeleteHmacKey),
       [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
@@ -159,7 +158,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
           R"""({"accessId": "test-access-id-1", "state": "ACTIVE"})""")
           .value();
 
-  EXPECT_CALL(*mock_, GetHmacKey(_))
+  EXPECT_CALL(*mock_, GetHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -177,7 +176,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 
 TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, GetHmacKey),
       [](Client& client) {
         return client.GetHmacKey("test-access-id").status();
       },
@@ -187,7 +186,7 @@ TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
 TEST_F(ServiceAccountTest, GetHmacKeyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      client, EXPECT_CALL(*mock_, GetHmacKey(_)),
+      client, EXPECT_CALL(*mock_, GetHmacKey),
       [](Client& client) {
         return client.GetHmacKey("test-access-id").status();
       },
@@ -200,7 +199,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
           R"""({"accessId": "test-access-id-1", "state": "ACTIVE"})""")
           .value();
 
-  EXPECT_CALL(*mock_, UpdateHmacKey(_))
+  EXPECT_CALL(*mock_, UpdateHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -219,7 +218,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, UpdateHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateHmacKey),
       [](Client& client) {
         return client.UpdateHmacKey("test-access-id", HmacKeyMetadata())
             .status();
@@ -230,7 +229,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKeyTooManyFailures) {
 TEST_F(ServiceAccountTest, UpdateHmacKeyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      client, EXPECT_CALL(*mock_, UpdateHmacKey(_)),
+      client, EXPECT_CALL(*mock_, UpdateHmacKey),
       [](Client& client) {
         return client.UpdateHmacKey("test-access-id", HmacKeyMetadata())
             .status();

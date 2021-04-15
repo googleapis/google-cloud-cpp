@@ -74,8 +74,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
         .WillRepeatedly(::testing::ReturnRef(k_project_id));
   }
   void ExpectCreateCluster(grpc::StatusCode mocked_code) {
-    using ::testing::_;
-    EXPECT_CALL(*create_cluster_reader, Finish(_, _, _))
+    EXPECT_CALL(*create_cluster_reader, Finish)
         .WillOnce([mocked_code](longrunning::Operation* response,
                                 grpc::Status* status, void*) {
           response->set_name("create_cluster_op_1");
@@ -83,7 +82,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
                         ? grpc::Status(mocked_code, "mocked-status")
                         : grpc::Status::OK;
         });
-    EXPECT_CALL(*client, AsyncCreateCluster(_, _, _))
+    EXPECT_CALL(*client, AsyncCreateCluster)
         .WillOnce([this](grpc::ClientContext* context,
                          btproto::CreateClusterRequest const& request,
                          grpc::CompletionQueue*) {
@@ -101,8 +100,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
 
   void ExpectPolling(bool polling_finished,
                      grpc::StatusCode polling_error_code) {
-    using ::testing::_;
-    EXPECT_CALL(*get_operation_reader, Finish(_, _, _))
+    EXPECT_CALL(*get_operation_reader, Finish)
         .WillOnce([polling_finished, polling_error_code](
                       longrunning::Operation* response, grpc::Status* status,
                       void*) {
@@ -126,7 +124,7 @@ class AsyncStartPollAfterRetryUnaryRpcTest
             response->set_allocated_response(any.release());
           }
         });
-    EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
+    EXPECT_CALL(*client, AsyncGetOperation)
         .WillOnce([this](grpc::ClientContext* context,
                          longrunning::GetOperationRequest const& request,
                          grpc::CompletionQueue*) {

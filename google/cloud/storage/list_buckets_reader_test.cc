@@ -30,7 +30,6 @@ using ::google::cloud::storage::internal::ListBucketsRequest;
 using ::google::cloud::storage::internal::ListBucketsResponse;
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::testing::_;
 using ::testing::ContainerEq;
 using ::testing::Return;
 
@@ -72,7 +71,7 @@ TEST(ListBucketsReaderTest, Basic) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListBuckets(_))
+  EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
@@ -91,7 +90,7 @@ TEST(ListBucketsReaderTest, Basic) {
 
 TEST(ListBucketsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListBuckets(_))
+  EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(Return(make_status_or(ListBucketsResponse())));
 
   auto reader = google::cloud::internal::MakePaginationRange<ListBucketsReader>(
@@ -123,7 +122,7 @@ TEST(ListBucketsReaderTest, PermanentFailure) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListBuckets(_))
+  EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce([](ListBucketsRequest const&) {
