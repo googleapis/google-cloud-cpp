@@ -31,7 +31,8 @@ ABSL_FLAG(std::string, protobuf_proto_path, "",
           "Path to root dir of protos distributed with protobuf.");
 ABSL_FLAG(std::string, googleapis_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
-ABSL_FLAG(std::string, output_path, ".", "Path to root dir where code is emitted.");
+ABSL_FLAG(std::string, output_path, ".",
+          "Path to root dir where code is emitted.");
 namespace {
 
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
@@ -61,8 +62,7 @@ int main(int argc, char** argv) {
 
   auto config = GetConfig(config_file);
   if (!config.ok()) {
-    std::cerr << "Failed to parse config file: "
-              << absl::GetFlag(FLAGS_config_file) << "\n";
+    std::cerr << "Failed to parse config file: " << config_file << "\n";
   }
 
   int result = 0;
@@ -82,7 +82,7 @@ int main(int argc, char** argv) {
     args.emplace_back("--cpp_codegen_opt=product_path=" +
                       service.product_path());
     args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
-                      absl::GetFlag(FLAGS_googleapis_commit_hash));
+                      googleapis_commit_hash);
     args.emplace_back("--cpp_codegen_opt=copyright_year=" +
                       service.initial_copyright_year());
     for (auto const& omit_rpc : service.omitted_rpcs()) {
