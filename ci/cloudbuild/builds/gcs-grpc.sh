@@ -28,4 +28,6 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 mapfile -t integration_args < <(integration::args)
 GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Uses the gRPC data plane
-integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
+io::log_h2 "Running Storage integration tests (with emulator)"
+google/cloud/storage/ci/run_integration_tests_emulator_bazel.sh \
+  bazel test "${args[@]}" "${integration_args[@]}"
