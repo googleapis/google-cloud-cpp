@@ -188,10 +188,12 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
   MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
 };
 
+/// Create a client configured to use the given mock.
 template <typename... Policies>
 Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
                       Policies&&... p) {
-  return Client{mock, std::forward<Policies>(p)...};
+  return internal::ClientImplDetails::CreateClient(
+      mock, std::forward<Policies>(p)...);
 }
 
 }  // namespace testing

@@ -465,8 +465,7 @@ TEST_F(ObjectTest, DeleteByPrefix) {
         EXPECT_EQ("object-3", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
   EXPECT_STATUS_OK(status);
@@ -505,8 +504,7 @@ TEST_F(ObjectTest, DeleteByPrefixNoOptions) {
         EXPECT_EQ("object-3", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = DeleteByPrefix(client, "test-bucket", "object-");
 
   EXPECT_STATUS_OK(status);
@@ -521,8 +519,7 @@ TEST_F(ObjectTest, DeleteByPrefixListFailure) {
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Return(StatusOr<internal::ListObjectsResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
@@ -553,8 +550,7 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
       })
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
                                UserProject("project-to-bill"));
   EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
@@ -564,8 +560,7 @@ TEST_F(ObjectTest, ComposeManyNone) {
   auto mock = std::make_shared<testing::MockClient>();
   auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
   EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto res =
       ComposeMany(client, "test-bucket", std::vector<ComposeSourceObject>{},
                   "prefix", "dest", false);
@@ -631,8 +626,7 @@ TEST_F(ObjectTest, ComposeManyOne) {
         EXPECT_EQ("prefix", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = ComposeMany(
       client, "test-bucket",
       std::vector<ComposeSourceObject>{ComposeSourceObject{"1", 42, {}}},
@@ -673,8 +667,7 @@ TEST_F(ObjectTest, ComposeManyThree) {
         EXPECT_EQ("prefix", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       });
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto status = ComposeMany(
       client, "test-bucket",
       std::vector<ComposeSourceObject>{ComposeSourceObject{"1", 42, {}},
@@ -759,7 +752,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
         return make_status_or(internal::EmptyResponse{});
       });
 
-  Client client(mock);
+  auto client = testing::ClientFromMock(mock);
 
   std::vector<ComposeSourceObject> sources;
 
@@ -808,7 +801,7 @@ TEST_F(ObjectTest, ComposeManyComposeFails) {
         return make_status_or(internal::EmptyResponse{});
       });
 
-  Client client(mock);
+  auto client = testing::ClientFromMock(mock);
 
   std::vector<ComposeSourceObject> sources;
   std::size_t i = 0;
@@ -848,7 +841,7 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
 
-  Client client(mock);
+  auto client = testing::ClientFromMock(mock);
 
   std::vector<ComposeSourceObject> sources;
   std::size_t i = 0;
@@ -889,7 +882,7 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
 
-  Client client(mock);
+  auto client = testing::ClientFromMock(mock);
 
   std::vector<ComposeSourceObject> sources;
   std::size_t i = 0;
@@ -911,8 +904,7 @@ TEST_F(ObjectTest, ComposeManyLockingPrefixFails) {
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(
           Status(StatusCode::kFailedPrecondition, "Generation mismatch")));
-  Client client(mock);
-
+  auto client = testing::ClientFromMock(mock);
   auto res = ComposeMany(
       client, "test-bucket",
       std::vector<ComposeSourceObject>{ComposeSourceObject{"1", 42, {}}},

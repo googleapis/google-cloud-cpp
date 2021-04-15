@@ -40,7 +40,7 @@ TEST(StorageMockingSamples, MockReadObject) {
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(ReturnRef(client_options));
 
-  gcs::Client client(mock);
+  auto client = gcs::testing::ClientFromMock(mock);
 
   std::string const text = "this is a mock http response";
   std::size_t offset = 0;
@@ -89,7 +89,7 @@ TEST(StorageMockingSamples, MockWriteObject) {
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(ReturnRef(client_options));
 
-  gcs::Client client(mock);
+  auto client = gcs::testing::ClientFromMock(mock);
 
   gcs::ObjectMetadata expected_metadata;
 
@@ -140,7 +140,7 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(ReturnRef(client_options));
 
-  gcs::Client client(mock);
+  auto client = gcs::testing::ClientFromMock(mock);
 
   std::string text = "this is a mock http response";
   EXPECT_CALL(*mock, ReadObject(_))
@@ -178,7 +178,7 @@ TEST(StorageMockingSamples, MockWriteObjectFailure) {
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(ReturnRef(client_options));
 
-  gcs::Client client(mock);
+  auto client = gcs::testing::ClientFromMock(mock);
 
   EXPECT_CALL(*mock, CreateResumableSession(_))
       .WillOnce([](gcs::internal::ResumableUploadRequest const& request) {

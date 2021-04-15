@@ -45,13 +45,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-namespace testing {
-class ClientTester;
-}  // namespace testing
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
+struct ClientImplDetails;
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
@@ -66,7 +64,7 @@ class ResumableParallelUploadState;
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
  * connection and authenticating with the service. Note that the library may
- * need to perform other bookeeping operations that may impact performance.
+ * need to perform other bookkeeping operations that may impact performance.
  * For example, access tokens need to be refreshed from time to time, and this
  * may impact the performance of some operations.
  *
@@ -227,7 +225,7 @@ class Client {
    */
   template <typename... Policies>
   explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(CreateDefaultInternalClient(std::move(options)),
+      : Client(InternalOnly{}, CreateDefaultInternalClient(std::move(options)),
                std::forward<Policies>(policies)...) {}
 
   /**
@@ -251,25 +249,48 @@ class Client {
       : Client(ClientOptions(std::move(credentials)),
                std::forward<Policies>(policies)...) {}
 
+  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
+  static StatusOr<Client> CreateDefaultClient();
+
   /// Builds a client and maybe override the retry, idempotency, and/or backoff
   /// policies.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
   template <typename... Policies>
+#if !defined(_MSC_VER) || _MSC_VER >= 1920
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please use the constructors from ClientOptions instead."
+      " For mocking, please use testing::ClientFromMock() instead."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you have a use-case not covered by these.")
+#endif  // _MSC_VER
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
-      : raw_client_(
-            Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
+      : Client(InternalOnly{}, std::move(client),
+               std::forward<Policies>(policies)...) {
+  }
 
   /// Define a tag to disable automatic decorations of the RawClient.
   struct NoDecorations {};
 
   /// Builds a client with a specific RawClient, without decorations.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
-      : raw_client_(std::move(client)) {}
-
-  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
-  static StatusOr<Client> CreateDefaultClient();
+      : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
 
   /// Access the underlying `RawClient`.
+  /// @deprecated Only intended for implementors, do not use.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
   std::shared_ptr<internal::RawClient> raw_client() const {
     return raw_client_;
   }
@@ -3103,7 +3124,17 @@ class Client {
   //@}
 
  private:
+  friend internal::ClientImplDetails;
+
   Client() = default;
+  struct InternalOnly {};
+  struct InternalOnlyNoDecorations {};
+
+  template <typename... Policies>
+  Client(InternalOnly, std::shared_ptr<internal::RawClient> c, Policies&&... p)
+      : raw_client_(Decorate(std::move(c), std::forward<Policies>(p)...)) {}
+  Client(InternalOnlyNoDecorations, std::shared_ptr<internal::RawClient> c)
+      : raw_client_(std::move(c)) {}
   static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
       ClientOptions options);
 
@@ -3199,7 +3230,6 @@ class Client {
 
   friend class internal::NonResumableParallelUploadState;
   friend class internal::ResumableParallelUploadState;
-  friend class testing::ClientTester;
 };
 
 /**
@@ -3221,6 +3251,26 @@ class Client {
 std::string CreateRandomPrefixName(std::string const& prefix = "");
 
 namespace internal {
+struct ClientImplDetails {
+  static std::shared_ptr<RawClient> GetRawClient(Client& c) {
+    return c.raw_client_;
+  }
+  static StatusOr<ObjectMetadata> UploadStreamResumable(
+      Client& client, std::istream& source,
+      internal::ResumableUploadRequest const& request) {
+    return client.UploadStreamResumable(source, request);
+  }
+  template <typename... Policies>
+  static Client CreateClient(std::shared_ptr<internal::RawClient> c,
+                             Policies&&... p) {
+    return Client(Client::InternalOnly{}, std::move(c),
+                  std::forward<Policies>(p)...);
+  }
+  static Client CreateWithoutDecorations(
+      std::shared_ptr<internal::RawClient> c) {
+    return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
+  }
+};
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
 struct DeleteApplyHelper {

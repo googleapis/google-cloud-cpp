@@ -51,7 +51,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   options.minimum_write_size = 1 * kMiB;
   options.enabled_apis = {GetParam()};
 
-  auto const& client_options = client->raw_client()->client_options();
+  auto const& client_options =
+      google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
+          ->client_options();
   auto experiments =
       CreateUploadExperiments(options, client_options, /*thread_id=*/0);
   for (auto& e : experiments) {
@@ -81,7 +83,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   options.minimum_write_size = 1 * kMiB;
   options.enabled_apis = {GetParam()};
 
-  auto const& client_options = client->raw_client()->client_options();
+  auto const& client_options =
+      google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
+          ->client_options();
   auto experiments =
       CreateDownloadExperiments(options, client_options, /*thread_id=*/0);
   for (auto& e : experiments) {

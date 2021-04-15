@@ -58,10 +58,11 @@ void TooManyFailuresStatusTest(
   using ::testing::HasSubstr;
   using ::testing::Return;
   // A storage::Client with a simple to test policy.
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                         std::chrono::milliseconds(1), 2.0)};
+  auto client = internal::ClientImplDetails::CreateClient(
+      std::shared_ptr<internal::RawClient>(mock),
+      LimitedErrorCountRetryPolicy(2),
+      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                               std::chrono::milliseconds(1), 2.0));
 
   // Expect exactly 3 calls before the retry policy is exhausted and an error
   // status is returned.
@@ -109,10 +110,10 @@ void NonIdempotentFailuresStatusTest(
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, but with a generous
   // retry policy.
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(10),
-                ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                         std::chrono::milliseconds(1), 2.0)};
+  auto client = testing::ClientFromMock(
+      mock, StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(10),
+      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                               std::chrono::milliseconds(1), 2.0));
 
   // The first transient error should stop the retries for non-idempotent
   // operations.
@@ -159,10 +160,10 @@ void IdempotentFailuresStatusTest(
   using ::testing::Return;
   // A storage::Client with the strict idempotency policy, and with an
   // easy-to-test retry policy.
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                         std::chrono::milliseconds(1), 2.0)};
+  auto client = testing::ClientFromMock(
+      mock, StrictIdempotencyPolicy(), LimitedErrorCountRetryPolicy(2),
+      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                               std::chrono::milliseconds(1), 2.0));
 
   // Expect exactly 3 calls before the retry policy is exhausted and an error
   // status is returned.

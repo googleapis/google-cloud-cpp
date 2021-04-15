@@ -41,15 +41,17 @@ StatusOr<google::cloud::storage::Client> DefaultGrpcClient() {
 google::cloud::storage::Client DefaultGrpcClient(
     google::cloud::storage::ClientOptions options, int channel_id) {
   if (UseGrpcForMetadata()) {
-    return storage::Client(storage::internal::GrpcClient::Create(
-        google::cloud::storage::internal::MakeOptions(std::move(options)),
-        channel_id));
+    return storage::internal::ClientImplDetails::CreateClient(
+        storage::internal::GrpcClient::Create(
+            google::cloud::storage::internal::MakeOptions(std::move(options)),
+            channel_id));
   }
   auto credentials = options.credentials();
-  return storage::Client(storage::internal::HybridClient::Create(
-      std::move(credentials),
-      google::cloud::storage::internal::MakeOptions(std::move(options)),
-      channel_id));
+  return storage::internal::ClientImplDetails::CreateClient(
+      storage::internal::HybridClient::Create(
+          std::move(credentials),
+          google::cloud::storage::internal::MakeOptions(std::move(options)),
+          channel_id));
 }
 
 }  // namespace STORAGE_CLIENT_NS

@@ -29,16 +29,6 @@
 namespace google {
 namespace cloud {
 namespace storage {
-namespace testing {
-class ClientTester {
- public:
-  static StatusOr<ObjectMetadata> UploadStreamResumable(
-      Client& client, std::istream& source,
-      internal::ResumableUploadRequest const& request) {
-    return client.UploadStreamResumable(source, request);
-  }
-};
-}  // namespace testing
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
@@ -98,10 +88,10 @@ TEST_F(WriteObjectTest, WriteObject) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
-  Client client{std::shared_ptr<internal::RawClient>(mock_),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                         std::chrono::milliseconds(1), 2.0)};
+  auto client = testing::ClientFromMock(
+      mock_, LimitedErrorCountRetryPolicy(2),
+      ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                               std::chrono::milliseconds(1), 2.0));
 
   auto returner = [](internal::ResumableUploadRequest const&) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
@@ -227,7 +217,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 
   ASSERT_TRUE(stream);
   auto client = ClientForMock();
-  auto res = testing::ClientTester::UploadStreamResumable(
+  auto res = internal::ClientImplDetails::UploadStreamResumable(
       client, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
   ASSERT_STATUS_OK(res);
@@ -299,7 +289,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
   auto client = testing::ClientFromMock(
       mock, ExponentialBackoffPolicy(std::chrono::milliseconds(1),
                                      std::chrono::milliseconds(1), 2.0));
-  auto res = testing::ClientTester::UploadStreamResumable(
+  auto res = internal::ClientImplDetails::UploadStreamResumable(
       client, stream,
       internal::ResumableUploadRequest("test-bucket-name", "test-object-name"));
   EXPECT_THAT(

@@ -48,7 +48,8 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
 
   SignBlobRequest request(service_account_, encoded, {});
 
-  StatusOr<SignBlobResponse> response = client->raw_client()->SignBlob(request);
+  StatusOr<SignBlobResponse> response =
+      internal::ClientImplDetails::GetRawClient(*client)->SignBlob(request);
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->key_id.empty());

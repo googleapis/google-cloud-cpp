@@ -69,7 +69,7 @@ TEST(CleanupStaleBucketsTest, RemoveBucketContents) {
         response.items.push_back(CreateObject("baz", 1));
         return response;
       });
-  Client client(mock, Client::NoDecorations{});
+  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
   auto const actual = RemoveBucketAndContents(client, "fake-bucket");
   EXPECT_STATUS_OK(actual);
 }
@@ -111,7 +111,7 @@ TEST(CleanupStaleBucketsTest, RemoveStaleBuckets) {
         return response;
       });
 
-  Client client(mock, Client::NoDecorations{});
+  auto client = internal::ClientImplDetails::CreateWithoutDecorations(mock);
   auto const actual = RemoveStaleBuckets(client, "matching", create_time_limit);
   EXPECT_STATUS_OK(actual);
 }
