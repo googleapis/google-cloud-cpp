@@ -24,7 +24,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::testing::_;
 using ::testing::ExitedWithCode;
 using ::testing::HasSubstr;
 
@@ -107,11 +106,10 @@ TEST(LogSinkTest, ClearBackend) {
 TEST(LogSinkTest, LogEnabled) {
   LogSink sink;
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
-        EXPECT_EQ("test message", lr.message);
-      });
+  EXPECT_CALL(*backend, ProcessWithOwnership).WillOnce([](LogRecord const& lr) {
+    EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
+    EXPECT_EQ("test message", lr.message);
+  });
   sink.AddBackend(backend);
 
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_WARNING, sink) << "test message";
@@ -121,12 +119,12 @@ TEST(LogSinkTest, LogEnabledMultipleBackends) {
   LogSink sink;
   auto be1 = std::make_shared<MockLogBackend>();
   auto be2 = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*be1, Process(_)).WillOnce([](LogRecord const& lr) {
+  EXPECT_CALL(*be1, Process).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
   });
   sink.AddBackend(be1);
-  EXPECT_CALL(*be2, Process(_)).WillOnce([](LogRecord const& lr) {
+  EXPECT_CALL(*be2, Process).WillOnce([](LogRecord const& lr) {
     EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
     EXPECT_EQ("test message", lr.message);
   });
@@ -151,11 +149,10 @@ TEST(LogSinkTest, LogDefaultInstance) {
   ScopedEnvironment config(kLogConfigVariable, absl::nullopt);
 
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership(_))
-      .WillOnce([](LogRecord const& lr) {
-        EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
-        EXPECT_EQ("test message", lr.message);
-      });
+  EXPECT_CALL(*backend, ProcessWithOwnership).WillOnce([](LogRecord const& lr) {
+    EXPECT_EQ(Severity::GCP_LS_WARNING, lr.severity);
+    EXPECT_EQ("test message", lr.message);
+  });
   LogSink::Instance().AddBackend(backend);
 
   GCP_LOG(WARNING) << "test message";
@@ -229,7 +226,7 @@ TEST(LogSinkTest, LogCheckCounter) {
   // The following tests could pass if the << operator was a no-op, so for
   // extra paranoia check that this is not the case.
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(2);
+  EXPECT_CALL(*backend, ProcessWithOwnership).Times(2);
   sink.AddBackend(backend);
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_ALERT, sink) << "count is " << counter;
   GOOGLE_CLOUD_CPP_LOG_I(GCP_LS_FATAL, sink) << "count is " << counter;
@@ -249,7 +246,7 @@ TEST(LogSinkTest, LogDisabledLevels) {
   LogSink sink;
   IOStreamCounter counter{0};
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(1);
+  EXPECT_CALL(*backend, ProcessWithOwnership).Times(1);
   sink.AddBackend(backend);
 
   sink.set_minimum_severity(Severity::GCP_LS_INFO);
@@ -266,7 +263,7 @@ TEST(LogSinkTest, CompileTimeDisabledCannotBeEnabled) {
   LogSink sink;
   IOStreamCounter counter{0};
   auto backend = std::make_shared<MockLogBackend>();
-  EXPECT_CALL(*backend, ProcessWithOwnership(_)).Times(1);
+  EXPECT_CALL(*backend, ProcessWithOwnership).Times(1);
   sink.AddBackend(backend);
 
   // Compile-time disabled logs cannot be enabled at r

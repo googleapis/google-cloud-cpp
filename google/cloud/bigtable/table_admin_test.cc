@@ -48,7 +48,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _min;
 using ::google::cloud::testing_util::chrono_literals::operator"" _s;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -238,7 +237,7 @@ TEST_F(TableAdminTest, Default) {
 TEST_F(TableAdminTest, ListTables) {
   TableAdmin tested(client_, kInstanceId);
   auto mock_list_tables = create_list_tables_lambda("", "", {"t0", "t1"});
-  EXPECT_CALL(*client_, ListTables(_, _, _)).WillOnce(mock_list_tables);
+  EXPECT_CALL(*client_, ListTables).WillOnce(mock_list_tables);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListTables(btadmin::Table::FULL);
@@ -263,7 +262,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
-  EXPECT_CALL(*client_, ListTables(_, _, _))
+  EXPECT_CALL(*client_, ListTables)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(batch0)
       .WillOnce(mock_recoverable_failure)
@@ -288,7 +287,7 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
  */
 TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, ListTables(_, _, _))
+  EXPECT_CALL(*client_, ListTables)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -310,8 +309,7 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
         google::cloud::internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  EXPECT_CALL(*client_, ListTables(_, _, _))
-      .WillRepeatedly(mock_recoverable_failure);
+  EXPECT_CALL(*client_, ListTables).WillRepeatedly(mock_recoverable_failure);
 
   EXPECT_FALSE(tested.ListTables(btadmin::Table::FULL));
 }
@@ -342,7 +340,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
       MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable");
-  EXPECT_CALL(*client_, CreateTable(_, _, _)).WillOnce(mock_create_table);
+  EXPECT_CALL(*client_, CreateTable).WillOnce(mock_create_table);
 
   // After all the setup, make the actual call we want to test.
   using GC = GcRule;
@@ -358,7 +356,7 @@ TEST_F(TableAdminTest, CreateTableSimple) {
  */
 TEST_F(TableAdminTest, CreateTableFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, CreateTable(_, _, _))
+  EXPECT_CALL(*client_, CreateTable)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -404,7 +402,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
   // Copy assignable
   table_admin_assign = table_admin;
 
-  EXPECT_CALL(*client_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
@@ -421,7 +419,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
   )pb";
   auto mock = MockRpcFactory<btadmin::GetTableRequest, btadmin::Table>::Create(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.GetTable");
-  EXPECT_CALL(*client_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable)
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(mock);
@@ -436,7 +434,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
  */
 TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
@@ -451,7 +449,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
 TEST_F(TableAdminTest, GetTableTooManyFailures) {
   TableAdmin tested(client_, "the-instance", LimitedErrorCountRetryPolicy(3),
                     ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*client_, GetTable(_, _, _))
+  EXPECT_CALL(*client_, GetTable)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
@@ -469,7 +467,7 @@ TEST_F(TableAdminTest, DeleteTable) {
   )pb";
   auto mock = MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(
       expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable");
-  EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, DeleteTable).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DeleteTable("the-table"));
@@ -481,7 +479,7 @@ TEST_F(TableAdminTest, DeleteTable) {
  */
 TEST_F(TableAdminTest, DeleteTableFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, DeleteTable(_, _, _))
+  EXPECT_CALL(*client_, DeleteTable)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -494,7 +492,7 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
 TEST_F(TableAdminTest, ListBackups) {
   TableAdmin tested(client_, kInstanceId);
   auto mock_list_backups = create_list_backups_lambda("", "", {"b0", "b1"});
-  EXPECT_CALL(*client_, ListBackups(_, _, _)).WillOnce(mock_list_backups);
+  EXPECT_CALL(*client_, ListBackups).WillOnce(mock_list_backups);
 
   // After all the setup, make the actual call we want to test.
   auto actual = tested.ListBackups({});
@@ -519,7 +517,7 @@ TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
   };
   auto batch0 = create_list_backups_lambda("", "token-001", {"b0", "b1"});
   auto batch1 = create_list_backups_lambda("token-001", "", {"b2", "b3"});
-  EXPECT_CALL(*client_, ListBackups(_, _, _))
+  EXPECT_CALL(*client_, ListBackups)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(batch0)
       .WillOnce(mock_recoverable_failure)
@@ -544,7 +542,7 @@ TEST_F(TableAdminTest, ListBackupsRecoverableFailures) {
  */
 TEST_F(TableAdminTest, ListBackupsUnrecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, ListBackups(_, _, _))
+  EXPECT_CALL(*client_, ListBackups)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -566,8 +564,7 @@ TEST_F(TableAdminTest, ListBackupsTooManyFailures) {
         google::cloud::internal::ApiClientHeader()));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  EXPECT_CALL(*client_, ListBackups(_, _, _))
-      .WillRepeatedly(mock_recoverable_failure);
+  EXPECT_CALL(*client_, ListBackups).WillRepeatedly(mock_recoverable_failure);
 
   EXPECT_FALSE(tested.ListBackups({}));
 }
@@ -582,7 +579,7 @@ TEST_F(TableAdminTest, GetBackupSimple) {
       MockRpcFactory<btadmin::GetBackupRequest, btadmin::Backup>::Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.GetBackup");
-  EXPECT_CALL(*client_, GetBackup(_, _, _))
+  EXPECT_CALL(*client_, GetBackup)
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(mock);
@@ -597,7 +594,7 @@ TEST_F(TableAdminTest, GetBackupSimple) {
  */
 TEST_F(TableAdminTest, GetBackupUnrecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, GetBackup(_, _, _))
+  EXPECT_CALL(*client_, GetBackup)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
@@ -612,7 +609,7 @@ TEST_F(TableAdminTest, GetBackupUnrecoverableFailures) {
 TEST_F(TableAdminTest, GetBackupTooManyFailures) {
   TableAdmin tested(client_, "the-instance", LimitedErrorCountRetryPolicy(3),
                     ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*client_, GetBackup(_, _, _))
+  EXPECT_CALL(*client_, GetBackup)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
@@ -636,7 +633,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
       MockRpcFactory<btadmin::UpdateBackupRequest, btadmin::Backup>::Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.UpdateBackup");
-  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+  EXPECT_CALL(*client_, UpdateBackup)
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(mock);
@@ -657,7 +654,7 @@ TEST_F(TableAdminTest, UpdateBackupSimple) {
  */
 TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+  EXPECT_CALL(*client_, UpdateBackup)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
 
@@ -678,7 +675,7 @@ TEST_F(TableAdminTest, UpdateBackupUnrecoverableFailures) {
 TEST_F(TableAdminTest, UpdateBackupTooManyFailures) {
   TableAdmin tested(client_, "the-instance", LimitedErrorCountRetryPolicy(3),
                     ExponentialBackoffPolicy(10_ms, 10_min));
-  EXPECT_CALL(*client_, UpdateBackup(_, _, _))
+  EXPECT_CALL(*client_, UpdateBackup)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
@@ -703,7 +700,7 @@ TEST_F(TableAdminTest, DeleteBackup) {
   auto mock = MockRpcFactory<btadmin::DeleteBackupRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup");
-  EXPECT_CALL(*client_, DeleteBackup(_, _, _)).WillOnce(mock).WillOnce(mock);
+  EXPECT_CALL(*client_, DeleteBackup).WillOnce(mock).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DeleteBackup("the-cluster", "the-backup"));
@@ -721,7 +718,7 @@ TEST_F(TableAdminTest, DeleteBackup) {
  */
 TEST_F(TableAdminTest, DeleteBackupFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, DeleteBackup(_, _, _))
+  EXPECT_CALL(*client_, DeleteBackup)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -753,7 +750,7 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
       Create(
           expected_text,
           "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies");
-  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, ModifyColumnFamilies).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   using M = ColumnFamilyModification;
@@ -769,7 +766,7 @@ TEST_F(TableAdminTest, ModifyColumnFamilies) {
  */
 TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _))
+  EXPECT_CALL(*client_, ModifyColumnFamilies)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -793,7 +790,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, DropRowRange).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DropRowsByPrefix("the-table", "foobar"));
@@ -805,7 +802,7 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
  */
 TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _))
+  EXPECT_CALL(*client_, DropRowRange)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -824,7 +821,7 @@ TEST_F(TableAdminTest, DropAllRows) {
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, DropRowRange).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DropAllRows("the-table"));
@@ -836,7 +833,7 @@ TEST_F(TableAdminTest, DropAllRows) {
  */
 TEST_F(TableAdminTest, DropAllRowsFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, DropRowRange(_, _, _))
+  EXPECT_CALL(*client_, DropRowRange)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -858,7 +855,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
       Create(expected_text,
              "google.bigtable.admin.v2.BigtableTableAdmin."
              "GenerateConsistencyToken");
-  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, GenerateConsistencyToken).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   tested.GenerateConsistencyToken("the-table");
@@ -870,7 +867,7 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
  */
 TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
+  EXPECT_CALL(*client_, GenerateConsistencyToken)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -892,7 +889,7 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
                              btadmin::CheckConsistencyResponse>::
       Create(expected_text,
              "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency");
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(mock);
+  EXPECT_CALL(*client_, CheckConsistency).WillOnce(mock);
 
   // After all the setup, make the actual call we want to test.
   auto result = tested.CheckConsistency("the-table", "test-token");
@@ -905,7 +902,7 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
  */
 TEST_F(TableAdminTest, CheckConsistencyFailure) {
   TableAdmin tested(client_, "the-instance");
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
+  EXPECT_CALL(*client_, CheckConsistency)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
@@ -943,7 +940,7 @@ TEST_F(TableAdminTest, GetIamPolicyForBackup) {
 TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+  EXPECT_CALL(*client_, GetIamPolicy)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
@@ -968,7 +965,7 @@ TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
   };
   auto mock_policy = create_get_policy_mock();
 
-  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+  EXPECT_CALL(*client_, GetIamPolicy)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(mock_policy);
 
@@ -1017,7 +1014,7 @@ TEST_F(TableAdminTest, SetIamPolicyForBackup) {
 TEST_F(TableAdminTest, SetIamPolicyUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+  EXPECT_CALL(*client_, SetIamPolicy)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
@@ -1044,7 +1041,7 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
   };
   auto mock_policy = create_policy_with_params();
 
-  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+  EXPECT_CALL(*client_, SetIamPolicy)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(mock_policy);
 
@@ -1123,7 +1120,7 @@ TEST_F(TableAdminTest, TestIamPermissionsiForBackup) {
 TEST_F(TableAdminTest, TestIamPermissionsUnrecoverableError) {
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+  EXPECT_CALL(*client_, TestIamPermissions)
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
@@ -1162,7 +1159,7 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
         response->add_permissions(permissions[1]);
         return grpc::Status::OK;
       };
-  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+  EXPECT_CALL(*client_, TestIamPermissions)
       .WillOnce(mock_recoverable_failure)
       .WillOnce(mock_permission_set);
 
@@ -1186,14 +1183,14 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   TableAdmin tested(client_, "test-instance");
 
   auto r1 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
-  EXPECT_CALL(*r1, Finish(_, _, _))
+  EXPECT_CALL(*r1, Finish)
       .WillOnce([](btadmin::CheckConsistencyResponse* response,
                    grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
       });
   auto r2 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
-  EXPECT_CALL(*r2, Finish(_, _, _))
+  EXPECT_CALL(*r2, Finish)
       .WillOnce([](btadmin::CheckConsistencyResponse* response,
                    grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
@@ -1201,7 +1198,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
         *status = grpc::Status::OK;
       });
   auto r3 = absl::make_unique<MockAsyncCheckConsistencyResponse>();
-  EXPECT_CALL(*r3, Finish(_, _, _))
+  EXPECT_CALL(*r3, Finish)
       .WillOnce([](btadmin::CheckConsistencyResponse* response,
                    grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
@@ -1227,7 +1224,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
   };
 
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-  EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
+  EXPECT_CALL(*client_, AsyncCheckConsistency)
       .WillOnce(make_invoke(r1))
       .WillOnce(make_invoke(r2))
       .WillOnce(make_invoke(r3));
@@ -1284,14 +1281,14 @@ TEST_F(TableAdminTest, AsyncWaitForConsistencySimple) {
 TEST_F(TableAdminTest, AsyncWaitForConsistencyFailure) {
   TableAdmin tested(client_, "test-instance");
   auto reader = absl::make_unique<MockAsyncCheckConsistencyResponse>();
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce([](btadmin::CheckConsistencyResponse* response,
                    grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
       });
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-  EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
+  EXPECT_CALL(*client_, AsyncCheckConsistency)
       .WillOnce([&](grpc::ClientContext* context,
                     btadmin::CheckConsistencyRequest const& request,
                     grpc::CompletionQueue*) {
@@ -1367,7 +1364,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::CreateTableRequest, btadmin::Table>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncCreateTable(_, _, _))
+  EXPECT_CALL(*client_, AsyncCreateTable)
       .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
@@ -1382,7 +1379,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::DeleteTableRequest, google::protobuf::Empty>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncDeleteTable(_, _, _))
+  EXPECT_CALL(*client_, AsyncDeleteTable)
       .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -1392,11 +1389,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
-  using ::testing::_;
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::CreateBackupRequest, google::longrunning::Operation>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncCreateBackup(_, _, _))
+  EXPECT_CALL(*client_, AsyncCreateBackup)
       .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance/clusters/the-cluster"
@@ -1417,11 +1413,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
-  using ::testing::_;
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::RestoreTableRequest, google::longrunning::Operation>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncRestoreTable(_, _, _))
+  EXPECT_CALL(*client_, AsyncRestoreTable)
       .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
@@ -1438,7 +1433,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::DropRowRangeRequest, google::protobuf::Empty>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
+  EXPECT_CALL(*client_, AsyncDropRowRange)
       .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -1452,7 +1447,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::DropRowRangeRequest, google::protobuf::Empty>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
+  EXPECT_CALL(*client_, AsyncDropRowRange)
       .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -1467,7 +1462,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
       btadmin::GenerateConsistencyTokenRequest,
       btadmin::GenerateConsistencyTokenResponse>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncGenerateConsistencyToken(_, _, _))
+  EXPECT_CALL(*client_, AsyncGenerateConsistencyToken)
       .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -1481,7 +1476,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::ListTablesRequest, btadmin::ListTablesResponse>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncListTables(_, _, _))
+  EXPECT_CALL(*client_, AsyncListTables)
       .WillOnce(rpc_factory.Create(
           R"pb(
             parent: "projects/the-project/instances/the-instance"
@@ -1495,7 +1490,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
   ::google::cloud::bigtable::testing::MockAsyncFailingRpcFactory<
       btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncModifyColumnFamilies(_, _, _))
+  EXPECT_CALL(*client_, AsyncModifyColumnFamilies)
       .WillOnce(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -1516,7 +1511,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         client_(new MockAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
+    EXPECT_CALL(*client_, AsyncGetIamPolicy)
         .WillOnce([this](grpc::ClientContext* context,
                          ::google::iam::v1::GetIamPolicyRequest const& request,
                          grpc::CompletionQueue*) {
@@ -1552,7 +1547,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         response->set_version(3);
@@ -1575,7 +1570,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
@@ -1602,7 +1597,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         client_(new MockAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
+    EXPECT_CALL(*client_, AsyncSetIamPolicy)
         .WillOnce([this](grpc::ClientContext* context,
                          ::google::iam::v1::SetIamPolicyRequest const& request,
                          grpc::CompletionQueue*) {
@@ -1641,7 +1636,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
   namespace iamproto = ::google::iam::v1;
   bigtable::TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
 
@@ -1669,7 +1664,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::Policy* response, grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
@@ -1696,7 +1691,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         client_(new MockAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
+    EXPECT_CALL(*client_, AsyncTestIamPermissions)
         .WillOnce([this](grpc::ClientContext* context,
                          ::google::iam::v1::TestIamPermissionsRequest const&
                              request,
@@ -1735,7 +1730,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::TestIamPermissionsResponse* response,
                    grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
@@ -1758,7 +1753,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   namespace iamproto = ::google::iam::v1;
   TableAdmin tested(client_, "the-instance");
 
-  EXPECT_CALL(*reader_, Finish(_, _, _))
+  EXPECT_CALL(*reader_, Finish)
       .WillOnce([](iamproto::TestIamPermissionsResponse* response,
                    grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);

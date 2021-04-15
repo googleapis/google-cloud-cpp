@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Return;
 
@@ -70,11 +69,11 @@ TEST(GrpcResumableUploadSessionTest, Simple) {
 
   EXPECT_FALSE(session.done());
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, CreateUploadWriter(_, _))
+  EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
         auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
-        EXPECT_CALL(*writer, Write(_, _))
+        EXPECT_CALL(*writer, Write)
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
                           grpc::WriteOptions const& options) {
               EXPECT_EQ("test-upload-id", r.upload_id());
@@ -169,11 +168,11 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
   auto const size = payload.size();
 
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, CreateUploadWriter(_, _))
+  EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
         auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
-        EXPECT_CALL(*writer, Write(_, _))
+        EXPECT_CALL(*writer, Write)
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
@@ -199,7 +198,7 @@ TEST(GrpcResumableUploadSessionTest, Reset) {
 
   ResumableUploadResponse const resume_response{
       {}, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}};
-  EXPECT_CALL(*mock, QueryResumableUpload(_))
+  EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(resume_response);
@@ -232,11 +231,11 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
   auto const size = payload.size();
 
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, CreateUploadWriter(_, _))
+  EXPECT_CALL(*mock, CreateUploadWriter)
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
         auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
-        EXPECT_CALL(*writer, Write(_, _))
+        EXPECT_CALL(*writer, Write)
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
@@ -254,7 +253,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
       .WillOnce([&](grpc::ClientContext&, google::storage::v1::Object&) {
         auto writer = absl::make_unique<MockGrpcUploadWriter>();
 
-        EXPECT_CALL(*writer, Write(_, _))
+        EXPECT_CALL(*writer, Write)
             .WillOnce([&](google::storage::v1::InsertObjectRequest const& r,
                           grpc::WriteOptions const&) {
               EXPECT_EQ("test-upload-id", r.upload_id());
@@ -270,7 +269,7 @@ TEST(GrpcResumableUploadSessionTest, ResumeFromEmpty) {
 
   ResumableUploadResponse const resume_response{
       {}, 0, {}, ResumableUploadResponse::kInProgress, {}};
-  EXPECT_CALL(*mock, QueryResumableUpload(_))
+  EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ("test-upload-id", request.upload_session_url());
         return make_status_or(resume_response);

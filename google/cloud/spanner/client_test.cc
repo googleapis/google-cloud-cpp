@@ -45,7 +45,6 @@ using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::_;
 using ::testing::AnyNumber;
 using ::testing::ByMove;
 using ::testing::DoAll;
@@ -106,7 +105,7 @@ TEST(ClientTest, ReadSuccess) {
       .WillOnce(Return(MakeTestRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
@@ -147,7 +146,7 @@ TEST(ClientTest, ReadFailure) {
       .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
@@ -193,7 +192,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       .WillOnce(Return(MakeTestRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
-  EXPECT_CALL(*conn, ExecuteQuery(_))
+  EXPECT_CALL(*conn, ExecuteQuery)
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
@@ -234,7 +233,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
       .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  EXPECT_CALL(*conn, ExecuteQuery(_))
+  EXPECT_CALL(*conn, ExecuteQuery)
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
@@ -270,7 +269,7 @@ TEST(ClientTest, ExecuteBatchDmlSuccess) {
   };
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, ExecuteBatchDml(_)).WillOnce(Return(result));
+  EXPECT_CALL(*conn, ExecuteBatchDml).WillOnce(Return(result));
 
   Client client(conn);
   auto txn = MakeReadWriteTransaction();
@@ -296,7 +295,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
   };
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, ExecuteBatchDml(_)).WillOnce(Return(result));
+  EXPECT_CALL(*conn, ExecuteBatchDml).WillOnce(Return(result));
 
   Client client(conn);
   auto txn = MakeReadWriteTransaction();
@@ -316,7 +315,7 @@ TEST(ClientTest, ExecutePartitionedDmlSuccess) {
 
   std::string const sql_statement = "UPDATE Singers SET MarketingBudget = 1000";
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, ExecutePartitionedDml(_))
+  EXPECT_CALL(*conn, ExecutePartitionedDml)
       .WillOnce([&sql_statement](
                     Connection::ExecutePartitionedDmlParams const& epdp) {
         EXPECT_EQ(sql_statement, epdp.statement.sql());
@@ -337,7 +336,7 @@ TEST(ClientTest, CommitSuccess) {
   result.commit_timestamp = ts;
 
   Client client(conn);
-  EXPECT_CALL(*conn, Commit(_)).WillOnce(Return(result));
+  EXPECT_CALL(*conn, Commit).WillOnce(Return(result));
 
   auto txn = MakeReadWriteTransaction();
   auto commit = client.Commit(txn, {});
@@ -349,7 +348,7 @@ TEST(ClientTest, CommitError) {
   auto conn = std::make_shared<MockConnection>();
 
   Client client(conn);
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "blah")));
 
   auto txn = MakeReadWriteTransaction();
@@ -361,7 +360,7 @@ TEST(ClientTest, RollbackSuccess) {
   auto conn = std::make_shared<MockConnection>();
 
   Client client(conn);
-  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
+  EXPECT_CALL(*conn, Rollback).WillOnce(Return(Status()));
 
   auto txn = MakeReadWriteTransaction();
   auto rollback = client.Rollback(txn);
@@ -372,7 +371,7 @@ TEST(ClientTest, RollbackError) {
   auto conn = std::make_shared<MockConnection>();
 
   Client client(conn);
-  EXPECT_CALL(*conn, Rollback(_))
+  EXPECT_CALL(*conn, Rollback)
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "oops")));
 
   auto txn = MakeReadWriteTransaction();
@@ -424,10 +423,10 @@ TEST(ClientTest, CommitMutatorSuccess) {
       .WillOnce(Return(MakeTestRow("Bob")))
       .WillOnce(Return(Row()));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
                       Return(ByMove(RowStream(std::move(source))))));
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
                       Return(CommitResult{*timestamp, absl::nullopt})));
 
@@ -471,10 +470,10 @@ TEST(ClientTest, CommitMutatorRollback) {
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
                       Return(ByMove(RowStream(std::move(source))))));
-  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
+  EXPECT_CALL(*conn, Rollback).WillOnce(Return(Status()));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
@@ -513,10 +512,10 @@ TEST(ClientTest, CommitMutatorRollbackError) {
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
                       Return(ByMove(RowStream(std::move(source))))));
-  EXPECT_CALL(*conn, Rollback(_))
+  EXPECT_CALL(*conn, Rollback)
       .WillOnce(Return(Status(StatusCode::kInternal, "oops")));
 
   Client client(conn);
@@ -555,9 +554,9 @@ TEST(ClientTest, CommitMutatorException) {
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
 
-  EXPECT_CALL(*conn, Read(_))
+  EXPECT_CALL(*conn, Read)
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
-  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
+  EXPECT_CALL(*conn, Rollback).WillOnce(Return(Status()));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
@@ -581,7 +580,7 @@ TEST(ClientTest, CommitMutatorException) {
 
 TEST(ClientTest, CommitMutatorRuntimeStatusException) {
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Rollback(_)).WillRepeatedly(Return(Status()));
+  EXPECT_CALL(*conn, Rollback).WillRepeatedly(Return(Status()));
   Client client(conn);
   try {
     auto result = client.Commit([](Transaction const&) -> StatusOr<Mutations> {
@@ -609,7 +608,7 @@ TEST(ClientTest, CommitMutatorRerunTransientFailures) {
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([](Connection::CommitParams const&) {
         return Status(StatusCode::kAborted, "Aborted transaction");
       })
@@ -632,7 +631,7 @@ TEST(ClientTest, CommitMutatorTooManyFailures) {
   int const maximum_failures = 2;
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillRepeatedly([&commit_attempts](Connection::CommitParams const&) {
         ++commit_attempts;
         return Status(StatusCode::kAborted, "Aborted transaction");
@@ -661,7 +660,7 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
   int commit_attempts = 0;
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([&commit_attempts](Connection::CommitParams const&) {
         ++commit_attempts;
         return Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -683,7 +682,7 @@ TEST(ClientTest, CommitMutations) {
   auto timestamp =
       spanner_internal::TimestampFromRFC3339("2020-02-28T04:49:17.335Z");
   ASSERT_STATUS_OK(timestamp);
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([&mutation, &timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.mutations, Mutations{mutation});
         return CommitResult{*timestamp, absl::nullopt};
@@ -781,7 +780,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
 
   auto conn = std::make_shared<MockConnection>();
   // Eventually the Commit() will succeed.
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce(
           [&session_name, &timestamp](Connection::CommitParams const& cp) {
             EXPECT_THAT(cp.transaction, HasSession(session_name));
@@ -790,7 +789,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
             return CommitResult{*timestamp, absl::nullopt};
           });
   // But only after some aborts, the first of which sets the session.
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .Times(num_aborts)
       .WillOnce([&session_name](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, DoesNotHaveSession());
@@ -823,7 +822,7 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-3"));
         return CommitResult{*timestamp, absl::nullopt};
@@ -849,7 +848,7 @@ TEST(ClientTest, CommitSessionNotFound) {
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, HasSession("session-1"));
         return Status(StatusCode::kNotFound, "Session not found");
@@ -879,7 +878,7 @@ TEST(ClientTest, CommitStats) {
   CommitStats stats{42};
 
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Commit(_))
+  EXPECT_CALL(*conn, Commit)
       .WillOnce([&timestamp, &stats](Connection::CommitParams const& cp) {
         EXPECT_TRUE(cp.options.return_stats());
         return CommitResult{*timestamp, stats};
@@ -930,7 +929,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
       .WillOnce(Return(Row()));
   EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
 
-  EXPECT_CALL(*conn, ProfileQuery(_))
+  EXPECT_CALL(*conn, ProfileQuery)
       .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
 
   KeySet keys = KeySet::All();
@@ -994,7 +993,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
       .WillOnce(Return(Row()));
   EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
 
-  EXPECT_CALL(*conn, ProfileQuery(_))
+  EXPECT_CALL(*conn, ProfileQuery)
       .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
 
   KeySet keys = KeySet::All();

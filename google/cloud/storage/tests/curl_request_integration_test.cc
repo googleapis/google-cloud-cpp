@@ -489,10 +489,8 @@ TEST(CurlRequestTest, Logging) {
   auto mock_logger = std::make_shared<MockLogBackend>();
   google::cloud::LogSink::Instance().AddBackend(mock_logger);
 
-  using ::testing::_;
-
   std::string log_messages;
-  EXPECT_CALL(*mock_logger, ProcessWithOwnership(_))
+  EXPECT_CALL(*mock_logger, ProcessWithOwnership)
       .WillRepeatedly([&log_messages](google::cloud::LogRecord const& lr) {
         log_messages += lr.message;
         log_messages += "\n";

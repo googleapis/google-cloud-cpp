@@ -32,7 +32,6 @@ namespace {
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::Return;
 
@@ -75,7 +74,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstance(_, _))
+  EXPECT_CALL(*mock, GetInstance)
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  gcsa::GetInstanceRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
@@ -95,7 +94,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
 
 TEST(InstanceAdminConnectionTest, GetInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstance(_, _))
+  EXPECT_CALL(*mock, GetInstance)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -105,7 +104,7 @@ TEST(InstanceAdminConnectionTest, GetInstancePermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, GetInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstance(_, _))
+  EXPECT_CALL(*mock, GetInstance)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -118,7 +117,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
-  EXPECT_CALL(*mock, CreateInstance(_, _))
+  EXPECT_CALL(*mock, CreateInstance)
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  gcsa::CreateInstanceRequest const& r) {
         EXPECT_EQ("test-instance", r.instance_id());
@@ -135,7 +134,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
         op.set_done(false);
         return make_status_or(op);
       });
-  EXPECT_CALL(*mock, GetOperation(_, _))
+  EXPECT_CALL(*mock, GetOperation)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            google::longrunning::GetOperationRequest const& r) {
@@ -167,7 +166,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
 TEST(InstanceAdminClientTest, CreateInstanceError) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
-  EXPECT_CALL(*mock, CreateInstance(_, _))
+  EXPECT_CALL(*mock, CreateInstance)
       .WillOnce([](grpc::ClientContext&, gcsa::CreateInstanceRequest const&) {
         return StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -190,7 +189,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   std::string expected_name = "projects/test-project/instances/test-instance";
 
-  EXPECT_CALL(*mock, UpdateInstance(_, _))
+  EXPECT_CALL(*mock, UpdateInstance)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  gcsa::UpdateInstanceRequest const& r) {
@@ -200,7 +199,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
         op.set_done(false);
         return make_status_or(op);
       });
-  EXPECT_CALL(*mock, GetOperation(_, _))
+  EXPECT_CALL(*mock, GetOperation)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            google::longrunning::GetOperationRequest const& r) {
@@ -228,7 +227,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
 TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
-  EXPECT_CALL(*mock, UpdateInstance(_, _))
+  EXPECT_CALL(*mock, UpdateInstance)
       .WillOnce([](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
         return StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -244,7 +243,7 @@ TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
 TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
-  EXPECT_CALL(*mock, UpdateInstance(_, _))
+  EXPECT_CALL(*mock, UpdateInstance)
       .Times(AtLeast(2))
       .WillRepeatedly(
           [](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
@@ -263,7 +262,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
       "projects/test-project/instances/test-instance";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, DeleteInstance(_, _))
+  EXPECT_CALL(*mock, DeleteInstance)
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  gcsa::DeleteInstanceRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
@@ -282,7 +281,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
 
 TEST(InstanceAdminConnectionTest, DeleteInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, DeleteInstance(_, _))
+  EXPECT_CALL(*mock, DeleteInstance)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -292,7 +291,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstancePermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, DeleteInstance(_, _))
+  EXPECT_CALL(*mock, DeleteInstance)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -311,7 +310,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_instance_config));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+  EXPECT_CALL(*mock, GetInstanceConfig)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            gcsa::GetInstanceConfigRequest const& request) {
@@ -332,7 +331,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
 
 TEST(InstanceAdminConnectionTest, GetInstanceConfigPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+  EXPECT_CALL(*mock, GetInstanceConfig)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -343,7 +342,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfigPermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+  EXPECT_CALL(*mock, GetInstanceConfig)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -356,7 +355,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
   std::string const expected_parent = "projects/test-project";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+  EXPECT_CALL(*mock, ListInstanceConfigs)
       .WillOnce([&](grpc::ClientContext&,
                     gcsa::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -397,7 +396,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+  EXPECT_CALL(*mock, ListInstanceConfigs)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -409,7 +408,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigsPermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, ListInstanceConfigsTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+  EXPECT_CALL(*mock, ListInstanceConfigs)
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
@@ -424,7 +423,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
   std::string const expected_parent = "projects/test-project";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstances(_, _))
+  EXPECT_CALL(*mock, ListInstances)
       .WillOnce(
           [&](grpc::ClientContext&, gcsa::ListInstancesRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -468,7 +467,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
 
 TEST(InstanceAdminConnectionTest, ListInstancesPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstances(_, _))
+  EXPECT_CALL(*mock, ListInstances)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -480,7 +479,7 @@ TEST(InstanceAdminConnectionTest, ListInstancesPermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, ListInstancesTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, ListInstances(_, _))
+  EXPECT_CALL(*mock, ListInstances)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -495,7 +494,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicySuccess) {
       "projects/test-project/instances/test-instance";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  giam::GetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
@@ -522,7 +521,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicySuccess) {
 
 TEST(InstanceAdminConnectionTest, GetIamPolicyPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -532,7 +531,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicyPermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -556,7 +555,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &expected_policy));
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([&expected_name](grpc::ClientContext&,
                                  giam::SetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
@@ -581,7 +580,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
 
 TEST(InstanceAdminConnectionTest, SetIamPolicyPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -593,7 +592,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicyNonIdempotent) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   // If the Etag field is not set, then the RPC is not idempotent and should
   // fail on the first transient error.
-  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -604,7 +603,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicyNonIdempotent) {
 
 TEST(InstanceAdminConnectionTest, SetIamPolicyIdempotent) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
@@ -620,7 +619,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsSuccess) {
       "projects/test-project/instances/test-instance";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            giam::TestIamPermissionsRequest const& request) {
@@ -646,7 +645,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsSuccess) {
 
 TEST(InstanceAdminConnectionTest, TestIamPermissionsPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto conn = MakeLimitedRetryConnection(mock);
@@ -657,7 +656,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissionsPermanentFailure) {
 
 TEST(InstanceAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
-  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock, TestIamPermissions)
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 

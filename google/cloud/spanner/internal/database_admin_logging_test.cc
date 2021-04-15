@@ -27,7 +27,6 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -48,7 +47,7 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
 };
 
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateDatabase).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -62,7 +61,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
-  EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetDatabase).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -76,7 +75,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
-  EXPECT_CALL(*mock_, GetDatabaseDdl(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetDatabaseDdl).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -90,7 +89,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
-  EXPECT_CALL(*mock_, UpdateDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, UpdateDatabase).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -104,7 +103,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
-  EXPECT_CALL(*mock_, DropDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, DropDatabase).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -118,7 +117,7 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
-  EXPECT_CALL(*mock_, ListDatabases(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListDatabases).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -132,7 +131,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, RestoreDatabase).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -146,7 +145,7 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
-  EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetIamPolicy).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -161,7 +160,7 @@ TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
-  EXPECT_CALL(*mock_, SetIamPolicy(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, SetIamPolicy).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -176,8 +175,7 @@ TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
-  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, TestIamPermissions).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -192,7 +190,7 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateBackup).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -206,7 +204,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetBackup) {
-  EXPECT_CALL(*mock_, GetBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetBackup).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -220,7 +218,7 @@ TEST_F(DatabaseAdminLoggingTest, GetBackup) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
-  EXPECT_CALL(*mock_, DeleteBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, DeleteBackup).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -234,7 +232,7 @@ TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListBackups) {
-  EXPECT_CALL(*mock_, ListBackups(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListBackups).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -248,7 +246,7 @@ TEST_F(DatabaseAdminLoggingTest, ListBackups) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
-  EXPECT_CALL(*mock_, UpdateBackup(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, UpdateBackup).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -262,8 +260,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
-  EXPECT_CALL(*mock_, ListBackupOperations(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListBackupOperations).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -278,7 +275,7 @@ TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
-  EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
+  EXPECT_CALL(*mock_, ListDatabaseOperations)
       .WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
@@ -294,7 +291,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetOperation).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -309,7 +306,7 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
 }
 
 TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CancelOperation).WillOnce(Return(TransientError()));
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 

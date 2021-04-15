@@ -35,7 +35,6 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::ReturnRef;
@@ -54,7 +53,7 @@ TEST_F(WriteObjectTest, WriteObject) {
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock_, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession)
       .WillOnce([&expected](internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
         EXPECT_EQ("test-object-name", request.object_name());
@@ -63,13 +62,13 @@ TEST_F(WriteObjectTest, WriteObject) {
         using internal::ResumableUploadResponse;
         EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
         EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-        EXPECT_CALL(*mock, UploadChunk(_))
+        EXPECT_CALL(*mock, UploadChunk)
             .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
                 "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
         EXPECT_CALL(*mock, ResetSession())
             .WillOnce(Return(make_status_or(ResumableUploadResponse{
                 "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
-        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+        EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce(
                 Return(StatusOr<ResumableUploadResponse>(TransientError())))
             .WillOnce(Return(make_status_or(ResumableUploadResponse{
@@ -97,7 +96,7 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         TransientError());
   };
-  EXPECT_CALL(*mock_, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession)
       .WillOnce(returner)
       .WillOnce(returner)
       .WillOnce(returner);
@@ -112,7 +111,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         PermanentError());
   };
-  EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(returner);
+  EXPECT_CALL(*mock_, CreateResumableSession).WillOnce(returner);
   auto client = ClientForMock();
   auto stream = client.WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
@@ -126,8 +125,8 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
         std::unique_ptr<internal::ResumableUploadSession>(mock_session));
   };
   std::string const empty;
-  EXPECT_CALL(*mock_, CreateResumableSession(_)).WillOnce(returner);
-  EXPECT_CALL(*mock_session, UploadChunk(_))
+  EXPECT_CALL(*mock_, CreateResumableSession).WillOnce(returner);
+  EXPECT_CALL(*mock_session, UploadChunk)
       .WillRepeatedly(Return(PermanentError()));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
@@ -181,7 +180,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 
   // Simulate situation when a quantum has already been uploaded.
   std::size_t bytes_written = quantum;
-  EXPECT_CALL(*mock_, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession)
       .WillOnce([&expected, &bytes_written](
                     internal::ResumableUploadRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
@@ -193,7 +192,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
         EXPECT_CALL(*mock, next_expected_byte())
             .WillRepeatedly([&bytes_written]() { return bytes_written; });
 
-        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+        EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
                           std::uint64_t size) {
@@ -209,7 +208,7 @@ TEST_F(WriteObjectTest, UploadStreamResumable) {
 
   MockFilebuf filebuf;
   // Don't expect any seekoff events
-  EXPECT_CALL(filebuf, SeekoffEvent(_)).WillOnce([quantum](std::streamoff off) {
+  EXPECT_CALL(filebuf, SeekoffEvent).WillOnce([quantum](std::streamoff off) {
     EXPECT_EQ(quantum, off);
   });
   ASSERT_NE(nullptr, filebuf.open(temp_file.name().c_str(), std::ios_base::in));
@@ -259,7 +258,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
             .WillOnce(Return(0))
             .WillOnce(Return(524288))
             .WillRepeatedly(Return(524287));  // start lying
-        EXPECT_CALL(*mock, UploadChunk(_))
+        EXPECT_CALL(*mock, UploadChunk)
             .WillRepeatedly(
                 [&bytes_written](internal::ConstBufferSequence const& data) {
                   bytes_written += internal::TotalBytes(data);
@@ -279,7 +278,7 @@ TEST_F(WriteObjectTest, UploadStreamResumableSimulateBug) {
 
   MockFilebuf filebuf;
   // Don't expect any seekoff events
-  EXPECT_CALL(filebuf, SeekoffEvent(_)).WillOnce([](std::streamoff off) {
+  EXPECT_CALL(filebuf, SeekoffEvent).WillOnce([](std::streamoff off) {
     EXPECT_EQ(0, off);
   });
   ASSERT_NE(nullptr, filebuf.open(temp_file.name().c_str(), std::ios_base::in));
@@ -313,7 +312,7 @@ TEST_F(WriteObjectTest, UploadFile) {
 
   // Simulate situation when a quantum has already been uploaded.
   std::uint64_t bytes_written = quantum;
-  EXPECT_CALL(*mock_, CreateResumableSession(_))
+  EXPECT_CALL(*mock_, CreateResumableSession)
       .WillOnce([&expected, &bytes_written,
                  file_size](internal::ResumableUploadRequest const& request) {
         EXPECT_TRUE(request.HasOption<UploadContentLength>());
@@ -326,7 +325,7 @@ TEST_F(WriteObjectTest, UploadFile) {
         EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
         EXPECT_CALL(*mock, next_expected_byte())
             .WillRepeatedly([&bytes_written]() { return bytes_written; });
-        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+        EXPECT_CALL(*mock, UploadFinalChunk)
             .WillOnce([expected, &bytes_written](
                           internal::ConstBufferSequence const& data,
                           std::uint64_t size) {

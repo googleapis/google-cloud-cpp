@@ -28,7 +28,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -96,7 +95,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
   std::string expected_signed_blob_safe = "dGVzdC1zaWduZWQtYmxvYg%3D%3D";
 
-  EXPECT_CALL(*mock_, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
         return make_status_or(
@@ -112,7 +111,7 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
 /// @test Verify that CreateV2SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -124,7 +123,7 @@ TEST_F(CreateSignedUrlTest, V2SignTooManyFailures) {
 TEST_F(CreateSignedUrlTest, V2SignPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob(_)),
+      client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateV2SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -246,7 +245,7 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
   // Use `echo -n test-signed-blob | od -x` to create the magic string.
   std::string expected_signed_blob_hex = "746573742d7369676e65642d626c6f62";
 
-  EXPECT_CALL(*mock_, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
         return make_status_or(
@@ -262,7 +261,7 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
 /// @test Verify that CreateV4SignedUrl() + SignBlob() respects retry policies.
 TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
             .status();
@@ -274,7 +273,7 @@ TEST_F(CreateSignedUrlTest, V4SignTooManyFailures) {
 TEST_F(CreateSignedUrlTest, V4SignPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob(_)),
+      client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateV4SignedUrl("GET", "test-bucket", "test-object")
             .status();

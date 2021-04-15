@@ -156,11 +156,10 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 };
 
 TEST_F(ValidContextMdAsyncTest, AsyncApply) {
-  using ::testing::_;
   testing::MockAsyncFailingRpcFactory<btproto::MutateRowRequest,
                                       btproto::MutateRowResponse>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncMutateRow(_, _, _))
+  EXPECT_CALL(*client_, AsyncMutateRow)
       .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -172,11 +171,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncApply) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
-  using ::testing::_;
   testing::MockAsyncFailingRpcFactory<btproto::CheckAndMutateRowRequest,
                                       btproto::CheckAndMutateRowResponse>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncCheckAndMutateRow(_, _, _))
+  EXPECT_CALL(*client_, AsyncCheckAndMutateRow)
       .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"
@@ -190,11 +188,10 @@ TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
 }
 
 TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
-  using ::testing::_;
   testing::MockAsyncFailingRpcFactory<btproto::ReadModifyWriteRowRequest,
                                       btproto::ReadModifyWriteRowResponse>
       rpc_factory;
-  EXPECT_CALL(*client_, AsyncReadModifyWriteRow(_, _, _))
+  EXPECT_CALL(*client_, AsyncReadModifyWriteRow)
       .WillOnce(rpc_factory.Create(
           R"""(
               table_name: "projects/the-project/instances/the-instance/tables/the-table"

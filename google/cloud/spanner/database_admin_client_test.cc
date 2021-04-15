@@ -29,7 +29,6 @@ namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -41,7 +40,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase) {
 
   Database dbase("test-project", "test-instance", "test-db");
 
-  EXPECT_CALL(*mock, CreateDatabase(_))
+  EXPECT_CALL(*mock, CreateDatabase)
       .WillOnce(
           [&dbase](DatabaseAdminConnection::CreateDatabaseParams const& p) {
             EXPECT_EQ(p.database, dbase);
@@ -67,7 +66,7 @@ TEST(DatabaseAdminClientTest, GetDatabase) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Database dbase("test-project", "test-instance", "test-db");
 
-  EXPECT_CALL(*mock, GetDatabase(_))
+  EXPECT_CALL(*mock, GetDatabase)
       .WillOnce([&dbase](DatabaseAdminConnection::GetDatabaseParams const& p) {
         EXPECT_EQ(dbase, p.database);
         gcsa::Database response;
@@ -89,7 +88,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl) {
   Database const expected_name("test-project", "test-instance",
                                "test-database");
 
-  EXPECT_CALL(*mock, GetDatabaseDdl(_))
+  EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce([&expected_name](
                     DatabaseAdminConnection::GetDatabaseDdlParams const& p) {
         EXPECT_EQ(expected_name, p.database);
@@ -111,7 +110,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
 
   Database dbase("test-project", "test-instance", "test-db");
 
-  EXPECT_CALL(*mock, UpdateDatabase(_))
+  EXPECT_CALL(*mock, UpdateDatabase)
       .WillOnce(
           [&dbase](DatabaseAdminConnection::UpdateDatabaseParams const& p) {
             EXPECT_EQ(p.database, dbase);
@@ -133,7 +132,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
 TEST(DatabaseAdminClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Instance const expected_instance("test-project", "test-instance");
-  EXPECT_CALL(*mock, ListDatabases(_))
+  EXPECT_CALL(*mock, ListDatabases)
       .WillOnce([&expected_instance](
                     DatabaseAdminConnection::ListDatabasesParams const& p) {
         EXPECT_EQ(expected_instance, p.instance);
@@ -162,7 +161,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
   Database const expected_db("test-project", "test-instance", "test-database");
   std::string const expected_role = "roles/spanner.databaseReader";
   std::string const expected_member = "user:foobar@example.com";
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&expected_db, &expected_role, &expected_member](
                     DatabaseAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_EQ(expected_db, p.database);
@@ -186,7 +185,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
 TEST(DatabaseAdminClientTest, SetIamPolicy) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Database const expected_db("test-project", "test-instance", "test-database");
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce(
           [&expected_db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
             EXPECT_EQ(expected_db, p.database);
@@ -200,7 +199,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicy) {
 TEST(DatabaseAdminClientTest, SetIamPolicyOccGetFailure) {
   Database const db("test-project", "test-instance", "test-database");
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_EQ(db, p.database);
         return Status(StatusCode::kPermissionDenied, "uh-oh");
@@ -216,14 +215,14 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccGetFailure) {
 TEST(DatabaseAdminClientTest, SetIamPolicyOccNoUpdates) {
   Database const db("test-project", "test-instance", "test-database");
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_EQ(db, p.database);
         google::iam::v1::Policy r;
         r.set_etag("test-etag");
         return r;
       });
-  EXPECT_CALL(*mock, SetIamPolicy(_)).Times(0);
+  EXPECT_CALL(*mock, SetIamPolicy).Times(0);
 
   DatabaseAdminClient client(mock);
   auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const& p) {
@@ -249,7 +248,7 @@ std::unique_ptr<BackoffPolicy> BackoffPolicyForTesting() {
 TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAborted) {
   Database const db("test-project", "test-instance", "test-database");
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_EQ(db, p.database);
         google::iam::v1::Policy r;
@@ -262,7 +261,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAborted) {
         r.set_etag("test-etag-2");
         return r;
       });
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([&db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
         EXPECT_EQ(db, p.database);
         EXPECT_EQ("test-etag-1", p.policy.etag());
@@ -292,7 +291,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAborted) {
 TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
   Database const db("test-project", "test-instance", "test-database");
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillRepeatedly(
           [&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
             EXPECT_EQ(db, p.database);
@@ -300,7 +299,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
             r.set_etag("test-etag-1");
             return r;
           });
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .Times(AtLeast(2))
       .WillRepeatedly(
           [&db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
@@ -321,7 +320,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissions) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Database const expected_db("test-project", "test-instance", "test-database");
   std::string expected_permission = "spanner.databases.read";
-  EXPECT_CALL(*mock, TestIamPermissions(_))
+  EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(
           [&expected_db, &expected_permission](
               DatabaseAdminConnection::TestIamPermissionsParams const& p) {
@@ -349,7 +348,7 @@ TEST(DatabaseAdminClientTest, CreateBackup) {
   auto expire_time = MakeTimestamp(now + absl::Hours(7)).value();
   auto version_time = MakeTimestamp(now - absl::Hours(7)).value();
   Backup backup_name(dbase.instance(), backup_id);
-  EXPECT_CALL(*mock, CreateBackup(_))
+  EXPECT_CALL(*mock, CreateBackup)
       .WillOnce([&dbase, &expire_time, &version_time, &backup_id, &backup_name](
                     DatabaseAdminConnection::CreateBackupParams const& p) {
         EXPECT_EQ(p.database, dbase);
@@ -412,7 +411,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabase) {
 
   Database dbase("test-project", "test-instance", "test-db");
   Backup backup(dbase.instance(), "test-backup");
-  EXPECT_CALL(*mock, RestoreDatabase(_))
+  EXPECT_CALL(*mock, RestoreDatabase)
       .WillOnce([&dbase, &backup](
                     DatabaseAdminConnection::RestoreDatabaseParams const& p) {
         EXPECT_EQ(p.database, dbase);
@@ -441,7 +440,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseOverload) {
   Backup backup_name(dbase.instance(), "test-backup");
   gcsa::Backup backup;
   backup.set_name(backup_name.FullName());
-  EXPECT_CALL(*mock, RestoreDatabase(_))
+  EXPECT_CALL(*mock, RestoreDatabase)
       .WillOnce([&dbase, &backup_name](
                     DatabaseAdminConnection::RestoreDatabaseParams const& p) {
         EXPECT_EQ(p.database, dbase);
@@ -467,7 +466,7 @@ TEST(DatabaseAdminClientTest, GetBackup) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
 
-  EXPECT_CALL(*mock, GetBackup(_))
+  EXPECT_CALL(*mock, GetBackup)
       .WillOnce([&backup](DatabaseAdminConnection::GetBackupParams const& p) {
         EXPECT_EQ(backup.FullName(), p.backup_full_name);
         gcsa::Backup response;
@@ -488,7 +487,7 @@ TEST(DatabaseAdminClientTest, DeleteBackup) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
 
-  EXPECT_CALL(*mock, DeleteBackup(_))
+  EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(
           [&backup](DatabaseAdminConnection::DeleteBackupParams const& p) {
             EXPECT_EQ(backup.FullName(), p.backup_full_name);
@@ -507,7 +506,7 @@ TEST(DatabaseAdminClientTest, DeleteBackupOverload) {
   gcsa::Backup backup;
   backup.set_name(backup_name.FullName());
 
-  EXPECT_CALL(*mock, DeleteBackup(_))
+  EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(
           [&backup_name](DatabaseAdminConnection::DeleteBackupParams const& p) {
             EXPECT_EQ(backup_name.FullName(), p.backup_full_name);
@@ -523,7 +522,7 @@ TEST(DatabaseAdminClientTest, ListBackups) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Instance const expected_instance("test-project", "test-instance");
   std::string expected_filter("test-filter");
-  EXPECT_CALL(*mock, ListBackups(_))
+  EXPECT_CALL(*mock, ListBackups)
       .WillOnce([&expected_instance, &expected_filter](
                     DatabaseAdminConnection::ListBackupsParams const& p) {
         EXPECT_EQ(expected_instance, p.instance);
@@ -553,7 +552,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
   Backup backup(Instance("test-project", "test-instance"), "test-backup");
   auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
 
-  EXPECT_CALL(*mock, UpdateBackup(_))
+  EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce([&backup, &expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup.FullName(), p.request.backup().name());
@@ -608,7 +607,7 @@ TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
   backup.set_name(backup_name.FullName());
   auto expire_time = MakeTimestamp(absl::Now() + absl::Hours(7)).value();
 
-  EXPECT_CALL(*mock, UpdateBackup(_))
+  EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce([&backup_name, &expire_time](
                     DatabaseAdminConnection::UpdateBackupParams const& p) {
         EXPECT_EQ(backup_name.FullName(), p.request.backup().name());
@@ -659,7 +658,7 @@ TEST(DatabaseAdminClientTest, ListBackupOperations) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Instance const expected_instance("test-project", "test-instance");
   std::string expected_filter("test-filter");
-  EXPECT_CALL(*mock, ListBackupOperations(_))
+  EXPECT_CALL(*mock, ListBackupOperations)
       .WillOnce(
           [&expected_instance, &expected_filter](
               DatabaseAdminConnection::ListBackupOperationsParams const& p) {
@@ -689,7 +688,7 @@ TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Instance const expected_instance("test-project", "test-instance");
   std::string expected_filter("test-filter");
-  EXPECT_CALL(*mock, ListDatabaseOperations(_))
+  EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce(
           [&expected_instance, &expected_filter](
               DatabaseAdminConnection::ListDatabaseOperationsParams const& p) {

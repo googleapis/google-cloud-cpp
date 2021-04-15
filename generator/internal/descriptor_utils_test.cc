@@ -36,7 +36,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -794,7 +793,7 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
       absl::make_unique<generator_testing::MockGeneratorContext>();
   auto output =
       absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");

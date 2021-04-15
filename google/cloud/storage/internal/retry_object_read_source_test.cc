@@ -29,7 +29,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::_;
 using ::testing::HasSubstr;
 using testing::MockObjectReadSource;
 using ::testing::Return;
@@ -76,7 +75,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
         auto source = absl::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
@@ -96,7 +95,7 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return PermanentError(); });
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -112,7 +111,7 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .Times(4)
       .WillRepeatedly(
           [](ReadObjectRangeRequest const&) { return TransientError(); });
@@ -130,7 +129,7 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -153,11 +152,11 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([raw_source](ReadObjectRangeRequest const&) {
         return std::unique_ptr<ObjectReadSource>(raw_source);
       });
-  EXPECT_CALL(*raw_source, Read(_, _))
+  EXPECT_CALL(*raw_source, Read)
       .WillOnce(Return(ReadSourceResult{}))
       .WillOnce(Return(PermanentError()));
 
@@ -242,7 +241,7 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
         auto source = absl::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read)
@@ -273,7 +272,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
       LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
       ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  EXPECT_CALL(*raw_client, ReadObject(_))
+  EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
         auto source = absl::make_unique<MockObjectReadSource>();

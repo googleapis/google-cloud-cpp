@@ -29,7 +29,6 @@ using ::google::cloud::storage::internal::ListObjectsRequest;
 using ::google::cloud::storage::internal::ListObjectsResponse;
 using ::google::cloud::storage::internal::SortObjectsAndPrefixes;
 using ::google::cloud::storage::testing::MockClient;
-using ::testing::_;
 using ::testing::ContainerEq;
 
 ObjectMetadata CreateElement(int index) {
@@ -77,7 +76,7 @@ TEST(ListObjectsAndPrefixesReaderTest, Basic) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));

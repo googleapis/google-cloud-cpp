@@ -36,7 +36,6 @@ namespace {
 namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::testing::_;
 using ::testing::ReturnRef;
 using MockAsyncListInstancesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
@@ -109,7 +108,7 @@ std::vector<std::string> InstanceNames(InstanceList const& response) {
 
 /// @test One successful page with 1 one instance.
 TEST_F(AsyncListInstancesTest, Simple) {
-  EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
+  EXPECT_CALL(*client_, AsyncListInstances)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListInstancesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -123,7 +122,7 @@ TEST_F(AsyncListInstancesTest, Simple) {
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
       });
-  EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_1_, Finish)
       .WillOnce(
           create_list_instances_lambda("", {"instance_1"}, {"failed_loc_1"}));
 
@@ -142,7 +141,7 @@ TEST_F(AsyncListInstancesTest, Simple) {
 
 /// @test Test 3 pages, no failures, multiple clusters and failed locations.
 TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
-  EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
+  EXPECT_CALL(*client_, AsyncListInstances)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListInstancesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -182,14 +181,14 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_3_.get());
       });
-  EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_1_, Finish)
       .WillOnce(create_list_instances_lambda("token_1", {"instance_1"},
                                              {"failed_loc_1"}));
-  EXPECT_CALL(*instances_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_2_, Finish)
       .WillOnce(create_list_instances_lambda("token_2",
                                              {"instance_2", "instance_3"},
                                              {"failed_loc_1", "failed_loc_2"}));
-  EXPECT_CALL(*instances_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_3_, Finish)
       .WillOnce(
           create_list_instances_lambda("", {"instance_4"}, {"failed_loc_1"}));
 
@@ -225,7 +224,7 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
 
 /// @test Test 2 pages, with a failure between them.
 TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
-  EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
+  EXPECT_CALL(*client_, AsyncListInstances)
       .WillOnce([this](grpc::ClientContext* context,
                        btproto::ListInstancesRequest const& request,
                        grpc::CompletionQueue*) {
@@ -265,15 +264,15 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_3_.get());
       });
-  EXPECT_CALL(*instances_reader_1_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_1_, Finish)
       .WillOnce(create_list_instances_lambda("token_1", {"instance_1"},
                                              {"failed_loc_1"}));
-  EXPECT_CALL(*instances_reader_2_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_2_, Finish)
       .WillOnce(
           [](btproto::ListInstancesResponse*, grpc::Status* status, void*) {
             *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
           });
-  EXPECT_CALL(*instances_reader_3_, Finish(_, _, _))
+  EXPECT_CALL(*instances_reader_3_, Finish)
       .WillOnce(
           create_list_instances_lambda("", {"instance_2"}, {"failed_loc_2"}));
 

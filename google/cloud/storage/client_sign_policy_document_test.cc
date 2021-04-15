@@ -30,7 +30,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -129,7 +128,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   // string.
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
 
-  EXPECT_CALL(*mock_, SignBlob(_))
+  EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
         return make_status_or(
@@ -146,7 +145,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
 /// policies.
 TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
-      mock_, EXPECT_CALL(*mock_, SignBlob(_)),
+      mock_, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
             .status();
@@ -159,7 +158,7 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
 TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
   auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
-      client, EXPECT_CALL(*mock_, SignBlob(_)),
+      client, EXPECT_CALL(*mock_, SignBlob),
       [](Client& client) {
         return client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest())
             .status();

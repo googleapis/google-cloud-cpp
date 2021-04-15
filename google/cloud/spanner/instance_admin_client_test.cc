@@ -26,7 +26,6 @@ namespace {
 
 using ::google::cloud::testing_util::StatusIs;
 using spanner_mocks::MockInstanceAdminConnection;
-using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -59,7 +58,7 @@ TEST(InstanceAdminClientTest, CopyAndMove) {
 
 TEST(InstanceAdminClientTest, GetInstance) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetInstance(_))
+  EXPECT_CALL(*mock, GetInstance)
       .WillOnce([](InstanceAdminConnection::GetInstanceParams const& p) {
         EXPECT_EQ("projects/test-project/instances/test-instance",
                   p.instance_name);
@@ -73,7 +72,7 @@ TEST(InstanceAdminClientTest, GetInstance) {
 
 TEST(InstanceAdminClientTest, GetInstanceConfig) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetInstanceConfig(_))
+  EXPECT_CALL(*mock, GetInstanceConfig)
       .WillOnce([](InstanceAdminConnection::GetInstanceConfigParams const& p) {
         EXPECT_EQ("projects/test-project/instanceConfigs/test-config",
                   p.instance_config_name);
@@ -88,7 +87,7 @@ TEST(InstanceAdminClientTest, GetInstanceConfig) {
 
 TEST(InstanceAdminClientTest, ListInstanceConfigs) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, ListInstanceConfigs(_))
+  EXPECT_CALL(*mock, ListInstanceConfigs)
       .WillOnce(
           [](InstanceAdminConnection::ListInstanceConfigsParams const& p) {
             EXPECT_EQ("test-project", p.project_id);
@@ -114,7 +113,7 @@ TEST(InstanceAdminClientTest, ListInstanceConfigs) {
 TEST(InstanceAdminClientTest, ListInstances) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
 
-  EXPECT_CALL(*mock, ListInstances(_))
+  EXPECT_CALL(*mock, ListInstances)
       .WillOnce([](InstanceAdminConnection::ListInstancesParams const& p) {
         EXPECT_EQ("test-project", p.project_id);
         EXPECT_EQ("labels.test-key:test-value", p.filter);
@@ -140,7 +139,7 @@ TEST(InstanceAdminClientTest, ListInstances) {
 
 TEST(InstanceAdminClientTest, GetIamPolicy) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_EQ("projects/test-project/instances/test-instance",
                   p.instance_name);
@@ -154,7 +153,7 @@ TEST(InstanceAdminClientTest, GetIamPolicy) {
 
 TEST(InstanceAdminClientTest, SetIamPolicy) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([](InstanceAdminConnection::SetIamPolicyParams const& p) {
         EXPECT_EQ("projects/test-project/instances/test-instance",
                   p.instance_name);
@@ -169,7 +168,7 @@ TEST(InstanceAdminClientTest, SetIamPolicy) {
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
         EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
@@ -187,7 +186,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccNoUpdates) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
         EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
@@ -195,7 +194,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccNoUpdates) {
         r.set_etag("test-etag");
         return r;
       });
-  EXPECT_CALL(*mock, SetIamPolicy(_)).Times(0);
+  EXPECT_CALL(*mock, SetIamPolicy).Times(0);
 
   InstanceAdminClient client(mock);
   auto actual =
@@ -222,7 +221,7 @@ std::unique_ptr<BackoffPolicy> BackoffPolicyForTesting() {
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAborted) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
         EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
@@ -237,7 +236,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAborted) {
         r.set_etag("test-etag-2");
         return r;
       });
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([](InstanceAdminConnection::SetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
         EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
@@ -268,7 +267,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAborted) {
 
 TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy(_))
+  EXPECT_CALL(*mock, GetIamPolicy)
       .WillRepeatedly([](InstanceAdminConnection::GetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
         EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
@@ -276,7 +275,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
         r.set_etag("test-etag-1");
         return r;
       });
-  EXPECT_CALL(*mock, SetIamPolicy(_))
+  EXPECT_CALL(*mock, SetIamPolicy)
       .Times(AtLeast(2))
       .WillRepeatedly([](InstanceAdminConnection::SetIamPolicyParams const& p) {
         EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
@@ -295,7 +294,7 @@ TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
 
 TEST(InstanceAdminClientTest, TestIamPermissions) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
-  EXPECT_CALL(*mock, TestIamPermissions(_))
+  EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce([](InstanceAdminConnection::TestIamPermissionsParams const& p) {
         EXPECT_EQ("projects/test-project/instances/test-instance",
                   p.instance_name);

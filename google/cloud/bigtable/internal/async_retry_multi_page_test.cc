@@ -35,7 +35,6 @@ namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::Return;
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
@@ -136,7 +135,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
                                        ? std::string()
                                        : last_success->next_page_token;
 
-      EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
+      EXPECT_CALL(*client_, AsyncListClusters)
           .WillOnce([cluster_reader, expected_token](
                         grpc::ClientContext*,
                         ListClustersRequest const& request,
@@ -148,7 +147,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
                 cluster_reader);
           })
           .RetiresOnSaturation();
-      EXPECT_CALL(*cluster_reader, Finish(_, _, _))
+      EXPECT_CALL(*cluster_reader, Finish)
           .WillOnce([exchange](ListClustersResponse* response,
                                grpc::Status* status, void*) {
             for (auto const& cluster_name : exchange.clusters) {
@@ -233,7 +232,7 @@ TEST_F(AsyncMultipageFutureTest, DelayGrowsOnFailures) {
   ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
                      {grpc::StatusCode::UNAVAILABLE, {}, ""},
                      {grpc::StatusCode::OK, {"cluster_1"}, ""}});
-  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
+  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook)
       .WillOnce(Return(std::chrono::milliseconds(1)))
       .WillOnce(Return(std::chrono::milliseconds(1)));
 
@@ -274,7 +273,7 @@ TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
                      {grpc::StatusCode::OK, {"cluster_1"}, "token1"},
                      {grpc::StatusCode::UNAVAILABLE, {}, ""},
                      {grpc::StatusCode::OK, {"cluster_2"}, ""}});
-  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
+  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook)
       .WillOnce(Return(std::chrono::milliseconds(1)))
       .WillOnce(Return(std::chrono::milliseconds(1)));
 
@@ -319,7 +318,7 @@ TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
 TEST_F(AsyncMultipageFutureTest, TransientErrorsAreRetried) {
   ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
                      {grpc::StatusCode::OK, {"cluster_1"}, ""}});
-  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
+  EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook)
       .WillOnce(Return(std::chrono::milliseconds(1)));
 
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
