@@ -24,7 +24,7 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-bazel test "${args[@]}" --test_tag_filters=-integration-test ...
+bazel test "${args[@]}" --test_tag_filters=-integration-test google/cloud/storage/...
 
 mapfile -t integration_args < <(integration::args)
 GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Uses the gRPC data plane
