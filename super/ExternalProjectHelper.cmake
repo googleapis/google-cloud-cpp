@@ -20,10 +20,10 @@ include(GNUInstallDirs)
 message(
     WARNING
         [==[
-Super builds are no longer recommended, and will be removed on 2022-05-01
-or shortly after.  If you want to automatically download and build the
-`google-cloud-cpp` dependencies we recommend that you use `vcpkg` as
-described in /doc/contributor/howto-guide-setup-cmake-environment.md
+  Super builds are no longer recommended, and will be removed on 2022-05-01
+  or shortly after.  If you want to automatically download and build the
+  `google-cloud-cpp` dependencies we recommend that you use `vcpkg` as
+  described in /doc/contributor/howto-guide-setup-cmake-environment.md
 ]==])
 
 set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX
