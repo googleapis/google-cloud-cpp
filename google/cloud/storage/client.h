@@ -264,12 +264,13 @@ class Client {
       " For mocking, please use testing::ClientFromMock() instead."
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
-#endif // _MSC_VER
+#endif  // _MSC_VER
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
       : Client(InternalOnly{}, std::move(client),
-               std::forward<Policies>(policies)...) {}
+               std::forward<Policies>(policies)...) {
+  }
 
   /// Define a tag to disable automatic decorations of the RawClient.
   struct NoDecorations {};
@@ -3346,10 +3347,10 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
   auto all_options = std::tie(options...);
 
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<
-                  NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
+              all_options))>::value == 0,
       "This functions accepts only options of type QuotaUser, UserIp, "
       "UserProject or Versions.");
   for (auto const& object :
@@ -3482,12 +3483,13 @@ StatusOr<ObjectMetadata> ComposeMany(
 
   // TODO(#3247): this list of type should somehow be generated
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<NotAmong<
-                  DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
-                  IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp,
-                  UserProject, WithObjectMetadata>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<DestinationPredefinedAcl, EncryptionKey,
+                            IfGenerationMatch, IfMetagenerationMatch,
+                            KmsKeyName, QuotaUser, UserIp, UserProject,
+                            WithObjectMetadata>::TPred>(all_options))>::value ==
+          0,
       "This functions accepts only options of type DestinationPredefinedAcl, "
       "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
       "QuotaUser, UserIp, UserProject or WithObjectMetadata.");
