@@ -158,6 +158,13 @@ if [[ -z "${BUILD_NAME}" ]]; then
   exit 1
 fi
 
+# Info about the git repo that is used by some builds, e.g., coverage. These
+# will be automatically set by GCB for triggered builds, but we need to compute
+# them ourselves for manually started builds and docker builds. See
+# https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
+BRANCH_NAME="${BRANCH_NAME:-$(git branch --show-current)}"
+COMMIT_SHA="${COMMIT_SHA:-$(git rev-parse HEAD)}"
+
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
 # specified docker image, then in a container from that image it will run the
@@ -221,6 +228,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--user=$(id -u):$(id -g)"
     "--env=USER=$(id -un)"
     "--env=TZ=UTC0"
+    "--env=CODECOV_TOKEN=${CODECOV_TOKEN:-}"
+    "--env=BRANCH_NAME=${BRANCH_NAME}"
+    "--env=COMMIT_SHA=${COMMIT_SHA}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
@@ -257,6 +267,9 @@ account="$(gcloud config list account --format "value(core.account)")"
 subs="_DISTRO=${DISTRO_FLAG}"
 subs+=",_BUILD_NAME=${BUILD_NAME}"
 subs+=",_CACHE_TYPE=manual-${account}"
+subs+=",_PR_NUMBER="  # Must be empty or a number, and this is not a PR
+subs+=",BRANCH_NAME=${BRANCH_NAME}"
+subs+=",COMMIT_SHA=${COMMIT_SHA}"
 io::log "Substitutions ${subs}"
 args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"

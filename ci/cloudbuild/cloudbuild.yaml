@@ -21,7 +21,10 @@ options:
     'TZ=UTC0',
     'GOOGLE_CLOUD_BUILD=yes',
     'PROJECT_ID=${PROJECT_ID}',
-    'BUILD_ID=${BUILD_ID}'
+    'BUILD_ID=${BUILD_ID}',
+    'BRANCH_NAME=${BRANCH_NAME}',
+    'COMMIT_SHA=${COMMIT_SHA}',
+    'PR_NUMBER=${_PR_NUMBER}'
   ]
   volumes:
     - name: 'home'
@@ -39,6 +42,11 @@ substitutions:
 
 tags: [ '${_TRIGGER_TYPE}', '${_BUILD_NAME}', '${_DISTRO}' ]
 timeout: 3600s
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/1
+    env: 'CODECOV_TOKEN'
 
 steps:
   # Builds the docker image that will be used by the main build step.
@@ -66,6 +74,7 @@ steps:
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
   entrypoint: 'ci/cloudbuild/build.sh'
   args: [ '--local', '${_BUILD_NAME}' ]
+  secretEnv: ['CODECOV_TOKEN']
   env: [
     'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
     'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
