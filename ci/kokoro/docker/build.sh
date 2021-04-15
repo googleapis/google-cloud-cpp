@@ -364,13 +364,13 @@ fi
 
 echo "================================================================"
 io::log_yellow "Creating Docker image with all the development tools."
-echo "    docker build ${docker_build_flags[*]} ci"
-io::log_yellow "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
 set +e
 mkdir -p "${BUILD_OUTPUT}"
+io::log_yellow "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
+io::log_cmdline "docker build ${docker_build_flags[*]} ci"
 if timeout 3600s docker build "${docker_build_flags[@]}" ci \
   >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
   update_cache="true"
@@ -637,7 +637,7 @@ else
 fi
 
 # Run the docker image with that giant collection of flags.
-echo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
+io::log_cmdline docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
@@ -684,7 +684,6 @@ else
   io::log_yellow "Not a CI build; skipping artifact cleanup"
 fi
 
-echo
 echo "================================================================"
 if [[ ${exit_status} -eq 0 ]]; then
   io::log_green "Build script finished successfully."
