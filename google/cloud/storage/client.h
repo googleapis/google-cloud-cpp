@@ -257,12 +257,14 @@ class Client {
   /// @deprecated This was intended only for test code, applications should not
   /// use it.
   template <typename... Policies>
+#if !defined(_MSC_VER) || _MSC_VER >= 1920
   GOOGLE_CLOUD_CPP_DEPRECATED(
       "applications should not need this."
       " Please use the constructors from ClientOptions instead."
       " For mocking, please use testing::ClientFromMock() instead."
       " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
       " if you have a use-case not covered by these.")
+#endif // _MSC_VER
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
