@@ -64,7 +64,7 @@ struct ClientImplDetails;
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
  * connection and authenticating with the service. Note that the library may
- * need to perform other book keeping operations that may impact performance.
+ * need to perform other bookkeeping operations that may impact performance.
  * For example, access tokens need to be refreshed from time to time, and this
  * may impact the performance of some operations.
  *
