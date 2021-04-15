@@ -912,6 +912,10 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
 /// @test Verify that using an encryption key works.
 TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
+  // Suppress a false leak.
+  // TODO(#4038): After we fix the issue #4038, we won't need to use
+  // `AllowLeak()` any more.
+  Mock::AllowLeak(mock.get());
   Database dbase("test-project", "test-instance", "test-database");
 
   EXPECT_CALL(*mock, CreateBackup(_, _))
