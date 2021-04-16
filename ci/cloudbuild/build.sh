@@ -242,7 +242,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   )
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then
-    printf "To run the build manually:\n  %s\n\n" "${cmd[*]}"
+    printf "To run the build manually:\n  "
+    printf " %q" "${cmd[@]}"
+    printf "\n\n"
     cmd=("bash")
   fi
   docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
