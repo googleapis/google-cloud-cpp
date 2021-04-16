@@ -26,7 +26,7 @@
 #include <iostream>
 #include <sstream>
 
-ABSL_FLAG(std::string, config_file, "./generator/generator_config.textproto",
+ABSL_FLAG(std::string, config_file, "",
           "Text proto configuration file specifying the code to be generated.");
 ABSL_FLAG(std::string, googleapis_commit_hash, "",
           "Git commit hash of googleapis dependency.");
@@ -54,6 +54,20 @@ GetConfig(std::string const& filepath) {
 }
 }  // namespace
 
+/**
+ * C++ microgenerator.
+ *
+ * @par Command line arguments:
+ *  --config-file=<path> REQUIRED should be a textproto file for
+ * GeneratorConfiguration message.
+ *  --googleapis_commit_hash=<hash> REQUIRED git commit hash of googleapis
+ * dependency.
+ *  --protobuf_proto_path=<path> REQUIRED path to .proto files distributed with
+ * protobuf.
+ *  --googleapis_proto_path=<path> REQUIRED path to .proto files distributed
+ * with googleapis repo.
+ *  --output_path=<path> OPTIONAL defaults to current directory.
+ */
 int main(int argc, char** argv) {
   absl::ParseCommandLine(argc, argv);
 
@@ -94,7 +108,7 @@ int main(int argc, char** argv) {
     }
     args.emplace_back(service.service_proto_path());
     GCP_LOG(INFO) << "Generating service code using: "
-                  << absl::StrJoin(args.begin(), args.end(), ";") << "\n";
+                  << absl::StrJoin(args, ";") << "\n";
 
     tasks.push_back(std::async(std::launch::async, [args] {
       google::protobuf::compiler::CommandLineInterface cli;
