@@ -78,28 +78,47 @@ std::size_t DefaultConnectionPoolSize() {
 #define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT 120
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT
 
+// Define the defaults using a pre-processor macro, this allows the application
+// developers to change the defaults for their application by compiling with
+// different values.
+#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
+#define STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::minutes(15)
+#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
+
+#ifndef STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
+#define STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY std::chrono::seconds(1)
+#endif  // STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
+
+#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
+#define STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY std::chrono::minutes(5)
+#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
+
+#ifndef STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
+#define STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING 2.0
+#endif  //  STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
+
 }  // namespace
 
 namespace internal {
 
 std::string JsonEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<GcsRestEndpointOption>()) +
+  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
          "/storage/" + options.get<TargetApiVersionOption>();
 }
 
 std::string JsonUploadEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<GcsRestEndpointOption>()) +
+  return GetEmulator().value_or(options.get<RestEndpointOption>()) +
          "/upload/storage/" + options.get<TargetApiVersionOption>();
 }
 
 std::string XmlEndpoint(Options const& options) {
-  return GetEmulator().value_or(options.get<GcsRestEndpointOption>());
+  return GetEmulator().value_or(options.get<RestEndpointOption>());
 }
 
 std::string IamEndpoint(Options const& options) {
   auto emulator = GetEmulator();
   if (emulator) return *emulator + "/iamapi";
-  return options.get<GcsIamEndpointOption>();
+  return options.get<IamEndpointOption>();
 }
 
 Options MakeOptions(ClientOptions o) {
@@ -112,13 +131,28 @@ ClientOptions MakeBackwardsCompatibleClientOptions(Options opts) {
   return ClientOptions(std::move(opts));
 }
 
+Options ApplyPolicy(Options opts, RetryPolicy const& p) {
+  opts.set<RetryPolicyOption>(p.clone());
+  return opts;
+}
+
+Options ApplyPolicy(Options opts, BackoffPolicy const& p) {
+  opts.set<BackoffPolicyOption>(p.clone());
+  return opts;
+}
+
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p) {
+  opts.set<IdempotencyPolicyOption>(p.clone());
+  return opts;
+}
+
 Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
                        Options opts) {
   auto o =
       Options{}
           .set<Oauth2CredentialsOption>(std::move(credentials))
-          .set<GcsRestEndpointOption>("https://storage.googleapis.com")
-          .set<GcsIamEndpointOption>("https://iamcredentials.googleapis.com/v1")
+          .set<RestEndpointOption>("https://storage.googleapis.com")
+          .set<IamEndpointOption>("https://iamcredentials.googleapis.com/v1")
           .set<TargetApiVersionOption>("v1")
           .set<ConnectionPoolSizeOption>(DefaultConnectionPoolSize())
           .set<DownloadBufferSizeOption>(
@@ -132,13 +166,24 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
           .set<MaximumCurlSocketRecvSizeOption>(0)
           .set<MaximumCurlSocketSendSizeOption>(0)
           .set<DownloadStallTimeoutOption>(std::chrono::seconds(
-              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT));
+              GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT))
+          .set<RetryPolicyOption>(
+              LimitedTimeRetryPolicy(
+                  STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
+                  .clone())
+          .set<BackoffPolicyOption>(
+              ExponentialBackoffPolicy(
+                  STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
+                  STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
+                  STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
+                  .clone())
+          .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy().clone());
 
   o = google::cloud::internal::MergeOptions(std::move(opts), std::move(o));
   auto emulator = GetEmulator();
   if (emulator.has_value()) {
-    o.set<GcsRestEndpointOption>(*emulator).set<GcsIamEndpointOption>(
-        *emulator + "/iamapi");
+    o.set<RestEndpointOption>(*emulator).set<IamEndpointOption>(*emulator +
+                                                                "/iamapi");
   }
 
   auto tracing =

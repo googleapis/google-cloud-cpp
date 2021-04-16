@@ -33,18 +33,8 @@ namespace internal {
 class RetryClient : public RawClient,
                     public std::enable_shared_from_this<RetryClient> {
  public:
-  struct DefaultPolicies {};
-
   explicit RetryClient(std::shared_ptr<RawClient> client,
-                       DefaultPolicies unused);
-
-  template <typename... Policies>
-  // NOLINTNEXTLINE(performance-unnecessary-value-param) TODO(#4112)
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       Policies&&... policies)
-      : RetryClient(std::move(client), DefaultPolicies{}) {
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
+                       Options const& options);
 
   ~RetryClient() override = default;
 
@@ -166,26 +156,6 @@ class RetryClient : public RawClient,
   std::shared_ptr<RawClient> client() const { return client_; }
 
  private:
-  void Apply(RetryPolicy const& policy) {
-    retry_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(BackoffPolicy const& policy) {
-    backoff_policy_prototype_ = policy.clone();
-  }
-
-  void Apply(IdempotencyPolicy const& policy) {
-    idempotency_policy_ = policy.clone();
-  }
-
-  void ApplyPolicies() {}
-
-  template <typename P, typename... Policies>
-  void ApplyPolicies(P&& head, Policies&&... policies) {
-    Apply(std::forward<P>(head));
-    ApplyPolicies(std::forward<Policies>(policies)...);
-  }
-
   std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;

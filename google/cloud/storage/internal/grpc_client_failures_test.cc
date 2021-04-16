@@ -43,17 +43,25 @@ class GrpcClientFailuresTest
  protected:
   GrpcClientFailuresTest()
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}),
-        rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:1"),
-        grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", "localhost:1") {}
+        rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
+        grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", {}) {}
 
   void SetUp() override {
     std::string const grpc_config = GetParam();
     google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                     grpc_config);
+    auto options =
+        Options{}
+            .set<internal::RestEndpointOption>("http://localhost:1")
+            .set<internal::IamEndpointOption>("http://localhost:1")
+            .set<EndpointOption>("localhost:1")
+            .set<internal::Oauth2CredentialsOption>(
+                oauth2::CreateAnonymousCredentials())
+            .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     if (grpc_config == "metadata") {
-      client_ = GrpcClient::Create({});
+      client_ = GrpcClient::Create(std::move(options));
     } else {
-      client_ = HybridClient::Create(oauth2::CreateAnonymousCredentials(), {});
+      client_ = HybridClient::Create(std::move(options));
     }
   }
 

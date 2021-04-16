@@ -67,13 +67,20 @@ class BackoffPolicyMock : public BackoffPolicy {
   std::shared_ptr<BackoffPolicyMockState> state_;
 };
 
+Options BasicTestPolicies() {
+  return Options{}
+      .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
+      .set<BackoffPolicyOption>(
+          // Make the tests faster.
+          ExponentialBackoffPolicy(1_us, 2_us, 2).clone())
+      .set<IdempotencyPolicyOption>(StrictIdempotencyPolicy().clone());
+}
+
 /// @test No failures scenario.
 TEST(RetryObjectReadSourceTest, NoFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -91,9 +98,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
 TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return PermanentError(); });
@@ -107,9 +112,7 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
 TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .Times(4)
@@ -125,9 +128,7 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
@@ -148,9 +149,7 @@ TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto* raw_source = new MockObjectReadSource;
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([raw_source](ReadObjectRangeRequest const&) {
@@ -179,8 +178,8 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   });
   auto client = std::make_shared<RetryClient>(
       std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(5), StrictIdempotencyPolicy(),
-      backoff_policy_mock);
+      BasicTestPolicies().set<BackoffPolicyOption>(
+          backoff_policy_mock.clone()));
 
   EXPECT_EQ(0, num_backoff_policy_called);
 
@@ -210,8 +209,8 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
-  // The policy was cloned by the ctor and once by the RetryClient
-  EXPECT_EQ(2, backoff_policy_mock.NumClones());
+  // The policy was cloned by the options, the ctor, and once by the RetryClient
+  EXPECT_EQ(3, backoff_policy_mock.NumClones());
   EXPECT_EQ(0, num_backoff_policy_called);
 
   // raw_source1 and raw_source2 fail, then a success
@@ -219,7 +218,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // Two retries, so the backoff policy was called twice.
   EXPECT_EQ(2, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(3, backoff_policy_mock.NumClones());
+  EXPECT_EQ(4, backoff_policy_mock.NumClones());
   // The backoff policy was used twice in the first retry.
   EXPECT_EQ(2, backoff_policy_mock.NumCallsFromLastClone());
 
@@ -228,7 +227,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // This read caused a third retry.
   EXPECT_EQ(3, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(4, backoff_policy_mock.NumClones());
+  EXPECT_EQ(5, backoff_policy_mock.NumClones());
   // The backoff policy was only once in the second retry.
   EXPECT_EQ(1, backoff_policy_mock.NumCallsFromLastClone());
 }
@@ -237,9 +236,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -268,9 +265,7 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
-      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-      ExponentialBackoffPolicy(1_us, 2_us, 2));
+      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {

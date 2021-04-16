@@ -91,22 +91,21 @@ std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
                                    std::move(args));
 }
 
-std::shared_ptr<GrpcClient> GrpcClient::Create(Options options) {
-  return Create(std::move(options), /*channel_id=*/0);
+std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
+  return Create(opts, /*channel_id=*/0);
 }
 
-std::shared_ptr<GrpcClient> GrpcClient::Create(Options options,
+std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts,
                                                int channel_id) {
   // Cannot use std::make_shared<> as the constructor is private.
-  return std::shared_ptr<GrpcClient>(
-      new GrpcClient(DefaultOptionsGrpc(std::move(options)), channel_id));
+  return std::shared_ptr<GrpcClient>(new GrpcClient(opts, channel_id));
 }
 
-GrpcClient::GrpcClient(Options const& options, int channel_id)
+GrpcClient::GrpcClient(Options const& opts, int channel_id)
     : backwards_compatibility_options_(
-          MakeBackwardsCompatibleClientOptions(options)),
+          MakeBackwardsCompatibleClientOptions(opts)),
       stub_(google::storage::v1::Storage::NewStub(
-          CreateGrpcChannel(options, channel_id))) {}
+          CreateGrpcChannel(opts, channel_id))) {}
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
     grpc::ClientContext& context, google::storage::v1::Object& result) {

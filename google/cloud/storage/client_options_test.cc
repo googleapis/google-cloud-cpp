@@ -309,9 +309,9 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   auto const opts = internal::MakeOptions(
       ClientOptions(oauth2::CreateAnonymousCredentials()));
   EXPECT_EQ("https://storage.googleapis.com",
-            opts.get<internal::GcsRestEndpointOption>());
+            opts.get<internal::RestEndpointOption>());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
-            opts.get<internal::GcsIamEndpointOption>());
+            opts.get<internal::IamEndpointOption>());
   EXPECT_TRUE(opts.has<internal::Oauth2CredentialsOption>());
   EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
   EXPECT_EQ("test-project-id", opts.get<internal::ProjectIdOption>());
@@ -330,14 +330,14 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
 TEST_F(ClientOptionsTest, DefaultOptions) {
   auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("https://storage.googleapis.com",
-            o.get<internal::GcsRestEndpointOption>());
+            o.get<internal::RestEndpointOption>());
 
   // Verify any set values are respected overriden.
   o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                               Options{}.set<internal::GcsRestEndpointOption>(
+                               Options{}.set<internal::RestEndpointOption>(
                                    "https://private.googleapis.com"));
   EXPECT_EQ("https://private.googleapis.com",
-            o.get<internal::GcsRestEndpointOption>());
+            o.get<internal::RestEndpointOption>());
 }
 
 }  // namespace

@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -34,8 +35,20 @@ static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
-    ClientOptions options) {
-  return internal::CurlClient::Create(std::move(options));
+    Options const& opts, std::shared_ptr<internal::RawClient> client) {
+  using google::cloud::internal::Contains;
+  auto const& tracing_components = opts.get<TracingComponentsOption>();
+  auto const enable_logging = Contains(tracing_components, "raw-client") ||
+                              Contains(tracing_components, "rpc");
+  if (enable_logging) {
+    client = std::make_shared<internal::LoggingClient>(std::move(client));
+  }
+  return std::make_shared<internal::RetryClient>(std::move(client), opts);
+}
+
+std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
+    Options const& opts) {
+  return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
 
 StatusOr<Client> Client::CreateDefaultClient() {

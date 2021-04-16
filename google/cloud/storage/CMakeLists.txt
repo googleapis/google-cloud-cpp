@@ -218,6 +218,7 @@ add_library(
     object_rewriter.h
     object_stream.cc
     object_stream.h
+    options.h
     override_default_project.h
     parallel_upload.cc
     parallel_upload.h

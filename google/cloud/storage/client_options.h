@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_OPTIONS_H
 
 #include "google/cloud/storage/oauth2/credentials.h"
+#include "google/cloud/storage/options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
@@ -35,73 +36,23 @@ std::string XmlEndpoint(Options const&);
 std::string IamEndpoint(Options const&);
 
 Options MakeOptions(ClientOptions);
+
 ClientOptions MakeBackwardsCompatibleClientOptions(Options);
+
+Options ApplyPolicy(Options opts, RetryPolicy const& p);
+Options ApplyPolicy(Options opts, BackoffPolicy const& p);
+Options ApplyPolicy(Options opts, IdempotencyPolicy const& p);
+
+inline Options ApplyPolicies(Options opts) { return opts; }
+
+template <typename P, typename... Policies>
+Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
+  opts = ApplyPolicy(std::move(opts), std::forward<P>(head));
+  return ApplyPolicies(std::move(opts), std::forward<Policies>(tail)...);
+}
+
 Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
                        Options opts = {});
-
-/// Configure the IAM endpoint for the GCS client library.
-struct GcsRestEndpointOption {
-  using Type = std::string;
-};
-
-struct GcsIamEndpointOption {
-  using Type = std::string;
-};
-
-/// Configure oauth2::Credentials for the GCS client library.
-struct Oauth2CredentialsOption {
-  using Type = std::shared_ptr<oauth2::Credentials>;
-};
-
-/// This is only intended for testing against staging or development versions
-/// of the service. It should *remain* in the internal:: namespace.
-struct TargetApiVersionOption {
-  using Type = std::string;
-};
-
-struct ProjectIdOption {
-  using Type = std::string;
-};
-
-struct ConnectionPoolSizeOption {
-  using Type = std::size_t;
-};
-
-struct DownloadBufferSizeOption {
-  using Type = std::size_t;
-};
-
-struct UploadBufferSizeOption {
-  using Type = std::size_t;
-};
-
-struct MaximumSimpleUploadSizeOption {
-  using Type = std::size_t;
-};
-
-struct EnableCurlSslLockingOption {
-  using Type = bool;
-};
-
-struct EnableCurlSigpipeHandlerOption {
-  using Type = bool;
-};
-
-struct MaximumCurlSocketRecvSizeOption {
-  using Type = std::size_t;
-};
-
-struct MaximumCurlSocketSendSizeOption {
-  using Type = std::size_t;
-};
-
-struct DownloadStallTimeoutOption {
-  using Type = std::chrono::seconds;
-};
-
-struct SslRootPathOption {
-  using Type = std::string;
-};
 
 }  // namespace internal
 
@@ -173,18 +124,18 @@ class ClientOptions {
   }
 
   std::string const& endpoint() const {
-    return opts_.get<internal::GcsRestEndpointOption>();
+    return opts_.get<internal::RestEndpointOption>();
   }
   ClientOptions& set_endpoint(std::string endpoint) {
-    opts_.set<internal::GcsRestEndpointOption>(std::move(endpoint));
+    opts_.set<internal::RestEndpointOption>(std::move(endpoint));
     return *this;
   }
 
   std::string const& iam_endpoint() const {
-    return opts_.get<internal::GcsIamEndpointOption>();
+    return opts_.get<internal::IamEndpointOption>();
   }
   ClientOptions& set_iam_endpoint(std::string endpoint) {
-    opts_.set<internal::GcsIamEndpointOption>(std::move(endpoint));
+    opts_.set<internal::IamEndpointOption>(std::move(endpoint));
     return *this;
   }
 
