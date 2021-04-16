@@ -59,6 +59,7 @@ function quickstart::run_cmake_and_make() {
 
     echo
     io::log "[ Make ]"
+    LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
     PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
       make -C "${src_dir}"
     test "${#run_args[@]}" -eq 0 || "${src_dir}/quickstart" "${run_args[@]}"
