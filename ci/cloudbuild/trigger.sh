@@ -55,6 +55,7 @@ name: ${name}-ci
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci
 EOF
@@ -74,6 +75,7 @@ name: ${name}-pr
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr
 EOF

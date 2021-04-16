@@ -9,5 +9,6 @@ name: msan-pr
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan
+  _TRIGGER_TYPE: pr
 tags:
 - pr
