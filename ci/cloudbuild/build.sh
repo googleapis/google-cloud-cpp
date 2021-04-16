@@ -220,7 +220,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   io::log_h2 "Building docker image: ${image}"
   docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
-  io::log_h2 "Starting container for ${image} running ${BUILD_NAME}"
+  io::log_h2 "Starting docker container: ${image}"
   run_flags=(
     "--interactive"
     "--tty"
@@ -242,8 +242,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   )
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then
-    io::log "Starting shell, to manually run the requested build use:"
-    echo "==> ${cmd[*]}"
+    printf "To run the build manually:\n  "
+    printf " %q" "${cmd[@]}"
+    printf "\n\n"
     cmd=("bash")
   fi
   docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
@@ -264,16 +265,17 @@ fi
 # Uses Google Cloud build to run the specified build.
 io::log_h1 "Starting cloud build: ${BUILD_NAME}"
 account="$(gcloud config list account --format "value(core.account)")"
-subs="_DISTRO=${DISTRO_FLAG}"
-subs+=",_BUILD_NAME=${BUILD_NAME}"
-subs+=",_CACHE_TYPE=manual-${account}"
-subs+=",_PR_NUMBER=" # Must be empty or a number, and this is not a PR
-subs+=",BRANCH_NAME=${BRANCH_NAME}"
-subs+=",COMMIT_SHA=${COMMIT_SHA}"
-io::log "Substitutions ${subs}"
+subs=("_DISTRO=${DISTRO_FLAG}")
+subs+=("_BUILD_NAME=${BUILD_NAME}")
+subs+=("_CACHE_TYPE=manual-${account}")
+subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
+subs+=("BRANCH_NAME=${BRANCH_NAME}")
+subs+=("COMMIT_SHA=${COMMIT_SHA}")
+printf "Substitutions:\n"
+printf "  %s\n" "${subs[@]}"
 args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"
-  "--substitutions=${subs}"
+  "--substitutions=$(printf "%s," "${subs[@]}")"
 )
 if [[ -n "${PROJECT_FLAG}" ]]; then
   args+=("--project=${PROJECT_FLAG}")
