@@ -27,6 +27,7 @@ mapfile -t args < <(bazel::common_args)
 args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
 args+=("--instrument_test_targets")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
+GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 

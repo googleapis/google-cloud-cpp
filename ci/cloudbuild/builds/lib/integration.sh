@@ -73,6 +73,7 @@ function integration::args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     # Spanner
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
   )
@@ -150,7 +151,6 @@ function integration::bazel_with_emulators() {
     bazel "${verb}" "${args[@]}"
 
   # TODO(#6083): Add support for:
-  # - GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS
   # - GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT
   io::log_h2 "Running Spanner integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
