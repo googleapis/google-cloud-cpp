@@ -28,6 +28,7 @@ args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
 args+=("--instrument_test_targets")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 mapfile -t integration_args < <(integration::args)
+GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
