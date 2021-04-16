@@ -76,8 +76,7 @@ Mocking a successful &lt;tt&gt;ExecuteQuery&lt;/tt&gt;</h2>
 <div class="line"><span class="preprocessor">#include &lt;google/protobuf/text_format.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;gmock/gmock.h&gt;</span></div>
 </div><!-- fragment --><p> The example uses a number of aliases to save typing and improve readability:</p>
-<div class="fragment"><div class="line">using ::testing::_;</div>
-<div class="line">using ::testing::Return;</div>
+<div class="fragment"><div class="line">using ::testing::Return;</div>
 <div class="line"><span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div>
 </div><!-- fragment --><p> Create a mocking object for <code><a class="el" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Connection.html" title="A connection to a Spanner database instance.">google::cloud::spanner::Connection</a></code>:</p>
 <div class="fragment"><div class="line">  <span class="keyword">auto</span> conn = std::make_shared&lt;google::cloud::spanner_mocks::MockConnection&gt;();</div>
@@ -125,7 +124,7 @@ Mocking a successful &lt;tt&gt;ExecuteQuery&lt;/tt&gt;</h2>
 </div><!-- fragment --><p> Note that the last value in the stream is indicated by an absl::optional without a value:</p>
 <div class="fragment"><div class="line">      .WillOnce(Return(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html">spanner::Row</a>()));</div>
 </div><!-- fragment --><p>Once the <code>source</code> has been created and its behavior mocked, you mock the behavior for <code>ExecuteQuery</code>:</p>
-<div class="fragment"><div class="line">  EXPECT_CALL(*conn, ExecuteQuery(_))</div>
+<div class="fragment"><div class="line">  EXPECT_CALL(*conn, ExecuteQuery)</div>
 <div class="line">      .WillOnce([&amp;source](spanner::Connection::SqlParams <span class="keyword">const</span>&amp;)</div>
 <div class="line">                    -&gt; <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a> {</div>
 <div class="line">        <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a>(std::move(source));</div>
@@ -141,7 +140,6 @@ Full Listing</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>{</div>
 <div class="line"> </div>
-<div class="line">using ::testing::_;</div>
 <div class="line">using ::testing::Return;</div>
 <div class="line"><span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div>
 <div class="line"> </div>
@@ -181,7 +179,7 @@ Full Listing</h2>
 <div class="line"><span class="comment"></span>  <span class="keyword">auto</span> conn = std::make_shared&lt;google::cloud::spanner_mocks::MockConnection&gt;();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Setup the connection mock to return the results previously setup:</span></div>
-<div class="line"><span class="comment"></span>  EXPECT_CALL(*conn, ExecuteQuery(_))</div>
+<div class="line"><span class="comment"></span>  EXPECT_CALL(*conn, ExecuteQuery)</div>
 <div class="line">      .WillOnce([&amp;source](spanner::Connection::SqlParams <span class="keyword">const</span>&amp;)</div>
 <div class="line">                    -&gt; <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a> {</div>
 <div class="line">        <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a>(std::move(source));</div>

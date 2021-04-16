@@ -93,71 +93,70 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span>{</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;using ::testing::_;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;using ::testing::Return;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;TEST(MockSpannerClient, SuccessfulExecuteQuery) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="comment">// Create a mock object to stream the results of a ExecuteQuery.</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> source =</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;      std::unique_ptr&lt;google::cloud::spanner_mocks::MockResultSetSource&gt;(</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;          <span class="keyword">new</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner__mocks_1_1v1_1_1MockResultSetSource.html">google::cloud::spanner_mocks::MockResultSetSource</a>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="comment">// Setup the return type of the ExecuteQuery results:</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> constexpr kText = R<span class="stringliteral">&quot;pb(</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="stringliteral">    row_type: {</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="stringliteral">      fields: {</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="stringliteral">        name: &quot;Id&quot;,</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="stringliteral">        type: { code: INT64 }</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="stringliteral">      }</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="stringliteral">      fields: {</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="stringliteral">        name: &quot;Greeting&quot;,</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="stringliteral">        type: { code: STRING }</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="stringliteral">      }</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="stringliteral">    })pb&quot;;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="stringliteral">  google::spanner::v1::ResultSetMetadata metadata;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &amp;metadata));</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="stringliteral">  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="stringliteral"></span> </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="stringliteral">  </span><span class="comment">// Setup the mock source to return some values:</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment"></span>  EXPECT_CALL(*source, NextRow())</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      .WillOnce(Return(</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;          <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1e6c93e3354534b522f62638634e137a">spanner::MakeTestRow</a>({{<span class="stringliteral">&quot;Id&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(1)},</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                                {<span class="stringliteral">&quot;Greeting&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(<span class="stringliteral">&quot;Hello World&quot;</span>)}})))</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      .WillOnce(Return(</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;          <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1e6c93e3354534b522f62638634e137a">spanner::MakeTestRow</a>({{<span class="stringliteral">&quot;Id&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(2)},</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                                {<span class="stringliteral">&quot;Greeting&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(<span class="stringliteral">&quot;Hello World&quot;</span>)}})))</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      .WillOnce(Return(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html">spanner::Row</a>()));</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="comment">// Create a mock for `spanner::Connection`:</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> conn = std::make_shared&lt;google::cloud::spanner_mocks::MockConnection&gt;();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="comment">// Setup the connection mock to return the results previously setup:</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment"></span>  EXPECT_CALL(*conn, ExecuteQuery(_))</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      .WillOnce([&amp;source](spanner::Connection::SqlParams <span class="keyword">const</span>&amp;)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    -&gt; <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a> {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a>(std::move(source));</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      });</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="comment">// Create a client with the mocked connection:</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment"></span>  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html">spanner::Client</a> client(conn);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="comment">// Make the request and verify the expected results:</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> rows = client.ExecuteQuery(</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html">spanner::SqlStatement</a>(<span class="stringliteral">&quot;SELECT Id, Greeting FROM Greetings&quot;</span>));</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keywordtype">int</span> count = 0;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keyword">using</span> RowType = std::tuple&lt;std::int64_t, std::string&gt;;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; row : spanner::StreamOf&lt;RowType&gt;(rows)) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    ASSERT_TRUE(row);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">auto</span> expected_id = ++count;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    EXPECT_EQ(expected_id, std::get&lt;0&gt;(*row));</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    EXPECT_EQ(<span class="stringliteral">&quot;Hello World&quot;</span>, std::get&lt;1&gt;(*row));</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}  <span class="comment">// namespace</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;using ::testing::Return;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacegoogle_1_1cloud_1_1spanner.html">spanner</a> = ::google::cloud::spanner;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;TEST(MockSpannerClient, SuccessfulExecuteQuery) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="comment">// Create a mock object to stream the results of a ExecuteQuery.</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> source =</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      std::unique_ptr&lt;google::cloud::spanner_mocks::MockResultSetSource&gt;(</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          <span class="keyword">new</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner__mocks_1_1v1_1_1MockResultSetSource.html">google::cloud::spanner_mocks::MockResultSetSource</a>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="comment">// Setup the return type of the ExecuteQuery results:</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> constexpr kText = R<span class="stringliteral">&quot;pb(</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="stringliteral">    row_type: {</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="stringliteral">      fields: {</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="stringliteral">        name: &quot;Id&quot;,</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="stringliteral">        type: { code: INT64 }</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="stringliteral">      }</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="stringliteral">      fields: {</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="stringliteral">        name: &quot;Greeting&quot;,</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="stringliteral">        type: { code: STRING }</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="stringliteral">      }</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="stringliteral">    })pb&quot;;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="stringliteral">  google::spanner::v1::ResultSetMetadata metadata;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="stringliteral">  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &amp;metadata));</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="stringliteral">  </span><span class="comment">// Setup the mock source to return some values:</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"></span>  EXPECT_CALL(*source, NextRow())</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      .WillOnce(Return(</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;          <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1e6c93e3354534b522f62638634e137a">spanner::MakeTestRow</a>({{<span class="stringliteral">&quot;Id&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(1)},</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                                {<span class="stringliteral">&quot;Greeting&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(<span class="stringliteral">&quot;Hello World&quot;</span>)}})))</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      .WillOnce(Return(</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1e6c93e3354534b522f62638634e137a">spanner::MakeTestRow</a>({{<span class="stringliteral">&quot;Id&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(2)},</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                                {<span class="stringliteral">&quot;Greeting&quot;</span>, <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Value.html">spanner::Value</a>(<span class="stringliteral">&quot;Hello World&quot;</span>)}})))</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      .WillOnce(Return(<a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Row.html">spanner::Row</a>()));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="comment">// Create a mock for `spanner::Connection`:</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> conn = std::make_shared&lt;google::cloud::spanner_mocks::MockConnection&gt;();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="comment">// Setup the connection mock to return the results previously setup:</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"></span>  EXPECT_CALL(*conn, ExecuteQuery)</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      .WillOnce([&amp;source](spanner::Connection::SqlParams <span class="keyword">const</span>&amp;)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                    -&gt; <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a> {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1RowStream.html">spanner::RowStream</a>(std::move(source));</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      });</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="comment">// Create a client with the mocked connection:</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"></span>  <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1Client.html">spanner::Client</a> client(conn);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="comment">// Make the request and verify the expected results:</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"></span>  <span class="keyword">auto</span> rows = client.ExecuteQuery(</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <a class="code" href="classgoogle_1_1cloud_1_1spanner_1_1v1_1_1SqlStatement.html">spanner::SqlStatement</a>(<span class="stringliteral">&quot;SELECT Id, Greeting FROM Greetings&quot;</span>));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="keyword">using</span> RowType = std::tuple&lt;std::int64_t, std::string&gt;;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; row : spanner::StreamOf&lt;RowType&gt;(rows)) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    ASSERT_TRUE(row);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">auto</span> expected_id = ++count;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    EXPECT_EQ(expected_id, std::get&lt;0&gt;(*row));</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    EXPECT_EQ(<span class="stringliteral">&quot;Hello World&quot;</span>, std::get&lt;1&gt;(*row));</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}  <span class="comment">// namespace</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_html"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner.html">google::cloud::spanner</a></div><div class="ttdoc">Contains all the Cloud Spanner C++ client types and functions.</div><div class="ttdef"><b>Definition:</b> <a href="backoff__policy_8h_source.html#l00023">backoff_policy.h:23</a></div></div>
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_a1e6c93e3354534b522f62638634e137a"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a1e6c93e3354534b522f62638634e137a">google::cloud::spanner::v1::MakeTestRow</a></div><div class="ttdeci">Row MakeTestRow(std::vector&lt; std::pair&lt; std::string, Value &gt;&gt; pairs)</div><div class="ttdoc">Creates a Row with the specified column names and values.</div><div class="ttdef"><b>Definition:</b> <a href="row_8cc_source.html#l00036">row.cc:36</a></div></div>

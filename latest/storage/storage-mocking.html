@@ -96,7 +96,7 @@ Mocking Successful call of &lt;tt&gt;ReadObject&lt;/tt&gt;</h3>
 <div class="line">    <span class="keywordflow">return</span> gcs::internal::ReadSourceResult{</div>
 <div class="line">        l, gcs::internal::HttpResponse{200, {}, {}}};</div>
 <div class="line">  };</div>
-<div class="line">  EXPECT_CALL(*mock, ReadObject(_))</div>
+<div class="line">  EXPECT_CALL(*mock, ReadObject)</div>
 <div class="line">      .WillOnce([simulate_read](</div>
 <div class="line">                    gcs::internal::ReadObjectRangeRequest <span class="keyword">const</span>&amp; request) {</div>
 <div class="line">        EXPECT_EQ(request.bucket_name(), <span class="stringliteral">&quot;mock-bucket-name&quot;</span>) &lt;&lt; request;</div>
@@ -105,7 +105,7 @@ Mocking Successful call of &lt;tt&gt;ReadObject&lt;/tt&gt;</h3>
 <div class="line">        EXPECT_CALL(*mock_source, IsOpen())</div>
 <div class="line">            .WillOnce(Return(<span class="keyword">true</span>))</div>
 <div class="line">            .WillRepeatedly(Return(<span class="keyword">false</span>));</div>
-<div class="line">        EXPECT_CALL(*mock_source, Read(_, _)).WillRepeatedly(simulate_read);</div>
+<div class="line">        EXPECT_CALL(*mock_source, Read).WillRepeatedly(simulate_read);</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> google::cloud::make_status_or(</div>
 <div class="line">            std::unique_ptr&lt;gcs::internal::ObjectReadSource&gt;(</div>
@@ -137,14 +137,14 @@ Mocking Failed call of &lt;tt&gt;ReadObject&lt;/tt&gt;</h3>
 <div class="line">  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"> </div>
 <div class="line">  std::string text = <span class="stringliteral">&quot;this is a mock http response&quot;</span>;</div>
-<div class="line">  EXPECT_CALL(*mock, ReadObject(_))</div>
+<div class="line">  EXPECT_CALL(*mock, ReadObject)</div>
 <div class="line">      .WillOnce([](gcs::internal::ReadObjectRangeRequest <span class="keyword">const</span>&amp; request) {</div>
 <div class="line">        EXPECT_EQ(request.bucket_name(), <span class="stringliteral">&quot;mock-bucket-name&quot;</span>) &lt;&lt; request;</div>
 <div class="line">        <span class="keyword">auto</span>* mock_source = <span class="keyword">new</span> gcs::testing::MockObjectReadSource;</div>
 <div class="line">        EXPECT_CALL(*mock_source, IsOpen())</div>
 <div class="line">            .WillOnce(Return(<span class="keyword">true</span>))</div>
 <div class="line">            .WillRepeatedly(Return(<span class="keyword">false</span>));</div>
-<div class="line">        EXPECT_CALL(*mock_source, Read(_, _))</div>
+<div class="line">        EXPECT_CALL(*mock_source, Read)</div>
 <div class="line">            .WillOnce(Return(google::cloud::Status(</div>
 <div class="line">                google::cloud::StatusCode::kInvalidArgument,</div>
 <div class="line">                <span class="stringliteral">&quot;Invalid Argument&quot;</span>)));</div>
@@ -176,7 +176,7 @@ Mocking Successful call of &lt;tt&gt;WriteObject&lt;/tt&gt;</h3>
 <div class="line"> </div>
 <div class="line">  <a class="code" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html">gcs::ObjectMetadata</a> expected_metadata;</div>
 <div class="line"> </div>
-<div class="line">  EXPECT_CALL(*mock, CreateResumableSession(_))</div>
+<div class="line">  EXPECT_CALL(*mock, CreateResumableSession)</div>
 <div class="line">      .WillOnce([&amp;expected_metadata](</div>
 <div class="line">                    gcs::internal::ResumableUploadRequest <span class="keyword">const</span>&amp; request) {</div>
 <div class="line">        EXPECT_EQ(request.bucket_name(), <span class="stringliteral">&quot;mock-bucket-name&quot;</span>) &lt;&lt; request;</div>
@@ -185,14 +185,14 @@ Mocking Successful call of &lt;tt&gt;WriteObject&lt;/tt&gt;</h3>
 <div class="line">        EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(<span class="keyword">false</span>));</div>
 <div class="line">        EXPECT_CALL(*mock_result, next_expected_byte())</div>
 <div class="line">            .WillRepeatedly(Return(0));</div>
-<div class="line">        EXPECT_CALL(*mock_result, UploadChunk(_))</div>
+<div class="line">        EXPECT_CALL(*mock_result, UploadChunk)</div>
 <div class="line">            .WillRepeatedly(Return(google::cloud::make_status_or(</div>
 <div class="line">                ResumableUploadResponse{<span class="stringliteral">&quot;fake-url&quot;</span>,</div>
 <div class="line">                                        0,</div>
 <div class="line">                                        {},</div>
 <div class="line">                                        ResumableUploadResponse::kInProgress,</div>
 <div class="line">                                        {}})));</div>
-<div class="line">        EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))</div>
+<div class="line">        EXPECT_CALL(*mock_result, UploadFinalChunk)</div>
 <div class="line">            .WillRepeatedly(Return(google::cloud::make_status_or(</div>
 <div class="line">                ResumableUploadResponse{<span class="stringliteral">&quot;fake-url&quot;</span>,</div>
 <div class="line">                                        0,</div>
@@ -223,7 +223,7 @@ Mocking Failed call of &lt;tt&gt;WriteObject&lt;/tt&gt;</h3>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> client = gcs::testing::ClientFromMock(mock);</div>
 <div class="line"> </div>
-<div class="line">  EXPECT_CALL(*mock, CreateResumableSession(_))</div>
+<div class="line">  EXPECT_CALL(*mock, CreateResumableSession)</div>
 <div class="line">      .WillOnce([](gcs::internal::ResumableUploadRequest <span class="keyword">const</span>&amp; request) {</div>
 <div class="line">        EXPECT_EQ(request.bucket_name(), <span class="stringliteral">&quot;mock-bucket-name&quot;</span>) &lt;&lt; request;</div>
 <div class="line">        <span class="keyword">auto</span>* mock_result = <span class="keyword">new</span> gcs::testing::MockResumableUploadSession;</div>
@@ -231,11 +231,11 @@ Mocking Failed call of &lt;tt&gt;WriteObject&lt;/tt&gt;</h3>
 <div class="line">        EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(<span class="keyword">false</span>));</div>
 <div class="line">        EXPECT_CALL(*mock_result, next_expected_byte())</div>
 <div class="line">            .WillRepeatedly(Return(0));</div>
-<div class="line">        EXPECT_CALL(*mock_result, UploadChunk(_))</div>
+<div class="line">        EXPECT_CALL(*mock_result, UploadChunk)</div>
 <div class="line">            .WillRepeatedly(Return(google::cloud::Status(</div>
 <div class="line">                google::cloud::StatusCode::kInvalidArgument,</div>
 <div class="line">                <span class="stringliteral">&quot;Invalid Argument&quot;</span>)));</div>
-<div class="line">        EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))</div>
+<div class="line">        EXPECT_CALL(*mock_result, UploadFinalChunk)</div>
 <div class="line">            .WillRepeatedly(Return(google::cloud::Status(</div>
 <div class="line">                google::cloud::StatusCode::kInvalidArgument,</div>
 <div class="line">                <span class="stringliteral">&quot;Invalid Argument&quot;</span>)));</div>
