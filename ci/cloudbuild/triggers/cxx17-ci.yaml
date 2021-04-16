@@ -8,5 +8,6 @@ name: cxx17-ci
 substitutions:
   _BUILD_NAME: cxx17
   _DISTRO: fedora
+  _TRIGGER_TYPE: ci
 tags:
 - ci

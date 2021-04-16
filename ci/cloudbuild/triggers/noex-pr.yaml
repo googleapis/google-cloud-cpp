@@ -9,5 +9,6 @@ name: noex-pr
 substitutions:
   _BUILD_NAME: noex
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr

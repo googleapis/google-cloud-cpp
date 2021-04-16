@@ -9,5 +9,6 @@ name: gcs-grpc-pr
 substitutions:
   _BUILD_NAME: gcs-grpc
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr

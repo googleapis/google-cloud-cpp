@@ -9,5 +9,6 @@ name: libcxx-pr
 substitutions:
   _BUILD_NAME: libcxx
   _DISTRO: fedora
+  _TRIGGER_TYPE: pr
 tags:
 - pr

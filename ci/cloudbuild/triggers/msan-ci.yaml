@@ -8,5 +8,6 @@ name: msan-ci
 substitutions:
   _BUILD_NAME: msan
   _DISTRO: fedora-msan
+  _TRIGGER_TYPE: ci
 tags:
 - ci
