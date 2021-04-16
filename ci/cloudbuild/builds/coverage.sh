@@ -46,7 +46,7 @@ TIMEFORMAT="==> 🕑 merging done in %R seconds"
 time {
   mapfile -t coverage_dat < <(find "$(bazel info output_path)" -name "coverage.dat")
   io::log "Found ${#coverage_dat[@]} coverage.dat files"
-  lcov_flags=($(printf -- "--add-tracefile=%s " "${coverage_dat[@]}"))
+  mapfile -t lcov_flags < <(printf -- "--add-tracefile=%s\n" "${coverage_dat[@]}")
   lcov --quiet "${lcov_flags[@]}" --output-file "${MERGED_COVERAGE}"
   ls -lh "${MERGED_COVERAGE}"
 }
