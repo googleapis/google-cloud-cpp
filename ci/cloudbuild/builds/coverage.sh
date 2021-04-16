@@ -24,6 +24,8 @@ export CC=gcc
 export CXX=g++
 
 mapfile -t args < <(bazel::common_args)
+args+=("--instrumentation_filter=/google/cloud[/:],/generator[/:]")
+args+=("--instrument_test_targets")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 mapfile -t integration_args < <(integration::args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
