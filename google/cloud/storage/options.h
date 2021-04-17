@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OPTIONS_H
 
 #include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/backoff_policy.h"
