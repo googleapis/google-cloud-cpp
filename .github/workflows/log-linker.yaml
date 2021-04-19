@@ -1,0 +1,40 @@
+# Copyright 2021 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Post a comment linking to the build logs
+on: [pull_request]
+jobs:
+  Log-Linker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Find Logs Comment
+      uses: peter-evans/find-comment@v1
+      id: fc
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'google-cloud-cpp-actions[bot]'
+        body-includes: This is a comment from the loglinker bot.
+
+    - name: Create or update comment
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          This is a comment from the loglinker bot. To view logs for this build see:
+
+            * http://storage.googleapis.com/cloud-cpp-testing-resources_publiclogs/logs/google-cloud-cpp/${{ github.event.pull_request.number }}/${{ github.sha }}
+            * .... blah ....
+
+        edit-mode: replace
