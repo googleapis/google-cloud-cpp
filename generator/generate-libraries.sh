@@ -34,7 +34,7 @@ io::log_yellow "Build protoc binary"
 ${BAZEL_BIN} build @com_google_protobuf//:protoc
 
 io::log_yellow "Build microgenerator standalone executable"
-${BAZEL_BIN} build //generator:protoc-gen-cpp_codegen
+${BAZEL_BIN} build //generator:google-cloud-cpp-codegen
 
 io::log_yellow "Run protoc and format generated .h and .cc files:"
 cd "${PROJECT_ROOT}"
@@ -45,7 +45,17 @@ GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes "${BAZEL_BIN_DIR}"/generator/google-cloud-cpp-c
   --output_path=. \
   --config_file=generator/generator_config.textproto
 
-find google/cloud \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
+io::log_yellow "clang-format generated code."
+find google/cloud -path google/cloud/bigtable -prune -o \
+  -path google/cloud/examples -prune -o \
+  -path google/cloud/firestore -prune -o \
+  -path google/cloud/grpc_utils -prune -o \
+  -path google/cloud/internal -prune -o \
+  -path google/cloud/pubsub -prune -o \
+  -path google/cloud/spanner -prune -o \
+  -path google/cloud/storage -prune -o \
+  -path google/cloud/testing_util -prune -o \
+  \( -name '*.cc' -o -name '*.h' \) -exec clang-format -i {} \;
 
 io::log_yellow "Update generator-googlapis-commit-hash.sh file."
 cat >"${PROJECT_ROOT}"/ci/etc/generator-googleapis-commit-hash.sh <<EOF
