@@ -127,6 +127,8 @@ add_library(
     internal/build_info.h
     internal/compiler_info.cc
     internal/compiler_info.h
+    internal/credentials.cc
+    internal/credentials.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
@@ -406,7 +408,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/streaming_read_rpc.h
         internal/streaming_read_rpc_logging.h
         internal/time_utils.cc
-        internal/time_utils.h)
+        internal/time_utils.h
+        internal/unified_grpc_credentials.cc
+        internal/unified_grpc_credentials.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC absl::function_ref

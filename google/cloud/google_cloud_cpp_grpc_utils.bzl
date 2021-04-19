@@ -45,6 +45,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/streaming_read_rpc.h",
     "internal/streaming_read_rpc_logging.h",
     "internal/time_utils.h",
+    "internal/unified_grpc_credentials.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
@@ -59,4 +60,5 @@ google_cloud_cpp_grpc_utils_srcs = [
     "internal/retry_loop_helpers.cc",
     "internal/streaming_read_rpc.cc",
     "internal/time_utils.cc",
+    "internal/unified_grpc_credentials.cc",
 ]

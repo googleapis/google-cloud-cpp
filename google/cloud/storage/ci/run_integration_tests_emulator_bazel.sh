@@ -50,6 +50,7 @@ production_only_targets=(
   "//google/cloud/storage/examples:storage_signed_url_v4_samples"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
+  "//google/cloud/storage/tests:unified_credentials_integration_test"
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_tag_filters="integration-test" -- \
