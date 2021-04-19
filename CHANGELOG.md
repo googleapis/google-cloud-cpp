@@ -76,6 +76,9 @@
   not used by client libraries. However, if anyone was relying on the
   `generator/` being compiled, it can be re-enabled with
   `-DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON`
+* In #6286, we removed the .gcpcxx.pb suffix from filenames emitted from the C++
+  microgenerator. Any usages of the bigquery, iamcredentials, or logging
+  experimental libraries will require updating of include paths in user code.
 
 ## v1.26.0 - 2021-04
 
