@@ -41,8 +41,13 @@ substitutions:
   _TRIGGER_TYPE: 'manual'
   _LOGS_BUCKET_SUFFIX: 'publiclogs'
 
-tags: [ '${_TRIGGER_TYPE}', '${_BUILD_NAME}', '${_DISTRO}' ]
 timeout: 3600s
+tags: [
+  '${_TRIGGER_TYPE}',
+  '${_BUILD_NAME}',
+  '${_DISTRO}',
+  '${_PR_NUMBER}'
+]
 
 availableSecrets:
   secretManager:
