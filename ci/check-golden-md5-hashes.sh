@@ -24,8 +24,8 @@ if [[ "${CHECK_GENERATED_CODE_HASH}" != "yes" ]]; then
 fi
 
 num_current_files=$(find "${PROJECT_ROOT}"/generator/integration_tests/golden/ \
-    -path "${PROJECT_ROOT}"/generator/integration_tests/golden/tests -prune \
-    -false -o -name '*golden*.h' -o -name '*golden*.cc' | wc -l)
+  -path "${PROJECT_ROOT}"/generator/integration_tests/golden/tests -prune \
+  -false -o -name '*golden*.h' -o -name '*golden*.cc' | wc -l)
 num_hashed_files=$(wc -l <"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5)
 
 if [ "${num_current_files}" -gt "${num_hashed_files}" ]; then

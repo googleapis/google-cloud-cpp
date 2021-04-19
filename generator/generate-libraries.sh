@@ -88,6 +88,6 @@ EOF
 io::log_yellow "Update ci/etc/generator-golden-md5-hashes.md5."
 find generator/integration_tests/golden/ \
   -path generator/integration_tests/golden/tests -prune -false -o \
-  -name '*golden*.h' -print0 -o -name '*golden*.cc' -print0 | sort -z | \
+  -name '*golden*.h' -print0 -o -name '*golden*.cc' -print0 | sort -z |
   xargs -0 md5sum >"${PROJECT_ROOT}"/ci/etc/generator-golden-md5-hashes.md5
 exit 0
