@@ -32,7 +32,7 @@ TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
                    "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenThingAdminDefaultOptions(options);
@@ -40,7 +40,7 @@ TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
                    "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");
