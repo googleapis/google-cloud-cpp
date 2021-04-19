@@ -107,6 +107,14 @@ Macros</h2></td></tr>
 <tr class="separator:ad1ea59f83e217a9986e59f1bf9b1a2c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39da51214909a41359b3d80fb36a3f71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a39da51214909a41359b3d80fb36a3f71">GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT</a>&#160;&#160;&#160;120</td></tr>
 <tr class="separator:a39da51214909a41359b3d80fb36a3f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9045e1115c7918bc7b80070d677a26a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a9045e1115c7918bc7b80070d677a26a8">STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD</a>&#160;&#160;&#160;std::chrono::minutes(15)</td></tr>
+<tr class="separator:a9045e1115c7918bc7b80070d677a26a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97b3f37cfb87b49722d387ce005a6c6f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a97b3f37cfb87b49722d387ce005a6c6f">STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY</a>&#160;&#160;&#160;std::chrono::seconds(1)</td></tr>
+<tr class="separator:a97b3f37cfb87b49722d387ce005a6c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dc7688dab31fca38a178e8246990306"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#a5dc7688dab31fca38a178e8246990306">STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY</a>&#160;&#160;&#160;std::chrono::minutes(5)</td></tr>
+<tr class="separator:a5dc7688dab31fca38a178e8246990306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf6d9106bc9f9f3ebbc33a3f87d348ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client__options_8cc.html#abf6d9106bc9f9f3ebbc33a3f87d348ca">STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING</a>&#160;&#160;&#160;2.0</td></tr>
+<tr class="separator:abf6d9106bc9f9f3ebbc33a3f87d348ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a25c50af0e37e9649cd291ef49702f70b"></a>
@@ -170,6 +178,70 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00062">62</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+
+</div>
+</div>
+<a id="abf6d9106bc9f9f3ebbc33a3f87d348ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf6d9106bc9f9f3ebbc33a3f87d348ca">&#9670;&nbsp;</a></span>STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING&#160;&#160;&#160;2.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00097">97</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+
+</div>
+</div>
+<a id="a97b3f37cfb87b49722d387ce005a6c6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97b3f37cfb87b49722d387ce005a6c6f">&#9670;&nbsp;</a></span>STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY&#160;&#160;&#160;std::chrono::seconds(1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00089">89</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+
+</div>
+</div>
+<a id="a5dc7688dab31fca38a178e8246990306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dc7688dab31fca38a178e8246990306">&#9670;&nbsp;</a></span>STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY&#160;&#160;&#160;std::chrono::minutes(5)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00093">93</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
+
+</div>
+</div>
+<a id="a9045e1115c7918bc7b80070d677a26a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9045e1115c7918bc7b80070d677a26a8">&#9670;&nbsp;</a></span>STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD&#160;&#160;&#160;std::chrono::minutes(15)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="client__options_8cc_source.html#l00085">85</a> of file <a class="el" href="client__options_8cc_source.html">client_options.cc</a>.</p>
 
 </div>
 </div>

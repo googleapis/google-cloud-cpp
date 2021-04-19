@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.20"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Google Cloud Storage C++ Client: idempotency_policy.h File Reference</title>
+<title>Google Cloud Storage C++ Client: options.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -64,38 +64,23 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">idempotency_policy.h File Reference</div>  </div>
+<div class="title">options.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;google/cloud/storage/internal/bucket_acl_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/bucket_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/default_object_acl_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/hmac_key_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/notification_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/object_acl_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/object_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/service_account_requests.h&quot;</code><br />
-<code>#include &quot;google/cloud/storage/internal/sign_blob_requests.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="idempotency__policy_8h_source.html">google/cloud/storage/idempotency_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="credentials_8h_source.html">google/cloud/storage/oauth2/credentials.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="retry__policy_8h_source.html">google/cloud/storage/retry_policy.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/storage/version.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/backoff__policy_8h.html">google/cloud/backoff_policy.h</a>&quot;</code><br />
+<code>#include &quot;<a class="elRef" href="https://googleapis.dev/cpp/google-cloud-common/latest/options_8h.html">google/cloud/options.h</a>&quot;</code><br />
+<code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 </div>
-<p><a href="idempotency__policy_8h_source.html">Go to the source code of this file.</a></p>
+<p><a href="options_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1IdempotencyPolicy.html">google::cloud::storage::v1::IdempotencyPolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the interface for the idempotency policy.  <a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1IdempotencyPolicy.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1AlwaysRetryIdempotencyPolicy.html">google::cloud::storage::v1::AlwaysRetryIdempotencyPolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1IdempotencyPolicy.html" title="Define the interface for the idempotency policy.">IdempotencyPolicy</a> that always retries all requests.  <a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1AlwaysRetryIdempotencyPolicy.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1StrictIdempotencyPolicy.html">google::cloud::storage::v1::StrictIdempotencyPolicy</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1IdempotencyPolicy.html" title="Define the interface for the idempotency policy.">IdempotencyPolicy</a> that only retries strictly idempotent requests.  <a href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1StrictIdempotencyPolicy.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle.html">google</a></td></tr>
