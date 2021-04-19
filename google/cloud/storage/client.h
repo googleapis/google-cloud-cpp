@@ -225,8 +225,9 @@ class Client {
    */
   template <typename... Policies>
   explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(InternalOnly{}, CreateDefaultInternalClient(std::move(options)),
-               std::forward<Policies>(policies)...) {}
+      : Client(InternalOnly{}, internal::ApplyPolicies(
+                                   internal::MakeOptions(std::move(options)),
+                                   std::forward<Policies>(policies)...)) {}
 
   /**
    * Creates the default client type given the credentials and policies.
@@ -246,8 +247,10 @@ class Client {
   template <typename... Policies>
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
                   Policies&&... policies)
-      : Client(ClientOptions(std::move(credentials)),
-               std::forward<Policies>(policies)...) {}
+      : Client(InternalOnly{},
+               internal::ApplyPolicies(
+                   internal::DefaultOptions(std::move(credentials), {}),
+                   std::forward<Policies>(policies)...)) {}
 
   /// Create a Client using ClientOptions::CreateDefaultClientOptions().
   static StatusOr<Client> CreateDefaultClient();
@@ -3130,24 +3133,15 @@ class Client {
   struct InternalOnly {};
   struct InternalOnlyNoDecorations {};
 
-  template <typename... Policies>
-  Client(InternalOnly, std::shared_ptr<internal::RawClient> c, Policies&&... p)
-      : raw_client_(Decorate(std::move(c), std::forward<Policies>(p)...)) {}
+  Client(InternalOnly, Options const& opts)
+      : raw_client_(CreateDefaultInternalClient(opts)) {}
   Client(InternalOnlyNoDecorations, std::shared_ptr<internal::RawClient> c)
       : raw_client_(std::move(c)) {}
-  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
-      ClientOptions options);
 
-  template <typename... Policies>
-  std::shared_ptr<internal::RawClient> Decorate(
-      std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
-    if (client->client_options().enable_raw_client_tracing()) {
-      client = std::make_shared<internal::LoggingClient>(std::move(client));
-    }
-    auto retry = std::make_shared<internal::RetryClient>(
-        std::move(client), std::forward<Policies>(policies)...);
-    return retry;
-  }
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
+      Options const& opts, std::shared_ptr<internal::RawClient> client);
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
+      Options const& opts);
 
   ObjectReadStream ReadObjectImpl(
       internal::ReadObjectRangeRequest const& request);
@@ -3263,12 +3257,24 @@ struct ClientImplDetails {
   template <typename... Policies>
   static Client CreateClient(std::shared_ptr<internal::RawClient> c,
                              Policies&&... p) {
-    return Client(Client::InternalOnly{}, std::move(c),
-                  std::forward<Policies>(p)...);
+    auto opts =
+        internal::ApplyPolicies(internal::MakeOptions(c->client_options()),
+                                std::forward<Policies>(p)...);
+    return Client(Client::InternalOnlyNoDecorations{},
+                  Client::CreateDefaultInternalClient(opts, std::move(c)));
   }
   static Client CreateWithoutDecorations(
       std::shared_ptr<internal::RawClient> c) {
     return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
+  }
+
+  // TODO(#6161) - this should become a public API and the *recommended* way to
+  //     create a Client.
+  static Client CreateClient(std::shared_ptr<oauth2::Credentials> credentials,
+                             Options opts = {}) {
+    opts = DefaultOptions(std::move(credentials), std::move(opts));
+    return Client(Client::InternalOnlyNoDecorations{},
+                  Client::CreateDefaultInternalClient(opts));
   }
 };
 

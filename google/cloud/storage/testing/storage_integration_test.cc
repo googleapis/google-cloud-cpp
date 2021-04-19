@@ -14,8 +14,7 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-#include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
@@ -72,34 +71,34 @@ google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient(
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  if (!options) return std::move(options).status();
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  if (!client_options) return std::move(client_options).status();
+
+  auto opts =
+      internal::MakeOptions(*std::move(client_options))
+          .set<internal::RetryPolicyOption>(std::move(retry_policy))
+          .set<internal::BackoffPolicyOption>(std::move(backoff_policy));
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (UseGrpcForMetadata()) {
-    return internal::ClientImplDetails::CreateClient(
-        internal::GrpcClient::Create(Options{}), *retry_policy,
-        *backoff_policy);
-  }
-  if (UseGrpcForMedia()) {
-    return internal::ClientImplDetails::CreateClient(
-        internal::HybridClient::Create(options->credentials(), Options{}),
-        *retry_policy, *backoff_policy);
+  if (UseGrpcForMedia() || UseGrpcForMetadata()) {
+    return storage_experimental::DefaultGrpcClient(std::move(opts));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
-  auto idempotency =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
-  if (!idempotency || *idempotency == "always-retry") {
-    return Client(*std::move(options), *retry_policy, *backoff_policy);
+  auto const idempotency =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY")
+          .value_or("always-retry");
+  if (idempotency == "strict") {
+    opts.set<internal::IdempotencyPolicyOption>(
+        StrictIdempotencyPolicy{}.clone());
+  } else if (idempotency != "always-retry") {
+    return Status(
+        StatusCode::kInvalidArgument,
+        "Invalid value for CLOUD_STORAGE_IDEMPOTENCY environment variable");
   }
-  if (*idempotency == "strict") {
-    return Client(*std::move(options), *retry_policy, *backoff_policy,
-                  StrictIdempotencyPolicy{});
-  }
-  return Status(
-      StatusCode::kInvalidArgument,
-      "Invalid value for CLOUD_STORAGE_IDEMPOTENCY environment variable");
+  auto credentials = opts.get<internal::Oauth2CredentialsOption>();
+  return internal::ClientImplDetails::CreateClient(std::move(credentials),
+                                                   std::move(opts));
 }
 
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {

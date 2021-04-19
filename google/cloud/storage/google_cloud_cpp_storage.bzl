@@ -107,6 +107,7 @@ google_cloud_cpp_storage_hdrs = [
     "object_metadata.h",
     "object_rewriter.h",
     "object_stream.h",
+    "options.h",
     "override_default_project.h",
     "parallel_upload.h",
     "policy_document.h",
