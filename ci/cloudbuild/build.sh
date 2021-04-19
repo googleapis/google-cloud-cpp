@@ -267,7 +267,7 @@ io::log_h1 "Starting cloud build: ${BUILD_NAME}"
 account="$(gcloud config list account --format "value(core.account)")"
 subs=("_DISTRO=${DISTRO_FLAG}")
 subs+=("_BUILD_NAME=${BUILD_NAME}")
-subs+=("_CACHE_TYPE=manual-${account}")
+subs+=("_TRIGGER_SOURCE=manual-${account}")
 subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
 subs+=("_LOGS_BUCKET_SUFFIX=cloudbuild")
 subs+=("BRANCH_NAME=${BRANCH_NAME}")
