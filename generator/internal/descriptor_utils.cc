@@ -413,19 +413,19 @@ VarsDictionary CreateServiceVars(
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
-  vars["client_cc_path"] = absl::StrCat(
-      vars["product_path"], ServiceNameToFilePath(descriptor.name()), "_client",
-      GeneratedFileSuffix(), ".cc");
-  vars["client_header_path"] = absl::StrCat(
-      vars["product_path"], ServiceNameToFilePath(descriptor.name()), "_client",
-      GeneratedFileSuffix(), ".h");
+  vars["client_cc_path"] =
+      absl::StrCat(vars["product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_client.cc");
+  vars["client_header_path"] =
+      absl::StrCat(vars["product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_client.h");
   vars["connection_class_name"] = absl::StrCat(descriptor.name(), "Connection");
-  vars["connection_cc_path"] = absl::StrCat(
-      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
-      "_connection", GeneratedFileSuffix(), ".cc");
-  vars["connection_header_path"] = absl::StrCat(
-      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
-      "_connection", GeneratedFileSuffix(), ".h");
+  vars["connection_cc_path"] =
+      absl::StrCat(vars["product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_connection.cc");
+  vars["connection_header_path"] =
+      absl::StrCat(vars["product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_connection.h");
   vars["connection_options_name"] =
       absl::StrCat(descriptor.name(), "ConnectionOptions");
   vars["connection_options_traits_name"] =
@@ -435,49 +435,42 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");
   vars["idempotency_policy_cc_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()),
-      "_connection_idempotency_policy", GeneratedFileSuffix(), ".cc");
+      "_connection_idempotency_policy.cc");
   vars["idempotency_policy_header_path"] = absl::StrCat(
       vars["product_path"], ServiceNameToFilePath(descriptor.name()),
-      "_connection_idempotency_policy", GeneratedFileSuffix(), ".h");
+      "_connection_idempotency_policy.h");
   vars["limited_error_count_retry_policy_name"] =
       absl::StrCat(descriptor.name(), "LimitedErrorCountRetryPolicy");
   vars["limited_time_retry_policy_name"] =
       absl::StrCat(descriptor.name(), "LimitedTimeRetryPolicy");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
-  vars["logging_cc_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()),
-                   "_logging_decorator", GeneratedFileSuffix(), ".cc");
-  vars["logging_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()),
-                   "_logging_decorator", GeneratedFileSuffix(), ".h");
+  vars["logging_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_logging_decorator.cc");
+  vars["logging_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_logging_decorator.h");
   vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
-  vars["metadata_cc_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()),
-                   "_metadata_decorator", GeneratedFileSuffix(), ".cc");
-  vars["metadata_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()),
-                   "_metadata_decorator", GeneratedFileSuffix(), ".h");
+  vars["metadata_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.cc");
+  vars["metadata_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.h");
   vars["mock_connection_class_name"] =
       absl::StrCat("Mock", descriptor.name(), "Connection");
   vars["mock_connection_header_path"] =
       absl::StrCat(vars["product_path"], "mocks/mock_",
-                   ServiceNameToFilePath(descriptor.name()), "_connection",
-                   GeneratedFileSuffix(), ".h");
-  vars["option_defaults_cc_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
-                   GeneratedFileSuffix(), ".cc");
-  vars["option_defaults_header_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_option_defaults",
-                   GeneratedFileSuffix(), ".h");
-  vars["options_header_path"] = absl::StrCat(
-      vars["product_path"], ServiceNameToFilePath(descriptor.name()),
-      "_options", GeneratedFileSuffix(), ".h");
+                   ServiceNameToFilePath(descriptor.name()), "_connection.h");
+  vars["option_defaults_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_option_defaults.cc");
+  vars["option_defaults_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_option_defaults.h");
+  vars["options_header_path"] =
+      absl::StrCat(vars["product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_options.h");
   vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
   vars["product_internal_namespace"] =
       BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
@@ -496,21 +489,18 @@ VarsDictionary CreateServiceVars(
       "_ENDPOINT");
   vars["service_name"] = descriptor.name();
   vars["stub_class_name"] = absl::StrCat(descriptor.name(), "Stub");
-  vars["stub_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
-                                      ServiceNameToFilePath(descriptor.name()),
-                                      "_stub", GeneratedFileSuffix(), ".cc");
+  vars["stub_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub.cc");
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub",
-                   GeneratedFileSuffix(), ".h");
-  vars["stub_factory_cc_path"] =
-      absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
-                   GeneratedFileSuffix(), ".cc");
+                   ServiceNameToFilePath(descriptor.name()), "_stub.h");
+  vars["stub_factory_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_stub_factory.cc");
   vars["stub_factory_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
-                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
-                   GeneratedFileSuffix(), ".h");
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory.h");
   return vars;
 }
 
