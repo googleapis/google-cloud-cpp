@@ -39,6 +39,7 @@ substitutions:
   _CACHE_TYPE: '${_PR_NUMBER:-main}'
   _IMAGE: 'cloudbuild/${_DISTRO}'
   _TRIGGER_TYPE: 'manual'
+  _LOGS_BUCKET_SUFFIX: 'publiclogs'
 
 tags: [ '${_TRIGGER_TYPE}', '${_BUILD_NAME}', '${_DISTRO}' ]
 timeout: 3600s
@@ -47,6 +48,8 @@ availableSecrets:
   secretManager:
   - versionName: projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/latest
     env: 'CODECOV_TOKEN'
+
+logsBucket: 'gs://${PROJECT_ID}_${_LOGS_BUCKET_SUFFIX}/logs/google-cloud-cpp/${_CACHE_TYPE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}'
 
 steps:
   # Builds the docker image that will be used by the main build step.
