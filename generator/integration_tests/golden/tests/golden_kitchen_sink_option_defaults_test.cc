@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/setenv.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.h"
 #include <gtest/gtest.h>
 #include <memory>
 

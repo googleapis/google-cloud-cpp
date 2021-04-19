@@ -11,11 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>

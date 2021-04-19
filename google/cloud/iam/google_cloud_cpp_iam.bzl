@@ -17,25 +17,25 @@
 """Automatically generated source lists for google_cloud_cpp_iam - DO NOT EDIT."""
 
 google_cloud_cpp_iam_hdrs = [
-    "iam_credentials_client.gcpcxx.pb.h",
-    "iam_credentials_connection.gcpcxx.pb.h",
-    "iam_credentials_connection_idempotency_policy.gcpcxx.pb.h",
-    "iam_credentials_options.gcpcxx.pb.h",
-    "internal/iam_credentials_logging_decorator.gcpcxx.pb.h",
-    "internal/iam_credentials_metadata_decorator.gcpcxx.pb.h",
-    "internal/iam_credentials_option_defaults.gcpcxx.pb.h",
-    "internal/iam_credentials_stub.gcpcxx.pb.h",
-    "internal/iam_credentials_stub_factory.gcpcxx.pb.h",
+    "iam_credentials_client.h",
+    "iam_credentials_connection.h",
+    "iam_credentials_connection_idempotency_policy.h",
+    "iam_credentials_options.h",
+    "internal/iam_credentials_logging_decorator.h",
+    "internal/iam_credentials_metadata_decorator.h",
+    "internal/iam_credentials_option_defaults.h",
+    "internal/iam_credentials_stub.h",
+    "internal/iam_credentials_stub_factory.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_iam_srcs = [
-    "iam_credentials_client.gcpcxx.pb.cc",
-    "iam_credentials_connection.gcpcxx.pb.cc",
-    "iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc",
-    "internal/iam_credentials_logging_decorator.gcpcxx.pb.cc",
-    "internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc",
-    "internal/iam_credentials_option_defaults.gcpcxx.pb.cc",
-    "internal/iam_credentials_stub.gcpcxx.pb.cc",
-    "internal/iam_credentials_stub_factory.gcpcxx.pb.cc",
+    "iam_credentials_client.cc",
+    "iam_credentials_connection.cc",
+    "iam_credentials_connection_idempotency_policy.cc",
+    "internal/iam_credentials_logging_decorator.cc",
+    "internal/iam_credentials_metadata_decorator.cc",
+    "internal/iam_credentials_option_defaults.cc",
+    "internal/iam_credentials_stub.cc",
+    "internal/iam_credentials_stub_factory.cc",
 ]

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/logging/internal/logging_service_v2_stub_factory.gcpcxx.pb.h"
-#include "google/cloud/logging/logging_service_v2_client.gcpcxx.pb.h"
-#include "google/cloud/logging/logging_service_v2_options.gcpcxx.pb.h"
+#include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/logging_service_v2_client.h"
+#include "google/cloud/logging/logging_service_v2_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"

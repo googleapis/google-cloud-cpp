@@ -21,7 +21,7 @@ load(":google_cloud_cpp_generator_golden_files.bzl", "google_cloud_cpp_generator
 filegroup(
     name = "golden_filegroup",
     srcs = glob([
-        "*gcpcxx*",
+        "*.*",
         "retry_traits.h",
         "streaming.cc",
     ]),
@@ -29,12 +29,12 @@ filegroup(
 
 filegroup(
     name = "golden_internal_filegroup",
-    srcs = glob(["internal/*gcpcxx*"]),
+    srcs = glob(["internal/*.*"]),
 )
 
 filegroup(
     name = "golden_mocks_filegroup",
-    srcs = glob(["mocks/*gcpcxx.pb.h"]),
+    srcs = glob(["mocks/*.h"]),
 )
 
 cc_library(

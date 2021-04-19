@@ -11,12 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "generator/integration_tests/golden/golden_kitchen_sink_client.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_kitchen_sink_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>

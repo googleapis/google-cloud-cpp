@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [START bigquerystorage_quickstart]
-#include "google/cloud/bigquery/bigquery_read_client.gcpcxx.pb.h"
+#include "google/cloud/bigquery/bigquery_read_client.h"
 #include <iostream>
 #include <stdexcept>
 

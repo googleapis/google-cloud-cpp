@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_stub_factory.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
