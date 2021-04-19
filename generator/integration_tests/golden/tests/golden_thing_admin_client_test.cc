@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/golden_thing_admin_client.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_thing_admin_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_connection.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>

@@ -17,25 +17,25 @@
 """Automatically generated source lists for google_cloud_cpp_logging - DO NOT EDIT."""
 
 google_cloud_cpp_logging_hdrs = [
-    "internal/logging_service_v2_logging_decorator.gcpcxx.pb.h",
-    "internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h",
-    "internal/logging_service_v2_option_defaults.gcpcxx.pb.h",
-    "internal/logging_service_v2_stub.gcpcxx.pb.h",
-    "internal/logging_service_v2_stub_factory.gcpcxx.pb.h",
-    "logging_service_v2_client.gcpcxx.pb.h",
-    "logging_service_v2_connection.gcpcxx.pb.h",
-    "logging_service_v2_connection_idempotency_policy.gcpcxx.pb.h",
-    "logging_service_v2_options.gcpcxx.pb.h",
+    "internal/logging_service_v2_logging_decorator.h",
+    "internal/logging_service_v2_metadata_decorator.h",
+    "internal/logging_service_v2_option_defaults.h",
+    "internal/logging_service_v2_stub.h",
+    "internal/logging_service_v2_stub_factory.h",
+    "logging_service_v2_client.h",
+    "logging_service_v2_connection.h",
+    "logging_service_v2_connection_idempotency_policy.h",
+    "logging_service_v2_options.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_logging_srcs = [
-    "internal/logging_service_v2_logging_decorator.gcpcxx.pb.cc",
-    "internal/logging_service_v2_metadata_decorator.gcpcxx.pb.cc",
-    "internal/logging_service_v2_option_defaults.gcpcxx.pb.cc",
-    "internal/logging_service_v2_stub.gcpcxx.pb.cc",
-    "internal/logging_service_v2_stub_factory.gcpcxx.pb.cc",
-    "logging_service_v2_client.gcpcxx.pb.cc",
-    "logging_service_v2_connection.gcpcxx.pb.cc",
-    "logging_service_v2_connection_idempotency_policy.gcpcxx.pb.cc",
+    "internal/logging_service_v2_logging_decorator.cc",
+    "internal/logging_service_v2_metadata_decorator.cc",
+    "internal/logging_service_v2_option_defaults.cc",
+    "internal/logging_service_v2_stub.cc",
+    "internal/logging_service_v2_stub_factory.cc",
+    "logging_service_v2_client.cc",
+    "logging_service_v2_connection.cc",
+    "logging_service_v2_connection_idempotency_policy.cc",
 ]

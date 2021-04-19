@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 

@@ -17,7 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_logging_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_logging_mocks_hdrs = [
-    "mocks/mock_logging_service_v2_connection.gcpcxx.pb.h",
+    "mocks/mock_logging_service_v2_connection.h",
 ]
 
 google_cloud_cpp_logging_mocks_srcs = [

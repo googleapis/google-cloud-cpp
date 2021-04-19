@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
 #include <gmock/gmock.h>
 #include <memory>
 

@@ -31,23 +31,23 @@ find_package(absl CONFIG REQUIRED)
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_logging # cmake-format: sort
-    internal/logging_service_v2_logging_decorator.gcpcxx.pb.cc
-    internal/logging_service_v2_logging_decorator.gcpcxx.pb.h
-    internal/logging_service_v2_metadata_decorator.gcpcxx.pb.cc
-    internal/logging_service_v2_metadata_decorator.gcpcxx.pb.h
-    internal/logging_service_v2_option_defaults.gcpcxx.pb.cc
-    internal/logging_service_v2_option_defaults.gcpcxx.pb.h
-    internal/logging_service_v2_stub.gcpcxx.pb.cc
-    internal/logging_service_v2_stub.gcpcxx.pb.h
-    internal/logging_service_v2_stub_factory.gcpcxx.pb.cc
-    internal/logging_service_v2_stub_factory.gcpcxx.pb.h
-    logging_service_v2_client.gcpcxx.pb.cc
-    logging_service_v2_client.gcpcxx.pb.h
-    logging_service_v2_connection.gcpcxx.pb.cc
-    logging_service_v2_connection.gcpcxx.pb.h
-    logging_service_v2_connection_idempotency_policy.gcpcxx.pb.cc
-    logging_service_v2_connection_idempotency_policy.gcpcxx.pb.h
-    logging_service_v2_options.gcpcxx.pb.h
+    internal/logging_service_v2_logging_decorator.cc
+    internal/logging_service_v2_logging_decorator.h
+    internal/logging_service_v2_metadata_decorator.cc
+    internal/logging_service_v2_metadata_decorator.h
+    internal/logging_service_v2_option_defaults.cc
+    internal/logging_service_v2_option_defaults.h
+    internal/logging_service_v2_stub.cc
+    internal/logging_service_v2_stub.h
+    internal/logging_service_v2_stub_factory.cc
+    internal/logging_service_v2_stub_factory.h
+    logging_service_v2_client.cc
+    logging_service_v2_client.h
+    logging_service_v2_connection.cc
+    logging_service_v2_connection.h
+    logging_service_v2_connection_idempotency_policy.cc
+    logging_service_v2_connection_idempotency_policy.h
+    logging_service_v2_options.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_logging
@@ -83,8 +83,7 @@ add_library(google_cloud_cpp_logging_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_logging_mocks
     INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_logging_service_v2_connection.gcpcxx.pb.h
-)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_logging_service_v2_connection.h)
 target_link_libraries(
     google_cloud_cpp_logging_mocks
     INTERFACE google-cloud-cpp::experimental-logging GTest::gmock_main
