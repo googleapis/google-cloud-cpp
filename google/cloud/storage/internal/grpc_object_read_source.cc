@@ -23,6 +23,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+GrpcObjectReadSource::GrpcObjectReadSource(
+    std::unique_ptr<grpc::ClientContext> context,
+    std::unique_ptr<GrpcObjectContentsReader> stream)
+    : context_(std::move(context)), stream_(std::move(stream)) {}
+
 GrpcObjectReadSource::~GrpcObjectReadSource() {
   // clang-tidy is complaining about code in the gRPC implementation. It seems
   // that it is *possible* for gRPC to call a function through a null pointer
@@ -41,7 +46,7 @@ StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
   if (stream_) {
     // Cancel the streaming RPC so we can close the stream early and
     // ignore any errors (kCancelled is likely).
-    context_.TryCancel();
+    context_->TryCancel();
     (void)stream_->Finish();
     stream_ = nullptr;
   }

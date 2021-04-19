@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,6 +21,8 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
+
+using ::google::cloud::testing_util::IsOk;
 
 TEST(GrpcChannelCredentialsAuthenticationTest, Basic) {
   GrpcChannelCredentialsAuthentication auth(grpc::InsecureChannelCredentials());
@@ -29,7 +32,8 @@ TEST(GrpcChannelCredentialsAuthenticationTest, Basic) {
 
   grpc::ClientContext context;
   EXPECT_EQ(nullptr, context.credentials());
-  auth.ConfigureContext(context);
+  auto status = auth.ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
   EXPECT_EQ(nullptr, context.credentials());
 }
 
