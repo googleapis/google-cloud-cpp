@@ -264,12 +264,13 @@ fi
 
 # Uses Google Cloud build to run the specified build.
 io::log_h1 "Starting cloud build: ${BUILD_NAME}"
-account="$(gcloud config list account --format "value(core.account)")"
+project="${PROJECT_FLAG:-$(gcloud config get-value project)}"
+account="$(gcloud config get-value account)"
 subs=("_DISTRO=${DISTRO_FLAG}")
 subs+=("_BUILD_NAME=${BUILD_NAME}")
 subs+=("_TRIGGER_SOURCE=manual-${account}")
 subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
-subs+=("_LOGS_BUCKET_SUFFIX=cloudbuild")
+subs+=("_LOGS_BUCKET=${project}_cloudbuild")
 subs+=("BRANCH_NAME=${BRANCH_NAME}")
 subs+=("COMMIT_SHA=${COMMIT_SHA}")
 printf "Substitutions:\n"
@@ -277,8 +278,6 @@ printf "  %s\n" "${subs[@]}"
 args=(
   "--config=ci/cloudbuild/cloudbuild.yaml"
   "--substitutions=$(printf "%s," "${subs[@]}")"
+  "--project=${project}"
 )
-if [[ -n "${PROJECT_FLAG}" ]]; then
-  args+=("--project=${PROJECT_FLAG}")
-fi
 gcloud builds submit "${args[@]}" .
