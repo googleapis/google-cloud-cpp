@@ -29,9 +29,11 @@ if [[ -z "${PR_NUMBER:-}" ]]; then
   exit
 fi
 
+io::log_h2 "Authenticating"
+gh auth login --with-token <<<"${LOG_LINKER_PAT}"
+
 console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources"
 storage_link="http://storage.googleapis.com/cloud-cpp-testing-resources_publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}"
-
 body="$(
   cat <<EOF
 **Google Cloud Build log links**
@@ -47,5 +49,4 @@ EOF
 
 io::log_h2 "Commenting on ${PR_NUMBER}"
 echo "${body}"
-
 gh --repo googleapis/google-cloud-cpp comment "${PR_NUMBER}" --body "${body}"
