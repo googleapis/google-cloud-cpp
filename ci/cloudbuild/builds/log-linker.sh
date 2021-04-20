@@ -32,19 +32,20 @@ fi
 console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources"
 storage_link="http://storage.googleapis.com/cloud-cpp-testing-resources_publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}"
 
-body="$(cat <<EOF
+body="$(
+  cat <<EOF
 **Google Cloud Build log links**
 
-* [Cloud Build Console](${console_link}) 
-* [Cloud Storage Logs Bucket](${storage_link}) 
+* [Cloud Build Console](${console_link})
+* [Cloud Storage Logs Bucket](${storage_link})
 
-:information_source: Log links 
+:information_source: Log links
 
-This is a robocomment from google-cloud-cpp-bot. 
+This is a robocomment from google-cloud-cpp-bot.
 EOF
 )"
 
 io::log_h2 "Commenting on ${PR_NUMBER}"
 echo "${body}"
 
-gh --repo googleapis/google-cloud-cpp "${PR_NUMBER}" --body "${body}"
+gh --repo googleapis/google-cloud-cpp comment "${PR_NUMBER}" --body "${body}"
