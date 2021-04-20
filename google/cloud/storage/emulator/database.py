@@ -156,7 +156,7 @@ class Database:
                 continue
             if name < start_offset:
                 continue
-            if end_offset is not None and name >= end_offset:
+            if end_offset and name >= end_offset:
                 continue
             delimiter_index = name.find(delimiter, len(prefix))
             if delimiter != "" and delimiter_index > 0:
