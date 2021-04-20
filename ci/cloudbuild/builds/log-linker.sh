@@ -49,4 +49,4 @@ EOF
 
 io::log_h2 "Commenting on ${PR_NUMBER}"
 echo "${body}"
-gh --repo googleapis/google-cloud-cpp comment "${PR_NUMBER}" --body "${body}"
+gh --repo googleapis/google-cloud-cpp pr comment "${PR_NUMBER}" --body "${body}"
