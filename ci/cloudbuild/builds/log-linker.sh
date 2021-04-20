@@ -36,17 +36,18 @@ console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-
 storage_link="http://storage.googleapis.com/cloud-cpp-testing-resources_publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}"
 body="$(
   cat <<EOF
-**Google Cloud Build log links**
+**Google Cloud Build Logs**
+For commit: \`${COMMIT_SHA}\`
 
 * [Cloud Build Console](${console_link}) (for team members with access)
 * [Cloud Storage Logs Bucket](${storage_link}) (public access *coming soon*)
 
-:information_source: Kokoro logs are linked from "Details" below.
-
-This is a robocomment from google-cloud-cpp-bot.
+:information_source: NOTE: Kokoro logs are linked from "Details" below.
 EOF
 )"
 
 io::log_h2 "Commenting on ${PR_NUMBER}"
 echo "${body}"
+# TODO(#6295): See if there's a way to edit an existing log-linker comment
+# rather than creating a new one.
 gh --repo googleapis/google-cloud-cpp pr comment "${PR_NUMBER}" --body "${body}"
