@@ -33,7 +33,7 @@ io::log_h2 "Authenticating"
 gh auth login --with-token <<<"${LOG_LINKER_PAT}"
 
 console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources"
-storage_link="http://storage.googleapis.com/cloud-cpp-testing-resources_publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}"
+storage_link="http://storage.googleapis.com/cloud-cpp-community-publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}"
 body="$(
   cat <<EOF
 **Google Cloud Build Logs**
