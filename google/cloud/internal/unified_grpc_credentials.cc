@@ -16,8 +16,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/memory/memory.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
-#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -59,13 +57,9 @@ class DynamicAccessTokenAuthenticationStrategy
   }
   Status Setup(grpc::ClientContext& context) override {
     std::unique_lock<std::mutex> lk(mu_);
+    cv_.wait(lk, [this] { return !refreshing_; });
     auto const deadline = std::chrono::system_clock::now() + kExpirationSlack;
     if (deadline < expiration_) {
-      context.set_credentials(credentials_);
-      return {};
-    }
-    if (refreshing_) {
-      cv_.wait(lk, [this] { return !refreshing_; });
       context.set_credentials(credentials_);
       return {};
     }
@@ -73,12 +67,11 @@ class DynamicAccessTokenAuthenticationStrategy
     lk.unlock();
     auto refresh = source_();
     lk.lock();
+    refreshing_ = false;
     token_ = std::move(refresh.token);
     expiration_ = refresh.expiration;
     credentials_ = grpc::AccessTokenCredentials(token_);
-    refreshing_ = false;
     context.set_credentials(credentials_);
-    lk.unlock();
     cv_.notify_all();
     return Status{};
   }

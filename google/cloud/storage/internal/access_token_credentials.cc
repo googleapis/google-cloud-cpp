@@ -25,21 +25,18 @@ auto constexpr kExpirationSlack = std::chrono::minutes(5);
 StatusOr<std::string> AccessTokenCredentials::AuthorizationHeader() {
   std::unique_lock<std::mutex> lk(mu_);
   auto const deadline = std::chrono::system_clock::now() + kExpirationSlack;
+  cv_.wait(lk, [this] { return !refreshing_; });
   if (deadline < expiration_) return header_;
   // The access token has expired, or is about to expire, refresh it.
   // Avoid deadlocks by releasing the lock before calling any external function.
-  if (refreshing_) {
-    cv_.wait(lk, [this] { return !refreshing_; });
-    return header_;
-  }
   refreshing_ = true;
   lk.unlock();
   auto refresh = source_();
   lk.lock();
+  refreshing_ = false;
   token_ = std::move(refresh.token);
   expiration_ = refresh.expiration;
   header_ = "Authorization: Bearer " + token_;
-  refreshing_ = false;
   cv_.notify_all();
   return header_;
 }
