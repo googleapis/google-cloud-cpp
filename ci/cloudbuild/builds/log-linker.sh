@@ -38,10 +38,10 @@ body="$(
   cat <<EOF
 **Google Cloud Build log links**
 
-* [Cloud Build Console](${console_link})
-* [Cloud Storage Logs Bucket](${storage_link})
+* [Cloud Build Console](${console_link}) (for team members with access)
+* [Cloud Storage Logs Bucket](${storage_link}) (public access *coming soon*)
 
-:information_source: Log links
+:information_source: Kokoro logs are linked from "Details" below.
 
 This is a robocomment from google-cloud-cpp-bot.
 EOF
