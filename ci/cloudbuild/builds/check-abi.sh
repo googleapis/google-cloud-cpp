@@ -86,5 +86,5 @@ for lib in "${libraries[@]}"; do
     w3m -dump "${report}"
   fi
 done
-echo 
+echo
 exit "${errors}"
