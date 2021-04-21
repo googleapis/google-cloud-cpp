@@ -196,7 +196,7 @@ class GoldenKitchenSinkClient {
    * @return [::google::test::admin::database::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1286)
    */
   StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> key_types);
+  ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types);
 
   /**
    * Generates an OAuth 2.0 access token for a service account.
