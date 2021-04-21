@@ -20,7 +20,7 @@ ARG NCPU=4
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker abi-dumper ccache \
+    dnf install -y abi-compliance-checker abi-dumper autoconf automake ccache \
         clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
@@ -137,6 +137,17 @@ RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9
     tar -xzf - --strip-components=1 && \
     cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
     cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
+    cd /var/tmp && rm -fr build
+
+# Installs Universal Ctags (which is different than the default "Exuberant
+# Ctags"), which is needed by the ABI checker. See https://ctags.io/
+WORKDIR /var/tmp/build
+RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20210418.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    ./autogen.sh && \
+    ./configure --prefix=/usr/local && \
+    make && \
+    make install && \
     cd /var/tmp && rm -fr build
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
