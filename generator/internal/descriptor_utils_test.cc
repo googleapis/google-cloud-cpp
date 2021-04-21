@@ -637,9 +637,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "::google::protobuf::Foo const& widget"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature2", "bool toggle"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_signature3",
-            "std::string const& name, std::string const& title"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature3",
+                             "std::string const& name, "
+                             "std::string const& title"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature4",
                              "std::string const& name, "
