@@ -23,7 +23,7 @@ auto constexpr kExpirationSlack = std::chrono::minutes(5);
 
 std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
-  // TODO(#....) - support setting SSL options
+  // TODO(#6311) - support setting SSL options
   auto credentials = grpc::SslCredentials(grpc::SslCredentialsOptions{});
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }

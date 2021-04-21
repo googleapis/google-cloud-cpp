@@ -35,7 +35,7 @@ class GrpcAuthenticationStrategy {
   virtual std::shared_ptr<grpc::Channel> CreateChannel(
       std::string const& endpoint, grpc::ChannelArguments const& arguments) = 0;
   virtual Status Setup(grpc::ClientContext&) = 0;
-  // TODO(#...) - support asynchronous refresh
+  // TODO(#6310) - support asynchronous refresh
   //     virtual future<Status>
   //     SetupAsync(std::unique_ptr<grpc::ClientContext>, CompletionQueue& cq) =
   //     0;
