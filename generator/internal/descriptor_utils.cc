@@ -172,36 +172,40 @@ void SetMethodSignatureMethodVars(
           input_type->FindFieldByName(parameters[j]);
       if (parameter_descriptor->is_map()) {
         method_signature += absl::StrFormat(
-            "std::map<%s, %s>",
+            "std::map<%s, %s> const& %s",
             CppTypeToString(parameter_descriptor->message_type()->map_key()),
-            CppTypeToString(parameter_descriptor->message_type()->map_value()));
+            CppTypeToString(parameter_descriptor->message_type()->map_value()),
+            parameters[j]);
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameters[j], parameters[j], parameters[j]);
       } else if (parameter_descriptor->is_repeated()) {
         method_signature += absl::StrFormat(
-            "std::vector<%s>", CppTypeToString(parameter_descriptor));
+            "std::vector<%s> const& %s", CppTypeToString(parameter_descriptor),
+            parameters[j]);
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameters[j], parameters[j], parameters[j]);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
-        method_signature += CppTypeToString(parameter_descriptor);
+        method_signature += absl::StrFormat(
+            "%s const& %s", CppTypeToString(parameter_descriptor),
+            parameters[j]);
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = %s;\n", parameters[j], parameters[j]);
       } else {
-        method_signature += CppTypeToString(parameter_descriptor);
+        switch (parameter_descriptor->cpp_type()) {
+          case FieldDescriptor::CPPTYPE_STRING:
+            method_signature += absl::StrFormat(
+                "%s const& %s", CppTypeToString(parameter_descriptor),
+                parameters[j]);
+            break;
+          default:
+            method_signature += absl::StrFormat(
+                "%s %s", CppTypeToString(parameter_descriptor), parameters[j]);
+        }
         method_request_setters += absl::StrFormat("  request.set_%s(%s);\n",
                                                   parameters[j], parameters[j]);
-      }
-
-      switch (parameter_descriptor->cpp_type()) {
-        case FieldDescriptor::CPPTYPE_STRING:
-        case FieldDescriptor::CPPTYPE_MESSAGE:
-          method_signature += absl::StrFormat(" const& %s", parameters[j]);
-          break;
-        default:
-          method_signature += absl::StrFormat(" %s", parameters[j]);
       }
 
       if (j < parameters.size() - 1) {

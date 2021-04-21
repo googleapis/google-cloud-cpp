@@ -70,7 +70,7 @@ GoldenKitchenSinkClient::TailLogEntries(std::vector<std::string> const& resource
 }
 
 StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
-GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> key_types) {
+GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types) {
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   request.set_name(name);
   *request.mutable_key_types() = {key_types.begin(), key_types.end()};

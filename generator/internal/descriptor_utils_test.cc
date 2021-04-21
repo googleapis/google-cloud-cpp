@@ -640,10 +640,11 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method5", "method_signature3",
             "std::string const& name, std::string const& title"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_signature4",
-            "std::string const& name, "
-            "std::vector<::google::protobuf::Bar::SwallowType> swallow_types"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature4",
+                             "std::string const& name, "
+                             "std::vector<::google::protobuf::Bar::SwallowType>"
+                             " const& swallow_types"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),
