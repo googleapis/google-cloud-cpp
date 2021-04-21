@@ -1,4 +1,4 @@
-# Copyright 2020 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ FROM python:3.8@sha256:ff8ae88abfe6c829c188cc54737139f7c583279009ba34c96034e0e66
 EXPOSE 9000
 WORKDIR /opt/storage-emulator
 
-ADD . /opt/storage-emulator/
+COPY . /opt/storage-emulator/
 
 RUN python3 -m pip install -r requirements.txt
 
