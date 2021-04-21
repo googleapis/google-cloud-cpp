@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: check-abi-ci
+substitutions:
+  _BUILD_NAME: check-abi
+  _DISTRO: fedora
+  _TRIGGER_TYPE: ci
+tags:
+- ci
