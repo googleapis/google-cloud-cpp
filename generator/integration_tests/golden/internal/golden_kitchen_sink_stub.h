@@ -54,6 +54,10 @@ class GoldenKitchenSinkStub {
     std::unique_ptr<grpc::ClientContext> context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
 
+  virtual StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
+
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -86,6 +90,11 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
   TailLogEntries(
     std::unique_ptr<grpc::ClientContext> client_context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+
+  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(
+    grpc::ClientContext& client_context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
  private:
   std::unique_ptr<::google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;

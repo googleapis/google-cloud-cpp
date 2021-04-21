@@ -58,6 +58,10 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
     std::unique_ptr<grpc::ClientContext> context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
+  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+
  private:
   std::shared_ptr<GoldenKitchenSinkStub> child_;
   TracingOptions tracing_options_;

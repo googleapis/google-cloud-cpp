@@ -71,6 +71,14 @@ GoldenKitchenSinkMetadata::TailLogEntries(
   return child_->TailLogEntries(std::move(context), request);
 }
 
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+GoldenKitchenSinkMetadata::ListServiceAccountKeys(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ListServiceAccountKeys(context, request);
+}
+
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

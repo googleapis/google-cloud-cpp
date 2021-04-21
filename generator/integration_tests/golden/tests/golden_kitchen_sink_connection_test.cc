@@ -74,6 +74,14 @@ class MockGoldenKitchenSinkStub
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
+  MOCK_METHOD(
+      StatusOr<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+      ListServiceAccountKeys,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
+           request),
+      (override));
 };
 
 std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
@@ -308,6 +316,44 @@ TEST(GoldenKitchenSinkConnectionTest, TailLogEntriesPermanentError) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysSuccess) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce([](grpc::ClientContext&,
+                   ::google::test::admin::database::v1::
+                       ListServiceAccountKeysRequest const&) {
+        ::google::test::admin::database::v1::ListServiceAccountKeysResponse
+            response;
+        return response;
+      });
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  auto response = conn->ListServiceAccountKeys(request);
+  EXPECT_STATUS_OK(response);
+}
+
+TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysTooManyTransients) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  auto response = conn->ListServiceAccountKeys(request);
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  auto response = conn->ListServiceAccountKeys(request);
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
 }
 
 }  // namespace

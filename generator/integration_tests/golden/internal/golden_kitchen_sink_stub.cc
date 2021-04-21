@@ -92,6 +92,19 @@ DefaultGoldenKitchenSinkStub::TailLogEntries(
       std::move(client_context), std::move(stream));
 }
 
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+DefaultGoldenKitchenSinkStub::ListServiceAccountKeys(
+  grpc::ClientContext& client_context,
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+    ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
+    auto status =
+        grpc_stub_->ListServiceAccountKeys(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud

@@ -60,8 +60,9 @@ std::string CppTypeToString(FieldDescriptor const* field) {
     case FieldDescriptor::CPPTYPE_DOUBLE:
     case FieldDescriptor::CPPTYPE_FLOAT:
     case FieldDescriptor::CPPTYPE_BOOL:
-    case FieldDescriptor::CPPTYPE_ENUM:
       return std::string(field->cpp_type_name());
+    case FieldDescriptor::CPPTYPE_ENUM:
+      return ProtoNameToCppName(field->enum_type()->full_name());
 
     case FieldDescriptor::CPPTYPE_STRING:
       return std::string("std::") + std::string(field->cpp_type_name());

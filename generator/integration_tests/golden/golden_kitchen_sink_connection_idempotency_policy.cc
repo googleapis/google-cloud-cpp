@@ -58,6 +58,11 @@ class DefaultGoldenKitchenSinkConnectionIdempotencyPolicy : public GoldenKitchen
     return Idempotency::kIdempotent;
   }
 
+  Idempotency
+  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const&) override {
+    return Idempotency::kIdempotent;
+  }
+
 };
 }  // namespace
 

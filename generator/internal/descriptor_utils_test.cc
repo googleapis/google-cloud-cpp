@@ -338,11 +338,17 @@ const char* const kServiceProto =
     "}\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
+    "  enum SwallowType {\n"
+    "    I_DONT_KNOW = 0;\n"
+    "    AFRICAN = 1;\n"
+    "    EUROPEAN = 2;\n"
+    "  }\n"
     "  int32 number = 1;\n"
     "  string name = 2;\n"
     "  Foo widget = 3;\n"
     "  bool toggle = 4;\n"
     "  string title = 5;\n"
+    "  repeated SwallowType swallow_types =6;\n"
     "}\n"
     "// Leading comments about message Empty.\n"
     "message Empty {}\n"
@@ -404,6 +410,7 @@ const char* const kServiceProto =
     "    option (google.api.method_signature) = \"number,widget\";\n"
     "    option (google.api.method_signature) = \"toggle\";\n"
     "    option (google.api.method_signature) = \"name,title\";\n"
+    "    option (google.api.method_signature) = \"name,swallow_types\";\n"
     "  }\n"
     "  // Leading comments about rpc $Method6.\n"
     "  rpc Method6(Foo) returns (Empty) {\n"
@@ -535,7 +542,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method0", "method_return_doxygen_link",
             "[::google::protobuf::Empty](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L22)"),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L28)"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -633,6 +640,10 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method5", "method_signature3",
             "std::string const& name, std::string const& title"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_signature4",
+            "std::string const& name, "
+            "std::vector<::google::protobuf::Bar::SwallowType> swallow_types"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),

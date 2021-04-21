@@ -48,6 +48,10 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
   TailLogEntries,
   (::google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
 
+  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+  ListServiceAccountKeys,
+  (::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
+
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

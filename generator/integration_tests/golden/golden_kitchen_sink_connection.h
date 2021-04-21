@@ -66,6 +66,9 @@ class GoldenKitchenSinkConnection {
   virtual StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
+  virtual StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
+
 };
 
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(

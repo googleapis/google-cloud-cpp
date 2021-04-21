@@ -69,6 +69,14 @@ GoldenKitchenSinkClient::TailLogEntries(std::vector<std::string> const& resource
   return connection_->TailLogEntries(request);
 }
 
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> key_types) {
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  request.set_name(name);
+  *request.mutable_key_types() = {key_types.begin(), key_types.end()};
+  return connection_->ListServiceAccountKeys(request);
+}
+
 StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkClient::GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return connection_->GenerateAccessToken(request);
@@ -92,6 +100,11 @@ GoldenKitchenSinkClient::ListLogs(::google::test::admin::database::v1::ListLogsR
 StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
 GoldenKitchenSinkClient::TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
   return connection_->TailLogEntries(request);
+}
+
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+GoldenKitchenSinkClient::ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  return connection_->ListServiceAccountKeys(request);
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

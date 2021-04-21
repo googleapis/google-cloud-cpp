@@ -53,6 +53,11 @@ TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListLogs) {
   EXPECT_EQ(policy_->ListLogs(request), Idempotency::kIdempotent);
 }
 
+TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListServiceAccountKeys) {
+  google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  EXPECT_EQ(policy_->ListServiceAccountKeys(request), Idempotency::kIdempotent);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal

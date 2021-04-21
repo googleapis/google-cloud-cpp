@@ -54,6 +54,10 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
     std::unique_ptr<grpc::ClientContext> context,
     ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
+  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
