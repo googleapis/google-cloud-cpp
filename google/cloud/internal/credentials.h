@@ -41,8 +41,8 @@ class Credentials {
   virtual void dispatch(CredentialsVisitor& visitor) = 0;
 };
 
-std::shared_ptr<Credentials> GoogleDefaultCredentials();
-std::shared_ptr<Credentials> AccessTokenCredentials(
+std::shared_ptr<Credentials> MakeGoogleDefaultCredentials();
+std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
     std::chrono::system_clock::time_point expiration);
 
@@ -65,7 +65,7 @@ struct AccessToken {
 using AccessTokenSource = std::function<AccessToken()>;
 
 /// A generic generator of access tokens.
-std::shared_ptr<Credentials> DynamicAccessTokenCredentials(
+std::shared_ptr<Credentials> MakeDynamicAccessTokenCredentials(
     AccessTokenSource source);
 
 class GoogleDefaultCredentialsConfig;

@@ -39,7 +39,7 @@ struct Visitor : public CredentialsVisitor {
 TEST(Credentials, GoogleDefaultCredentials) {
   Visitor visitor;
 
-  auto credentials = GoogleDefaultCredentials();
+  auto credentials = MakeGoogleDefaultCredentials();
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("GoogleDefaultCredentialsConfig", visitor.name);
 }
@@ -48,7 +48,7 @@ TEST(Credentials, AccessTokenCredentials) {
   Visitor visitor;
 
   auto const expiration = std::chrono::system_clock::now();
-  auto credentials = AccessTokenCredentials("test-token", expiration);
+  auto credentials = MakeAccessTokenCredentials("test-token", expiration);
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("DynamicAccessTokenConfig", visitor.name);
   auto const access_token = visitor.source();
@@ -65,7 +65,7 @@ TEST(Credentials, DynamicAccessTokenCredentials) {
       .WillOnce(Return(AccessToken{"t2", e2}));
 
   Visitor visitor;
-  auto credentials = DynamicAccessTokenCredentials(mock.AsStdFunction());
+  auto credentials = MakeDynamicAccessTokenCredentials(mock.AsStdFunction());
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("DynamicAccessTokenConfig", visitor.name);
   auto t1 = visitor.source();

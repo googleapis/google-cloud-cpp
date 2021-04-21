@@ -26,19 +26,19 @@ void CredentialsVisitor::dispatch(Credentials& credentials,
   credentials.dispatch(visitor);
 }
 
-std::shared_ptr<Credentials> GoogleDefaultCredentials() {
+std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
   return std::make_shared<GoogleDefaultCredentialsConfig>();
 }
 
-std::shared_ptr<Credentials> AccessTokenCredentials(
+std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
     std::chrono::system_clock::time_point expiration) {
-  return DynamicAccessTokenCredentials([access_token, expiration] {
+  return MakeDynamicAccessTokenCredentials([access_token, expiration] {
     return AccessToken{access_token, expiration};
   });
 }
 
-std::shared_ptr<Credentials> DynamicAccessTokenCredentials(
+std::shared_ptr<Credentials> MakeDynamicAccessTokenCredentials(
     AccessTokenSource source) {
   return std::make_shared<DynamicAccessTokenConfig>(std::move(source));
 }
