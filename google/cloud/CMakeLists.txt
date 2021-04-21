@@ -127,6 +127,8 @@ add_library(
     internal/build_info.h
     internal/compiler_info.cc
     internal/compiler_info.h
+    internal/credentials.cc
+    internal/credentials.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
@@ -253,6 +255,7 @@ if (BUILD_TESTING)
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
+        internal/credentials_test.cc
         internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
