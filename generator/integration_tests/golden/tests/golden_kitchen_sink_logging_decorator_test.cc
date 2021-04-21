@@ -71,6 +71,14 @@ class MockGoldenKitchenSinkStub
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
+  MOCK_METHOD(
+      StatusOr<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+      ListServiceAccountKeys,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
+           request),
+      (override));
 };
 
 class LoggingDecoratorTest : public ::testing::Test {
@@ -240,6 +248,35 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeys) {
+  ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
+  EXPECT_CALL(*mock_, ListServiceAccountKeys).WillOnce(Return(response));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
+  EXPECT_CALL(*mock_, ListServiceAccountKeys)
+      .WillOnce(Return(TransientError()));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 }  // namespace

@@ -103,6 +103,18 @@ GoldenKitchenSinkLogging::TailLogEntries(
       std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+GoldenKitchenSinkLogging::ListServiceAccountKeys(
+    grpc::ClientContext& context,
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+        return child_->ListServiceAccountKeys(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden_internal
 }  // namespace cloud

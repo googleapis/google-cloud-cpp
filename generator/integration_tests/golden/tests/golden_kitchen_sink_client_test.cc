@@ -225,6 +225,38 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
+TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  std::string expected_name =
+      "/projects/my-project/serviceAccounts/foo@bar.com";
+  std::vector<::google::test::admin::database::v1::
+                  ListServiceAccountKeysRequest::KeyType>
+      expected_key_types = {::google::test::admin::database::v1::
+                                ListServiceAccountKeysRequest::SYSTEM_MANAGED};
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .Times(2)
+      .WillRepeatedly([expected_name, expected_key_types](
+                          ::google::test::admin::database::v1::
+                              ListServiceAccountKeysRequest const& request) {
+        EXPECT_EQ(request.name(), expected_name);
+        EXPECT_THAT(request.key_types(),
+                    testing::ElementsAreArray(expected_key_types));
+        ::google::test::admin::database::v1::ListServiceAccountKeysResponse
+            response;
+        return response;
+      });
+  GoldenKitchenSinkClient client(std::move(mock));
+  auto response =
+      client.ListServiceAccountKeys(expected_name, expected_key_types);
+  EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  request.set_name(expected_name);
+  *request.mutable_key_types() = {expected_key_types.begin(),
+                                  expected_key_types.end()};
+  response = client.ListServiceAccountKeys(request);
+  EXPECT_STATUS_OK(response);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace golden

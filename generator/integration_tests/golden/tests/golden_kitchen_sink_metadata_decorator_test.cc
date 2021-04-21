@@ -69,6 +69,14 @@ class MockGoldenKitchenSinkStub
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
            request),
       (override));
+  MOCK_METHOD(
+      StatusOr<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+      ListServiceAccountKeys,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
+           request),
+      (override));
 };
 
 class MetadataDecoratorTest : public ::testing::Test {
@@ -202,6 +210,27 @@ TEST_F(MetadataDecoratorTest, TailLogEntries) {
   auto response =
       stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
+}
+
+TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
+  EXPECT_CALL(*mock_, ListServiceAccountKeys)
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::test::admin::database::v1::
+                           ListServiceAccountKeysRequest const&) {
+        EXPECT_STATUS_OK(
+            IsContextMDValid(context,
+                             "google.test.admin.database.v1.GoldenKitchenSink."
+                             "ListServiceAccountKeys",
+                             expected_api_client_header_));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  request.set_name("projects/my-project/serviceAccounts/foo@bar.com");
+  auto status = stub.ListServiceAccountKeys(context, request);
+  EXPECT_EQ(TransientError(), status.status());
 }
 
 }  // namespace

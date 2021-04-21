@@ -74,6 +74,12 @@ StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> GoldenK
       );
 }
 
+StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+GoldenKitchenSinkConnection::ListServiceAccountKeys(
+    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 namespace {
 class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
  public:
@@ -185,6 +191,19 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         ::google::test::admin::database::v1::TailLogEntriesResponse>(
         [resumable]{return resumable->Read();}));
   }
+
+  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(
+      ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override {
+    return google::cloud::internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        idempotency_policy_->ListServiceAccountKeys(request),
+        [this](grpc::ClientContext& context,
+            ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+          return stub_->ListServiceAccountKeys(context, request);
+        },
+        request, __func__);
+}
 
  private:
   std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
