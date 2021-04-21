@@ -36,6 +36,8 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
     "internal/default_completion_queue_impl.h",
+    "internal/grpc_access_token_authentication.h",
+    "internal/grpc_channel_credentials_authentication.h",
     "internal/log_wrapper.h",
     "internal/polling_loop.h",
     "internal/resumable_streaming_read_rpc.h",
@@ -45,6 +47,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/streaming_read_rpc.h",
     "internal/streaming_read_rpc_logging.h",
     "internal/time_utils.h",
+    "internal/unified_grpc_credentials.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
@@ -55,8 +58,11 @@ google_cloud_cpp_grpc_utils_srcs = [
     "internal/async_connection_ready.cc",
     "internal/background_threads_impl.cc",
     "internal/default_completion_queue_impl.cc",
+    "internal/grpc_access_token_authentication.cc",
+    "internal/grpc_channel_credentials_authentication.cc",
     "internal/log_wrapper.cc",
     "internal/retry_loop_helpers.cc",
     "internal/streaming_read_rpc.cc",
     "internal/time_utils.cc",
+    "internal/unified_grpc_credentials.cc",
 ]
