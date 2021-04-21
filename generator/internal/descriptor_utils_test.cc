@@ -348,7 +348,7 @@ const char* const kServiceProto =
     "  Foo widget = 3;\n"
     "  bool toggle = 4;\n"
     "  string title = 5;\n"
-    "  repeated SwallowType swallow_types =6;\n"
+    "  repeated SwallowType swallow_types = 6;\n"
     "}\n"
     "// Leading comments about message Empty.\n"
     "message Empty {}\n"
