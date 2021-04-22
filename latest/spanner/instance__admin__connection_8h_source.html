@@ -191,28 +191,28 @@ $(function() {
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a10f10c3ed64d898949801b44b2916619">MakeInstanceAdminConnection</a>(</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options);</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160; </div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a10f10c3ed64d898949801b44b2916619">MakeInstanceAdminConnection</a>(</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy);</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;}  <span class="comment">// namespace spanner</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="keyword">namespace </span>spanner_internal {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a> {</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;std::shared_ptr&lt;InstanceAdminConnection&gt; <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a10f10c3ed64d898949801b44b2916619">MakeInstanceAdminConnection</a>(</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#a780db6d7ded7d601844b15fced88b1a4">ConnectionOptions</a> <span class="keyword">const</span>&amp; options, std::unique_ptr&lt;RetryPolicy&gt; retry_policy,</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    std::unique_ptr&lt;BackoffPolicy&gt; backoff_policy,</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    std::unique_ptr&lt;PollingPolicy&gt; polling_policy);</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;std::shared_ptr&lt;spanner::InstanceAdminConnection&gt;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad200b9e92b53eef9ab32cc18d30e942e">MakeInstanceAdminConnectionForTesting</a>(</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    std::shared_ptr&lt;InstanceAdminStub&gt; base_stub, Options opts);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}  <span class="comment">// namespace spanner_internal</span></div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}  <span class="comment">// namespace cloud</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;}  <span class="comment">// namespace spanner</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keyword">namespace </span>spanner_internal {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">inline</span> <span class="keyword">namespace </span><a class="code" href="version_8h.html#a313bc0c726caf781fb59a7140610468e">SPANNER_CLIENT_NS</a> {</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;std::shared_ptr&lt;spanner::InstanceAdminConnection&gt;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<a class="code" href="namespacegoogle_1_1cloud_1_1spanner__internal_1_1v1.html#ad200b9e92b53eef9ab32cc18d30e942e">MakeInstanceAdminConnectionForTesting</a>(</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    std::shared_ptr&lt;InstanceAdminStub&gt; base_stub, Options opts);</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CONNECTION_H</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}  <span class="comment">// namespace SPANNER_CLIENT_NS</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}  <span class="comment">// namespace spanner_internal</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;}  <span class="comment">// namespace cloud</span></div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;}  <span class="comment">// namespace google</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160; </div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;<span class="preprocessor">#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CONNECTION_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespacegoogle_1_1cloud_1_1spanner_1_1v1_html_ae93fca2f5409b77f4f905843a044d7c0"><div class="ttname"><a href="namespacegoogle_1_1cloud_1_1spanner_1_1v1.html#ae93fca2f5409b77f4f905843a044d7c0">google::cloud::spanner::v1::ListInstancesRange</a></div><div class="ttdeci">google::cloud::internal::PaginationRange&lt; google::spanner::admin::instance::v1::Instance &gt; ListInstancesRange</div><div class="ttdoc">An input range to stream all the instances in a Cloud project.</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00044">instance_admin_connection.h:45</a></div></div>
 <div class="ttc" id="astructgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection_1_1GetInstanceParams_html"><div class="ttname"><a href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1InstanceAdminConnection_1_1GetInstanceParams.html">google::cloud::spanner::v1::InstanceAdminConnection::GetInstanceParams</a></div><div class="ttdoc">Wrap the arguments for GetInstance().</div><div class="ttdef"><b>Definition:</b> <a href="instance__admin__connection_8h_source.html#l00085">instance_admin_connection.h:85</a></div></div>
