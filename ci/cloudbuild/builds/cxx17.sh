@@ -23,7 +23,7 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=gcc
 export CXX=g++
 
-cmake -GNinja -DBUILD_TESTING=OFF -DCMAKE_CXX_STANDARD=17 -S . -B cmake-out
+cmake -GNinja -DCMAKE_CXX_STANDARD=17 -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 
