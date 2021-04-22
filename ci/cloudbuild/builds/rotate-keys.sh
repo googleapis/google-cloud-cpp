@@ -76,7 +76,6 @@ for key_base in "${active_key_bases[@]}"; do
 done
 
 io::log_h2 "Checking for stale keyfiles"
-# Keys are certainly no longer in use after 45 days
 stale_key_base="key-$(date +"%Y-%m" --date="now - 45 days")"
 for filetype in "json" "p12"; do
   bucket_path="${bucket}/${stale_key_base}.${filetype}"
