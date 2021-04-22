@@ -339,10 +339,9 @@ TEST(ConnectionImplTest, ReadSuccess) {
     values: { string_value: "42" }
     values: { string_value: "Ann" }
   )pb";
-  EXPECT_CALL(
-      *mock,
-      StreamingRead(
-          _, HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW)))
+  EXPECT_CALL(*mock,
+              StreamingRead(
+                  _, HasPriority(spanner_proto::RequestOptions::PRIORITY_LOW)))
       .WillOnce(Return(ByMove(MakeFailingReader(retry_status))))
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
@@ -714,7 +713,7 @@ TEST(ConnectionImplTest, QueryOptions) {
   auto constexpr kRequestOptionsProp =
       &spanner_proto::ExecuteSqlRequest::request_options;
   spanner_proto::RequestOptions ro;
-  ro.set_priority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW);
+  ro.set_priority(spanner_proto::RequestOptions::PRIORITY_LOW);
 
   for (auto const& version : optimizer_versions) {
     spanner_proto::ExecuteSqlRequest::QueryOptions qo;
@@ -1285,8 +1284,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   EXPECT_CALL(
       *mock,
       ExecuteBatchDml(
-          _,
-          HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_MEDIUM)))
+          _, HasPriority(spanner_proto::RequestOptions::PRIORITY_MEDIUM)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
@@ -1833,8 +1831,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
       Commit(_,
              AllOf(HasSession("test-session-name"),
                    HasNakedTransactionId("test-txn-id"),
-                   HasPriority(
-                       spanner_proto::RequestOptions_Priority_PRIORITY_HIGH))))
+                   HasPriority(spanner_proto::RequestOptions::PRIORITY_HIGH))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
