@@ -41,3 +41,11 @@ CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="${GOOGLE_CLOUD_BUILD:-no}" \
 
 io::log_h2 "Verifying Markdown"
 CHECK_MARKDOWN=yes ci/check-markdown.sh
+io::log "done"
+
+io::log_h2 "Verifying googleapis commit has for generated code"
+CHECK_GENERATED_CODE_HASH=yes ci/check-generated-code-hash.sh
+
+io::log_h2 "Verifying generator golden file md5 hashes"
+CHECK_GENERATED_CODE_HASH=yes ci/check-golden-md5-hashes.sh
+io::log "done"
