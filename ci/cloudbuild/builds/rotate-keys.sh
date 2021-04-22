@@ -14,14 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ATTENTION:
-# This build is different than most because it's designed to be run as a
-# "manual" trigger that's run on a schedule in GCB. For details, see the docs
+# ATTENTION: This build is different than most because it's designed to be run
+# as a "manual" trigger that's run on a schedule in GCB. For details, see
 # https://cloud.google.com/build/docs/automating-builds/create-manual-triggers.
 #
 # NOTE: This build script will not have a trigger file in the
 # `ci/cloudbuild/triggers` directory. "Manual" triggers exist only within the
-# GCB UI at the time of this writing.
+# GCB UI at the time of this writing. Users with the appropriate access can run
+# this build by hand with:
+#   `ci/cloudbuild/build.sh --distro fedora rotate-keys --local`
 #
 # The purpose of this build is to rotate the service-account keys used by the
 # GCS integration test (see lib/integration.sh). The idea is to have p12 and
@@ -41,29 +42,25 @@
 #
 # We can schedule this script to run every night or weekly and it will create
 # keys as necessary and delete old ones.
-#
-# Users with the appropriate access can run this build by hand with:
-#   `ci/cloudbuild/build.sh --distro fedora rotate-keys --local`
 
 set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/lib/io.sh
 
-bucket="gs://cloud-cpp-testing-resources-secrets"
-account="storage-key-file-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com"
-active_key_bases=(
-  "key-$(date +"%Y-%m")"
-  "key-$(date +"%Y-%m" --date="now + 2 weeks")"
-)
-
 io::log_h2 "Current service account keys"
+account="storage-key-file-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com"
 gcloud iam service-accounts keys list \
   --iam-account="${account}" \
   --managed-by=user \
   --format="table(CREATED_AT, EXPIRES_AT)"
 
-io::log_h2 "Making sure the needed active keys exist"
+io::log_h2 "Checking for the expected active keys"
+bucket="gs://cloud-cpp-testing-resources-secrets"
+active_key_bases=(
+  "key-$(date +"%Y-%m")"
+  "key-$(date +"%Y-%m" --date="now + 2 weeks")"
+)
 for key_base in "${active_key_bases[@]}"; do
   for filetype in "json" "p12"; do
     bucket_path="${bucket}/${key_base}.${filetype}"
@@ -72,13 +69,13 @@ for key_base in "${active_key_bases[@]}"; do
       io::log "Not found. Creating ${bucket_path}"
       gcloud iam service-accounts keys create - \
         --iam-account="${account}" \
-        --key-file-type="${filetype}" \
-        | gsutil cp - "${bucket_path}"
+        --key-file-type="${filetype}" |
+        gsutil cp - "${bucket_path}"
     fi
   done
 done
 
-io::log_h2 "Looking for stale key files to delete"
+io::log_h2 "Checking for stale keyfiles"
 # Keys are certainly no longer in use after 45 days
 stale_key_base="key-$(date +"%Y-%m" --date="now - 45 days")"
 for filetype in "json" "p12"; do
@@ -90,7 +87,7 @@ for filetype in "json" "p12"; do
   fi
 done
 
-io::log_h2 "Deleting keys over 90 days old"
+io::log_h2 "Checking for keys over 90-days old"
 args=(
   "--iam-account=${account}"
   "--managed-by=user"
@@ -98,8 +95,7 @@ args=(
   "--format=value(KEY_ID)"
 )
 for old_key in $(gcloud iam service-accounts keys list "${args[@]}"); do
-  io::log "Found old key: ${old_key}"
+  io::log "Deleting key: ${old_key}"
   gcloud iam service-accounts keys delete "${old_key}" --account="${account}"
 done
 echo
-
