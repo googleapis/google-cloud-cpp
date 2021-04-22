@@ -397,6 +397,10 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/completion_queue_impl.h
         internal/default_completion_queue_impl.cc
         internal/default_completion_queue_impl.h
+        internal/grpc_access_token_authentication.cc
+        internal/grpc_access_token_authentication.h
+        internal/grpc_channel_credentials_authentication.cc
+        internal/grpc_channel_credentials_authentication.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/polling_loop.h
@@ -409,7 +413,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/streaming_read_rpc.h
         internal/streaming_read_rpc_logging.h
         internal/time_utils.cc
-        internal/time_utils.h)
+        internal/time_utils.h
+        internal/unified_grpc_credentials.cc
+        internal/unified_grpc_credentials.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC absl::function_ref
@@ -482,13 +488,16 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_loop_test.cc
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
+            internal/grpc_access_token_authentication_test.cc
+            internal/grpc_channel_credentials_authentication_test.cc
             internal/log_wrapper_test.cc
             internal/polling_loop_test.cc
             internal/resumable_streaming_read_rpc_test.cc
             internal/retry_loop_test.cc
             internal/streaming_read_rpc_logging_test.cc
             internal/streaming_read_rpc_test.cc
-            internal/time_utils_test.cc)
+            internal/time_utils_test.cc
+            internal/unified_grpc_credentials_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
