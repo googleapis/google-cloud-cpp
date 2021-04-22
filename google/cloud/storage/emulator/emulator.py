@@ -676,9 +676,9 @@ def resumable_upload_chunk(bucket_name):
     if upload.complete:
         return gcs_type.object.Object.rest(upload.metadata, upload.rest_only)
     upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
-    content_length = int(request.headers.get("content-length", 0))
+    content_length = request.headers.get("content-length", None)
     data = utils.common.extract_media(request)
-    if content_length != len(data):
+    if content_length is not None and int(content_length) != len(data):
         utils.error.invalid("content-length header", None)
     content_range = request.headers.get("content-range")
     custom_header_value = request.headers.get("x-goog-emulator-custom-header")
@@ -712,10 +712,15 @@ def resumable_upload_chunk(bucket_name):
                     blob.rest_metadata(), projection, fields
                 )
             return upload.resumable_status_rest()
-        _, chunk_last_byte = [int(v) for v in items[0].split("-")]
+        _, chunk_last_byte = [v for v in items[0].split("-")]
         x_upload_content_length = int(
             upload.request.headers.get("x-upload-content-length", 0)
         )
+        if (chunk_last_byte == '*'):
+            x_upload_content_length = len(upload.media)
+            chunk_last_byte = len(upload.media) - 1
+        else:
+            chunk_last_byte = int(chunk_last_byte)
         total_object_size = (
             int(items[1]) if items[1] != "*" else x_upload_content_length
         )
