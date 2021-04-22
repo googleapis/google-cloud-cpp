@@ -164,6 +164,11 @@ fi
 # https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
 BRANCH_NAME="${BRANCH_NAME:-$(git branch --show-current)}"
 COMMIT_SHA="${COMMIT_SHA:-$(git rev-parse HEAD)}"
+# GCB builds get these vars from Secret Manager, which uses a single newline
+# instead of an empty string. We remove all whitespace here so that `test -z`
+# and similar work in the invoked build scripts.
+CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
+LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
@@ -264,8 +269,19 @@ fi
 
 # Uses Google Cloud build to run the specified build.
 io::log_h1 "Starting cloud build: ${BUILD_NAME}"
-project="${PROJECT_FLAG:-$(gcloud config get-value project)}"
-account="$(gcloud config get-value account)"
+project="${PROJECT_FLAG:-$(gcloud config get-value project 2>/dev/null)}"
+account="$(gcloud config get-value account 2>/dev/null)"
+# The cloudbuild.yaml file expects certain "secrets" to be present in the
+# project's "Secret Manager". This is true for our main production project, but
+# for personal projects we may need to create them (with empty strings).
+if [[ "${project}" != "cloud-cpp-testing-resources" ]]; then
+  for secret in "CODECOV_TOKEN" "LOG_LINKER_PAT"; do
+    if ! gcloud --project "${project}" secrets describe "${secret}" >/dev/null; then
+      io::log_yellow "Adding missing secret ${secret} to ${project}"
+      echo | gcloud --project "${project}" secrets create "${secret}" --data-file=-
+    fi
+  done
+fi
 subs=("_DISTRO=${DISTRO_FLAG}")
 subs+=("_BUILD_NAME=${BUILD_NAME}")
 subs+=("_TRIGGER_SOURCE=manual-${account}")
