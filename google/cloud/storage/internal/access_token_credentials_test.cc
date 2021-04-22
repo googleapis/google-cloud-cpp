@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/access_token_credentials.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,7 +23,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using google::cloud::internal::AccessToken;
+using ::google::cloud::internal::AccessToken;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Return;
 
 TEST(AccessTokenCredentials, Simple) {
@@ -44,13 +46,15 @@ TEST(AccessTokenCredentials, Simple) {
 }
 
 TEST(AccessTokenCredentials, NotExpired) {
-  ::testing::MockFunction<AccessToken()> mock_source;
+  ::testing::MockFunction<StatusOr<AccessToken>()> mock_source;
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::minutes(10);
   EXPECT_CALL(mock_source, Call)
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(AccessToken{"token1", expiration}));
 
   AccessTokenCredentials tested(mock_source.AsStdFunction());
+  EXPECT_THAT(tested.AuthorizationHeader(), StatusIs(StatusCode::kUnavailable));
   EXPECT_EQ("Authorization: Bearer token1",
             tested.AuthorizationHeader().value());
   EXPECT_EQ("Authorization: Bearer token1",

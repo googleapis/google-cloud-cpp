@@ -38,7 +38,6 @@ class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
  private:
   AccessTokenSource source_;
   std::mutex mu_;
-  std::string token_;
   std::shared_ptr<grpc::CallCredentials> credentials_;
   std::chrono::system_clock::time_point expiration_;
   bool refreshing_ = false;

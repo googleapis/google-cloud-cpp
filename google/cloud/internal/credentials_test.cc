@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/credentials.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,6 +22,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Return;
 
 struct Visitor : public CredentialsVisitor {
@@ -52,12 +54,13 @@ TEST(Credentials, AccessTokenCredentials) {
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("DynamicAccessTokenConfig", visitor.name);
   auto const access_token = visitor.source();
-  EXPECT_EQ("test-token", access_token.token);
-  EXPECT_EQ(expiration, access_token.expiration);
+  ASSERT_THAT(access_token, IsOk());
+  EXPECT_EQ("test-token", access_token->token);
+  EXPECT_EQ(expiration, access_token->expiration);
 }
 
 TEST(Credentials, DynamicAccessTokenCredentials) {
-  ::testing::MockFunction<AccessToken()> mock;
+  ::testing::MockFunction<StatusOr<AccessToken>()> mock;
   auto const e1 = std::chrono::system_clock::now() + std::chrono::hours(1);
   auto const e2 = std::chrono::system_clock::now() + std::chrono::hours(2);
   EXPECT_CALL(mock, Call)
@@ -69,11 +72,13 @@ TEST(Credentials, DynamicAccessTokenCredentials) {
   CredentialsVisitor::dispatch(*credentials, visitor);
   EXPECT_EQ("DynamicAccessTokenConfig", visitor.name);
   auto t1 = visitor.source();
-  EXPECT_EQ("t1", t1.token);
-  EXPECT_EQ(e1, t1.expiration);
+  ASSERT_THAT(t1, IsOk());
+  EXPECT_EQ("t1", t1->token);
+  EXPECT_EQ(e1, t1->expiration);
   auto t2 = visitor.source();
-  EXPECT_EQ("t2", t2.token);
-  EXPECT_EQ(e2, t2.expiration);
+  ASSERT_THAT(t2, IsOk());
+  EXPECT_EQ("t2", t2->token);
+  EXPECT_EQ(e2, t2->expiration);
 }
 
 }  // namespace
