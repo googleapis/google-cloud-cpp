@@ -66,8 +66,8 @@ for lib in "${libraries[@]}"; do
   io::log_h2 "Checking ${lib}"
   actual_dump_file="${lib}.actual.abi.dump"
   expected_dump_file="${lib}.expected.abi.dump"
-  zcat "${PROJECT_ROOT}/ci/test-abi/${expected_dump_file}.gz" > \
-    "cmake-out/${expected_dump_file}"
+  expected_dump_path="${PROJECT_ROOT}/ci/test-abi/${expected_dump_file}.gz"
+  zcat "${expected_dump_path}" > "cmake-out/${expected_dump_file}"
   # We ignore all symbols in internal namespaces, because these are not part
   # of our public API. We do this by specifying a regex that matches against
   # the mangled symbol names. For example, 8 is the number of characters in
@@ -85,6 +85,9 @@ for lib in "${libraries[@]}"; do
     io::log "Report file: ${report}"
     w3m -dump "${report}"
   fi
+  # Replaces the (old) expected dump file with the (new) actual one.
+  gzip "cmake-out/${actual_dump_file}"
+  mv -f "cmake-out/${actual_dump_file}.gz" "${expected_dump_path}"
 done
 echo
 exit "${errors}"
