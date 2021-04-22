@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/grpc_plugin.h"
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/credentials.h"

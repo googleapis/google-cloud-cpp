@@ -15,7 +15,6 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/grpc_plugin.h"
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/internal/grpc_client.h"
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
