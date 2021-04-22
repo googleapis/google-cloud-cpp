@@ -442,47 +442,6 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-/// @test Verify that NOT_FOUND is returned for missing objects
-TEST_P(GrpcIntegrationTest, GetObjectMediaNotFound) {
-  if (GetParam() == "media") GTEST_SKIP();
-  auto bucket_client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(bucket_client);
-
-  auto client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-
-  auto bucket_name = MakeRandomBucketName();
-  auto bucket_metadata = bucket_client->CreateBucketForProject(
-      bucket_name, project_id(), BucketMetadata());
-  ASSERT_STATUS_OK(bucket_metadata);
-
-  auto object_name = MakeRandomObjectName();
-
-  auto channel = google::cloud::storage::internal::CreateGrpcChannel(
-      DefaultOptionsGrpc(), /*channel_id=*/0);
-  auto stub = google::storage::v1::Storage::NewStub(channel);
-
-  grpc::ClientContext context;
-  google::storage::v1::GetObjectMediaRequest request;
-  request.set_bucket(bucket_name);
-  request.set_object(object_name);
-  auto stream = stub->GetObjectMedia(&context, request);
-  google::storage::v1::GetObjectMediaResponse response;
-  auto open = true;
-  for (int i = 0; i != 100 && open; ++i) {
-    open = stream->Read(&response);
-  }
-  EXPECT_FALSE(open);
-
-  auto status = stream->Finish();
-  ASSERT_EQ(grpc::StatusCode::NOT_FOUND, status.error_code())
-      << "message = " << status.error_message();
-  auto delete_bucket_status = bucket_client->DeleteBucket(bucket_name);
-  EXPECT_STATUS_OK(delete_bucket_status);
-}
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
 TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto bucket_client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(bucket_client);
