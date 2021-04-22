@@ -234,18 +234,24 @@ std::shared_ptr<spanner::InstanceAdminConnection> MakeInstanceAdminConnection(
  *
  * @see `InstanceAdminConnection`
  *
- * @param options (optional) configure the `InstanceAdminConnection` created by
- *     this function.
+ * @param options configure the `InstanceAdminConnection` created by this
+ *     function.
  */
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options);
 
 /**
- * @copydoc MakeInstanceAdminConnection
+ * Returns an InstanceAdminConnection object that can be used for interacting
+ * with Cloud Spanner's admin APIs.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `InstanceAdminClient` instance.
  *
  * @note Prefer using the `MakeInstanceAdminConnection()` overload that accepts
  *     `google::cloud::Options`.
  *
+ * @param options configure the `InstanceAdminConnection` created by this
+ *     function.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted
  * @param backoff_policy controls the backoff behavior between retry attempts,
