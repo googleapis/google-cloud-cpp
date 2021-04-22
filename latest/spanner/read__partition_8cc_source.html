@@ -110,15 +110,15 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">switch</span> (*read_options.<a class="code" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">request_priority</a>) {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;      <span class="keywordflow">case</span> spanner::RequestPriority::kLow:</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        request_options-&gt;set_priority(</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            google::spanner::v1::RequestOptions_Priority_PRIORITY_LOW);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            google::spanner::v1::RequestOptions::PRIORITY_LOW);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      <span class="keywordflow">case</span> spanner::RequestPriority::kMedium:</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        request_options-&gt;set_priority(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            google::spanner::v1::RequestOptions_Priority_PRIORITY_MEDIUM);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            google::spanner::v1::RequestOptions::PRIORITY_MEDIUM);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      <span class="keywordflow">case</span> spanner::RequestPriority::kHigh:</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        request_options-&gt;set_priority(</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            google::spanner::v1::RequestOptions_Priority_PRIORITY_HIGH);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            google::spanner::v1::RequestOptions::PRIORITY_HIGH);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
@@ -130,13 +130,13 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  options.<a class="code" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a8c8b93c2dfbc5e9827274774a69ed7d3">limit</a> = proto_.limit();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> (proto_.has_request_options()) {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">switch</span> (proto_.request_options().priority()) {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions_Priority_PRIORITY_LOW:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions::PRIORITY_LOW:</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        options.<a class="code" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">request_priority</a> = spanner::RequestPriority::kLow;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions_Priority_PRIORITY_MEDIUM:</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions::PRIORITY_MEDIUM:</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        options.<a class="code" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">request_priority</a> = spanner::RequestPriority::kMedium;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions_Priority_PRIORITY_HIGH:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordflow">case</span> google::spanner::v1::RequestOptions::PRIORITY_HIGH:</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        options.<a class="code" href="structgoogle_1_1cloud_1_1spanner_1_1v1_1_1ReadOptions.html#a165065589c69c3fac6da6af988af5f4e">request_priority</a> = spanner::RequestPriority::kHigh;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="keywordflow">default</span>:</div>
