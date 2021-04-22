@@ -80,7 +80,7 @@ Options DefaultOptionsGrpc(Options options) {
 }
 
 std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> const&
+    google::cloud::internal::GrpcAuthenticationStrategy&
         authentication_strategy,
     Options const& options, int channel_id) {
   grpc::ChannelArguments args;
@@ -88,8 +88,8 @@ std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
   if (DirectPathEnabled()) {
     args.SetServiceConfigJSON(kDirectPathConfig);
   }
-  return authentication_strategy->CreateChannel(options.get<EndpointOption>(),
-                                                std::move(args));
+  return authentication_strategy.CreateChannel(options.get<EndpointOption>(),
+                                               std::move(args));
 }
 
 std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy>
@@ -117,7 +117,7 @@ GrpcClient::GrpcClient(Options const& opts, int channel_id)
           MakeBackwardsCompatibleClientOptions(opts)),
       auth_strategy_(CreateAuthenticationStrategy(opts)),
       stub_(google::storage::v1::Storage::NewStub(
-          CreateGrpcChannel(auth_strategy_, opts, channel_id))) {}
+          CreateGrpcChannel(*auth_strategy_, opts, channel_id))) {}
 
 std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
     grpc::ClientContext& context, google::storage::v1::Object& result) {
