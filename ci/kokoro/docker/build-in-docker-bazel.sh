@@ -83,7 +83,7 @@ fi
 readonly BAZEL_VERB
 
 echo "================================================================"
-io::log "Fetching dependencies"
+io::log_yellow "Fetching dependencies"
 # retry up to 3 times with exponential backoff, initial interval 120s
 "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
   "${BAZEL_BIN}" fetch ... \
@@ -107,7 +107,7 @@ io::log_yellow "Verify generator golden file md5 hashes"
 "${PROJECT_ROOT}"/ci/check-golden-md5-hashes.sh
 
 echo "================================================================"
-io::log "Compiling and running unit tests"
+io::log_yellow "Compiling and running unit tests"
 io::log_cmdline "bazel ${BAZEL_VERB}" "${bazel_args[@]}"
 "${BAZEL_BIN}" ${BAZEL_VERB} \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
@@ -136,7 +136,7 @@ test_against_production() {
 
 if should_run_integration_tests; then
   echo "================================================================"
-  io::log "Running the integration tests"
+  io::log_yellow "Running the integration tests"
 
   if [[ -n "${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}" ]]; then
     bazel_args+=(

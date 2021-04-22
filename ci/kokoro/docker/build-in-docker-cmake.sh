@@ -57,7 +57,7 @@ if command -v ccache >/dev/null 2>&1; then
 fi
 
 echo "================================================================"
-io::log_yellow "Configure CMake"
+io::log_yellow "Running CMake config"
 
 CMAKE_DRIVER="env"
 CMAKE_DRIVER_ARGS=()
@@ -124,13 +124,17 @@ cmake_extra_flags+=("-GNinja")
 # unset. We also disable the shellcheck warning because we want ${CMAKE_FLAGS}
 # to expand as separate arguments.
 # shellcheck disable=SC2086
-"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} cmake \
-  -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+io::log_cmdline \
+  "${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} \
+  cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
   "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
-  ${CMAKE_FLAGS:-} \
-  "-H${SOURCE_DIR}" \
-  "-B${BINARY_DIR}"
-io::log_yellow "Finished CMake config"
+  ${CMAKE_FLAGS:-} "-H${SOURCE_DIR}" "-B${BINARY_DIR}"
+# shellcheck disable=SC2086
+"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} \
+  cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+  "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
+  ${CMAKE_FLAGS:-} "-H${SOURCE_DIR}" "-B${BINARY_DIR}"
+io::log_green "Finished CMake config"
 
 if [[ "${CLANG_TIDY:-}" == "yes" && ("${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" || "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GIT_ON_BORG") ]]; then
   # For presubmit builds we only run clang-tidy on the files that have changed
@@ -171,9 +175,12 @@ if [[ "${CLANG_TIDY:-}" == "yes" && ("${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB
 fi
 
 echo "================================================================"
-io::log_yellow "started build"
-"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} cmake \
-  --build "${BINARY_DIR}" -- -j "${NCPU}"
+io::log_yellow "Running CMake"
+io::log_cmdline \
+  "${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} \
+  cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
+"${CMAKE_DRIVER}" ${CMAKE_DRIVER_ARGS[@]+"${CMAKE_DRIVER_ARGS[@]}"} \
+  cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 io::log_yellow "finished build"
 
 readonly TEST_JOB_COUNT="${NCPU}"
