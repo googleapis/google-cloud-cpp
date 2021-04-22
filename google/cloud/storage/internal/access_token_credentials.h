@@ -41,8 +41,7 @@ class AccessTokenCredentials : public oauth2::Credentials {
  private:
   google::cloud::internal::AccessTokenSource source_;
   std::mutex mu_;
-  std::string header_;
-  std::string token_;
+  StatusOr<std::string> header_;
   std::chrono::system_clock::time_point expiration_;
   bool refreshing_ = false;
   std::condition_variable cv_;

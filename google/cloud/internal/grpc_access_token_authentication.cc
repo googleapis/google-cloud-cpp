@@ -42,9 +42,14 @@ Status GrpcAccessTokenAuthentication::ConfigureContext(
   auto refresh = source_();
   lk.lock();
   refreshing_ = false;
-  token_ = std::move(refresh.token);
-  expiration_ = refresh.expiration;
-  credentials_ = grpc::AccessTokenCredentials(token_);
+  if (!refresh) {
+    expiration_ = {};  // failure to get a token is not cacheable
+    credentials_.reset();
+    cv_.notify_all();
+    return std::move(refresh).status();
+  }
+  expiration_ = refresh->expiration;
+  credentials_ = grpc::AccessTokenCredentials(refresh->token);
   context.set_credentials(credentials_);
   cv_.notify_all();
   return Status{};

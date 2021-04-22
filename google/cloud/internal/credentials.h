@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CREDENTIALS_H
 
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <chrono>
@@ -62,7 +63,7 @@ struct AccessToken {
 };
 
 /// A generator for access tokens.
-using AccessTokenSource = std::function<AccessToken()>;
+using AccessTokenSource = std::function<StatusOr<AccessToken>()>;
 
 /// A generic generator of access tokens.
 std::shared_ptr<Credentials> MakeDynamicAccessTokenCredentials(

@@ -34,9 +34,13 @@ StatusOr<std::string> AccessTokenCredentials::AuthorizationHeader() {
   auto refresh = source_();
   lk.lock();
   refreshing_ = false;
-  token_ = std::move(refresh.token);
-  expiration_ = refresh.expiration;
-  header_ = "Authorization: Bearer " + token_;
+  if (!refresh) {
+    expiration_ = {};  // failure to get a token is not cacheable
+    header_ = std::move(refresh).status();
+  } else {
+    expiration_ = refresh->expiration;
+    header_ = "Authorization: Bearer " + refresh->token;
+  }
   cv_.notify_all();
   return header_;
 }
