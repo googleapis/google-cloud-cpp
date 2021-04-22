@@ -101,16 +101,13 @@ class ReadPartition {
   ///@}
 
   std::string TableName() const { return proto_.table(); }
+
   std::vector<std::string> ColumnNames() const {
     auto const& columns = proto_.columns();
     return std::vector<std::string>(columns.begin(), columns.end());
   }
-  google::cloud::spanner::ReadOptions ReadOptions() const {
-    google::cloud::spanner::ReadOptions options;
-    options.index_name = proto_.index();
-    options.limit = proto_.limit();
-    return options;
-  }
+
+  google::cloud::spanner::ReadOptions ReadOptions() const;
 
   /// @name Equality
   ///@{
@@ -130,9 +127,8 @@ class ReadPartition {
       : proto_(std::move(proto)) {}
   ReadPartition(std::string transaction_id, std::string session_id,
                 std::string partition_token, std::string table_name,
-                google::cloud::spanner::KeySet key_set,
-                std::vector<std::string> column_names,
-                google::cloud::spanner::ReadOptions read_options = {});
+                KeySet key_set, std::vector<std::string> column_names,
+                google::cloud::spanner::ReadOptions read_options);
 
   // Accessor methods for use by friends.
   std::string PartitionToken() const { return proto_.partition_token(); }
@@ -149,6 +145,7 @@ class ReadPartition {
 // Internal implementation details that callers should not use.
 namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
+
 struct ReadPartitionInternals {
   static spanner::ReadPartition MakeReadPartition(
       std::string transaction_id, std::string session_id,
@@ -178,7 +175,7 @@ inline spanner::ReadPartition MakeReadPartition(
     std::string transaction_id, std::string session_id,
     std::string partition_token, std::string table_name,
     spanner::KeySet key_set, std::vector<std::string> column_names,
-    spanner::ReadOptions read_options = {}) {
+    spanner::ReadOptions read_options) {
   return ReadPartitionInternals::MakeReadPartition(
       std::move(transaction_id), std::move(session_id),
       std::move(partition_token), std::move(table_name), std::move(key_set),

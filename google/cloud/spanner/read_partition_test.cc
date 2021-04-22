@@ -58,10 +58,14 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   std::string transaction_id("foo");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
+  ReadOptions read_options;
+  read_options.index_name = "secondary";
+  read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
       transaction_id, session_id, partition_token, table_name, KeySet::All(),
-      column_names));
+      column_names, read_options));
 
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
@@ -70,6 +74,7 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   EXPECT_THAT(actual_partition.KeySet(),
               IsProtoEqual(spanner_internal::ToProto(KeySet::All())));
   EXPECT_EQ(column_names, actual_partition.ColumnNames());
+  EXPECT_EQ(read_options, actual_partition.ReadOptions());
 }
 
 TEST(ReadPartitionTest, Constructor) {
@@ -81,6 +86,7 @@ TEST(ReadPartitionTest, Constructor) {
   ReadOptions read_options;
   read_options.index_name = "secondary";
   read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
       transaction_id, session_id, partition_token, table_name, KeySet::All(),
@@ -104,6 +110,7 @@ TEST(ReadPartitionTest, RegularSemantics) {
   ReadOptions read_options;
   read_options.index_name = "secondary";
   read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartition read_partition(spanner_internal::MakeReadPartition(
       transaction_id, session_id, partition_token, table_name, KeySet::All(),
@@ -123,9 +130,13 @@ TEST(ReadPartitionTest, RegularSemantics) {
 }
 
 TEST(ReadPartitionTest, SerializeDeserialize) {
+  ReadOptions read_options;
+  read_options.index_name = "secondary";
+  read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
       "foo", "session", "token", "Students", KeySet::All(),
-      std::vector<std::string>{"LastName", "FirstName"}));
+      std::vector<std::string>{"LastName", "FirstName"}, read_options));
 
   StatusOr<ReadPartition> partition = DeserializeReadPartition(
       *(SerializeReadPartition(expected_partition.Partition())));
@@ -153,15 +164,21 @@ TEST(ReadPartitionTest, FailedDeserialize) {
 
 TEST(ReadPartitionTest, MakeReadParams) {
   std::vector<std::string> columns = {"LastName", "FirstName"};
+  ReadOptions read_options;
+  read_options.index_name = "secondary";
+  read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
-      "foo", "session", "token", "Students", KeySet::All(), columns));
+      "foo", "session", "token", "Students", KeySet::All(), columns,
+      read_options));
 
   Connection::ReadParams params =
       spanner_internal::MakeReadParams(expected_partition.Partition());
 
   EXPECT_EQ(*params.partition_token, "token");
-  EXPECT_EQ(params.keys, KeySet::All());
+  EXPECT_EQ(params.read_options, read_options);
   EXPECT_EQ(params.columns, columns);
+  EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.table, "Students");
   EXPECT_THAT(params.transaction, HasSessionAndTransactionId("session", "foo"));
 }

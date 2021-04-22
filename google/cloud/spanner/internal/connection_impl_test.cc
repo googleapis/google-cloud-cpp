@@ -2033,6 +2033,7 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
       begin { read_only { strong: true return_read_timestamp: true } }
     }
     table: "table"
+    index: "index"
     columns: "UserId"
     columns: "UserName"
     key_set: { all: true }
@@ -2048,18 +2049,26 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
 
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-  StatusOr<std::vector<spanner::ReadPartition>> result = conn->PartitionRead(
-      {{txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}}});
+  spanner::ReadOptions read_options;
+  read_options.index_name = "index";
+  read_options.limit = 21;
+  read_options.request_priority = spanner::RequestPriority::kLow;
+  StatusOr<std::vector<spanner::ReadPartition>> result =
+      conn->PartitionRead({{txn,
+                            "table",
+                            spanner::KeySet::All(),
+                            {"UserId", "UserName"},
+                            read_options}});
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "CAFEDEAD"));
 
   std::vector<spanner::ReadPartition> expected_read_partitions = {
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", "test-session-name", "BADDECAF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"}),
+          spanner::KeySet::All(), {"UserId", "UserName"}, read_options),
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", "test-session-name", "DEADBEEF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"})};
+          spanner::KeySet::All(), {"UserId", "UserName"}, read_options)};
 
   EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
                                                    expected_read_partitions));
