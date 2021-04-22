@@ -322,7 +322,7 @@ class DatabaseAdminConnection {
 };
 
 /**
- * Returns an DatabaseAdminConnection object that can be used for interacting
+ * Returns a DatabaseAdminConnection object that can be used for interacting
  * with Cloud Spanner's admin APIs.
  *
  * The returned connection object should not be used directly; instead it
@@ -345,7 +345,7 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options opts = {});
 
 /**
- * Returns an DatabaseAdminConnection object that can be used for interacting
+ * Returns a DatabaseAdminConnection object that can be used for interacting
  * with Cloud Spanner's admin APIs.
  *
  * The returned connection object should not be used directly, rather it should
@@ -356,18 +356,24 @@ std::shared_ptr<spanner::DatabaseAdminConnection> MakeDatabaseAdminConnection(
  *
  * @see `DatabaseAdminConnection`
  *
- * @param options (optional) configure the `DatabaseAdminConnection` created by
- *     this function.
+ * @param options configure the `DatabaseAdminConnection` created by this
+ *     function.
  */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options);
 
 /**
- * @copydoc MakeDatabaseAdminConnection
+ * Returns a DatabaseAdminConnection object that can be used for interacting
+ * with Cloud Spanner's admin APIs.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `DatabaseAdminClient` instance.
  *
  * @note Prefer using the `MakeDatabaseAdminConnection()` overload that accepts
  *     `google::cloud::Options`.
  *
+ * @param options configure the `DatabaseAdminConnection` created by this
+ *     function.
  * @param retry_policy control for how long (or how many times) are retryable
  *     RPCs attempted
  * @param backoff_policy controls the backoff behavior between retry attempts,
