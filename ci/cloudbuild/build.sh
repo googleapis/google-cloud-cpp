@@ -278,8 +278,7 @@ if [[ "${project}" != "cloud-cpp-testing-resources" ]]; then
   for secret in "CODECOV_TOKEN" "LOG_LINKER_PAT"; do
     if ! gcloud --project "${project}" secrets describe "${secret}" >/dev/null; then
       io::log_yellow "Adding missing secret ${secret} to ${project}"
-      gcloud --project "${project}" secrets create "${secret}" --data-file=- \
-        </dev/null
+      echo | gcloud --project "${project}" secrets create "${secret}" --data-file=-
     fi
   done
 fi
