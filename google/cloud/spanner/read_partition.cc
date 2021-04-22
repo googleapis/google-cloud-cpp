@@ -41,15 +41,15 @@ ReadPartition::ReadPartition(std::string transaction_id, std::string session_id,
     switch (*read_options.request_priority) {
       case spanner::RequestPriority::kLow:
         request_options->set_priority(
-            google::spanner::v1::RequestOptions_Priority_PRIORITY_LOW);
+            google::spanner::v1::RequestOptions::PRIORITY_LOW);
         break;
       case spanner::RequestPriority::kMedium:
         request_options->set_priority(
-            google::spanner::v1::RequestOptions_Priority_PRIORITY_MEDIUM);
+            google::spanner::v1::RequestOptions::PRIORITY_MEDIUM);
         break;
       case spanner::RequestPriority::kHigh:
         request_options->set_priority(
-            google::spanner::v1::RequestOptions_Priority_PRIORITY_HIGH);
+            google::spanner::v1::RequestOptions::PRIORITY_HIGH);
         break;
     }
   }
@@ -61,13 +61,13 @@ google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
   options.limit = proto_.limit();
   if (proto_.has_request_options()) {
     switch (proto_.request_options().priority()) {
-      case google::spanner::v1::RequestOptions_Priority_PRIORITY_LOW:
+      case google::spanner::v1::RequestOptions::PRIORITY_LOW:
         options.request_priority = spanner::RequestPriority::kLow;
         break;
-      case google::spanner::v1::RequestOptions_Priority_PRIORITY_MEDIUM:
+      case google::spanner::v1::RequestOptions::PRIORITY_MEDIUM:
         options.request_priority = spanner::RequestPriority::kMedium;
         break;
-      case google::spanner::v1::RequestOptions_Priority_PRIORITY_HIGH:
+      case google::spanner::v1::RequestOptions::PRIORITY_HIGH:
         options.request_priority = spanner::RequestPriority::kHigh;
         break;
       default:

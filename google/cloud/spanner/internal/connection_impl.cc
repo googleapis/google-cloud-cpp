@@ -82,14 +82,14 @@ spanner_proto::RequestOptions_Priority ProtoRequestPriority(
   if (request_priority) {
     switch (*request_priority) {
       case spanner::RequestPriority::kLow:
-        return spanner_proto::RequestOptions_Priority_PRIORITY_LOW;
+        return spanner_proto::RequestOptions::PRIORITY_LOW;
       case spanner::RequestPriority::kMedium:
-        return spanner_proto::RequestOptions_Priority_PRIORITY_MEDIUM;
+        return spanner_proto::RequestOptions::PRIORITY_MEDIUM;
       case spanner::RequestPriority::kHigh:
-        return spanner_proto::RequestOptions_Priority_PRIORITY_HIGH;
+        return spanner_proto::RequestOptions::PRIORITY_HIGH;
     }
   }
-  return spanner_proto::RequestOptions_Priority_PRIORITY_UNSPECIFIED;
+  return spanner_proto::RequestOptions::PRIORITY_UNSPECIFIED;
 }
 
 // Operations that set `TransactionSelector::begin` in the request and receive
@@ -816,7 +816,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
       params.options.has<spanner::RequestPriorityOption>()
           ? ProtoRequestPriority(
                 params.options.lookup<spanner::RequestPriorityOption>())
-          : spanner_proto::RequestOptions_Priority_PRIORITY_UNSPECIFIED);
+          : spanner_proto::RequestOptions::PRIORITY_UNSPECIFIED);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
