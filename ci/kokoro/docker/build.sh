@@ -369,7 +369,7 @@ io::log_yellow "Creating Docker image with all the development tools."
 # is an error, so disabling from this point on is the right choice.
 set +e
 mkdir -p "${BUILD_OUTPUT}"
-io::log_yellow "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
+io::log "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 io::log_cmdline "docker build ${docker_build_flags[*]} ci"
 if timeout 3600s docker build "${docker_build_flags[@]}" ci \
   >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then

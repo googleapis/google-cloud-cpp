@@ -27,6 +27,6 @@ export CXX=clang++
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
-mapfile -t integration_args < <(integration::args)
+mapfile -t integration_args < <(integration::bazel_args)
 # TODO(#6181): Run this build against production, not emulators.
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"

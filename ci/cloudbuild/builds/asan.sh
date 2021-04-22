@@ -27,5 +27,5 @@ mapfile -t args < <(bazel::common_args)
 args+=("--config=asan")
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
-mapfile -t integration_args < <(integration::args)
+mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"

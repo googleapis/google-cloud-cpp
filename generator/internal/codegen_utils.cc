@@ -115,8 +115,6 @@ std::string CurrentCopyrightYear() {
   return kCurrentCopyrightYear;
 }
 
-std::string GeneratedFileSuffix() { return ".gcpcxx.pb"; }
-
 std::string LocalInclude(absl::string_view header) {
   if (header.empty()) return {};
   return absl::StrCat("#include \"", header, "\"\n");

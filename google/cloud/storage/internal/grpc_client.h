@@ -17,7 +17,9 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/storage/v1/storage.grpc.pb.h>
+#include <memory>
 #include <string>
 
 namespace google {
@@ -30,14 +32,13 @@ namespace internal {
 /// GOOGLE_CLOUD_DIRECT_PATH.
 bool DirectPathEnabled();
 Options DefaultOptionsGrpc(Options = {});
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(Options const&,
-                                                          int channel_id);
 
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
-  static std::shared_ptr<GrpcClient> Create(Options options);
-  static std::shared_ptr<GrpcClient> Create(Options options, int channel_id);
+  static std::shared_ptr<GrpcClient> Create(Options const& opts);
+  static std::shared_ptr<GrpcClient> Create(Options const& opts,
+                                            int channel_id);
   ~GrpcClient() override = default;
 
   //@{
@@ -318,10 +319,12 @@ class GrpcClient : public RawClient,
   static std::string MD5ToProto(std::string const&);
 
  protected:
-  explicit GrpcClient(Options const& options, int channel_id);
+  explicit GrpcClient(Options const& opts, int channel_id);
 
  private:
   ClientOptions backwards_compatibility_options_;
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy>
+      auth_strategy_;
   std::shared_ptr<google::storage::v1::Storage::Stub> stub_;
 };
 

@@ -27,10 +27,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
-TEST(GeneratedFileSuffix, Success) {
-  EXPECT_EQ(".gcpcxx.pb", GeneratedFileSuffix());
-}
-
 TEST(LocalInclude, Success) {
   EXPECT_EQ("#include \"google/cloud/status.h\"\n",
             LocalInclude("google/cloud/status.h"));

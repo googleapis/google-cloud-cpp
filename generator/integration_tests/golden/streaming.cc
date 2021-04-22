@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "google/cloud/version.h"
 
 namespace google {

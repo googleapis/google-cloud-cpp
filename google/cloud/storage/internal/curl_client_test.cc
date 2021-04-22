@@ -60,7 +60,8 @@ class CurlClientTest : public ::testing::Test,
   void SetUp() override {
     std::string const error_type = GetParam();
     if (error_type == "credentials-failure") {
-      client_ = CurlClient::Create(std::make_shared<FailingCredentials>());
+      client_ = CurlClient::Create(Options{}.set<Oauth2CredentialsOption>(
+          std::make_shared<FailingCredentials>()));
       // We know exactly what error to expect, so setup the assertions to be
       // very strict.
       check_status_ = [](Status const& actual) {
@@ -70,9 +71,11 @@ class CurlClientTest : public ::testing::Test,
     } else if (error_type == "libcurl-failure") {
       google::cloud::internal::SetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT",
                                       "http://localhost:1");
-      client_ =
-          CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())
-                                 .set_endpoint("http://localhost:1"));
+      client_ = CurlClient::Create(
+          Options{}
+              .set<Oauth2CredentialsOption>(
+                  oauth2::CreateAnonymousCredentials())
+              .set<RestEndpointOption>("http://localhost:1"));
       // We do not know what libcurl will return. Some kind of error, but varies
       // by version of libcurl. Just make sure it is an error and the CURL
       // details are included in the error message.

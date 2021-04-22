@@ -11,11 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
@@ -69,6 +69,14 @@ class MockGoldenKitchenSinkStub
       TailLogEntries,
       (std::unique_ptr<grpc::ClientContext> context,
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
+           request),
+      (override));
+  MOCK_METHOD(
+      StatusOr<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+      ListServiceAccountKeys,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
            request),
       (override));
 };
@@ -240,6 +248,35 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeys) {
+  ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
+  EXPECT_CALL(*mock_, ListServiceAccountKeys).WillOnce(Return(response));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
+  EXPECT_CALL(*mock_, ListServiceAccountKeys)
+      .WillOnce(Return(TransientError()));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 }  // namespace

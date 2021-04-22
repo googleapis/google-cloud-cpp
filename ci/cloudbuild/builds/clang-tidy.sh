@@ -18,6 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=clang
 export CXX=clang++
@@ -26,11 +27,14 @@ export CTCACHE_DIR=~/.cache/ctcache
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
 cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=ON \
+  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
   -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 
-io::log_h2 "clang-tidy cache"
+integration::ctest_with_emulators "cmake-out"
+
+io::log_h2 "ctcache stats"
 printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
 printf "%s: %s\n" " num files" "$(find "${CTCACHE_DIR}" | wc -l)"
 echo

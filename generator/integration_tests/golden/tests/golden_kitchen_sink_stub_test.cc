@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
@@ -189,6 +189,33 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
       (::grpc::ClientContext * context,
        const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq),
       (override));
+  MOCK_METHOD(
+      ::grpc::Status, ListServiceAccountKeys,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+           request,
+       ::google::test::admin::database::v1::ListServiceAccountKeysResponse*
+           response),
+      (override));
+
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>*,
+      AsyncListServiceAccountKeysRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
+  MOCK_METHOD(
+      ::grpc::ClientAsyncResponseReaderInterface<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>*,
+      PrepareAsyncListServiceAccountKeysRaw,
+      (::grpc::ClientContext * context,
+       const ::google::test::admin::database::v1::ListServiceAccountKeysRequest&
+           request,
+       ::grpc::CompletionQueue* cq),
+      (override));
 };
 
 class GoldenKitchenSinkStubTest : public ::testing::Test {
@@ -298,6 +325,20 @@ TEST_F(GoldenKitchenSinkStubTest, TailLogEntries) {
       stub.TailLogEntries(absl::make_unique<grpc::ClientContext>(), request);
   auto failure_status = absl::get<Status>(failure_stream->Read());
   EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
+  grpc::Status status;
+  grpc::ClientContext context;
+  google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  EXPECT_CALL(*grpc_stub_, ListServiceAccountKeys(&context, _, _))
+      .WillOnce(Return(status))
+      .WillOnce(Return(GrpcTransientError()));
+  DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
+  auto success = stub.ListServiceAccountKeys(context, request);
+  EXPECT_THAT(success, IsOk());
+  auto failure = stub.ListServiceAccountKeys(context, request);
+  EXPECT_EQ(failure.status(), TransientError());
 }
 
 }  // namespace

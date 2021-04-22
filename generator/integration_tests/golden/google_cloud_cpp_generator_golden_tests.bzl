@@ -30,6 +30,7 @@ google_cloud_cpp_generator_golden_tests = [
     "tests/golden_thing_admin_idempotency_policy_test.cc",
     "tests/golden_thing_admin_logging_decorator_test.cc",
     "tests/golden_thing_admin_metadata_decorator_test.cc",
+    "tests/golden_thing_admin_option_defaults_test.cc",
     "tests/golden_thing_admin_stub_factory_test.cc",
     "tests/golden_thing_admin_stub_test.cc",
 ]

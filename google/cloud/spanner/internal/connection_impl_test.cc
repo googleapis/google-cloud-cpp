@@ -339,10 +339,9 @@ TEST(ConnectionImplTest, ReadSuccess) {
     values: { string_value: "42" }
     values: { string_value: "Ann" }
   )pb";
-  EXPECT_CALL(
-      *mock,
-      StreamingRead(
-          _, HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW)))
+  EXPECT_CALL(*mock,
+              StreamingRead(
+                  _, HasPriority(spanner_proto::RequestOptions::PRIORITY_LOW)))
       .WillOnce(Return(ByMove(MakeFailingReader(retry_status))))
       .WillOnce(Return(ByMove(MakeReader({kText}))));
 
@@ -714,7 +713,7 @@ TEST(ConnectionImplTest, QueryOptions) {
   auto constexpr kRequestOptionsProp =
       &spanner_proto::ExecuteSqlRequest::request_options;
   spanner_proto::RequestOptions ro;
-  ro.set_priority(spanner_proto::RequestOptions_Priority_PRIORITY_LOW);
+  ro.set_priority(spanner_proto::RequestOptions::PRIORITY_LOW);
 
   for (auto const& version : optimizer_versions) {
     spanner_proto::ExecuteSqlRequest::QueryOptions qo;
@@ -1285,8 +1284,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   EXPECT_CALL(
       *mock,
       ExecuteBatchDml(
-          _,
-          HasPriority(spanner_proto::RequestOptions_Priority_PRIORITY_MEDIUM)))
+          _, HasPriority(spanner_proto::RequestOptions::PRIORITY_MEDIUM)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
 
@@ -1833,8 +1831,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
       Commit(_,
              AllOf(HasSession("test-session-name"),
                    HasNakedTransactionId("test-txn-id"),
-                   HasPriority(
-                       spanner_proto::RequestOptions_Priority_PRIORITY_HIGH))))
+                   HasPriority(spanner_proto::RequestOptions::PRIORITY_HIGH))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
@@ -2033,6 +2030,7 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
       begin { read_only { strong: true return_read_timestamp: true } }
     }
     table: "table"
+    index: "index"
     columns: "UserId"
     columns: "UserName"
     key_set: { all: true }
@@ -2048,18 +2046,26 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
 
   spanner::Transaction txn =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
-  StatusOr<std::vector<spanner::ReadPartition>> result = conn->PartitionRead(
-      {{txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}}});
+  spanner::ReadOptions read_options;
+  read_options.index_name = "index";
+  read_options.limit = 21;
+  read_options.request_priority = spanner::RequestPriority::kLow;
+  StatusOr<std::vector<spanner::ReadPartition>> result =
+      conn->PartitionRead({{txn,
+                            "table",
+                            spanner::KeySet::All(),
+                            {"UserId", "UserName"},
+                            read_options}});
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "CAFEDEAD"));
 
   std::vector<spanner::ReadPartition> expected_read_partitions = {
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", "test-session-name", "BADDECAF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"}),
+          spanner::KeySet::All(), {"UserId", "UserName"}, read_options),
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", "test-session-name", "DEADBEEF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"})};
+          spanner::KeySet::All(), {"UserId", "UserName"}, read_options)};
 
   EXPECT_THAT(*result, testing::UnorderedPointwise(testing::Eq(),
                                                    expected_read_partitions));

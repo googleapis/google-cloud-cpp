@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/iam/iam_credentials_client.gcpcxx.pb.h"
+#include "google/cloud/iam/iam_credentials_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
