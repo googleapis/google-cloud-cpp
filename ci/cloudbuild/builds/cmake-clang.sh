@@ -27,4 +27,4 @@ cmake -GNinja -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 
-integration::cmake_with_emulators "cmake-out"
+integration::ctest_with_emulators "cmake-out"

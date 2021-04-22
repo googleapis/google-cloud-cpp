@@ -157,14 +157,14 @@ function integration::bazel_with_emulators() {
     google/cloud/spanner/...
 }
 
-# Runs integration tests with CMake using emulators. This function requires a
+# Runs integration tests with CTest using emulators. This function requires a
 # first argument that is the "cmake-out" directory where the tests live.
 #
 # Example usage:
 #
-#   integration::cmake_with_emulators "cmake-out"
+#   integration::ctest_with_emulators "cmake-out"
 #
-function integration::cmake_with_emulators() {
+function integration::ctest_with_emulators() {
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
   if [[ $# == 0 ]]; then
     io::log_red "error: build output directory required"

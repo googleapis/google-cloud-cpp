@@ -27,4 +27,4 @@ cmake -GNinja -DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=NO -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 
-integration::cmake_with_emulators "cmake-out"
+integration::ctest_with_emulators "cmake-out"

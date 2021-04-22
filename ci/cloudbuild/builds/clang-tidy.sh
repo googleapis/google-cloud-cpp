@@ -32,7 +32,7 @@ cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
 
-integration::cmake_with_emulators "cmake-out"
+integration::ctest_with_emulators "cmake-out"
 
 io::log_h2 "ctcache stats"
 printf "%s: %s\n" "total size" "$(du -sh "${CTCACHE_DIR}")"
