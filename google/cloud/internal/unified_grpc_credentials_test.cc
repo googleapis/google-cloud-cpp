@@ -29,7 +29,7 @@ TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
       CreateAuthenticationStrategy(grpc::InsecureChannelCredentials());
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->Setup(context);
+  result->ConfigureContext(context);
   ASSERT_EQ(nullptr, context.credentials());
 }
 
@@ -42,7 +42,7 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
   auto result = CreateAuthenticationStrategy(MakeGoogleDefaultCredentials());
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->Setup(context);
+  result->ConfigureContext(context);
   ASSERT_EQ(nullptr, context.credentials());
 }
 
@@ -53,7 +53,7 @@ TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
       MakeAccessTokenCredentials("test-token", expiration));
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->Setup(context);
+  result->ConfigureContext(context);
   ASSERT_NE(nullptr, context.credentials());
 }
 

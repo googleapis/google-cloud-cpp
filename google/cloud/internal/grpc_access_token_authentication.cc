@@ -28,7 +28,8 @@ std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 
-Status GrpcAccessTokenAuthentication::Setup(grpc::ClientContext& context) {
+Status GrpcAccessTokenAuthentication::ConfigureContext(
+    grpc::ClientContext& context) {
   std::unique_lock<std::mutex> lk(mu_);
   cv_.wait(lk, [this] { return !refreshing_; });
   auto const deadline = std::chrono::system_clock::now() + kExpirationSlack;

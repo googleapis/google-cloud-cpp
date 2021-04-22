@@ -41,7 +41,7 @@ TEST(GrpcAccessTokenAuthenticationTest, Simple) {
     SCOPED_TRACE("Running attempt " + std::to_string(attempt));
     grpc::ClientContext context;
     EXPECT_EQ(nullptr, context.credentials());
-    auth.Setup(context);
+    auth.ConfigureContext(context);
     EXPECT_NE(nullptr, context.credentials());
   }
 }
@@ -62,7 +62,7 @@ TEST(GrpcAccessTokenAuthenticationTest, NotExpired) {
     SCOPED_TRACE("Running attempt " + std::to_string(attempt));
     grpc::ClientContext context;
     EXPECT_EQ(nullptr, context.credentials());
-    auth.Setup(context);
+    auth.ConfigureContext(context);
     EXPECT_NE(nullptr, context.credentials());
   }
 }

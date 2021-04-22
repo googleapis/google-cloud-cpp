@@ -34,7 +34,7 @@ class GrpcChannelCredentialsAuthentication : public GrpcAuthenticationStrategy {
   std::shared_ptr<grpc::Channel> CreateChannel(
       std::string const& endpoint,
       grpc::ChannelArguments const& arguments) override;
-  Status Setup(grpc::ClientContext&) override;
+  Status ConfigureContext(grpc::ClientContext&) override;
 
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;

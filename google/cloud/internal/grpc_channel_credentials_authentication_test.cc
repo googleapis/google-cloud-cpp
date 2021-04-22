@@ -29,7 +29,7 @@ TEST(GrpcChannelCredentialsAuthenticationTest, Basic) {
 
   grpc::ClientContext context;
   EXPECT_EQ(nullptr, context.credentials());
-  auth.Setup(context);
+  auth.ConfigureContext(context);
   EXPECT_EQ(nullptr, context.credentials());
 }
 

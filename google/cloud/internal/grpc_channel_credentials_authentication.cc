@@ -25,7 +25,8 @@ GrpcChannelCredentialsAuthentication::CreateChannel(
   return grpc::CreateCustomChannel(endpoint, credentials_, arguments);
 }
 
-Status GrpcChannelCredentialsAuthentication::Setup(grpc::ClientContext&) {
+Status GrpcChannelCredentialsAuthentication::ConfigureContext(
+    grpc::ClientContext&) {
   return Status{};
 }
 
