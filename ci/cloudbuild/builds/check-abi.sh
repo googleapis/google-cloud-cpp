@@ -67,7 +67,7 @@ for lib in "${libraries[@]}"; do
   actual_dump_file="${lib}.actual.abi.dump"
   expected_dump_file="${lib}.expected.abi.dump"
   zcat "${PROJECT_ROOT}/ci/test-abi/${expected_dump_file}.gz" > \
-    "${expected_dump_file}"
+    "cmake-out/${expected_dump_file}"
   # We ignore all symbols in internal namespaces, because these are not part
   # of our public API. We do this by specifying a regex that matches against
   # the mangled symbol names. For example, 8 is the number of characters in
