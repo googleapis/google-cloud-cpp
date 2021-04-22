@@ -84,11 +84,8 @@ TEST(GrpcObjectReadSource, Simple) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::string expected =
       "0123456789 The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
@@ -110,11 +107,8 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
   EXPECT_CALL(*mock, Finish())
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::vector<char> buffer(1024);
   EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
@@ -134,11 +128,8 @@ TEST(GrpcObjectReadSource, DataWithError) {
   EXPECT_CALL(*mock, Finish())
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -168,11 +159,8 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::vector<char> buffer(trailer_size);
   auto response = tested.Read(buffer.data(), expected_1.size());
   ASSERT_STATUS_OK(response);
@@ -204,11 +192,8 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), 3);
   ASSERT_STATUS_OK(response);
@@ -256,11 +241,8 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -308,11 +290,8 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -337,11 +316,8 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
       })
       .WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  GrpcObjectReadSource tested(absl::make_unique<grpc::ClientContext>(),
+                              std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());

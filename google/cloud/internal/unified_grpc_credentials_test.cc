@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,14 +23,15 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-using google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedEnvironment;
 
 TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
   auto result =
       CreateAuthenticationStrategy(grpc::InsecureChannelCredentials());
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->ConfigureContext(context);
+  auto status = result->ConfigureContext(context);
   ASSERT_EQ(nullptr, context.credentials());
 }
 
@@ -42,7 +44,8 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
   auto result = CreateAuthenticationStrategy(MakeGoogleDefaultCredentials());
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->ConfigureContext(context);
+  auto status = result->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
   ASSERT_EQ(nullptr, context.credentials());
 }
 
@@ -53,7 +56,8 @@ TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
       MakeAccessTokenCredentials("test-token", expiration));
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
-  result->ConfigureContext(context);
+  auto status = result->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
   ASSERT_NE(nullptr, context.credentials());
 }
 

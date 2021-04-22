@@ -27,8 +27,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-using StreamMaker = std::function<std::unique_ptr<grpc::ClientReaderInterface<
-    google::storage::v1::GetObjectMediaResponse>>(grpc::ClientContext&)>;
+using GrpcObjectContentsReader =
+    grpc::ClientReaderInterface<google::storage::v1::GetObjectMediaResponse>;
 
 /**
  * A data source for storage::ObjectReadStream using gRPC.
@@ -42,8 +42,9 @@ using StreamMaker = std::function<std::unique_ptr<grpc::ClientReaderInterface<
  */
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
-  explicit GrpcObjectReadSource(StreamMaker const& maker)
-      : stream_(maker(context_)) {}
+  explicit GrpcObjectReadSource(
+      std::unique_ptr<grpc::ClientContext> context,
+      std::unique_ptr<GrpcObjectContentsReader> stream);
 
   ~GrpcObjectReadSource() override;
 
@@ -60,10 +61,8 @@ class GrpcObjectReadSource : public ObjectReadSource {
   // To create a reader for a streaming RPC one needs a client context with
   // longer lifetime than the stream. This is the client context used for the
   // request.
-  grpc::ClientContext context_;
-  std::unique_ptr<
-      grpc::ClientReaderInterface<google::storage::v1::GetObjectMediaResponse>>
-      stream_;
+  std::unique_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<GrpcObjectContentsReader> stream_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

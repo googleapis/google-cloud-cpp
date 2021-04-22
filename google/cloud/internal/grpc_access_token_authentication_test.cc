@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_access_token_authentication.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,6 +22,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOk;
 using ::testing::Return;
 
 TEST(GrpcAccessTokenAuthenticationTest, Simple) {
@@ -41,7 +43,8 @@ TEST(GrpcAccessTokenAuthenticationTest, Simple) {
     SCOPED_TRACE("Running attempt " + std::to_string(attempt));
     grpc::ClientContext context;
     EXPECT_EQ(nullptr, context.credentials());
-    auth.ConfigureContext(context);
+    auto status = auth.ConfigureContext(context);
+    EXPECT_THAT(status, IsOk());
     EXPECT_NE(nullptr, context.credentials());
   }
 }
@@ -62,7 +65,8 @@ TEST(GrpcAccessTokenAuthenticationTest, NotExpired) {
     SCOPED_TRACE("Running attempt " + std::to_string(attempt));
     grpc::ClientContext context;
     EXPECT_EQ(nullptr, context.credentials());
-    auth.ConfigureContext(context);
+    auto status = auth.ConfigureContext(context);
+    EXPECT_THAT(status, IsOk());
     EXPECT_NE(nullptr, context.credentials());
   }
 }
