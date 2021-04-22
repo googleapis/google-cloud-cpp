@@ -26,7 +26,7 @@ export CXX=clang++
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test google/cloud/storage/...
 
-mapfile -t integration_args < <(integration::args)
+mapfile -t integration_args < <(integration::bazel_args)
 # "media" says to use the hybrid gRPC/REST client. For more details see
 # https://github.com/googleapis/google-cloud-cpp/issues/6268
 GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media # Uses the gRPC data plane

@@ -18,6 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
+source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=gcc
 export CXX=g++
@@ -25,3 +26,5 @@ export CXX=g++
 cmake -GNinja -S . -B cmake-out
 cmake --build cmake-out
 env -C cmake-out ctest -LE "integration-test"
+
+integration::ctest_with_emulators "cmake-out"

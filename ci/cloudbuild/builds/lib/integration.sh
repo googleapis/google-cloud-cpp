@@ -23,7 +23,6 @@ if ((CI_CLOUDBUILD_BUILDS_LIB_INTEGRATION_SH__++ != 0)); then
 fi # include guard
 
 source module ci/lib/io.sh
-source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
 
@@ -33,10 +32,10 @@ source module ci/lib/io.sh
 # Example usage:
 #
 #   mapfile -t args < <(bazel::common_args)
-#   mapfile -t integration_args < <(integration::args)
+#   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
 #
-function integration::args() {
+function integration::bazel_args() {
   declare -a args
   args+=(
     # Common flags
@@ -95,12 +94,12 @@ function integration::args() {
 # function requires a first argument that is the bazel verb to do, valid verbs
 # are "test" and "coverage". Additional arguments are assumed to be bazel args.
 # Almost certainly the caller should pass the arguments returned from the
-# `integration::args` function defined above.
+# `integration::bazel_args` function defined above.
 #
 # Example usage:
 #
 #   mapfile -t args < <(bazel::common_args)
-#   mapfile -t integration_args < <(integration::args)
+#   mapfile -t integration_args < <(integration::bazel_args)
 #   integration::bazel_with_emulators test "${args[@]}" "${integration_args}"
 #
 function integration::bazel_with_emulators() {
@@ -155,4 +154,49 @@ function integration::bazel_with_emulators() {
   io::log_h2 "Running Spanner integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
     google/cloud/spanner/...
+}
+
+# Runs integration tests with CTest using emulators. This function requires a
+# first argument that is the "cmake-out" directory where the tests live.
+#
+# Example usage:
+#
+#   integration::ctest_with_emulators "cmake-out"
+#
+function integration::ctest_with_emulators() {
+  readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+  if [[ $# == 0 ]]; then
+    io::log_red "error: build output directory required"
+    return 1
+  fi
+
+  local cmake_out="$1"
+  ctest_args=(
+    "--output-on-failure"
+    "--parallel=$(nproc)"
+  )
+
+  io::log_h2 "Running Generator integration tests via CTest"
+  "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}"
+
+  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Bigtable integration tests (with emulator)"
+  env CBT=/usr/local/google-cloud-sdk/bin/cbt \
+    CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
+    GOPATH="${GOPATH:-}" \
+    ./ci/retry-command.sh 3 0 \
+    "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Spanner integration tests (with emulator)"
+  "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
