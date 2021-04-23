@@ -141,8 +141,9 @@ std::shared_ptr<MinimalIamCredentialsStub> MakeMinimalIamCredentialsStub(
 }
 
 Options MakeMinimalIamCredentialsOptions(Options options) {
-  return MergeOptions(Options{}.set<EndpointOption>("iam.googleapis.com"),
-                      std::move(options));
+  return MergeOptions(
+      Options{}.set<EndpointOption>("iamcredentials.googleapis.com"),
+      std::move(options));
 }
 
 }  // namespace internal
