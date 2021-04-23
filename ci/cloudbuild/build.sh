@@ -158,6 +158,7 @@ if [[ -z "${BUILD_NAME}" ]]; then
   exit 1
 fi
 
+TRIGGER_TYPE="${TRIGGER_TYPE:-manual}"
 # Info about the git repo that is used by some builds, e.g., coverage. These
 # will be automatically set by GCB for triggered builds, but we need to compute
 # them ourselves for manually started builds and docker builds. See
@@ -236,6 +237,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=CODECOV_TOKEN=${CODECOV_TOKEN:-}"
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
+    "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"
