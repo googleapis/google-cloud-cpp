@@ -30,7 +30,7 @@ cmake -GNinja -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
   -S . -B cmake-out
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test"
+env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 
 integration::ctest_with_emulators "cmake-out"
 
