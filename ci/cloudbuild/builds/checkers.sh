@@ -18,22 +18,7 @@ set -eu
 
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
-
-# `check-style.sh` (below) uses `git ls-files`. Unfortunately Google Cloud
-# Build does not preserve the `.git` directory. To keep `check-style.sh` usable
-# in multiple CI systems, we initialize `.git/` with all the files in the
-# current directory.`
-if [[ -d .git ]]; then
-  io::log_green "Found .git directory"
-else
-  # This .git dir is thrown away at the end of the build.
-  io::log "Initializing .git directory"
-  git init --initial-branch=checkers-branch
-  git config --local user.email "checkers@fake"
-  git config --local user.name "checkers"
-  git add .
-  git commit --quiet -m "checkers: added all files"
-fi
+source module ci/cloudbuild/builds/lib/git.sh
 
 io::log_h2 "Checking Style"
 CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="${GOOGLE_CLOUD_BUILD:-no}" \
@@ -41,11 +26,3 @@ CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="${GOOGLE_CLOUD_BUILD:-no}" \
 
 io::log_h2 "Verifying Markdown"
 CHECK_MARKDOWN=yes ci/check-markdown.sh
-io::log "done"
-
-io::log_h2 "Verifying googleapis commit has for generated code"
-CHECK_GENERATED_CODE_HASH=yes ci/check-generated-code-hash.sh
-
-io::log_h2 "Verifying generator golden file md5 hashes"
-CHECK_GENERATED_CODE_HASH=yes ci/check-golden-md5-hashes.sh
-io::log "done"
