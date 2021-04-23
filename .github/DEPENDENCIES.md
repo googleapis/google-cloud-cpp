@@ -26,7 +26,7 @@ The community has developed a [workaround][workaround-link] to handle these case
 * `dependabot` will create a PR to update these steps.
 * The human reviewer for this PR needs to update the corresponding scripts.
     * Humans can edit the automatically generated PR, so all changes take place in a single PR.
-    
+
 This is the workflow we have adopted for `google-cloud-cpp`.
 
 [Dependabot]:  https://dependabot.com/
