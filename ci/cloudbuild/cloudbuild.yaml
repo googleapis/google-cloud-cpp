@@ -68,6 +68,11 @@ steps:
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
   ]
 
+  # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
+  # automatically, and also fill the log with about 2-3 pages of noise.
+- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  entrypoint: '/bin/true'
+
   # Restores the homedir cache into /h in parallel with the previous step.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
