@@ -29,7 +29,7 @@ cmake -GNinja \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -S . -B cmake-out
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test"
+env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 cmake --build cmake-out --target install
 
 # Tests the installed artifacts by building and running the quickstarts.

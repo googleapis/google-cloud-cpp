@@ -25,6 +25,6 @@ export CXX=g++
 
 cmake -GNinja -S . -B cmake-out
 cmake --build cmake-out
-env -C cmake-out ctest -LE "integration-test"
+env -C cmake-out ctest -LE "integration-test" --parallel "$(nproc)"
 
 integration::ctest_with_emulators "cmake-out"
