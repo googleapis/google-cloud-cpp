@@ -399,6 +399,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/default_completion_queue_impl.h
         internal/grpc_access_token_authentication.cc
         internal/grpc_access_token_authentication.h
+        internal/grpc_async_access_token_cache.cc
+        internal/grpc_async_access_token_cache.h
         internal/grpc_channel_credentials_authentication.cc
         internal/grpc_channel_credentials_authentication.h
         internal/log_wrapper.cc
@@ -492,6 +494,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/grpc_access_token_authentication_test.cc
+            internal/grpc_async_access_token_cache_test.cc
             internal/grpc_channel_credentials_authentication_test.cc
             internal/log_wrapper_test.cc
             internal/minimal_iam_credentials_stub_test.cc
