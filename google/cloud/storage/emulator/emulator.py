@@ -716,7 +716,7 @@ def resumable_upload_chunk(bucket_name):
         x_upload_content_length = int(
             upload.request.headers.get("x-upload-content-length", 0)
         )
-        if (chunk_last_byte == '*'):
+        if chunk_last_byte == "*":
             x_upload_content_length = len(upload.media)
             chunk_last_byte = len(upload.media) - 1
         else:
