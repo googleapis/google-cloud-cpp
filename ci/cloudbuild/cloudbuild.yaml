@@ -24,7 +24,8 @@ options:
     'BUILD_ID=${BUILD_ID}',
     'BRANCH_NAME=${BRANCH_NAME}',
     'COMMIT_SHA=${COMMIT_SHA}',
-    'PR_NUMBER=${_PR_NUMBER}'
+    'PR_NUMBER=${_PR_NUMBER}',
+    'TRIGGER_TYPE=${_TRIGGER_TYPE}'
   ]
   volumes:
     - name: 'home'
