@@ -1,0 +1,14 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^(master|main|v\d+\..*)$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+name: generate-libraries-pr
+substitutions:
+  _BUILD_NAME: generate-libraries
+  _DISTRO: fedora
+  _TRIGGER_TYPE: pr
+tags:
+- pr
