@@ -577,7 +577,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         "gRPC Utilities for the Google Cloud C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common google_cloud_cpp_iam_protos")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
+        "google_cloud_cpp_common google_cloud_cpp_iam_protos")
     google_cloud_cpp_absl_pkg_config(absl_pkg_config
                                      google_cloud_cpp_grpc_utils)
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils"
