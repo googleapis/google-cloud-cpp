@@ -34,9 +34,9 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -55,15 +55,14 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
 # Google Cloud Platform proto files:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+WORKDIR /var/tmp/build/protobuf
+RUN curl -sSL https://github.com/google/protobuf/archive/v3.14.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -75,10 +74,9 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
 # distributes c-ares-1.10. Manually install a newer version:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
+WORKDIR /var/tmp/build/c-ares
+RUN curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
     make install && \
     ldconfig
@@ -89,10 +87,9 @@ RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
 # We need a newer version of RE2 than the system package provides.
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
-    tar -xf 2020-11-01.tar.gz && \
-    cd re2-2020-11-01 && \
+WORKDIR /var/tmp/build/re2
+RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
@@ -108,10 +105,9 @@ RUN wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
 # Cloud Platform proto files. We can install gRPC from source using:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+WORKDIR /var/tmp/build/grpc
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -134,10 +130,9 @@ RUN wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
 # source:
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+WORKDIR /var/tmp/build/crc32c
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -158,10 +153,9 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
 # This leaves your environment without support for CMake pkg-config.
 
 # ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+WORKDIR /var/tmp/build/json
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
         -e '/^target_compile_features/d' \
