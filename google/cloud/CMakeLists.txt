@@ -403,6 +403,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/grpc_channel_credentials_authentication.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
+        internal/minimal_iam_credentials_stub.cc
+        internal/minimal_iam_credentials_stub.h
         internal/polling_loop.h
         internal/resumable_streaming_read_rpc.h
         internal/retry_loop.h
@@ -421,6 +423,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         PUBLIC absl::function_ref
                absl::memory
                absl::time
+               google-cloud-cpp::iam_protos
                google-cloud-cpp::rpc_status_protos
                google-cloud-cpp::common
                gRPC::grpc++
@@ -491,6 +494,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/grpc_access_token_authentication_test.cc
             internal/grpc_channel_credentials_authentication_test.cc
             internal/log_wrapper_test.cc
+            internal/minimal_iam_credentials_stub_test.cc
             internal/polling_loop_test.cc
             internal/resumable_streaming_read_rpc_test.cc
             internal/retry_loop_test.cc
@@ -512,6 +516,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                         google_cloud_cpp_testing_grpc
                         google_cloud_cpp_testing
                         google-cloud-cpp::common
+                        google-cloud-cpp::iam_protos
                         google-cloud-cpp::bigtable_protos
                         google-cloud-cpp::spanner_protos
                         absl::variant
@@ -572,7 +577,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         "gRPC Utilities for the Google Cloud C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
+        "google_cloud_cpp_common google_cloud_cpp_iam_protos")
     google_cloud_cpp_absl_pkg_config(absl_pkg_config
                                      google_cloud_cpp_grpc_utils)
     string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils"
