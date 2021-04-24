@@ -151,10 +151,10 @@ def google_cloud_cpp_deps():
     if "com_github_google_crc32c" not in native.existing_rules():
         http_archive(
             name = "com_github_google_crc32c",
-            strip_prefix = "crc32c-1.0.6",
+            strip_prefix = "crc32c-1.1.1",
             urls = [
-                "https://github.com/google/crc32c/archive/1.0.6.tar.gz",
+                "https://github.com/google/crc32c/archive/1.1.1.tar.gz",
             ],
-            sha256 = "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9",
+            sha256 = "a6533f45b1670b5d59b38a514d82b09c6fb70cc1050467220216335e873074e8",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )
