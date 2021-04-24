@@ -14,6 +14,6 @@ jobs:
     steps:
       # update the version in these places manually when Dependabot changes it here:
       # 1. /super/abseil.cmake
-      - uses: abseil/abseil-cpp@20200923.3
+      - uses: abseil/abseil-cpp@20210324.1
       # 2. /google/cloud/*/quickstart/WORKSPACE
       - uses: googleapis/google-cloud-cpp@v1.26.0
