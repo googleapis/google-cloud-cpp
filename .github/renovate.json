@@ -1,0 +1,6 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "ignoreDeps": [ "com_google_googleapis" ]
+}
