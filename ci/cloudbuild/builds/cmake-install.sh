@@ -32,7 +32,8 @@ cmake -GNinja \
   -DBUILD_TESTING=OFF \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -S . -B cmake-out
-cmake --build cmake-out --target install
+cmake --build cmake-out
+cmake --install cmake-out --component google_cloud_cpp_development
 
 io::log_h2 "Verifying installed directories"
 # Finds all the installed leaf directories (i.e., directories with exactly two
@@ -144,6 +145,13 @@ while IFS= read -r -d '' f; do
 done < <(find "${INSTALL_PREFIX}" -type f -print0)
 
 # Tests the installed artifacts by building and running the quickstarts.
+quickstart::build_cmake_and_make "${INSTALL_PREFIX}"
+quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+
+# Deletes all the installed artifacts, and installs only the runtime components
+# to verify that we can still execute the compiled quickstart programs.
+rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
+cmake --install cmake-out --component google_cloud_cpp_runtime
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
 
 exit "${exit_code}"
