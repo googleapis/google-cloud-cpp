@@ -16,4 +16,4 @@ jobs:
       # 1. /super/abseil.cmake
       - uses: abseil/abseil-cpp@20200923.3
       # 2. /google/cloud/*/quickstart/WORKSPACE
-      - uses: googleapis/google-cloud-cpp@v1.26.0
+      - uses: googleapis/google-cloud-cpp@v1.26.1
