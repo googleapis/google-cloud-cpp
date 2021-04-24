@@ -20,9 +20,23 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
 
+io::log_h2 "Generating Markdown"
+declare -A -r GENERATOR_MAP=(
+  ["ci/generate-markdown/generate-readme.sh"]="README.md"
+  ["ci/generate-markdown/generate-bigtable-readme.sh"]="google/cloud/bigtable/README.md"
+  ["ci/generate-markdown/generate-pubsub-readme.sh"]="google/cloud/pubsub/README.md"
+  ["ci/generate-markdown/generate-spanner-readme.sh"]="google/cloud/spanner/README.md"
+  ["ci/generate-markdown/generate-storage-readme.sh"]="google/cloud/storage/README.md"
+  ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
+)
+for generator in "${!GENERATOR_MAP[@]}"; do
+  "${generator}" >"${GENERATOR_MAP[${generator}]}"
+done
+# Any diffs in the markdown files result in a checker failure.
+# Edited files are left in the repo so they can be committed.
+git diff --color --exit-code "${GENERATOR_MAP[@]}"
+io::log_green "Markdown OK"
+
 io::log_h2 "Checking Style"
 CHECK_STYLE=yes NCPU="$(nproc)" RUNNING_CI="${GOOGLE_CLOUD_BUILD:-no}" \
   ci/check-style.sh
-
-io::log_h2 "Verifying Markdown"
-CHECK_MARKDOWN=yes ci/check-markdown.sh
