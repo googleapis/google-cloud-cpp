@@ -39,4 +39,5 @@ cmake --build cmake-out --target install
 ## [END packaging.md]
 
 # Tests the installed artifacts by building and running the quickstarts.
+quickstart::build_cmake_and_make "${PREFIX}"
 quickstart::run_cmake_and_make "${PREFIX}"
