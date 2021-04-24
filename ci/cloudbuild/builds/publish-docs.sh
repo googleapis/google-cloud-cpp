@@ -87,6 +87,7 @@ io::log_h2 "Publishing docs"
 io::log "version: ${version}"
 io::log "branch:  ${BRANCH_NAME}"
 io::log "bucket:  gs://${bucket}"
+
 upload_docs "google-cloud-common" "cmake-out/google/cloud/html"
 upload_docs "google-cloud-bigtable" "cmake-out/google/cloud/bigtable/html"
 upload_docs "google-cloud-pubsub" "cmake-out/google/cloud/pubsub/html"
