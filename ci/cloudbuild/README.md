@@ -25,6 +25,11 @@ we prefer to configure them with version controlled YAML files that live in the
 also, but we have the local `trigger.sh` script to make this process a bit
 easier. See `trigger.sh --help` for more details.
 
+The internal-only doc at http://go/cloud-cxx:gcb-project has more info about
+how we've configured the Google Cloud project where these builds run.
+
+## Adding a new build
+
 Adding a new build is pretty simple, and can be done in a single PR. For
 example, see https://github.com/googleapis/google-cloud-cpp/pull/6252, which
 adds the `cxx17-pr` and `cxx17-ci` builds. The steps to add a new build are:
