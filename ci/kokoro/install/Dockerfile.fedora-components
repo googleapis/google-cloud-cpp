@@ -31,10 +31,9 @@ RUN dnf makecache && \
 
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+WORKDIR /var/tmp/build/abseil
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -46,10 +45,9 @@ RUN wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+WORKDIR /var/tmp/build/crc32c
+RUN curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -61,10 +59,9 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+WORKDIR /var/tmp/build/json
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
