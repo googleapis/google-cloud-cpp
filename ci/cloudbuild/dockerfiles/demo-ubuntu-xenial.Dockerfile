@@ -23,8 +23,8 @@ ARG NCPU=4
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libcurl4-openssl-dev libssl-dev libtool m4 make \
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
 
