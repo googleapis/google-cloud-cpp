@@ -317,9 +317,9 @@ workstation or build server.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
-        gzip libcurl-devel libopenssl-devel libtool make re2-devel tar wget \
-        which zlib zlib-devel-static
+sudo zypper install --allow-downgrade -y automake ccache cmake curl \
+        gcc gcc-c++ git gzip libcurl-devel libopenssl-devel \
+        libtool make re2-devel tar wget which zlib zlib-devel-static
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -475,9 +475,9 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev libssl-dev m4 \
-        make pkg-config tar wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        libssl-dev m4 make pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -607,9 +607,9 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -756,8 +756,8 @@ Install the minimal development tools, OpenSSL and libcurl:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libcurl4-openssl-dev libssl-dev libtool m4 make \
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 ```
 
@@ -923,9 +923,9 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        automake build-essential ca-certificates ccache cmake curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 ```
 
 Debian 10 includes versions of gRPC and Protobuf that support the
@@ -1027,9 +1027,9 @@ prevent you from compiling against openssl-1.1.0.
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config tar wget \
-        zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config \
+        tar wget zlib1g-dev
 ```
 
 #### Abseil

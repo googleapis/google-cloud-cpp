@@ -25,9 +25,9 @@ ARG NCPU=4
 
 # ```bash
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
-        gzip libcurl-devel libopenssl-devel libtool make re2-devel tar wget \
-        which zlib zlib-devel-static
+    zypper install --allow-downgrade -y automake ccache cmake curl \
+        gcc gcc-c++ git gzip libcurl-devel libopenssl-devel \
+        libtool make re2-devel tar wget which zlib zlib-devel-static
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. openSUSE
