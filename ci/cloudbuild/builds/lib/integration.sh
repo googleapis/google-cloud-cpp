@@ -38,8 +38,6 @@ source module ci/lib/io.sh
 function integration::bazel_args() {
   declare -a args
   args+=(
-    # Common flags
-    "--test_timeout=600"
     # "--test_tag_filters=integration-test"
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
