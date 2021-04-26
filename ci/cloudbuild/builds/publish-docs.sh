@@ -83,6 +83,12 @@ function upload_docs() {
   env -C "${docs_dir}" python3 -m docuploader upload . --staging-bucket "${bucket}"
 }
 
+if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
+  io::log_h2 "Skipping upload of docs," \
+    "which can only be done in GCB project 'cloud-cpp-testing-resources'"
+  exit 0
+fi
+
 io::log_h2 "Publishing docs"
 io::log "version: ${version}"
 io::log "branch:  ${BRANCH_NAME}"

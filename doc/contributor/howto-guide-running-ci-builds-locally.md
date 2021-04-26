@@ -29,12 +29,14 @@ and run the same script the CI build uses:
 
 ```console
 cd $HOME/google-cloud-cpp
-./ci/kokoro/docker/build.sh clang-tidy
+ci/cloudbuild/build.sh -t clang-tidy-pr --docker
 ```
 
 The build takes a few minutes the first time, as it needs to create a Docker
 image with all the development tools and dependencies installed. Future builds
 (with no changes to the source) take only a few seconds.
+
+NOTE: Look in `ci/cloudbuild/triggers` for a list of other builds you can run.
 
 ## Getting a shell
 
@@ -43,15 +45,12 @@ build will run, you can do this locally, using these commands:
 
 ```shell
 cd $HOME/google-cloud-cpp
-./ci/kokoro/docker/build.sh clang-tidy
-./ci/kokoro/docker/build.sh clang-tidy bash
+ci/cloudbuild/build.sh -t clang-tidy-pr --docker
+ci/cloudbuild/build.sh -t clang-tidy-pr --docker -s  # --docker is implied by -s and is optional
 ```
 
-The first `build.sh` will configure the environment and compile as much of
-the code as possible. The second command will drop you into a shell with the
-same tools, dependencies, and OS image as the CI build would use. The source
-code is mounted in `/v`, there is a fake home directory in `/h`. The binary
-output is in `cmake-out/ci-*`, there is only one directory there, with a long
-name.
-
-}
+The first `build.sh` will configure the docker image and environment and
+compile as much of the code as possible. The second command will drop you into
+a shell with the same tools, dependencies, and OS image as the CI build would
+use. The source code is mounted in `/workspace` (your CWD), there is a fake
+home directory in `/h`. The binary output from CMake builds is in `cmake-out/`.

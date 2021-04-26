@@ -37,12 +37,11 @@ to compile `google-cloud-cpp`. But for active development you may want to
 install additional tools to run the unit and integration tests.
 
 These instructions will describe how to install these tools for Ubuntu 18.04
-(Bionic Beaver). For other distributions you may consult the Dockerfile used by
-the integration tests. We use
-[Dockerfile.fedora-install](/ci/kokoro/docker/Dockerfile.fedora-install) to
-to enforce formatting for our builds. If you use a different distribution, you
-will need to use the corresponding package manager (`dnf`, `zypper`, `apk`,
-etc.) and find the corresponding package names.
+(Bionic Beaver). For other distributions you may consult the Dockerfiles in
+[ci/cloudbuild/dockerfiles/](https://github.com/googleapis/google-cloud-cpp/tree/master/ci/cloudbuild/dockerfiles)
+If you use a different distribution, you will need to use the corresponding
+package manager (`dnf`, `zypper`, `apk`, etc.) and find the corresponding
+package names.
 
 First, install the basic development tools:
 
