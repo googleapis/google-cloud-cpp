@@ -16,14 +16,14 @@
 
 # ATTENTION: This build is different than most because it's designed to be run
 # as a "manual" trigger that's run on a schedule in GCB. It will be scheduled
-# to right once a day at night. For details about scheduled manual triggers see
+# to run once a day. For details about scheduled manual triggers see
 # https://cloud.google.com/build/docs/automating-builds/create-manual-triggers.
 #
 # NOTE: This build script will not have a trigger file in the
 # `ci/cloudbuild/triggers` directory. "Manual" triggers exist only within the
 # GCB UI at the time of this writing. Users with the appropriate access can run
 # this build by hand with:
-#   `ci/cloudbuild/build.sh --distro fedora integration-nightly --project cloud-cpp-testing-resources`
+#   `ci/cloudbuild/build.sh --distro fedora integration-daily --project cloud-cpp-testing-resources`
 
 set -eu
 
