@@ -158,17 +158,20 @@ if [[ -z "${BUILD_NAME}" ]]; then
   exit 1
 fi
 
-# Info about the git repo that is used by some builds, e.g., coverage. These
-# will be automatically set by GCB for triggered builds, but we need to compute
-# them ourselves for manually started builds and docker builds. See
+# Sets some env vars that usually come from GCB, but need to be set explicitly
+# when doing --local or --docker builds. See also `cloudbuild.yaml` and
 # https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
+TRIGGER_TYPE="${TRIGGER_TYPE:-manual}"
 BRANCH_NAME="${BRANCH_NAME:-$(git branch --show-current)}"
 COMMIT_SHA="${COMMIT_SHA:-$(git rev-parse HEAD)}"
-# GCB builds get these vars from Secret Manager, which uses a single newline
-# instead of an empty string. We remove all whitespace here so that `test -z`
-# and similar work in the invoked build scripts.
 CODECOV_TOKEN="$(tr -d '[:space:]' <<<"${CODECOV_TOKEN:-}")"
 LOG_LINKER_PAT="$(tr -d '[:space:]' <<<"${LOG_LINKER_PAT:-}")"
+
+export TRIGGER_TYPE
+export BRANCH_NAME
+export COMMIT_SHA
+export CODECOV_TOKEN
+export LOG_LINKER_PAT
 
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
@@ -236,6 +239,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=CODECOV_TOKEN=${CODECOV_TOKEN:-}"
     "--env=BRANCH_NAME=${BRANCH_NAME}"
     "--env=COMMIT_SHA=${COMMIT_SHA}"
+    "--env=TRIGGER_TYPE=${TRIGGER_TYPE:-}"
     # Mounts an empty volume over "build-out" to isolate builds from each
     # other. Doesn't affect GCB builds, but it helps our local docker builds.
     "--volume=/workspace/build-out"

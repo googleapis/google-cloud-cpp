@@ -31,38 +31,61 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/etc/quickstart-config.sh
 source module ci/lib/io.sh
 
-# Builds and runs the CMake and Makefile quickstart programs. This is a useful
-# way to test that the artifacts installed by `google-cloud-cpp` work. This
-# function requires a single argument specifying the directory where the
-# `google-cloud-cpp` library was installed.
+# Builds the CMake and Makefile quickstart programs but DOES NOT RUN THEM. This
+# is a useful way to test that the artifacts installed by `google-cloud-cpp`
+# work for compilation. This function requires a single argument specifying the
+# directory where the `google-cloud-cpp` library was installed.
 #
 # Example:
 #
-#   quickstart::run_cmake_and_make "/usr/local"
-function quickstart::run_cmake_and_make() {
+#   quickstart::build_cmake_and_make "/usr/local"
+function quickstart::build_cmake_and_make() {
   local prefix="$1"
   for lib in $(quickstart::libraries); do
-    mapfile -t run_args < <(quickstart::arguments "${lib}")
     io::log_h2 "Building quickstart: ${lib}"
-    if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
-      run_args=() # Empties these args so we don't execute quickstarts below
-      io::log_yellow "Not executing quickstarts," \
-        "which can only run in GCB project 'cloud-cpp-testing-resources'"
-    fi
-
     io::log "[ CMake ]"
     src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
     bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
     cmake -H"${src_dir}" -B"${bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
     cmake --build "${bin_dir}"
-    test "${#run_args[@]}" -eq 0 || "${bin_dir}/quickstart" "${run_args[@]}"
 
     echo
     io::log "[ Make ]"
     PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
       make -C "${src_dir}"
-    test "${#run_args[@]}" -eq 0 ||
-      LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
-        "${src_dir}/quickstart" "${run_args[@]}"
+  done
+}
+
+# Runs the CMake and Makefile quickstart programs but DOES NOT COMPILE THEM.
+# This function relies on the binaries already being compiled by a previous
+# call to `quickstart::build_cmake_and_make`. This function requires a single
+# argument specifying the directory where the `google-cloud-cpp` library was
+# installed.
+#
+# Example:
+#
+#   quickstart::build_cmake_and_make "/usr/local"
+#   quickstart::run_cmake_and_make "/usr/local"
+function quickstart::run_cmake_and_make() {
+  local prefix="$1"
+  for lib in $(quickstart::libraries); do
+    if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
+      io::log_yellow "Skipping quickstart for ${lib}" \
+        "since not in GCB project 'cloud-cpp-testing-resources'"
+      continue
+    fi
+
+    io::log_h2 "Running quickstart: ${lib}"
+    mapfile -t run_args < <(quickstart::arguments "${lib}")
+
+    io::log "[ CMake ]"
+    bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
+    "${bin_dir}/quickstart" "${run_args[@]}"
+
+    echo
+    io::log "[ Make ]"
+    src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
+    LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
+      "${src_dir}/quickstart" "${run_args[@]}"
   done
 }

@@ -173,7 +173,7 @@ function integration::ctest_with_emulators() {
   local cmake_out="$1"
   ctest_args=(
     "--output-on-failure"
-    "--parallel=$(nproc)"
+    "--parallel" "$(nproc)"
   )
 
   io::log_h2 "Running Generator integration tests via CTest"

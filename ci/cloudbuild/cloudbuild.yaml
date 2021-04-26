@@ -24,7 +24,8 @@ options:
     'BUILD_ID=${BUILD_ID}',
     'BRANCH_NAME=${BRANCH_NAME}',
     'COMMIT_SHA=${COMMIT_SHA}',
-    'PR_NUMBER=${_PR_NUMBER}'
+    'PR_NUMBER=${_PR_NUMBER}',
+    'TRIGGER_TYPE=${_TRIGGER_TYPE}'
   ]
   volumes:
     - name: 'home'
@@ -67,6 +68,11 @@ steps:
     '--cache=true',
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
   ]
+
+  # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
+  # automatically, and also fill the log with about 2-3 pages of noise.
+- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  entrypoint: '/bin/true'
 
   # Restores the homedir cache into /h in parallel with the previous step.
 - name: 'gcr.io/cloud-builders/gsutil'
