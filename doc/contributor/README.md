@@ -70,5 +70,5 @@ To generate the doxygen HTML pages on your local machine, do the following:
 $ ci/cloudbuild/build.sh -t publish-docs-pr --docker
 
 # The docs live in the "html" directories
-$ find build-out/fedora-publish-docs/cmake-out/ -name html 
+$ find build-out/fedora-publish-docs/cmake-out/ -name html
 ```
