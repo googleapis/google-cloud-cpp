@@ -38,8 +38,6 @@ source module ci/lib/io.sh
 function integration::bazel_args() {
   declare -a args
   args+=(
-    # Common flags
-    "--test_timeout=600"
     # "--test_tag_filters=integration-test"
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
@@ -153,7 +151,7 @@ function integration::bazel_with_emulators() {
   # - GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT
   io::log_h2 "Running Spanner integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    --test_timeout=3600 google/cloud/spanner/...
+    google/cloud/spanner/...
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
