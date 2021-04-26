@@ -28,7 +28,7 @@ std::shared_ptr<GrpcAsyncAccessTokenCache> GrpcAsyncAccessTokenCache::Create(
       new GrpcAsyncAccessTokenCache(std::move(cq), std::move(source)));
 }
 
-StatusOr<AccessToken> GrpcAsyncAccessTokenCache::GetCallCredentials(
+StatusOr<AccessToken> GrpcAsyncAccessTokenCache::GetAccessToken(
     std::chrono::system_clock::time_point now) {
   std::unique_lock<std::mutex> lk(mu_);
   if (now + kUseSlack > token_.expiration) return Refresh(std::move(lk));
@@ -37,8 +37,7 @@ StatusOr<AccessToken> GrpcAsyncAccessTokenCache::GetCallCredentials(
   return tmp;
 }
 
-future<StatusOr<AccessToken>>
-GrpcAsyncAccessTokenCache::AsyncGetCallCredentials(
+future<StatusOr<AccessToken>> GrpcAsyncAccessTokenCache::AsyncGetAccessToken(
     std::chrono::system_clock::time_point now) {
   std::unique_lock<std::mutex> lk(mu_);
   if (now + kUseSlack > token_.expiration) return AsyncRefresh(std::move(lk));

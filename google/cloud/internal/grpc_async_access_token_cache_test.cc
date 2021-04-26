@@ -52,28 +52,28 @@ TEST(GrpcAsyncAccessTokenCacheTest, Simple) {
   auto under_test = GrpcAsyncAccessTokenCache::Create(
       background.cq(), mock_source.AsStdFunction());
 
-  auto pending = under_test->AsyncGetCallCredentials(start);
+  auto pending = under_test->AsyncGetAccessToken(start);
   async.PopFront().set_value();
   EXPECT_THAT(pending.get(), IsOk());
 
   // For the next few minutes the cache makes no further calls.
   for (auto m : {minutes(1), minutes(2), minutes(3)}) {
     SCOPED_TRACE("Testing at start + " + std::to_string(m.count()) + "m");
-    auto r = under_test->GetCallCredentials(start + m);
+    auto r = under_test->GetAccessToken(start + m);
     ASSERT_THAT(r, IsOk());
     EXPECT_EQ(t1.token, r->token);
     EXPECT_EQ(t1.expiration, r->expiration);
   }
 
   // At start+6m the cache makes a call, but still returns the cached value.
-  auto r = under_test->GetCallCredentials(start + minutes(6));
+  auto r = under_test->GetAccessToken(start + minutes(6));
   ASSERT_THAT(r, IsOk());
   EXPECT_EQ(t1.token, r->token);
   EXPECT_EQ(t1.expiration, r->expiration);
 
   // Have the async operation complete and test at start+11m
   async.PopFront().set_value();
-  r = under_test->GetCallCredentials(start + minutes(11));
+  r = under_test->GetAccessToken(start + minutes(11));
   ASSERT_THAT(r, IsOk());
   EXPECT_EQ(t2.token, r->token);
   EXPECT_EQ(t2.expiration, r->expiration);
@@ -108,7 +108,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, IgnoreErrorsOnPreCaching) {
   auto under_test = GrpcAsyncAccessTokenCache::Create(
       background.cq(), mock_source.AsStdFunction());
 
-  auto pending = under_test->AsyncGetCallCredentials(start);
+  auto pending = under_test->AsyncGetAccessToken(start);
   async.PopFront().set_value();
   EXPECT_THAT(pending.get(), IsOk());
 
@@ -118,7 +118,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, IgnoreErrorsOnPreCaching) {
   for (auto s : {seconds(1), seconds(2), seconds(3)}) {
     auto i = minutes(5) + s;
     SCOPED_TRACE("Testing at start + " + std::to_string(i.count()) + "s");
-    auto r = under_test->GetCallCredentials(start + i);
+    auto r = under_test->GetAccessToken(start + i);
     ASSERT_THAT(r, IsOk());
     EXPECT_EQ(r->token, t1.token);
   }
@@ -129,7 +129,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, IgnoreErrorsOnPreCaching) {
   for (auto s : {seconds(4), seconds(5), seconds(6)}) {
     auto i = minutes(5) + s;
     SCOPED_TRACE("Testing at start + " + std::to_string(i.count()) + "s");
-    auto r = under_test->GetCallCredentials(start + i);
+    auto r = under_test->GetAccessToken(start + i);
     ASSERT_THAT(r, IsOk());
     EXPECT_EQ(r->token, t1.token);
   }
@@ -140,7 +140,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, IgnoreErrorsOnPreCaching) {
   for (auto s : {seconds(7), seconds(8)}) {
     auto i = minutes(5) + s;
     SCOPED_TRACE("Testing at start + " + std::to_string(i.count()) + "s");
-    auto r = under_test->GetCallCredentials(start + i);
+    auto r = under_test->GetAccessToken(start + i);
     ASSERT_THAT(r, IsOk());
     EXPECT_EQ(t2.token, r->token);
   }
@@ -162,7 +162,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, ReturnError) {
   auto under_test = GrpcAsyncAccessTokenCache::Create(
       background.cq(), mock_source.AsStdFunction());
 
-  auto pending = under_test->AsyncGetCallCredentials(start);
+  auto pending = under_test->AsyncGetAccessToken(start);
   async.PopFront().set_value();
   EXPECT_THAT(pending.get(), StatusIs(StatusCode::kUnavailable, "try-again"));
 }
@@ -186,7 +186,7 @@ TEST(GrpcAsyncAccessTokenCacheTest, SatisfyMany) {
 
   std::vector<future<StatusOr<AccessToken>>> results(3);
   std::generate(results.begin(), results.end(),
-                [&] { return under_test->AsyncGetCallCredentials(start); });
+                [&] { return under_test->AsyncGetAccessToken(start); });
 
   // Making multiple requests creates one refresh attempt, simulate its
   // completion, that should satisfy all the pending requests.

@@ -55,10 +55,10 @@ class GrpcAsyncAccessTokenCache
   static std::shared_ptr<GrpcAsyncAccessTokenCache> Create(
       CompletionQueue cq, AsyncAccessTokenSource source);
 
-  StatusOr<AccessToken> GetCallCredentials(
+  StatusOr<AccessToken> GetAccessToken(
       std::chrono::system_clock::time_point now =
           std::chrono::system_clock::now());
-  future<StatusOr<AccessToken>> AsyncGetCallCredentials(
+  future<StatusOr<AccessToken>> AsyncGetAccessToken(
       std::chrono::system_clock::time_point now =
           std::chrono::system_clock::now());
 
