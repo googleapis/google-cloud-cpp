@@ -770,7 +770,6 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads && cd $HOME/Downloads
 mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
