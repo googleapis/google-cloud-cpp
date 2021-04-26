@@ -237,7 +237,7 @@ export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -295,13 +295,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -338,7 +339,7 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -454,13 +455,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -485,7 +487,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -587,19 +589,20 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
 
 <details>
-<summary>Ubuntu (18.04 LTS - Bionic Beaver)</summary>
+<summary>Ubuntu (18.04 LTS - Xenial Xerus)</summary>
 <br>
 
 Install the minimal development tools, libcurl, OpenSSL and libc-ares:
@@ -617,7 +620,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -736,13 +739,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -766,7 +770,8 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads && cd $HOME/Downloads
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -903,13 +908,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -942,7 +948,7 @@ sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -1000,13 +1006,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1037,7 +1044,7 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -1174,13 +1181,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1217,7 +1225,7 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -1319,13 +1327,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1374,7 +1383,7 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-mkdir -p $HOME/Downloads/abseil && cd $HOME/Downloads/abseil
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
 curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
@@ -1490,13 +1499,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
