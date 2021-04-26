@@ -23,7 +23,7 @@ import scalpl
 import utils
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
-content_range_split = re.compile(r"bytes (\*|[0-9]+-\*|[0-9]+)\/(\*|[0-9]+)")
+content_range_split = re.compile(r"bytes (\*|[0-9]+-[0-9]+|[0-9]+-\*)\/(\*|[0-9]+)")
 
 # === STR === #
 
