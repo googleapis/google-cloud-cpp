@@ -27,6 +27,7 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/async_retry_unary_rpc_test.cc",
     "internal/background_threads_impl_test.cc",
     "internal/grpc_access_token_authentication_test.cc",
+    "internal/grpc_async_access_token_cache_test.cc",
     "internal/grpc_channel_credentials_authentication_test.cc",
     "internal/log_wrapper_test.cc",
     "internal/minimal_iam_credentials_stub_test.cc",
