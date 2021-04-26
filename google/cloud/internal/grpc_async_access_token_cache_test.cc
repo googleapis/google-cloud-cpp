@@ -79,6 +79,56 @@ TEST(GrpcAsyncAccessTokenCacheTest, Simple) {
   EXPECT_EQ(t2.expiration, r->expiration);
 }
 
+TEST(GrpcAsyncAccessTokenCacheTest, SimpleAsync) {
+  ::testing::MockFunction<future<StatusOr<AccessToken>>(CompletionQueue&)>
+      mock_source;
+  auto const start = std::chrono::system_clock::now();
+  using minutes = std::chrono::minutes;
+  auto const t1 = AccessToken{"token1", start + minutes(10)};
+  auto const t2 = AccessToken{"token2", start + minutes(20)};
+
+  AsyncSequencer<void> async;
+  EXPECT_CALL(mock_source, Call)
+      .WillOnce([&](CompletionQueue&) {
+        return async.PushBack().then(
+            [&](future<void>) { return make_status_or(t1); });
+      })
+      .WillOnce([&](CompletionQueue&) {
+        return async.PushBack().then(
+            [&](future<void>) { return make_status_or(t2); });
+      });
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto under_test = GrpcAsyncAccessTokenCache::Create(
+      background.cq(), mock_source.AsStdFunction());
+
+  auto pending = under_test->AsyncGetAccessToken(start);
+  async.PopFront().set_value();
+  EXPECT_THAT(pending.get(), IsOk());
+
+  // For the next few minutes the cache makes no further calls.
+  for (auto m : {minutes(1), minutes(2), minutes(3)}) {
+    SCOPED_TRACE("Testing at start + " + std::to_string(m.count()) + "m");
+    auto r = under_test->AsyncGetAccessToken(start + m).get();
+    ASSERT_THAT(r, IsOk());
+    EXPECT_EQ(t1.token, r->token);
+    EXPECT_EQ(t1.expiration, r->expiration);
+  }
+
+  // At start+6m the cache makes a call, but still returns the cached value.
+  auto r = under_test->AsyncGetAccessToken(start + minutes(6)).get();
+  ASSERT_THAT(r, IsOk());
+  EXPECT_EQ(t1.token, r->token);
+  EXPECT_EQ(t1.expiration, r->expiration);
+
+  // Have the async operation complete and test at start+11m
+  async.PopFront().set_value();
+  r = under_test->AsyncGetAccessToken(start + minutes(11)).get();
+  ASSERT_THAT(r, IsOk());
+  EXPECT_EQ(t2.token, r->token);
+  EXPECT_EQ(t2.expiration, r->expiration);
+}
+
 TEST(GrpcAsyncAccessTokenCacheTest, IgnoreErrorsOnPreCaching) {
   ::testing::MockFunction<future<StatusOr<AccessToken>>(CompletionQueue&)>
       mock_source;
@@ -197,6 +247,27 @@ TEST(GrpcAsyncAccessTokenCacheTest, SatisfyMany) {
     ASSERT_EQ(t1.token, r->token);
     ASSERT_EQ(t1.expiration, r->expiration);
   }
+}
+
+TEST(GrpcAsyncAccessTokenCacheTest, BlockingRefresh) {
+  ::testing::MockFunction<future<StatusOr<AccessToken>>(CompletionQueue&)>
+      mock_source;
+  auto const start = std::chrono::system_clock::now();
+  using minutes = std::chrono::minutes;
+  auto const t1 = AccessToken{"token1", start + minutes(10)};
+
+  EXPECT_CALL(mock_source, Call).WillOnce([&](CompletionQueue&) {
+    return make_ready_future(make_status_or(t1));
+  });
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto under_test = GrpcAsyncAccessTokenCache::Create(
+      background.cq(), mock_source.AsStdFunction());
+
+  auto r = under_test->GetAccessToken(start);
+  EXPECT_THAT(r, IsOk());
+  EXPECT_EQ(t1.token, r->token);
+  EXPECT_EQ(t1.expiration, r->expiration);
 }
 
 }  // namespace
