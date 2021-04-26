@@ -236,7 +236,7 @@ DOCKER_DISTROS=(
   "demo-fedora.Dockerfile,Fedora (33)"
   "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
   "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
-  "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Xenial Xerus)"
+  "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Bionic Beaver)"
   "demo-ubuntu-xenial.Dockerfile,Ubuntu (16.04 LTS - Xenial Xerus)"
   "demo-debian-buster.Dockerfile,Debian (Buster)"
   "demo-debian-stretch.Dockerfile,Debian (Stretch)"

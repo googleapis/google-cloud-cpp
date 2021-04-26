@@ -602,7 +602,7 @@ cmake --build cmake-out --target install
 </details>
 
 <details>
-<summary>Ubuntu (18.04 LTS - Xenial Xerus)</summary>
+<summary>Ubuntu (18.04 LTS - Bionic Beaver)</summary>
 <br>
 
 Install the minimal development tools, libcurl, OpenSSL and libc-ares:
