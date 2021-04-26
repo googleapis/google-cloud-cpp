@@ -33,8 +33,9 @@ std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials());
     }
-    void visit(DynamicAccessTokenConfig& cfg) override {
-      result = absl::make_unique<GrpcAccessTokenAuthentication>(cfg.source());
+    void visit(AccessTokenConfig& cfg) override {
+      result =
+          absl::make_unique<GrpcAccessTokenAuthentication>(cfg.access_token());
     }
   } visitor;
 

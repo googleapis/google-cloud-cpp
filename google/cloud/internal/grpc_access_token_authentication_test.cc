@@ -23,51 +23,15 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Return;
 
 TEST(GrpcAccessTokenAuthenticationTest, Simple) {
-  ::testing::MockFunction<AccessToken()> mock_source;
   auto const expiration =
       std::chrono::system_clock::now() - std::chrono::minutes(10);
-  EXPECT_CALL(mock_source, Call)
-      .WillOnce(Return(AccessToken{"token1", expiration}))
-      .WillOnce(Return(AccessToken{"token2", expiration}))
-      .WillOnce(Return(AccessToken{"token3", expiration}));
 
-  GrpcAccessTokenAuthentication auth(mock_source.AsStdFunction());
+  GrpcAccessTokenAuthentication auth(AccessToken{"token1", expiration});
 
   auto channel = auth.CreateChannel("localhost:1", grpc::ChannelArguments{});
   EXPECT_NE(nullptr, channel.get());
-
-  for (auto attempt : {1, 2, 3}) {
-    SCOPED_TRACE("Running attempt " + std::to_string(attempt));
-    grpc::ClientContext context;
-    EXPECT_EQ(nullptr, context.credentials());
-    auto status = auth.ConfigureContext(context);
-    EXPECT_THAT(status, IsOk());
-    EXPECT_NE(nullptr, context.credentials());
-  }
-}
-
-TEST(GrpcAccessTokenAuthenticationTest, NotExpired) {
-  ::testing::MockFunction<StatusOr<AccessToken>()> mock_source;
-  auto const expiration =
-      std::chrono::system_clock::now() + std::chrono::minutes(10);
-  EXPECT_CALL(mock_source, Call)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(Return(AccessToken{"token1", expiration}));
-
-  GrpcAccessTokenAuthentication auth(mock_source.AsStdFunction());
-
-  auto channel = auth.CreateChannel("localhost:1", grpc::ChannelArguments{});
-  EXPECT_NE(nullptr, channel.get());
-
-  {
-    grpc::ClientContext context;
-    auto status = auth.ConfigureContext(context);
-    EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
-  }
 
   for (auto attempt : {1, 2, 3}) {
     SCOPED_TRACE("Running attempt " + std::to_string(attempt));

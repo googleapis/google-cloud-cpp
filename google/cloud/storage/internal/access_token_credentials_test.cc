@@ -24,39 +24,12 @@ namespace internal {
 namespace {
 
 using ::google::cloud::internal::AccessToken;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::Return;
 
 TEST(AccessTokenCredentials, Simple) {
-  ::testing::MockFunction<AccessToken()> mock_source;
   auto const expiration =
       std::chrono::system_clock::now() - std::chrono::minutes(10);
-  EXPECT_CALL(mock_source, Call)
-      .WillOnce(Return(AccessToken{"token1", expiration}))
-      .WillOnce(Return(AccessToken{"token2", expiration}))
-      .WillOnce(Return(AccessToken{"token3", expiration}));
 
-  AccessTokenCredentials tested(mock_source.AsStdFunction());
-  EXPECT_EQ("Authorization: Bearer token1",
-            tested.AuthorizationHeader().value());
-  EXPECT_EQ("Authorization: Bearer token2",
-            tested.AuthorizationHeader().value());
-  EXPECT_EQ("Authorization: Bearer token3",
-            tested.AuthorizationHeader().value());
-}
-
-TEST(AccessTokenCredentials, NotExpired) {
-  ::testing::MockFunction<StatusOr<AccessToken>()> mock_source;
-  auto const expiration =
-      std::chrono::system_clock::now() + std::chrono::minutes(10);
-  EXPECT_CALL(mock_source, Call)
-      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(Return(AccessToken{"token1", expiration}));
-
-  AccessTokenCredentials tested(mock_source.AsStdFunction());
-  EXPECT_THAT(tested.AuthorizationHeader(), StatusIs(StatusCode::kUnavailable));
-  EXPECT_EQ("Authorization: Bearer token1",
-            tested.AuthorizationHeader().value());
+  AccessTokenCredentials tested(AccessToken{"token1", expiration});
   EXPECT_EQ("Authorization: Bearer token1",
             tested.AuthorizationHeader().value());
   EXPECT_EQ("Authorization: Bearer token1",

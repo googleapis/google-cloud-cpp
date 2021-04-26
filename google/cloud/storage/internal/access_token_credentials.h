@@ -33,18 +33,12 @@ namespace internal {
 class AccessTokenCredentials : public oauth2::Credentials {
  public:
   explicit AccessTokenCredentials(
-      google::cloud::internal::AccessTokenSource source)
-      : source_(std::move(source)) {}
+      google::cloud::internal::AccessToken const& access_token);
 
   StatusOr<std::string> AuthorizationHeader() override;
 
  private:
-  google::cloud::internal::AccessTokenSource source_;
-  std::mutex mu_;
-  StatusOr<std::string> header_;
-  std::chrono::system_clock::time_point expiration_;
-  bool refreshing_ = false;
-  std::condition_variable cv_;
+  std::string header_;
 };
 
 }  // namespace internal

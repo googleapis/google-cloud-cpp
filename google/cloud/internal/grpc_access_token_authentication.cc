@@ -19,8 +19,6 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-auto constexpr kExpirationSlack = std::chrono::minutes(5);
-
 std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
   // TODO(#6311) - support setting SSL options
@@ -30,28 +28,7 @@ std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
 
 Status GrpcAccessTokenAuthentication::ConfigureContext(
     grpc::ClientContext& context) {
-  std::unique_lock<std::mutex> lk(mu_);
-  cv_.wait(lk, [this] { return !refreshing_; });
-  auto const deadline = std::chrono::system_clock::now() + kExpirationSlack;
-  if (deadline < expiration_) {
-    context.set_credentials(credentials_);
-    return {};
-  }
-  refreshing_ = true;
-  lk.unlock();
-  auto refresh = source_();
-  lk.lock();
-  refreshing_ = false;
-  if (!refresh) {
-    expiration_ = {};  // failure to get a token is not cacheable
-    credentials_.reset();
-    cv_.notify_all();
-    return std::move(refresh).status();
-  }
-  expiration_ = refresh->expiration;
-  credentials_ = grpc::AccessTokenCredentials(refresh->token);
   context.set_credentials(credentials_);
-  cv_.notify_all();
   return Status{};
 }
 

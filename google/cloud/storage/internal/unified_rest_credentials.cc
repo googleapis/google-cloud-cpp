@@ -23,8 +23,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+using google::cloud::internal::AccessTokenConfig;
 using google::cloud::internal::CredentialsVisitor;
-using google::cloud::internal::DynamicAccessTokenConfig;
 using google::cloud::internal::GoogleDefaultCredentialsConfig;
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
@@ -42,8 +42,8 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       result =
           std::make_shared<ErrorCredentials>(std::move(credentials).status());
     }
-    void visit(DynamicAccessTokenConfig& config) override {
-      result = std::make_shared<AccessTokenCredentials>(config.source());
+    void visit(AccessTokenConfig& config) override {
+      result = std::make_shared<AccessTokenCredentials>(config.access_token());
     }
   } visitor;
 

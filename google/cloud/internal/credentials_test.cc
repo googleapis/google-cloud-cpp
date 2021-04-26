@@ -22,19 +22,16 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
-using ::testing::Return;
-
 struct Visitor : public CredentialsVisitor {
   std::string name;
-  AccessTokenSource source;
+  AccessToken access_token;
 
   void visit(GoogleDefaultCredentialsConfig&) override {
     name = "GoogleDefaultCredentialsConfig";
   }
-  void visit(DynamicAccessTokenConfig& cfg) override {
-    name = "DynamicAccessTokenConfig";
-    source = cfg.source();
+  void visit(AccessTokenConfig& cfg) override {
+    name = "AccessTokenConfig";
+    access_token = cfg.access_token();
   }
 };
 
@@ -52,33 +49,9 @@ TEST(Credentials, AccessTokenCredentials) {
   auto const expiration = std::chrono::system_clock::now();
   auto credentials = MakeAccessTokenCredentials("test-token", expiration);
   CredentialsVisitor::dispatch(*credentials, visitor);
-  ASSERT_EQ("DynamicAccessTokenConfig", visitor.name);
-  auto const access_token = visitor.source();
-  ASSERT_THAT(access_token, IsOk());
-  EXPECT_EQ("test-token", access_token->token);
-  EXPECT_EQ(expiration, access_token->expiration);
-}
-
-TEST(Credentials, DynamicAccessTokenCredentials) {
-  ::testing::MockFunction<StatusOr<AccessToken>()> mock;
-  auto const e1 = std::chrono::system_clock::now() + std::chrono::hours(1);
-  auto const e2 = std::chrono::system_clock::now() + std::chrono::hours(2);
-  EXPECT_CALL(mock, Call)
-      .WillOnce(Return(AccessToken{"t1", e1}))
-      .WillOnce(Return(AccessToken{"t2", e2}));
-
-  Visitor visitor;
-  auto credentials = MakeDynamicAccessTokenCredentials(mock.AsStdFunction());
-  CredentialsVisitor::dispatch(*credentials, visitor);
-  EXPECT_EQ("DynamicAccessTokenConfig", visitor.name);
-  auto t1 = visitor.source();
-  ASSERT_THAT(t1, IsOk());
-  EXPECT_EQ("t1", t1->token);
-  EXPECT_EQ(e1, t1->expiration);
-  auto t2 = visitor.source();
-  ASSERT_THAT(t2, IsOk());
-  EXPECT_EQ("t2", t2->token);
-  EXPECT_EQ(e2, t2->expiration);
+  ASSERT_EQ("AccessTokenConfig", visitor.name);
+  EXPECT_EQ("test-token", visitor.access_token.token);
+  EXPECT_EQ(expiration, visitor.access_token.expiration);
 }
 
 }  // namespace
