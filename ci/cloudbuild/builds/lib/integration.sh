@@ -153,7 +153,7 @@ function integration::bazel_with_emulators() {
   # - GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT
   io::log_h2 "Running Spanner integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    google/cloud/spanner/...
+    --test_timeout=3600 google/cloud/spanner/...
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
