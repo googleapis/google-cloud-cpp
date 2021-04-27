@@ -17,9 +17,14 @@
 #include <cppcodec/base64_rfc4648.hpp>
 #include <nlohmann/json.hpp>
 #include <iostream>
+#include <regex>
 #include <sstream>
 #include <stdexcept>
 
+auto constexpr kGcsPrefix = "https://storage.googleapis.com/";
+auto constexpr kAttempts = 4;
+
+using ::google::cloud::StatusCode;
 using ::google::cloud::functions::CloudEvent;
 namespace gcs = ::google::cloud::storage;
 
@@ -80,23 +85,54 @@ void index_build_logs(CloudEvent event) {  // NOLINT
   }
 
   auto const pr_number = contents["substitutions"].value("_PR_NUMBER", "");
+  auto const commit_sha = contents["substitutions"].value("COMMIT_SHA", "");
 
-  std::string prefix = "logs/google-cloud-cpp/" + pr_number + "/";
+  auto const prefix =
+      "logs/google-cloud-cpp/" + pr_number + "/" + commit_sha + "/";
 
-  // TODO(coryan) - this should be in a OCC loop
-  std::ostringstream os;
-  os << "<body>\n";
-  os << "<ul>";
-  for (auto const& object :
-       client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
-    if (!object) throw std::runtime_error(object.status().message());
-    os << "<li><a href=\"" << object->media_link() << "\">" << object->name()
-       << "</a></li>\n";
+  auto const link_prefix = kGcsPrefix + bucket_name;
+
+  static auto const kIsIndex =
+      std::regex(R"re(/index\.html$)re", std::regex::optimize);
+  static auto const kIsStep =
+      std::regex(R"re(-step-[0-9]+\.txt)re", std::regex::optimize);
+
+  std::int64_t index_generation = 0;
+  for (int i = 0; i != kAttempts; ++i) {
+    std::ostringstream os;
+    os << "<!DOCTYPE html>\n";
+    os << "<html><meta charset=\"utf-8\"><head>Logs for #" << pr_number << " @ "
+       << commit_sha << "</head>\n";
+    os << "<body>\n";
+    os << "<ul>";
+    for (auto const& object :
+         client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
+      if (!object) throw std::runtime_error(object.status().message());
+      if (std::regex_search(object->name(), kIsStep)) continue;
+      if (std::regex_search(object->name(), kIsIndex)) {
+        index_generation = object->generation();
+        continue;
+      }
+      os << "<li><a href=\"" << kGcsPrefix + bucket_name + "/" + object->name()
+         << "\">" << object->name() << "</a></li>\n";
+    }
+    os << "</ul>";
+    os << "</body>\n";
+    os << "</html>\n";
+    // Use `IfGenerationMatch()` to prevent overwriting data. It is possible
+    // that the data written concurrently was more up to date. Note that
+    // (conveniently) `IfGenerationMatch(0)` means "if the object does not
+    // exist".
+    auto metadata = client.InsertObject(
+        bucket_name, prefix + "index.html", os.str(),
+        gcs::IfGenerationMatch(index_generation),
+        gcs::WithObjectMetadata(gcs::ObjectMetadata{}
+                                    .set_content_type("text/html")
+                                    .set_cache_control("no-cache")));
+    if (metadata.ok()) return;
+    // Writing the index.html file
+    if (metadata.status().code() != StatusCode::kFailedPrecondition) {
+      throw std::runtime_error(metadata.status().message());
+    }
   }
-  os << "</ul>";
-  os << "</body>\n";
-  client
-      .InsertObject(bucket_name, prefix + "index.html", os.str(),
-                    gcs::ContentType("text/html"))
-      .value();
 }
