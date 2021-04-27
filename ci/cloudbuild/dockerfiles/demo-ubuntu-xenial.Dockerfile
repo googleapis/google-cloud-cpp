@@ -33,7 +33,6 @@ RUN apt-get update && \
 # We need a recent version of Abseil.
 
 # ```bash
-WORKDIR /var/tmp/build
 WORKDIR /var/tmp/build/abseil-cpp
 RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
     tar -xzf - --strip-components=1 && \

@@ -29,13 +29,11 @@ source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
 ## [START packaging.md]
-
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
-
 ## [END packaging.md]
 
 # Tests the installed artifacts by building and running the quickstarts.
