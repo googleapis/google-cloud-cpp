@@ -185,6 +185,14 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
     print_usage
     exit 1
   fi
+
+  # Prints links to the log files for the current build. These can be useful to
+  # copy-n-paste into issues. The GCB link will require auth but the raw link
+  # may be publicly accessible.
+  io::log_h1 "Log Links"
+  printf "GCB: %s\n" "${CONSOLE_LOG_URL:-none}"
+  printf "Raw: %s\n" "${RAW_LOG_URL:-none}"
+
   function mem_total() {
     awk '$1 == "MemTotal:" {printf "%0.2f GiB", $2/1024/1024}' /proc/meminfo
   }
