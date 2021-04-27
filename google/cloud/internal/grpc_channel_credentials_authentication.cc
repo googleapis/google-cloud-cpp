@@ -25,9 +25,19 @@ GrpcChannelCredentialsAuthentication::CreateChannel(
   return grpc::CreateCustomChannel(endpoint, credentials_, arguments);
 }
 
+bool GrpcChannelCredentialsAuthentication::RequiresConfigureContext() const {
+  return false;
+}
+
 Status GrpcChannelCredentialsAuthentication::ConfigureContext(
     grpc::ClientContext&) {
   return Status{};
+}
+
+future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+GrpcChannelCredentialsAuthentication::AsyncConfigureContext(
+    std::unique_ptr<grpc::ClientContext> context) {
+  return make_ready_future(make_status_or(std::move(context)));
 }
 
 }  // namespace internal

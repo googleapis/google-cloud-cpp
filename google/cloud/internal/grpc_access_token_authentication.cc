@@ -26,10 +26,21 @@ std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 
+bool GrpcAccessTokenAuthentication::RequiresConfigureContext() const {
+  return true;
+}
+
 Status GrpcAccessTokenAuthentication::ConfigureContext(
     grpc::ClientContext& context) {
   context.set_credentials(credentials_);
   return Status{};
+}
+
+future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+GrpcAccessTokenAuthentication::AsyncConfigureContext(
+    std::unique_ptr<grpc::ClientContext> context) {
+  context->set_credentials(credentials_);
+  return make_ready_future(make_status_or(std::move(context)));
 }
 
 }  // namespace internal
