@@ -32,6 +32,22 @@ pack build  --builder gcr.io/buildpacks/builder:latest \
      "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs"
 ```
 
+## Enable Writing on the Destination Bucket
+
+```shell
+BUCKET_NAME="cloud-cpp-community-publiclogs"
+PROJECT_NUMBER=$(gcloud projects list \
+    --filter="project_id=${GOOGLE_CLOUD_PROJECT}" \
+    --format="value(project_number)" \
+    --limit=1)
+
+gsutil iam ch \
+    "serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com:objectAdmin" \
+    "gs://${BUCKET_NAME}"
+```
+
+
+
 ## Deploy to Cloud Run
 
 ```shell
@@ -40,19 +56,20 @@ docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs:latest"
 gcloud run deploy index-build-logs \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs:latest" \
+    --set-env-vars="BUCKET_NAME=${BUCKET_NAME}" \
     --region="us-central1" \
     --platform="managed" \
     --no-allow-unauthenticated
-     
+
 gcloud beta eventarc triggers create index-build-logs-trigger \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --location="us-central1" \
     --destination-run-service="index-build-logs" \
     --destination-run-region="us-central1" \
     --transport-topic="cloud-builds" \
-    --matching-criteria="type=google.cloud.pubsub.topic.v1.messagePublished"
+    --matching-criteria="type=google.cloud.pubsub.topic.v1.messagePublished" \
+    --service-account="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 
-# TODO(coryan) -- think about  --allow-unauthenticated
 ```
 
 [docker]: https://docker.com/

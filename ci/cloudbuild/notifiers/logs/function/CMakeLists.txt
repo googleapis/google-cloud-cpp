@@ -21,5 +21,5 @@ find_package(functions_framework_cpp REQUIRED)
 
 add_library(functions_framework_cpp_function function.cc)
 target_link_libraries(
-functions_framework_cpp_function functions-framework-cpp::framework
-        google-cloud-cpp::storage)
+    functions_framework_cpp_function functions-framework-cpp::framework
+    google-cloud-cpp::storage)
