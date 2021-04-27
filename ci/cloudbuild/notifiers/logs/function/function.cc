@@ -130,7 +130,8 @@ void index_build_logs(CloudEvent event) {  // NOLINT
                                     .set_content_type("text/html")
                                     .set_cache_control("no-cache")));
     if (metadata.ok()) return;
-    // Writing the index.html file
+    // If the write fail for any reason other than a failed precondition that is
+    // an error.
     if (metadata.status().code() != StatusCode::kFailedPrecondition) {
       throw std::runtime_error(metadata.status().message());
     }
