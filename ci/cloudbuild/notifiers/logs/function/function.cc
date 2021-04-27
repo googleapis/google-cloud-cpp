@@ -68,12 +68,6 @@ void index_build_logs(CloudEvent event) {  // NOLINT
   auto const data = cppcodec::base64_rfc4648::decode<std::string>(
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
-
-  std::cout << "Contents: " << contents.dump() << "\n";
-  std::cout << "Build Id: " << message["attributes"].value("buildId", "")
-            << "\n";
-  std::cout << "Attributes: " << message["attributes"].dump() << "\n";
-
   auto const trigger_type =
       contents["substitutions"].value("_TRIGGER_TYPE", "");
   if (trigger_type == "manual") {
