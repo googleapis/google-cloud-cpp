@@ -33,14 +33,7 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
     std::chrono::system_clock::time_point expiration) {
-  return MakeDynamicAccessTokenCredentials([access_token, expiration] {
-    return AccessToken{access_token, expiration};
-  });
-}
-
-std::shared_ptr<Credentials> MakeDynamicAccessTokenCredentials(
-    AccessTokenSource source) {
-  return std::make_shared<DynamicAccessTokenConfig>(std::move(source));
+  return std::make_shared<AccessTokenConfig>(access_token, expiration);
 }
 
 }  // namespace internal

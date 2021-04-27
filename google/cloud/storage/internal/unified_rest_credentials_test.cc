@@ -30,12 +30,10 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using google::cloud::internal::AccessToken;
-using google::cloud::internal::MakeDynamicAccessTokenCredentials;
+using google::cloud::internal::MakeAccessTokenCredentials;
 using google::cloud::internal::MakeGoogleDefaultCredentials;
 using google::cloud::testing_util::IsOk;
 using google::cloud::testing_util::ScopedEnvironment;
-using ::testing::Return;
 
 class UnifiedRestCredentialsTest : public ::testing::Test {
  public:
@@ -53,17 +51,9 @@ class UnifiedRestCredentialsTest : public ::testing::Test {
 };
 
 TEST_F(UnifiedRestCredentialsTest, AccessToken) {
-  ::testing::MockFunction<AccessToken()> mock_source;
-  auto const expiration =
-      std::chrono::system_clock::now() - std::chrono::minutes(10);
-  EXPECT_CALL(mock_source, Call)
-      .WillOnce(Return(AccessToken{"token1", expiration}))
-      .WillOnce(Return(AccessToken{"token2", expiration}))
-      .WillOnce(Return(AccessToken{"token3", expiration}));
-
   auto credentials = MapCredentials(
-      MakeDynamicAccessTokenCredentials(mock_source.AsStdFunction()));
-  for (std::string expected : {"token1", "token2", "token3"}) {
+      MakeAccessTokenCredentials("token1", std::chrono::system_clock::now()));
+  for (std::string expected : {"token1", "token1", "token1"}) {
     auto header = credentials->AuthorizationHeader();
     ASSERT_THAT(header, IsOk());
     EXPECT_EQ("Authorization: Bearer " + expected, *header);

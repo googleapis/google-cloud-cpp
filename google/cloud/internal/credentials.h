@@ -62,21 +62,14 @@ struct AccessToken {
   std::chrono::system_clock::time_point expiration;
 };
 
-/// A generator for access tokens.
-using AccessTokenSource = std::function<StatusOr<AccessToken>()>;
-
-/// A generic generator of access tokens.
-std::shared_ptr<Credentials> MakeDynamicAccessTokenCredentials(
-    AccessTokenSource source);
-
 class GoogleDefaultCredentialsConfig;
-class DynamicAccessTokenConfig;
+class AccessTokenConfig;
 
 class CredentialsVisitor {
  public:
   virtual ~CredentialsVisitor() = default;
   virtual void visit(GoogleDefaultCredentialsConfig&) = 0;
-  virtual void visit(DynamicAccessTokenConfig&) = 0;
+  virtual void visit(AccessTokenConfig&) = 0;
 
   static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
 };
@@ -89,16 +82,19 @@ class GoogleDefaultCredentialsConfig : public Credentials {
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
 };
 
-class DynamicAccessTokenConfig : public Credentials {
+class AccessTokenConfig : public Credentials {
  public:
-  explicit DynamicAccessTokenConfig(AccessTokenSource source)
-      : source_(std::move(source)) {}
+  AccessTokenConfig(std::string token,
+                    std::chrono::system_clock::time_point expiration)
+      : access_token_(AccessToken{std::move(token), expiration}) {}
+  ~AccessTokenConfig() override = default;
 
-  AccessTokenSource source() const { return source_; }
+  AccessToken const& access_token() const { return access_token_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
-  AccessTokenSource source_;
+
+  AccessToken access_token_;
 };
 
 }  // namespace internal

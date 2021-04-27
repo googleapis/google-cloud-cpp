@@ -26,8 +26,8 @@ namespace internal {
 
 class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
  public:
-  explicit GrpcAccessTokenAuthentication(AccessTokenSource source)
-      : source_(std::move(source)) {}
+  explicit GrpcAccessTokenAuthentication(AccessToken const& access_token)
+      : credentials_(grpc::AccessTokenCredentials(access_token.token)) {}
   ~GrpcAccessTokenAuthentication() override = default;
 
   std::shared_ptr<grpc::Channel> CreateChannel(
@@ -36,12 +36,7 @@ class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
   Status ConfigureContext(grpc::ClientContext&) override;
 
  private:
-  AccessTokenSource source_;
-  std::mutex mu_;
   std::shared_ptr<grpc::CallCredentials> credentials_;
-  std::chrono::system_clock::time_point expiration_;
-  bool refreshing_ = false;
-  std::condition_variable cv_;
 };
 
 }  // namespace internal
