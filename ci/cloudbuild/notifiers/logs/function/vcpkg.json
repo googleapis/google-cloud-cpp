@@ -1,0 +1,8 @@
+{
+  "name": "index-build-logs",
+  "version-string": "unversioned",
+  "dependencies": [
+    "google-cloud-cpp",
+    "functions-framework-cpp"
+  ]
+}
