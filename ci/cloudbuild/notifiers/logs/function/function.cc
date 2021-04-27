@@ -14,6 +14,8 @@
 
 #include <google/cloud/functions/cloud_event.h>
 #include <google/cloud/storage/client.h>
+#include <cppcodec/base64_rfc4648.hpp>
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -33,13 +35,55 @@ void index_build_logs(CloudEvent event) {  // NOLINT
     return std::string{bname};
   }();
 
-  std::string prefix = "test-prefix-coryan/";
+  if (event.data_content_type().value_or("") != "application/json") {
+    std::cerr << nlohmann::json{{"severity", "error"},
+                     {"message", "expected application/json data"},
+                                }
+                     .dump()
+              << "\n";
+    return;
+  }
+  auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
+  if (payload.count("message") == 0) {
+    std::cerr << nlohmann::json{{"severity", "error"},
+                                {"message", "missing embedded Pub/Sub message"}}
+                     .dump()
+              << "\n";
+    return;
+  }
+  auto const message = payload["message"];
+  if (message.count("attributes") == 0 or message.count("data") == 0) {
+    std::cerr << nlohmann::json{{"severity", "error"},
+                                {"message",
+                                 "missing Pub/Sub attributes or data"}}
+                     .dump()
+              << "\n";
+    return;
+  }
+  auto const data = cppcodec::base64_rfc4648::decode<std::string>(
+      message["data"].get<std::string>());
+  auto const contents = nlohmann::json::parse(data);
 
-  std::cout << "Received event"
-            << "\n id: " << event.id()
-            << "\n subject: " << event.subject().value_or("") << std::endl;
-  std::cout << "Event: " << event.data().value_or("[no data]") << std::endl;
+  std::cout << "Contents: " << contents.dump() << "\n";
+  std::cout << "Build Id: " << message["attributes"].value("buildId", "")
+            << "\n";
+  std::cout << "Attributes: " << message["attributes"].dump() << "\n";
 
+  auto const trigger_type =
+      contents["substitutions"].value("_TRIGGER_TYPE", "");
+  if (trigger_type == "manual") {
+    std::cout << nlohmann::json{{"severity", "info"},
+                                {"message", "skip manual build"}}
+                     .dump()
+              << "\n";
+    return;
+  }
+
+  auto const pr_number = contents["substitutions"].value("_PR_NUMBER", "");
+
+  std::string prefix = "logs/google-cloud-cpp/" + pr_number + "/";
+
+  // TODO(coryan) - this should be in a OCC loop
   std::ostringstream os;
   os << "<body>\n";
   os << "<ul>";
