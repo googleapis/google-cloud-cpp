@@ -1,0 +1,10 @@
+{
+  "name": "index-build-logs",
+  "version-string": "unversioned",
+  "dependencies": [
+    "cppcodec",
+    "functions-framework-cpp",
+    "google-cloud-cpp",
+    "nlohmann-json"
+  ]
+}
