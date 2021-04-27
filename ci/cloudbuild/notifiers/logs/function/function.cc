@@ -65,6 +65,8 @@ void index_build_logs(CloudEvent event) {  // NOLINT
               << "\n";
     return;
   }
+  // Queued builds do not have any logs, skip them.
+  if (message["attributes"].value("status", "") == "QUEUED") return;
   auto const data = cppcodec::base64_rfc4648::decode<std::string>(
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
