@@ -46,7 +46,7 @@ std::string Anchor(std::string const& url, std::string name = "") {
 // Writes an HTML table w/ the data from the vector.
 void WriteTable(std::ostream& os,
                 std::vector<std::vector<std::string>> const& table,
-                std::vector<std::string> header = {}) {
+                std::vector<std::string> const& header = {}) {
   os << "<table>\n";
   if (!header.empty()) {
     os << "<tr>";
@@ -65,31 +65,9 @@ void WriteTable(std::ostream& os,
   os << "</table>";
 }
 
-// The log files include a component like <distro>-<script>, but the GitHub
-// status UI shows trigger names, like `clang-tidy-pr`. To make it easier for
-// customers to correlate these logs w/ the builds that fail in the GitHub UI,
-// we split the logfile component into the separate build parts so we can
-// render links with the same name.
-struct BuildInfo {
-  std::string distro;
-  std::string script;
-  std::string trigger;
-};
-BuildInfo MakeBuildInfo(std::string const& distro_script) {
-  auto hyphen = distro_script.find('-');
-  if (hyphen == std::string::npos) {
-    throw std::runtime_error("No hyphen in distro_script: " + distro_script);
-  }
-  BuildInfo bn;
-  bn.distro = distro_script.substr(0, hyphen);
-  bn.script = distro_script.substr(hyphen + 1);
-  bn.trigger = bn.script + "-pr";
-  return bn;
-}
-
 }  // namespace
 
-void index_build_logs(CloudEvent event) {  // NOLINT
+void IndexBuildLogs(CloudEvent event) {
   static auto client = [] {
     return gcs::Client::CreateDefaultClient().value();
   }();
@@ -103,8 +81,7 @@ void index_build_logs(CloudEvent event) {  // NOLINT
 
   if (event.data_content_type().value_or("") != "application/json") {
     std::cerr << nlohmann::json{{"severity", "error"},
-                     {"message", "expected application/json data"},
-                                }
+                                {"message", "expected application/json data"}}
                      .dump()
               << "\n";
     return;
@@ -172,15 +149,14 @@ void index_build_logs(CloudEvent event) {  // NOLINT
     os << "<head><meta charset=\"utf-8\">";
     os << "<style>\n";
     os << "tr:nth-child(even) {background: #FFF}\n";
-    os << "tr:nth-child(odd) {background: #CCC}\n";
+    os << "tr:nth-child(odd) {background: #DDD}\n";
     os << "</style></head>\n";
     os << "<body>\n";
-    os << "<h1>Public Build Results</h1>";
+    os << "<h1>Public Build Results</h1><hr/>";
     WriteTable(os, v);
     os << "<h2>Build logs</h2>";
     std::vector<std::vector<std::string>> table;
-    std::vector<std::string> header{
-        {"Log", "Distro", "Trigger", "Local repro command"}};
+    std::vector<std::string> header{{"Build", "Log"}};
     for (auto const& object :
          client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
       if (!object) throw std::runtime_error(object.status().message());
@@ -190,14 +166,17 @@ void index_build_logs(CloudEvent event) {  // NOLINT
       }
       if (!std::regex_search(object->name(), kLogfileRE)) continue;
       auto path = object->name();
-      auto const info = MakeBuildInfo(basename(dirname(path.data())));
       table.emplace_back(std::vector<std::string>{
-          Anchor(kGcsPrefix + bucket_name + "/" + object->name(), "raw log"),
-          info.distro, info.trigger,
-          "<code>ci/cloudbuild/build.sh --trigger " + info.trigger +
-              " --docker</code>"});
+          basename(dirname(path.data())),
+          Anchor(kGcsPrefix + bucket_name + "/" + object->name(), "raw log")});
     }
     WriteTable(os, table, header);
+    os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
+    os << "<code>ci/cloudbuild/build.sh</code> script, with its ";
+    os << "<a "
+          "href=\"https://github.com/googleapis/google-cloud-cpp/blob/master/"
+          "ci/cloudbuild/build.sh\">documentation here</a>.";
+    os << "</p>\n";
     os << "</body>\n";
     os << "</html>\n";
     // Use `IfGenerationMatch()` to prevent overwriting data. It is possible

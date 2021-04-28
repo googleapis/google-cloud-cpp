@@ -61,7 +61,7 @@ and use it from Cloud Run.
 GOOGLE_CLOUD_PROJECT=... # The project running the builds
 pack build  --builder gcr.io/buildpacks/builder:latest \
      --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
-     --env "GOOGLE_FUNCTION_TARGET=index_build_logs" \
+     --env "GOOGLE_FUNCTION_TARGET=IndexBuildLogs" \
      --path "function" \
      "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs"
 ```

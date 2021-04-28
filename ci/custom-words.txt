@@ -10,7 +10,6 @@ CRTP
 CSEK
 DDTHH
 deserializes
-distro
 factivity
 fluentd
 frobber
