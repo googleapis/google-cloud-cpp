@@ -116,6 +116,10 @@ function integration::bazel_with_emulators() {
   local verb="$1"
   local args=("${@:2}")
 
+  io::log_h2 "Running gRPC Utils integration tests"
+  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
+    google/cloud:all
+
   io::log_h2 "Running Generator integration tests (with emulator)"
   env \
     GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes \
