@@ -125,7 +125,7 @@ GrpcImpersonateServiceAccount::OnGetCallCredentials(
     StatusOr<AccessToken> result) {
   if (!result) return std::move(result).status();
   context->set_credentials(UpdateCallCredentials(std::move(result->token)));
-  return context;
+  return make_status_or(std::move(context));
 }
 
 }  // namespace internal
