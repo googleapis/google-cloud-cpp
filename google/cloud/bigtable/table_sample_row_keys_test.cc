@@ -36,7 +36,7 @@ class TableSampleRowKeysTest
   TableSampleRowKeysTest() : TableTestFixture(CompletionQueue{}) {}
 };
 
-/// @test Verify that Table::SampleRows<T>() works for default parameter.
+/// @test Verify that Table::SampleRows() works.
 TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   namespace btproto = ::google::bigtable::v2;
 
@@ -64,34 +64,7 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
   EXPECT_EQ(++it, result->end());
 }
 
-/// @test Verify that Table::SampleRows<T>() works for std::vector.
-TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
-  namespace btproto = ::google::bigtable::v2;
-
-  EXPECT_CALL(*client_, SampleRowKeys).WillOnce([](Unused, Unused) {
-    auto reader = absl::make_unique<MockSampleRowKeysReader>(
-        "google.bigtable.v2.Bigtable.SampleRowKeys");
-    EXPECT_CALL(*reader, Read)
-        .WillOnce([](btproto::SampleRowKeysResponse* r) {
-          {
-            r->set_row_key("test1");
-            r->set_offset_bytes(11);
-          }
-          return true;
-        })
-        .WillOnce(Return(false));
-    EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
-    return reader;
-  });
-  auto result = table_.SampleRows();
-  ASSERT_STATUS_OK(result);
-  auto it = result->begin();
-  EXPECT_NE(it, result->end());
-  EXPECT_EQ(it->row_key, "test1");
-  EXPECT_EQ(it->offset_bytes, 11);
-  EXPECT_EQ(++it, result->end());
-}
-
+/// @test Verify that Table::SampleRows() retries when unavailable.
 TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
   namespace btproto = ::google::bigtable::v2;
 
@@ -151,7 +124,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-/// @test Verify that Table::sample_rows() reports correctly on too many errors.
+/// @test Verify that Table::SampleRows() reports correctly on too many errors.
 TEST_F(TableSampleRowKeysTest, TooManyFailures) {
   namespace btproto = ::google::bigtable::v2;
 
