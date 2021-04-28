@@ -39,8 +39,8 @@ body="$(
 **Google Cloud Build Logs**
 For commit: \`${COMMIT_SHA}\`
 
-* [Cloud Build Console](${console_link}) (for team members with access)
-* [Cloud Storage Logs Bucket](${storage_link}) (public access *coming soon*)
+* [Public Access Build Logs](${storage_link})
+* [Cloud Build Console](${console_link}) (requires auth)
 
 :information_source: NOTE: Kokoro logs are linked from "Details" below.
 EOF
