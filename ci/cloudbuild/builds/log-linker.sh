@@ -33,14 +33,14 @@ io::log_h2 "Authenticating"
 gh auth login --with-token <<<"${LOG_LINKER_PAT}"
 
 console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources&query=tags%3D%22${PR_NUMBER}%22"
-storage_link="http://storage.googleapis.com/cloud-cpp-community-publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}/index.html"
+storage_link="https://storage.googleapis.com/cloud-cpp-community-publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}/index.html"
 body="$(
   cat <<EOF
 **Google Cloud Build Logs**
 For commit: \`${COMMIT_SHA}\`
 
-* [Cloud Build Console](${console_link}) (for team members with access)
-* [Cloud Storage Logs Bucket](${storage_link}) (public access *coming soon*)
+* [Public Access Build Logs](${storage_link})
+* [Cloud Build Console](${console_link}) (requires auth)
 
 :information_source: NOTE: Kokoro logs are linked from "Details" below.
 EOF
