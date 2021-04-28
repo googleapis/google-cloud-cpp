@@ -166,8 +166,8 @@ Please note that we use more strict settings for release branches than for
   * The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * _At a minimum_ the `cla/google`, `kokoro/docker/asan`, and `kokoro/docker/clang-tidy`
-    checks are required to pass, but more may be selected.
+  * _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks are
+    required to pass, but more may be selected.
 
 * The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.

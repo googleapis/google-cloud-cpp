@@ -24,8 +24,5 @@ cmake-build-*/
 .vsbuild/
 .vscode/
 
-# Ignore staging files for the ci/kokoro/install builds
-ci/kokoro/install/ccache-contents/
-
 google/cloud/storage/emulator/**/__pycache__/
 google/cloud/storage/emulator/**/*.pyc
