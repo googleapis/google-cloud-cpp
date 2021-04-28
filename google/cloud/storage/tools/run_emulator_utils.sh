@@ -61,7 +61,7 @@ start_emulator() {
 
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class sync \
-    --threads 10 \
+    --threads "$(nproc)" \
     --access-logfile - \
     --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
     "emulator:run()" \
