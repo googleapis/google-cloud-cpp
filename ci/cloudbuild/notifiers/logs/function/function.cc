@@ -16,11 +16,12 @@
 #include <google/cloud/storage/client.h>
 #include <cppcodec/base64_rfc4648.hpp>
 #include <nlohmann/json.hpp>
+#include <filesystem>
 #include <iostream>
-#include <libgen.h>
 #include <regex>
 #include <sstream>
 #include <stdexcept>
+#include <tuple>
 #include <unordered_set>
 #include <vector>
 
@@ -54,7 +55,7 @@ void WriteTable(std::ostream& os,
     for (auto const& col : header) {
       os << "<th>" << col << "</th>";
     }
-    os << "</tr>";
+    os << "</tr>\n";
   }
   for (auto const& row : table) {
     os << "<tr>";
@@ -63,15 +64,10 @@ void WriteTable(std::ostream& os,
     }
     os << "</tr>\n";
   }
-  os << "</table>";
+  os << "</table>\n";
 }
 
-}  // namespace
-
-void IndexBuildLogs(CloudEvent event) {
-  static auto client = [] {
-    return gcs::Client::CreateDefaultClient().value();
-  }();
+std::string const& bucket_name() {
   static auto const kBucketName = [] {
     auto const* bname = std::getenv("BUCKET_NAME");
     if (bname == nullptr) {
@@ -79,9 +75,89 @@ void IndexBuildLogs(CloudEvent event) {
     }
     return std::string{bname};
   }();
+  return kBucketName;
+}
+
+std::string const& destination() {
   static auto const kDestination = [] {
     auto const* destination = std::getenv("DESTINATION");
     return std::string{destination == nullptr ? "index.html" : destination};
+  }();
+  return kDestination;
+}
+
+auto HtmlHead(std::string const& pr, std::string const& sha) {
+  std::ostringstream os;
+  os << "<head><meta charset=\"utf-8\">";
+  os << "<title>"
+     << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
+     << "</title>\n";
+  os << "<style>\n";
+  os << "tr:nth-child(even) {background: #FFF}\n";
+  os << "tr:nth-child(odd) {background: #DDD}\n";
+  os << "</style></head>";
+  return os.str();
+}
+
+void LogsSummaryTable(std::ostream& os, gcs::Client client,
+                      std::string const& prefix) {
+  static auto const kLogfileRE =
+      std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
+  std::vector<std::string> const header{std::string{"Build"},
+                                        std::string{"Log"}};
+  std::vector<std::vector<std::string>> table;
+  for (auto const& object :
+       client.ListObjects(bucket_name(), gcs::Prefix(prefix))) {
+    if (!object) throw std::runtime_error(object.status().message());
+    auto const path = std::filesystem::path(object->name());
+    if (!std::regex_search(object->name(), kLogfileRE)) continue;
+    table.emplace_back(std::vector<std::string>{
+        path.parent_path().filename().string(),
+        Anchor(kGcsPrefix + bucket_name() + "/" + object->name(), "raw log")});
+  }
+  WriteTable(os, table, header);
+}
+
+auto CreateContents(gcs::Client client, std::string const& prefix,
+                    std::string const& html_head,
+                    std::vector<std::vector<std::string>> const& preamble) {
+  std::ostringstream os;
+  os << "<!DOCTYPE html>\n";
+  os << "<html>\n";
+  os << html_head << "\n";
+  os << "<body>\n";
+  os << "<h1>Public Build Results</h1><hr/>\n";
+  WriteTable(os, preamble);
+  os << "<h2>Build logs</h2>\n";
+  LogsSummaryTable(os, client, prefix);
+  os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
+  os << "<code>ci/cloudbuild/build.sh</code> script, with its ";
+  os << "<a "
+        "href=\"https://github.com/googleapis/google-cloud-cpp/blob/master/"
+        "ci/cloudbuild/build.sh\">documentation here</a>.";
+  os << "</p>\n";
+  os << "</body>\n";
+  os << "</html>\n";
+  return std::move(os).str();
+}
+
+nlohmann::json LogFormat(std::string const& sev, std::string const& msg) {
+  return nlohmann::json{{"severity", sev}, {"message", msg}}.dump();
+}
+
+void LogError(std::string const& msg) {
+  std::cerr << LogFormat("error", msg) << "\n";
+}
+
+void LogInfo(std::string const& msg) {
+  std::cout << LogFormat("info", msg) << "\n";
+}
+
+}  // namespace
+
+void IndexBuildLogs(CloudEvent event) {
+  static auto client = [] {
+    return gcs::Client::CreateDefaultClient().value();
   }();
 
   // We skip any events with these status as such builds do not have a final
@@ -92,116 +168,66 @@ void IndexBuildLogs(CloudEvent event) {
   };
 
   if (event.data_content_type().value_or("") != "application/json") {
-    std::cerr << nlohmann::json{{"severity", "error"},
-                                {"message", "expected application/json data"}}
-                     .dump()
-              << "\n";
-    return;
+    return LogError("expected application/json data");
   }
   auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
   if (payload.count("message") == 0) {
-    std::cerr << nlohmann::json{{"severity", "error"},
-                                {"message", "missing embedded Pub/Sub message"}}
-                     .dump()
-              << "\n";
-    return;
+    return LogError("missing embedded Pub/Sub message");
   }
   auto const message = payload["message"];
   if (message.count("attributes") == 0 or message.count("data") == 0) {
-    std::cerr << nlohmann::json{{"severity", "error"},
-                                {"message",
-                                 "missing Pub/Sub attributes or data"}}
-                     .dump()
-              << "\n";
-    return;
+    return LogError("missing Pub/Sub attributes or data");
   }
   auto const data = cppcodec::base64_rfc4648::decode<std::string>(
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
-  if (kSkippedStatus.count(status) != 0) return;
+  if (kSkippedStatus.count(status) != 0) {
+    return LogInfo("skipped because status is " + status);
+  }
 
   auto const trigger_type =
       contents["substitutions"].value("_TRIGGER_TYPE", "");
   if (trigger_type != "pr") {
-    std::cout << nlohmann::json{{"severity", "info"},
-                                {"message", "skipping non-PR build"}}
-                     .dump()
-              << "\n";
-    return;
+    return LogInfo("skipping non-PR build");
   }
 
   auto const pr = contents["substitutions"].value("_PR_NUMBER", "");
+  auto const build_name = contents["substitutions"].value("_BUILD_NAME", "");
+  auto const image = contents["substitutions"].value("_IMAGE", "");
   auto const sha = contents["substitutions"].value("COMMIT_SHA", "");
   auto const prefix = "logs/google-cloud-cpp/" + pr + "/" + sha + "/";
   auto const project = contents["projectId"].get<std::string>();
 
-  static auto const kIndexRE =
-      std::regex("/" + kDestination + "$", std::regex::optimize);
-  static auto const kLogfileRE =
-      std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
-
+  auto const html_head = HtmlHead(pr, sha);
   // Each element vector should contain exactly two elements.
-  std::vector<std::vector<std::string>> v;
-  v.emplace_back(std::vector<std::string>{
+  std::vector<std::vector<std::string>> preamble;
+  preamble.emplace_back(std::vector<std::string>{
       "Repo", Anchor("https://github.com/googleapis/google-cloud-cpp")});
-  v.emplace_back(std::vector<std::string>{"Pull Request",
-                                          Anchor(kPrPrefix + pr, "#" + pr)});
-  v.emplace_back(std::vector<std::string>{
+  preamble.emplace_back(std::vector<std::string>{
+      "Pull Request", Anchor(kPrPrefix + pr, "#" + pr)});
+  preamble.emplace_back(std::vector<std::string>{
       "Commit SHA", Anchor(kPrPrefix + pr + "/commits/" + sha, sha)});
-  v.emplace_back(std::vector<std::string>{
+  preamble.emplace_back(std::vector<std::string>{
       "GCB Console",
       Anchor(kGCBPrefix + project + "&query=tags%3D%22" + pr + "%22",
              "(requires auth)")});
 
-  std::int64_t index_generation = 0;
   for (int i = 0; i != kAttempts; ++i) {
-    std::ostringstream os;
-    os << "<!DOCTYPE html>\n";
-    os << "<html>\n";
-    os << "<head><meta charset=\"utf-8\">";
-    os << "<title>"
-       << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
-       << "</title>\n";
-    os << "<style>\n";
-    os << "tr:nth-child(even) {background: #FFF}\n";
-    os << "tr:nth-child(odd) {background: #DDD}\n";
-    os << "</style></head>\n";
-    os << "<body>\n";
-    os << "<h1>Public Build Results</h1><hr/>";
-    WriteTable(os, v);
-    os << "<h2>Build logs</h2>";
-    std::vector<std::vector<std::string>> table;
-    std::vector<std::string> header{std::string{"Build"}, std::string{"Log"}};
-    for (auto const& object :
-         client.ListObjects(kBucketName, gcs::Prefix(prefix))) {
-      if (!object) throw std::runtime_error(object.status().message());
-      if (std::regex_search(object->name(), kIndexRE)) {
-        index_generation = object->generation();
-        continue;
-      }
-      if (!std::regex_search(object->name(), kLogfileRE)) continue;
-      auto path = object->name();
-      table.emplace_back(std::vector<std::string>{
-          std::string{basename(dirname(path.data()))},
-          Anchor(kGcsPrefix + kBucketName + "/" + object->name(), "raw log")});
-    }
-    WriteTable(os, table, header);
-    os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
-    os << "<code>ci/cloudbuild/build.sh</code> script, with its ";
-    os << "<a "
-          "href=\"https://github.com/googleapis/google-cloud-cpp/blob/master/"
-          "ci/cloudbuild/build.sh\">documentation here</a>.";
-    os << "</p>\n";
-    os << "</body>\n";
-    os << "</html>\n";
+    auto const generation = [&] {
+      auto meta =
+          client.GetObjectMetadata(bucket_name(), prefix + destination());
+      if (meta) return meta->generation();
+      return std::int64_t{0};
+    }();
+    auto contents = CreateContents(client, prefix, html_head, preamble);
     // Use `IfGenerationMatch()` to prevent overwriting data. It is possible
     // that the data written concurrently was more up to date. Note that
     // (conveniently) `IfGenerationMatch(0)` means "if the object does not
     // exist".
     auto metadata = client.InsertObject(
-        kBucketName, prefix + kDestination, os.str(),
-        gcs::IfGenerationMatch(index_generation),
+        bucket_name(), prefix + destination(), contents,
+        gcs::IfGenerationMatch(generation),
         gcs::WithObjectMetadata(gcs::ObjectMetadata{}
                                     .set_content_type("text/html")
                                     .set_cache_control("no-cache")));
