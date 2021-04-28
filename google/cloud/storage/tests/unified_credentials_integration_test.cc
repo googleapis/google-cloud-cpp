@@ -96,7 +96,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, GoogleDefaultCredentials) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenSource) {
+TEST_P(UnifiedCredentialsIntegrationTest, AccessToken) {
   if (UsingEmulator()) GTEST_SKIP();
   // First use the default credentials to obtain an access token, then use the
   // access token to test the DynamicAccessTokenCredentials() function. In a
