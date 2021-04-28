@@ -21,12 +21,13 @@
 #include <regex>
 #include <sstream>
 #include <stdexcept>
-#include <utility>
 #include <vector>
 
 auto constexpr kGcsPrefix = "https://storage.googleapis.com/";
-auto constexpr kPrPrefix = "https://github.com/googleapis/google-cloud-cpp/pull/";
-auto constexpr kGCBPrefix = "https://console.cloud.google.com/cloud-build/builds?project=";
+auto constexpr kPrPrefix =
+    "https://github.com/googleapis/google-cloud-cpp/pull/";
+auto constexpr kGCBPrefix =
+    "https://console.cloud.google.com/cloud-build/builds?project=";
 auto constexpr kAttempts = 4;
 
 using ::google::cloud::StatusCode;
@@ -37,19 +38,28 @@ namespace {
 
 // Returns an HTML anchor referencing the given URL with the optional name. If
 // `name` is not specified, the URL is used as the text.
-std::string anchor(std::string const& url, std::string name = "") {
+std::string Anchor(std::string const& url, std::string name = "") {
   if (name.empty()) name = url;
   return "<a href=\"" + url + "\">" + name + "</a>";
 }
 
-// Writes a 2-column HTML table w/ the data from the vector.
-void write_table(std::ostream& os,
-                 std::vector<std::pair<std::string, std::string>> const& v) {
+// Writes an HTML table w/ the data from the vector.
+void WriteTable(std::ostream& os,
+                std::vector<std::vector<std::string>> const& table,
+                std::vector<std::string> header = {}) {
   os << "<table>\n";
-  for (auto const& e : v) {
+  if (!header.empty()) {
     os << "<tr>";
-    os << "<td>" << e.first << "</td>";
-    os << "<td>" << e.second << "</td>";
+    for (auto const& col : header) {
+      os << "<th>" << col << "</th>";
+    }
+    os << "</tr>";
+  }
+  for (auto const& row : table) {
+    os << "<tr>";
+    for (auto const& col : row) {
+      os << "<td>" << col << "</td>";
+    }
     os << "</tr>\n";
   }
   os << "</table>";
@@ -60,17 +70,17 @@ void write_table(std::ostream& os,
 // customers to correlate these logs w/ the builds that fail in the GitHub UI,
 // we split the logfile component into the separate build parts so we can
 // render links with the same name.
-struct BuildName {
+struct BuildInfo {
   std::string distro;
   std::string script;
   std::string trigger;
 };
-BuildName MakeBuildName(std::string const& distro_script) {
+BuildInfo MakeBuildInfo(std::string const& distro_script) {
   auto hyphen = distro_script.find('-');
   if (hyphen == std::string::npos) {
     throw std::runtime_error("No hyphen in distro_script: " + distro_script);
   }
-  BuildName bn;
+  BuildInfo bn;
   bn.distro = distro_script.substr(0, hyphen);
   bn.script = distro_script.substr(hyphen + 1);
   bn.trigger = bn.script + "-pr";
@@ -141,23 +151,36 @@ void index_build_logs(CloudEvent event) {  // NOLINT
   static auto const kLogfileRE =
       std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
 
-  std::vector<std::pair<std::string, std::string>> v;
-  v.emplace_back("Repo", anchor("https://github.com/googleapis/google-cloud-cpp"));
-  v.emplace_back("Pull Request", anchor(kPrPrefix + pr, "#" + pr));
-  v.emplace_back("Commit SHA", anchor(kPrPrefix + pr + "/commits/" + sha, sha));
-  v.emplace_back("GCB Console",
-                 anchor(kGCBPrefix + project + "&query=tags%3D%22" + pr + "%22",
-                        "(requires auth)"));
+  // Each element vector should contain exactly two elements.
+  std::vector<std::vector<std::string>> v;
+  v.emplace_back(std::vector<std::string>{
+      "Repo", Anchor("https://github.com/googleapis/google-cloud-cpp")});
+  v.emplace_back(std::vector<std::string>{"Pull Request",
+                                          Anchor(kPrPrefix + pr, "#" + pr)});
+  v.emplace_back(std::vector<std::string>{
+      "Commit SHA", Anchor(kPrPrefix + pr + "/commits/" + sha, sha)});
+  v.emplace_back(std::vector<std::string>{
+      "GCB Console",
+      Anchor(kGCBPrefix + project + "&query=tags%3D%22" + pr + "%22",
+             "(requires auth)")});
 
   std::int64_t index_generation = 0;
   for (int i = 0; i != kAttempts; ++i) {
     std::ostringstream os;
     os << "<!DOCTYPE html>\n";
-    os << "<html><head><meta charset=\"utf-8\"></head>\n";
+    os << "<html>\n";
+    os << "<head><meta charset=\"utf-8\">";
+    os << "<style>\n";
+    os << "tr:nth-child(even) {background: #FFF}\n";
+    os << "tr:nth-child(odd) {background: #CCC}\n";
+    os << "</style></head>\n";
     os << "<body>\n";
-    os << "<h1>Public Build Logs</h1>";
-    write_table(os, v);
-    os << "<ul>\n";
+    os << "<h1>Public Build Results</h1>";
+    WriteTable(os, v);
+    os << "<h2>Build logs</h2>";
+    std::vector<std::vector<std::string>> table;
+    std::vector<std::string> header{
+        {"Log", "Distro", "Trigger", "Local repro command"}};
     for (auto const& object :
          client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
       if (!object) throw std::runtime_error(object.status().message());
@@ -167,12 +190,14 @@ void index_build_logs(CloudEvent event) {  // NOLINT
       }
       if (!std::regex_search(object->name(), kLogfileRE)) continue;
       auto path = object->name();
-      auto const build_name = MakeBuildName(basename(dirname(path.data())));
-      os << "<li>";
-      os << anchor(kGcsPrefix + bucket_name + "/" + object->name(), build_name.trigger);
-      os << "</li>\n";
+      auto const info = MakeBuildInfo(basename(dirname(path.data())));
+      table.emplace_back(std::vector<std::string>{
+          Anchor(kGcsPrefix + bucket_name + "/" + object->name(), "raw log"),
+          info.distro, info.trigger,
+          "<code>ci/cloudbuild/build.sh --trigger " + info.trigger +
+              " --docker</code>"});
     }
-    os << "</ul>\n";
+    WriteTable(os, table, header);
     os << "</body>\n";
     os << "</html>\n";
     // Use `IfGenerationMatch()` to prevent overwriting data. It is possible
