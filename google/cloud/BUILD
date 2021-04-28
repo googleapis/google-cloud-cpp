@@ -121,6 +121,27 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]
 
+load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grpc_utils_integration_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    tags = [
+        "integration-test",
+    ],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_grpc_utils",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "@com_google_absl//absl/memory",
+        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
+        "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
+        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_grpc_utils_integration_tests]
+
 load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils_benchmarks")
 
 [cc_binary(

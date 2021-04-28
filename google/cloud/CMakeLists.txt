@@ -403,6 +403,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/grpc_async_access_token_cache.h
         internal/grpc_channel_credentials_authentication.cc
         internal/grpc_channel_credentials_authentication.h
+        internal/grpc_impersonate_service_account.cc
+        internal/grpc_impersonate_service_account.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/minimal_iam_credentials_stub.cc
@@ -479,8 +481,34 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         endforeach ()
     endfunction ()
 
+    function (google_cloud_cpp_grpc_utils_add_test fname labels)
+        google_cloud_cpp_add_executable(target "common_grpc_utils" "${fname}")
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::grpc_utils
+                    google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_testing
+                    google-cloud-cpp::common
+                    google-cloud-cpp::iam_protos
+                    google-cloud-cpp::bigtable_protos
+                    google-cloud-cpp::spanner_protos
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    gRPC::grpc++
+                    gRPC::grpc)
+        google_cloud_cpp_add_common_options(${target})
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
+        add_test(NAME ${target} COMMAND ${target})
+        set_tests_properties(${target} PROPERTIES LABELS "${labels}")
+    endfunction ()
+
     if (BUILD_TESTING)
         google_cloud_cpp_grpc_utils_define_benchmarks()
+
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_unit_tests
             # cmake-format: sort
@@ -506,33 +534,26 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/time_utils_test.cc
             internal/unified_grpc_credentials_test.cc)
 
-        # Export the list of unit tests so the Bazel BUILD file can pick it up.
+        # List the unit tests, then setup the targets and dependencies.
+        set(google_cloud_cpp_grpc_utils_integration_tests
+            # cmake-format: sort
+            internal/grpc_impersonate_service_account_integration_test.cc)
+
+        # Export the list of unit and integration tests so the Bazel BUILD file
+        # can pick them up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
                              "google_cloud_cpp_grpc_utils_unit_tests" YEAR 2019)
+        export_list_to_bazel(
+            "google_cloud_cpp_grpc_utils_integration_tests.bzl"
+            "google_cloud_cpp_grpc_utils_integration_tests" YEAR 2021)
 
         foreach (fname ${google_cloud_cpp_grpc_utils_unit_tests})
-            google_cloud_cpp_add_executable(target "common_grpc_utils"
-                                            "${fname}")
-            target_link_libraries(
-                ${target}
-                PRIVATE google-cloud-cpp::grpc_utils
-                        google_cloud_cpp_testing_grpc
-                        google_cloud_cpp_testing
-                        google-cloud-cpp::common
-                        google-cloud-cpp::iam_protos
-                        google-cloud-cpp::bigtable_protos
-                        google-cloud-cpp::spanner_protos
-                        absl::variant
-                        GTest::gmock_main
-                        GTest::gmock
-                        GTest::gtest
-                        gRPC::grpc++
-                        gRPC::grpc)
-            google_cloud_cpp_add_common_options(${target})
-            if (MSVC)
-                target_compile_options(${target} PRIVATE "/bigobj")
-            endif ()
-            add_test(NAME ${target} COMMAND ${target})
+            google_cloud_cpp_grpc_utils_add_test("${fname}" "")
+        endforeach ()
+
+        foreach (fname ${google_cloud_cpp_grpc_utils_integration_tests})
+            google_cloud_cpp_grpc_utils_add_test("${fname}"
+                                                 "integration-test-production")
         endforeach ()
     endif ()
 
