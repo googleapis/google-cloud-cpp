@@ -46,12 +46,12 @@ std::string anchor(std::string const& url, std::string name = "") {
 void write_table(std::ostream& os,
                  std::vector<std::pair<std::string, std::string>> const& v) {
   os << "<table>\n";
-  os << "<tr>";
   for (auto const& e : v) {
+    os << "<tr>";
     os << "<td>" << e.first << "</td>";
     os << "<td>" << e.second << "</td>";
+    os << "</tr>\n";
   }
-  os << "</tr>\n";
   os << "</table>";
 }
 
