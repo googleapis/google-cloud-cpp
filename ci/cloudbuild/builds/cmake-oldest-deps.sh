@@ -23,13 +23,12 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=clang
 export CXX=clang++
 
-mkdir -p cmake-out
 if [[ ! -d cmake-out/vcpkg ]]; then
+  mkdir -p cmake-out
   git -C cmake-out clone https://github.com/microsoft/vcpkg.git
 fi
-VCPKG_ROOT="$(pwd)/cmake-out/vcpkg"
 cmake -GNinja -S . -B cmake-out/build \
-  "-DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" \
+  "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/cmake-out/vcpkg/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest"
 cmake --build cmake-out/build
