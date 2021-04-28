@@ -72,7 +72,7 @@ BuildName MakeBuildName(std::string const& distro_script) {
   }
   BuildName bn;
   bn.distro = distro_script.substr(0, hyphen);
-  bn.script = distro_script.substr(hyphen + 1) + ".sh";
+  bn.script = distro_script.substr(hyphen + 1);
   bn.trigger = bn.script + "-pr";
   return bn;
 }
