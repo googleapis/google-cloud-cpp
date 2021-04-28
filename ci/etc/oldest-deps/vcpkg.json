@@ -1,0 +1,35 @@
+{
+    "name": "google-cloud-cpp",
+    "version": "1.27.0",
+    "description": "C++ Client Libraries for Google Cloud Platform APIs.",
+    "homepage": "https://github.com/googleapis/google-cloud-cpp",
+    "license": "Apache-2.0",
+    "supports": "!uwp",
+    "$TODO": "move `gtest` and `benchmark` to dev-dependencies",
+    "builtin-baseline": "6d9ed568117dd958c543b3ab8d3ed692965cac34",
+    "dependencies": [
+      {"name": "abseil", "version>=": "2020-09-23#3"},
+      {"name": "crc32c", "version>=": "1.1.1"},
+      {
+        "name": "curl",
+        "features": [
+          "ssl"
+        ]
+      },
+      {
+        "name": "grpc",
+        "version>=": "1.33.1",
+        "host": true
+      },
+      {
+        "name": "protobuf",
+        "version>=": "3.14.0",
+        "host": true
+      },
+      {"name": "grpc", "version>=": "1.33.1"},
+      {"name": "protobuf", "version>=": "3.14.0"},
+      {"name": "nlohmann-json", "version>=": "3.9.1"},
+      "benchmark",
+      "gtest"
+    ]
+  }
