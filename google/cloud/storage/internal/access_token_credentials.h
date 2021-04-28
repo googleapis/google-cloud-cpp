@@ -18,10 +18,6 @@
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/credentials.h"
-#include <chrono>
-#include <condition_variable>
-#include <memory>
-#include <mutex>
 #include <string>
 
 namespace google {
