@@ -147,6 +147,9 @@ void IndexBuildLogs(CloudEvent event) {
     os << "<!DOCTYPE html>\n";
     os << "<html>\n";
     os << "<head><meta charset=\"utf-8\">";
+    os << "<title>"
+       << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
+       << "</title>\n";
     os << "<style>\n";
     os << "tr:nth-child(even) {background: #FFF}\n";
     os << "tr:nth-child(odd) {background: #DDD}\n";
