@@ -26,7 +26,7 @@ RUN dnf makecache && \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build npm \
         openssl-devel pkgconfig protobuf-compiler python  python3.8 \
-        python-pip ShellCheck tar unzip w3m wget which zlib-devel
+        python-pip ShellCheck tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
