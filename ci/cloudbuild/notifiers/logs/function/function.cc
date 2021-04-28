@@ -156,7 +156,7 @@ void IndexBuildLogs(CloudEvent event) {
     WriteTable(os, v);
     os << "<h2>Build logs</h2>";
     std::vector<std::vector<std::string>> table;
-    std::vector<std::string> header{{"Build", "Log"}};
+    std::vector<std::string> header{std::string{"Build"}, std::string{"Log"}};
     for (auto const& object :
          client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
       if (!object) throw std::runtime_error(object.status().message());
@@ -167,7 +167,7 @@ void IndexBuildLogs(CloudEvent event) {
       if (!std::regex_search(object->name(), kLogfileRE)) continue;
       auto path = object->name();
       table.emplace_back(std::vector<std::string>{
-          basename(dirname(path.data())),
+          std::string{basename(dirname(path.data()))},
           Anchor(kGcsPrefix + bucket_name + "/" + object->name(), "raw log")});
     }
     WriteTable(os, table, header);
