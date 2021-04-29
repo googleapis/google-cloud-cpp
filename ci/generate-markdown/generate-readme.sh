@@ -27,18 +27,12 @@ cat <<EOF
 EOF
 
 cat <<"EOF"
-[![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
 [![Kokoro CI status][kokoro-windows-cmake-shield]][kokoro-windows-cmake-link]
 [![Kokoro CI status][kokoro-macos-cmake-shield]][kokoro-macos-cmake-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]<br>
-[![Kokoro CI status][kokoro-integration-shield]][kokoro-integration-link]
 [![Kokoro CI status][kokoro-windows-bazel-shield]][kokoro-windows-bazel-link]
 [![Kokoro CI status][kokoro-macos-bazel-shield]][kokoro-macos-bazel-link]
 
-[kokoro-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy.svg
-[kokoro-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy-link.html
-[kokoro-integration-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-integration.svg
-[kokoro-integration-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-integration-link.html
 [kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
 [kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
