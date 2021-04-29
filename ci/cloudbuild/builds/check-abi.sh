@@ -74,11 +74,11 @@ for lib in "${libraries[@]}"; do
   # the string "internal", and it should again be followed by some other
   # number indicating the length of the symbol within the "internal"
   # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
-  if ! abi-compliance-checker \
+  if ! env -C cmake-out abi-compliance-checker \
     -skip-internal-symbols "(8internal|15pubsub_internal|16spanner_internal)\d" \
     -src -l "${lib}" \
-    -old "cmake-out/${expected_dump_file}" \
-    -new "cmake-out/${actual_dump_file}"; then
+    -old "${expected_dump_file}" \
+    -new "${actual_dump_file}"; then
     io::log_red "ABI Compliance error: ${lib}"
     ((++errors))
     report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
