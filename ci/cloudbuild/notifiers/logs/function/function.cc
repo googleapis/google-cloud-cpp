@@ -50,21 +50,22 @@ std::string Anchor(std::string const& url, std::string name = "") {
 
 auto Badge(std::string const& status) {
   auto l = status;
-  std::transform(l.begin(), l.end(), l.begin(), [](auto c) {
-    return static_cast<char>(std::tolower(c));
-  });
+  std::transform(l.begin(), l.end(), l.begin(),
+                 [](auto c) { return static_cast<char>(std::tolower(c)); });
   auto const color = [&]() -> std::string {
     if (status == "SUCCESS") return "brightgreen";
     if (status == "FAILURE") return "red";
     return "inactive";
   }();
-  auto const kFormat = R"""(<image src="https://img.shields.io/badge/status-{}-{}?style=flat-square" alt="{}">)""";
+  auto const kFormat =
+      R"""(<image src="https://img.shields.io/badge/status-{}-{}?style=flat-square" alt="{}">)""";
   return fmt::format(kFormat, l, color, status);
 }
 
 auto ReproCommand(std::string const& distro, std::string const& build_name) {
   if (distro.empty() || build_name.empty()) return std::string{};
-  auto const kFormat = R"""(<code>ci/cloudbuild/build.sh --docker --distro {} {}</code>)""";
+  auto const kFormat =
+      R"""(<code>ci/cloudbuild/build.sh --docker --distro {} {}</code>)""";
   return fmt::format(kFormat, distro, build_name);
 }
 
@@ -126,7 +127,8 @@ void LogsSummaryTable(std::ostream& os, gcs::Client client,
                       std::string const& prefix) {
   static auto const kLogfileRE =
       std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
-  std::vector<std::string> const header{"Build", "Log", "Status", "Repro Command"};
+  std::vector<std::string> const header{"Build", "Log", "Status",
+                                        "Repro Command"};
   std::vector<std::vector<std::string>> table;
   for (auto const& o : client.ListObjects(bucket_name(), gcs::Prefix(prefix))) {
     if (!o) throw std::runtime_error(o.status().message());
@@ -245,7 +247,7 @@ void IndexBuildLogs(CloudEvent event) {
   os << "updated metadata on " << object_name
      << ", result=" << updated.status().code();
   LogDebug(os.str());
-  
+
   if (kSkippedStatus.count(status) != 0) {
     return LogDebug("skip index generation because status is " + status);
   }
