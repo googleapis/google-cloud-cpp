@@ -231,7 +231,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   out_dir="${PROJECT_ROOT}/build-out/${DISTRO_FLAG}-${BUILD_NAME}"
   out_home="${out_dir}/h"
   out_cmake="${out_dir}/cmake-out"
-  mkdir -p "${out_home}" "${out_cmake}"
+  # Creates the directories that docker will mount as a volumes, otherwise they
+  # will be created by the docker daemon as root-owned directories.
+  mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
   image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
   docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
