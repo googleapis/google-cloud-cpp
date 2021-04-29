@@ -161,12 +161,6 @@ auto CreateContents(gcs::Client client, std::string const& prefix,
   WriteTable(os, preamble);
   os << "<h2>Build logs</h2>\n";
   LogsSummaryTable(os, client, prefix);
-  os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
-  os << "<code>ci/cloudbuild/build.sh</code> script, with its ";
-  os << "<a "
-        "href=\"https://github.com/googleapis/google-cloud-cpp/blob/master/"
-        "ci/cloudbuild/build.sh\">documentation here</a>.";
-  os << "</p>\n";
   os << "</body>\n";
   os << "</html>\n";
   return std::move(os).str();
