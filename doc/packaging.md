@@ -394,7 +394,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -528,7 +528,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -678,7 +678,7 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -842,7 +842,7 @@ Cloud Platform proto files. We can install gRPC from source using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1115,7 +1115,7 @@ Protobuf we just installed in `/usr/local`:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1265,7 +1265,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -1437,7 +1437,7 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
-curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
