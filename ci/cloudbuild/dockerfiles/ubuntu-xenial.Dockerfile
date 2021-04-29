@@ -36,6 +36,7 @@ RUN apt-get update && \
         lsb-release \
         make \
         ninja-build \
+        patch \
         pkg-config \
         python3 \
         python3-dev \

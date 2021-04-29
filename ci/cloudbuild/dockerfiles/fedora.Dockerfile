@@ -25,7 +25,7 @@ RUN dnf makecache && \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build npm \
-        openssl-devel pkgconfig protobuf-compiler python  python3.8 \
+        openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
         python-pip ShellCheck tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell

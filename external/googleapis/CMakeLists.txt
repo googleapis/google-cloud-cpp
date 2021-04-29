@@ -168,7 +168,10 @@ ExternalProject_Add(
         ""
         # ~~~
         # Scaffolding for patching googleapis after download. For example:
-        #   PATCH_COMMAND patch -p1 --input=/v/external/googleapis.patch
+        #   PATCH_COMMAND
+        #       patch
+        #       -p1
+        #       --input=/workspace/external/googleapis.patch
         # NOTE: This should only be used while developing with a new
         # protobuf message. No changes to `PATCH_COMMAND` should ever be
         # committed to the main branch.
