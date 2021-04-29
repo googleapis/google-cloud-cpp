@@ -69,12 +69,6 @@ function quickstart::build_cmake_and_make() {
 function quickstart::run_cmake_and_make() {
   local prefix="$1"
   for lib in $(quickstart::libraries); do
-    if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
-      io::log_yellow "Skipping quickstart for ${lib}" \
-        "since not in GCB project 'cloud-cpp-testing-resources'"
-      continue
-    fi
-
     io::log_h2 "Running quickstart: ${lib}"
     mapfile -t run_args < <(quickstart::arguments "${lib}")
 
