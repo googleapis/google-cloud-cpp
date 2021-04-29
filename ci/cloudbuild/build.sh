@@ -241,6 +241,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--interactive"
     "--tty"
     "--rm"
+    "--network=host"
     "--user=$(id -u):$(id -g)"
     "--env=USER=$(id -un)"
     "--env=TZ=UTC0"
@@ -256,6 +257,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--volume=${out_cmake}:/workspace/cmake-out:Z"
     "--volume=${out_home}:/h:Z"
     "--env=HOME=/h"
+    # Makes the host's gcloud credentials visible inside the docker container,
+    # which we need for integration tests.
+    "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
   )
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then

@@ -102,12 +102,6 @@ function integration::bazel_args() {
 #
 function integration::bazel_with_emulators() {
   readonly EMULATOR_SCRIPT="run_integration_tests_emulator_bazel.sh"
-  if [[ "${PROJECT_ID:-}" != "cloud-cpp-testing-resources" ]]; then
-    io::log_h2 "Skipping integration tests," \
-      "which must run in GCB project 'cloud-cpp-testing-resources'"
-    return 0
-  fi
-
   if [[ $# == 0 ]]; then
     io::log_red "error: bazel verb required"
     return 1
