@@ -259,7 +259,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--env=HOME=/h"
     # Makes the host's gcloud credentials visible inside the docker container,
     # which we need for integration tests.
-    "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
+    "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:ro,Z"
   )
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then
