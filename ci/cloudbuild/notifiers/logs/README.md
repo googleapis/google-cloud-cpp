@@ -158,7 +158,7 @@ After you are finished testing you can cleanup:
 gcloud beta eventarc triggers delete index-build-logs-test-trigger \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --location="us-central1"
-gcloud run delete index-build-logs-test \
+gcloud run services delete index-build-logs-test \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --region="us-central1" \
     --platform="managed"
