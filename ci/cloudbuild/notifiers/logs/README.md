@@ -39,6 +39,7 @@ following command grants this service account permissions to write into
 the bucket.
 
 ```shell
+GOOGLE_CLOUD_PROJECT=... # The project running the builds
 BUCKET_NAME="cloud-cpp-community-publiclogs"
 PROJECT_NUMBER=$(gcloud projects list \
     --filter="project_id=${GOOGLE_CLOUD_PROJECT}" \
@@ -58,11 +59,10 @@ workstation. We will then push the image to GCR (Google Container Registry)
 and use it from Cloud Run.
 
 ```shell
-GOOGLE_CLOUD_PROJECT=... # The project running the builds
 pack build  --builder gcr.io/buildpacks/builder:latest \
      --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
      --env "GOOGLE_FUNCTION_TARGET=IndexBuildLogs" \
-     --path "function" \
+     --path "ci/cloudbuild/notifiers/logs/function" \
      "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs"
 ```
 
@@ -104,6 +104,65 @@ gcloud beta eventarc triggers create index-build-logs-trigger \
     --matching-criteria="type=google.cloud.pubsub.topic.v1.messagePublished" \
     --service-account="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 ```
+
+## Testing
+
+To test a new version change a few parameters in the previous steps, first,
+create a different Docker image:
+
+```shell
+pack build  --builder gcr.io/buildpacks/builder:latest \
+     --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
+     --env "GOOGLE_FUNCTION_TARGET=IndexBuildLogs" \
+     --path "ci/cloudbuild/notifiers/logs/function" \
+     "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs-test"
+```
+
+Push this image to GCR:
+
+```shell
+docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs-test:latest"
+```
+
+Run a different deployment, change an environment variable to write to
+`index-test.html` instead of `index.html`:
+
+```shell
+gcloud run deploy index-build-logs-test \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs-test:latest" \
+    --set-env-vars="BUCKET_NAME=${BUCKET_NAME}" \
+    --set-env-vars="DESTINATION=index-test.html" \
+    --region="us-central1" \
+    --platform="managed" \
+    --no-allow-unauthenticated
+```
+
+And create a separate trigger:
+
+```shell
+gcloud beta eventarc triggers create index-build-logs-test-trigger \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --location="us-central1" \
+    --destination-run-service="index-build-logs-test" \
+    --destination-run-region="us-central1" \
+    --transport-topic="cloud-builds" \
+    --matching-criteria="type=google.cloud.pubsub.topic.v1.messagePublished" \
+    --service-account="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
+```
+
+After you are finished testing you can cleanup:
+
+```shell
+gcloud beta eventarc triggers delete index-build-logs-test-trigger \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --location="us-central1"
+gcloud run delete index-build-logs-test \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" \
+    --platform="managed"
+```
+
 
 [docker]: https://docker.com/
 [docker-install]: https://store.docker.com/search?type=edition&offering=community

@@ -21,6 +21,7 @@
 #include <regex>
 #include <sstream>
 #include <stdexcept>
+#include <unordered_set>
 #include <vector>
 
 auto constexpr kGcsPrefix = "https://storage.googleapis.com/";
@@ -71,13 +72,24 @@ void IndexBuildLogs(CloudEvent event) {
   static auto client = [] {
     return gcs::Client::CreateDefaultClient().value();
   }();
-  static auto const bucket_name = [] {
+  static auto const kBucketName = [] {
     auto const* bname = std::getenv("BUCKET_NAME");
     if (bname == nullptr) {
       throw std::runtime_error("BUCKET_NAME environment variable is required");
     }
     return std::string{bname};
   }();
+  static auto const kDestination = [] {
+    auto const* destination = std::getenv("DESTINATION");
+    return std::string{destination == nullptr ? "index.html" : destination};
+  }();
+
+  // We skip any events with these status as such builds do not have a final
+  // log, and cannot affect the output of the index.html file.
+  static auto const kSkippedStatus = std::unordered_set<std::string>{
+      "STATUS_UNKNOWN", "QUEUED", "WORKING",
+      "",  // empty status indicates an invalid message
+  };
 
   if (event.data_content_type().value_or("") != "application/json") {
     std::cerr << nlohmann::json{{"severity", "error"},
@@ -103,11 +115,12 @@ void IndexBuildLogs(CloudEvent event) {
               << "\n";
     return;
   }
-  // Queued builds do not have any logs, skip them.
-  if (message["attributes"].value("status", "") == "QUEUED") return;
   auto const data = cppcodec::base64_rfc4648::decode<std::string>(
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
+  auto const status = message["attributes"].value("status", "");
+  if (kSkippedStatus.count(status) != 0) return;
+
   auto const trigger_type =
       contents["substitutions"].value("_TRIGGER_TYPE", "");
   if (trigger_type != "pr") {
@@ -124,7 +137,7 @@ void IndexBuildLogs(CloudEvent event) {
   auto const project = contents["projectId"].get<std::string>();
 
   static auto const kIndexRE =
-      std::regex(R"re(/index\.html$)re", std::regex::optimize);
+      std::regex("/" + kDestination + "$", std::regex::optimize);
   static auto const kLogfileRE =
       std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
 
@@ -161,7 +174,7 @@ void IndexBuildLogs(CloudEvent event) {
     std::vector<std::vector<std::string>> table;
     std::vector<std::string> header{std::string{"Build"}, std::string{"Log"}};
     for (auto const& object :
-         client.ListObjects(bucket_name, gcs::Prefix(prefix))) {
+         client.ListObjects(kBucketName, gcs::Prefix(prefix))) {
       if (!object) throw std::runtime_error(object.status().message());
       if (std::regex_search(object->name(), kIndexRE)) {
         index_generation = object->generation();
@@ -171,7 +184,7 @@ void IndexBuildLogs(CloudEvent event) {
       auto path = object->name();
       table.emplace_back(std::vector<std::string>{
           std::string{basename(dirname(path.data()))},
-          Anchor(kGcsPrefix + bucket_name + "/" + object->name(), "raw log")});
+          Anchor(kGcsPrefix + kBucketName + "/" + object->name(), "raw log")});
     }
     WriteTable(os, table, header);
     os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
@@ -187,7 +200,7 @@ void IndexBuildLogs(CloudEvent event) {
     // (conveniently) `IfGenerationMatch(0)` means "if the object does not
     // exist".
     auto metadata = client.InsertObject(
-        bucket_name, prefix + "index.html", os.str(),
+        kBucketName, prefix + kDestination, os.str(),
         gcs::IfGenerationMatch(index_generation),
         gcs::WithObjectMetadata(gcs::ObjectMetadata{}
                                     .set_content_type("text/html")
