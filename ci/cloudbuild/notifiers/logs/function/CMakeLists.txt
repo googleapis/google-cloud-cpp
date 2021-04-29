@@ -16,10 +16,11 @@
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(google_cloud_cpp_storage REQUIRED)
+find_package(fmt REQUIRED)
 find_package(functions_framework_cpp REQUIRED)
+find_package(google_cloud_cpp_storage REQUIRED)
 
 add_library(functions_framework_cpp_function function.cc)
 target_link_libraries(
     functions_framework_cpp_function functions-framework-cpp::framework
-    google-cloud-cpp::storage stdc++fs)
+    fmt::fmt google-cloud-cpp::storage stdc++fs)

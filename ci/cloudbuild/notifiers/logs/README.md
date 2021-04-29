@@ -133,6 +133,7 @@ gcloud run deploy index-build-logs-test \
     --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/index-build-logs-test:latest" \
     --set-env-vars="BUCKET_NAME=${BUCKET_NAME}" \
     --set-env-vars="DESTINATION=index-test.html" \
+    --set-env-vars="ENABLE_DEBUG=yes" \
     --region="us-central1" \
     --platform="managed" \
     --no-allow-unauthenticated
