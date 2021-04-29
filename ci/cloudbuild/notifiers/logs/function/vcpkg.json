@@ -3,6 +3,7 @@
   "version-string": "unversioned",
   "dependencies": [
     "cppcodec",
+    "fmt",
     "functions-framework-cpp",
     "google-cloud-cpp",
     "nlohmann-json"

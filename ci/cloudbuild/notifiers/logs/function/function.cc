@@ -15,7 +15,10 @@
 #include <google/cloud/functions/cloud_event.h>
 #include <google/cloud/storage/client.h>
 #include <cppcodec/base64_rfc4648.hpp>
+#include <fmt/core.h>
 #include <nlohmann/json.hpp>
+#include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <iostream>
 #include <regex>
@@ -43,6 +46,27 @@ namespace {
 std::string Anchor(std::string const& url, std::string name = "") {
   if (name.empty()) name = url;
   return "<a href=\"" + url + "\">" + name + "</a>";
+}
+
+auto Badge(std::string const& status) {
+  auto l = status;
+  std::transform(l.begin(), l.end(), l.begin(),
+                 [](auto c) { return static_cast<char>(std::tolower(c)); });
+  auto const color = [&]() -> std::string {
+    if (status == "SUCCESS") return "brightgreen";
+    if (status == "FAILURE") return "red";
+    return "inactive";
+  }();
+  auto const kFormat =
+      R"""(<image src="https://img.shields.io/badge/status-{}-{}?style=flat-square" alt="{}">)""";
+  return fmt::format(kFormat, l, color, status);
+}
+
+auto ReproCommand(std::string const& distro, std::string const& build_name) {
+  if (distro.empty() || build_name.empty()) return std::string{};
+  auto const kFormat =
+      R"""(<code>ci/cloudbuild/build.sh --docker --distro {} {}</code>)""";
+  return fmt::format(kFormat, distro, build_name);
 }
 
 // Writes an HTML table w/ the data from the vector.
@@ -88,7 +112,7 @@ std::string const& destination() {
 
 auto HtmlHead(std::string const& pr, std::string const& sha) {
   std::ostringstream os;
-  os << "<head><meta charset=\"utf-8\">";
+  os << "<head><meta charset=\"utf-8\">\n";
   os << "<title>"
      << "PR #" << pr << " google-cloud-cpp@" << sha.substr(0, 7)
      << "</title>\n";
@@ -103,17 +127,24 @@ void LogsSummaryTable(std::ostream& os, gcs::Client client,
                       std::string const& prefix) {
   static auto const kLogfileRE =
       std::regex(R"re(/log-[0-9a-f-]+\.txt$)re", std::regex::optimize);
-  std::vector<std::string> const header{std::string{"Build"},
-                                        std::string{"Log"}};
+  std::vector<std::string> const header{"Build", "Log", "Status",
+                                        "Repro Command"};
   std::vector<std::vector<std::string>> table;
-  for (auto const& object :
-       client.ListObjects(bucket_name(), gcs::Prefix(prefix))) {
-    if (!object) throw std::runtime_error(object.status().message());
-    auto const path = std::filesystem::path(object->name());
-    if (!std::regex_search(object->name(), kLogfileRE)) continue;
-    table.emplace_back(std::vector<std::string>{
+  for (auto const& o : client.ListObjects(bucket_name(), gcs::Prefix(prefix))) {
+    if (!o) throw std::runtime_error(o.status().message());
+    if (!std::regex_search(o->name(), kLogfileRE)) continue;
+    auto const path = std::filesystem::path(o->name());
+    auto row = std::vector<std::string>{
         path.parent_path().filename().string(),
-        Anchor(kGcsPrefix + bucket_name() + "/" + object->name(), "raw log")});
+        Anchor(kGcsPrefix + bucket_name() + "/" + o->name(), "raw log")};
+    auto const& m = o->metadata();
+    auto value_or = [&m](std::string const& key) {
+      auto const i = m.find(key);
+      return i == m.end() ? std::string{} : i->second;
+    };
+    row.push_back(Badge(value_or("status")));
+    row.push_back(ReproCommand(value_or("distro"), value_or("build_name")));
+    table.emplace_back(std::move(row));
   }
   WriteTable(os, table, header);
 }
@@ -130,12 +161,6 @@ auto CreateContents(gcs::Client client, std::string const& prefix,
   WriteTable(os, preamble);
   os << "<h2>Build logs</h2>\n";
   LogsSummaryTable(os, client, prefix);
-  os << "<hr/><p>NOTE: To debug a build on your local machine use the ";
-  os << "<code>ci/cloudbuild/build.sh</code> script, with its ";
-  os << "<a "
-        "href=\"https://github.com/googleapis/google-cloud-cpp/blob/master/"
-        "ci/cloudbuild/build.sh\">documentation here</a>.";
-  os << "</p>\n";
   os << "</body>\n";
   os << "</html>\n";
   return std::move(os).str();
@@ -149,8 +174,13 @@ void LogError(std::string const& msg) {
   std::cerr << LogFormat("error", msg) << "\n";
 }
 
-void LogInfo(std::string const& msg) {
-  std::cout << LogFormat("info", msg) << "\n";
+void LogDebug(std::string const& msg) {
+  auto const kEnabled = [] {
+    auto const* enabled = std::getenv("ENABLE_DEBUG");
+    return enabled != nullptr;
+  }();
+  if (!kEnabled) return;
+  std::cerr << LogFormat("debug", msg) << "\n";
 }
 
 }  // namespace
@@ -182,22 +212,39 @@ void IndexBuildLogs(CloudEvent event) {
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
-  if (kSkippedStatus.count(status) != 0) {
-    return LogInfo("skipped because status is " + status);
-  }
 
   auto const trigger_type =
       contents["substitutions"].value("_TRIGGER_TYPE", "");
-  if (trigger_type != "pr") {
-    return LogInfo("skipping non-PR build");
-  }
+  if (trigger_type != "pr") return LogDebug("skipping non-PR build");
 
+  auto const build_id = contents.value("id", "");
   auto const pr = contents["substitutions"].value("_PR_NUMBER", "");
   auto const build_name = contents["substitutions"].value("_BUILD_NAME", "");
-  auto const image = contents["substitutions"].value("_IMAGE", "");
+  auto const distro = contents["substitutions"].value("_DISTRO", "");
   auto const sha = contents["substitutions"].value("COMMIT_SHA", "");
   auto const prefix = "logs/google-cloud-cpp/" + pr + "/" + sha + "/";
   auto const project = contents["projectId"].get<std::string>();
+
+  auto const object_name =
+      prefix + distro + "-" + build_name + "/log-" + build_id + ".txt";
+  LogDebug("object_name=" + object_name);
+  LogDebug("distro=" + distro);
+  LogDebug("build_name=" + build_name);
+  LogDebug("contents=" + contents.dump());
+
+  auto updated = client.PatchObject(bucket_name(), object_name,
+                                    gcs::ObjectMetadataPatchBuilder{}
+                                        .SetMetadata("distro", distro)
+                                        .SetMetadata("build_name", build_name)
+                                        .SetMetadata("status", status));
+  std::ostringstream os;
+  os << "updated metadata on " << object_name
+     << ", result=" << updated.status().code();
+  LogDebug(os.str());
+
+  if (kSkippedStatus.count(status) != 0) {
+    return LogDebug("skip index generation because status is " + status);
+  }
 
   auto const html_head = HtmlHead(pr, sha);
   // Each element vector should contain exactly two elements.
