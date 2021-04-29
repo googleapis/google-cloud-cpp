@@ -139,6 +139,8 @@ add_library(
     internal/make_jwt_assertion.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
+    internal/minimal_iam_credentials_rest.cc
+    internal/minimal_iam_credentials_rest.h
     internal/notification_metadata_parser.cc
     internal/notification_metadata_parser.h
     internal/notification_requests.cc
