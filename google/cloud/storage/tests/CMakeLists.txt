@@ -24,6 +24,7 @@ set(storage_client_integration_tests
     error_injection_integration_test.cc
     grpc_integration_test.cc
     key_file_integration_test.cc
+    minimal_iam_credentials_rest_integration_test.cc
     object_basic_crud_integration_test.cc
     object_checksum_integration_test.cc
     object_compose_many_integration_test.cc
@@ -93,7 +94,9 @@ endforeach ()
 foreach (
     fname
     # cmake-format: sort
-    key_file_integration_test.cc signed_url_integration_test.cc
+    key_file_integration_test.cc
+    minimal_iam_credentials_rest_integration_test.cc
+    signed_url_integration_test.cc
     unified_credentials_integration_test.cc)
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
