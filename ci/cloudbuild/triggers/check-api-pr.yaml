@@ -5,9 +5,9 @@ github:
   pullRequest:
     branch: ^(master|main|v\d+\..*)$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
-name: check-abi-pr
+name: check-api-pr
 substitutions:
-  _BUILD_NAME: check-abi
+  _BUILD_NAME: check-api
   _DISTRO: fedora
   _TRIGGER_TYPE: pr
 tags:

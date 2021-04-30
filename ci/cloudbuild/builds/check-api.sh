@@ -58,7 +58,7 @@ libraries=(
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
   bash -c "dump_abi \$0 ${INSTALL_PREFIX}"
 
-# A count of the number of libraries that fail the abi compliance check.
+# A count of the number of libraries that fail the api compliance check.
 # This will become the script's exit code.
 errors=0
 

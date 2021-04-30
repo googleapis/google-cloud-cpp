@@ -22,12 +22,12 @@ master.
 
 ### Update the API baseline
 
-Run the `check-abi` build to update the API baseline. Once you cut the release
+Run the `check-api` build to update the API baseline. Once you cut the release
 any new APIs are, well, released, and we should think carefully about removing
 them.
 
 ```bash
-./ci/cloudbuild/build.sh -t check-abi-pr --docker
+./ci/cloudbuild/build.sh -t check-api-pr --docker
 ```
 
 The updated ABI dump files will be left in the `ci/test-abi` folder.
