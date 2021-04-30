@@ -64,8 +64,8 @@
 #   Runs builds/cmake-install.sh script in the demo-centos-7.Dockerfile
 #   $ build.sh cmake-install --distro demo-centos-7 --docker
 #
-#   Runs the integration tests in the cloud-cpp-testing-resources project
-#   $ build.sh -t integration-pr --project cloud-cpp-testing-resources
+#   Runs the asan/integration tests in the cloud-cpp-testing-resources project
+#   $ build.sh -t asan-pr --project cloud-cpp-testing-resources
 #
 #   Runs the checkers in your local docker
 #   NOTE: This is a good way to format your code and check for style issues.
