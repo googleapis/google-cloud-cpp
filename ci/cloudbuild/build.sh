@@ -263,6 +263,13 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # which we need for integration tests.
     "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
   )
+  # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
+  for e in $(env); do
+    if [[ "${e}" = GOOGLE_CLOUD_* ]]; then
+      io::log_yellow "Exporting to docker environment: ${e}"
+      run_flags+=("--env=${e}")
+    fi
+  done
   cmd=(ci/cloudbuild/build.sh --local "${BUILD_NAME}")
   if [[ "${SHELL_FLAG}" = "true" ]]; then
     printf "To run the build manually:\n  "
