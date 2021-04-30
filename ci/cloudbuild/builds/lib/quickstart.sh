@@ -54,8 +54,7 @@ function quickstart::build_cmake_and_make() {
     makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${lib}"
     mkdir -p "${makefile_bin_dir}"
     PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
-      make -C "${src_dir}"
-    mv "${src_dir}/quickstart" "${makefile_bin_dir}"
+      make -C "${src_dir}" BIN="${makefile_bin_dir}"
   done
 }
 
