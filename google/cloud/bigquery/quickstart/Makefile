@@ -20,8 +20,9 @@
 CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
+BIN=.
 
-all: quickstart
+all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
@@ -31,5 +32,5 @@ BIGQUERY_CXXLDFLAGS := $(shell pkg-config $(BIGQUERY_DEPS) --libs-only-L)
 BIGQUERY_LIBS       := $(shell pkg-config $(BIGQUERY_DEPS) --libs-only-l)
 
 # A target using the Cloud BigQuery C++ client library.
-quickstart: quickstart.cc
+$(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(BIGQUERY_CXXFLAGS) $(BIGQUERY_CXXLDFLAGS) -o $@ $^ $(BIGQUERY_LIBS)

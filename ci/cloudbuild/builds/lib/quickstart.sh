@@ -45,14 +45,16 @@ function quickstart::build_cmake_and_make() {
     io::log_h2 "Building quickstart: ${lib}"
     io::log "[ CMake ]"
     src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
-    bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
-    cmake -H"${src_dir}" -B"${bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
-    cmake --build "${bin_dir}"
+    cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-${lib}"
+    cmake -H"${src_dir}" -B"${cmake_bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
+    cmake --build "${cmake_bin_dir}"
 
     echo
     io::log "[ Make ]"
+    makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${lib}"
+    mkdir -p "${makefile_bin_dir}"
     PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
-      make -C "${src_dir}"
+      make -C "${src_dir}" BIN="${makefile_bin_dir}"
   done
 }
 
@@ -73,13 +75,14 @@ function quickstart::run_cmake_and_make() {
     mapfile -t run_args < <(quickstart::arguments "${lib}")
 
     io::log "[ CMake ]"
-    bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-${lib}"
-    "${bin_dir}/quickstart" "${run_args[@]}"
+    cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-cmake-${lib}"
+    "${cmake_bin_dir}/quickstart" "${run_args[@]}"
 
     echo
     io::log "[ Make ]"
     src_dir="${PROJECT_ROOT}/google/cloud/${lib}/quickstart"
+    makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart-makefile-${lib}"
     LD_LIBRARY_PATH="${prefix}/lib64:${prefix}/lib:${LD_LIBRARY_PATH:-}" \
-      "${src_dir}/quickstart" "${run_args[@]}"
+      "${makefile_bin_dir}/quickstart" "${run_args[@]}"
   done
 }
