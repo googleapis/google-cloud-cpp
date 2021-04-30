@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=stretch
 FROM debian:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START packaging.md]
+## [BEGIN packaging.md]
 
 # First install the development tools and libcurl.
 # On Debian 9, libcurl links against openssl-1.0.2, and one must link
@@ -175,7 +175,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     ldconfig
 # ```
 
-## [END packaging.md]
+## [DONE packaging.md]
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

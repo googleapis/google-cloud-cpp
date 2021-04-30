@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=latest
 FROM opensuse/leap:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START packaging.md]
+## [BEGIN packaging.md]
 
 # Install the minimal development tools, libcurl and OpenSSL. The gRPC Makefile
 # uses `which` to determine whether the compiler is available. Install this
@@ -160,7 +160,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     ldconfig
 # ```
 
-## [END packaging.md]
+## [DONE packaging.md]
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
