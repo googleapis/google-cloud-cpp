@@ -4,9 +4,9 @@ github:
   owner: googleapis
   push:
     branch: ^(master|main|v\d+\..*)$
-name: check-abi-ci
+name: check-api-ci
 substitutions:
-  _BUILD_NAME: check-abi
+  _BUILD_NAME: check-api
   _DISTRO: fedora
   _TRIGGER_TYPE: ci
 tags:
