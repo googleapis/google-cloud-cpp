@@ -59,6 +59,7 @@ storage_client_unit_tests = [
     "internal/hash_validator_test.cc",
     "internal/hmac_key_requests_test.cc",
     "internal/http_response_test.cc",
+    "internal/impersonate_service_account_credentials_test.cc",
     "internal/logging_client_test.cc",
     "internal/logging_resumable_upload_session_test.cc",
     "internal/make_jwt_assertion_test.cc",
