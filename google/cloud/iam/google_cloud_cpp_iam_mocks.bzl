@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_iam_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_iam_mocks_hdrs = [
+    "mocks/mock_iam_connection.h",
     "mocks/mock_iam_credentials_connection.h",
 ]
 

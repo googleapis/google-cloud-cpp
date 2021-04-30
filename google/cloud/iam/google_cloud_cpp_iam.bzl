@@ -17,19 +17,31 @@
 """Automatically generated source lists for google_cloud_cpp_iam - DO NOT EDIT."""
 
 google_cloud_cpp_iam_hdrs = [
+    "iam_client.h",
+    "iam_connection.h",
+    "iam_connection_idempotency_policy.h",
     "iam_credentials_client.h",
     "iam_credentials_connection.h",
     "iam_credentials_connection_idempotency_policy.h",
     "iam_credentials_options.h",
+    "iam_options.h",
     "internal/iam_credentials_logging_decorator.h",
     "internal/iam_credentials_metadata_decorator.h",
     "internal/iam_credentials_option_defaults.h",
     "internal/iam_credentials_stub.h",
     "internal/iam_credentials_stub_factory.h",
+    "internal/iam_logging_decorator.h",
+    "internal/iam_metadata_decorator.h",
+    "internal/iam_option_defaults.h",
+    "internal/iam_stub.h",
+    "internal/iam_stub_factory.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_iam_srcs = [
+    "iam_client.cc",
+    "iam_connection.cc",
+    "iam_connection_idempotency_policy.cc",
     "iam_credentials_client.cc",
     "iam_credentials_connection.cc",
     "iam_credentials_connection_idempotency_policy.cc",
@@ -38,4 +50,9 @@ google_cloud_cpp_iam_srcs = [
     "internal/iam_credentials_option_defaults.cc",
     "internal/iam_credentials_stub.cc",
     "internal/iam_credentials_stub_factory.cc",
+    "internal/iam_logging_decorator.cc",
+    "internal/iam_metadata_decorator.cc",
+    "internal/iam_option_defaults.cc",
+    "internal/iam_stub.cc",
+    "internal/iam_stub_factory.cc",
 ]

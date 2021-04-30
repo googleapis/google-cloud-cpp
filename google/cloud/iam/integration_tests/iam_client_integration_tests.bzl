@@ -18,4 +18,5 @@
 
 iam_client_integration_tests = [
     "iam_credentials_integration_test.cc",
+    "iam_integration_test.cc",
 ]

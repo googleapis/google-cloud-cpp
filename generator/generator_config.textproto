@@ -28,6 +28,13 @@ service {
   initial_copyright_year: "2020"
 }
 
+service {
+  service_proto_path: "google/iam/admin/v1/iam.proto"
+  product_path: "google/cloud/iam"
+  initial_copyright_year: "2021"
+  omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"

@@ -71,6 +71,7 @@ expected_dirs=(
   ./include/google/cloud/storage/testing
   ./include/google/cloud/texttospeech/v1
   ./include/google/devtools/cloudtrace/v2
+  ./include/google/iam/admin/v1
   ./include/google/iam/credentials/v1
   ./include/google/iam/v1
   ./include/google/logging/type

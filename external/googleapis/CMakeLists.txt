@@ -43,6 +43,8 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
+    "google/iam/admin/v1/iam.proto"
+    "google/iam/admin/v1/audit_data.proto"
     "google/iam/credentials/v1/common.proto"
     "google/iam/credentials/v1/iamcredentials.proto"
     "google/iam/v1/options.proto"
@@ -504,6 +506,11 @@ target_link_libraries(
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_iam_protos
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/options.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/policy.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/iam_policy.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/iam.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/audit_data.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/iamcredentials.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/common.proto"
     PROTO_PATH_DIRECTORIES
@@ -515,7 +522,8 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos)
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::type_expr_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_logging_type_protos
@@ -752,6 +760,7 @@ string(
            " google_cloud_cpp_api_http_protos"
            " google_cloud_cpp_rpc_status_protos"
            " google_cloud_cpp_rpc_error_details_protos"
+           " google_cloud_cpp_type_expr_protos"
            " grpc++"
            " grpc"
            " openssl"
