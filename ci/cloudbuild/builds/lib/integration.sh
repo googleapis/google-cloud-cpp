@@ -73,6 +73,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}"
   )
 
   # Adds some special GCS flags that rely on keys that we copy out of a GCS bucket
@@ -145,8 +146,6 @@ function integration::bazel_with_emulators() {
   "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
-  # TODO(#6083): Add support for:
-  # - GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT
   io::log_h2 "Running Spanner integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
     google/cloud/spanner/...

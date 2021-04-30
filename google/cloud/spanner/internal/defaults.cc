@@ -34,8 +34,8 @@ namespace {
 // Sets basic defaults that apply to normal and admin connections.
 void SetBasicDefaults(Options& opts) {
   if (!opts.has<EndpointOption>()) {
-    auto env = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-    opts.set<EndpointOption>(env ? *env : "spanner.googleapis.com");
+    auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
+    opts.set<EndpointOption>(e && !e->empty() ? *e : "spanner.googleapis.com");
   }
   if (auto emulator = internal::GetEnv("SPANNER_EMULATOR_HOST")) {
     opts.set<EndpointOption>(*emulator).set<GrpcCredentialOption>(
