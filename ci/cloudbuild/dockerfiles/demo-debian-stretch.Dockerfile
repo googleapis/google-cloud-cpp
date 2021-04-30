@@ -112,7 +112,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.35.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.37.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
