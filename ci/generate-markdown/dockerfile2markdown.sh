@@ -19,7 +19,7 @@ set -eu
 # shellcheck disable=SC2016
 sed_args=(
   # Delete any sections marked as ignored.
-  '-e' '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d'
+  '-e' '/^## \[BEGIN IGNORED\]/,/^## \[DONE IGNORED\]/d'
   # Remove the Docker commands to define the base image and/or copy files.
   '-e' '/^FROM /d'
   '-e' '/^ARG /d'

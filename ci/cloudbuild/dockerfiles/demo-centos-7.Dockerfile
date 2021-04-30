@@ -16,7 +16,7 @@ ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START packaging.md]
+## [BEGIN packaging.md]
 
 # First install the development tools and OpenSSL. The development tools
 # distributed with CentOS 7 are too old to build the project. In these
@@ -34,7 +34,7 @@ RUN yum makecache && \
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
-## [START IGNORED]
+## [BEGIN IGNORED]
 # In order to use the `devtoolset-7` Software Collection we're supposed to run
 # `scl enable devtoolset-7 bash`, which starts a new shell with the environment
 # configured correctly. However, we can't do that in this Dockerfile, AND we
@@ -46,7 +46,7 @@ RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/cte
 # its environment.
 ENV PATH /opt/rh/devtoolset-7/root/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/root/usr/lib:/opt/rh/devtoolset-7/root/usr/lib64/dyninst:/opt/rh/devtoolset-7/root/usr/lib/dyninst:/opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/root/usr/lib
-## [END IGNORED]
+## [DONE IGNORED]
 # Start a bash shell with its environment configured to use the tools installed
 # by `devtoolset-7`.
 # **IMPORTANT**: All the following commands should be run from this new shell.
@@ -185,7 +185,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
     ldconfig
 # ```
 
-## [END packaging.md]
+## [DONE packaging.md]
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

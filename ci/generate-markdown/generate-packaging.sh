@@ -225,10 +225,10 @@ the case, the instructions describe how you can manually download and install
 these dependencies.
 END_OF_PREAMBLE
 
-# Extracts the part of a file between the START/END tags.
+# Extracts the part of a file between the BEGIN/DONE tags.
 function extract() {
-  sed -e '0,/^.*\[START packaging.md\].*$/d' \
-    -e '/^.*\[END packaging.md\].*$/,$d' "$1"
+  sed -e '0,/^.*\[BEGIN packaging.md\].*$/d' \
+    -e '/^.*\[DONE packaging.md\].*$/,$d' "$1"
 }
 
 # A "map" (comma separated) of dockerfile -> summary.
