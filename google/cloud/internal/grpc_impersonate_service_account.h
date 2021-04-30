@@ -32,14 +32,6 @@ namespace internal {
 
 class MinimalIamCredentialsStub;
 
-struct ImpersonateServiceAccountConfig {
-  std::shared_ptr<Credentials> credentials;
-  std::string target_service_account;
-  std::chrono::seconds lifetime;
-  std::vector<std::string> scopes;
-  std::vector<std::string> delegates;
-};
-
 class GrpcImpersonateServiceAccount
     : public GrpcAuthenticationStrategy,
       public std::enable_shared_from_this<GrpcImpersonateServiceAccount> {
