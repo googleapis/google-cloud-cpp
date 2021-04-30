@@ -202,8 +202,15 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
   //    https://curl.haxx.se/libcurl/c/threadsafe.html
   // Only these library prefixes require special configuration for using safely
   // with multiple threads.
-  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 ||
-          curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
+  char const* const require_locking_ssl_ids[] = {
+      "NSS/3",
+      "OpenSSL/1.0",
+      "OpenSSL 1.0",
+      "LibreSSL/2",
+  };
+  return std::any_of(
+      std::begin(require_locking_ssl_ids), std::end(require_locking_ssl_ids),
+      [&curl_ssl_id](char const* id) { return curl_ssl_id.rfind(id, 0) == 0; });
 }
 
 bool SslLockingCallbacksInstalled() {
