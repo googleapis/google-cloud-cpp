@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generate_svg_badge.h"
 #include <google/cloud/functions/cloud_event.h>
 #include <google/cloud/storage/client.h>
 #include <cppcodec/base64_rfc4648.hpp>
@@ -183,48 +184,56 @@ void LogDebug(std::string const& msg) {
   std::cerr << LogFormat("debug", msg) << "\n";
 }
 
-}  // namespace
+auto LogsPrefix(std::string const& pr, std::string const& sha) {
+  return "logs/google-cloud-cpp/" + pr + "/" + sha + "/";
+}
 
-void IndexBuildLogs(CloudEvent event) {
-  static auto client = [] {
-    return gcs::Client::CreateDefaultClient().value();
-  }();
-
-  // We skip any events with these status as such builds do not have a final
-  // log, and cannot affect the output of the index.html file.
-  static auto const kSkippedStatus = std::unordered_set<std::string>{
-      "STATUS_UNKNOWN", "QUEUED", "WORKING",
-      "",  // empty status indicates an invalid message
-  };
-
-  if (event.data_content_type().value_or("") != "application/json") {
-    return LogError("expected application/json data");
-  }
-  auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
-  if (payload.count("message") == 0) {
-    return LogError("missing embedded Pub/Sub message");
-  }
-  auto const message = payload["message"];
-  if (message.count("attributes") == 0 or message.count("data") == 0) {
-    return LogError("missing Pub/Sub attributes or data");
-  }
-  auto const data = cppcodec::base64_rfc4648::decode<std::string>(
-      message["data"].get<std::string>());
-  auto const contents = nlohmann::json::parse(data);
-  auto const status = message["attributes"].value("status", "");
-
-  auto const trigger_type =
-      contents["substitutions"].value("_TRIGGER_TYPE", "");
-  if (trigger_type != "pr") return LogDebug("skipping non-PR build");
+void UpdateBuildBadge(gcs::Client client, nlohmann::json const& contents,
+                      std::string const& status) {
+  auto constexpr kBadgeLinkFormat =
+      R"""(<meta http-equiv="refresh" content="0; url={link}" />)""";
 
   auto const build_id = contents.value("id", "");
-  auto const pr = contents["substitutions"].value("_PR_NUMBER", "");
   auto const build_name = contents["substitutions"].value("_BUILD_NAME", "");
   auto const distro = contents["substitutions"].value("_DISTRO", "");
   auto const sha = contents["substitutions"].value("COMMIT_SHA", "");
-  auto const prefix = "logs/google-cloud-cpp/" + pr + "/" + sha + "/";
-  auto const project = contents["projectId"].get<std::string>();
 
+  auto const badge_image = GenerateSvgBadge(build_name, status);
+  auto const badge_image_name =
+      "badges/google-cloud-cpp/main/" + build_name + ".svg";
+
+  auto link = kGcsPrefix + bucket_name() + "/" + LogsPrefix("main", sha) +
+              distro + "-" + build_name + "/logs-" + build_id + ".txt";
+  auto badge_link = fmt::format(kBadgeLinkFormat, fmt::arg("link", link));
+  auto const badge_link_name =
+      "badges/google-cloud-cpp/main/" + build_name + ".html";
+
+  client
+      .InsertObject(
+          bucket_name(), badge_image_name, badge_image,
+          gcs::WithObjectMetadata(gcs::ObjectMetadata{}
+                                      .set_content_type("image/svg+xml")
+                                      .set_cache_control("no-cache")))
+      .value();
+
+  client
+      .InsertObject(bucket_name(), badge_link_name, badge_link,
+                    gcs::WithObjectMetadata(gcs::ObjectMetadata{}
+                                                .set_content_type("text/html")
+                                                .set_cache_control("no-cache")))
+      .value();
+}
+
+void UpdateCurrentLogMetadata(gcs::Client client,
+                              nlohmann::json const& contents,
+                              std::string const& status) {
+  auto const build_id = contents.value("id", "");
+  auto const build_name = contents["substitutions"].value("_BUILD_NAME", "");
+  auto const distro = contents["substitutions"].value("_DISTRO", "");
+
+  auto const pr = contents["substitutions"].value("_PR_NUMBER", "");
+  auto const sha = contents["substitutions"].value("COMMIT_SHA", "");
+  auto const prefix = LogsPrefix(pr, sha);
   auto const object_name =
       prefix + distro + "-" + build_name + "/log-" + build_id + ".txt";
   LogDebug("object_name=" + object_name);
@@ -241,12 +250,27 @@ void IndexBuildLogs(CloudEvent event) {
   os << "updated metadata on " << object_name
      << ", result=" << updated.status().code();
   LogDebug(os.str());
+}
+
+void UpdateLogsIndex(gcs::Client client, nlohmann::json const& contents,
+                     std::string const& status) {
+  // We skip any events with these status as such builds do not have a final
+  // log, and cannot affect the output of the index.html file.
+  static auto const kSkippedStatus = std::unordered_set<std::string>{
+      "STATUS_UNKNOWN", "QUEUED", "WORKING",
+      "",  // empty status indicates an invalid message
+  };
 
   if (kSkippedStatus.count(status) != 0) {
     return LogDebug("skip index generation because status is " + status);
   }
 
+  auto const pr = contents["substitutions"].value("_PR_NUMBER", "");
+  auto const sha = contents["substitutions"].value("COMMIT_SHA", "");
+  auto const prefix = LogsPrefix(pr, sha);
   auto const html_head = HtmlHead(pr, sha);
+  auto const project = contents["projectId"].get<std::string>();
+
   // Each element vector should contain exactly two elements.
   std::vector<std::vector<std::string>> preamble;
   preamble.emplace_back(std::vector<std::string>{
@@ -285,4 +309,37 @@ void IndexBuildLogs(CloudEvent event) {
       throw std::runtime_error(metadata.status().message());
     }
   }
+}
+
+}  // namespace
+
+void IndexBuildLogs(CloudEvent event) {
+  static auto client = [] {
+    return gcs::Client::CreateDefaultClient().value();
+  }();
+
+  if (event.data_content_type().value_or("") != "application/json") {
+    return LogError("expected application/json data");
+  }
+  auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
+  if (payload.count("message") == 0) {
+    return LogError("missing embedded Pub/Sub message");
+  }
+  auto const message = payload["message"];
+  if (message.count("attributes") == 0 or message.count("data") == 0) {
+    return LogError("missing Pub/Sub attributes or data");
+  }
+  auto const data = cppcodec::base64_rfc4648::decode<std::string>(
+      message["data"].get<std::string>());
+  auto const contents = nlohmann::json::parse(data);
+  auto const status = message["attributes"].value("status", "");
+
+  auto const trigger_type =
+      contents["substitutions"].value("_TRIGGER_TYPE", "");
+
+  if (trigger_type == "ci") return UpdateBuildBadge(client, contents, status);
+  if (trigger_type != "pr") return LogDebug("skipping non-PR build");
+
+  UpdateCurrentLogMetadata(client, contents, status);
+  UpdateLogsIndex(client, contents, status);
 }

@@ -27,9 +27,11 @@ cat <<EOF
 EOF
 
 cat <<"EOF"
+[![GCB CI status][gcb-clang-tidy-shield]][gcb-clang-tidy-link]
 [![Kokoro CI status][kokoro-windows-cmake-shield]][kokoro-windows-cmake-link]
 [![Kokoro CI status][kokoro-macos-cmake-shield]][kokoro-macos-cmake-link]
 [![Codecov Coverage status][codecov-shield]][codecov-link]<br>
+[![GCB CI status][gcb-asan-shield]][gcb-asan-link]
 [![Kokoro CI status][kokoro-windows-bazel-shield]][kokoro-windows-bazel-link]
 [![Kokoro CI status][kokoro-macos-bazel-shield]][kokoro-macos-bazel-link]
 
@@ -43,6 +45,10 @@ cat <<"EOF"
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
+[gcb-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.svg
+[gcb-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.html
+[gcb-asan-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.svg
+[gcb-asan-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.html
 
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
