@@ -203,7 +203,7 @@ void UpdateBuildBadge(gcs::Client client, nlohmann::json const& contents,
       "badges/google-cloud-cpp/main/" + build_name + ".svg";
 
   auto link = kGcsPrefix + bucket_name() + "/" + LogsPrefix("main", sha) +
-              distro + "-" + build_name + "/logs-" + build_id + ".txt";
+              distro + "-" + build_name + "/log-" + build_id + ".txt";
   auto badge_link = fmt::format(kBadgeLinkFormat, fmt::arg("link", link));
   auto const badge_link_name =
       "badges/google-cloud-cpp/main/" + build_name + ".html";

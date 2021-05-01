@@ -14,33 +14,35 @@
 
 #include "generate_svg_badge.h"
 #include <fmt/core.h>
+#include <algorithm>
+#include <cctype>
 
 std::string GenerateSvgBadge(std::string const& build_name,
                              std::string const& status) {
   // The badge is basically two rectangles with text inside:
-  //   [gcb][build-name]
+  //   [gcb:build-name][message]
   // We need to:
   // - size these rectangles to fit the text,
   // - place the text more or less in the center, and
   // - put a clip-path around the rectangles to "round" the edges
   //
-  // We will name the first box "system" because it represents what was used for
-  // the build, the second box is the "name" box.
+  // The arguments to form the svg badge become:
   //
-  // <------------------------ width ------------------------>
-  // <---- system_width -----><--------- name_width --------->
-  // <---- na -->
-  // <---------- name_anchor ---------------->
-  // <---- system_width -----><--------- name_width --------->
-  // <------------------------ width ------------------------>
+  // <------------------------ width ------------------------------->
+  // <---------- label_width -----><-------- message_width --------->
+  // <- label_anchor ->
+  // <---------- label_width -----><-------- message_width --------->
+  // <------------- message_anchor ----------------->
+  // <------------------------ width ------------------------------->
   //
+  // Where "label" is the name for the first box, "message" for the second box.
+  // The "*_anchor" represent where the text is anchored, approximately at the
+  // center of each box.
+  // The text is repeated below, with slight offsets to create a shadow
+  // effect.
   // The height of the boxes is fixed to 20px.
   auto constexpr kBadgeImageFormat =
-      R"""(<svg xmlns='http://www.w3.org/2000/svg'
-       width='{width}' height='20'
-       role="img"
-       aria-label="gcb: {build_name}"
-    >
+      R"""(<svg xmlns='http://www.w3.org/2000/svg' width='{width}' height='20' role="img">
     <linearGradient id='a' x2='0' y2='100%'>
       <stop offset='0' stop-color='#bbb' stop-opacity='.1'/>
       <stop offset='1' stop-opacity='.1'/>
@@ -49,22 +51,22 @@ std::string GenerateSvgBadge(std::string const& build_name,
       <rect width="{width}" height="20" rx="3" fill="#fff"></rect>
     </clipPath>
     <g clip-path="url(#r)">
-      <rect width="{system_width}" height="20" fill="#555"></rect>
-      <rect x="{system_width}" width="{name_width}" height="20" fill="{color}"></rect>
+      <rect width="{label_width}" height="20" fill="#555"></rect>
+      <rect x="{label_width}" width="{message_width}" height="20" fill="{color}"></rect>
       <rect width="{width}" height="20" fill="url(#a)"></rect>
     </g>
     <g fill='#fff' text-anchor='middle' font-family='DejaVu Sans,Verdana,Geneva,sans-serif' font-size='11'>
-      <text x='{system_anchor}' y='15' fill='#010101' fill-opacity='.3'>
-        gcb
+      <text x='{label_anchor}' y='15' fill='#010101' fill-opacity='.3'>
+        {label}
       </text>
-      <text x='{system_anchor}' y='14'>
-        gcb
+      <text x='{label_anchor}' y='14'>
+        {label}
       </text>
-      <text x='{name_anchor}' y='15' fill='#010101' fill-opacity='.3'>
-        {build_name}
+      <text x='{message_anchor}' y='15' fill='#010101' fill-opacity='.3'>
+        {message}
       </text>
-      <text x='{name_anchor}' y='14'>
-        {build_name}
+      <text x='{message_anchor}' y='14'>
+        {message}
       </text>
     </g>
   </svg>)""";
@@ -77,6 +79,11 @@ std::string GenerateSvgBadge(std::string const& build_name,
     return kWorkingColor;
   }();
 
+  auto label = "gcb:" + build_name;
+  auto message = status;
+  std::transform(message.begin(), message.end(), message.begin(),
+                 [](auto c) { return static_cast<char>(std::tolower(c)); });
+
   auto textbox_width = [](std::string const& text) {
     auto constexpr kPadding = 10;
     // We estimate the font size at 7px per character, this is probably
@@ -84,15 +91,16 @@ std::string GenerateSvgBadge(std::string const& build_name,
     auto constexpr kAvgCharSize = 7;
     return kPadding + kAvgCharSize * text.size();
   };
-  auto const system_width = textbox_width("gcb");
-  auto const system_anchor = system_width / 2;
-  auto const name_width = textbox_width(build_name);
-  auto const name_anchor = system_width + name_width / 2;
-  auto const width = system_width + name_width;
+  auto const label_width = textbox_width(label);
+  auto const label_anchor = label_width / 2;
+  auto const message_width = textbox_width(message);
+  auto const message_anchor = label_width + message_width / 2;
+  auto const width = label_width + message_width;
   return fmt::format(
-      kBadgeImageFormat, fmt::arg("system_width", system_width),
-      fmt::arg("system_anchor", system_anchor),
-      fmt::arg("name_width", name_width), fmt::arg("name_anchor", name_anchor),
-      fmt::arg("width", width), fmt::arg("build_name", build_name),
+      kBadgeImageFormat, fmt::arg("label", label),
+      fmt::arg("label_width", label_width),
+      fmt::arg("label_anchor", label_anchor), fmt::arg("message", message),
+      fmt::arg("message_width", message_width),
+      fmt::arg("message_anchor", message_anchor), fmt::arg("width", width),
       fmt::arg("status", status), fmt::arg("color", color));
 }
