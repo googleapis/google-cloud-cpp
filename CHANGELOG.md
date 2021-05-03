@@ -77,7 +77,43 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.27.0 - TBD
+## v1.28.0 - TBD
+
+## v1.27.0 - 2021-05
+
+### Storage
+
+* fix(storage): missing implementation for constructor (#6439)
+* feat(storage): minimal stub for IAM credentials service (#6425)
+* feat: support errors in DynamicAccessTokenCredentials (#6325)
+* feat(storage): use the unified authentication client (#6323)
+* feat(storage): map unified to REST credentials (#6301)
+* refactor(storage): use g::c::Options in RawClients (#6282)
+* refactor(storage): common code for client unit tests (#6256)
+* doc(storage): wrong arguments for quickstart program (#6249)
+* fix(storage): deflake IAM integration test (#6234)
+* fix(storage): disable self-signed JWT authentication (#6230)
+* refactor(storage): use g::c::Options for GrpcClient (#6209)
+* refactor(storage): use g::c::Options in CurlClient (#6203)
+* refactor(storage): compute default options in a single function (#6200)
+* refactor(storage): use g::c::Options in ClientOptions (#6183)
+
+### Spanner
+
+* fix(spanner): propagate request_options in ReadPartition serialization (#6319)
+
+### Common libraries
+
+* feat(common): credentials for service account impersonation (#6429)
+* feat(common): gRPC support for  service account impersonation (#6401)
+* feat(common): support asynchronous RPCs in GrpcAuthenticationStrategy (#6391)
+* feat: a cache for access tokens retrieved using gRPC (#6381)
+* feat: minimal stub for service account impersonation (#6348)
+* feat: support errors in DynamicAccessTokenCredentials (#6325)
+* feat(common): support unified credentials in gRPC (#6304)
+* feat(common): bootstrap Unified Authentication Client (#6299)
+* refactor!: remove gcpcxx.pb suffix from generated files (#6286)
+* feat(iam): an example for GenerateAccessToken (#6188)
 
 ### Misc.
 
@@ -90,6 +126,12 @@
 * In #6286, we removed the .gcpcxx.pb suffix from filenames emitted from the C++
   microgenerator. Any usages of the bigquery, iamcredentials, or logging
   experimental libraries will require updating of include paths in user code.
+
+## v1.26.1 - 2021-04
+
+### Storage
+
+* fix(storage): disable self-signed JWT authentication (#6238)
 
 ## v1.26.0 - 2021-04
 
