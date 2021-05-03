@@ -173,6 +173,22 @@ TEST_F(ClientTest, LoggingDecorators) {
   ASSERT_TRUE(curl != nullptr);
 }
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
+TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
+  auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  auto m1 = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*m1, client_options).WillRepeatedly(ReturnRef(options));
+
+  auto c1 = storage::Client(m1, Client::NoDecorations{});
+  EXPECT_EQ(c1.raw_client().get(), m1.get());
+
+  auto m2 = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*m2, client_options).WillRepeatedly(ReturnRef(options));
+  auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
+  EXPECT_NE(c2.raw_client().get(), m2.get());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -271,8 +271,13 @@ class Client {
   // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
-      : Client(InternalOnly{}, std::move(client),
-               std::forward<Policies>(policies)...) {
+      : Client(InternalOnlyNoDecorations{},
+               CreateDefaultInternalClient(
+                   internal::ApplyPolicies(
+                       internal::DefaultOptions(
+                           client->client_options().credentials()),
+                       std::forward<Policies>(policies)...),
+                   client)) {
   }
 
   /// Define a tag to disable automatic decorations of the RawClient.
