@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/internal/access_token_credentials.h"
 #include "google/cloud/storage/internal/error_credentials.h"
+#include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 
 namespace google {
@@ -23,9 +24,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-using google::cloud::internal::AccessTokenConfig;
-using google::cloud::internal::CredentialsVisitor;
-using google::cloud::internal::GoogleDefaultCredentialsConfig;
+using ::google::cloud::internal::AccessTokenConfig;
+using ::google::cloud::internal::CredentialsVisitor;
+using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
+using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::internal::Credentials> const& credentials) {
@@ -44,6 +46,9 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
     }
     void visit(AccessTokenConfig& config) override {
       result = std::make_shared<AccessTokenCredentials>(config.access_token());
+    }
+    void visit(ImpersonateServiceAccountConfig& config) override {
+      result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
     }
   } visitor;
 

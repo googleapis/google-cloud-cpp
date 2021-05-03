@@ -16,6 +16,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/grpc_access_token_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
+#include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/memory/memory.h"
 
@@ -24,10 +25,16 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    std::shared_ptr<Credentials> const& credentials) {
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,
+    Options options) {
   struct Visitor : public CredentialsVisitor {
-    std::unique_ptr<GrpcAuthenticationStrategy> result;
+    CompletionQueue cq;
+    Options options;
+    std::shared_ptr<GrpcAuthenticationStrategy> result;
+
+    Visitor(CompletionQueue c, Options o)
+        : cq(std::move(c)), options(std::move(o)) {}
 
     void visit(GoogleDefaultCredentialsConfig&) override {
       result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
@@ -37,15 +44,19 @@ std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
       result =
           absl::make_unique<GrpcAccessTokenAuthentication>(cfg.access_token());
     }
-  } visitor;
+    void visit(ImpersonateServiceAccountConfig& cfg) override {
+      result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
+                                                     std::move(options));
+    }
+  } visitor(std::move(cq), std::move(options));
 
   CredentialsVisitor::dispatch(*credentials, visitor);
   return std::move(visitor.result);
 }
 
-std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials) {
-  return absl::make_unique<GrpcChannelCredentialsAuthentication>(credentials);
+  return std::make_shared<GrpcChannelCredentialsAuthentication>(credentials);
 }
 
 }  // namespace internal

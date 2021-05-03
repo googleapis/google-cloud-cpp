@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include <google/storage/v1/storage.pb.h>
 #include <memory>
@@ -325,6 +326,7 @@ class GrpcClient : public RawClient,
 
  private:
   ClientOptions backwards_compatibility_options_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<StorageStub> stub_;
 };
 

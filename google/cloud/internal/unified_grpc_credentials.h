@@ -40,10 +40,11 @@ class GrpcAuthenticationStrategy {
   AsyncConfigureContext(std::unique_ptr<grpc::ClientContext> context) = 0;
 };
 
-std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    std::shared_ptr<Credentials> const& credentials);
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    std::shared_ptr<Credentials> const& credentials, CompletionQueue cq,
+    Options options = {});
 
-std::unique_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials);
 
 }  // namespace internal

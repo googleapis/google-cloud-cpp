@@ -28,6 +28,7 @@ using ::testing::IsEmpty;
 struct Visitor : public CredentialsVisitor {
   std::string name;
   AccessToken access_token;
+  ImpersonateServiceAccountConfig* impersonate = nullptr;
 
   void visit(GoogleDefaultCredentialsConfig&) override {
     name = "GoogleDefaultCredentialsConfig";
@@ -35,6 +36,10 @@ struct Visitor : public CredentialsVisitor {
   void visit(AccessTokenConfig& cfg) override {
     name = "AccessTokenConfig";
     access_token = cfg.access_token();
+  }
+  void visit(ImpersonateServiceAccountConfig& cfg) override {
+    name = "ImpersonateServiceAccountConfig";
+    impersonate = &cfg;
   }
 };
 
@@ -80,6 +85,16 @@ TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
   EXPECT_EQ(std::chrono::minutes(15), credentials->lifetime());
   EXPECT_THAT(credentials->scopes(), ElementsAre("scope1", "scope2"));
   EXPECT_THAT(credentials->delegates(), ElementsAre("delegate1", "delegate2"));
+}
+
+TEST(Credentials, ImpersonateServiceAccountCredentialsVisit) {
+  Visitor visitor;
+
+  auto credentials = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), "invalid-test-only@invalid.address");
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  ASSERT_EQ("ImpersonateServiceAccountConfig", visitor.name);
+  EXPECT_EQ(visitor.impersonate, credentials.get());
 }
 
 }  // namespace
