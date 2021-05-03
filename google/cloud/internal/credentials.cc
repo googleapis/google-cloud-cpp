@@ -43,9 +43,8 @@ MakeImpersonateServiceAccountCredentials(
   opts = MergeOptions(
       std::move(opts),
       Options{}
-          .set<LifetimeOption>(std::chrono::seconds(std::chrono::hours(1)))
           .set<ScopesOption>({"https://www.googleapis.com/auth/cloud-platform"})
-          .set<DelegatesOption>({}));
+          .set<LifetimeOption>(std::chrono::seconds(std::chrono::hours(1))));
   return std::make_shared<ImpersonateServiceAccountConfig>(
       std::move(base_credentials), std::move(target_service_account),
       std::move(opts));
