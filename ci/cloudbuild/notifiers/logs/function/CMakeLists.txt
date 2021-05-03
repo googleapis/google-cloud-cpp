@@ -20,7 +20,13 @@ find_package(fmt REQUIRED)
 find_package(functions_framework_cpp REQUIRED)
 find_package(google_cloud_cpp_storage REQUIRED)
 
-add_library(functions_framework_cpp_function function.cc)
+add_library(functions_framework_cpp_function function.cc generate_svg_badge.cc)
 target_link_libraries(
     functions_framework_cpp_function functions-framework-cpp::framework
     fmt::fmt google-cloud-cpp::storage stdc++fs)
+target_include_directories(functions_framework_cpp_function
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_executable(print_svg_badge generate_svg_badge.cc print_svg_badge.cc)
+target_link_libraries(print_svg_badge PRIVATE fmt::fmt stdc++fs)
+target_include_directories(print_svg_badge PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
