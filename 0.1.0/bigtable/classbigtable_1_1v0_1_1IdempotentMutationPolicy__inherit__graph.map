@@ -1,4 +1,0 @@
-<map id="bigtable::v0::IdempotentMutationPolicy" name="bigtable::v0::IdempotentMutationPolicy">
-<area shape="rect" id="node2" href="$classbigtable_1_1v0_1_1AlwaysRetryMutationPolicy.html" title="Implements a policy that retries all mutations. " alt="" coords="225,5,397,47"/>
-<area shape="rect" id="node3" href="$classbigtable_1_1v0_1_1SafeIdempotentMutationPolicy.html" title="Implements a policy that only accepts truly idempotent mutations. " alt="" coords="216,71,405,112"/>
-</map>

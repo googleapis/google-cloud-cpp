@@ -1,7 +1,0 @@
-<map id="client/table_admin.h" name="client/table_admin.h">
-<area shape="rect" id="node2" href="$admin__client_8h.html" title="bigtable/client/admin\l_client.h" alt="" coords="451,80,592,121"/>
-<area shape="rect" id="node12" href="$column__family_8h.html" title="bigtable/client/column\l_family.h" alt="" coords="929,169,1077,211"/>
-<area shape="rect" id="node19" href="$table__config_8h.html" title="bigtable/client/table\l_config.h" alt="" coords="1270,80,1405,121"/>
-<area shape="rect" id="node3" href="$client__options_8h.html" title="bigtable/client/client\l_options.h" alt="" coords="453,169,590,211"/>
-<area shape="rect" id="node4" href="$version_8h.html" title="bigtable/client/version.h" alt="" coords="619,266,778,293"/>
-</map>
