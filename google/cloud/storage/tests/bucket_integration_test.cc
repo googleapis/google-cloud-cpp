@@ -461,33 +461,49 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name_);
+  std::string bucket_name = MakeRandomBucketName();
+  auto create = client->CreateBucketForProject(bucket_name, project_id_,
+                                               BucketMetadata{});
+  ASSERT_STATUS_OK(create) << bucket_name;
+
+  auto metadata = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_EQ(bucket_name_, metadata->id());
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name, metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
   auto metadata2 = client->GetBucketMetadata(
-      bucket_name_, storage::Projection("noAcl"),
+      bucket_name, storage::Projection("noAcl"),
       storage::IfMetagenerationMatch(metadata->metageneration()));
   ASSERT_STATUS_OK(metadata2);
   EXPECT_EQ(*metadata2, *metadata);
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name_);
+  std::string bucket_name = MakeRandomBucketName();
+  auto create = client->CreateBucketForProject(bucket_name, project_id_,
+                                               BucketMetadata{});
+  ASSERT_STATUS_OK(create) << bucket_name;
+
+  auto metadata = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_EQ(bucket_name_, metadata->id());
+  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name, metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
   auto metadata2 = client->GetBucketMetadata(
-      bucket_name_, storage::Projection("noAcl"),
+      bucket_name, storage::Projection("noAcl"),
       storage::IfMetagenerationNotMatch(metadata->metageneration()));
   EXPECT_THAT(metadata2, Not(IsOk())) << "metadata=" << metadata2.value();
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
