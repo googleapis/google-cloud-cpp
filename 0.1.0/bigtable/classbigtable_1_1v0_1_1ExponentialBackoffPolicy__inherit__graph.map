@@ -1,3 +1,0 @@
-<map id="bigtable::v0::ExponentialBackoffPolicy" name="bigtable::v0::ExponentialBackoffPolicy">
-<area shape="rect" id="node2" href="$classbigtable_1_1v0_1_1RPCBackoffPolicy.html" title="Define the interface for controlling how the Bigtable client backsoff from failed RPC operations..." alt="" coords="5,5,176,47"/>
-</map>
