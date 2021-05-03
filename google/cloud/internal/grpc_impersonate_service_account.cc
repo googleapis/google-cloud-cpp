@@ -29,16 +29,16 @@ using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
                                   Options const& options) {
   auto stub = MakeMinimalIamCredentialsStub(
-      CreateAuthenticationStrategy(config.credentials),
+      CreateAuthenticationStrategy(config.base_credentials()),
       MakeMinimalIamCredentialsOptions(options));
 
   GenerateAccessTokenRequest request;
   request.set_name("projects/-/serviceAccounts/" +
-                   config.target_service_account);
-  *request.mutable_delegates() = {config.delegates.begin(),
-                                  config.delegates.end()};
-  *request.mutable_scope() = {config.scopes.begin(), config.scopes.end()};
-  request.mutable_lifetime()->set_seconds(config.lifetime.count());
+                   config.target_service_account());
+  *request.mutable_delegates() = {config.delegates().begin(),
+                                  config.delegates().end()};
+  *request.mutable_scope() = {config.scopes().begin(), config.scopes().end()};
+  request.mutable_lifetime()->set_seconds(config.lifetime().count());
 
   return [stub, request](CompletionQueue& cq) {
     return stub

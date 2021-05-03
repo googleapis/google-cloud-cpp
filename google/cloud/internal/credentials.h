@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CREDENTIALS_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
@@ -47,6 +48,18 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
     std::chrono::system_clock::time_point expiration);
 
+struct DelegatesOption {
+  using Type = std::vector<std::string>;
+};
+
+struct ScopesOption {
+  using Type = std::vector<std::string>;
+};
+
+struct LifetimeOption {
+  using Type = std::chrono::seconds;
+};
+
 /// A wrapper to store credentials into an options
 struct UnifiedCredentialsOption {
   using Type = std::shared_ptr<Credentials>;
@@ -64,6 +77,7 @@ struct AccessToken {
 
 class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
+class ImpersonateServiceAccountConfig;
 
 class CredentialsVisitor {
  public:
@@ -96,6 +110,38 @@ class AccessTokenConfig : public Credentials {
 
   AccessToken access_token_;
 };
+
+class ImpersonateServiceAccountConfig : public Credentials {
+ public:
+  ImpersonateServiceAccountConfig(std::shared_ptr<Credentials> base_credentials,
+                                  std::string target_service_account,
+                                  Options opts);
+
+  std::shared_ptr<Credentials> base_credentials() const {
+    return base_credentials_;
+  }
+  std::string const& target_service_account() const {
+    return target_service_account_;
+  }
+  std::chrono::seconds lifetime() const { return lifetime_; }
+  std::vector<std::string> const& scopes() const { return scopes_; }
+  std::vector<std::string> const& delegates() const { return delegates_; }
+
+ private:
+  // TODO(#6309) - keep unimplemented until the rest of the code is ready
+  void dispatch(CredentialsVisitor&) override {}
+
+  std::shared_ptr<Credentials> base_credentials_;
+  std::string target_service_account_;
+  std::chrono::seconds lifetime_;
+  std::vector<std::string> scopes_;
+  std::vector<std::string> delegates_;
+};
+
+std::shared_ptr<ImpersonateServiceAccountConfig>
+MakeImpersonateServiceAccountCredentials(
+    std::shared_ptr<Credentials> base_credentials,
+    std::string target_service_account, Options opts = {});
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

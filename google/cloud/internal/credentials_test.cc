@@ -22,6 +22,9 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
 struct Visitor : public CredentialsVisitor {
   std::string name;
   AccessToken access_token;
@@ -52,6 +55,31 @@ TEST(Credentials, AccessTokenCredentials) {
   ASSERT_EQ("AccessTokenConfig", visitor.name);
   EXPECT_EQ("test-token", visitor.access_token.token);
   EXPECT_EQ(expiration, visitor.access_token.expiration);
+}
+
+TEST(Credentials, ImpersonateServiceAccountCredentialsDefault) {
+  auto credentials = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), "invalid-test-only@invalid.address");
+  EXPECT_EQ("invalid-test-only@invalid.address",
+            credentials->target_service_account());
+  EXPECT_EQ(std::chrono::hours(1), credentials->lifetime());
+  EXPECT_THAT(credentials->scopes(),
+              ElementsAre("https://www.googleapis.com/auth/cloud-platform"));
+  EXPECT_THAT(credentials->delegates(), IsEmpty());
+}
+
+TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
+  auto credentials = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), "invalid-test-only@invalid.address",
+      Options{}
+          .set<LifetimeOption>(std::chrono::minutes(15))
+          .set<ScopesOption>({"scope1", "scope2"})
+          .set<DelegatesOption>({"delegate1", "delegate2"}));
+  EXPECT_EQ("invalid-test-only@invalid.address",
+            credentials->target_service_account());
+  EXPECT_EQ(std::chrono::minutes(15), credentials->lifetime());
+  EXPECT_THAT(credentials->scopes(), ElementsAre("scope1", "scope2"));
+  EXPECT_THAT(credentials->delegates(), ElementsAre("delegate1", "delegate2"));
 }
 
 }  // namespace

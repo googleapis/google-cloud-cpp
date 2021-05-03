@@ -196,15 +196,11 @@ std::shared_ptr<TestStub> MakeTestStub(
 
 TEST_F(GrpcImpersonateServiceAccountIntegrationTest, BlockingCallWithToken) {
   AutomaticallyCreatedBackgroundThreads background;
-  ImpersonateServiceAccountConfig config{
-      /*.credentials=*/MakeGoogleDefaultCredentials(),
-      /*.target_service_account=*/iam_service_account(),
-      /*.lifetime=*/std::chrono::seconds(std::chrono::minutes(15)),
-      /*.scopes=*/{"https://www.googleapis.com/auth/bigtable.admin"},
-      /*.delegates=*/{},
-  };
+  auto config = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), iam_service_account());
   auto under_test = GrpcImpersonateServiceAccount::Create(
-      background.cq(), config, Options{}.set<TracingComponentsOption>({"rpc"}));
+      background.cq(), *config,
+      Options{}.set<TracingComponentsOption>({"rpc"}));
 
   auto channel = under_test->CreateChannel("bigtableadmin.googleapis.com",
                                            grpc::ChannelArguments{});
@@ -237,15 +233,11 @@ TEST_F(GrpcImpersonateServiceAccountIntegrationTest, BlockingCallWithToken) {
 
 TEST_F(GrpcImpersonateServiceAccountIntegrationTest, AsyncCallWithToken) {
   AutomaticallyCreatedBackgroundThreads background;
-  ImpersonateServiceAccountConfig config{
-      /*.credentials=*/MakeGoogleDefaultCredentials(),
-      /*.target_service_account=*/iam_service_account(),
-      /*.lifetime=*/std::chrono::seconds(std::chrono::minutes(15)),
-      /*.scopes=*/{"https://www.googleapis.com/auth/bigtable.admin"},
-      /*.delegates=*/{},
-  };
+  auto config = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), iam_service_account());
   auto under_test = GrpcImpersonateServiceAccount::Create(
-      background.cq(), config, Options{}.set<TracingComponentsOption>({"rpc"}));
+      background.cq(), *config,
+      Options{}.set<TracingComponentsOption>({"rpc"}));
 
   auto channel = under_test->CreateChannel("bigtableadmin.googleapis.com",
                                            grpc::ChannelArguments{});
