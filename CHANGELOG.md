@@ -5,6 +5,17 @@
 <!-- Keep these sorted by estimated date -->
 
 <details>
+<summary>2021-05-01: removing super build test files.</summary>
+
+* Shortly after 2021-05-01 we are planning to remove the super build test files
+  in the `super/` directory. `google-cloud-cpp` should remain usable in a
+  super build for a larger project, but we think this testing is redundant
+  with other testing that installs `google-cloud-cpp` in `$HOME`. Contributors
+  to `google-cloud-cpp` can use `vcpkg` to install the dependencies as part of
+  their CMake setup.
+</details>
+
+<details>
 <summary>2021-06-01: retiring experimental Bigtable Admin Async APIs</summary>
 
 * In 2021-06-01 (or shortly after) we are planning to remove all the functions
