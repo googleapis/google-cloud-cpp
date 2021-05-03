@@ -131,6 +131,14 @@ function integration::bazel_with_emulators() {
   "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
+  io::log_h2 "Running Storage integration tests (with emulator)"
+  "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+    bazel "${verb}" "${args[@]}"
+
+  io::log_h2 "Running Spanner integration tests"
+  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
+    google/cloud/spanner/...
+
   # We retry these tests because the emulator crashes due to #441.
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   env \
@@ -142,14 +150,6 @@ function integration::bazel_with_emulators() {
     bazel "${verb}" "${args[@]}"
   # TODO(#6083): Run //google/cloud/bigtable/examples:bigtable_grpc_credentials
   # separately w/ an access token.
-
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
-
-  io::log_h2 "Running Spanner integration tests"
-  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
-    google/cloud/spanner/...
 }
 
 # Runs integration tests with CTest using emulators. This function requires a
@@ -180,19 +180,19 @@ function integration::ctest_with_emulators() {
   "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Bigtable integration tests (with emulator)"
-  env CBT=/usr/local/google-cloud-sdk/bin/cbt \
-    CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-    GOPATH="${GOPATH:-}" \
-    ./ci/retry-command.sh 3 0 \
-    "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
-
   io::log_h2 "Running Storage integration tests (with emulator)"
   "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "${PROJECT_ROOT}/google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+    "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
+
+  io::log_h2 "Running Bigtable integration tests (with emulator)"
+  env CBT=/usr/local/google-cloud-sdk/bin/cbt \
+    CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
+    GOPATH="${GOPATH:-}" \
+    ./ci/retry-command.sh 3 0 \
+    "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
