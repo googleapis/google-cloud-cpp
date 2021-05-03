@@ -7,7 +7,7 @@
 <details>
 <summary>2021-05-01: removing super build test files.</summary>
 
-* Shortly after 2021-05-01 we are planning to remote the super build test files
+* Shortly after 2021-05-01 we are planning to remove the super build test files
   in the `super/` directory. `google-cloud-cpp` should remain usable in a
   super build for a larger project, but we think this testing is redundant
   with other testing that installs `google-cloud-cpp` in `$HOME`. Contributors
