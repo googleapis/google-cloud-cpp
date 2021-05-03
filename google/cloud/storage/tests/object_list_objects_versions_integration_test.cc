@@ -40,71 +40,46 @@ TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  // This test requires the bucket to be configured with versioning. The buckets
-  // used by the CI build are already configured with versioning enabled. The
-  // bucket created in the emulator also has versioning. Regardless, set the
-  // bucket to the desired state, which will produce a better error message if
-  // there is a configuration problem.
-  auto bucket_meta = client->GetBucketMetadata(bucket_name_);
-  ASSERT_STATUS_OK(bucket_meta);
-  auto updated_meta = client->PatchBucket(
-      bucket_name_,
-      BucketMetadataPatchBuilder().SetVersioning(BucketVersioning{true}),
-      IfMetagenerationMatch(bucket_meta->metageneration()));
-  ASSERT_STATUS_OK(updated_meta);
-  ASSERT_TRUE(updated_meta->versioning().has_value());
-  ASSERT_TRUE(updated_meta->versioning().value().enabled);
+  std::string bucket_name = MakeRandomBucketName();
+  auto create = client->CreateBucketForProject(
+      bucket_name, project_id_,
+      BucketMetadata{}.set_versioning(BucketVersioning{true}));
+  ASSERT_STATUS_OK(create) << bucket_name;
 
-  auto create_object_with_3_versions = [&client, this] {
+  std::vector<std::pair<std::string, std::int64_t>> expected;
+  for (auto i : {1, 2, 3, 4}) {
+    SCOPED_TRACE("Creating objects #" + std::to_string(i));
     auto object_name = MakeRandomObjectName();
     // ASSERT_TRUE does not work inside this lambda because the return type is
     // not `void`, use `.value()` instead to throw (or crash) on the unexpected
     // error.
-    auto meta = client
-                    ->InsertObject(bucket_name_, object_name,
-                                   "contents for the first revision",
-                                   storage::IfGenerationMatch(0))
-                    .value();
-    client
-        ->InsertObject(bucket_name_, object_name,
-                       "contents for the second revision")
-        .value();
-    client
-        ->InsertObject(bucket_name_, object_name,
-                       "contents for the final revision")
-        .value();
-    return meta.name();
-  };
+    auto precondition = storage::IfGenerationMatch(0);
+    for (std::string rev : {"first", "second", "third"}) {
+      auto meta = client
+                      ->InsertObject(bucket_name, object_name,
+                                     "contents for the " + rev + " revision",
+                                     precondition)
+                      .value();
+      expected.emplace_back(meta.name(), meta.generation());
+      precondition = storage::IfGenerationMatch{};
+    }
+  }
 
-  std::vector<std::string> expected(4);
-  std::generate_n(expected.begin(), expected.size(),
-                  create_object_with_3_versions);
-
-  ListObjectsReader reader = client->ListObjects(bucket_name_, Versions(true));
-  std::vector<std::string> actual;
+  ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
+  std::vector<std::pair<std::string, std::int64_t>> actual;
   for (auto& it : reader) {
     auto const& meta = it.value();
-    EXPECT_EQ(bucket_name_, meta.bucket());
-    actual.push_back(meta.name());
+    actual.emplace_back(meta.name(), meta.generation());
   }
-  auto produce_joined_list = [&actual] {
-    std::string joined;
-    for (auto const& x : actual) {
-      joined += "  ";
-      joined += x;
-      joined += "\n";
-    }
-    return joined;
-  };
-  // There may be a lot of other objects in the bucket, so we want to verify
-  // that any objects we created are found there, but cannot expect a perfect
-  // match.
+  EXPECT_THAT(actual, ::testing::IsSupersetOf(expected));
+  for (auto const& o : client->ListObjects(bucket_name, Versions(true))) {
+    if (!o) break;
+    (void)client->DeleteObject(bucket_name, o->name(),
+                               Generation(o->generation()));
+  }
 
-  for (auto const& name : expected) {
-    EXPECT_EQ(3, std::count(actual.begin(), actual.end(), name))
-        << "Expected to find 3 copies of " << name << " in the object list:\n"
-        << produce_joined_list();
-  }
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
 }
 
 }  // anonymous namespace
