@@ -169,9 +169,9 @@ class Bucket:
                 )
             cls.__insert_predefined_acl(metadata, predefined_acl, context)
         if len(metadata.default_object_acl) == 0:
-            predefined_default_object_acl = (
-                utils.acl.extract_predefined_default_object_acl(request, context)
-            )
+            predefined_default_object_acl =  utils.acl.extract_predefined_default_object_acl(
+                request, context)
+
             if (
                 predefined_default_object_acl
                 == CommonEnums.PredefinedObjectAcl.PREDEFINED_OBJECT_ACL_UNSPECIFIED
