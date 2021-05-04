@@ -25,8 +25,6 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::ElementsAre;
-using ::testing::HasSubstr;
 using ::testing::Return;
 
 struct FakeRequest {
