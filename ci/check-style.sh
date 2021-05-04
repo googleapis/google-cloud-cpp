@@ -187,7 +187,7 @@ time {
 }
 
 # Report any differences created by running the formatting tools.
-if ! git diff --ignore-submodules=all --color --exit-code .; then
+if ! git diff --ignore-submodules=all --exit-code .; then
   problems="${problems} formatting"
 fi
 

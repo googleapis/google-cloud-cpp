@@ -34,7 +34,7 @@ for generator in "${!GENERATOR_MAP[@]}"; do
 done
 # Any diffs in the markdown files result in a checker failure.
 # Edited files are left in the repo so they can be committed.
-git diff --color --exit-code "${GENERATOR_MAP[@]}"
+git diff --exit-code "${GENERATOR_MAP[@]}"
 io::log_green "Markdown OK"
 
 io::log_h2 "Checking Style"
