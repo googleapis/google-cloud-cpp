@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=focal
-FROM ubuntu:${DISTRO_VERSION} AS devtools
+FROM ubuntu:${DISTRO_VERSION}
 ARG NCPU=4
 
 ## [BEGIN packaging.md]

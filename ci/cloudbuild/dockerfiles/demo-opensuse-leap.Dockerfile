@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=latest
-FROM opensuse/leap:${DISTRO_VERSION} AS devtools
+FROM opensuse/leap:${DISTRO_VERSION}
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
