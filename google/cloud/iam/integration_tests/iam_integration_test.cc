@@ -205,6 +205,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountKeyFailure) {
 }
 
 TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   auto create_response = client.CreateServiceAccountKey(
       "projects/-/serviceAccounts/" + iam_service_account_,
@@ -249,6 +250,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicySuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   ::google::iam::v1::Policy policy;
   auto response = client.SetIamPolicy(
@@ -504,6 +506,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyProtoSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
