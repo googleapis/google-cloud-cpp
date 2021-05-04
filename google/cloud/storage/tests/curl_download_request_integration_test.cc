@@ -39,13 +39,13 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   // httpbin can generate up to 100 lines, do not try to download more than
   // that.
   constexpr int kDownloadedLines = 100;
-  CurlRequestBuilder request(
-      HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
-      storage::internal::GetDefaultCurlHandleFactory());
 
   std::size_t count = 0;
   auto download = [&] {
     count = 0;
+    CurlRequestBuilder request(
+        HttpBinEndpoint() + "/stream/" + std::to_string(kDownloadedLines),
+        storage::internal::GetDefaultCurlHandleFactory());
     auto download = request.BuildDownloadRequest(std::string{});
     char buffer[128 * 1024];
     do {
