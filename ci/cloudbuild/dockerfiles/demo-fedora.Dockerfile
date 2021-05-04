@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=33
-FROM fedora:${DISTRO_VERSION} AS devtools
+FROM fedora:${DISTRO_VERSION}
 ARG NCPU=4
 
 ## [BEGIN packaging.md]

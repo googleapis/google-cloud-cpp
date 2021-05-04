@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=stretch
-FROM debian:${DISTRO_VERSION} AS devtools
+FROM debian:${DISTRO_VERSION}
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
