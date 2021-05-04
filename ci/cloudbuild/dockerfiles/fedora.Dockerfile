@@ -57,9 +57,6 @@ RUN pip3 install black==19.3b0
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install setuptools wheel
-RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
-RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
-    crc32c==2.1 gunicorn==20.0.4
 
 # Install cspell for spell checking.
 RUN npm install -g cspell@5.2.4
