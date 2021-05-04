@@ -64,7 +64,7 @@ TEST(StreamingWriteRpcImpl, SuccessfulStream) {
     auto w = impl.Write(FakeRequest{key}, grpc::WriteOptions{});
     EXPECT_TRUE(absl::holds_alternative<absl::monostate>(w));
   }
-  auto actual = impl.WritesDone();
+  auto actual = impl.Close();
   ASSERT_THAT(actual, IsOk());
   EXPECT_EQ("on-finish", actual->value);
 }
@@ -108,7 +108,7 @@ TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
     auto w = impl.Write(FakeRequest{key}, grpc::WriteOptions{});
     EXPECT_TRUE(absl::holds_alternative<absl::monostate>(w));
   }
-  auto result = impl.WritesDone();
+  auto result = impl.Close();
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted, "aborted"));
 }
 

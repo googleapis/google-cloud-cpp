@@ -69,7 +69,7 @@ class StreamingWriteRpc {
   virtual WriteOutcome Write(RequestType const& r, grpc::WriteOptions o) = 0;
 
   /// Half-close the stream and wait for a response.
-  virtual StatusOr<ResponseType> WritesDone() = 0;
+  virtual StatusOr<ResponseType> Close() = 0;
 };
 
 /// Report the errors in a standalone function to minimize includes
@@ -116,7 +116,7 @@ class StreamingWriteRpcImpl
     return std::move(*response_);
   }
 
-  StatusOr<ResponseType> WritesDone() override {
+  StatusOr<ResponseType> Close() override {
     (void)stream_->WritesDone();
     auto status = Finish();
     if (!status.ok()) return status;
