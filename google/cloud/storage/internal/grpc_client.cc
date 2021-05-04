@@ -18,6 +18,8 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
+#include "google/cloud/storage/internal/storage_auth.h"
+#include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
@@ -28,6 +30,7 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/internal/time_utils.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_split.h"
@@ -42,6 +45,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+using ::google::cloud::internal::GrpcAuthenticationStrategy;
 
 auto constexpr kDirectPathConfig = R"json({
     "loadBalancingConfig": [{
@@ -81,27 +86,35 @@ Options DefaultOptionsGrpc(Options options) {
   return options;
 }
 
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(
-    google::cloud::internal::GrpcAuthenticationStrategy&
-        authentication_strategy,
-    Options const& options, int channel_id) {
+std::shared_ptr<grpc::Channel> CreateGrpcChannel(
+    GrpcAuthenticationStrategy& auth, Options const& options, int channel_id) {
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", channel_id);
   if (DirectPathEnabled()) {
     args.SetServiceConfigJSON(kDirectPathConfig);
   }
-  return authentication_strategy.CreateChannel(options.get<EndpointOption>(),
-                                               std::move(args));
+  return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
 }
 
-std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy>
-CreateAuthenticationStrategy(Options const& opts) {
+std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
+    Options const& opts) {
   if (opts.has<google::cloud::internal::UnifiedCredentialsOption>()) {
     return google::cloud::internal::CreateAuthenticationStrategy(
         opts.get<google::cloud::internal::UnifiedCredentialsOption>());
   }
   return google::cloud::internal::CreateAuthenticationStrategy(
       opts.get<google::cloud::GrpcCredentialOption>());
+}
+
+std::shared_ptr<StorageStub> CreateStorageStub(Options const& opts,
+                                               int channel_id) {
+  auto auth = CreateAuthenticationStrategy(opts);
+  auto stub =
+      MakeDefaultStorageStub(CreateGrpcChannel(*auth, opts, channel_id));
+  if (auth->RequiresConfigureContext()) {
+    stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
+  }
+  return stub;
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
@@ -117,42 +130,26 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts,
 GrpcClient::GrpcClient(Options const& opts, int channel_id)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
-      auth_strategy_(CreateAuthenticationStrategy(opts)),
-      stub_(google::storage::v1::Storage::NewStub(
-          CreateGrpcChannel(*auth_strategy_, opts, channel_id))) {}
+      stub_(CreateStorageStub(opts, channel_id)) {}
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
-  using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
-  using InsertStreamError = google::cloud::internal::StreamingWriteRpcError<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
-
-  auto auth = auth_strategy_->ConfigureContext(*context);
-  if (!auth.ok()) return absl::make_unique<InsertStreamError>(std::move(auth));
-  auto holder = absl::make_unique<google::storage::v1::Object>();
-  auto impl = stub_->InsertObject(context.get(), holder.get());
-  return absl::make_unique<InsertStreamImpl>(
-      std::move(context), std::move(holder), std::move(impl));
+  return stub_->InsertObjectMedia(std::move(context));
 }
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto const proto_request = ToProto(request);
-  google::storage::v1::QueryWriteStatusResponse response;
-  auto status = stub_->QueryWriteStatus(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->QueryWriteStatus(context, ToProto(request));
+  if (!response) return std::move(response).status();
 
   return ResumableUploadResponse{
       {},
-      static_cast<std::uint64_t>(response.committed_size()),
+      static_cast<std::uint64_t>(response->committed_size()),
       // TODO(b/146890058) - `response` should include the object metadata.
       ObjectMetadata{},
-      response.complete() ? ResumableUploadResponse::kDone
-                          : ResumableUploadResponse::kInProgress,
+      response->complete() ? ResumableUploadResponse::kDone
+                           : ResumableUploadResponse::kInProgress,
       {}};
 }
 
@@ -163,16 +160,12 @@ ClientOptions const& GrpcClient::client_options() const {
 StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
     ListBucketsRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ListBucketsResponse response;
-  auto status = stub_->ListBuckets(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->ListBuckets(context, ToProto(request));
+  if (!response) return std::move(response).status();
 
   ListBucketsResponse res;
-  res.next_page_token = std::move(*response.mutable_next_page_token());
-  for (auto& item : *response.mutable_items()) {
+  res.next_page_token = std::move(*response->mutable_next_page_token());
+  for (auto& item : *response->mutable_items()) {
     res.items.emplace_back(FromProto(std::move(item)));
   }
 
@@ -182,53 +175,33 @@ StatusOr<ListBucketsResponse> GrpcClient::ListBuckets(
 StatusOr<BucketMetadata> GrpcClient::CreateBucket(
     CreateBucketRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::Bucket response;
-  auto status = stub_->InsertBucket(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(response);
+  auto response = stub_->InsertBucket(context, ToProto(request));
+  if (!response) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<BucketMetadata> GrpcClient::GetBucketMetadata(
     GetBucketMetadataRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  google::storage::v1::Bucket response;
-  auto proto_request = ToProto(request);
-  auto status = stub_->GetBucket(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->GetBucket(context, ToProto(request));
+  if (!response) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucket(
     DeleteBucketRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::protobuf::Empty response;
-  auto status = stub_->DeleteBucket(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response = stub_->DeleteBucket(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 
 StatusOr<BucketMetadata> GrpcClient::UpdateBucket(
     UpdateBucketRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  google::storage::v1::Bucket response;
-  auto proto_request = ToProto(request);
-  auto status = stub_->UpdateBucket(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->UpdateBucket(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<BucketMetadata> GrpcClient::PatchBucket(PatchBucketRequest const&) {
@@ -243,14 +216,9 @@ StatusOr<IamPolicy> GrpcClient::GetBucketIamPolicy(
 StatusOr<NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::iam::v1::Policy response;
-  auto status = stub_->GetBucketIamPolicy(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->GetBucketIamPolicy(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
@@ -261,29 +229,19 @@ StatusOr<IamPolicy> GrpcClient::SetBucketIamPolicy(
 StatusOr<NativeIamPolicy> GrpcClient::SetNativeBucketIamPolicy(
     SetNativeBucketIamPolicyRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::iam::v1::Policy response;
-  auto status = stub_->SetBucketIamPolicy(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->SetBucketIamPolicy(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<TestBucketIamPermissionsResponse> GrpcClient::TestBucketIamPermissions(
     TestBucketIamPermissionsRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::iam::v1::TestIamPermissionsResponse response;
-  auto status =
-      stub_->TestBucketIamPermissions(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->TestBucketIamPermissions(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
 
   TestBucketIamPermissionsResponse res;
-  for (auto const& permission : response.permissions()) {
+  for (auto const& permission : *response->mutable_permissions()) {
     res.permissions.emplace_back(std::move(permission));
   }
 
@@ -297,22 +255,8 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  auto stream = [&]() -> std::unique_ptr<InsertStream> {
-    using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
-        google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
-    using InsertStreamError = google::cloud::internal::StreamingWriteRpcError<
-        google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
-
-    auto context = absl::make_unique<grpc::ClientContext>();
-    auto auth = auth_strategy_->ConfigureContext(*context);
-    if (!auth.ok()) {
-      return absl::make_unique<InsertStreamError>(std::move(auth));
-    }
-    auto holder = absl::make_unique<google::storage::v1::Object>();
-    auto impl = stub_->InsertObject(context.get(), holder.get());
-    return absl::make_unique<InsertStreamImpl>(
-        std::move(context), std::move(holder), std::move(impl));
-  }();
+  auto stream =
+      stub_->InsertObjectMedia(absl::make_unique<grpc::ClientContext>());
 
   auto proto_request = ToProto(request);
   auto const& contents = request.contents();
@@ -368,20 +312,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
         StatusCode::kOutOfRange,
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
-  auto const proto_request = ToProto(request);
-  auto context = absl::make_unique<grpc::ClientContext>();
-  auto status = auth_strategy_->ConfigureContext(*context);
-  if (!status.ok()) return status;
-
-  auto impl = stub_->GetObjectMedia(context.get(), proto_request);
-
-  using StreamingRead = google::cloud::internal::StreamingReadRpcImpl<
-      google::storage::v1::GetObjectMediaResponse>;
-  auto reader =
-      absl::make_unique<StreamingRead>(std::move(context), std::move(impl));
-
   return std::unique_ptr<ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(std::move(reader)));
+      absl::make_unique<GrpcObjectReadSource>(stub_->GetObjectMedia(
+          absl::make_unique<grpc::ClientContext>(), ToProto(request))));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
@@ -392,13 +325,8 @@ StatusOr<ListObjectsResponse> GrpcClient::ListObjects(
 StatusOr<EmptyResponse> GrpcClient::DeleteObject(
     DeleteObjectRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::protobuf::Empty response;
-  auto status = stub_->DeleteObject(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response = stub_->DeleteObject(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 
@@ -430,17 +358,13 @@ GrpcClient::CreateResumableSession(ResumableUploadRequest const& request) {
   }
 
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::StartResumableWriteResponse response;
-  auto status = stub_->StartResumableWrite(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->StartResumableWrite(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
 
   auto self = shared_from_this();
   return std::unique_ptr<ResumableUploadSession>(new GrpcResumableUploadSession(
       self,
-      {request.bucket_name(), request.object_name(), response.upload_id()}));
+      {request.bucket_name(), request.object_name(), response->upload_id()}));
 }
 
 StatusOr<std::unique_ptr<ResumableUploadSession>>
@@ -462,29 +386,19 @@ GrpcClient::RestoreResumableSession(std::string const& upload_url) {
 StatusOr<EmptyResponse> GrpcClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  google::protobuf::Empty response;
-  auto proto_request = ToProto(request);
-  auto status = stub_->DeleteObject(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response = stub_->DeleteObject(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 
 StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
     ListBucketAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ListBucketAccessControlsResponse response;
-  auto status =
-      stub_->ListBucketAccessControls(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->ListBucketAccessControls(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
 
   ListBucketAclResponse res;
-  for (auto& item : *response.mutable_items()) {
+  for (auto& item : *response->mutable_items()) {
     res.items.emplace_back(FromProto(std::move(item)));
   }
 
@@ -494,41 +408,24 @@ StatusOr<ListBucketAclResponse> GrpcClient::ListBucketAcl(
 StatusOr<BucketAccessControl> GrpcClient::GetBucketAcl(
     GetBucketAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::BucketAccessControl response;
-  auto status =
-      stub_->GetBucketAccessControl(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->GetBucketAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<BucketAccessControl> GrpcClient::CreateBucketAcl(
     CreateBucketAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::BucketAccessControl response;
-  auto status =
-      stub_->InsertBucketAccessControl(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return FromProto(std::move(response));
+  auto response = stub_->InsertBucketAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteBucketAcl(
     DeleteBucketAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::protobuf::Empty response;
-  auto status =
-      stub_->DeleteBucketAccessControl(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response = stub_->DeleteBucketAccessControl(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 
@@ -540,15 +437,9 @@ StatusOr<ListObjectAclResponse> GrpcClient::ListObjectAcl(
 StatusOr<BucketAccessControl> GrpcClient::UpdateBucketAcl(
     UpdateBucketAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::BucketAccessControl response;
-  auto status =
-      stub_->UpdateBucketAccessControl(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->UpdateBucketAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<BucketAccessControl> GrpcClient::PatchBucketAcl(
@@ -584,16 +475,12 @@ StatusOr<ObjectAccessControl> GrpcClient::PatchObjectAcl(
 StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
     ListDefaultObjectAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ListObjectAccessControlsResponse response;
-  auto status = stub_->ListDefaultObjectAccessControls(&context, proto_request,
-                                                       &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response =
+      stub_->ListDefaultObjectAccessControls(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
 
   ListDefaultObjectAclResponse res;
-  for (auto& item : *response.mutable_items()) {
+  for (auto& item : *response->mutable_items()) {
     res.items.emplace_back(FromProto(std::move(item)));
   }
 
@@ -603,56 +490,37 @@ StatusOr<ListDefaultObjectAclResponse> GrpcClient::ListDefaultObjectAcl(
 StatusOr<ObjectAccessControl> GrpcClient::CreateDefaultObjectAcl(
     CreateDefaultObjectAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ObjectAccessControl response;
-  auto status = stub_->InsertDefaultObjectAccessControl(&context, proto_request,
-                                                        &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-  return FromProto(std::move(response));
+  auto response =
+      stub_->InsertDefaultObjectAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteDefaultObjectAcl(
     DeleteDefaultObjectAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::protobuf::Empty response;
-  auto status = stub_->DeleteDefaultObjectAccessControl(&context, proto_request,
-                                                        &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response =
+      stub_->DeleteDefaultObjectAccessControl(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::GetDefaultObjectAcl(
     GetDefaultObjectAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ObjectAccessControl response;
-  auto status =
-      stub_->GetDefaultObjectAccessControl(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response =
+      stub_->GetDefaultObjectAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::UpdateDefaultObjectAcl(
     UpdateDefaultObjectAclRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ObjectAccessControl response;
-  auto status = stub_->UpdateDefaultObjectAccessControl(&context, proto_request,
-                                                        &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response =
+      stub_->UpdateDefaultObjectAccessControl(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<ObjectAccessControl> GrpcClient::PatchDefaultObjectAcl(
@@ -731,15 +599,11 @@ NotificationMetadata GrpcClient::FromProto(
 StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
     ListNotificationsRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::ListNotificationsResponse response;
-  auto status = stub_->ListNotifications(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
+  auto response = stub_->ListNotifications(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
 
   ListNotificationsResponse res;
-  for (auto& item : *response.mutable_items()) {
+  for (auto& item : *response->mutable_items()) {
     res.items.emplace_back(FromProto(std::move(item)));
   }
 
@@ -749,39 +613,24 @@ StatusOr<ListNotificationsResponse> GrpcClient::ListNotifications(
 StatusOr<NotificationMetadata> GrpcClient::CreateNotification(
     CreateNotificationRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::Notification response;
-  auto status = stub_->InsertNotification(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->InsertNotification(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<NotificationMetadata> GrpcClient::GetNotification(
     GetNotificationRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::storage::v1::Notification response;
-  auto status = stub_->GetNotification(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stub_->GetNotification(context, ToProto(request));
+  if (!response.ok()) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<EmptyResponse> GrpcClient::DeleteNotification(
     DeleteNotificationRequest const& request) {
   grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  auto proto_request = ToProto(request);
-  google::protobuf::Empty response;
-  auto status = stub_->DeleteNotification(&context, proto_request, &response);
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
+  auto response = stub_->DeleteNotification(context, ToProto(request));
+  if (!response.ok()) return response;
   return EmptyResponse{};
 }
 

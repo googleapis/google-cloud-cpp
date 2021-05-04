@@ -18,8 +18,7 @@
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/streaming_write_rpc.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include <google/storage/v1/storage.pb.h>
 #include <memory>
 #include <string>
 
@@ -33,6 +32,8 @@ namespace internal {
 /// GOOGLE_CLOUD_DIRECT_PATH.
 bool DirectPathEnabled();
 Options DefaultOptionsGrpc(Options = {});
+
+class StorageStub;
 
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
@@ -324,9 +325,7 @@ class GrpcClient : public RawClient,
 
  private:
   ClientOptions backwards_compatibility_options_;
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy>
-      auth_strategy_;
-  std::shared_ptr<google::storage::v1::Storage::Stub> stub_;
+  std::shared_ptr<StorageStub> stub_;
 };
 
 }  // namespace internal

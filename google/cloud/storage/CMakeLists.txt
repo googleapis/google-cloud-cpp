@@ -318,7 +318,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_resumable_upload_session_url.cc
         internal/grpc_resumable_upload_session_url.h
         internal/hybrid_client.cc
-        internal/hybrid_client.h)
+        internal/hybrid_client.h
+        internal/storage_auth.cc
+        internal/storage_auth.h
+        internal/storage_stub.cc
+        internal/storage_stub.h)
     target_link_libraries(
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
