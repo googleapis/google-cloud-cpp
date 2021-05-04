@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/log.h"
 
 namespace google {
