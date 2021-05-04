@@ -290,7 +290,7 @@ class TestCommonUtils(unittest.TestCase):
     def test_parse_multipart(self):
         request = utils.common.FakeRequest(
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
-            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "myObject", "metadata": {"test": "test"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{"name": "myObject", "metadata": {"test": "test"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
         metadata, media_header, media = utils.common.parse_multipart(request)
@@ -328,10 +328,10 @@ class TestCommonUtils(unittest.TestCase):
             b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
         )
 
-        # Test incorrect ending
+        # Test incorrect multipart body
         request = utils.common.FakeRequest(
             headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
-            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n',
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n',
             environ={},
         )
         with self.assertRaises(utils.error.RestException):
@@ -431,7 +431,7 @@ class TestError(unittest.TestCase):
     def test_error_propagation(self):
         emulator = os.getenv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
         if emulator is None:
-            self.skipTest()
+            self.skipTest("CLOUD_STORAGE_EMULATOR_ENDPOINT is not set")
         conn = http.client.HTTPConnection(emulator[len("http://") :], timeout=10)
 
         conn.request("GET", "/raise_error")

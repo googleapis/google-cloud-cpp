@@ -14,6 +14,14 @@ not as a general purpose emulator.
 pip install -r requirements.txt
 ```
 
+## Run Tests
+
+Tests use https://docs.python.org/3/library/unittest.html and can be ran using:
+
+```bash
+python -m unittest tests/test_*.py
+```
+
 ## Run Test Bench
 
 ### Emulator

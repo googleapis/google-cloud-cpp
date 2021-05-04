@@ -314,7 +314,7 @@ class TestObject(unittest.TestCase):
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
-            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"key": "value"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{"name": "object", "metadata": {"key": "value"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
         blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
@@ -361,7 +361,7 @@ class TestObject(unittest.TestCase):
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
-            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
         blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
@@ -391,7 +391,7 @@ class TestObject(unittest.TestCase):
         request = utils.common.FakeRequest(
             args={},
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
-            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{"name": "object", "metadata": {"method": "rest"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
         blob, _ = gcs.object.Object.init_multipart(request, self.bucket.metadata)
