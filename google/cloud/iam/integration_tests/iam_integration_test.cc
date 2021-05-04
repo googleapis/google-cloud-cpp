@@ -16,11 +16,16 @@
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/str_split.h"
+#include "absl/time/time.h"
+#include "absl/time/clock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -34,6 +39,13 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
+
+bool RunQuotaLimitedTests() {
+  static bool run_quota_limited_tests =
+      internal::GetEnv("GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS")
+          .value_or("") == "yes";
+  return run_quota_limited_tests;
+}
 
 class IamIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -111,17 +123,6 @@ TEST_F(IamIntegrationTest, GetServiceAccountFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetServiceAccount")));
 }
 
-#if 0
-TEST_F(IamIntegrationTest, CreateServiceAccountSuccess) {
-::google::iam::admin::v1::ServiceAccount service_account;
-  auto client = IAMClient(MakeIAMConnection());
-  auto response = client.CreateServiceAccount(
-      iam_project_, "iam-integration-test", service_account);
-  ASSERT_STATUS_OK(response);
-  EXPECT_FALSE();
-}
-#endif
-
 TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
   auto client = IAMClient(MakeIAMConnection(options_));
@@ -131,15 +132,28 @@ TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateServiceAccount")));
 }
 
-#if 0
-TEST_F(IamIntegrationTest, DeleteServiceAccountSuccess) {
-::google::iam::admin::v1::ServiceAccount service_account;
+TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
-  auto response = client.DeleteServiceAccount("");
-  ASSERT_STATUS_OK(response);
-  EXPECT_FALSE();
+  std::string account_id = "sa-crud-test";
+  auto service_account_inferred_name = absl::StrCat(
+      "projects/-/serviceAccounts/",
+      account_id, "@", iam_project_, ".iam.gserviceaccount.com");
+
+  // In case a previous execution left the service account.
+  client.DeleteServiceAccount(service_account_inferred_name);
+
+  ::google::iam::admin::v1::ServiceAccount service_account;
+  service_account.set_display_name(account_id);
+  service_account.set_description(
+      "Service account created during IAM integration test.");
+  auto create_response = client.CreateServiceAccount(
+      "projects/" + iam_project_, account_id, service_account);
+  ASSERT_STATUS_OK(create_response);
+
+  auto delete_response = client.DeleteServiceAccount(service_account_inferred_name);
+  ASSERT_STATUS_OK(delete_response);
 }
-#endif
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
@@ -199,11 +213,6 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   ASSERT_STATUS_OK(create_response);
   EXPECT_GT(create_response->private_key_data().size(), 0);
 
-  auto list_response = client.ListServiceAccountKeys(
-      "projects/-/serviceAccounts/" + iam_service_account_, {});
-  ASSERT_STATUS_OK(list_response);
-  EXPECT_GT(list_response->keys().size(), 0);
-
   auto get_response = client.GetServiceAccountKey(
       create_response->name(),
       ::google::iam::admin::v1::ServiceAccountPublicKeyType::
@@ -211,9 +220,17 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   ASSERT_STATUS_OK(get_response);
   EXPECT_GT(get_response->public_key_data().size(), 0);
 
-  auto delete_response =
-      client.DeleteServiceAccountKey(create_response->name());
-  EXPECT_STATUS_OK(delete_response);
+  auto list_response = client.ListServiceAccountKeys(
+      "projects/-/serviceAccounts/" + iam_service_account_,
+      {::google::iam::admin::v1::ListServiceAccountKeysRequest::USER_MANAGED});
+  ASSERT_STATUS_OK(list_response);
+  EXPECT_GT(list_response->keys().size(), 0);
+
+  for (auto const& key : list_response->keys()) {
+    auto delete_response =
+        client.DeleteServiceAccountKey(key.name());
+    EXPECT_STATUS_OK(delete_response);
+  }
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicySuccess) {
@@ -332,20 +349,69 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("GetServiceAccount")));
 }
 
-// TODO(sdhart): add this test case into a ServiceAccount crud test case.
-// TEST_F(IamIntegrationTest, EnableDisableServiceAccountProtoSuccess) {
-//  auto client = IAMClient(MakeIAMConnection(options_));
-//  ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
-//  disable_request.set_name("projects/-/serviceAccounts/" +
-//  iam_service_account_); auto disable_response =
-//  client.DisableServiceAccount(disable_request);
-//  EXPECT_STATUS_OK(disable_response);
-//  ::google::iam::admin::v1::EnableServiceAccountRequest enable_request;
-//  enable_request.set_name("projects/-/serviceAccounts/" +
-//  iam_service_account_); auto enable_response =
-//  client.DisableServiceAccount(disable_request);
-//  EXPECT_STATUS_OK(enable_response);
-//}
+TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
+  auto client = IAMClient(MakeIAMConnection());
+  std::string account_id = "sa-crud-proto-test";
+  auto service_account_inferred_name = absl::StrCat(
+      "projects/-/serviceAccounts/",
+      account_id, "@", iam_project_, ".iam.gserviceaccount.com");
+
+  // In case a previous execution left the service account.
+  ::google::iam::admin::v1::DeleteServiceAccountRequest pre_delete_request;
+  pre_delete_request.set_name(service_account_inferred_name);
+  client.DeleteServiceAccount(pre_delete_request);
+
+  ::google::iam::admin::v1::CreateServiceAccountRequest create_request;
+  create_request.set_name("projects/" + iam_project_);
+  create_request.set_account_id(account_id);
+  ::google::iam::admin::v1::ServiceAccount service_account;
+  service_account.set_display_name(account_id);
+  service_account.set_description(
+      "Service account created during IAM integration test.");
+  *create_request.mutable_service_account() = service_account;
+  auto create_response = client.CreateServiceAccount(create_request);
+  ASSERT_STATUS_OK(create_response);
+  auto unique_id = create_response->unique_id();
+  auto service_account_full_name = absl::StrCat(
+    "projects/", iam_project_, "/serviceAccounts/",
+    unique_id);
+
+  ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
+  disable_request.set_name(service_account_inferred_name);
+  auto disable_response = client.DisableServiceAccount(disable_request);
+  EXPECT_STATUS_OK(disable_response);
+
+  ::google::iam::admin::v1::EnableServiceAccountRequest enable_request;
+  enable_request.set_name(service_account_inferred_name);
+  auto enable_response = client.DisableServiceAccount(disable_request);
+  EXPECT_STATUS_OK(enable_response);
+
+  ::google::iam::admin::v1::PatchServiceAccountRequest patch_request;
+  ::google::iam::admin::v1::ServiceAccount patch_service_account;
+  patch_service_account.set_name(service_account_inferred_name);
+  patch_service_account.set_description("Patched");
+  *patch_request.mutable_service_account() = patch_service_account;
+  google::protobuf::FieldMask update_mask;
+  *update_mask.add_paths() = "description";
+  *patch_request.mutable_update_mask() = update_mask;
+  auto patch_response = client.PatchServiceAccount(patch_request);
+  EXPECT_THAT(patch_response, StatusIs(StatusCode::kFailedPrecondition));
+
+  ::google::iam::admin::v1::DeleteServiceAccountRequest delete_request;
+  delete_request.set_name(service_account_inferred_name);
+  auto delete_response = client.DeleteServiceAccount(delete_request);
+  ASSERT_STATUS_OK(delete_response);
+
+  ::google::iam::admin::v1::UndeleteServiceAccountRequest undelete_request;
+  undelete_request.set_name(service_account_full_name);
+  auto undelete_response = client.UndeleteServiceAccount(undelete_request);
+  ASSERT_STATUS_OK(undelete_response);
+  EXPECT_EQ(undelete_response->restored_account().unique_id(), unique_id);
+
+  auto really_delete_response = client.DeleteServiceAccount(delete_request);
+  EXPECT_STATUS_OK(really_delete_response);
+}
 
 TEST_F(IamIntegrationTest, EnableServiceAccountProtoFailure) {
   auto client = IAMClient(MakeIAMConnection(options_));
@@ -499,6 +565,125 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesProtoFailure) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("QueryGrantableRoles")));
 }
 
+TEST_F(IamIntegrationTest, ListRolesProtoFailure) {
+  options_.set<IAMRetryPolicyOption>(retry_policy_->clone());
+  options_.set<IAMBackoffPolicyOption>(backoff_policy_->clone());
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::ListRolesRequest request;
+  request.set_parent("projects/*");
+  auto response = client.ListRoles(request);
+  auto begin = response.begin();
+  ASSERT_NE(begin, response.end());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kInvalidArgument));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListRoles")));
+}
+
+TEST_F(IamIntegrationTest, GetRoleProtoFailure) {
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::GetRoleRequest request;
+  request.set_name("projects/*");
+  auto response = client.GetRole(request);
+  EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("GetRole")));
+}
+
+TEST_F(IamIntegrationTest, CreateRoleProtoFailure) {
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::CreateRoleRequest request;
+  auto response = client.CreateRole(request);
+  EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("CreateRole")));
+}
+
+TEST_F(IamIntegrationTest, UpdateRoleProtoFailure) {
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::UpdateRoleRequest request;
+  auto response = client.UpdateRole(request);
+  EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateRole")));
+}
+
+TEST_F(IamIntegrationTest, DeleteRoleProtoFailure) {
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::DeleteRoleRequest request;
+  auto response = client.DeleteRole(request);
+  EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("DeleteRole")));
+}
+
+TEST_F(IamIntegrationTest, UndeleteRoleProtoFailure) {
+  auto client = IAMClient(MakeIAMConnection(options_));
+  ::google::iam::admin::v1::UndeleteRoleRequest request;
+  auto response = client.UndeleteRole(request);
+  EXPECT_THAT(response, Not(IsOk()));
+  auto const log_lines = ClearLogLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("UndeleteRole")));
+}
+
+TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
+  if (!RunQuotaLimitedTests()) GTEST_SKIP();
+  auto client = IAMClient(MakeIAMConnection());
+  auto const parent_project = "projects/" + iam_project_;
+
+  // Clean up any roles leaked in previous executions.
+  ::google::iam::admin::v1::ListRolesRequest list_request;
+  list_request.set_parent(parent_project);
+  auto list_response = client.ListRoles(list_request);
+  for (auto const& role : list_response) {
+    ASSERT_STATUS_OK(role);
+    ::google::iam::admin::v1::DeleteRoleRequest delete_request;
+    delete_request.set_name(role->name());
+    auto delete_response = client.DeleteRole(delete_request);
+    EXPECT_STATUS_OK(delete_response);
+  }
+
+  auto role_id = absl::StrCat("iam_test_role_",
+          absl::FormatTime("%Y%m%d", absl::Now(), absl::UTCTimeZone()));
+  ::google::iam::admin::v1::CreateRoleRequest create_request;
+  create_request.set_parent(parent_project);
+  create_request.set_role_id(role_id);
+  ::google::iam::admin::v1::Role role;
+  *role.add_included_permissions() = "iam.serviceAccounts.list";
+  role.set_stage(::google::iam::admin::v1::Role::DISABLED);
+  *create_request.mutable_role() = role;
+  auto create_response = client.CreateRole(create_request);
+  ASSERT_STATUS_OK(create_response);
+
+  ::google::iam::admin::v1::GetRoleRequest get_request;
+  get_request.set_name(create_response->name());
+  auto get_response = client.GetRole(get_request);
+  EXPECT_STATUS_OK(get_response);
+
+  ::google::iam::admin::v1::UpdateRoleRequest update_request;
+  update_request.set_name(create_response->name());
+  ::google::iam::admin::v1::Role updated_role;
+  updated_role.set_title("Test Title");
+  ::google::protobuf::FieldMask update_mask;
+  *update_mask.add_paths() = "title";
+  *update_request.mutable_role() = updated_role;
+  *update_request.mutable_update_mask() = update_mask;
+  auto update_response = client.UpdateRole(update_request);
+  EXPECT_STATUS_OK(update_response);
+  
+  ::google::iam::admin::v1::DeleteRoleRequest delete_request;
+  delete_request.set_name(create_response->name());
+  auto delete_response = client.DeleteRole(delete_request);
+  ASSERT_STATUS_OK(delete_response);
+
+  ::google::iam::admin::v1::UndeleteRoleRequest undelete_request;
+  undelete_request.set_name(create_response->name());
+  auto undelete_response = client.UndeleteRole(undelete_request);
+  EXPECT_STATUS_OK(undelete_response);
+
+  auto final_delete_response = client.DeleteRole(delete_request);
+  EXPECT_STATUS_OK(final_delete_response);
+}
+
 TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoSuccess) {
   auto client = IAMClient(MakeIAMConnection());
   ::google::iam::admin::v1::QueryTestablePermissionsRequest request;
@@ -551,7 +736,8 @@ TEST_F(IamIntegrationTest, LintPolicyProtoSuccess) {
                                               iam_service_account_));
   *request.mutable_condition() = condition;
   auto response = client.LintPolicy(request);
-  EXPECT_STATUS_OK(response);
+  ASSERT_STATUS_OK(response);
+  EXPECT_GT(response->lint_results().size(), 0);
 }
 
 TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {

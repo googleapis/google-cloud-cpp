@@ -40,5 +40,6 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 export GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance,backup"
+export GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_INTEGRATION_TESTS="yes"
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators test "${args[@]}" "${integration_args[@]}"
