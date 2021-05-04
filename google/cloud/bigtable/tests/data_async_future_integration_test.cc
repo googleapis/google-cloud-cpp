@@ -277,6 +277,68 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
 
   CheckEqualUnordered(expected, actual);
 }
+
+TEST_F(DataAsyncFutureIntegrationTest, TableSampleRowsTest) {
+  auto table = GetTable();
+
+  // Create kBatchSize * kBatchCount rows. Use a special client with tracing
+  // disabled because it simply generates too much data.
+  auto bulk_table =
+      bigtable::Table(bigtable::CreateDefaultDataClient(
+                          testing::TableTestEnvironment::project_id(),
+                          testing::TableTestEnvironment::instance_id(),
+                          ClientOptions().disable_tracing("rpc")),
+                      testing::TableTestEnvironment::table_id());
+  int constexpr kBatchCount = 10;
+  int constexpr kBatchSize = 5000;
+  int constexpr kColumnCount = 10;
+  int rowid = 0;
+  for (int batch = 0; batch != kBatchCount; ++batch) {
+    BulkMutation bulk;
+    for (int row = 0; row != kBatchSize; ++row) {
+      std::ostringstream os;
+      os << "row:" << std::setw(9) << std::setfill('0') << rowid;
+
+      // Build a mutation that creates 10 columns.
+      SingleRowMutation mutation(os.str());
+      for (int col = 0; col != kColumnCount; ++col) {
+        std::string colid = "c" + std::to_string(col);
+        std::string value = colid + "#" + os.str();
+        mutation.emplace_back(SetCell(kFamily, std::move(colid),
+                                      std::chrono::milliseconds(0),
+                                      std::move(value)));
+      }
+      bulk.emplace_back(std::move(mutation));
+      ++rowid;
+    }
+    auto failures = bulk_table.BulkApply(std::move(bulk));
+    ASSERT_THAT(failures, ::testing::IsEmpty());
+  }
+
+  auto fut = table.AsyncSampleRows();
+
+  // Block until the asynchronous operation completes. This is not what one
+  // would do in a real application (the synchronous API is better in that
+  // case), but we need to wait before checking the results.
+  auto samples = fut.get();
+  ASSERT_STATUS_OK(samples);
+
+  // It is somewhat hard to verify that the values returned here are correct.
+  // We cannot check the specific values, not even the format, of the row keys
+  // because Cloud Bigtable might return an empty row key (for "end of table"),
+  // and it might return row keys that have never been written to.
+  // All we can check is that this is not empty, and that the offsets are in
+  // ascending order.
+  EXPECT_FALSE(samples->empty());
+  std::int64_t previous = 0;
+  for (auto const& s : *samples) {
+    EXPECT_LE(previous, s.offset_bytes);
+    previous = s.offset_bytes;
+  }
+  // At least one of the samples should have non-zero offset:
+  auto last = samples->back();
+  EXPECT_LT(0, last.offset_bytes);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

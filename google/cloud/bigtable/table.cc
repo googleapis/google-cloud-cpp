@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "row_key_sample.h"
 #include <thread>
 #include <type_traits>
 
@@ -337,7 +338,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // successful. When RPC is finished, this function returns the SampleRowKeys
 // as a std::vector<>. If the RPC fails, it will keep retrying until the
 // policies in effect tell us to stop. Note that each retry must clear the
-// samples otherwise the result is an inconsistent set of samples row keys.
+// samples otherwise the result is an inconsistent set of sample row keys.
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   // Copy the policies in effect for this operation.
   auto backoff_policy = clone_rpc_backoff_policy();
@@ -377,6 +378,29 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
     std::this_thread::sleep_for(delay);
   }
   return samples;
+}
+
+future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+  auto cq = background_threads_->cq();
+
+  // Copy the policies in effect for this operation.
+  auto backoff_policy = clone_rpc_backoff_policy();
+  auto retry_policy = clone_rpc_retry_policy();
+  std::vector<bigtable::RowKeySample> samples;
+
+  // Build the RPC request for SampleRowKeys
+  btproto::SampleRowKeysRequest request;
+  btproto::SampleRowKeysResponse response;
+  SetCommonTableOperationRequest<btproto::SampleRowKeysRequest>(
+      request, app_profile_id_, table_name_);
+
+  auto client = client_;
+  auto metadata_update_policy = clone_metadata_update_policy();
+  
+
+  promise<StatusOr<std::vector<bigtable::RowKeySample>>> sample_promise;
+  sample_promise.set_value(Status(StatusCode::kUnimplemented, "TODO : dbolduc"));
+  return sample_promise.get_future();
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
@@ -447,8 +471,8 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRowImpl(
       // The `CompletionQueue`, which this object holds a reference to, should
       // not be shut down before `OnStreamFinished` is called. In order to make
       // sure of that, satisying the `promise<>` is deferred until then - the
-      // user shouldn't shutown the `CompleetionQue` before this whole
-      // operations is done.
+      // user shouldn't shutdown the `CompletionQueue` before this whole
+      // operation is done.
       return make_ready_future(false);
     }
 

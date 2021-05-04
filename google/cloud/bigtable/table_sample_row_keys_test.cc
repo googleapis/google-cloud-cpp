@@ -37,7 +37,7 @@ class TableSampleRowKeysTest
 };
 
 /// @test Verify that Table::SampleRows() works.
-TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
+TEST_F(TableSampleRowKeysTest, SampleRowKeysTest) {
   namespace btproto = ::google::bigtable::v2;
 
   EXPECT_CALL(*client_, SampleRowKeys).WillOnce([](Unused, Unused) {

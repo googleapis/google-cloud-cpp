@@ -256,6 +256,30 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
   (std::move(table), argv.at(0));
 }
 
+void AsyncSampleRows(google::cloud::bigtable::Table table,
+                std::vector<std::string> const&) {
+  //! [async sample row keys]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::Table table) {
+    future<StatusOr<std::vector<cbt::RowKeySample>>> samples_future = table.AsyncSampleRows();
+
+    samples_future
+        .then([](future<StatusOr<std::vector<cbt::RowKeySample>>> f) {
+          auto samples = f.get();  
+          if (!samples) throw std::runtime_error(samples.status().message());
+          for (auto const& sample : *samples) {
+            std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
+                      << "\n";
+          }
+        })
+        .get();  // block to simplify the example.
+  }
+  //! [async sample row keys]
+  (std::move(table));
+}
+
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           std::vector<std::string> const& argv) {
   //! [async read modify write]
@@ -334,6 +358,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncBulkApply() example" << std::endl;
   AsyncBulkApply(table, {});
 
+  std::cout << "\nRunning the AsyncSampleRows() example" << std::endl;
+  AsyncSampleRows(table, {});
+
   std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
   AsyncReadRows(table, {});
 
@@ -370,6 +397,7 @@ int main(int argc, char* argv[]) {
   google::cloud::bigtable::examples::Example example({
       MakeCommandEntry("async-apply", {"<row-key>"}, AsyncApply),
       MakeCommandEntry("async-bulk-apply", {}, AsyncBulkApply),
+      MakeCommandEntry("async-sample-rows", {}, AsyncSampleRows),
       MakeCommandEntry("async-read-rows", {}, AsyncReadRows),
       MakeCommandEntry("async-read-rows-with-limit", {},
                        AsyncReadRowsWithLimit),
