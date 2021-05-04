@@ -24,8 +24,8 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
-#include "absl/time/time.h"
 #include "absl/time/clock.h"
+#include "absl/time/time.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -136,9 +136,9 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   std::string account_id = "sa-crud-test";
-  auto service_account_inferred_name = absl::StrCat(
-      "projects/-/serviceAccounts/",
-      account_id, "@", iam_project_, ".iam.gserviceaccount.com");
+  auto service_account_inferred_name =
+      absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
+                   ".iam.gserviceaccount.com");
 
   // In case a previous execution left the service account.
   client.DeleteServiceAccount(service_account_inferred_name);
@@ -151,7 +151,8 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
       "projects/" + iam_project_, account_id, service_account);
   ASSERT_STATUS_OK(create_response);
 
-  auto delete_response = client.DeleteServiceAccount(service_account_inferred_name);
+  auto delete_response =
+      client.DeleteServiceAccount(service_account_inferred_name);
   ASSERT_STATUS_OK(delete_response);
 }
 
@@ -227,8 +228,7 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   EXPECT_GT(list_response->keys().size(), 0);
 
   for (auto const& key : list_response->keys()) {
-    auto delete_response =
-        client.DeleteServiceAccountKey(key.name());
+    auto delete_response = client.DeleteServiceAccountKey(key.name());
     EXPECT_STATUS_OK(delete_response);
   }
 }
@@ -353,9 +353,9 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   std::string account_id = "sa-crud-proto-test";
-  auto service_account_inferred_name = absl::StrCat(
-      "projects/-/serviceAccounts/",
-      account_id, "@", iam_project_, ".iam.gserviceaccount.com");
+  auto service_account_inferred_name =
+      absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
+                   ".iam.gserviceaccount.com");
 
   // In case a previous execution left the service account.
   ::google::iam::admin::v1::DeleteServiceAccountRequest pre_delete_request;
@@ -373,9 +373,8 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   auto create_response = client.CreateServiceAccount(create_request);
   ASSERT_STATUS_OK(create_response);
   auto unique_id = create_response->unique_id();
-  auto service_account_full_name = absl::StrCat(
-    "projects/", iam_project_, "/serviceAccounts/",
-    unique_id);
+  auto service_account_full_name =
+      absl::StrCat("projects/", iam_project_, "/serviceAccounts/", unique_id);
 
   ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
   disable_request.set_name(service_account_inferred_name);
@@ -642,8 +641,9 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
     EXPECT_STATUS_OK(delete_response);
   }
 
-  auto role_id = absl::StrCat("iam_test_role_",
-          absl::FormatTime("%Y%m%d", absl::Now(), absl::UTCTimeZone()));
+  auto role_id = absl::StrCat(
+      "iam_test_role_",
+      absl::FormatTime("%Y%m%d", absl::Now(), absl::UTCTimeZone()));
   ::google::iam::admin::v1::CreateRoleRequest create_request;
   create_request.set_parent(parent_project);
   create_request.set_role_id(role_id);
@@ -669,7 +669,7 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   *update_request.mutable_update_mask() = update_mask;
   auto update_response = client.UpdateRole(update_request);
   EXPECT_STATUS_OK(update_response);
-  
+
   ::google::iam::admin::v1::DeleteRoleRequest delete_request;
   delete_request.set_name(create_response->name());
   auto delete_response = client.DeleteRole(delete_request);
