@@ -129,6 +129,8 @@ add_library(
     internal/hmac_key_requests.h
     internal/http_response.cc
     internal/http_response.h
+    internal/impersonate_service_account_credentials.cc
+    internal/impersonate_service_account_credentials.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
     internal/logging_client.cc
@@ -446,6 +448,7 @@ if (BUILD_TESTING)
         internal/hash_validator_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
+        internal/impersonate_service_account_credentials_test.cc
         internal/logging_client_test.cc
         internal/logging_resumable_upload_session_test.cc
         internal/make_jwt_assertion_test.cc
