@@ -196,3 +196,7 @@ function integration::ctest_with_emulators() {
     "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
+
+# To run the integration tests we need to install the dependencies for the storage emulator
+export PATH="${HOME}/.local/bin:${PATH}"
+python3 -m pip install --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"

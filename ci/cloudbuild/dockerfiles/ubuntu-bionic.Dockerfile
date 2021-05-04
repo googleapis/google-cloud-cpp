@@ -55,9 +55,6 @@ RUN apt-get update && \
 # Install Python packages used in the integration tests.
 RUN update-alternatives --install /usr/bin/python python $(which python3) 10
 RUN pip3 install setuptools wheel
-RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
-RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
-    crc32c==2.1 gunicorn==20.0.4
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.

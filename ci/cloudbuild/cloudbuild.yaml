@@ -110,7 +110,8 @@ steps:
     '--path=.cache/ccache',
     '--path=.cache/ctcache',
     '--path=.cache/vcpkg',
-    '--path=.cache/google-cloud-cpp'
+    '--path=.cache/google-cloud-cpp',
+    '--path=.local',
   ]
 
   # Remove the images created by this build.

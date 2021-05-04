@@ -32,9 +32,6 @@ RUN echo 'root:' | chpasswd
 # Install the Python modules needed to run the storage emulator
 RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
-RUN pip3 install git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
-RUN pip3 install flask==1.1.2 httpbin==0.7.0 scalpl==0.4.0 \
-    crc32c==2.1 gunicorn==20.0.4
 
 WORKDIR /var/tmp/build
 
