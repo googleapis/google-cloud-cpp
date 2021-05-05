@@ -19,8 +19,9 @@ import http
 import os
 import unittest
 import urllib
-
+import gzip
 import utils
+from werkzeug.test import create_environ
 
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
@@ -447,6 +448,27 @@ class TestError(unittest.TestCase):
         self.assertIn("Traceback (most recent call last):", body)
         self.assertIn("TypeError", body)
         self.assertIn("custom message", body)
+
+
+class TestHandleGzip(unittest.TestCase):
+    def test_handle_decompressing(self):
+        plain_text = b"hello world"
+        compressed_text = gzip.compress(plain_text)
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(compressed_text),
+            data=compressed_text,
+            content_type="application/octet-stream",
+            method="GET",
+            headers={"Content-Encoding": "gzip"},
+        )
+
+        def passthrough_fn(environ, _):
+            return environ
+
+        middleware = utils.handle_gzip.HandleGzipMiddleware(passthrough_fn)
+        decompressed_environ = middleware(environ, None)
+        self.assertEqual(decompressed_environ["werkzeug.request"].data, plain_text)
 
 
 if __name__ == "__main__":
