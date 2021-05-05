@@ -22,6 +22,8 @@ import urllib
 
 import utils
 
+from werkzeug.test import create_environ
+from werkzeug.wrappers import Request
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
@@ -336,6 +338,29 @@ class TestCommonUtils(unittest.TestCase):
         )
         with self.assertRaises(utils.error.RestException):
             utils.common.parse_multipart(request)
+
+    def test_enforce_patch_override_failure(self):
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=0,
+            data="",
+            content_type="application/octet-stream",
+            method="POST",
+            headers={"X-Http-Method-Override": "other"},
+        )
+        with self.assertRaises(utils.error.RestException):
+            utils.common.enforce_patch_override(Request(environ))
+
+    def test_enforce_patch_override_success(self):
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=0,
+            data="",
+            content_type="application/octet-stream",
+            method="POST",
+            headers={"X-Http-Method-Override": "PATCH"},
+        )
+        utils.common.enforce_patch_override(Request(environ))
 
 
 class TestGeneration(unittest.TestCase):

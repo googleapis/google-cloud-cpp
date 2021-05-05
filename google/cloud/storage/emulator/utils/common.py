@@ -322,3 +322,11 @@ def extract_instruction(request, context):
         if instruction is None:
             instruction = request.headers.get("x-goog-testbench-instructions")
     return instruction
+
+
+def enforce_patch_override(request):
+    if (
+        request.method == "POST"
+        and request.headers.get("X-Http-Method-Override", "") != "PATCH"
+    ):
+        utils.error.notallowed(context=None)
