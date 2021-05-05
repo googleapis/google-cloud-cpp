@@ -123,6 +123,14 @@ TEST(StreamingWriteRpcImpl, NoWritesDoneWithLastMessage) {
   EXPECT_THAT(impl.Close(), IsOk());
 }
 
+TEST(StreamingWriteRpcError, ErrorStream) {
+  auto under_test = StreamingWriteRpcError<FakeRequest, FakeResponse>(
+      Status(StatusCode::kAborted, "aborted"));
+  EXPECT_NO_THROW(under_test.Cancel());
+  EXPECT_FALSE(under_test.Write(FakeRequest{"w0"}, grpc::WriteOptions()));
+  EXPECT_THAT(under_test.Close(), StatusIs(StatusCode::kAborted, "aborted"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
