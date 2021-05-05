@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/iam_binding.h"
 #include "google/cloud/bigtable/expr.h"
-#include "google/cloud/testing_util/is_proto_equal.h"
+#include <google/protobuf/util/message_differencer.h>
 #include <algorithm>
 #include <iostream>
 #include <iterator>
