@@ -155,7 +155,7 @@ steps:
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       gcloud builds list --ongoing --format='value(id)' --filter \
         "tags=pr AND tags=${_PR_NUMBER} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time < ${ctime}" | \
-        xargs -t gcloud builds cancel
+        xargs -t gcloud builds cancel || exit 0
 
   # Cancels *this* specific build one is already queued up for a newer commit.
   # This frees up resources to run the build for the newer commit.
@@ -169,4 +169,4 @@ steps:
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       gcloud builds list --limit 1 --format='value(id)' --filter \
         "tags=pr AND tags=${_PR_NUMBER} AND tags=${_BUILD_NAME} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time > ${ctime}" | \
-        grep . && gcloud builds cancel '${BUILD_ID}'
+        grep . && gcloud builds cancel '${BUILD_ID}' || exit 0
