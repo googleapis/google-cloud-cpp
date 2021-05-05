@@ -19,7 +19,6 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/types/variant.h"
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/support/sync_stream.h>
 #include <memory>
@@ -44,29 +43,18 @@ namespace internal {
 template <typename RequestType, typename ResponseType>
 class StreamingWriteRpc {
  public:
-  /**
-   * Possible results for a Write() operation.
-   *
-   * A Write() operation can have three possible outcomes:
-   * - The Write was successful, continue using the stream, this is represented
-   *   by the `absl::monostate` branch
-   * - The streaming RPC is now closed, either with an error (the `Status`
-   *   branch), or with a successful final response (the `ResponseType`) branch.
-   *   maybe as a result of the Write() as result.
-   *
-   * @note the stream may be closed because of the `Write()` call (e.g., if it
-   * contains the `last_message()` bit), or because the service has closed the
-   * stream, or because of network or service errors.
-   */
-  using WriteOutcome = absl::variant<absl::monostate, Status, ResponseType>;
-
   virtual ~StreamingWriteRpc() = default;
 
   /// Cancel the RPC, this is needed to terminate the RPC "early".
   virtual void Cancel() = 0;
 
-  /// Return the next element, or the final RPC status.
-  virtual WriteOutcome Write(RequestType const& r, grpc::WriteOptions o) = 0;
+  /**
+   * Writes a new request message to the stream.
+   *
+   * Returns `true` if successful, if this operation fails the application
+   * should stop using the stream and call `Close()` to find the specific error.
+   */
+  virtual bool Write(RequestType const& r, grpc::WriteOptions o) = 0;
 
   /// Half-close the stream and wait for a response.
   virtual StatusOr<ResponseType> Close() = 0;
@@ -87,9 +75,6 @@ template <typename RequestType, typename ResponseType>
 class StreamingWriteRpcImpl
     : public StreamingWriteRpc<RequestType, ResponseType> {
  public:
-  using WriteOutcome =
-      typename StreamingWriteRpc<RequestType, ResponseType>::WriteOutcome;
-
   StreamingWriteRpcImpl(
       std::unique_ptr<grpc::ClientContext> context,
       std::unique_ptr<ResponseType> response,
@@ -108,16 +93,13 @@ class StreamingWriteRpcImpl
 
   void Cancel() override { context_->TryCancel(); }
 
-  WriteOutcome Write(RequestType const& r, grpc::WriteOptions o) override {
-    auto const result = stream_->Write(r, o);
-    if (result) return absl::monostate{};
-    auto status = Finish();
-    if (!status.ok()) return status;
-    return std::move(*response_);
+  bool Write(RequestType const& r, grpc::WriteOptions o) override {
+    if (o.is_last_message()) has_last_message_ = true;
+    return stream_->Write(r, std::move(o));
   }
 
   StatusOr<ResponseType> Close() override {
-    (void)stream_->WritesDone();
+    if (!has_last_message_) (void)stream_->WritesDone();
     auto status = Finish();
     if (!status.ok()) return status;
     return std::move(*response_);
@@ -134,6 +116,7 @@ class StreamingWriteRpcImpl
   std::unique_ptr<ResponseType> response_;
   std::unique_ptr<grpc::ClientWriterInterface<RequestType>> stream_;
   bool finished_ = false;
+  bool has_last_message_ = false;
 };
 
 }  // namespace internal

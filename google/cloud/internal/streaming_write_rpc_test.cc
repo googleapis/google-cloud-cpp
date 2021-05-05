@@ -61,8 +61,7 @@ TEST(StreamingWriteRpcImpl, SuccessfulStream) {
       absl::make_unique<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1", "w2"}) {
-    auto w = impl.Write(FakeRequest{key}, grpc::WriteOptions{});
-    EXPECT_TRUE(absl::holds_alternative<absl::monostate>(w));
+    EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
   }
   auto actual = impl.Close();
   ASSERT_THAT(actual, IsOk());
@@ -76,6 +75,7 @@ TEST(StreamingWriteRpcImpl, ErrorInWrite) {
       .WillOnce(Return(true))
       .WillOnce(Return(true))
       .WillOnce(Return(false));
+  EXPECT_CALL(*mock, WritesDone).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return grpc::Status(grpc::StatusCode::ABORTED, "aborted");
   });
@@ -84,12 +84,10 @@ TEST(StreamingWriteRpcImpl, ErrorInWrite) {
       absl::make_unique<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1"}) {
-    auto w = impl.Write(FakeRequest{key}, grpc::WriteOptions{});
-    EXPECT_TRUE(absl::holds_alternative<absl::monostate>(w));
+    EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
   }
-  auto w = impl.Write(FakeRequest{"w2"}, grpc::WriteOptions{});
-  ASSERT_TRUE(absl::holds_alternative<Status>(w));
-  EXPECT_THAT(absl::get<Status>(w), StatusIs(StatusCode::kAborted, "aborted"));
+  EXPECT_FALSE(impl.Write(FakeRequest{"w2"}, grpc::WriteOptions{}));
+  EXPECT_THAT(impl.Close(), StatusIs(StatusCode::kAborted, "aborted"));
 }
 
 TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
@@ -105,11 +103,24 @@ TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
       absl::make_unique<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1"}) {
-    auto w = impl.Write(FakeRequest{key}, grpc::WriteOptions{});
-    EXPECT_TRUE(absl::holds_alternative<absl::monostate>(w));
+    EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
   }
-  auto result = impl.Close();
-  EXPECT_THAT(result, StatusIs(StatusCode::kAborted, "aborted"));
+  EXPECT_THAT(impl.Close(), StatusIs(StatusCode::kAborted, "aborted"));
+}
+
+TEST(StreamingWriteRpcImpl, NoWritesDoneWithLastMessage) {
+  auto mock = absl::make_unique<MockWriter>();
+  auto response = absl::make_unique<FakeResponse>();
+  EXPECT_CALL(*mock, Write).WillOnce(Return(true)).WillOnce(Return(true));
+  EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
+
+  StreamingWriteRpcImpl<FakeRequest, FakeResponse> impl(
+      absl::make_unique<grpc::ClientContext>(), std::move(response),
+      std::move(mock));
+  EXPECT_TRUE(impl.Write(FakeRequest{"w0"}, grpc::WriteOptions{}));
+  EXPECT_TRUE(
+      impl.Write(FakeRequest{"w1"}, grpc::WriteOptions{}.set_last_message()));
+  EXPECT_THAT(impl.Close(), IsOk());
 }
 
 }  // namespace
