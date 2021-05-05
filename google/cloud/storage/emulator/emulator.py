@@ -147,8 +147,9 @@ def bucket_update(bucket_name):
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
 
 
-@gcs.route("/b/<bucket_name>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>", methods=["PATCH", "POST"])
 def bucket_patch(bucket_name):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.patch(flask.request, None)
     projection = utils.common.extract_projection(
@@ -209,8 +210,9 @@ def bucket_acl_update(bucket_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PATCH", "POST"])
 def bucket_acl_patch(bucket_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.patch_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
@@ -268,8 +270,9 @@ def bucket_default_object_acl_update(bucket_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PATCH", "POST"])
 def bucket_default_object_acl_patch(bucket_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.patch_default_object_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
@@ -386,8 +389,9 @@ def object_update(bucket_name, object_name):
     return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
 
 
-@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH", "POST"])
 def object_patch(bucket_name, object_name):
+    utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
@@ -592,8 +596,11 @@ def object_acl_update(bucket_name, object_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH"])
+@gcs.route(
+    "/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH", "POST"]
+)
 def object_acl_patch(bucket_name, object_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     acl = blob.patch_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
