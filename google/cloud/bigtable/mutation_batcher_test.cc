@@ -19,9 +19,9 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,6 +35,7 @@ namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
@@ -178,12 +179,8 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
               SingleRowMutation tmp(exchange.req[i]);
               tmp.MoveTo(&expected);
 
-              std::string delta;
-              google::protobuf::util::MessageDifferencer differencer;
-              differencer.ReportDifferencesToString(&delta);
-              EXPECT_TRUE(
-                  differencer.Compare(expected, r.entries(static_cast<int>(i))))
-                  << delta;
+              EXPECT_THAT(expected,
+                          IsProtoEqual(r.entries(static_cast<int>(i))));
             }
             return std::unique_ptr<
                 MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(

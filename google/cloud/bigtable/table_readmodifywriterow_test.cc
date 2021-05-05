@@ -14,10 +14,10 @@
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,6 +29,7 @@ namespace {
 namespace btproto = ::google::bigtable::v2;
 
 using ::google::cloud::testing_util::IsContextMDValid;
+using ::google::cloud::testing_util::IsProtoEqual;
 
 /// Define helper types and functions for this test.
 class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
@@ -48,11 +49,7 @@ auto create_rules_lambda = [](std::string const& expected_request_string,
     btproto::ReadModifyWriteRowRequest expected_request;
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         expected_request_string, &expected_request));
-
-    std::string delta;
-    google::protobuf::util::MessageDifferencer differencer;
-    differencer.ReportDifferencesToString(&delta);
-    EXPECT_TRUE(differencer.Compare(expected_request, request)) << delta;
+    EXPECT_THAT(expected_request, IsProtoEqual(request));
 
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         generated_response_string, response));
