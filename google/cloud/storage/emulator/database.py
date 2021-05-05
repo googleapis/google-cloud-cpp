@@ -242,7 +242,7 @@ class Database:
     def get_rewrite(self, token, context):
         rewrite = self.rewrites.get(token)
         if rewrite is None:
-            utils.error.notfound(404, "Rewrite %s" % token, context)
+            utils.error.notfound("Rewrite %s" % token, context)
         return rewrite
 
     def insert_rewrite(self, rewrite):
