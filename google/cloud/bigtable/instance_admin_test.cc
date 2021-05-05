@@ -19,11 +19,11 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 // TODO(#5923) - remove after deprecation is completed
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
@@ -40,6 +40,7 @@ using MockAdminClient =
     ::google::cloud::bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
@@ -192,10 +193,7 @@ struct MockRpcFactory {
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
           EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
               expected_request, &expected));
-          std::string delta;
-          google::protobuf::util::MessageDifferencer differencer;
-          differencer.ReportDifferencesToString(&delta);
-          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+          EXPECT_THAT(expected, IsProtoEqual(request));
 
           EXPECT_NE(nullptr, response);
           return grpc::Status::OK;

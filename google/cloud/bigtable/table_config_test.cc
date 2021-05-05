@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table_config.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,6 +24,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
+using ::google::cloud::testing_util::IsProtoEqual;
 
 TEST(TableConfig, Simple) {
   TableConfig config;
@@ -63,10 +64,7 @@ initial_splits { key: 'qux' }
 
   auto request = std::move(config).as_proto();
 
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+  EXPECT_THAT(expected, IsProtoEqual(request));
 }
 
 TEST(TableConfig, ComplexConstructor) {

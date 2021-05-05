@@ -21,11 +21,11 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <chrono>
@@ -42,6 +42,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::chrono_literals::operator"" _h;
 using ::google::cloud::testing_util::chrono_literals::operator"" _min;
@@ -213,10 +214,7 @@ struct MockRpcFactory {
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
           EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
               expected_request, &expected));
-          std::string delta;
-          google::protobuf::util::MessageDifferencer differencer;
-          differencer.ReportDifferencesToString(&delta);
-          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+          EXPECT_THAT(expected, IsProtoEqual(request));
 
           return grpc::Status::OK;
         });
