@@ -418,6 +418,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/streaming_read_rpc.cc
         internal/streaming_read_rpc.h
         internal/streaming_read_rpc_logging.h
+        internal/streaming_write_rpc.cc
+        internal/streaming_write_rpc.h
         internal/time_utils.cc
         internal/time_utils.h
         internal/unified_grpc_credentials.cc
@@ -531,6 +533,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/retry_loop_test.cc
             internal/streaming_read_rpc_logging_test.cc
             internal/streaming_read_rpc_test.cc
+            internal/streaming_write_rpc_test.cc
             internal/time_utils_test.cc
             internal/unified_grpc_credentials_test.cc)
 
