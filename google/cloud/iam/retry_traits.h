@@ -31,6 +31,14 @@ struct IAMCredentialsRetryTraits {
   }
 };
 
+struct IAMRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kDeadlineExceeded &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
+
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS
 }  // namespace iam_internal
 }  // namespace cloud

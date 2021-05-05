@@ -29,6 +29,12 @@ find_package(absl CONFIG REQUIRED)
 
 add_library(
     google_cloud_cpp_iam # cmake-format: sort
+    iam_client.cc
+    iam_client.h
+    iam_connection.cc
+    iam_connection.h
+    iam_connection_idempotency_policy.cc
+    iam_connection_idempotency_policy.h
     iam_credentials_client.cc
     iam_credentials_client.h
     iam_credentials_connection.cc
@@ -36,6 +42,7 @@ add_library(
     iam_credentials_connection_idempotency_policy.cc
     iam_credentials_connection_idempotency_policy.h
     iam_credentials_options.h
+    iam_options.h
     internal/iam_credentials_logging_decorator.cc
     internal/iam_credentials_logging_decorator.h
     internal/iam_credentials_metadata_decorator.cc
@@ -46,6 +53,16 @@ add_library(
     internal/iam_credentials_stub.h
     internal/iam_credentials_stub_factory.cc
     internal/iam_credentials_stub_factory.h
+    internal/iam_logging_decorator.cc
+    internal/iam_logging_decorator.h
+    internal/iam_metadata_decorator.cc
+    internal/iam_metadata_decorator.h
+    internal/iam_option_defaults.cc
+    internal/iam_option_defaults.h
+    internal/iam_stub.cc
+    internal/iam_stub.h
+    internal/iam_stub_factory.cc
+    internal/iam_stub_factory.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_iam
@@ -80,6 +97,7 @@ add_library(google_cloud_cpp_iam_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_iam_mocks
     INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.h)
 target_link_libraries(
     google_cloud_cpp_iam_mocks
