@@ -167,7 +167,7 @@ steps:
     - '-c'
     - |
       set -e
-      now="$(date --iso-8601=seconds -u)"
+      ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       gcloud builds list --limit 1 --format='value(id)' --filter \
         "tags=pr AND tags=${_PR_NUMBER} AND tags=${_BUILD_NAME} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time > '${ctime}'" \
         | grep . && gcloud builds cancel '${BUILD_ID}'
