@@ -155,6 +155,6 @@ steps:
     - |
       set +e
       gcloud builds list --ongoing --format='value(id)' --filter \
-        'tags=pr AND tags=${_PR_NUMBER} AND tags=${_BUILD_NAME} AND substitutions.COMMIT_SHA != ${COMMIT_SHA}' \
+        'tags=pr AND tags=${_PR_NUMBER} AND substitutions.COMMIT_SHA != ${COMMIT_SHA}' \
         | xargs -t gcloud builds cancel
       exit 0
