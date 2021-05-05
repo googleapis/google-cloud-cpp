@@ -18,6 +18,11 @@ import json
 import random
 import re
 import types
+import time
+import sys
+import socket
+import struct
+from flask import Response as FlaskResponse
 
 import scalpl
 import utils
@@ -27,6 +32,9 @@ from requests_toolbelt import MultipartDecoder
 from requests_toolbelt.multipart.decoder import ImproperBodyPartContentException
 
 re_remove_index = re.compile(r"\[\d+\]+|^[0-9]+")
+retry_return_error_code = re.compile(r"return-([0-9]+)$")
+retry_return_error_connection = re.compile(r"return-([a-z\-]+)$")
+retry_return_error_after_bytes = re.compile(r"return-([0-9]+)-after-([0-9]+)K$")
 content_range_split = re.compile(r"bytes (\*|[0-9]+-[0-9]+|[0-9]+-\*)\/(\*|[0-9]+)")
 
 # === STR === #
@@ -330,3 +338,85 @@ def enforce_patch_override(request):
         and request.headers.get("X-Http-Method-Override", "") != "PATCH"
     ):
         utils.error.notallowed(context=None)
+
+
+def __extract_data(data):
+    if isinstance(data, FlaskResponse):
+        return data.get_data()
+    if isinstance(data, dict):
+        return json.dumps(data)
+    return data
+
+
+def __wrap_in_response_instance(data, to_wrap):
+    if isinstance(data, FlaskResponse):
+        data.set_data(to_wrap)
+        return data
+    return FlaskResponse(to_wrap)
+
+
+def handle_retry_test_instruction(database, request, method):
+    test_id = request.headers.get("x-retry-test-id", None)
+
+    def retry_test_response_handler(data):
+        return data
+
+    if test_id and database.has_instructions_retry_test(test_id, method):
+        next_instruction = database.peek_next_instruction(test_id, method)
+        error_code_matches = utils.common.retry_return_error_code.match(
+            next_instruction
+        )
+        if error_code_matches != None:
+            database.dequeue_next_instruction(test_id, method)
+            items = list(error_code_matches.groups())
+            error_code = items[0]
+            utils.error.generic(
+                "Retry Test: Caused a {}".format(error_code),
+                rest_code=error_code,
+                grpc_code=None,
+                context=None,
+            )
+        retry_connection_matches = utils.common.retry_return_error_connection.match(
+            next_instruction
+        )
+        if retry_connection_matches != None:
+            items = list(retry_connection_matches.groups())
+            # sys.exit(1) retains database state with more than 1 thread
+            if items[0] == "reset-connection":
+                database.dequeue_next_instruction(test_id, method)
+                fd = request.environ["gunicorn.socket"]
+                fd.setsockopt(
+                    socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0)
+                )
+                sys.exit(1)
+            elif items[0] == "broken-stream":
+
+                def retry_test_response_handler(data):
+                    def streamer():
+                        database.dequeue_next_instruction(test_id, method)
+                        d = __extract_data(data)
+                        chunk_size = 4
+                        for r in range(0, len(d), chunk_size):
+                            if r >= 10:
+                                sys.exit(1)
+                            chunk_end = min(r + chunk_size, len(d))
+                            yield d[r:chunk_end]
+
+                    return __wrap_in_response_instance(data, streamer())
+
+        error_after_bytes_matches = utils.common.retry_return_error_after_bytes.match(
+            next_instruction
+        )
+        if error_after_bytes_matches != None:
+            items = list(error_after_bytes_matches.groups())
+            error_code = items[0]
+            after_bytes = items[1]
+            if method == "storage.objects.insert":
+                # Upload failures should allow to not complete after certain bytes
+                upload_type = request.args.get("uploadType", None)
+                if upload_type != None and upload_type == "resumable":
+                    upload_id = request.args.get("upload_id", None)
+                    if upload_id != None:
+                        database.dequeue_next_instruction(test_id, method)
+                        utils.error.notallowed()
+    return retry_test_response_handler
