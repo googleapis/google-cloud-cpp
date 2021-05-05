@@ -154,7 +154,8 @@ steps:
     - '-c'
     - |
       set +e
+      now="$(date --iso-8601=seconds -u)"
       gcloud builds list --ongoing --format='value(id)' --filter \
-        'tags=pr AND tags=${_PR_NUMBER} AND substitutions.COMMIT_SHA != ${COMMIT_SHA}' \
+        "tags=pr AND tags=${_PR_NUMBER} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time < '${now}'" \
         | xargs -t gcloud builds cancel
       exit 0
