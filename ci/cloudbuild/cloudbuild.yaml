@@ -143,8 +143,8 @@ steps:
         xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
       exit 0
 
-  # Cancels *this* specific build one is already queued up for a newer commit.
-  # This frees up resources to run the build for the newer commit.
+  # Cancels *this* specific build if one is already queued up for a newer
+  # commit. This frees up resources to run the build for the newer commit.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   waitFor: [ '-' ]
   entrypoint: 'bash'
