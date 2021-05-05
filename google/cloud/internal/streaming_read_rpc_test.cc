@@ -172,7 +172,7 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
 TEST(StreamingReadRpcImpl, ErrorStream) {
   auto under_test = StreamingReadRpcError<FakeResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
-  EXPECT_NO_THROW(under_test.Cancel());
+  under_test.Cancel();  // just a smoke test
   auto result = under_test.Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(result));
   EXPECT_THAT(absl::get<Status>(result),

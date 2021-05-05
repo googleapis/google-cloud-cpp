@@ -126,7 +126,7 @@ TEST(StreamingWriteRpcImpl, NoWritesDoneWithLastMessage) {
 TEST(StreamingWriteRpcError, ErrorStream) {
   auto under_test = StreamingWriteRpcError<FakeRequest, FakeResponse>(
       Status(StatusCode::kAborted, "aborted"));
-  EXPECT_NO_THROW(under_test.Cancel());
+  under_test.Cancel();  // just a smoke test
   EXPECT_FALSE(under_test.Write(FakeRequest{"w0"}, grpc::WriteOptions()));
   EXPECT_THAT(under_test.Close(), StatusIs(StatusCode::kAborted, "aborted"));
 }
