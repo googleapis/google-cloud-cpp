@@ -109,6 +109,12 @@ class InProcessDataClient : public bigtable::DataClient {
       ::grpc::ClientContext* context,
       const ::google::bigtable::v2::SampleRowKeysRequest& request,
       ::grpc::CompletionQueue* cq, void* tag) override;
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::SampleRowKeysResponse>>
+  PrepareAsyncSampleRowKeys(
+      ::grpc::ClientContext* context,
+      const ::google::bigtable::v2::SampleRowKeysRequest& request,
+      ::grpc::CompletionQueue* cq) override;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,

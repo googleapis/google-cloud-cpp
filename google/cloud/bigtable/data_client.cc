@@ -139,6 +139,14 @@ class DefaultDataClient : public DataClient {
       ::grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::SampleRowKeysResponse>>
+  PrepareAsyncSampleRowKeys(
+      ::grpc::ClientContext* context,
+      const ::google::bigtable::v2::SampleRowKeysRequest& request,
+      ::grpc::CompletionQueue* cq) override {
+    return impl_.Stub()->PrepareAsyncSampleRowKeys(context, request, cq);
+  }
 
   std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,

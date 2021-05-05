@@ -140,6 +140,15 @@ LoggingDataClient::AsyncSampleRowKeys(
   return child_->AsyncSampleRowKeys(context, request, cq, tag);
 }
 
+std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+    ::google::bigtable::v2::SampleRowKeysResponse>>
+LoggingDataClient::PrepareAsyncSampleRowKeys(
+    ::grpc::ClientContext* context,
+    const ::google::bigtable::v2::SampleRowKeysRequest& request,
+    ::grpc::CompletionQueue* cq) {
+  return child_->PrepareAsyncSampleRowKeys(context, request, cq);
+}
+
 std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
 LoggingDataClient::MutateRows(grpc::ClientContext* context,
                               btproto::MutateRowsRequest const& request) {
