@@ -21,6 +21,9 @@ import unittest
 import gcs
 import utils
 
+from werkzeug.test import create_environ
+from werkzeug.wrappers import Request
+
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 from google.cloud.storage_v1.proto import storage_resources_pb2 as resources_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
@@ -415,6 +418,129 @@ class TestObject(unittest.TestCase):
 
 
 class TestHolder(unittest.TestCase):
+    def test_init_resumable_rest_empty_body_no_name(self):
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(json.dumps({"name": "bucket-test"})),
+            data=json.dumps({"name": "bucket-test"}),
+            content_type="application/json",
+            method="GET",
+        )
+
+        bucket, _ = gcs.bucket.Bucket.init(Request(environ), None)
+        bucket = bucket.metadata
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = "{}"
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(cm.exception.msg, "No object name is invalid.")
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = ""
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(cm.exception.msg, "No object name is invalid.")
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = json.dumps({"name": ""})
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                query_string={"name": ""},
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(cm.exception.msg, "No object name is invalid.")
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = json.dumps({"name": "a"})
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                query_string={"name": "b"},
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(
+            cm.exception.msg,
+            "Value 'a' in content does not agree with value 'b'. is invalid.",
+        )
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = json.dumps({"name": ""})
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                query_string={"name": "b"},
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(
+            cm.exception.msg,
+            "Value '' in content does not agree with value 'b'. is invalid.",
+        )
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = json.dumps({"name": "a"})
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                query_string={"name": ""},
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(
+            cm.exception.msg,
+            "Value 'a' in content does not agree with value ''. is invalid.",
+        )
+
+        with self.assertRaises(utils.error.RestException) as cm:
+            data = json.dumps({"name": None})
+            environ = create_environ(
+                base_url="http://localhost:8080",
+                query_string={"name": "b"},
+                content_length=len(data),
+                data=data,
+                content_type="application/json",
+                method="GET",
+            )
+            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+        self.assertEqual(
+            cm.exception.msg,
+            "Value '' in content does not agree with value 'b'. is invalid.",
+        )
+
+        data = json.dumps({"name": "a"})
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            query_string={"name": "a"},
+            content_length=len(data),
+            data=data,
+            content_type="application/json",
+            method="GET",
+        )
+        upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+
     def test_init_resumable_grpc(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
         bucket, _ = gcs.bucket.Bucket.init(request, "")
