@@ -143,20 +143,6 @@ steps:
         xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
       exit 0
 
-  # Cancels in-progress builds for previous commits in the current PR so we can
-  # free up resources to start running the builds for the new commit.
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  waitFor: [ '-' ]
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      set -xe
-      ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
-      gcloud builds list --ongoing --format='value(id)' --filter \
-        "tags=pr AND tags=${_PR_NUMBER} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time < ${ctime}" | \
-        xargs -r -t gcloud builds cancel
-
   # Cancels *this* specific build one is already queued up for a newer commit.
   # This frees up resources to run the build for the newer commit.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -167,6 +153,27 @@ steps:
     - |
       set -xe
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
-      gcloud builds list --limit 1 --format='value(id)' --filter \
-        "tags=pr AND tags=${_PR_NUMBER} AND tags=${_BUILD_NAME} AND substitutions.COMMIT_SHA != ${COMMIT_SHA} AND create_time > ${ctime}" | \
+      query="tags=pr"
+      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND tags=${_BUILD_NAME}"
+      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
+      query+=" AND create_time > ${ctime}"
+      gcloud builds list --limit 1 --format='value(id)' --filter "${query}" | \
         grep . && gcloud builds cancel '${BUILD_ID}' || exit 0
+
+  # Cancels in-progress builds for previous commits in the current PR so we can
+  # free up resources to start running the builds for the new commit.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  waitFor: [ '-' ]
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set -xe
+      ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
+      query="tags=pr"
+      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
+      query+=" AND create_time < ${ctime}"
+      gcloud builds list --ongoing --format='value(id)' --filter "${query}" | \
+        xargs -r -t gcloud builds cancel
