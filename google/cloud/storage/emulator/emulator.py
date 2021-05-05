@@ -21,6 +21,7 @@ import gcs as gcs_type
 import grpc_server
 import httpbin
 import utils
+from utils.handle_gzip import HandleGzipMiddleware
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
@@ -803,16 +804,18 @@ def xml_get_object(bucket_name, object_name):
 (IAM_HANDLER_PATH, iam_app) = gcs_type.iam.get_iam_app()
 
 
-server = DispatcherMiddleware(
-    root,
-    {
-        "/httpbin": httpbin.app,
-        GCS_HANDLER_PATH: gcs,
-        DOWNLOAD_HANDLER_PATH: download,
-        UPLOAD_HANDLER_PATH: upload,
-        PROJECTS_HANDLER_PATH: projects_app,
-        IAM_HANDLER_PATH: iam_app,
-    },
+server = HandleGzipMiddleware(
+    DispatcherMiddleware(
+        root,
+        {
+            "/httpbin": httpbin.app,
+            GCS_HANDLER_PATH: gcs,
+            DOWNLOAD_HANDLER_PATH: download,
+            UPLOAD_HANDLER_PATH: upload,
+            PROJECTS_HANDLER_PATH: projects_app,
+            IAM_HANDLER_PATH: iam_app,
+        },
+    )
 )
 
 root.register_error_handler(Exception, utils.error.RestException.handler)
