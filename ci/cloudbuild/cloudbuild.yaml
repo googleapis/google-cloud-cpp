@@ -143,10 +143,10 @@ steps:
         xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
       exit 0
 
-  # Cancels all ongoing builds for the current build name and PR that don't
-  # match the new COMMIT_SHA. This effectively means that anytime we push a new
-  # commit, all ongoing builds are cancelled in favor of starting builds for
-  # the new commit. This will only happen for PRs (i.e., not for CI builds).
+  # Cancels all ongoing builds for the current PR that don't match the new
+  # COMMIT_SHA. This effectively means that anytime we push a new commit, all
+  # ongoing builds are cancelled in favor of starting builds for the new
+  # commit. This will only happen for PRs (i.e., not for CI builds).
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   waitFor: [ '-' ]
   entrypoint: 'bash'
