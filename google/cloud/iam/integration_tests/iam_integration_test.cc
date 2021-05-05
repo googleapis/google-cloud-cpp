@@ -226,7 +226,13 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
       "projects/-/serviceAccounts/" + iam_service_account_,
       {::google::iam::admin::v1::ListServiceAccountKeysRequest::USER_MANAGED});
   ASSERT_STATUS_OK(list_response);
-  EXPECT_GT(list_response->keys().size(), 0);
+  bool found = std::any_of(
+      list_response->keys().begin(), list_response->keys().end(),
+      [&create_response](
+          StatusOr<::google::iam::admin::v1::ServiceAccountKey> const& sa) {
+        return sa.ok() && sa->name() == create_response->name();
+      });
+  EXPECT_TRUE(found);
 
   for (auto const& key : list_response->keys()) {
     auto delete_response = client.DeleteServiceAccountKey(key.name());
@@ -397,6 +403,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   *update_mask.add_paths() = "description";
   *patch_request.mutable_update_mask() = update_mask;
   auto patch_response = client.PatchServiceAccount(patch_request);
+  // TODO(#6475): Determine how to make this call successful.
   EXPECT_THAT(patch_response, StatusIs(StatusCode::kFailedPrecondition));
 
   ::google::iam::admin::v1::DeleteServiceAccountRequest delete_request;
@@ -663,6 +670,14 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   get_request.set_name(create_response->name());
   auto get_response = client.GetRole(get_request);
   EXPECT_STATUS_OK(get_response);
+
+  list_response = client.ListRoles(list_request);
+  bool role_found = std::any_of(
+      list_response.begin(), list_response.end(),
+      [&role_id](StatusOr<::google::iam::admin::v1::Role> const& role) {
+        return role.ok() && role->name() == role_id;
+      });
+  EXPECT_TRUE(role_found);
 
   ::google::iam::admin::v1::UpdateRoleRequest update_request;
   update_request.set_name(create_response->name());
