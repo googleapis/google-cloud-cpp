@@ -98,6 +98,30 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
   bool finished_ = false;
 };
 
+/**
+ * A stream returning a fixed error.
+ *
+ * This is used when the library cannot even start the streaming RPC, for
+ * example, because setting up the credentials for the call failed.  One could
+ * return `StatusOr<std::unique_ptr<StreamingReadRpc<T>>` in such cases, but
+ * the receiving code must deal with streams that fail anyway. It seems more
+ * elegant to represent the error as part of the stream.
+ */
+template <typename ResponseType>
+class StreamingReadRpcError : public StreamingReadRpc<ResponseType> {
+ public:
+  explicit StreamingReadRpcError(Status status) : status_(std::move(status)) {}
+
+  ~StreamingReadRpcError() override = default;
+
+  void Cancel() override {}
+
+  absl::variant<Status, ResponseType> Read() override { return status_; }
+
+ private:
+  Status status_;
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

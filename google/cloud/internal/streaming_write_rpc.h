@@ -119,6 +119,32 @@ class StreamingWriteRpcImpl
   bool has_last_message_ = false;
 };
 
+/**
+ * A stream returning a fixed error.
+ *
+ * This is used when the library cannot even start the streaming RPC, for
+ * example, because setting up the credentials for the call failed.  One could
+ * return `StatusOr<std::unique_ptr<StreamingWriteRpc<A, B>>` in such cases, but
+ * the receiving code must deal with streams that fail anyway. It seems more
+ * elegant to represent the error as part of the stream.
+ */
+template <typename RequestType, typename ResponseType>
+class StreamingWriteRpcError
+    : public StreamingWriteRpc<RequestType, ResponseType> {
+ public:
+  explicit StreamingWriteRpcError(Status status) : status_(std::move(status)) {}
+  ~StreamingWriteRpcError() override = default;
+
+  void Cancel() override {}
+
+  bool Write(RequestType const&, grpc::WriteOptions) override { return false; }
+
+  StatusOr<ResponseType> Close() override { return status_; }
+
+ private:
+  Status status_;
+};
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
