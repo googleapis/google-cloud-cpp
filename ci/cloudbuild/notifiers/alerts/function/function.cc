@@ -48,12 +48,12 @@ nlohmann::json MakeChatPayload(nlohmann::json const& build) {
   auto const project_id = build.value("projectId", "unknown");
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
   auto text = fmt::format(
-      R"""(Failed trigger: {trigger_name}
-      (<https://console.cloud.google.com/cloud-build/builds/{build_id}?project={project_id}|Build Log>)
-      )""",
+      "Failed trigger: **{trigger_name}** "
+      "(<https://console.cloud.google.com/cloud-build/builds/"
+      "{build_id}?project={project_id}|Build Log>)",
       fmt::arg("trigger_name", trigger_name), fmt::arg("build_id", build_id),
       fmt::arg("project_id", project_id));
-  return nlohmann::json{"text", std::move(text)};
+  return nlohmann::json{{"text", std::move(text)}};
 } 
 
 extern "C" size_t CurlOnWriteData(char* ptr, size_t size, size_t nmemb,
@@ -95,6 +95,7 @@ void HttpPost(std::string const& url, std::string const& data) {
   };
 
   setopt(CURLOPT_URL, url.c_str());
+  setopt(CURLOPT_POSTFIELDS, data.c_str());
   setopt(CURLOPT_WRITEFUNCTION, &CurlOnWriteData);
   std::string buffer;
   setopt(CURLOPT_WRITEDATA, &buffer);
@@ -145,5 +146,12 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   }
 
   std::cerr << "Got webhook URL prefix " << webhook_url.substr(0, 10) << "\n";
+  /* std::string cmd = "curl -X POST -H 'Content-Type: application/json; charset=UTF-8'"; */
+  /* cmd += " -sSL"; */
+  /* cmd += " -d '" + chat.dump() + "'"; */
+  /* cmd += " '" + webhook_url + "'"; */
+  /* std::cerr << "cmd=" << cmd << "\n"; */
+  /* auto x = system(cmd.c_str()); */
+  /* std::cerr << "system returned " << x << "\n"; */
   HttpPost(webhook_url, chat.dump());
 }
