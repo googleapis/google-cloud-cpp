@@ -226,13 +226,11 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
       "projects/-/serviceAccounts/" + iam_service_account_,
       {::google::iam::admin::v1::ListServiceAccountKeysRequest::USER_MANAGED});
   ASSERT_STATUS_OK(list_response);
-  bool found = std::any_of(
-      list_response->keys().begin(), list_response->keys().end(),
-      [&create_response](
-          StatusOr<::google::iam::admin::v1::ServiceAccountKey> const& sa) {
-        return sa.ok() && sa->name() == create_response->name();
-      });
-  EXPECT_TRUE(found);
+  std::vector<std::string> key_names;
+  for (auto const& key : list_response->keys()) {
+    key_names.push_back(key.name());
+  }
+  EXPECT_THAT(key_names, Contains(create_response->name()));
 
   for (auto const& key : list_response->keys()) {
     auto delete_response = client.DeleteServiceAccountKey(key.name());
@@ -672,12 +670,13 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   EXPECT_STATUS_OK(get_response);
 
   list_response = client.ListRoles(list_request);
-  bool role_found = std::any_of(
-      list_response.begin(), list_response.end(),
-      [&role_id](StatusOr<::google::iam::admin::v1::Role> const& role) {
-        return role.ok() && role->name() == role_id;
-      });
-  EXPECT_TRUE(role_found);
+  std::vector<std::string> role_ids;
+  for (auto const& role : list_response) {
+    if (role) {
+      role_ids.push_back(role->name());
+    }
+  }
+  EXPECT_THAT(role_ids, Contains(role_id));
 
   ::google::iam::admin::v1::UpdateRoleRequest update_request;
   update_request.set_name(create_response->name());
