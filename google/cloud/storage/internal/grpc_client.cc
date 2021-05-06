@@ -315,22 +315,22 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
   }();
 
   auto proto_request = ToProto(request);
-  std::size_t const maximum_buffer_size =
-      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   auto const& contents = request.contents();
+  auto const contents_size = static_cast<std::int64_t>(contents.size());
+  std::int64_t const maximum_buffer_size =
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
-  std::int64_t offset = 0;
-  do {
+  for (std::int64_t offset = 0, n = 0; offset < contents_size; offset += n) {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
-    auto const n = (std::min)(contents.size() - offset, maximum_buffer_size);
+    n = (std::min)(contents_size - offset, maximum_buffer_size);
     data.set_content(contents.substr(offset, n));
     data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
 
     grpc::WriteOptions options;
-    if (offset + n >= contents.size()) {
+    if (offset + n >= contents_size) {
       options.set_last_message();
       proto_request.set_finish_write(true);
     }
@@ -339,8 +339,7 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     // there is no need to resend it.
     proto_request.clear_insert_object_spec();
     proto_request.clear_object_checksums();
-    offset += static_cast<std::int64_t>(n);
-  } while (offset < static_cast<std::int64_t>(contents.size()));
+  }
 
   auto response = stream->Close();
   if (!response) return std::move(response).status();
