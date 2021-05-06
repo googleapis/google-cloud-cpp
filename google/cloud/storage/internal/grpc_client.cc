@@ -322,19 +322,19 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
-  for (std::int64_t offset = 0, n = 0; offset < contents_size; offset += n) {
+  for (std::int64_t offset = 0, n = 0; offset <= contents_size; offset += n) {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
     n = (std::min)(contents_size - offset, maximum_buffer_size);
     data.set_content(contents.substr(offset, n));
     data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
 
-    grpc::WriteOptions options;
     if (offset + n >= contents_size) {
-      options.set_last_message();
       proto_request.set_finish_write(true);
+      stream->Write(proto_request, grpc::WriteOptions{}.set_last_message());
+      break;
     }
-    if (!stream->Write(proto_request, options)) break;
+    if (!stream->Write(proto_request, grpc::WriteOptions{})) break;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     proto_request.clear_insert_object_spec();
