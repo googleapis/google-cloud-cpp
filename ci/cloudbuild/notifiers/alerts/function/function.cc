@@ -100,7 +100,9 @@ void HttpPost(std::string const& url, std::string const& data) {
   setopt(CURLOPT_WRITEDATA, &buffer);
   setopt(CURLOPT_HTTPHEADER, headers.get());
 
+  std::cerr << "curl_easy_perform\n";
   auto e = curl_easy_perform(easy.get());
+  std::cerr << "done with " << e << "\n";
   if (e != CURLE_OK) {
     LogError(fmt::format("Curl failed with code %d", get_response_code()));
   }
@@ -109,7 +111,7 @@ void HttpPost(std::string const& url, std::string const& data) {
 }  // namespace
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
-  std::cerr << "Got event";
+  std::cerr << "Got event\n";
   if (event.data_content_type().value_or("") != "application/json") {
     return LogError("expected application/json data");
   }
@@ -133,7 +135,7 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   /* } */
 
   auto chat = MakeChatPayload(contents);
-  std::cerr << "Got Chat payload: " << chat;
+  std::cerr << "Got Chat payload: " << chat << "\n";
 
   std::string webhook_url;
   if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
@@ -142,6 +144,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
     return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
   }
 
-  std::cerr << "Got webhook URL prefix" << webhook_url.substr(0, 10);
+  std::cerr << "Got webhook URL prefix " << webhook_url.substr(0, 10) << "\n";
   HttpPost(webhook_url, chat.dump());
 }
