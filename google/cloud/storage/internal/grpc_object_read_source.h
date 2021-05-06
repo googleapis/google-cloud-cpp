@@ -17,7 +17,8 @@
 
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include <google/storage/v1/storage.pb.h>
 #include <functional>
 #include <string>
 
@@ -26,9 +27,6 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
-using GrpcObjectContentsReader =
-    grpc::ClientReaderInterface<google::storage::v1::GetObjectMediaResponse>;
 
 /**
  * A data source for storage::ObjectReadStream using gRPC.
@@ -42,11 +40,12 @@ using GrpcObjectContentsReader =
  */
 class GrpcObjectReadSource : public ObjectReadSource {
  public:
-  explicit GrpcObjectReadSource(
-      std::unique_ptr<grpc::ClientContext> context,
-      std::unique_ptr<GrpcObjectContentsReader> stream);
+  using StreamingRpc = google::cloud::internal::StreamingReadRpc<
+      google::storage::v1::GetObjectMediaResponse>;
 
-  ~GrpcObjectReadSource() override;
+  explicit GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream);
+
+  ~GrpcObjectReadSource() override = default;
 
   bool IsOpen() const override { return static_cast<bool>(stream_); }
 
@@ -58,11 +57,7 @@ class GrpcObjectReadSource : public ObjectReadSource {
   StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:
-  // To create a reader for a streaming RPC one needs a client context with
-  // longer lifetime than the stream. This is the client context used for the
-  // request.
-  std::unique_ptr<grpc::ClientContext> context_;
-  std::unique_ptr<GrpcObjectContentsReader> stream_;
+  std::unique_ptr<StreamingRpc> stream_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.

@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <google/storage/v1/storage.grpc.pb.h>
 #include <memory>
@@ -48,10 +49,10 @@ class GrpcClient : public RawClient,
   // them is very different from the standard retry loop. Also note that these
   // are virtual functions only because we need to override them in the unit
   // tests.
-  using UploadWriter =
-      grpc::ClientWriterInterface<google::storage::v1::InsertObjectRequest>;
-  virtual std::unique_ptr<UploadWriter> CreateUploadWriter(
-      grpc::ClientContext&, google::storage::v1::Object&);
+  using InsertStream = google::cloud::internal::StreamingWriteRpc<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+  virtual std::unique_ptr<InsertStream> CreateUploadWriter(
+      std::unique_ptr<grpc::ClientContext> context);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
   //@}

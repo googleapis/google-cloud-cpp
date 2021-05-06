@@ -25,6 +25,8 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/internal/streaming_write_rpc.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 #include "absl/algorithm/container.h"
@@ -119,10 +121,19 @@ GrpcClient::GrpcClient(Options const& opts, int channel_id)
       stub_(google::storage::v1::Storage::NewStub(
           CreateGrpcChannel(*auth_strategy_, opts, channel_id))) {}
 
-std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
-    grpc::ClientContext& context, google::storage::v1::Object& result) {
-  auto concrete_writer = stub_->InsertObject(&context, &result);
-  return std::unique_ptr<GrpcClient::UploadWriter>(concrete_writer.release());
+std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+  using InsertStreamError = google::cloud::internal::StreamingWriteRpcError<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+
+  auto auth = auth_strategy_->ConfigureContext(*context);
+  if (!auth.ok()) return absl::make_unique<InsertStreamError>(std::move(auth));
+  auto holder = absl::make_unique<google::storage::v1::Object>();
+  auto impl = stub_->InsertObject(context.get(), holder.get());
+  return absl::make_unique<InsertStreamImpl>(
+      std::move(context), std::move(holder), std::move(impl));
 }
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
@@ -286,43 +297,53 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  grpc::ClientContext context;
-  auto auth = auth_strategy_->ConfigureContext(context);
-  if (!auth.ok()) return auth;
-  google::storage::v1::Object response;
-  auto stream = stub_->InsertObject(&context, &response);
+  auto stream = [&]() -> std::unique_ptr<InsertStream> {
+    using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
+        google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+    using InsertStreamError = google::cloud::internal::StreamingWriteRpcError<
+        google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+
+    auto context = absl::make_unique<grpc::ClientContext>();
+    auto auth = auth_strategy_->ConfigureContext(*context);
+    if (!auth.ok()) {
+      return absl::make_unique<InsertStreamError>(std::move(auth));
+    }
+    auto holder = absl::make_unique<google::storage::v1::Object>();
+    auto impl = stub_->InsertObject(context.get(), holder.get());
+    return absl::make_unique<InsertStreamImpl>(
+        std::move(context), std::move(holder), std::move(impl));
+  }();
+
   auto proto_request = ToProto(request);
-  std::size_t const maximum_buffer_size =
-      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
   auto const& contents = request.contents();
+  auto const contents_size = static_cast<std::int64_t>(contents.size());
+  std::int64_t const maximum_buffer_size =
+      google::storage::v1::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
-  std::size_t offset = 0;
-  do {
+  for (std::int64_t offset = 0, n = 0; offset <= contents_size; offset += n) {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
-    auto const n = (std::min)(contents.size() - offset, maximum_buffer_size);
+    n = (std::min)(contents_size - offset, maximum_buffer_size);
     data.set_content(contents.substr(offset, n));
     data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
 
-    grpc::WriteOptions options;
-    if (offset + n >= contents.size()) {
-      options.set_last_message();
+    if (offset + n >= contents_size) {
       proto_request.set_finish_write(true);
+      stream->Write(proto_request, grpc::WriteOptions{}.set_last_message());
+      break;
     }
-    if (!stream->Write(proto_request, options)) break;
+    if (!stream->Write(proto_request, grpc::WriteOptions{})) break;
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     proto_request.clear_insert_object_spec();
     proto_request.clear_object_checksums();
-    offset += n;
-  } while (offset < contents.size());
+  }
 
-  auto status = stream->Finish();
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  return FromProto(std::move(response));
+  auto response = stream->Close();
+  if (!response) return std::move(response).status();
+  return FromProto(*std::move(response));
 }
 
 StatusOr<ObjectMetadata> GrpcClient::CopyObject(CopyObjectRequest const&) {
@@ -350,15 +371,17 @@ StatusOr<std::unique_ptr<ObjectReadSource>> GrpcClient::ReadObject(
   auto const proto_request = ToProto(request);
   auto context = absl::make_unique<grpc::ClientContext>();
   auto status = auth_strategy_->ConfigureContext(*context);
-  if (!status.ok()) {
-    return std::unique_ptr<ObjectReadSource>(
-        absl::make_unique<ObjectReadErrorSource>(std::move(status)));
-  }
+  if (!status.ok()) return status;
 
-  auto reader = stub_->GetObjectMedia(context.get(), proto_request);
+  auto impl = stub_->GetObjectMedia(context.get(), proto_request);
+
+  using StreamingRead = google::cloud::internal::StreamingReadRpcImpl<
+      google::storage::v1::GetObjectMediaResponse>;
+  auto reader =
+      absl::make_unique<StreamingRead>(std::move(context), std::move(impl));
+
   return std::unique_ptr<ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(std::move(context),
-                                              std::move(reader)));
+      absl::make_unique<GrpcObjectReadSource>(std::move(reader)));
 }
 
 StatusOr<ListObjectsResponse> GrpcClient::ListObjects(

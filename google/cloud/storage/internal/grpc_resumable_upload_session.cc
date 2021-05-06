@@ -49,17 +49,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadFinalChunk(
   auto initial = UploadGeneric(payload, true);
   if (!initial) return initial;
 
-  auto status = upload_writer_->Finish();
-  upload_writer_ = nullptr;
-  upload_context_ = nullptr;
-  if (!status.ok()) return google::cloud::MakeStatusFromRpcError(status);
-
-  done_ = true;
-  return ResumableUploadResponse{{},
-                                 next_expected_ - 1,
-                                 GrpcClient::FromProto(upload_object_),
-                                 ResumableUploadResponse::kDone,
-                                 {}};
+  return HandleStreamClosed();
 }
 
 StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::ResetSession() {
@@ -106,7 +96,8 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
 
     google::storage::v1::InsertObjectRequest request;
     request.set_upload_id(session_id_params_.upload_id);
-    request.set_write_offset(next_expected_);
+    request.set_write_offset(
+        static_cast<google::protobuf::int64>(next_expected_));
     request.set_finish_write(false);
 
     auto& data = *request.mutable_checksummed_data();
@@ -148,7 +139,7 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
     }
     PopFrontBytes(buffers, consumed);
 
-    if (!flush_chunk(!buffers.empty())) return HandleWriteError();
+    if (!flush_chunk(!buffers.empty())) return HandleStreamClosed();
   } while (!buffers.empty());
 
   return ResumableUploadResponse{
@@ -156,27 +147,27 @@ StatusOr<ResumableUploadResponse> GrpcResumableUploadSession::UploadGeneric(
 }
 
 void GrpcResumableUploadSession::CreateUploadWriter() {
-  if (upload_writer_) {
-    return;
-  }
+  if (upload_writer_) return;
   // TODO(#4216) - set the timeout
-  upload_context_ = absl::make_unique<grpc::ClientContext>();
-  google::storage::v1::InsertObjectRequest request;
-  request.set_upload_id(session_id_params_.upload_id);
-  upload_writer_ =
-      client_->CreateUploadWriter(*upload_context_, upload_object_);
+  auto context = absl::make_unique<grpc::ClientContext>();
+  upload_writer_ = client_->CreateUploadWriter(std::move(context));
 }
 
 StatusOr<ResumableUploadResponse>
-GrpcResumableUploadSession::HandleWriteError() {
-  auto grpc_status = upload_writer_->Finish();
+GrpcResumableUploadSession::HandleStreamClosed() {
+  auto result = upload_writer_->Close();
   upload_writer_ = nullptr;
-  upload_context_ = nullptr;
+  if (!result) {
+    last_response_ = std::move(result).status();
+    return last_response_;
+  }
+  done_ = true;
   last_response_ =
-      grpc_status.ok()
-          ? Status(StatusCode::kUnavailable,
-                   "GrpcResumableUploadSession: stream closed unexpectedly")
-          : google::cloud::MakeStatusFromRpcError(grpc_status);
+      ResumableUploadResponse{{},
+                              next_expected_ - 1,
+                              GrpcClient::FromProto(*std::move(result)),
+                              ResumableUploadResponse::kDone,
+                              {}};
   return last_response_;
 }
 

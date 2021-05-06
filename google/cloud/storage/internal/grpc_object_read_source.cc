@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/internal/grpc_client.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "absl/functional/function_ref.h"
 #include <algorithm>
 
 namespace google {
@@ -22,37 +23,29 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-
-GrpcObjectReadSource::GrpcObjectReadSource(
-    std::unique_ptr<grpc::ClientContext> context,
-    std::unique_ptr<GrpcObjectContentsReader> stream)
-    : context_(std::move(context)), stream_(std::move(stream)) {}
-
-GrpcObjectReadSource::~GrpcObjectReadSource() {
-  // clang-tidy is complaining about code in the gRPC implementation. It seems
-  // that it is *possible* for gRPC to call a function through a null pointer
-  // I hesitate to disable the warning because it seems *really* useful, but I
-  // could not find another way to disable it that putting this obscure comment
-  // here.
-  //
-  // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage)
-  if (stream_) {
-    (void)stream_->Finish();
-    stream_ = nullptr;
+namespace {
+using HeadersMap = std::multimap<std::string, std::string>;
+HeadersMap MakeHeadersFromChecksums(
+    google::storage::v1::ObjectChecksums const& checksums) {
+  HeadersMap headers;
+  if (checksums.has_crc32c()) {
+    headers.emplace("x-goog-hash", "crc32c=" + GrpcClient::Crc32cFromProto(
+                                                   checksums.crc32c()));
   }
+  if (!checksums.md5_hash().empty()) {
+    headers.emplace("x-goog-hash",
+                    "md5=" + GrpcClient::MD5FromProto(checksums.md5_hash()));
+  }
+  return headers;
 }
+}  // namespace
+
+GrpcObjectReadSource::GrpcObjectReadSource(std::unique_ptr<StreamingRpc> stream)
+    : stream_(std::move(stream)) {}
 
 StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
-  if (stream_) {
-    // Cancel the streaming RPC so we can close the stream early and
-    // ignore any errors (kCancelled is likely).
-    context_->TryCancel();
-    (void)stream_->Finish();
-    stream_ = nullptr;
-  }
-  if (!status_.ok()) {
-    return status_;
-  }
+  if (stream_) stream_ = nullptr;
+  if (!status_.ok()) return status_;
   return HttpResponse{HttpStatusCode::kOk, {}, {}};
 }
 
@@ -60,47 +53,46 @@ StatusOr<HttpResponse> GrpcObjectReadSource::Close() {
 /// codes.
 StatusOr<ReadSourceResult> GrpcObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
-  std::multimap<std::string, std::string> headers;
   std::size_t offset = 0;
   auto update_buf = [&offset, buf, n](std::string source) {
-    if (source.empty()) {
-      return source;
-    }
+    if (source.empty()) return source;
     auto const nbytes = std::min(n - offset, source.size());
     std::copy(source.data(), source.data() + nbytes, buf + offset);
     offset += nbytes;
     source.erase(0, nbytes);
     return source;
   };
+  struct Visitor {
+    GrpcObjectReadSource& self;
+    absl::FunctionRef<std::string(std::string)> update_buf;
+
+    HeadersMap operator()(Status s) {
+      // A status, whether success or failure, closes the stream.
+      self.status_ = std::move(s);
+      self.stream_ = nullptr;
+      return {};
+    }
+    HeadersMap operator()(
+        google::storage::v1::GetObjectMediaResponse response) {
+      // The google.storage.v1.Storage documentation says this field can be
+      // empty.
+      if (response.has_checksummed_data()) {
+        self.spill_ =
+            update_buf(std::string(  // Sometimes protobuf bytes are not strings
+                std::move(
+                    *response.mutable_checksummed_data()->mutable_content())));
+      }
+      if (!response.has_object_checksums()) return {};
+      return MakeHeadersFromChecksums(response.object_checksums());
+    }
+  };
 
   spill_ = update_buf(std::move(spill_));
-
+  HeadersMap headers;
   while (offset < n && stream_) {
-    google::storage::v1::GetObjectMediaResponse response;
-    bool success = stream_->Read(&response);
-
-    // The google.storage.v1.Storage documentation says this field can be empty.
-    if (response.has_checksummed_data()) {
-      spill_ =
-          update_buf(std::string(  // Sometimes protobuf bytes are not strings
-              std::move(
-                  *response.mutable_checksummed_data()->mutable_content())));
-    }
-    if (response.has_object_checksums()) {
-      auto const& checksums = response.object_checksums();
-      if (checksums.has_crc32c()) {
-        headers.emplace("x-goog-hash", "crc32c=" + GrpcClient::Crc32cFromProto(
-                                                       checksums.crc32c()));
-      }
-      if (!checksums.md5_hash().empty()) {
-        headers.emplace("x-goog-hash", "md5=" + GrpcClient::MD5FromProto(
-                                                    checksums.md5_hash()));
-      }
-    }
-    if (!success) {
-      status_ = google::cloud::MakeStatusFromRpcError(stream_->Finish());
-      stream_ = nullptr;
-    }
+    auto v = stream_->Read();
+    auto h = absl::visit(Visitor{*this, update_buf}, std::move(v));
+    headers.insert(h.begin(), h.end());
   }
 
   if (offset != 0) {
