@@ -23,17 +23,19 @@ namespace internal {
 std::unique_ptr<StorageStub::ObjectMediaStream> StorageAuth::GetObjectMedia(
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v1::GetObjectMediaRequest const& request) {
-  // TODO(coryan) - refactor to return a "always fails" stream
+  using ErrorStream = google::cloud::internal::StreamingReadRpcError<
+      google::storage::v1::GetObjectMediaResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return {};
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
   return child_->GetObjectMedia(std::move(context), request);
 }
 
 std::unique_ptr<StorageStub::InsertStream> StorageAuth::InsertObjectMedia(
     std::unique_ptr<grpc::ClientContext> context) {
-  // TODO(coryan) - refactor to return a "always fails" stream
+  using ErrorStream = google::cloud::internal::StreamingWriteRpcError<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return {};
+  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
   return child_->InsertObjectMedia(std::move(context));
 }
 
@@ -81,15 +83,6 @@ StorageAuth::UpdateBucketAccessControl(
   return child_->UpdateBucketAccessControl(context, request);
 }
 
-StatusOr<google::storage::v1::BucketAccessControl>
-StorageAuth::PatchBucketAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::PatchBucketAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->PatchBucketAccessControl(context, request);
-}
-
 Status StorageAuth::DeleteBucket(
     grpc::ClientContext& context,
     google::storage::v1::DeleteBucketRequest const& request) {
@@ -122,14 +115,6 @@ StatusOr<google::storage::v1::ListBucketsResponse> StorageAuth::ListBuckets(
   return child_->ListBuckets(context, request);
 }
 
-StatusOr<google::storage::v1::Bucket> StorageAuth::LockBucketRetentionPolicy(
-    grpc::ClientContext& context,
-    google::storage::v1::LockRetentionPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->LockBucketRetentionPolicy(context, request);
-}
-
 StatusOr<google::iam::v1::Policy> StorageAuth::GetBucketIamPolicy(
     grpc::ClientContext& context,
     google::storage::v1::GetIamPolicyRequest const& request) {
@@ -153,14 +138,6 @@ StorageAuth::TestBucketIamPermissions(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestBucketIamPermissions(context, request);
-}
-
-StatusOr<google::storage::v1::Bucket> StorageAuth::PatchBucket(
-    grpc::ClientContext& context,
-    google::storage::v1::PatchBucketRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->PatchBucket(context, request);
 }
 
 StatusOr<google::storage::v1::Bucket> StorageAuth::UpdateBucket(
@@ -210,16 +187,6 @@ StorageAuth::ListDefaultObjectAccessControls(
 }
 
 StatusOr<google::storage::v1::ObjectAccessControl>
-StorageAuth::PatchDefaultObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::PatchDefaultObjectAccessControlRequest const&
-        request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->PatchDefaultObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::ObjectAccessControl>
 StorageAuth::UpdateDefaultObjectAccessControl(
     grpc::ClientContext& context,
     google::storage::v1::UpdateDefaultObjectAccessControlRequest const&
@@ -262,105 +229,12 @@ StorageAuth::ListNotifications(
   return child_->ListNotifications(context, request);
 }
 
-Status StorageAuth::DeleteObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::DeleteObjectAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::ObjectAccessControl>
-StorageAuth::GetObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::GetObjectAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::ObjectAccessControl>
-StorageAuth::InsertObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::InsertObjectAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->InsertObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::ListObjectAccessControlsResponse>
-StorageAuth::ListObjectAccessControls(
-    grpc::ClientContext& context,
-    google::storage::v1::ListObjectAccessControlsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListObjectAccessControls(context, request);
-}
-
-StatusOr<google::storage::v1::ObjectAccessControl>
-StorageAuth::PatchObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::PatchObjectAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->PatchObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::ObjectAccessControl>
-StorageAuth::UpdateObjectAccessControl(
-    grpc::ClientContext& context,
-    google::storage::v1::UpdateObjectAccessControlRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->UpdateObjectAccessControl(context, request);
-}
-
-StatusOr<google::storage::v1::Object> StorageAuth::ComposeObject(
-    grpc::ClientContext& context,
-    google::storage::v1::ComposeObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ComposeObject(context, request);
-}
-
-StatusOr<google::storage::v1::Object> StorageAuth::CopyObject(
-    grpc::ClientContext& context,
-    google::storage::v1::CopyObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->CopyObject(context, request);
-}
-
 Status StorageAuth::DeleteObject(
     grpc::ClientContext& context,
     google::storage::v1::DeleteObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteObject(context, request);
-}
-
-StatusOr<google::storage::v1::Object> StorageAuth::GetObject(
-    grpc::ClientContext& context,
-    google::storage::v1::GetObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetObject(context, request);
-}
-
-StatusOr<google::storage::v1::ListObjectsResponse> StorageAuth::ListObjects(
-    grpc::ClientContext& context,
-    google::storage::v1::ListObjectsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListObjects(context, request);
-}
-
-StatusOr<google::storage::v1::RewriteResponse> StorageAuth::RewriteObject(
-    grpc::ClientContext& context,
-    google::storage::v1::RewriteObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->RewriteObject(context, request);
 }
 
 StatusOr<google::storage::v1::StartResumableWriteResponse>
@@ -379,70 +253,6 @@ StorageAuth::QueryWriteStatus(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->QueryWriteStatus(context, request);
-}
-
-StatusOr<google::storage::v1::Object> StorageAuth::PatchObject(
-    grpc::ClientContext& context,
-    google::storage::v1::PatchObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->PatchObject(context, request);
-}
-
-StatusOr<google::storage::v1::Object> StorageAuth::UpdateObject(
-    grpc::ClientContext& context,
-    google::storage::v1::UpdateObjectRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->UpdateObject(context, request);
-}
-
-StatusOr<google::storage::v1::ServiceAccount> StorageAuth::GetServiceAccount(
-    grpc::ClientContext& context,
-    google::storage::v1::GetProjectServiceAccountRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetServiceAccount(context, request);
-}
-
-StatusOr<google::storage::v1::CreateHmacKeyResponse> StorageAuth::CreateHmacKey(
-    grpc::ClientContext& context,
-    google::storage::v1::CreateHmacKeyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->CreateHmacKey(context, request);
-}
-
-Status StorageAuth::DeleteHmacKey(
-    grpc::ClientContext& context,
-    google::storage::v1::DeleteHmacKeyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->DeleteHmacKey(context, request);
-}
-
-StatusOr<google::storage::v1::HmacKeyMetadata> StorageAuth::GetHmacKey(
-    grpc::ClientContext& context,
-    google::storage::v1::GetHmacKeyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetHmacKey(context, request);
-}
-
-StatusOr<google::storage::v1::ListHmacKeysResponse> StorageAuth::ListHmacKeys(
-    grpc::ClientContext& context,
-    google::storage::v1::ListHmacKeysRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListHmacKeys(context, request);
-}
-
-StatusOr<google::storage::v1::HmacKeyMetadata> StorageAuth::UpdateHmacKey(
-    grpc::ClientContext& context,
-    google::storage::v1::UpdateHmacKeyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->UpdateHmacKey(context, request);
 }
 
 }  // namespace internal

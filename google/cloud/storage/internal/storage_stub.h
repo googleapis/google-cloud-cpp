@@ -62,10 +62,6 @@ class StorageStub {
   UpdateBucketAccessControl(
       grpc::ClientContext& context,
       google::storage::v1::UpdateBucketAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::BucketAccessControl>
-  PatchBucketAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchBucketAccessControlRequest const& request) = 0;
   virtual Status DeleteBucket(
       grpc::ClientContext& context,
       google::storage::v1::DeleteBucketRequest const& request) = 0;
@@ -78,9 +74,6 @@ class StorageStub {
   virtual StatusOr<google::storage::v1::ListBucketsResponse> ListBuckets(
       grpc::ClientContext& context,
       google::storage::v1::ListBucketsRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Bucket> LockBucketRetentionPolicy(
-      grpc::ClientContext& context,
-      google::storage::v1::LockRetentionPolicyRequest const& request) = 0;
   virtual StatusOr<google::iam::v1::Policy> GetBucketIamPolicy(
       grpc::ClientContext& context,
       google::storage::v1::GetIamPolicyRequest const& request) = 0;
@@ -91,9 +84,6 @@ class StorageStub {
   TestBucketIamPermissions(
       grpc::ClientContext& context,
       google::storage::v1::TestIamPermissionsRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Bucket> PatchBucket(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchBucketRequest const& request) = 0;
   virtual StatusOr<google::storage::v1::Bucket> UpdateBucket(
       grpc::ClientContext& context,
       google::storage::v1::UpdateBucketRequest const& request) = 0;
@@ -117,11 +107,6 @@ class StorageStub {
       google::storage::v1::ListDefaultObjectAccessControlsRequest const&
           request) = 0;
   virtual StatusOr<google::storage::v1::ObjectAccessControl>
-  PatchDefaultObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchDefaultObjectAccessControlRequest const&
-          request) = 0;
-  virtual StatusOr<google::storage::v1::ObjectAccessControl>
   UpdateDefaultObjectAccessControl(
       grpc::ClientContext& context,
       google::storage::v1::UpdateDefaultObjectAccessControlRequest const&
@@ -139,47 +124,9 @@ class StorageStub {
   ListNotifications(
       grpc::ClientContext& context,
       google::storage::v1::ListNotificationsRequest const& request) = 0;
-  virtual Status DeleteObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::DeleteObjectAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ObjectAccessControl>
-  GetObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::GetObjectAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ObjectAccessControl>
-  InsertObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::InsertObjectAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ListObjectAccessControlsResponse>
-  ListObjectAccessControls(
-      grpc::ClientContext& context,
-      google::storage::v1::ListObjectAccessControlsRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ObjectAccessControl>
-  PatchObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchObjectAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ObjectAccessControl>
-  UpdateObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateObjectAccessControlRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Object> ComposeObject(
-      grpc::ClientContext& context,
-      google::storage::v1::ComposeObjectRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Object> CopyObject(
-      grpc::ClientContext& context,
-      google::storage::v1::CopyObjectRequest const& request) = 0;
   virtual Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v1::DeleteObjectRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Object> GetObject(
-      grpc::ClientContext& context,
-      google::storage::v1::GetObjectRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ListObjectsResponse> ListObjects(
-      grpc::ClientContext& context,
-      google::storage::v1::ListObjectsRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::RewriteResponse> RewriteObject(
-      grpc::ClientContext& context,
-      google::storage::v1::RewriteObjectRequest const& request) = 0;
   virtual StatusOr<google::storage::v1::StartResumableWriteResponse>
   StartResumableWrite(
       grpc::ClientContext& context,
@@ -188,30 +135,6 @@ class StorageStub {
   QueryWriteStatus(
       grpc::ClientContext& context,
       google::storage::v1::QueryWriteStatusRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Object> PatchObject(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchObjectRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::Object> UpdateObject(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateObjectRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ServiceAccount> GetServiceAccount(
-      grpc::ClientContext& context,
-      google::storage::v1::GetProjectServiceAccountRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::CreateHmacKeyResponse> CreateHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::CreateHmacKeyRequest const& request) = 0;
-  virtual Status DeleteHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::DeleteHmacKeyRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::HmacKeyMetadata> GetHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::GetHmacKeyRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::ListHmacKeysResponse> ListHmacKeys(
-      grpc::ClientContext& context,
-      google::storage::v1::ListHmacKeysRequest const& request) = 0;
-  virtual StatusOr<google::storage::v1::HmacKeyMetadata> UpdateHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateHmacKeyRequest const& request) = 0;
 };
 
 std::shared_ptr<StorageStub> MakeDefaultStorageStub(

@@ -107,16 +107,6 @@ class StorageStubImpl : public StorageStub {
     return response;
   }
 
-  StatusOr<google::storage::v1::BucketAccessControl> PatchBucketAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchBucketAccessControlRequest const& request)
-      override {
-    google::storage::v1::BucketAccessControl response;
-    auto status = impl_->PatchBucketAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
   Status DeleteBucket(
       grpc::ClientContext& context,
       google::storage::v1::DeleteBucketRequest const& request) override {
@@ -153,16 +143,6 @@ class StorageStubImpl : public StorageStub {
     return response;
   }
 
-  StatusOr<google::storage::v1::Bucket> LockBucketRetentionPolicy(
-      grpc::ClientContext& context,
-      google::storage::v1::LockRetentionPolicyRequest const& request) override {
-    google::storage::v1::Bucket response;
-    auto status =
-        impl_->LockBucketRetentionPolicy(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
   StatusOr<google::iam::v1::Policy> GetBucketIamPolicy(
       grpc::ClientContext& context,
       google::storage::v1::GetIamPolicyRequest const& request) override {
@@ -187,15 +167,6 @@ class StorageStubImpl : public StorageStub {
       google::storage::v1::TestIamPermissionsRequest const& request) override {
     google::iam::v1::TestIamPermissionsResponse response;
     auto status = impl_->TestBucketIamPermissions(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::Bucket> PatchBucket(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchBucketRequest const& request) override {
-    google::storage::v1::Bucket response;
-    auto status = impl_->PatchBucket(&context, request, &response);
     if (!status.ok()) return MakeStatusFromRpcError(status);
     return response;
   }
@@ -257,18 +228,6 @@ class StorageStubImpl : public StorageStub {
   }
 
   StatusOr<google::storage::v1::ObjectAccessControl>
-  PatchDefaultObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchDefaultObjectAccessControlRequest const&
-          request) override {
-    google::storage::v1::ObjectAccessControl response;
-    auto status =
-        impl_->PatchDefaultObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ObjectAccessControl>
   UpdateDefaultObjectAccessControl(
       grpc::ClientContext& context,
       google::storage::v1::UpdateDefaultObjectAccessControlRequest const&
@@ -316,88 +275,6 @@ class StorageStubImpl : public StorageStub {
     return response;
   }
 
-  Status DeleteObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::DeleteObjectAccessControlRequest const& request)
-      override {
-    google::protobuf::Empty response;
-    auto status =
-        impl_->DeleteObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return Status{};
-  }
-
-  StatusOr<google::storage::v1::ObjectAccessControl> GetObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::GetObjectAccessControlRequest const& request)
-      override {
-    google::storage::v1::ObjectAccessControl response;
-    auto status = impl_->GetObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ObjectAccessControl> InsertObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::InsertObjectAccessControlRequest const& request)
-      override {
-    google::storage::v1::ObjectAccessControl response;
-    auto status =
-        impl_->InsertObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ListObjectAccessControlsResponse>
-  ListObjectAccessControls(
-      grpc::ClientContext& context,
-      google::storage::v1::ListObjectAccessControlsRequest const& request)
-      override {
-    google::storage::v1::ListObjectAccessControlsResponse response;
-    auto status = impl_->ListObjectAccessControls(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ObjectAccessControl> PatchObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchObjectAccessControlRequest const& request)
-      override {
-    google::storage::v1::ObjectAccessControl response;
-    auto status = impl_->PatchObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ObjectAccessControl> UpdateObjectAccessControl(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateObjectAccessControlRequest const& request)
-      override {
-    google::storage::v1::ObjectAccessControl response;
-    auto status =
-        impl_->UpdateObjectAccessControl(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::Object> ComposeObject(
-      grpc::ClientContext& context,
-      google::storage::v1::ComposeObjectRequest const& request) override {
-    google::storage::v1::Object response;
-    auto status = impl_->ComposeObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::Object> CopyObject(
-      grpc::ClientContext& context,
-      google::storage::v1::CopyObjectRequest const& request) override {
-    google::storage::v1::Object response;
-    auto status = impl_->CopyObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
   Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v1::DeleteObjectRequest const& request) override {
@@ -405,33 +282,6 @@ class StorageStubImpl : public StorageStub {
     auto status = impl_->DeleteObject(&context, request, &response);
     if (!status.ok()) return MakeStatusFromRpcError(status);
     return Status{};
-  }
-
-  StatusOr<google::storage::v1::Object> GetObject(
-      grpc::ClientContext& context,
-      google::storage::v1::GetObjectRequest const& request) override {
-    google::storage::v1::Object response;
-    auto status = impl_->GetObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ListObjectsResponse> ListObjects(
-      grpc::ClientContext& context,
-      google::storage::v1::ListObjectsRequest const& request) override {
-    google::storage::v1::ListObjectsResponse response;
-    auto status = impl_->ListObjects(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::RewriteResponse> RewriteObject(
-      grpc::ClientContext& context,
-      google::storage::v1::RewriteObjectRequest const& request) override {
-    google::storage::v1::RewriteResponse response;
-    auto status = impl_->RewriteObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
   }
 
   StatusOr<google::storage::v1::StartResumableWriteResponse>
@@ -449,77 +299,6 @@ class StorageStubImpl : public StorageStub {
       google::storage::v1::QueryWriteStatusRequest const& request) override {
     google::storage::v1::QueryWriteStatusResponse response;
     auto status = impl_->QueryWriteStatus(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::Object> PatchObject(
-      grpc::ClientContext& context,
-      google::storage::v1::PatchObjectRequest const& request) override {
-    google::storage::v1::Object response;
-    auto status = impl_->PatchObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::Object> UpdateObject(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateObjectRequest const& request) override {
-    google::storage::v1::Object response;
-    auto status = impl_->UpdateObject(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::ServiceAccount> GetServiceAccount(
-      grpc::ClientContext& context,
-      google::storage::v1::GetProjectServiceAccountRequest const& request)
-      override {
-    google::storage::v1::ServiceAccount response;
-    auto status = impl_->GetServiceAccount(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  StatusOr<google::storage::v1::CreateHmacKeyResponse> CreateHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::CreateHmacKeyRequest const& request) override {
-    google::storage::v1::CreateHmacKeyResponse response;
-    auto status = impl_->CreateHmacKey(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-
-  Status DeleteHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::DeleteHmacKeyRequest const& request) override {
-    google::protobuf::Empty response;
-    auto status = impl_->DeleteHmacKey(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return Status{};
-  }
-
-  StatusOr<google::storage::v1::HmacKeyMetadata> GetHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::GetHmacKeyRequest const& request) override {
-    google::storage::v1::HmacKeyMetadata response;
-    auto status = impl_->GetHmacKey(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-  StatusOr<google::storage::v1::ListHmacKeysResponse> ListHmacKeys(
-      grpc::ClientContext& context,
-      google::storage::v1::ListHmacKeysRequest const& request) override {
-    google::storage::v1::ListHmacKeysResponse response;
-    auto status = impl_->ListHmacKeys(&context, request, &response);
-    if (!status.ok()) return MakeStatusFromRpcError(status);
-    return response;
-  }
-  StatusOr<google::storage::v1::HmacKeyMetadata> UpdateHmacKey(
-      grpc::ClientContext& context,
-      google::storage::v1::UpdateHmacKeyRequest const& request) override {
-    google::storage::v1::HmacKeyMetadata response;
-    auto status = impl_->UpdateHmacKey(&context, request, &response);
     if (!status.ok()) return MakeStatusFromRpcError(status);
     return response;
   }
