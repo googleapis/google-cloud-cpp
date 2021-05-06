@@ -121,10 +121,19 @@ GrpcClient::GrpcClient(Options const& opts, int channel_id)
       stub_(google::storage::v1::Storage::NewStub(
           CreateGrpcChannel(*auth_strategy_, opts, channel_id))) {}
 
-std::unique_ptr<GrpcClient::UploadWriter> GrpcClient::CreateUploadWriter(
-    grpc::ClientContext& context, google::storage::v1::Object& result) {
-  auto concrete_writer = stub_->InsertObject(&context, &result);
-  return std::unique_ptr<GrpcClient::UploadWriter>(concrete_writer.release());
+std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
+    std::unique_ptr<grpc::ClientContext> context) {
+  using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+  using InsertStreamError = google::cloud::internal::StreamingWriteRpcError<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+
+  auto auth = auth_strategy_->ConfigureContext(*context);
+  if (!auth.ok()) return absl::make_unique<InsertStreamError>(std::move(auth));
+  auto holder = absl::make_unique<google::storage::v1::Object>();
+  auto impl = stub_->InsertObject(context.get(), holder.get());
+  return absl::make_unique<InsertStreamImpl>(
+      std::move(context), std::move(holder), std::move(impl));
 }
 
 StatusOr<ResumableUploadResponse> GrpcClient::QueryResumableUpload(
@@ -288,9 +297,6 @@ StatusOr<BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
 
 StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     InsertObjectMediaRequest const& request) {
-  using InsertStream = google::cloud::internal::StreamingWriteRpc<
-      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
-
   auto stream = [&]() -> std::unique_ptr<InsertStream> {
     using InsertStreamImpl = google::cloud::internal::StreamingWriteRpcImpl<
         google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
@@ -299,8 +305,9 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
 
     auto context = absl::make_unique<grpc::ClientContext>();
     auto auth = auth_strategy_->ConfigureContext(*context);
-    if (!auth.ok())
+    if (!auth.ok()) {
       return absl::make_unique<InsertStreamError>(std::move(auth));
+    }
     auto holder = absl::make_unique<google::storage::v1::Object>();
     auto impl = stub_->InsertObject(context.get(), holder.get());
     return absl::make_unique<InsertStreamImpl>(

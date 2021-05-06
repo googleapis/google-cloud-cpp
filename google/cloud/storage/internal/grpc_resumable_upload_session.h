@@ -60,16 +60,12 @@ class GrpcResumableUploadSession : public ResumableUploadSession {
 
   void CreateUploadWriter();
 
-  StatusOr<ResumableUploadResponse> HandleWriteError();
+  StatusOr<ResumableUploadResponse> HandleStreamClosed();
 
   std::shared_ptr<GrpcClient> client_;
   ResumableUploadSessionGrpcParams session_id_params_;
   std::string session_url_;
-  using UploadWriter =
-      grpc::ClientWriterInterface<google::storage::v1::InsertObjectRequest>;
-  std::unique_ptr<grpc::ClientContext> upload_context_;
-  google::storage::v1::Object upload_object_;
-  std::unique_ptr<UploadWriter> upload_writer_;
+  std::unique_ptr<GrpcClient::InsertStream> upload_writer_;
 
   std::uint64_t next_expected_ = 0;
   bool done_ = false;
