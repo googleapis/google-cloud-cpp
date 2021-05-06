@@ -377,6 +377,7 @@ if (BUILD_TESTING)
         testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
+        testing/mock_storage_stub.h
         testing/object_integration_test.cc
         testing/object_integration_test.h
         testing/random_names.cc
@@ -545,7 +546,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_client_test.cc
             internal/grpc_object_read_source_test.cc
             internal/grpc_resumable_upload_session_test.cc
-            internal/grpc_resumable_upload_session_url_test.cc)
+            internal/grpc_resumable_upload_session_url_test.cc
+            internal/storage_auth_test.cc)
 
         foreach (fname ${storage_client_grpc_unit_tests})
             google_cloud_cpp_add_executable(target "storage" "${fname}")
