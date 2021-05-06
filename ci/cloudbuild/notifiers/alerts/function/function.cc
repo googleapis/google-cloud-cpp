@@ -109,6 +109,7 @@ void HttpPost(std::string const& url, std::string const& data) {
 }  // namespace
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
+  std::cerr << "Got event";
   if (event.data_content_type().value_or("") != "application/json") {
     return LogError("expected application/json data");
   }
@@ -132,10 +133,7 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   /* } */
 
   auto chat = MakeChatPayload(contents);
-
-  std::cerr << ">>> chat payload";
-  std::cerr << chat;
-  std::cerr << "<<< chat payload";
+  std::cerr << "Got Chat payload: " << chat;
 
   std::string webhook_url;
   if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
@@ -144,5 +142,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
     return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
   }
 
+  std::cerr << "Got webhook URL prefix" << webhook_url.substr(0, 10);
   HttpPost(webhook_url, chat.dump());
 }
