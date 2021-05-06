@@ -1825,7 +1825,8 @@ void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
-  std::cout << "Insert was successful [spanner_update_data_with_numeric]\n";
+  std::cout
+      << "Insert was successful [spanner_update_data_with_numeric_column]\n";
 }
 //! [END spanner_update_data_with_numeric_column]
 
@@ -3659,7 +3660,7 @@ void RunAll(bool emulator) {
     AddNumericColumn(database_admin_client, project_id, instance_id,
                      database_id);
 
-    std::cout << "\nRunning spanner_update_data_with_numeric sample"
+    std::cout << "\nRunning spanner_update_data_with_numeric_column sample"
               << std::endl;
     UpdateDataWithNumeric(client);
 
