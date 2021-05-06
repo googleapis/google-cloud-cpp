@@ -39,6 +39,12 @@ StatusOr<std::string> PickRandomInstance(
        client.ListInstances(project_id, filter + name_filter)) {
     if (!instance) return std::move(instance).status();
     auto instance_id = instance->name().substr(instance_prefix.size());
+    if (instance_id.rfind("test-instance-", 0) != 0) {
+      auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+      if (emulator.has_value()) continue;  // server-side filter not supported
+      return Status(StatusCode::kInternal,
+                    "ListInstances erroneously returned " + instance_id);
+    }
     instance_ids.push_back(std::move(instance_id));
   }
 
