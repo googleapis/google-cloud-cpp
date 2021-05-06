@@ -48,13 +48,25 @@ nlohmann::json MakeChatPayload(nlohmann::json const& build) {
   auto const project_id = build.value("projectId", "unknown");
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
   auto text = fmt::format(
-      "Failed trigger: **{trigger_name}** "
+      "Failed trigger: *{trigger_name}* "
       "(<https://console.cloud.google.com/cloud-build/builds/"
       "{build_id}?project={project_id}|Build Log>)",
       fmt::arg("trigger_name", trigger_name), fmt::arg("build_id", build_id),
       fmt::arg("project_id", project_id));
   return nlohmann::json{{"text", std::move(text)}};
 } 
+
+void EasyPost(std::string const& url, std::string const& data) {
+  using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
+  auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
+  if (curl) {
+    curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
+    curl_easy_setopt(curl.get(), CURLOPT_VERBOSE, 1L);
+    CURLcode res = curl_easy_perform(curl.get());
+    if (res != CURLE_OK) LogError(curl_easy_strerror(res));
+  }
+}
 
 extern "C" size_t CurlOnWriteData(char* ptr, size_t size, size_t nmemb,
                                   void* userdata) {
