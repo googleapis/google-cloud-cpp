@@ -112,6 +112,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
   auto adapter = [=](std::vector<std::string> argv) {
     std::vector<std::string> const common{"<project-id>", "<instance-id>",
                                           "<table-id>"};
+    auto const common_size =
+        static_cast<std::vector<std::string>::difference_type>(common.size());
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != common.size() + args.size()) {
       std::ostringstream os;
@@ -131,7 +133,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
     google::cloud::CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));
-    argv.erase(argv.begin(), argv.begin() + common.size());
+    argv.erase(argv.begin(), argv.begin() + common_size);
     command(std::move(table), cq, std::move(argv));
   };
   return Commands::value_type{name, std::move(adapter)};

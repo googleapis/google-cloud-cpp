@@ -21,17 +21,16 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 std::string PrefixRangeEnd(std::string const& key) {
-  auto pos = key.find_last_not_of('\xFF');
-  if (pos == std::string::npos) {
-    // If key is all \xFF then any sequence higher than key starts with the
-    // same number of \xFF.  So the end of the range is +infinity, which is
-    // represented by the empty string.
-    return std::string();
-  }
-  // Generally just take the last byte and increment by 1, but if there are
-  // trailing \xFF byte we need to turn those into zeroes and increment the last
-  // byte that is not a \xFF.
+  auto p = key.find_last_not_of('\xFF');
+  // If key is all \xFF then any sequence higher than key starts with the same
+  // number of \xFF.  So the end of the range is +infinity, which is represented
+  // by the empty string.
+  if (p == std::string::npos) return std::string{};
+  auto const pos = static_cast<std::string::difference_type>(p);
   std::string result = key;
+  // Generally just take the last byte and increment by 1, but if there are
+  // trailing \xFF bytes we need to turn those into zeroes and increment the
+  // last byte that is not a \xFF.
   std::fill(std::begin(result) + pos + 1, std::end(result), '\0');
   result[pos]++;
   return result;
