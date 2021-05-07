@@ -171,10 +171,14 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-using ::google::cloud::pubsub_internal::MessageSize;
 using ::google::cloud::testing_util::Timer;
 
 std::mutex cout_mu;
+
+std::int64_t MessageSize(pubsub::Message const& m) {
+  return static_cast<std::int64_t>(
+      ::google::cloud::pubsub_internal::MessageSize(m));
+}
 
 bool Done(Config const& config, std::int64_t samples,
           std::chrono::steady_clock::time_point start) {
