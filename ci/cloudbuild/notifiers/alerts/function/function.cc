@@ -56,8 +56,8 @@ void HttpPost(std::string const& url, std::string const& data) {
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   std::string webhook;
-  if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
-    webhook = e;
+  if (auto const* env = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
+    webhook = env;
   } else {
     return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
   }
@@ -77,8 +77,7 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   auto const build = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
-  auto const trigger_type =
-      contents["substitutions"].value("_TRIGGER_TYPE", "");
+  auto const trigger_type = build["substitutions"].value("_TRIGGER_TYPE", "");
   // Skips successful builds, PR invocations, and invocations without triggers.
   if (status != "FAILURE" || trigger_type == "pr" || trigger_name.empty())
     return;
