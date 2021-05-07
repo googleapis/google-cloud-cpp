@@ -31,9 +31,13 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
-using google::bigtable::admin::v2::GetTableRequest;
-using google::bigtable::admin::v2::Table;
-using google::cloud::internal::LogWrapper;
+using ::google::bigtable::admin::v2::GetTableRequest;
+using ::google::bigtable::admin::v2::Table;
+using ::google::cloud::internal::ImpersonateServiceAccountConfig;
+using ::google::cloud::internal::LogWrapper;
+using ::google::cloud::internal::MakeImpersonateServiceAccountCredentials;
+using ::testing::IsNull;
+using ::testing::Not;
 
 class GrpcImpersonateServiceAccountIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -196,8 +200,11 @@ std::shared_ptr<TestStub> MakeTestStub(
 
 TEST_F(GrpcImpersonateServiceAccountIntegrationTest, BlockingCallWithToken) {
   AutomaticallyCreatedBackgroundThreads background;
-  auto config = MakeImpersonateServiceAccountCredentials(
-      MakeGoogleDefaultCredentials(), iam_service_account());
+  auto credentials = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), iam_service_account(), Options{});
+  auto* config =
+      dynamic_cast<ImpersonateServiceAccountConfig*>(credentials.get());
+  ASSERT_THAT(config, Not(IsNull()));
   auto under_test = GrpcImpersonateServiceAccount::Create(
       background.cq(), *config,
       Options{}.set<TracingComponentsOption>({"rpc"}));
@@ -233,8 +240,11 @@ TEST_F(GrpcImpersonateServiceAccountIntegrationTest, BlockingCallWithToken) {
 
 TEST_F(GrpcImpersonateServiceAccountIntegrationTest, AsyncCallWithToken) {
   AutomaticallyCreatedBackgroundThreads background;
-  auto config = MakeImpersonateServiceAccountCredentials(
-      MakeGoogleDefaultCredentials(), iam_service_account());
+  auto credentials = MakeImpersonateServiceAccountCredentials(
+      MakeGoogleDefaultCredentials(), iam_service_account(), Options{});
+  auto* config =
+      dynamic_cast<ImpersonateServiceAccountConfig*>(credentials.get());
+  ASSERT_THAT(config, Not(IsNull()));
   auto under_test = GrpcImpersonateServiceAccount::Create(
       background.cq(), *config,
       Options{}.set<TracingComponentsOption>({"rpc"}));
