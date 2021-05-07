@@ -636,7 +636,6 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
   auto client = IAMClient(MakeIAMConnection());
   auto const parent_project = "projects/" + iam_project_;
-
   // Clean up any roles leaked in previous executions.
   ::google::iam::admin::v1::ListRolesRequest list_request;
   list_request.set_parent(parent_project);
@@ -653,7 +652,7 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
 
   auto role_id = absl::StrCat(
       "iam_test_role_",
-      absl::FormatTime("%Y%m%d", absl::Now(), absl::UTCTimeZone()));
+      absl::FormatTime("%Y%m%d%H%M%S", absl::Now(), absl::UTCTimeZone()));
   ::google::iam::admin::v1::CreateRoleRequest create_request;
   create_request.set_parent(parent_project);
   create_request.set_role_id(role_id);
@@ -676,7 +675,9 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
       role_ids.push_back(role->name());
     }
   }
-  EXPECT_THAT(role_ids, Contains(role_id));
+  auto expected_role_id =
+      absl::StrCat("projects/", iam_project_, "/roles/", role_id);
+  EXPECT_THAT(role_ids, Contains(expected_role_id));
 
   ::google::iam::admin::v1::UpdateRoleRequest update_request;
   update_request.set_name(create_response->name());
