@@ -23,6 +23,11 @@
 
 namespace {
 
+void LogInfo(std::string const& msg) {
+  auto const json = nlohmann::json{{"severity", "info"}, {"message", msg}};
+  std::cerr << json.dump() << "\n";
+}
+
 void LogError(std::string const& msg) {
   auto const json = nlohmann::json{{"severity", "error"}, {"message", msg}};
   std::cerr << json.dump() << "\n";
@@ -45,6 +50,7 @@ void HttpPost(std::string const& url, std::string const& data) {
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
   if (!curl) return LogError("Failed to create CurlHandle");
+  LogInfo("Posting message: " + data);
   curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
   curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
