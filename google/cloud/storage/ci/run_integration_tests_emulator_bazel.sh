@@ -118,8 +118,7 @@ emulator_args=(
 exit_status=$?
 
 if [[ "$exit_status" -ne 0 ]]; then
-  source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-  dump_log "${HOME}/gcs_emulator.log"
+  cat "${HOME}/gcs_emulator.log"
 fi
 
 exit "${exit_status}"

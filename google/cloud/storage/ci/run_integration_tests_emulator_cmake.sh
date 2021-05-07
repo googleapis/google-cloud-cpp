@@ -64,8 +64,7 @@ kill_emulator
 trap '' EXIT
 
 if [[ "$exit_status" -ne 0 ]]; then
-  source "${PROJECT_ROOT}/ci/define-dump-log.sh"
-  dump_log "${HOME}/emulator.log"
+  cat "${HOME}/gcs_emulator.log"
 fi
 
 exit "${exit_status}"
