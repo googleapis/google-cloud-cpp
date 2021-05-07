@@ -50,7 +50,6 @@ void HttpPost(std::string const& url, std::string const& data) {
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
   if (!curl) return LogError("Failed to create CurlHandle");
-  LogInfo("Posting message: " + data);
   curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
   curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
@@ -87,5 +86,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   if (status != "FAILURE" || trigger_type == "pr" || trigger_name.empty())
     return;
   auto const chat = MakeChatPayload(build);
+  LogInfo("Posting chat:\n" + chat);
   HttpPost(webhook, chat.dump());
 }
