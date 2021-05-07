@@ -8,7 +8,7 @@ github:
 name: cmake-oldest-deps-pr
 substitutions:
   _BUILD_NAME: cmake-oldest-deps
-  _DISTRO: fedora
+  _DISTRO: ubuntu-focal
   _TRIGGER_TYPE: pr
 tags:
 - pr
