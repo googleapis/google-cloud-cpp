@@ -97,7 +97,7 @@ StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
   // Context:
   // https://social.msdn.microsoft.com/Forums/en-US/8f40dcd8-c67f-4eba-9134-a19b9178e481/vs-2015-rc-linker-stdcodecvt-error?forum=vcgeneral
   using WideChar = __int32;
-#else  // (_MSC_VER >= 1900)
+#else   // (_MSC_VER >= 1900)
   using WideChar = char32_t;
 #endif  // (_MSC_VER >= 1900)
   std::wstring_convert<std::codecvt_utf8<WideChar>, WideChar> conv;
@@ -121,7 +121,7 @@ StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
   }
   return result;
 }
-#else  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const&) {
   return Status(StatusCode::kUnimplemented,
                 "Signing POST policies is unavailable with this compiler due "

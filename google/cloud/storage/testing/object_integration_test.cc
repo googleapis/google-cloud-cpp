@@ -42,7 +42,7 @@ StatusOr<std::size_t> GetNumEntries(std::string const& path) {
   }
   closedir(dir);
   return count;
-#else  // __unix__
+#else   // __unix__
   return Status(StatusCode::kUnimplemented,
                 "Can't check #entries in " + path +
                     ", because only UNIX systems are supported");

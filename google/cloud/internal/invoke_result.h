@@ -154,8 +154,8 @@ template <typename F, typename... ArgTypes>
 struct invoke_result_impl<decltype(void(invoker_function(
                               std::declval<F>(), std::declval<ArgTypes>()...))),
                           F, ArgTypes...> {
-  using type = decltype(
-      invoker_function(std::declval<F>(), std::declval<ArgTypes>()...));
+  using type = decltype(invoker_function(std::declval<F>(),
+                                         std::declval<ArgTypes>()...));
 };
 
 /**
