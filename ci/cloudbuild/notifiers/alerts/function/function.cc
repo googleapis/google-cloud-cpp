@@ -44,25 +44,30 @@ void LogDebug(std::string const& msg) {
 }
 
 nlohmann::json MakeChatPayload(nlohmann::json const& build) {
-  auto const build_id = build.value("id", "unknown");
-  auto const project_id = build.value("projectId", "unknown");
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
+  auto const log_url = build.value("logUrl", "");
   auto text = fmt::format(
-      "Failed trigger: *{trigger_name}* "
-      "(<https://console.cloud.google.com/cloud-build/builds/"
-      "{build_id}?project={project_id}|Build Log>)",
-      fmt::arg("trigger_name", trigger_name), fmt::arg("build_id", build_id),
-      fmt::arg("project_id", project_id));
+      R""(Failed trigger: *{trigger_name}* (<{log_url}|Build Log>)"",
+      fmt::arg("trigger_name", trigger_name), fmt::arg("log_url", log_url));
   return nlohmann::json{{"text", std::move(text)}};
 } 
 
 void EasyPost(std::string const& url, std::string const& data) {
+  std::cerr << "DEBUG: url=" << url << "\n";
+  std::cerr << "DEBUG: data=" << data << "\n";
+  static constexpr auto kContentType =
+      "Content-Type: application/json; charset=UTF-8";
+  using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
+  auto const headers =
+      Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
+
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
   if (curl) {
     curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
     curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
-    curl_easy_setopt(curl.get(), CURLOPT_VERBOSE, 1L);
+    /* curl_easy_setopt(curl.get(), CURLOPT_VERBOSE, 1L); */
     CURLcode res = curl_easy_perform(curl.get());
     if (res != CURLE_OK) LogError(curl_easy_strerror(res));
   }
@@ -147,8 +152,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   /*   return LogDebug("Nothing to do"); */
   /* } */
 
-  auto chat = MakeChatPayload(contents);
-  std::cerr << "Got Chat payload: " << chat << "\n";
 
   std::string webhook_url;
   if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
@@ -157,13 +160,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
     return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
   }
 
-  std::cerr << "Got webhook URL prefix " << webhook_url.substr(0, 10) << "\n";
-  /* std::string cmd = "curl -X POST -H 'Content-Type: application/json; charset=UTF-8'"; */
-  /* cmd += " -sSL"; */
-  /* cmd += " -d '" + chat.dump() + "'"; */
-  /* cmd += " '" + webhook_url + "'"; */
-  /* std::cerr << "cmd=" << cmd << "\n"; */
-  /* auto x = system(cmd.c_str()); */
-  /* std::cerr << "system returned " << x << "\n"; */
-  HttpPost(webhook_url, chat.dump());
+  auto const chat = MakeChatPayload(contents);
+  EasyPost(webhook_url, chat.dump());
 }
