@@ -652,7 +652,7 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
 
   auto role_id = absl::StrCat(
       "iam_test_role_",
-      absl::FormatTime("%Y%m%d", absl::Now(), absl::UTCTimeZone()));
+      absl::FormatTime("%Y%m%d%H%M%S", absl::Now(), absl::UTCTimeZone()));
   ::google::iam::admin::v1::CreateRoleRequest create_request;
   create_request.set_parent(parent_project);
   create_request.set_role_id(role_id);
