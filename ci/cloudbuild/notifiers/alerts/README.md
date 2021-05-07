@@ -31,6 +31,18 @@ can read that for details or just run it.
 deploy.sh
 ```
 
+## One-time setup: Set the `GCB_BUILD_ALERT_WEBHOOK` secret
+
+Note: This command only needs to be run once. It is here in case we ever move
+the build to a different project.
+
+Go to Secret Manager and create a secret named `GCB_BUILD_ALERT_WEBHOOK`. Set
+its value to the Webhook URL for the Google Chat room of your choice.
+
+Then go to Cloud Run in the UI and edit this deployment. There will be a
+"Variables & Secrets" tab. On there you can configure this secret to be
+injected into the job's environment.
+
 ## One-time setup: Set up a trigger
 
 Note: This command only needs to be run once. It is here in case we ever move
