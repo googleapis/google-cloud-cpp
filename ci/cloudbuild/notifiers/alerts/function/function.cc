@@ -17,12 +17,8 @@
 #include <curl/curl.h>
 #include <fmt/core.h>
 #include <nlohmann/json.hpp>
-#include <cctype>
 #include <iostream>
 #include <memory>
-#include <regex>
-#include <sstream>
-#include <stdexcept>
 
 namespace {
 
@@ -43,8 +39,8 @@ auto MakeChatPayload(nlohmann::json const& build) {
 void HttpPost(std::string const& url, std::string const& data) {
   static constexpr auto kContentType = "Content-Type: application/json";
   using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
-  auto const headers = std::make_unique<Headers>(
-      curl_slist_append(nullptr, kContentType), curl_slist_free_all);
+  auto const headers =
+      Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
   if (curl) {
@@ -78,9 +74,14 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   }
   auto const data = cppcodec::base64_rfc4648::decode<std::string>(
       message["data"].get<std::string>());
-  auto const contents = nlohmann::json::parse(data);
+  auto const build = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
-  if (status != "FAILURE") return;
-  auto const chat = MakeChatPayload(contents);
+  auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
+  auto const trigger_type =
+      contents["substitutions"].value("_TRIGGER_TYPE", "");
+  // Skips successful builds, PR invocations, and invocations without triggers.
+  if (status != "FAILURE" || trigger_type == "pr" || trigger_name.empty())
+    return;
+  auto const chat = MakeChatPayload(build);
   HttpPost(webhook, chat.dump());
 }
