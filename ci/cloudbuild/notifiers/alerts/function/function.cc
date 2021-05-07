@@ -19,6 +19,7 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 
 namespace {
 
@@ -31,7 +32,7 @@ auto MakeChatPayload(nlohmann::json const& build) {
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
   auto const log_url = build.value("logUrl", "");
   auto text = fmt::format(
-      R""(Failed build: *{trigger_name}* (<{log_url}|Build Log>))"",
+      R""(Build failed: *{trigger_name}* (<{log_url}|Build Log>))"",
       fmt::arg("trigger_name", trigger_name), fmt::arg("log_url", log_url));
   return nlohmann::json{{"text", std::move(text)}};
 }
@@ -43,24 +44,22 @@ void HttpPost(std::string const& url, std::string const& data) {
       Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
-  if (curl) {
-    curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
-    curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
-    CURLcode res = curl_easy_perform(curl.get());
-    if (res != CURLE_OK) LogError(curl_easy_strerror(res));
-  }
+  if (!curl) return LogError("Failed to create CurlHandle");
+  curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
+  curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
+  curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
+  CURLcode res = curl_easy_perform(curl.get());
+  if (res != CURLE_OK) LogError(curl_easy_strerror(res));
 }
 
 }  // namespace
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
-  std::string webhook;
-  if (auto const* env = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
-    webhook = env;
-  } else {
-    return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
-  }
+  auto const webhook = [] {
+    if (auto const* env = std::getenv("GDB_BUILD_ALERT_WEBHOOK"))
+      return std::string{env};
+    throw std::runtime_error("Missing GCB_BUILD_ALERT_WEBHOOK");
+  }();
   if (event.data_content_type().value_or("") != "application/json") {
     return LogError("expected application/json data");
   }
