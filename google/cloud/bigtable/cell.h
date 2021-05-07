@@ -51,8 +51,8 @@ Mutation SetCell(Cell);
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using ColumnQualifierType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
+using ColumnQualifierType = std::decay<
+    decltype(std::declval<google::bigtable::v2::Column>().qualifier())>::type;
 
 /**
  * Defines the type for cell values.
@@ -73,8 +73,8 @@ using ColumnQualifierType = std::decay<decltype(
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using CellValueType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Cell>().value())>::type;
+using CellValueType = std::decay<
+    decltype(std::declval<google::bigtable::v2::Cell>().value())>::type;
 
 /**
  * The in-memory representation of a Bigtable cell.

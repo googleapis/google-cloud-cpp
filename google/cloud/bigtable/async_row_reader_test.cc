@@ -826,7 +826,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
 INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
                          Values(CancelMode::kFalseValue, CancelMode::kStdExcept,
                                 CancelMode::kOtherExcept));
-#else  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
                          Values(CancelMode::kFalseValue));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
