@@ -56,8 +56,8 @@ void HttpPost(std::string const& url, std::string const& data) {
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   auto const webhook = [] {
-    if (auto const* env = std::getenv("GDB_BUILD_ALERT_WEBHOOK"))
-      return std::string{env};
+    auto const* env = std::getenv("GDB_BUILD_ALERT_WEBHOOK");
+    if (env) return std::string{env};
     throw std::runtime_error("Missing GCB_BUILD_ALERT_WEBHOOK");
   }();
   if (event.data_content_type().value_or("") != "application/json") {
