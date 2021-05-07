@@ -23,19 +23,35 @@
 
 namespace {
 
-void LogInfo(std::string const& msg) {
-  auto const json = nlohmann::json{{"severity", "info"}, {"message", msg}};
-  std::cerr << json.dump() << "\n";
+struct BuildStatus {
+  nlohmann::json build;
+  std::string status;
+};
+
+// Parses the Pub/Sub message within the given `event`, and returns the build
+// status and the embedded Build object from GCB. See also
+// https://cloud.google.com/build/docs/api/reference/rest/v1/projects.builds#Build
+BuildStatus ParseBuildStatus(google::cloud::functions::CloudEvent event) {
+  if (event.data_content_type().value_or("") != "application/json") {
+    throw std::runtime_error("expected application/json data");
+  }
+  auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
+  if (payload.count("message") == 0) {
+    throw std::runtime_error("missing embedded Pub/Sub message");
+  }
+  auto const pubsub = payload["message"];
+  if (pubsub.count("attributes") == 0 || pubsub.count("data") == 0) {
+    throw std::runtime_error("missing Pub/Sub attributes or data");
+  }
+  auto const data = cppcodec::base64_rfc4648::decode<std::string>(
+      pubsub["data"].get<std::string>());
+  return BuildStatus{nlohmann::json::parse(data),
+                     pubsub["attributes"].value("status", "")};
 }
 
-void LogError(std::string const& msg) {
-  auto const json = nlohmann::json{{"severity", "error"}, {"message", msg}};
-  std::cerr << json.dump() << "\n";
-}
-
-auto MakeChatPayload(nlohmann::json const& build) {
-  auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
-  auto const log_url = build.value("logUrl", "");
+nlohmann::json MakeChatPayload(BuildStatus const& bs) {
+  auto const trigger_name = bs.build["substitutions"].value("TRIGGER_NAME", "");
+  auto const log_url = bs.build.value("logUrl", "");
   auto text = fmt::format(
       R""(Build failed: *{trigger_name}* (<{log_url}|Build Log>))"",
       fmt::arg("trigger_name", trigger_name), fmt::arg("log_url", log_url));
@@ -49,43 +65,31 @@ void HttpPost(std::string const& url, std::string const& data) {
       Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
   auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
-  if (!curl) return LogError("Failed to create CurlHandle");
+  if (!curl) throw std::runtime_error("Failed to create CurlHandle");
   curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
   curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
   CURLcode res = curl_easy_perform(curl.get());
-  if (res != CURLE_OK) LogError(curl_easy_strerror(res));
+  if (res != CURLE_OK) throw std::runtime_error(curl_easy_strerror(res));
 }
 
 }  // namespace
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
-  auto const webhook = [] {
-    auto const* env = std::getenv("GDB_BUILD_ALERT_WEBHOOK");
+  static auto const webhook = [] {
+    std::string const name = "GCB_BUILD_ALERT_WEBHOOK";
+    auto const* env = std::getenv(name.c_str());
     if (env) return std::string{env};
-    throw std::runtime_error("Missing GCB_BUILD_ALERT_WEBHOOK");
+    throw std::runtime_error("Missing environment variable: " + name);
   }();
-  if (event.data_content_type().value_or("") != "application/json") {
-    return LogError("expected application/json data");
-  }
-  auto const payload = nlohmann::json::parse(event.data().value_or("{}"));
-  if (payload.count("message") == 0) {
-    return LogError("missing embedded Pub/Sub message");
-  }
-  auto const message = payload["message"];
-  if (message.count("attributes") == 0 || message.count("data") == 0) {
-    return LogError("missing Pub/Sub attributes or data");
-  }
-  auto const data = cppcodec::base64_rfc4648::decode<std::string>(
-      message["data"].get<std::string>());
-  auto const build = nlohmann::json::parse(data);
-  auto const status = message["attributes"].value("status", "");
-  auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
-  auto const trigger_type = build["substitutions"].value("_TRIGGER_TYPE", "");
-  // Skips successful builds, PR invocations, and invocations without triggers.
-  if (status != "FAILURE" || trigger_type == "pr" || trigger_name.empty())
-    return;
-  auto const chat = MakeChatPayload(build);
-  LogInfo("Posting chat:\n" + chat);
+  auto const bs = ParseBuildStatus(std::move(event));
+  if (bs.status != "FAILURE") return;
+  auto const substitutions = bs.build["substitutions"];
+  auto const trigger_type = substitutions.value("_TRIGGER_TYPE", "");
+  auto const trigger_name = substitutions.value("TRIGGER_NAME", "");
+  // Skips PR invocations and manually invoked builds (no trigger name).
+  if (trigger_type == "pr" || trigger_name.empty()) return;
+  auto const chat = MakeChatPayload(bs);
+  std::cout << "Posting chat:\n" << chat << "\n";
   HttpPost(webhook, chat.dump());
 }
