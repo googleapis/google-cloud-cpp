@@ -31,13 +31,12 @@ void LogError(std::string const& msg) {
   std::cerr << json.dump() << "\n";
 }
 
-auto MakeChatPayload(nlohmann::json const& build, std::string const& status) {
+auto MakeChatPayload(nlohmann::json const& build) {
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
   auto const log_url = build.value("logUrl", "");
   auto text = fmt::format(
-      R""(Failed build: *{trigger_name}* status={status} (<{log_url}|Build Log>))"",
-      fmt::arg("status", status), fmt::arg("trigger_name", trigger_name),
-      fmt::arg("log_url", log_url));
+      R""(Failed build: *{trigger_name}* (<{log_url}|Build Log>))"",
+      fmt::arg("trigger_name", trigger_name), fmt::arg("log_url", log_url));
   return nlohmann::json{{"text", std::move(text)}};
 }
 
@@ -81,9 +80,7 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
-  // XXX This is just for testing. It will alert on *all* non-successful
-  // builds. Before merging this, we should also ignore PR builds
-  if (status == "SUCCESS") return;
-  auto const chat = MakeChatPayload(contents, status);
+  if (status != "FAILURE") return;
+  auto const chat = MakeChatPayload(contents);
   HttpPost(webhook, chat.dump());
 }
