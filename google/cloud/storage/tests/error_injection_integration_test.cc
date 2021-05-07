@@ -172,7 +172,6 @@ class SymbolInterceptor {
 
   template <typename SymbolType>
   static SymbolType GetOrigSymbol(char const* symbol_name) {
-    // NOLINTNEXTLINE(performance-no-int-to-ptr)
     void* res = dlsym(RTLD_NEXT, symbol_name);
     if (res == nullptr) {
       std::stringstream stream;
