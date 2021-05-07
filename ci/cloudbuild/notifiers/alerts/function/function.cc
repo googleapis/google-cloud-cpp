@@ -81,6 +81,8 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
+  // XXX This is just for testing. It will alert on *all* non-successful
+  // builds. Before merging this, we should also ignore PR builds
   if (status == "SUCCESS") return;
   auto const chat = MakeChatPayload(contents, status);
   HttpPost(webhook, chat.dump());
