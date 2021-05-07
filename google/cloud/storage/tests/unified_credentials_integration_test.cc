@@ -45,7 +45,16 @@ class UnifiedCredentialsIntegrationTest
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    service_account_ =
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
+            .value_or("");
+
     ASSERT_FALSE(bucket_name_.empty());
+    ASSERT_FALSE(project_id_.empty());
+    ASSERT_FALSE(service_account_.empty());
   }
 
   static Client MakeTestClient(Options opts) {
@@ -66,9 +75,13 @@ class UnifiedCredentialsIntegrationTest
   }
 
   std::string const& bucket_name() const { return bucket_name_; }
+  std::string const& project_id() const { return project_id_; }
+  std::string const& service_account() const { return service_account_; }
 
  private:
   std::string bucket_name_;
+  std::string project_id_;
+  std::string service_account_;
   testing_util::ScopedEnvironment grpc_config_;
 };
 
@@ -115,6 +128,17 @@ TEST_P(UnifiedCredentialsIntegrationTest, AccessToken) {
 
   auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
       MakeAccessTokenCredentials(token, expiration)));
+
+  ASSERT_NO_FATAL_FAILURE(
+      UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
+}
+
+TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountImpersonation) {
+  if (UsingEmulator()) GTEST_SKIP();
+
+  auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
+      MakeImpersonateServiceAccountCredentials(MakeGoogleDefaultCredentials(),
+                                               service_account())));
 
   ASSERT_NO_FATAL_FAILURE(
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));

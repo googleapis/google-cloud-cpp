@@ -41,7 +41,9 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
   // the test.
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", "unused.json");
 
-  auto result = CreateAuthenticationStrategy(MakeGoogleDefaultCredentials());
+  CompletionQueue cq;
+  auto result =
+      CreateAuthenticationStrategy(MakeGoogleDefaultCredentials(), cq);
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
   auto status = result->ConfigureContext(context);
@@ -52,8 +54,9 @@ TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
 TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::hours(1);
+  CompletionQueue cq;
   auto result = CreateAuthenticationStrategy(
-      MakeAccessTokenCredentials("test-token", expiration));
+      MakeAccessTokenCredentials("test-token", expiration), cq);
   ASSERT_NE(nullptr, result.get());
   grpc::ClientContext context;
   auto status = result->ConfigureContext(context);

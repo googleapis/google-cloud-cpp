@@ -27,9 +27,10 @@ using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 
 AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
-                                  Options const& options) {
+                                  CompletionQueue cq, Options const& options) {
   auto stub = MakeMinimalIamCredentialsStub(
-      CreateAuthenticationStrategy(config.base_credentials()),
+      CreateAuthenticationStrategy(config.base_credentials(), std::move(cq),
+                                   options),
       MakeMinimalIamCredentialsOptions(options));
 
   GenerateAccessTokenRequest request;
@@ -54,6 +55,14 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
         });
   };
 }
+
+std::shared_ptr<GrpcAsyncAccessTokenCache> MakeCache(
+    CompletionQueue cq, ImpersonateServiceAccountConfig const& config,
+    Options const& options) {
+  auto source = MakeSource(config, cq, options);
+  return GrpcAsyncAccessTokenCache::Create(std::move(cq), std::move(source));
+}
+
 }  // namespace
 
 std::shared_ptr<GrpcImpersonateServiceAccount>
@@ -67,8 +76,7 @@ GrpcImpersonateServiceAccount::Create(
 GrpcImpersonateServiceAccount::GrpcImpersonateServiceAccount(
     CompletionQueue cq, ImpersonateServiceAccountConfig const& config,
     Options const& options)
-    : cache_(GrpcAsyncAccessTokenCache::Create(std::move(cq),
-                                               MakeSource(config, options))) {}
+    : cache_(MakeCache(std::move(cq), config, options)) {}
 
 GrpcImpersonateServiceAccount::~GrpcImpersonateServiceAccount() = default;
 

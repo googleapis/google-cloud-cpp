@@ -82,6 +82,10 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<EndpointOption>()) {
     options.set<EndpointOption>("storage.googleapis.com");
   }
+  if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
+    options.set<GrpcBackgroundThreadsFactoryOption>(
+        google::cloud::internal::DefaultBackgroundThreadsFactory);
+  }
 
   return options;
 }
@@ -97,18 +101,20 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 }
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
-    Options const& opts) {
+    CompletionQueue cq, Options const& opts) {
   if (opts.has<google::cloud::internal::UnifiedCredentialsOption>()) {
     return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<google::cloud::internal::UnifiedCredentialsOption>());
+        opts.get<google::cloud::internal::UnifiedCredentialsOption>(),
+        std::move(cq), opts);
   }
   return google::cloud::internal::CreateAuthenticationStrategy(
       opts.get<google::cloud::GrpcCredentialOption>());
 }
 
-std::shared_ptr<StorageStub> CreateStorageStub(Options const& opts,
+std::shared_ptr<StorageStub> CreateStorageStub(CompletionQueue cq,
+                                               Options const& opts,
                                                int channel_id) {
-  auto auth = CreateAuthenticationStrategy(opts);
+  auto auth = CreateAuthenticationStrategy(std::move(cq), opts);
   auto stub =
       MakeDefaultStorageStub(CreateGrpcChannel(*auth, opts, channel_id));
   if (auth->RequiresConfigureContext()) {
@@ -130,7 +136,8 @@ std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts,
 GrpcClient::GrpcClient(Options const& opts, int channel_id)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
-      stub_(CreateStorageStub(opts, channel_id)) {}
+      background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
+      stub_(CreateStorageStub(background_->cq(), opts, channel_id)) {}
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {

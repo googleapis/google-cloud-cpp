@@ -84,6 +84,7 @@ class CredentialsVisitor {
   virtual ~CredentialsVisitor() = default;
   virtual void visit(GoogleDefaultCredentialsConfig&) = 0;
   virtual void visit(AccessTokenConfig&) = 0;
+  virtual void visit(ImpersonateServiceAccountConfig&) = 0;
 
   static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
 };
@@ -128,8 +129,7 @@ class ImpersonateServiceAccountConfig : public Credentials {
   std::vector<std::string> const& delegates() const { return delegates_; }
 
  private:
-  // TODO(#6309) - keep unimplemented until the rest of the code is ready
-  void dispatch(CredentialsVisitor&) override {}
+  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
 
   std::shared_ptr<Credentials> base_credentials_;
   std::string target_service_account_;

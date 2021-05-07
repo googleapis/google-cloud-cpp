@@ -49,8 +49,8 @@ class MockGrpcClient : public GrpcClient {
   }
 
   MockGrpcClient()
-      : GrpcClient(Options{}.set<GrpcCredentialOption>(
-                       grpc::InsecureChannelCredentials()),
+      : GrpcClient(DefaultOptionsGrpc(Options{}.set<GrpcCredentialOption>(
+                       grpc::InsecureChannelCredentials())),
                    /*channel_id=*/0) {}
 
   MOCK_METHOD(std::unique_ptr<GrpcClient::InsertStream>, CreateUploadWriter,

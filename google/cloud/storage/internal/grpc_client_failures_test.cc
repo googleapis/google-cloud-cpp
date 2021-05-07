@@ -59,9 +59,9 @@ class GrpcClientFailuresTest
                 oauth2::CreateAnonymousCredentials())
             .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     if (grpc_config == "metadata") {
-      client_ = GrpcClient::Create(std::move(options));
+      client_ = GrpcClient::Create(DefaultOptionsGrpc(std::move(options)));
     } else {
-      client_ = HybridClient::Create(std::move(options));
+      client_ = HybridClient::Create(DefaultOptionsGrpc(std::move(options)));
     }
   }
 
