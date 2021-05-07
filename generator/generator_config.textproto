@@ -35,6 +35,12 @@ service {
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
 }
 
+service {
+  service_proto_path: "google/iam/v1/iam_policy.proto"
+  product_path: "google/cloud/iam"
+  initial_copyright_year: "2021"
+}
+
 # Logging
 service {
   service_proto_path: "google/logging/v2/logging.proto"
