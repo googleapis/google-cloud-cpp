@@ -74,6 +74,14 @@ class CurlHandle {
     ThrowSetOptionError(e, option, std::forward<T>(param));
   }
 
+  void SetOption(CURLoption option, std::nullptr_t) {
+    auto e = curl_easy_setopt(handle_.get(), option, nullptr);
+    if (e == CURLE_OK) {
+      return;
+    }
+    ThrowSetOptionError(e, option, static_cast<void*>(nullptr));
+  }
+
   Status EasyPerform() {
     auto e = curl_easy_perform(handle_.get());
     return AsStatus(e, __func__);
