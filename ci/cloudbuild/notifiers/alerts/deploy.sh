@@ -21,8 +21,7 @@ source module ci/lib/io.sh
 cd "${PROGRAM_DIR}"
 
 io::log_h1 "Building code with pack"
-pack build\
-  --builder gcr.io/buildpacks/builder:latest \
+pack build --builder gcr.io/buildpacks/builder:latest \
   --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
   --env "GOOGLE_FUNCTION_TARGET=SendBuildAlerts" \
   --path "function" "gcr.io/cloud-cpp-testing-resources/send-build-alerts"
@@ -34,8 +33,8 @@ docker push "${IMAGE}"
 
 io::log_h1 "Deploying to Cloud Run"
 gcloud run deploy send-build-alerts \
-    --project="${GOOGLE_CLOUD_PROJECT}" \
-    --image="${IMAGE}" \
-    --region="us-central1" \
-    --platform="managed" \
-    --no-allow-unauthenticated
+  --project="${GOOGLE_CLOUD_PROJECT}" \
+  --image="${IMAGE}" \
+  --region="us-central1" \
+  --platform="managed" \
+  --no-allow-unauthenticated

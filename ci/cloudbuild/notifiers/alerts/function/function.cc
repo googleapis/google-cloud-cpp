@@ -26,110 +26,46 @@
 
 namespace {
 
-nlohmann::json LogFormat(std::string const& sev, std::string const& msg) {
-  return nlohmann::json{{"severity", sev}, {"message", msg}}.dump();
-}
-
 void LogError(std::string const& msg) {
-  std::cerr << LogFormat("error", msg) << "\n";
+  auto const json = nlohmann::json{{"severity", "error"}, {"message", msg}};
+  std::cerr << json.dump() << "\n";
 }
 
-void LogDebug(std::string const& msg) {
-  auto const kEnabled = [] {
-    auto const* enabled = std::getenv("ENABLE_DEBUG");
-    return enabled != nullptr;
-  }();
-  if (!kEnabled) return;
-  std::cerr << LogFormat("debug", msg) << "\n";
-}
-
-nlohmann::json MakeChatPayload(nlohmann::json const& build) {
+auto MakeChatPayload(nlohmann::json const& build, std::string const& status) {
   auto const trigger_name = build["substitutions"].value("TRIGGER_NAME", "");
   auto const log_url = build.value("logUrl", "");
   auto text = fmt::format(
-      R""(Failed trigger: *{trigger_name}* (<{log_url}|Build Log>)"",
-      fmt::arg("trigger_name", trigger_name), fmt::arg("log_url", log_url));
+      R""(Failed build: *{trigger_name}* status={status} (<{log_url}|Build Log>))"",
+      fmt::arg("status", status), fmt::arg("trigger_name", trigger_name),
+      fmt::arg("log_url", log_url));
   return nlohmann::json{{"text", std::move(text)}};
-} 
-
-void EasyPost(std::string const& url, std::string const& data) {
-  std::cerr << "DEBUG: url=" << url << "\n";
-  std::cerr << "DEBUG: data=" << data << "\n";
-  static constexpr auto kContentType =
-      "Content-Type: application/json; charset=UTF-8";
-  using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
-  auto const headers =
-      Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
-
-  using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
-  auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
-  if (curl) {
-    curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
-    curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
-    /* curl_easy_setopt(curl.get(), CURLOPT_VERBOSE, 1L); */
-    CURLcode res = curl_easy_perform(curl.get());
-    if (res != CURLE_OK) LogError(curl_easy_strerror(res));
-  }
-}
-
-extern "C" size_t CurlOnWriteData(char* ptr, size_t size, size_t nmemb,
-                                  void* userdata) {
-  auto* buffer = reinterpret_cast<std::string*>(userdata);
-  buffer->append(ptr, size * nmemb);
-  return size * nmemb;
 }
 
 void HttpPost(std::string const& url, std::string const& data) {
-  using CurlHeaders =
-      std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
-  auto headers = CurlHeaders(nullptr, curl_slist_free_all);
-  auto add_header = [&headers](std::string const& h) {
-    auto* nh = curl_slist_append(headers.get(), h.c_str());
-    (void)headers.release();
-    headers.reset(nh);
-  };
-  add_header("Content-Type: application/json; charset=UTF-8");
-
+  static constexpr auto kContentType = "Content-Type: application/json";
+  using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
+  auto const headers = std::make_unique<Headers>(
+      curl_slist_append(nullptr, kContentType), curl_slist_free_all);
   using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
-  auto easy = CurlHandle(curl_easy_init(), curl_easy_cleanup);
-
-  auto setopt = [h = easy.get()](auto opt, auto value) {
-    if (auto e = curl_easy_setopt(h, opt, value); e != CURLE_OK) {
-      std::ostringstream os;
-      os << "error [" << e << "] setting curl_easy option <" << opt
-         << ">=" << value;
-      throw std::runtime_error(std::move(os).str());
-    }
-  };
-  auto get_response_code = [h = easy.get()]() {
-    long code;  // NOLINT(google-runtime-int)
-    auto e = curl_easy_getinfo(h, CURLINFO_RESPONSE_CODE, &code);
-    if (e == CURLE_OK) {
-      return static_cast<int>(code);
-    }
-    throw std::runtime_error("Cannot get response code");
-  };
-
-  setopt(CURLOPT_URL, url.c_str());
-  setopt(CURLOPT_POSTFIELDS, data.c_str());
-  setopt(CURLOPT_WRITEFUNCTION, &CurlOnWriteData);
-  std::string buffer;
-  setopt(CURLOPT_WRITEDATA, &buffer);
-  setopt(CURLOPT_HTTPHEADER, headers.get());
-
-  std::cerr << "curl_easy_perform\n";
-  auto e = curl_easy_perform(easy.get());
-  std::cerr << "done with " << e << "\n";
-  if (e != CURLE_OK) {
-    LogError(fmt::format("Curl failed with code %d", get_response_code()));
+  auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
+  if (curl) {
+    curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
+    curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl.get(), CURLOPT_POSTFIELDS, data.c_str());
+    CURLcode res = curl_easy_perform(curl.get());
+    if (res != CURLE_OK) LogError(curl_easy_strerror(res));
   }
 }
 
 }  // namespace
 
 void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
-  std::cerr << "Got event\n";
+  std::string webhook;
+  if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
+    webhook = e;
+  } else {
+    return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
+  }
   if (event.data_content_type().value_or("") != "application/json") {
     return LogError("expected application/json data");
   }
@@ -145,21 +81,7 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
       message["data"].get<std::string>());
   auto const contents = nlohmann::json::parse(data);
   auto const status = message["attributes"].value("status", "");
-  auto const trigger_type =
-      contents["substitutions"].value("_TRIGGER_TYPE", "");
-
-  /* if (status != "FAILURE" || trigger_type  == "pr") { */
-  /*   return LogDebug("Nothing to do"); */
-  /* } */
-
-
-  std::string webhook_url;
-  if (auto const* e = std::getenv("GCB_BUILD_ALERT_WEBHOOK")) {
-    webhook_url = e;
-  } else {
-    return LogError("Missing GCB_BUILD_ALERT_WEBHOOK environment variable");
-  }
-
-  auto const chat = MakeChatPayload(contents);
-  EasyPost(webhook_url, chat.dump());
+  if (status == "SUCCESS") return;
+  auto const chat = MakeChatPayload(contents, status);
+  HttpPost(webhook, chat.dump());
 }

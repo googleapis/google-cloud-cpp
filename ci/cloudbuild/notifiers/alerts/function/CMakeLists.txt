@@ -21,6 +21,5 @@ find_package(fmt REQUIRED)
 find_package(functions_framework_cpp REQUIRED)
 
 add_library(functions_framework_cpp_function function.cc)
-target_link_libraries(
-    functions_framework_cpp_function functions-framework-cpp::framework
-    fmt::fmt CURL::libcurl)
+target_link_libraries(functions_framework_cpp_function
+                      functions-framework-cpp::framework fmt::fmt CURL::libcurl)

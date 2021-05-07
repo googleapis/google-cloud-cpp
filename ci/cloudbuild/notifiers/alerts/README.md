@@ -1,11 +1,8 @@
-# Generate Log Index for External Developers
+# Send alerts when CI builds fail
 
-XXX
-
-This document describes the steps necessary to set up this Cloud Run
-deployment. The main audience is `google-cloud-cpp` team members that need
-to update the deployment. You are expected to be familiar with Docker, and
-Google Cloud Platform, particularly with Cloud Run and GCS.
+This notifier listens for failed builds (ignoring PR and manual builds) and
+sends alert chats to the webhook URL specified by the `GCB_BUILD_ALERT_WEBHOOK`
+environment variable. This variable is injected from Secret Manager.
 
 ## Prerequisites
 
@@ -25,39 +22,16 @@ pack version
 # Output: a version number, e.g., 0.17.0+git-d9cb4e7.build-2045
 ```
 
-## Create the Docker image
+## Build and deploy
 
-We use buildspacks to compile the code in the `function/` directory into a
-Docker image. At the end of this build the docker image will reside in your
-workstation. We will then push the image to GCR (Google Container Registry)
-and use it from Cloud Run.
+The steps to build and deploy this notifier are in the `deploy.sh` script. You
+can read that for details or just run it.
 
 ```shell
-pack build  --builder gcr.io/buildpacks/builder:latest \
-     --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
-     --env "GOOGLE_FUNCTION_TARGET=SendBuildAlerts" \
-     --path "ci/cloudbuild/notifiers/logs/function" \
-     "gcr.io/$GOOGLE_CLOUD_PROJECT/send-build-alerts"
+deploy.sh
 ```
 
-## Push the Docker image to GCR
-
-```shell
-docker push "gcr.io/$GOOGLE_CLOUD_PROJECT/send-build-alerts:latest"
-```
-
-## Deploy to Cloud Run
-
-```shell
-gcloud run deploy send-build-alerts \
-    --project="$GOOGLE_CLOUD_PROJECT" \
-    --image="gcr.io/$GOOGLE_CLOUD_PROJECT/send-build-alerts:latest" \
-    --region="us-central1" \
-    --platform="managed" \
-    --no-allow-unauthenticated
-```
-
-## Set up a trigger
+## One-time setup: Set up a trigger
 
 Note: This command only needs to be run once. It is here in case we ever move
 the build to a different project.
@@ -80,5 +54,4 @@ gcloud beta eventarc triggers create send-build-alerts-trigger \
 
 [docker]: https://docker.com/
 [docker-install]: https://store.docker.com/search?type=edition&offering=community
-[sudoless docker]: https://docs.docker.com/engine/install/linux-postinstall/
 [pack-install]: https://buildpacks.io/docs/install-pack/
