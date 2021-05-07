@@ -31,6 +31,9 @@ struct Visitor : public CredentialsVisitor {
   AccessToken access_token;
   ImpersonateServiceAccountConfig* impersonate = nullptr;
 
+  void visit(InsecureCredentialsConfig&) override {
+    name = "InsecureCredentialsConfig";
+  }
   void visit(GoogleDefaultCredentialsConfig&) override {
     name = "GoogleDefaultCredentialsConfig";
   }
@@ -43,6 +46,14 @@ struct Visitor : public CredentialsVisitor {
     impersonate = &cfg;
   }
 };
+
+TEST(Credentials, InsecureCredentials) {
+  Visitor visitor;
+
+  auto credentials = MakeInsecureCredentials();
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  EXPECT_EQ("InsecureCredentialsConfig", visitor.name);
+}
 
 TEST(Credentials, GoogleDefaultCredentials) {
   Visitor visitor;

@@ -36,6 +36,10 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     Visitor(CompletionQueue c, Options o)
         : cq(std::move(c)), options(std::move(o)) {}
 
+    void visit(InsecureCredentialsConfig&) override {
+      result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
+          grpc::InsecureChannelCredentials());
+    }
     void visit(GoogleDefaultCredentialsConfig&) override {
       result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials());

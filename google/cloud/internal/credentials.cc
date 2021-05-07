@@ -26,6 +26,10 @@ void CredentialsVisitor::dispatch(Credentials& credentials,
   credentials.dispatch(visitor);
 }
 
+std::shared_ptr<Credentials> MakeInsecureCredentials() {
+  return std::make_shared<InsecureCredentialsConfig>();
+}
+
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
   return std::make_shared<GoogleDefaultCredentialsConfig>();
 }

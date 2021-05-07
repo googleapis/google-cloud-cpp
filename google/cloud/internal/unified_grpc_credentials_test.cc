@@ -35,6 +35,16 @@ TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
   ASSERT_EQ(nullptr, context.credentials());
 }
 
+TEST(UnifiedGrpcCredentialsTest, WithInsecureCredentials) {
+  CompletionQueue cq;
+  auto result = CreateAuthenticationStrategy(MakeInsecureCredentials(), cq);
+  ASSERT_NE(nullptr, result.get());
+  grpc::ClientContext context;
+  auto status = result->ConfigureContext(context);
+  EXPECT_THAT(status, IsOk());
+  ASSERT_EQ(nullptr, context.credentials());
+}
+
 TEST(UnifiedGrpcCredentialsTest, WithDefaultCredentials) {
   // Create a filename for a file that (most likely) does not exist. We just
   // want to initialize the default credentials, the filename won't be used by

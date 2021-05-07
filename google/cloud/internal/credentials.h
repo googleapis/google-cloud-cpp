@@ -68,6 +68,21 @@ class Credentials {
 };
 
 /**
+ * Create insecure (aka anonymous, aka unauthenticated) credentials.
+ *
+ * These credentials are mostly intended for testing. Integration tests running
+ * against an emulator do not need to authenticate. In fact, it may be
+ * impossible to connect to an emulator using SSL/TLS because the emulators
+ * typically run without secure communication.
+ *
+ * In addition, unit tests may benefit from using these credentials: loading the
+ * default credentials unnecessarily slows down the unit tests, and in some
+ * CI environments the credentials may fail to load, creating confusing warnings
+ * and sometimes even errors.
+ */
+std::shared_ptr<Credentials> MakeInsecureCredentials();
+
+/**
  * Creates the default credentials.
  *
  * These are the most commonly used credentials, and are expected to meet the
@@ -178,6 +193,7 @@ struct AccessToken {
   std::chrono::system_clock::time_point expiration;
 };
 
+class InsecureCredentialsConfig;
 class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
 class ImpersonateServiceAccountConfig;
@@ -185,11 +201,20 @@ class ImpersonateServiceAccountConfig;
 class CredentialsVisitor {
  public:
   virtual ~CredentialsVisitor() = default;
+  virtual void visit(InsecureCredentialsConfig&) = 0;
   virtual void visit(GoogleDefaultCredentialsConfig&) = 0;
   virtual void visit(AccessTokenConfig&) = 0;
   virtual void visit(ImpersonateServiceAccountConfig&) = 0;
 
   static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
+};
+
+class InsecureCredentialsConfig : public Credentials {
+ public:
+  ~InsecureCredentialsConfig() override = default;
+
+ private:
+  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
 };
 
 class GoogleDefaultCredentialsConfig : public Credentials {
