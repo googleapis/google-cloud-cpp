@@ -60,8 +60,7 @@ class AsyncRetryBulkApply
                       std::string const& app_profile_id,
                       std::string const& table_name, BulkMutation mut);
 
-  void StartIterationIfNeeded(CompletionQueue cq);
-
+  void StartIteration(CompletionQueue cq);
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(CompletionQueue cq, google::cloud::Status status);
 

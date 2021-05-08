@@ -32,6 +32,7 @@ namespace {
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
@@ -46,12 +47,34 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
             internal::kBigtableTableAdminLimits)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()),
-        metadata_update_policy_("my_tqble", MetadataParamTypes::NAME) {}
+        metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
+
+  void SimulateIteration() {
+    cq_impl_->SimulateCompletion(true);
+    // state == PROCESSING
+    cq_impl_->SimulateCompletion(true);
+    // state == PROCESSING, 1 read
+    cq_impl_->SimulateCompletion(false);
+    // state == FINISHING
+    cq_impl_->SimulateCompletion(true);
+  }
 
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
+};
+
+TEST_F(AsyncBulkApplyTest, AsyncBulkApplyEmpty) {
+  bigtable::BulkMutation mut;
+
+  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+      cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
+      *idempotent_mutation_policy_, metadata_update_policy_, client_,
+      "my-app-profile", "my-table", std::move(mut));
+
+
+  ASSERT_EQ(0U, bulk_apply_future.get().size());
 };
 
 TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
@@ -102,13 +125,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
 
   ASSERT_EQ(1U, cq_impl_->size());
 
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING, 1 read
-  cq_impl_->SimulateCompletion(false);
-  // state == FINISHING
-  cq_impl_->SimulateCompletion(true);
+  SimulateIteration();
 
   ASSERT_EQ(0U, cq_impl_->size());
 }
@@ -174,23 +191,11 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING, 1 read
-  cq_impl_->SimulateCompletion(false);
-  // state == FINISHING
-  cq_impl_->SimulateCompletion(true);
+  SimulateIteration();
 
   ASSERT_EQ(1U, cq_impl_->size());
 
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING, 1 read
-  cq_impl_->SimulateCompletion(false);
-  // state == FINISHING
-  cq_impl_->SimulateCompletion(true);
+  SimulateIteration();
 
   bulk_apply_future.get();
 
@@ -198,7 +203,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplyFailureRetry) {
+TEST_F(AsyncBulkApplyTest, AsyncBulkApplyDefaultFailureRetry) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",
                                   {bigtable::SetCell("f", "c", 0_ms, "v2")}),
@@ -263,28 +268,67 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyFailureRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING, 1 read
-  cq_impl_->SimulateCompletion(false);
-  // state == FINISHING
-  cq_impl_->SimulateCompletion(true);
+  SimulateIteration();
 
   ASSERT_EQ(1U, cq_impl_->size());
 
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING
-  cq_impl_->SimulateCompletion(true);
-  // state == PROCESSING, 1 read
-  cq_impl_->SimulateCompletion(false);
-  // state == FINISHING
-  cq_impl_->SimulateCompletion(true);
+  SimulateIteration();
 
   bulk_apply_future.get();
 
   ASSERT_EQ(0U, cq_impl_->size());
 
+  EXPECT_TRUE(cq_impl_->empty());
+}
+
+TEST_F(AsyncBulkApplyTest, AsyncBulkApplyTooManyFailures) {
+  bigtable::BulkMutation mut{
+      bigtable::SingleRowMutation("foo2",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
+      bigtable::SingleRowMutation("foo3",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+      bigtable::SingleRowMutation("foo4",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v4")}),
+  };
+
+  // We give up on the 5th error.
+  const int limited_error_count = 4;
+
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .Times(limited_error_count + 1)
+      .WillRepeatedly([](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
+        EXPECT_CALL(*reader, Read)
+            .WillRepeatedly([](btproto::MutateRowsResponse*, void*) {});
+        EXPECT_CALL(*reader, Finish)
+            .WillRepeatedly([](grpc::Status* status, void*) {
+              *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+            });
+        EXPECT_CALL(*reader, StartCall).Times(1);
+        return reader;
+      });
+
+  auto limited_retry_policy = LimitedErrorCountRetryPolicy(limited_error_count);
+  auto short_backoff_policy = ExponentialBackoffPolicy(10_us, 40_us);
+  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+      cq_, limited_retry_policy.clone(), short_backoff_policy.clone(),
+      *idempotent_mutation_policy_, metadata_update_policy_, client_,
+      "my-app-profile", "my-table", std::move(mut));
+
+  for (int retry = 0; retry < limited_error_count; ++retry) {
+    SimulateIteration();
+    ASSERT_EQ(1U, cq_impl_->size());
+  }
+
+  SimulateIteration();
+
+  auto failures = bulk_apply_future.get();
+  EXPECT_EQ(3U, failures.size());
+
+  ASSERT_EQ(0U, cq_impl_->size());
   EXPECT_TRUE(cq_impl_->empty());
 }
 
