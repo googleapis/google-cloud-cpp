@@ -9,6 +9,7 @@ name: demo-fedora-pr
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: pr
 tags:
 - pr

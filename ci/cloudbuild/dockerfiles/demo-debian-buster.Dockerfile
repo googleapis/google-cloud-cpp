@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=buster
-FROM debian:${DISTRO_VERSION}
+FROM debian:buster
 ARG NCPU=4
 
 ## [BEGIN packaging.md]

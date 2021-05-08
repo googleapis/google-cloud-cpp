@@ -8,6 +8,7 @@ name: publish-docs-ci
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

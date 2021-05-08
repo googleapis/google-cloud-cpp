@@ -8,6 +8,7 @@ name: shared-ci
 substitutions:
   _BUILD_NAME: shared
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

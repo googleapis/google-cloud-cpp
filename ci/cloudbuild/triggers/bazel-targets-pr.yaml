@@ -9,6 +9,7 @@ name: bazel-targets-pr
 substitutions:
   _BUILD_NAME: bazel-targets
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: pr
 tags:
 - pr

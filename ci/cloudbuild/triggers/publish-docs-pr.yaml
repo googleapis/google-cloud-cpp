@@ -9,6 +9,7 @@ name: publish-docs-pr
 substitutions:
   _BUILD_NAME: publish-docs
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: pr
 tags:
 - pr

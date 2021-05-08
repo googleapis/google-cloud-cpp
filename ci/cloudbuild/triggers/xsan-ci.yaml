@@ -8,6 +8,7 @@ name: xsan-ci
 substitutions:
   _BUILD_NAME: xsan
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

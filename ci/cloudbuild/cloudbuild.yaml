@@ -37,6 +37,7 @@ options:
 # the `--substitutions=_FOO=bar` flag.
 substitutions:
   _DISTRO: 'unknown'
+  _DISTRO_VERSION: 'unknown'
   _BUILD_NAME: 'unknown'
   _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
   _IMAGE: 'cloudbuild/${_DISTRO}'
@@ -66,6 +67,8 @@ steps:
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
     '--context=dir:///workspace/ci',
+    # TODO(#6502) - add this when the triggers and Dockerfiles are ready
+    #     '--build-arg=DISTRO_VERSION=${_DISTRO_VERSION}',
     '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
     '--cache=true',
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',

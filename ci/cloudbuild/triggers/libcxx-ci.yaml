@@ -8,6 +8,7 @@ name: libcxx-ci
 substitutions:
   _BUILD_NAME: libcxx
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

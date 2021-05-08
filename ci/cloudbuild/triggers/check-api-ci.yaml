@@ -8,6 +8,7 @@ name: check-api-ci
 substitutions:
   _BUILD_NAME: check-api
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

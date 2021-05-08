@@ -9,6 +9,7 @@ name: checkers-pr
 substitutions:
   _BUILD_NAME: checkers
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: pr
 tags:
 - pr

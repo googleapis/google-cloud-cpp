@@ -9,6 +9,7 @@ name: generate-libraries-pr
 substitutions:
   _BUILD_NAME: generate-libraries
   _DISTRO: fedora
+  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: pr
 tags:
 - pr
