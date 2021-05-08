@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION
+ARG DISTRO_VERSION=33
 FROM fedora:${DISTRO_VERSION}
 ARG NCPU=4
 
