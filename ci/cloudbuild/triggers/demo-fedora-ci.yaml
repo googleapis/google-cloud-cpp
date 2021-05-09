@@ -8,7 +8,6 @@ name: demo-fedora-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-fedora
-  _DISTRO_VERSION: 33
   _TRIGGER_TYPE: ci
 tags:
 - ci

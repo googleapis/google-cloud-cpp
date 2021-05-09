@@ -7,8 +7,7 @@ github:
 name: bazel-targets-ci
 substitutions:
   _BUILD_NAME: bazel-targets
-  _DISTRO: fedora
-  _DISTRO_VERSION: 33
+  _DISTRO: fedora-33
   _TRIGGER_TYPE: ci
 tags:
 - ci

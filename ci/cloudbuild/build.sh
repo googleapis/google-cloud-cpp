@@ -18,7 +18,6 @@
 #
 #   Options:
 #     --distro=<name>      The distro name to use
-#     --distro-version=<v> The distro version to use
 #     -t|--trigger         The trigger file to extract the build name and distro
 #     -l|--local           Run the build in the local environment
 #     -d|--docker          Run the build in a local docker
@@ -68,9 +67,6 @@
 #   Runs the asan/integration tests in the cloud-cpp-testing-resources project
 #   $ build.sh -t asan-pr --project cloud-cpp-testing-resources
 #
-#   Runs a build with a non-standard version of the distro
-#   $ build.sh --distro fedora --distro-version 35 asan
-#
 #   Runs the checkers in your local docker
 #   NOTE: This is a good way to format your code and check for style issues.
 #   $ build.sh -t checkers-pr --docker
@@ -89,13 +85,12 @@ function print_usage() {
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="p:t:ldsh" \
-  --longoptions="distro:,distro-version:,project:,trigger:,local,docker,docker-shell,help" \
+  --longoptions="distro:,project:,trigger:,local,docker,docker-shell,help" \
   --name="${PROGRAM_NAME}" \
   -- "$@")"
 eval set -- "${PARSED}"
 
 DISTRO_FLAG=""
-DISTRO_VERSION_FLAG=""
 PROJECT_FLAG=""
 TRIGGER_FLAG=""
 LOCAL_FLAG="false"
@@ -105,10 +100,6 @@ while true; do
   case "$1" in
   --distro)
     DISTRO_FLAG="$2"
-    shift 2
-    ;;
-  --distro-version)
-    DISTRO_VERSION_FLAG="$2"
     shift 2
     ;;
   -p | --project)
@@ -153,12 +144,10 @@ if [[ -n "${TRIGGER_FLAG}" ]]; then
     io::log_red "Cannot open ${trigger_file}"
     exit 1
   fi
-  build="$(grep _BUILD_NAME: "${trigger_file}" | awk '{print $2}')"
-  distro="$(grep _DISTRO: "${trigger_file}" | awk '{print $2}')"
-  distro_version="$(grep _DISTRO_VERSION: "${trigger_file}" | awk '{print $2}')"
+  build="$(grep _BUILD_NAME "${trigger_file}" | awk '{print $2}')"
+  distro="$(grep _DISTRO "${trigger_file}" | awk '{print $2}')"
   test -z "${BUILD_NAME}" && BUILD_NAME="${build}"
   test -z "${DISTRO_FLAG}" && DISTRO_FLAG="${distro}"
-  test -z "${DISTRO_VERSION_FLAG}" && DISTRO_VERSION_FLAG="${distro_version}"
 fi
 readonly BUILD_NAME
 readonly DISTRO_FLAG
@@ -246,18 +235,8 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   # will be created by the docker daemon as root-owned directories.
   mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
   image="gcb-${DISTRO_FLAG}:latest"
-  if [[ -n "${DISTRO_VERSION_FLAG}" ]]; then
-    image="gcb-${DISTRO_FLAG}-${DISTRO_VERSION_FLAG}:latest"
-  fi
   io::log_h2 "Building docker image: ${image}"
-  build_flags=(
-    "-t" "${image}"
-    "--build-arg=NCPU=$(nproc)"
-  )
-  if [[ -n "${DISTRO_VERSION_FLAG}" ]]; then
-    build_flags+=("--build-arg=DISTRO_VERSION=${DISTRO_VERSION_FLAG}")
-  fi
-  docker build "${build_flags[@]}" \
+  docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(

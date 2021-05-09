@@ -8,8 +8,7 @@ github:
 name: gcs-grpc-pr
 substitutions:
   _BUILD_NAME: gcs-grpc
-  _DISTRO: fedora
-  _DISTRO_VERSION: 33
+  _DISTRO: fedora-33
   _TRIGGER_TYPE: pr
 tags:
 - pr

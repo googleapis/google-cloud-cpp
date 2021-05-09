@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=33
-FROM fedora:${DISTRO_VERSION}
+FROM fedora:33
 ARG NCPU=4
 
 # Install the minimal packages needed to compile libcxx, install Bazel, and
