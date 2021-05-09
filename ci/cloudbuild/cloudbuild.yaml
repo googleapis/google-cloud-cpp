@@ -37,7 +37,6 @@ options:
 # the `--substitutions=_FOO=bar` flag.
 substitutions:
   _DISTRO: 'unknown'
-  _DISTRO_VERSION: 'unknown'
   _BUILD_NAME: 'unknown'
   _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
   _IMAGE: 'cloudbuild/${_DISTRO}'
