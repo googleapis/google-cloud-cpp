@@ -52,9 +52,7 @@ BuildStatus ParseBuildStatus(google::cloud::functions::CloudEvent event) {
 nlohmann::json MakeChatPayload(BuildStatus const& bs) {
   auto const trigger_name = bs.build["substitutions"].value("TRIGGER_NAME", "");
   auto const log_url = bs.build.value("logUrl", "");
-  auto text = fmt::format(R""(Build failed: *{trigger_name}* {log_url})"",
-                          fmt::arg("trigger_name", trigger_name),
-                          fmt::arg("log_url", log_url));
+  auto text = fmt::format("Build failed: *{}* {}", trigger_name, log_url);
   return nlohmann::json{{"text", std::move(text)}};
 }
 
