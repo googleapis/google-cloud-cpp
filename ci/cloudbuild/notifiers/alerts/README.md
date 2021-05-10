@@ -1,8 +1,9 @@
 # Send alerts when CI builds fail
 
 This notifier listens for failed builds (ignoring PR and manual builds) and
-sends alert chats to the webhook URL specified by the `GCB_BUILD_ALERT_WEBHOOK`
-environment variable. This variable is injected from Secret Manager.
+sends alerts as Google Chat messages to the webhook URL specified by the
+`GCB_BUILD_ALERT_WEBHOOK` environment variable. This variable is injected from
+Secret Manager.
 
 ## Prerequisites
 
