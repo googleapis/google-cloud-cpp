@@ -29,8 +29,7 @@ future<std::vector<FailedMutation>> AsyncRetryBulkApply::Create(
     std::shared_ptr<bigtable::DataClient> client,
     std::string const& app_profile_id, std::string const& table_name,
     BulkMutation mut) {
-  if (mut.empty())
-    return make_ready_future(std::vector<FailedMutation>{});
+  if (mut.empty()) return make_ready_future(std::vector<FailedMutation>{});
 
   std::shared_ptr<AsyncRetryBulkApply> bulk_apply(new AsyncRetryBulkApply(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
@@ -72,7 +71,7 @@ void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
         self->OnRead(std::move(r));
         return make_ready_future(true);
       },
-      [self, cq](Status s) { self->OnFinish(cq, std::move(s)); });
+      [self, cq](Status const& s) { self->OnFinish(cq, s); });
 }
 
 void AsyncRetryBulkApply::OnRead(
@@ -81,7 +80,6 @@ void AsyncRetryBulkApply::OnRead(
 }
 
 void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
-  std::cout << "\nStatus: " << status.code() << " | " << status.message() << "\n\n";
   state_.OnFinish(status);
   if (!state_.HasPendingMutations() ||
       (!status.ok() && !rpc_retry_policy_->OnFailure(status))) {
@@ -89,18 +87,17 @@ void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
     return;
   }
 
-  std::cout << "\nStatus is still: " << status.code() << " | " << status.message() << "\n\n";
   auto self = this->shared_from_this();
   cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
-      .then([self, cq](future<StatusOr<std::chrono::system_clock::time_point>>
-                       result) {
-        std::cout << "\nTime's up\n\n";
-        if (auto tp = result.get()) {
-          self->StartIteration(std::move(cq));
-        } else {
-          self->promise_.set_value(std::move(self->state_).OnRetryDone());         
-        }
-      });
+      .then(
+          [self,
+           cq](future<StatusOr<std::chrono::system_clock::time_point>> result) {
+            if (auto tp = result.get()) {
+              self->StartIteration(std::move(cq));
+            } else {
+              self->promise_.set_value(std::move(self->state_).OnRetryDone());
+            }
+          });
 }
 
 }  // namespace internal

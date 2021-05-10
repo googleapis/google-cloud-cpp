@@ -32,7 +32,6 @@ namespace {
 namespace btproto = google::bigtable::v2;
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 
@@ -78,7 +77,6 @@ TEST_F(AsyncBulkApplyTest, NoMutations) {
       cq_, rpc_retry_policy_->clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
-
 
   ASSERT_EQ(0U, bulk_apply_future.get().size());
 };
@@ -301,15 +299,14 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
   EXPECT_CALL(*client_, PrepareAsyncMutateRows)
       .Times(limited_error_count + 1)
       .WillRepeatedly([](grpc::ClientContext*,
-                          btproto::MutateRowsRequest const&,
-                          grpc::CompletionQueue*) {
+                         btproto::MutateRowsRequest const&,
+                         grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-              *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-            });
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+        });
         EXPECT_CALL(*reader, StartCall);
         return reader;
       });
@@ -337,10 +334,12 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
 class MockBackoffPolicy : public RPCBackoffPolicy {
  public:
   MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext& context), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const& status), (override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext & context), (const, override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const& status),
+              (override));
   // TODO(#2344) - remove ::grpc::Status version.
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (grpc::Status const& status), (override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion,
+              (grpc::Status const& status), (override));
 };
 
 TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
@@ -356,15 +355,14 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
 
   std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
   EXPECT_CALL(*mock, Setup).Times(2);
-  EXPECT_CALL(*mock, OnCompletion(error))
-    .WillOnce([](Status const&) {
-        return 10_ms;
-        });
+  EXPECT_CALL(*mock, OnCompletion(error)).WillOnce([](Status const&) {
+    return 10_ms;
+  });
 
   EXPECT_CALL(*client_, PrepareAsyncMutateRows)
       .WillOnce([grpc_error](grpc::ClientContext*,
-                          btproto::MutateRowsRequest const&,
-                          grpc::CompletionQueue*) {
+                             btproto::MutateRowsRequest const&,
+                             grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
@@ -375,9 +373,8 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
         EXPECT_CALL(*reader, StartCall);
         return reader;
       })
-      .WillOnce([](grpc::ClientContext*,
-                          btproto::MutateRowsRequest const&,
-                          grpc::CompletionQueue*) {
+      .WillOnce([](grpc::ClientContext*, btproto::MutateRowsRequest const&,
+                   grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read)
@@ -385,16 +382,15 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
               auto& r1 = *r->add_entries();
               r1.set_index(0);
               r1.mutable_status()->set_code(grpc::StatusCode::OK);
-      
+
               auto& r2 = *r->add_entries();
               r2.set_index(1);
               r2.mutable_status()->set_code(grpc::StatusCode::OK);
             })
             .WillOnce([](btproto::MutateRowsResponse*, void*) {});
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-              *status = grpc::Status::OK;
-            });
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
         EXPECT_CALL(*reader, StartCall);
         return reader;
       });
@@ -424,15 +420,14 @@ TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
 
   std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
   EXPECT_CALL(*mock, Setup);
-  EXPECT_CALL(*mock, OnCompletion(error))
-    .WillOnce([](Status const&) {
-        return 10_ms;
-        });
+  EXPECT_CALL(*mock, OnCompletion(error)).WillOnce([](Status const&) {
+    return 10_ms;
+  });
 
   EXPECT_CALL(*client_, PrepareAsyncMutateRows)
       .WillOnce([grpc_error](grpc::ClientContext*,
-                          btproto::MutateRowsRequest const&,
-                          grpc::CompletionQueue*) {
+                             btproto::MutateRowsRequest const&,
+                             grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
