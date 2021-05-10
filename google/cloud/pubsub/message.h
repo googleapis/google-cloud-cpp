@@ -65,8 +65,8 @@ class MessageBuilder;
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using PubsubMessageDataType = std::decay<decltype(
-    std::declval<google::pubsub::v1::PubsubMessage>().data())>::type;
+using PubsubMessageDataType = std::decay<
+    decltype(std::declval<google::pubsub::v1::PubsubMessage>().data())>::type;
 
 /**
  * The C++ representation for a Cloud Pub/Sub messages.

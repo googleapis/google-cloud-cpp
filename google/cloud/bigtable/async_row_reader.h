@@ -226,7 +226,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
             "exception");
         return;
       }
-#else  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       should_cancel = !fut.get();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       if (should_cancel) {

@@ -39,8 +39,8 @@ TEST(ClusterConfigTest, Move) {
   auto proto = std::move(config).as_proto();
   // Verify that as_proto() for rvalue-references returns the right type.
   static_assert(
-      std::is_rvalue_reference<decltype(
-          std::move(std::declval<ClusterConfig>()).as_proto())>::value,
+      std::is_rvalue_reference<
+          decltype(std::move(std::declval<ClusterConfig>()).as_proto())>::value,
       "Return type from as_proto() must be rvalue-reference");
   EXPECT_EQ("somewhere", proto.location());
   EXPECT_EQ(7, proto.serve_nodes());

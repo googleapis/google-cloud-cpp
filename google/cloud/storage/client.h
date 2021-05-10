@@ -3358,10 +3358,10 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
   auto all_options = std::tie(options...);
 
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<
-                  NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
+              all_options))>::value == 0,
       "This functions accepts only options of type QuotaUser, UserIp, "
       "UserProject or Versions.");
   for (auto const& object :
@@ -3494,12 +3494,13 @@ StatusOr<ObjectMetadata> ComposeMany(
 
   // TODO(#3247): this list of type should somehow be generated
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<NotAmong<
-                  DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
-                  IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp,
-                  UserProject, WithObjectMetadata>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<DestinationPredefinedAcl, EncryptionKey,
+                            IfGenerationMatch, IfMetagenerationMatch,
+                            KmsKeyName, QuotaUser, UserIp, UserProject,
+                            WithObjectMetadata>::TPred>(all_options))>::value ==
+          0,
       "This functions accepts only options of type DestinationPredefinedAcl, "
       "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
       "QuotaUser, UserIp, UserProject or WithObjectMetadata.");

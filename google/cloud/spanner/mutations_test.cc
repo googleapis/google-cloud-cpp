@@ -362,11 +362,11 @@ TEST(MutationsTest, FluentUpdateBuilder) {
 
 TEST(MutationsTest, FluentInsertOrUpdateBuilder) {
   static_assert(
-      std::is_rvalue_reference<decltype(
-          std::declval<InsertOrUpdateMutationBuilder>()
-              .EmplaceRow()
-              .AddRow({})
-              .Build())>::value,
+      std::is_rvalue_reference<
+          decltype(std::declval<InsertOrUpdateMutationBuilder>()
+                       .EmplaceRow()
+                       .AddRow({})
+                       .Build())>::value,
       "Build() should return an rvalue if called fluently on a temporary");
 
   std::string const data(128, 'x');
@@ -403,8 +403,8 @@ TEST(MutationsTest, FluentReplaceBuilder) {
 
 TEST(MutationsTest, FluentDeleteBuilder) {
   static_assert(
-      std::is_rvalue_reference<decltype(
-          std::declval<DeleteMutationBuilder>().Build())>::value,
+      std::is_rvalue_reference<
+          decltype(std::declval<DeleteMutationBuilder>().Build())>::value,
       "Build() should return an rvalue if called fluently on a temporary");
 
   auto ks = KeySet().AddKey(MakeKey("key-to-delete"));
