@@ -33,7 +33,7 @@ if grep -qP 'v\d+\.\d+\..*' <<<"${BRANCH_NAME}"; then
   patch="$(awk '/GOOGLE_CLOUD_CPP_VERSION_PATCH/{print $3}' "${version_file}")"
   version="${major}.${minor}.${patch}"
 else
-  version="master"
+  version="HEAD"
   doc_args+=("-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=ON")
 fi
 
