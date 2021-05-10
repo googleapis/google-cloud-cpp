@@ -80,24 +80,28 @@ void AsyncRetryBulkApply::OnRead(
 }
 
 void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
+  auto const is_retryable = status.ok() || rpc_retry_policy_->OnFailure(status);
   state_.OnFinish(status);
-  if (!state_.HasPendingMutations() ||
-      (!status.ok() && !rpc_retry_policy_->OnFailure(status))) {
-    promise_.set_value(std::move(state_).OnRetryDone());
+  if (!state_.HasPendingMutations() || !is_retryable) {
+    SetPromise();
     return;
   }
 
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+
   auto self = this->shared_from_this();
   cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
-      .then(
-          [self,
-           cq](future<StatusOr<std::chrono::system_clock::time_point>> result) {
-            if (auto tp = result.get()) {
-              self->StartIteration(std::move(cq));
-            } else {
-              self->promise_.set_value(std::move(self->state_).OnRetryDone());
-            }
-          });
+      .then([self, cq](TimerFuture result) {
+        if (auto tp = result.get()) {
+          self->StartIteration(std::move(cq));
+        } else {
+          self->SetPromise();
+        }
+      });
+}
+
+void AsyncRetryBulkApply::SetPromise() {
+  promise_.set_value(std::move(state_).OnRetryDone());
 }
 
 }  // namespace internal

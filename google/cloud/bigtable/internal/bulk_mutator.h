@@ -52,7 +52,7 @@ class BulkMutatorState {
   std::vector<int> OnRead(google::bigtable::v2::MutateRowsResponse& response);
 
   /// Handle the result of a `Finish()` operation on the MutateRows() RPC.
-  void OnFinish(google::cloud::Status const& finish_status);
+  void OnFinish(google::cloud::Status finish_status);
 
   /**
    * Return the permanently failed mutations.

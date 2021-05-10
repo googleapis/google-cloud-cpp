@@ -63,6 +63,7 @@ class AsyncRetryBulkApply
   void StartIteration(CompletionQueue cq);
   void OnRead(google::bigtable::v2::MutateRowsResponse response);
   void OnFinish(CompletionQueue cq, google::cloud::Status const& status);
+  void SetPromise();
 
   std::unique_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy_;

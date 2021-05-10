@@ -34,6 +34,7 @@ namespace btproto = google::bigtable::v2;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 
 class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
  protected:
@@ -58,17 +59,17 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
     cq_impl_->SimulateCompletion(true);
   }
 
-  void SimulateIterationThatRetries() {
-    SimulateIteration();
-    // cq starts a timer for the backoff policy.
-    cq_impl_->SimulateCompletion(true);
-  }
-
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 };
+
+std::vector<Status> StatusOnly(std::vector<FailedMutation> const& failures) {
+  std::vector<Status> v;
+  for (auto const& f : failures) v.push_back(std::move(f.status()));
+  return v;
+}
 
 TEST_F(AsyncBulkApplyTest, NoMutations) {
   bigtable::BulkMutation mut;
@@ -79,7 +80,7 @@ TEST_F(AsyncBulkApplyTest, NoMutations) {
       "my-app-profile", "my-table", std::move(mut));
 
   ASSERT_EQ(0U, bulk_apply_future.get().size());
-};
+}
 
 TEST_F(AsyncBulkApplyTest, Success) {
   bigtable::BulkMutation mut{
@@ -195,7 +196,9 @@ TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  SimulateIterationThatRetries();
+  SimulateIteration();
+  // simulate the backoff timer
+  cq_impl_->SimulateCompletion(true);
 
   ASSERT_EQ(1U, cq_impl_->size());
 
@@ -272,7 +275,9 @@ TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  SimulateIterationThatRetries();
+  SimulateIteration();
+  // simulate the backoff timer
+  cq_impl_->SimulateCompletion(true);
 
   ASSERT_EQ(1U, cq_impl_->size());
 
@@ -293,11 +298,11 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
                                   {bigtable::SetCell("f", "c", 0_ms, "v3")}),
   };
 
-  // We give up on the 5th error.
-  const int limited_error_count = 4;
+  // We give up on the 3rd error.
+  auto constexpr kErrorCount = 2;
 
   EXPECT_CALL(*client_, PrepareAsyncMutateRows)
-      .Times(limited_error_count + 1)
+      .Times(kErrorCount + 1)
       .WillRepeatedly([](grpc::ClientContext*,
                          btproto::MutateRowsRequest const&,
                          grpc::CompletionQueue*) {
@@ -311,21 +316,24 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
         return reader;
       });
 
-  auto limited_retry_policy = LimitedErrorCountRetryPolicy(limited_error_count);
+  auto limited_retry_policy = LimitedErrorCountRetryPolicy(kErrorCount);
   auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
       cq_, limited_retry_policy.clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  for (int retry = 0; retry < limited_error_count; ++retry) {
-    SimulateIterationThatRetries();
+  for (int retry = 0; retry < kErrorCount; ++retry) {
+    SimulateIteration();
+    // simulate the backoff timer
+    cq_impl_->SimulateCompletion(true);
     ASSERT_EQ(1U, cq_impl_->size());
   }
 
   SimulateIteration();
 
-  auto failures = bulk_apply_future.get();
-  EXPECT_EQ(2U, failures.size());
+  auto failures = StatusOnly(bulk_apply_future.get());
+  EXPECT_THAT(failures, ElementsAre(StatusIs(StatusCode::kUnavailable),
+                                    StatusIs(StatusCode::kUnavailable)));
 
   ASSERT_EQ(0U, cq_impl_->size());
   EXPECT_TRUE(cq_impl_->empty());
@@ -400,10 +408,14 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  SimulateIterationThatRetries();
+  SimulateIteration();
+  // simulate the backoff timer
+  cq_impl_->SimulateCompletion(true);
+
   ASSERT_EQ(1U, cq_impl_->size());
 
   SimulateIteration();
+
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
@@ -447,15 +459,16 @@ TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
   SimulateIteration();
   ASSERT_EQ(1U, cq_impl_->size());
 
-  // cancel the future
+  // cancel the pending operation.
   bulk_apply_future.cancel();
   // simulate the backoff timer expiring.
   cq_impl_->SimulateCompletion(false);
 
   ASSERT_EQ(0U, cq_impl_->size());
 
-  auto failures = bulk_apply_future.get();
-  EXPECT_EQ(2U, failures.size());
+  auto failures = StatusOnly(bulk_apply_future.get());
+  EXPECT_THAT(failures, ElementsAre(StatusIs(StatusCode::kUnavailable),
+                                    StatusIs(StatusCode::kUnavailable)));
 }
 
 }  // namespace
