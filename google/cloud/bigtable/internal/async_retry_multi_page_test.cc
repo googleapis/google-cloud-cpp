@@ -268,7 +268,7 @@ TEST_F(AsyncMultipageFutureTest, DelayGrowsOnFailures) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
+TEST_F(AsyncMultipageFutureTest, SuccessResetsBackoffPolicy) {
   ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
                      {grpc::StatusCode::OK, {"cluster_1"}, "token1"},
                      {grpc::StatusCode::UNAVAILABLE, {}, ""},
