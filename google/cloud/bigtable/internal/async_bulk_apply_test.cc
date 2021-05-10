@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -67,7 +68,8 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
 
 std::vector<Status> StatusOnly(std::vector<FailedMutation> const& failures) {
   std::vector<Status> v;
-  for (auto const& f : failures) v.push_back(std::move(f.status()));
+  std::transform(failures.begin(), failures.end(), std::back_inserter(v),
+                 [](FailedMutation const& f) { return f.status(); });
   return v;
 }
 
