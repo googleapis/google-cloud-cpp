@@ -22,8 +22,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-using testing::_;
-using testing::Return;
+using ::testing::Return;
 
 class MockGeneratorContext
     : public google::protobuf::compiler::GeneratorContext {
@@ -47,7 +46,7 @@ class MockZeroCopyOutputStream
 TEST(PrinterTest, PrintWithMap) {
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
@@ -58,7 +57,7 @@ TEST(PrinterTest, PrintWithMap) {
 TEST(PrinterTest, PrintWithVariableArgs) {
   auto generator_context = absl::make_unique<MockGeneratorContext>();
   auto output = absl::make_unique<MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");

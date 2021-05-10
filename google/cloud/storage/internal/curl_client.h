@@ -37,13 +37,12 @@ class CurlRequestBuilder;
 class CurlClient : public RawClient,
                    public std::enable_shared_from_this<CurlClient> {
  public:
-  static std::shared_ptr<CurlClient> Create(ClientOptions options) {
+  static std::shared_ptr<CurlClient> Create(Options options) {
     // Cannot use std::make_shared because the constructor is private.
     return std::shared_ptr<CurlClient>(new CurlClient(std::move(options)));
   }
-  static std::shared_ptr<CurlClient> Create(
-      std::shared_ptr<oauth2::Credentials> credentials) {
-    return Create(ClientOptions(std::move(credentials)));
+  static std::shared_ptr<CurlClient> Create(ClientOptions options) {
+    return Create(MakeOptions(std::move(options)));
   }
 
   CurlClient(CurlClient const& rhs) = delete;
@@ -68,7 +67,9 @@ class CurlClient : public RawClient,
       QueryResumableUploadRequest const&);
   //@}
 
-  ClientOptions const& client_options() const override { return options_; }
+  ClientOptions const& client_options() const override {
+    return backwards_compatibility_options_;
+  }
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
@@ -183,7 +184,7 @@ class CurlClient : public RawClient,
  protected:
   // The constructor is private because the class must always be created
   // as a shared_ptr<>.
-  explicit CurlClient(ClientOptions options);
+  explicit CurlClient(Options options);
 
  private:
   /// Setup the configuration parameters that do not depend on the request.
@@ -212,7 +213,8 @@ class CurlClient : public RawClient,
   StatusOr<std::unique_ptr<ResumableUploadSession>>
   CreateResumableSessionGeneric(RequestType const& request);
 
-  ClientOptions options_;
+  google::cloud::Options opts_;
+  ClientOptions backwards_compatibility_options_;
   std::string const x_goog_api_client_header_;
   std::string const storage_endpoint_;
   std::string const storage_host_;

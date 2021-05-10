@@ -169,7 +169,10 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   auto object_name = MakeRandomObjectName();
   auto constexpr kUploadQuantum = 256 * 1024;
   auto const payload = std::string(
-      client->raw_client()->client_options().upload_buffer_size(), '*');
+      google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
+          ->client_options()
+          .upload_buffer_size(),
+      '*');
   auto const header = MakeRandomData(kUploadQuantum / 2);
 
   auto os =

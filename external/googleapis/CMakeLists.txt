@@ -19,10 +19,10 @@ cmake_minimum_required(VERSION 3.5)
 # Give application developers a hook to configure the version and hash
 # downloaded from GitHub.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/dff6e4625d4ea0a16fc44d3b9be115219c403f07.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/6ce40ff8faf68226782f507ca6b2d497a77044de.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "e3bc2c9c1e7fd61b491ead54515bb3f95f305e3c304d8e88bc83dec55b1f899e")
+    "6762083f829f998c3971efa2ba858c21d4ac4ba77feb9650bad7d358e3add2a5")
 
 set(EXTERNAL_GOOGLEAPIS_SOURCE
     "${CMAKE_BINARY_DIR}/external/googleapis/src/googleapis_download")
@@ -43,6 +43,8 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/devtools/cloudtrace/v2/tracing.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
+    "google/iam/admin/v1/iam.proto"
+    "google/iam/admin/v1/audit_data.proto"
     "google/iam/credentials/v1/common.proto"
     "google/iam/credentials/v1/iamcredentials.proto"
     "google/iam/v1/options.proto"
@@ -157,12 +159,25 @@ foreach (proto ${EXTERNAL_GOOGLEAPIS_PROTO_FILES})
 endforeach ()
 
 include(ExternalProject)
+
 ExternalProject_Add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
     PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
+    PATCH_COMMAND
+        ""
+        # ~~~
+        # Scaffolding for patching googleapis after download. For example:
+        #   PATCH_COMMAND
+        #       patch
+        #       -p1
+        #       --input=/workspace/external/googleapis.patch
+        # NOTE: This should only be used while developing with a new
+        # protobuf message. No changes to `PATCH_COMMAND` should ever be
+        # committed to the main branch.
+        # ~~~
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -491,6 +506,11 @@ target_link_libraries(
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_iam_protos
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/options.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/policy.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/v1/iam_policy.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/iam.proto"
+    "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/admin/v1/audit_data.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/iamcredentials.proto"
     "${EXTERNAL_GOOGLEAPIS_SOURCE}/google/iam/credentials/v1/common.proto"
     PROTO_PATH_DIRECTORIES
@@ -502,7 +522,8 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos)
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::type_expr_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_logging_type_protos
@@ -586,7 +607,8 @@ target_link_libraries(
     PUBLIC google-cloud-cpp::api_annotations_protos
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_resource_protos)
+           google-cloud-cpp::api_resource_protos
+           google-cloud-cpp::rpc_status_protos)
 
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_spanner_protos
@@ -723,10 +745,10 @@ string(
     CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
            "google_cloud_cpp_bigtable_protos"
            " google_cloud_cpp_cloud_bigquery_protos"
-           " google_cloud_iam_protos"
-           " google_cloud_pubsub_protos"
+           " google_cloud_cpp_iam_protos"
+           " google_cloud_cpp_pubsub_protos"
            " google_cloud_cpp_storage_protos"
-           " google_cloud_cpp_oo_protos"
+           " google_cloud_cpp_logging_protos"
            " google_cloud_cpp_iam_v1_iam_policy_protos"
            " google_cloud_cpp_iam_v1_options_protos"
            " google_cloud_cpp_iam_v1_policy_protos"
@@ -738,6 +760,7 @@ string(
            " google_cloud_cpp_api_http_protos"
            " google_cloud_cpp_rpc_status_protos"
            " google_cloud_cpp_rpc_error_details_protos"
+           " google_cloud_cpp_type_expr_protos"
            " grpc++"
            " grpc"
            " openssl"

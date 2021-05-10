@@ -26,7 +26,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::Not;
 
 class MockCurlClient : public CurlClient {
@@ -36,7 +35,8 @@ class MockCurlClient : public CurlClient {
   }
 
   MockCurlClient()
-      : CurlClient(ClientOptions(oauth2::CreateAnonymousCredentials())) {}
+      : CurlClient(
+            internal::DefaultOptions(oauth2::CreateAnonymousCredentials())) {}
 
   MOCK_METHOD(StatusOr<ResumableUploadResponse>, UploadChunk,
               (UploadChunkRequest const&), (override));
@@ -63,7 +63,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
 
   EXPECT_FALSE(session.done());
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, UploadChunk(_))
+  EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));
@@ -104,7 +104,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   auto const size = payload.size();
 
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, UploadChunk(_))
+  EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
             "", size - 1, {}, ResumableUploadResponse::kInProgress, {}});
@@ -115,7 +115,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
       });
   const ResumableUploadResponse resume_response{
       url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress, {}};
-  EXPECT_CALL(*mock, QueryResumableUpload(_))
+  EXPECT_CALL(*mock, QueryResumableUpload)
       .WillOnce([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(url1, request.upload_session_url());
         return make_status_or(resume_response);
@@ -149,7 +149,7 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   auto const size = payload.size();
 
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, UploadChunk(_))
+  EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
             "", size - 1, {}, ResumableUploadResponse::kInProgress, {}});
@@ -179,7 +179,7 @@ TEST(CurlResumableUploadSessionTest, Empty) {
 
   EXPECT_FALSE(session.done());
   EXPECT_EQ(0, session.next_expected_byte());
-  EXPECT_CALL(*mock, UploadChunk(_))
+  EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_THAT(request.payload(), MatchesPayload(payload));

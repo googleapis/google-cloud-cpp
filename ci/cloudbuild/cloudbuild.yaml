@@ -1,0 +1,179 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+options:
+  machineType: 'N1_HIGHCPU_32'
+  diskSizeGb: '512'
+  dynamic_substitutions: true
+  env: [
+    'HOME=/h',
+    'TZ=UTC0',
+    'GOOGLE_CLOUD_BUILD=yes',
+    'PROJECT_ID=${PROJECT_ID}',
+    'BUILD_ID=${BUILD_ID}',
+    'BRANCH_NAME=${BRANCH_NAME}',
+    'COMMIT_SHA=${COMMIT_SHA}',
+    'PR_NUMBER=${_PR_NUMBER}',
+    'TRIGGER_TYPE=${_TRIGGER_TYPE}',
+    'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=global/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
+    'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
+  ]
+  volumes:
+    - name: 'home'
+      path: '/h'
+
+# Variables that can be overridden from the `gcloud builds ...` command using
+# the `--substitutions=_FOO=bar` flag.
+substitutions:
+  _DISTRO: 'unknown'
+  _BUILD_NAME: 'unknown'
+  _CACHE_BUCKET: '${PROJECT_ID}_cloudbuild'
+  _IMAGE: 'cloudbuild/${_DISTRO}'
+  _TRIGGER_SOURCE: '${_PR_NUMBER:-main}'
+  _TRIGGER_TYPE: 'manual'
+  _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
+
+timeout: 3600s
+tags: [
+  '${_TRIGGER_TYPE}',
+  '${_BUILD_NAME}',
+  '${_DISTRO}',
+  '${_PR_NUMBER}'
+]
+
+availableSecrets:
+  secretManager:
+  - versionName: 'projects/${PROJECT_ID}/secrets/CODECOV_TOKEN/versions/latest'
+    env: 'CODECOV_TOKEN'
+  - versionName: 'projects/${PROJECT_ID}/secrets/LOG_LINKER_PAT/versions/latest'
+    env: 'LOG_LINKER_PAT'
+
+logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}'
+
+steps:
+  # Builds the docker image that will be used by the main build step.
+- name: 'gcr.io/kaniko-project/executor:edge'
+  args: [
+    '--context=dir:///workspace/ci',
+    '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
+    '--cache=true',
+    '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
+  ]
+
+  # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
+  # automatically, and also fill the log with about 2-3 pages of noise.
+- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  entrypoint: '/bin/true'
+
+  # Restores the homedir cache into /h in parallel with the previous step.
+- name: 'gcr.io/cloud-builders/gsutil'
+  waitFor: [ '-' ]
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  dir: '/h'
+  args: [
+    'restore',
+    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
+    '--key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h',
+    '--fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h'
+  ]
+
+  # Runs the specified build in the image that was created in the first step.
+- name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
+  entrypoint: 'ci/cloudbuild/build.sh'
+  args: [ '--local', '${_BUILD_NAME}' ]
+  secretEnv: ['CODECOV_TOKEN', 'LOG_LINKER_PAT']
+  env: [
+    'BAZEL_REMOTE_CACHE=https://storage.googleapis.com/${_CACHE_BUCKET}/bazel-cache/${_DISTRO}-${_BUILD_NAME}',
+    'VCPKG_BINARY_SOURCES=x-gcs,gs://${_CACHE_BUCKET}/vcpkg-cache/${_DISTRO}-${_BUILD_NAME},readwrite'
+  ]
+
+  # Caches some directories in the homedir, in the specified GCS bucket.
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  dir: '/h'
+  args: [
+    'save',
+    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
+    '--key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h',
+    '--path=.ccache',
+    '--path=.cache/ccache',
+    '--path=.cache/ctcache',
+    '--path=.cache/vcpkg',
+    '--path=.cache/google-cloud-cpp',
+    '--path=.local',
+  ]
+
+  # Remove the images created by this build.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set +e
+      gcloud container images delete -q gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}
+      exit 0
+
+  # The previous step may not run if the build fails. Garbage collect any
+  # images created by this script, and/or similar scripts in this repository.
+  # The main idea is to remove images created over 4 weeks ago. Because the
+  # current builds create images with current timestamps, such images are not
+  # likely to be in use. This step should not break the build on error, and it
+  # can start running as soon as the build does.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  waitFor: [ '-' ]
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set +e
+      gcloud container images list-tags gcr.io/${PROJECT_ID}/${_IMAGE} \
+        --format='get(digest)' --filter='timestamp.datetime < -P4W' | \
+        xargs -r printf "gcr.io/${PROJECT_ID}/${_IMAGE}@%s\n" | \
+        xargs -r -P 4 -L 32 gcloud container images delete -q --force-delete-tags
+      exit 0
+
+  # Cancels *this* specific build if one is already queued up for a newer
+  # commit. This frees up resources to run the build for the newer commit.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  waitFor: [ '-' ]
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set -xe
+      ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
+      query="tags=pr"
+      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND tags=${_BUILD_NAME}"
+      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
+      query+=" AND create_time > ${ctime}"
+      gcloud builds list --limit 1 --format='value(id)' --filter "${query}" | \
+        grep . && gcloud builds cancel '${BUILD_ID}' || exit 0
+
+  # Cancels in-progress builds for previous commits in the current PR so we can
+  # free up resources to start running the builds for the new commit.
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  waitFor: [ '-' ]
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      set -xe
+      ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
+      query="tags=pr"
+      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
+      query+=" AND create_time < ${ctime}"
+      gcloud builds list --ongoing --format='value(id)' --filter "${query}" | \
+        xargs -r -t gcloud builds cancel

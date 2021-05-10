@@ -28,7 +28,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::InSequence;
 using ::testing::InvokeWithoutArgs;
@@ -44,7 +43,7 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(1, count);
@@ -70,7 +69,7 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
   std::string const payload = "small test payload";
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(1, count);
@@ -105,21 +104,16 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
 
   int count = 0;
   size_t next_byte = 0;
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        ++count;
-        EXPECT_EQ(1, count);
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
-        auto last_committed_byte = payload.size() - 1;
-        next_byte = last_committed_byte + 1;
-        return make_status_or(
-            ResumableUploadResponse{"",
-                                    last_committed_byte,
-                                    {},
-                                    ResumableUploadResponse::kInProgress,
-                                    {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+    auto last_committed_byte = payload.size() - 1;
+    next_byte = last_committed_byte + 1;
+    return make_status_or(ResumableUploadResponse{
+        "", last_committed_byte, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -156,7 +150,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
   size_t next_byte = 0;
   {
     InSequence seq;
-    EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(InvokeWithoutArgs([&]() {
+    EXPECT_CALL(*mock, UploadChunk).WillOnce(InvokeWithoutArgs([&]() {
       next_byte = payload_1.size();
       return make_status_or(
           ResumableUploadResponse{"",
@@ -198,18 +192,16 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
 
   int count = 0;
   size_t next_byte = 0;
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        ++count;
-        EXPECT_EQ(1, count);
-        auto trailer = payload_2.substr(0, quantum - payload_1.size());
-        EXPECT_THAT(p,
-                    ElementsAre(ConstBuffer{payload_1}, ConstBuffer{trailer}));
-        next_byte += TotalBytes(p);
-        return make_status_or(ResumableUploadResponse{
-            "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    auto trailer = payload_2.substr(0, quantum - payload_1.size());
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload_1}, ConstBuffer{trailer}));
+    next_byte += TotalBytes(p);
+    return make_status_or(ResumableUploadResponse{
+        "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -251,16 +243,15 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   });
   bool mock_done = false;
   EXPECT_CALL(*mock, done).WillRepeatedly([&] { return mock_done; });
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        ++count;
-        EXPECT_EQ(1, count);
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
-        next_byte += TotalBytes(p);
-        return make_status_or(ResumableUploadResponse{
-            "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+    next_byte += TotalBytes(p);
+    return make_status_or(ResumableUploadResponse{
+        "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -293,15 +284,14 @@ TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
   std::string const payload = std::string(quantum - 2, '*') + "abcde";
 
   size_t next_byte = 0;
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        auto expected = payload.substr(0, quantum);
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
-        next_byte += quantum;
-        return make_status_or(ResumableUploadResponse{
-            "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    auto expected = payload.substr(0, quantum);
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
+    next_byte += quantum;
+    return make_status_or(ResumableUploadResponse{
+        "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         auto const content = payload.substr(quantum);
         EXPECT_THAT(p, ElementsAre(ConstBuffer{content}));
@@ -333,16 +323,15 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
   std::string const payload = std::string(quantum * 2, '*');
 
   size_t next_byte = 0;
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        auto expected = payload.substr(0, 2 * quantum);
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
-        // Simulate a condition where the server reports more bytes committed
-        // than expected
-        next_byte += quantum * 3;
-        return make_status_or(ResumableUploadResponse{
-            "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      });
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    auto expected = payload.substr(0, 2 * quantum);
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{expected}));
+    // Simulate a condition where the server reports more bytes committed
+    // than expected
+    next_byte += quantum * 3;
+    return make_status_or(ResumableUploadResponse{
+        "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
   EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly([&]() {
     return next_byte;
   });
@@ -367,7 +356,7 @@ TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
   std::string const payload = std::string(quantum * 2, '*');
 
   auto next_byte = quantum;
-  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(InvokeWithoutArgs([&]() {
+  EXPECT_CALL(*mock, UploadChunk).WillOnce(InvokeWithoutArgs([&]() {
     next_byte--;
     return make_status_or(ResumableUploadResponse{
         "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
@@ -399,18 +388,16 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
 
   int count = 0;
   size_t next_byte = 0;
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        ++count;
-        EXPECT_EQ(1, count);
-        auto expected = payload_2.substr(0, quantum - payload_1.size());
-        EXPECT_THAT(p,
-                    ElementsAre(ConstBuffer{payload_1}, ConstBuffer{expected}));
-        next_byte += TotalBytes(p);
-        return make_status_or(ResumableUploadResponse{
-            "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    auto expected = payload_2.substr(0, quantum - payload_1.size());
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload_1}, ConstBuffer{expected}));
+    next_byte += TotalBytes(p);
+    return make_status_or(ResumableUploadResponse{
+        "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -467,7 +454,7 @@ TEST(ObjectWriteStreambufTest, ErroneousStream) {
   std::string const payload = "small test payload";
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t n) {
         ++count;
         EXPECT_EQ(1, count);
@@ -498,11 +485,10 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   std::string const session_id = "upload_id";
 
   ON_CALL(*mock, next_expected_byte()).WillByDefault(Return(0));
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        EXPECT_EQ(3 * quantum, TotalBytes(p));
-        return Status(StatusCode::kInvalidArgument, "Invalid Argument");
-      });
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    EXPECT_EQ(3 * quantum, TotalBytes(p));
+    return Status(StatusCode::kInvalidArgument, "Invalid Argument");
+  });
   EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(session_id));
   ObjectWriteStreambuf streambuf(std::move(mock), quantum,
                                  absl::make_unique<NullHashValidator>());
@@ -533,7 +519,7 @@ TEST(ObjectWriteStreambufTest, KnownSizeUpload) {
   EXPECT_CALL(*mock, done()).WillRepeatedly([&]() { return mock_is_done; });
   std::string const mock_session_id = "session-id";
   EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(mock_session_id));
-  EXPECT_CALL(*mock, UploadChunk(_))
+  EXPECT_CALL(*mock, UploadChunk)
       .WillOnce([&](ConstBufferSequence const& p) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         mock_next_byte += TotalBytes(p);
@@ -586,18 +572,13 @@ TEST(ObjectWriteStreambufTest, Pubsync) {
   EXPECT_CALL(*mock, done()).WillRepeatedly([&]() { return mock_is_done; });
   std::string const mock_session_id = "session-id";
   EXPECT_CALL(*mock, session_id()).WillRepeatedly(ReturnRef(mock_session_id));
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
-        mock_next_byte += TotalBytes(p);
-        return make_status_or(
-            ResumableUploadResponse{"",
-                                    mock_next_byte - 1,
-                                    {},
-                                    ResumableUploadResponse::kInProgress,
-                                    {}});
-      });
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+    mock_next_byte += TotalBytes(p);
+    return make_status_or(ResumableUploadResponse{
+        "", mock_next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  });
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         mock_next_byte += TotalBytes(p);
@@ -654,7 +635,7 @@ TEST(ObjectReadStreambufTest, FailedTellg) {
 TEST(ObjectReadStreambufTest, Success) {
   auto read_source = absl::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*read_source, Read(_, _))
+  EXPECT_CALL(*read_source, Read)
       .WillOnce(Return(ReadSourceResult{10, {}}))
       .WillOnce(Return(ReadSourceResult{15, {}}))
       .WillOnce(Return(ReadSourceResult{15, {}}))
@@ -686,8 +667,7 @@ TEST(ObjectReadStreambufTest, Success) {
 TEST(ObjectReadStreambufTest, WrongSeek) {
   auto read_source = absl::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
-  EXPECT_CALL(*read_source, Read(_, _))
-      .WillOnce(Return(ReadSourceResult{10, {}}));
+  EXPECT_CALL(*read_source, Read).WillOnce(Return(ReadSourceResult{10, {}}));
   ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);
 
   std::istream stream(&buf);

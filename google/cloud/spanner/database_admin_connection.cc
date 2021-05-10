@@ -136,6 +136,22 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_parent(p.database.instance().FullName());
     request.set_create_statement("CREATE DATABASE `" +
                                  p.database.database_id() + "`");
+    struct EncryptionVisitor {
+      explicit EncryptionVisitor(gcsa::CreateDatabaseRequest& request)
+          : request_(request) {}
+      void operator()(DefaultEncryption const&) const {
+        // No encryption_config => GOOGLE_DEFAULT_ENCRYPTION.
+      }
+      void operator()(GoogleEncryption const&) const {
+        // No encryption_config => GOOGLE_DEFAULT_ENCRYPTION.
+      }
+      void operator()(CustomerManagedEncryption const& cme) const {
+        auto* config = request_.mutable_encryption_config();
+        config->set_kms_key_name(cme.encryption_key().FullName());
+      }
+      gcsa::CreateDatabaseRequest& request_;
+    };
+    absl::visit(EncryptionVisitor(request), p.encryption_config);
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
@@ -260,6 +276,27 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_parent(p.database.instance().FullName());
     request.set_database_id(p.database.database_id());
     request.set_backup(std::move(p.backup_full_name));
+    struct EncryptionVisitor {
+      explicit EncryptionVisitor(gcsa::RestoreDatabaseRequest& request)
+          : request_(request) {}
+      void operator()(DefaultEncryption const&) const {
+        // No encryption_config => USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION.
+        // That is, use the same encryption configuration as the backup.
+      }
+      void operator()(GoogleEncryption const&) const {
+        auto* config = request_.mutable_encryption_config();
+        config->set_encryption_type(
+            gcsa::RestoreDatabaseEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
+      }
+      void operator()(CustomerManagedEncryption const& cme) const {
+        auto* config = request_.mutable_encryption_config();
+        config->set_encryption_type(
+            gcsa::RestoreDatabaseEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+        config->set_kms_key_name(cme.encryption_key().FullName());
+      }
+      gcsa::RestoreDatabaseRequest& request_;
+    };
+    absl::visit(EncryptionVisitor(request), p.encryption_config);
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,
@@ -338,6 +375,27 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       *backup.mutable_version_time() =
           p.version_time->get<protobuf::Timestamp>().value();
     }
+    struct EncryptionVisitor {
+      explicit EncryptionVisitor(gcsa::CreateBackupRequest& request)
+          : request_(request) {}
+      void operator()(DefaultEncryption const&) const {
+        // No encryption_config => USE_DATABASE_ENCRYPTION.
+        // That is, use the same encryption configuration as the database.
+      }
+      void operator()(GoogleEncryption const&) const {
+        auto* config = request_.mutable_encryption_config();
+        config->set_encryption_type(
+            gcsa::CreateBackupEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
+      }
+      void operator()(CustomerManagedEncryption const& cme) const {
+        auto* config = request_.mutable_encryption_config();
+        config->set_encryption_type(
+            gcsa::CreateBackupEncryptionConfig::CUSTOMER_MANAGED_ENCRYPTION);
+        config->set_kms_key_name(cme.encryption_key().FullName());
+      }
+      gcsa::CreateBackupRequest& request_;
+    };
+    absl::visit(EncryptionVisitor(request), p.encryption_config);
     auto operation = RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         Idempotency::kNonIdempotent,

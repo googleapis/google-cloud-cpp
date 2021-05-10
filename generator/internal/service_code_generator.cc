@@ -15,6 +15,7 @@
 #include "generator/internal/service_code_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
@@ -42,8 +43,16 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
+  std::vector<std::string> omitted_rpcs;
+  auto iter = service_vars_.find("omitted_rpcs");
+  if (iter != service_vars_.end()) {
+    omitted_rpcs = absl::StrSplit(iter->second, ",");
+  }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    methods_.emplace_back(*service_descriptor_->method(i));
+    if (!internal::Contains(omitted_rpcs,
+                            service_descriptor_->method(i)->name())) {
+      methods_.emplace_back(*service_descriptor_->method(i));
+    }
   }
 }
 
@@ -60,25 +69,56 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   assert(service_descriptor != nullptr);
   assert(context != nullptr);
   SetVars(service_vars_[header_path_key]);
+  std::vector<std::string> omitted_rpcs;
+  auto iter = service_vars_.find("omitted_rpcs");
+  if (iter != service_vars_.end()) {
+    omitted_rpcs = absl::StrSplit(iter->second, ",");
+  }
   for (int i = 0; i < service_descriptor_->method_count(); ++i) {
-    methods_.emplace_back(*service_descriptor_->method(i));
+    if (!internal::Contains(omitted_rpcs,
+                            service_descriptor_->method(i)->name())) {
+      methods_.emplace_back(*service_descriptor_->method(i));
+    }
   }
 }
 
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
-  return generator_internal::HasLongrunningMethod(*service_descriptor_);
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsLongrunningOperation(m);
+                     });
 }
 
 bool ServiceCodeGenerator::HasPaginatedMethod() const {
-  return generator_internal::HasPaginatedMethod(*service_descriptor_);
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsPaginated(m);
+                     });
 }
 
 bool ServiceCodeGenerator::HasMessageWithMapField() const {
-  return generator_internal::HasMessageWithMapField(*service_descriptor_);
+  for (auto method : methods_) {
+    const auto* const request = method.get().input_type();
+    const auto* const response = method.get().output_type();
+    for (int j = 0; j < request->field_count(); ++j) {
+      if (request->field(j)->is_map()) {
+        return true;
+      }
+    }
+    for (int k = 0; k < response->field_count(); ++k) {
+      if (response->field(k)->is_map()) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 bool ServiceCodeGenerator::HasStreamingReadMethod() const {
-  return generator_internal::HasStreamingReadMethod(*service_descriptor_);
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsStreamingRead(m);
+                     });
 }
 
 VarsDictionary const& ServiceCodeGenerator::vars() const {
@@ -144,10 +184,9 @@ void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
 }
 
 void ServiceCodeGenerator::HeaderPrint(
-    std::vector<PredicatedFragment<google::protobuf::ServiceDescriptor>> const&
-        text) {
+    std::vector<PredicatedFragment<void>> const& text) {
   for (auto const& fragment : text) {
-    header_.Print(service_vars_, fragment(*service_descriptor_));
+    header_.Print(service_vars_, fragment());
   }
 }
 
@@ -163,10 +202,9 @@ void ServiceCodeGenerator::CcPrint(std::string const& text) {
 }
 
 void ServiceCodeGenerator::CcPrint(
-    std::vector<PredicatedFragment<google::protobuf::ServiceDescriptor>> const&
-        text) {
+    std::vector<PredicatedFragment<void>> const& text) {
   for (auto const& fragment : text) {
-    cc_.Print(service_vars_, fragment(*service_descriptor_));
+    cc_.Print(service_vars_, fragment());
   }
 }
 

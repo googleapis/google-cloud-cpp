@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <thread>
 
 namespace google {
 namespace cloud {

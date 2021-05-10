@@ -19,6 +19,8 @@ if ((CI_ETC_QUICKSTART_CONFIG_SH__++ != 0)); then
   return 0
 fi # include guard
 
+source module ci/etc/integration-tests-config.sh
+
 function quickstart::libraries() {
   echo "bigtable"
   echo "spanner"

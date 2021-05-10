@@ -31,7 +31,6 @@ using ::google::cloud::storage::internal::ListHmacKeysRequest;
 using ::google::cloud::storage::internal::ListHmacKeysResponse;
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::testing::_;
 using ::testing::ContainerEq;
 using ::testing::Return;
 
@@ -73,7 +72,7 @@ TEST(ListHmacKeysReaderTest, Basic) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListHmacKeys(_))
+  EXPECT_CALL(*mock, ListHmacKeys)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
@@ -95,7 +94,7 @@ TEST(ListHmacKeysReaderTest, Basic) {
 
 TEST(ListHmacKeysReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListHmacKeys(_))
+  EXPECT_CALL(*mock, ListHmacKeys)
       .WillOnce(Return(make_status_or(ListHmacKeysResponse())));
 
   auto reader =
@@ -130,7 +129,7 @@ TEST(ListHmacKeysReaderTest, PermanentFailure) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListHmacKeys(_))
+  EXPECT_CALL(*mock, ListHmacKeys)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce([](ListHmacKeysRequest const&) {

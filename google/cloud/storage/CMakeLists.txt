@@ -14,10 +14,7 @@
 # limitations under the License.
 # ~~~
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)" OFF)
@@ -78,6 +75,8 @@ add_library(
     internal/access_control_common.h
     internal/access_control_common_parser.cc
     internal/access_control_common_parser.h
+    internal/access_token_credentials.cc
+    internal/access_token_credentials.h
     internal/binary_data_as_debug_string.cc
     internal/binary_data_as_debug_string.h
     internal/bucket_access_control_parser.cc
@@ -115,6 +114,8 @@ add_library(
     internal/default_object_acl_requests.h
     internal/empty_response.cc
     internal/empty_response.h
+    internal/error_credentials.cc
+    internal/error_credentials.h
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
@@ -128,14 +129,20 @@ add_library(
     internal/hmac_key_requests.h
     internal/http_response.cc
     internal/http_response.h
+    internal/impersonate_service_account_credentials.cc
+    internal/impersonate_service_account_credentials.h
     internal/lifecycle_rule_parser.cc
     internal/lifecycle_rule_parser.h
     internal/logging_client.cc
     internal/logging_client.h
     internal/logging_resumable_upload_session.cc
     internal/logging_resumable_upload_session.h
+    internal/make_jwt_assertion.cc
+    internal/make_jwt_assertion.h
     internal/metadata_parser.cc
     internal/metadata_parser.h
+    internal/minimal_iam_credentials_rest.cc
+    internal/minimal_iam_credentials_rest.h
     internal/notification_metadata_parser.cc
     internal/notification_metadata_parser.h
     internal/notification_requests.cc
@@ -168,6 +175,8 @@ add_library(
     internal/retry_object_read_source.h
     internal/retry_resumable_upload_session.cc
     internal/retry_resumable_upload_session.h
+    internal/self_signing_service_account_credentials.cc
+    internal/self_signing_service_account_credentials.h
     internal/service_account_parser.cc
     internal/service_account_parser.h
     internal/service_account_requests.cc
@@ -179,6 +188,8 @@ add_library(
     internal/signed_url_requests.cc
     internal/signed_url_requests.h
     internal/tuple_filter.h
+    internal/unified_rest_credentials.cc
+    internal/unified_rest_credentials.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -217,6 +228,7 @@ add_library(
     object_rewriter.h
     object_stream.cc
     object_stream.h
+    options.h
     override_default_project.h
     parallel_upload.cc
     parallel_upload.h
@@ -306,7 +318,11 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_resumable_upload_session_url.cc
         internal/grpc_resumable_upload_session_url.h
         internal/hybrid_client.cc
-        internal/hybrid_client.h)
+        internal/hybrid_client.h
+        internal/storage_auth.cc
+        internal/storage_auth.h
+        internal/storage_stub.cc
+        internal/storage_stub.h)
     target_link_libraries(
         google_cloud_cpp_storage_grpc
         PUBLIC google-cloud-cpp::storage
@@ -353,12 +369,15 @@ if (BUILD_TESTING)
     add_library(
         storage_client_testing # cmake-format: sort
         testing/canonical_errors.h
+        testing/client_unit_test.cc
+        testing/client_unit_test.h
         testing/constants.h
         testing/mock_client.h
         testing/mock_fake_clock.cc
         testing/mock_fake_clock.h
         testing/mock_http_request.cc
         testing/mock_http_request.h
+        testing/mock_storage_stub.h
         testing/object_integration_test.cc
         testing/object_integration_test.h
         testing/random_names.cc
@@ -411,6 +430,7 @@ if (BUILD_TESTING)
         idempotency_policy_test.cc
         internal/access_control_common_parser_test.cc
         internal/access_control_common_test.cc
+        internal/access_token_credentials_test.cc
         internal/binary_data_as_debug_string_test.cc
         internal/bucket_acl_requests_test.cc
         internal/bucket_requests_test.cc
@@ -433,8 +453,10 @@ if (BUILD_TESTING)
         internal/hash_validator_test.cc
         internal/hmac_key_requests_test.cc
         internal/http_response_test.cc
+        internal/impersonate_service_account_credentials_test.cc
         internal/logging_client_test.cc
         internal/logging_resumable_upload_session_test.cc
+        internal/make_jwt_assertion_test.cc
         internal/metadata_parser_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
@@ -448,11 +470,13 @@ if (BUILD_TESTING)
         internal/retry_client_test.cc
         internal/retry_object_read_source_test.cc
         internal/retry_resumable_upload_session_test.cc
+        internal/self_signing_service_account_credentials_test.cc
         internal/service_account_requests_test.cc
         internal/sha256_hash_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
         internal/tuple_filter_test.cc
+        internal/unified_rest_credentials_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
@@ -522,7 +546,8 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
             internal/grpc_client_test.cc
             internal/grpc_object_read_source_test.cc
             internal/grpc_resumable_upload_session_test.cc
-            internal/grpc_resumable_upload_session_url_test.cc)
+            internal/grpc_resumable_upload_session_url_test.cc
+            internal/storage_auth_test.cc)
 
         foreach (fname ${storage_client_grpc_unit_tests})
             google_cloud_cpp_add_executable(target "storage" "${fname}")

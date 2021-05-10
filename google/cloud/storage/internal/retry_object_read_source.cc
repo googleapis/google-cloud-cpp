@@ -122,11 +122,11 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   auto status = std::move(result).status();
   std::stringstream os;
   if (internal::StatusTraits::IsPermanentFailure(status)) {
-    os << "Permanent error in Read(): " << status;
+    os << "Permanent error in Read(): " << status.message();
   } else {
-    os << "Retry policy exhausted in Read(): " << status;
+    os << "Retry policy exhausted in Read(): " << status.message();
   }
-  return Status(status.code(), os.str());
+  return Status(status.code(), std::move(os).str());
 }
 
 }  // namespace internal

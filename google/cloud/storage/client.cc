@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -34,8 +35,20 @@ static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
-    ClientOptions options) {
-  return internal::CurlClient::Create(std::move(options));
+    Options const& opts, std::shared_ptr<internal::RawClient> client) {
+  using google::cloud::internal::Contains;
+  auto const& tracing_components = opts.get<TracingComponentsOption>();
+  auto const enable_logging = Contains(tracing_components, "raw-client") ||
+                              Contains(tracing_components, "rpc");
+  if (enable_logging) {
+    client = std::make_shared<internal::LoggingClient>(std::move(client));
+  }
+  return std::make_shared<internal::RetryClient>(std::move(client), opts);
+}
+
+std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
+    Options const& opts) {
+  return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
 
 StatusOr<Client> Client::CreateDefaultClient() {
@@ -98,7 +111,7 @@ bool Client::UseSimpleUpload(std::string const& file_name,
     return false;
   }
   auto const fs = google::cloud::internal::file_size(file_name);
-  if (fs <= raw_client()->client_options().maximum_simple_upload_size()) {
+  if (fs <= raw_client_->client_options().maximum_simple_upload_size()) {
     size = static_cast<std::size_t>(fs);
     return true;
   }
@@ -116,9 +129,9 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
        << ") is bigger than the size of file source (" << file_size << ")";
     return Status(StatusCode::kInvalidArgument, std::move(os).str());
   }
-  auto upload_size = (std::min)(
-      request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-      file_size - upload_offset);
+  auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                    file_size - upload_offset),
+                                file_size - upload_offset);
 
   std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
@@ -176,9 +189,9 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
       return Status(StatusCode::kInvalidArgument, std::move(os).str());
     }
 
-    auto upload_size = (std::min)(
-        request.GetOption<UploadLimit>().value_or(file_size - upload_offset),
-        file_size - upload_offset);
+    auto upload_size = (std::min)(request.GetOption<UploadLimit>().value_or(
+                                      file_size - upload_offset),
+                                  file_size - upload_offset);
     request.set_option(UploadContentLength(upload_size));
   }
   std::ifstream source(file_name, std::ios::binary);
@@ -198,7 +211,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::istream& source, internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
-      raw_client()->CreateResumableSession(request);
+      raw_client_->CreateResumableSession(request);
   if (!session_status) {
     return std::move(session_status).status();
   }
@@ -220,7 +233,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
-      raw_client()->client_options().upload_buffer_size());
+      raw_client_->client_options().upload_buffer_size());
 
   StatusOr<internal::ResumableUploadResponse> upload_response(
       internal::ResumableUploadResponse{});
@@ -320,12 +333,12 @@ std::string Client::SigningEmail(SigningAccount const& signing_account) {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
-  return raw_client()->client_options().credentials()->AccountEmail();
+  return raw_client_->client_options().credentials()->AccountEmail();
 }
 
 StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
     SigningAccount const& signing_account, std::string const& string_to_sign) {
-  auto credentials = raw_client()->client_options().credentials();
+  auto credentials = raw_client_->client_options().credentials();
 
   std::string signing_account_email = SigningEmail(signing_account);
   // First try to sign locally.
@@ -339,7 +352,7 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   // credentials account. In either case, try to sign using the API.
   internal::SignBlobRequest sign_request(
       signing_account_email, internal::Base64Encode(string_to_sign), {});
-  auto response = raw_client()->SignBlob(sign_request);
+  auto response = raw_client_->SignBlob(sign_request);
   if (!response) {
     return response.status();
   }

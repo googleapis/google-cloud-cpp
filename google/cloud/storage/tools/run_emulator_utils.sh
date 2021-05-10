@@ -29,12 +29,12 @@ EMULATOR_PID=0
 #   None
 ################################################
 kill_emulator() {
-  echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment tear-down."
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_RESET} Integration test environment tear-down."
   echo -n "Killing emulator server [${EMULATOR_PID}] ... "
   kill "${EMULATOR_PID}"
   wait "${EMULATOR_PID}" >/dev/null 2>&1
   echo "done."
-  echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment tear-down."
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_RESET} Integration test environment tear-down."
 
 }
 
@@ -55,13 +55,13 @@ kill_emulator() {
 start_emulator() {
   local port="${1:-0}"
 
-  echo "${IO_COLOR_GREEN}[ -------- ]${IO_COLOR_RESET} Integration test environment set-up"
+  echo "${IO_COLOR_GREEN}[ -------- ]${IO_RESET} Integration test environment set-up"
   echo "Launching Cloud Storage emulator in the background"
   trap kill_emulator EXIT
 
   gunicorn --bind "0.0.0.0:${port}" \
     --worker-class sync \
-    --threads 10 \
+    --threads "$(nproc)" \
     --access-logfile - \
     --chdir "${PROJECT_ROOT}/google/cloud/storage/emulator" \
     "emulator:run()" \
@@ -79,7 +79,7 @@ start_emulator() {
   done
 
   if [[ -z "${emulator_port}" ]]; then
-    echo "${IO_COLOR_RED}Cannot find listening port for emulator.${IO_COLOR_RESET}" >&2
+    echo "${IO_COLOR_RED}Cannot find listening port for emulator.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   fi
@@ -99,7 +99,7 @@ start_emulator() {
   done
 
   if [[ "${connected}" = "no" ]]; then
-    echo "${IO_COLOR_RED}Cannot connect to emulator; aborting test.${IO_COLOR_RESET}" >&2
+    echo "${IO_COLOR_RED}Cannot connect to emulator; aborting test.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   else
@@ -114,11 +114,11 @@ start_emulator() {
     echo "Successfully connected to gRPC server at port ${grpc_port}"
   else
     echo "${IO_COLOR_RED}${grpc_port} must be an integer" >&2
-    echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_COLOR_RESET}" >&2
+    echo "${IO_COLOR_RED}Cannot connect to gRPC server; aborting test.${IO_RESET}" >&2
     cat gcs_emulator.log
     exit 1
   fi
   export CLOUD_STORAGE_GRPC_ENDPOINT="localhost:${grpc_port}"
 
-  echo "${IO_COLOR_GREEN}[ ======== ]${IO_COLOR_RESET} Integration test environment set-up."
+  echo "${IO_COLOR_GREEN}[ ======== ]${IO_RESET} Integration test environment set-up."
 }

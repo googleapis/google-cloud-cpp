@@ -17,6 +17,8 @@
 
 #include "google/cloud/iam_binding.h"
 #include "google/cloud/version.h"
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include <map>
 #include <set>
 #include <string>
@@ -27,25 +29,32 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
- * Represents a container for providing users with a handful of operation to
- * users which they can use to add and remove members to Binding which is used
- * for defining IAM Policy for Cloud Platform Resources.
+ * Simplified view of multiple roles and their members for IAM.
  *
- * For more information about a Binding please refer to:
- * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding
+ * @deprecated this class is deprecated. Any functions that use it have also
+ *     been deprecated. The class was defined before IAM conditional bindings,
+ *     and does not support them. Nor will it be able to support future IAM
+ *     features. Please use the alternative functions.
+ *
+ * @see [Identity and Access Management](https://cloud.google.com/iam)
+ * @see [Overview of IAM Conditions][iam-conditions]
+ *
+ * [iam-conditions]: https://cloud.google.com/iam/docs/conditions-overview
  */
 class IamBindings {
  public:
   IamBindings() = default;
 
-  // NOLINTNEXTLINE(performance-unnecessary-value-param)
-  explicit IamBindings(std::vector<IamBinding> bindings) {
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED explicit IamBindings(
+      // NOLINTNEXTLINE(performance-unnecessary-value-param)
+      std::vector<IamBinding> bindings) {
     for (auto& it : bindings) {
       bindings_.insert({std::move(it.role()), std::move(it.members())});
     }
   }
 
-  IamBindings(std::string role, std::set<std::string> members) {
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED IamBindings(std::string role,
+                                              std::set<std::string> members) {
     bindings_.insert({std::move(role), std::move(members)});
   }
 
@@ -55,28 +64,37 @@ class IamBindings {
    * Returns an iterator referring to the first element in IamBindings
    * container.
    */
-  iterator begin() const { return bindings_.begin(); }
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED iterator begin() const {
+    return bindings_.begin();
+  }
 
   /**
    * Returns an iterator referring to the past-the-end element in IamBindings
    * container.
    */
-  iterator end() const { return bindings_.end(); }
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED iterator end() const {
+    return bindings_.end();
+  }
 
   /**
    * Returns whether the Bindings container is empty.
    *
    * @return bool whether the container is empty or not.
    */
-  bool empty() const { return bindings_.empty(); }
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED bool empty() const {
+    return bindings_.empty();
+  }
 
   /**
    * Return number of Bindings in container.
    *
    * @return int the size of the container.
    */
-  std::size_t size() const { return bindings_.size(); }
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED std::size_t size() const {
+    return bindings_.size();
+  }
 
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED
   std::map<std::string, std::set<std::string>> const& bindings() const {
     return bindings_;
   }
@@ -84,10 +102,13 @@ class IamBindings {
   /**
    * Finds the members for a role.
    */
-  iterator find(std::string const& role) const { return bindings_.find(role); }
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED iterator find(std::string const& role) const {
+    return bindings_.find(role);
+  }
 
   /// Returns the members for a role.
-  std::set<std::string> at(std::string const& role) const {
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED std::set<std::string> at(
+      std::string const& role) const {
     auto loc = bindings_.find(role);
     if (loc == bindings_.end()) {
       return {};
@@ -103,7 +124,8 @@ class IamBindings {
    * @param member specifies the identity requesting access for a cloud
    * platform resource.
    */
-  void AddMember(std::string const& role, std::string member);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void AddMember(std::string const& role,
+                                                 std::string member);
 
   /**
    * Adds a new key-value pair of role and members to the container if there is
@@ -112,7 +134,8 @@ class IamBindings {
    *
    * @param iam_binding binding representing a set of members and role for them.
    */
-  void AddMembers(google::cloud::IamBinding const& iam_binding);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void AddMembers(
+      google::cloud::IamBinding const& iam_binding);
 
   /**
    * Adds a new key-value pair of role and members to the container if there no
@@ -122,8 +145,8 @@ class IamBindings {
    * @param role role of the member set to be added.
    * @param members a set of member which are needed to be added.
    */
-  void AddMembers(std::string const& role,
-                  std::set<std::string> const& members);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void AddMembers(
+      std::string const& role, std::set<std::string> const& members);
 
   /**
    * Removes the given member from the given role's member set if there exists
@@ -133,7 +156,8 @@ class IamBindings {
    * @param member specifies the identity requesting access for a cloud
    * platform resource.
    */
-  void RemoveMember(std::string const& role, std::string const& member);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void RemoveMember(std::string const& role,
+                                                    std::string const& member);
 
   /**
    * Removes the given binding's member from the given binding's role's member
@@ -141,7 +165,8 @@ class IamBindings {
    *
    * @param iam_binding binding representing a set of members and role for them.
    */
-  void RemoveMembers(google::cloud::IamBinding const& iam_binding);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void RemoveMembers(
+      google::cloud::IamBinding const& iam_binding);
 
   /**
    * Removes the given members from given role's member set if there exists one
@@ -150,8 +175,8 @@ class IamBindings {
    * @param role role of the member set to be removed.
    * @param members a set of members which are needed to be removed.
    */
-  void RemoveMembers(std::string const& role,
-                     std::set<std::string> const& members);
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED void RemoveMembers(
+      std::string const& role, std::set<std::string> const& members);
 
  private:
   std::map<std::string, std::set<std::string>> bindings_;
@@ -186,5 +211,7 @@ std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H

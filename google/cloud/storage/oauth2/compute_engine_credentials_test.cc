@@ -38,7 +38,6 @@ using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -71,10 +70,10 @@ TEST_F(ComputeEngineCredentialsTest,
   })""";
 
   auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
+  EXPECT_CALL(*first_mock_req_impl, MakeRequest)
       .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}));
   auto second_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*second_mock_req_impl, MakeRequest(_))
+  EXPECT_CALL(*second_mock_req_impl, MakeRequest)
       .WillOnce(Return(HttpResponse{200, token_info_resp, {}}));
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;
@@ -218,7 +217,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   })""";
 
   auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
+  EXPECT_CALL(*first_mock_req_impl, MakeRequest)
       // Fail the first call to DoMetadataServerGetRequest immediately.
       .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
       // Likewise, except with a >= 300 status code.
@@ -277,7 +276,7 @@ TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
   })""";
 
   auto mock_req = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_req, MakeRequest(_))
+  EXPECT_CALL(*mock_req, MakeRequest)
       // Fail the first call to RetrieveServiceAccountInfo immediately.
       .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
       // Make the call to RetrieveServiceAccountInfo return a good response,
@@ -359,7 +358,7 @@ TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
   })""";
 
   auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
+  EXPECT_CALL(*first_mock_req_impl, MakeRequest)
       .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}));
 
   auto mock_req_builder = MockHttpRequestBuilder::mock_;

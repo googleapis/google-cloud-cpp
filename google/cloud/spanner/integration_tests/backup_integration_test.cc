@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -28,6 +29,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
+#include <sstream>
 #include <string>
 
 namespace google {
@@ -39,7 +41,12 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
+
+// Constants used to identify the encryption key.
+auto constexpr kKeyRing = "spanner-cmek";
+auto constexpr kKeyName = "spanner-cmek-test-key";
 
 std::string const& ProjectId() {
   static std::string project_id =
@@ -107,12 +114,13 @@ TEST_F(BackupTest, BackupTest) {
       database_admin_client_.CreateBackup(db, db.database_id(), expire_time);
 
   // List the backup operations
-  auto filter = std::string("(metadata.database:") + db.database_id() +
-                ") AND " + "(metadata.@type:type.googleapis.com/" +
-                "google.spanner.admin.database.v1.CreateBackupMetadata)";
+  std::ostringstream backup_op_filter;
+  backup_op_filter << "(metadata.database:" << db.database_id() << ") AND "
+                   << "(metadata.@type:type.googleapis.com/"
+                   << "google.spanner.admin.database.v1.CreateBackupMetadata)";
   std::vector<std::string> db_names;
-  for (auto const& operation :
-       database_admin_client_.ListBackupOperations(in, filter)) {
+  for (auto const& operation : database_admin_client_.ListBackupOperations(
+           in, backup_op_filter.str())) {
     if (!operation) break;
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
     operation->metadata().UnpackTo(&metadata);
@@ -138,19 +146,19 @@ TEST_F(BackupTest, BackupTest) {
   EXPECT_STATUS_OK(backup_get);
   EXPECT_EQ(backup_get->name(), backup->name());
 
-  // RestoreDatabase
   Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
   auto restored_database =
       database_admin_client_.RestoreDatabase(restore_db, backup_name).get();
   EXPECT_STATUS_OK(restored_database);
 
   // List the database operations
-  filter = std::string(
-      "(metadata.@type:type.googleapis.com/"
-      "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)");
+  std::ostringstream db_op_filter;
+  db_op_filter
+      << "(metadata.@type:type.googleapis.com/"
+      << "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)";
   std::vector<std::string> restored_db_names;
   for (auto const& operation :
-       database_admin_client_.ListDatabaseOperations(in, filter)) {
+       database_admin_client_.ListDatabaseOperations(in, db_op_filter.str())) {
     if (!operation) break;
     google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata md;
     operation->metadata().UnpackTo(&md);
@@ -163,9 +171,11 @@ TEST_F(BackupTest, BackupTest) {
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db));
 
-  filter = std::string("expire_time < \"3000-01-01T00:00:00Z\"");
+  std::ostringstream backup_filter;
+  backup_filter << "expire_time <= \"" << expire_time << "\"";
   std::vector<std::string> backup_names;
-  for (auto const& b : database_admin_client_.ListBackups(in, filter)) {
+  for (auto const& b :
+       database_admin_client_.ListBackups(in, backup_filter.str())) {
     if (!backup) break;
     backup_names.push_back(b->name());
   }
@@ -397,6 +407,120 @@ TEST_F(BackupTest, CreateBackupWithFutureVersionTime) {
   }
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+}
+
+/// @test Tests backup/restore with Customer Managed Encryption Key
+TEST_F(BackupTest, BackupTestWithCMEK) {
+  if (!RunSlowBackupTests() || Emulator()) GTEST_SKIP();
+
+  auto instance_id =
+      spanner_testing::PickRandomInstance(generator_, ProjectId());
+  ASSERT_STATUS_OK(instance_id);
+  Instance in(ProjectId(), *instance_id);
+
+  auto location = spanner_testing::InstanceLocation(in);
+  ASSERT_STATUS_OK(location);
+  KmsKeyName encryption_key(in.project_id(), *location, kKeyRing, kKeyName);
+  auto encryption_config = CustomerManagedEncryption(encryption_key);
+
+  Database db(in, spanner_testing::RandomDatabaseName(generator_));
+  auto database =
+      database_admin_client_
+          .CreateDatabase(db, /*extra_statements=*/{}, encryption_config)
+          .get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_TRUE(database->has_encryption_config());
+  if (database->has_encryption_config()) {
+    EXPECT_EQ(database->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+  EXPECT_THAT(database->encryption_info(), IsEmpty());
+
+  auto database_get = database_admin_client_.GetDatabase(db);
+  ASSERT_STATUS_OK(database_get);
+  EXPECT_EQ(database_get->name(), database->name());
+  EXPECT_TRUE(database_get->has_encryption_config());
+  if (database_get->has_encryption_config()) {
+    EXPECT_EQ(database_get->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  auto create_time =
+      MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
+  auto expire_time = MakeTimestamp(create_time + absl::Hours(7)).value();
+  auto backup = database_admin_client_
+                    .CreateBackup(db, db.database_id(), expire_time,
+                                  absl::nullopt, encryption_config)
+                    .get();
+  ASSERT_STATUS_OK(backup);
+  EXPECT_TRUE(backup->has_encryption_info());
+  if (backup->has_encryption_info()) {
+    EXPECT_EQ(backup->encryption_info().encryption_type(),
+              google::spanner::admin::database::v1::EncryptionInfo::
+                  CUSTOMER_MANAGED_ENCRYPTION);
+    EXPECT_THAT(backup->encryption_info().kms_key_version(),
+                HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db));
+
+  Backup backup_name(in, db.database_id());
+  auto backup_get = database_admin_client_.GetBackup(backup_name);
+  ASSERT_STATUS_OK(backup_get);
+  EXPECT_EQ(backup_get->name(), backup->name());
+  EXPECT_TRUE(backup_get->has_encryption_info());
+  if (backup_get->has_encryption_info()) {
+    EXPECT_EQ(backup_get->encryption_info().encryption_type(),
+              google::spanner::admin::database::v1::EncryptionInfo::
+                  CUSTOMER_MANAGED_ENCRYPTION);
+    EXPECT_THAT(backup_get->encryption_info().kms_key_version(),
+                HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
+  }
+
+  Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
+  auto restored_database =
+      database_admin_client_
+          .RestoreDatabase(restore_db, backup_name, encryption_config)
+          .get();
+  ASSERT_STATUS_OK(restored_database);
+  EXPECT_TRUE(restored_database->has_encryption_config());
+  if (restored_database->has_encryption_config()) {
+    EXPECT_EQ(restored_database->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  auto restored_get = database_admin_client_.GetDatabase(restore_db);
+  ASSERT_STATUS_OK(restored_get);
+  EXPECT_EQ(restored_get->name(), restored_database->name());
+  EXPECT_TRUE(restored_get->has_encryption_config());
+  if (restored_get->has_encryption_config()) {
+    EXPECT_EQ(restored_get->encryption_config().kms_key_name(),
+              encryption_key.FullName());
+  }
+
+  EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db));
+
+  std::ostringstream backup_filter;
+  backup_filter << "expire_time <= \"" << expire_time << "\"";
+  bool found = false;
+  for (auto const& b :
+       database_admin_client_.ListBackups(in, backup_filter.str())) {
+    if (b->name() == backup->name()) {
+      found = true;
+      EXPECT_TRUE(b->has_encryption_info());
+      if (b->has_encryption_info()) {
+        EXPECT_EQ(b->encryption_info().encryption_type(),
+                  google::spanner::admin::database::v1::EncryptionInfo::
+                      CUSTOMER_MANAGED_ENCRYPTION);
+        EXPECT_THAT(
+            b->encryption_info().kms_key_version(),
+            HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
+      }
+    }
+  }
+  EXPECT_TRUE(found);
+
+  EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(*backup));
 }
 
 }  // namespace

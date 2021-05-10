@@ -17,5 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigquery_client_integration_tests = [
-    "big_query_read_integration_test.cc",
+    "bigquery_read_integration_test.cc",
 ]

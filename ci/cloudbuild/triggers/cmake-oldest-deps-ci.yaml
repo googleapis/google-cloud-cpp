@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: cmake-oldest-deps-ci
+substitutions:
+  _BUILD_NAME: cmake-oldest-deps
+  _DISTRO: ubuntu-focal
+  _TRIGGER_TYPE: ci
+tags:
+- ci

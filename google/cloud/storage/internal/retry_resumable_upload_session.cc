@@ -28,11 +28,13 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
                                               char const* error_message) {
   std::ostringstream os;
   if (retry_policy.IsExhausted()) {
-    os << "Retry policy exhausted in " << error_message << ": " << last_status;
+    os << "Retry policy exhausted in " << error_message << ": "
+       << last_status.message();
   } else {
-    os << "Permanent error in " << error_message << ": " << last_status;
+    os << "Permanent error in " << error_message << ": "
+       << last_status.message();
   }
-  return Status(last_status.code(), os.str());
+  return Status(last_status.code(), std::move(os).str());
 }
 }  // namespace
 
@@ -130,8 +132,8 @@ RetryResumableUploadSession::UploadGenericChunk(
     last_status = Status();
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in " << func << ": " << last_status;
-  return Status(last_status.code(), os.str());
+  os << "Retry policy exhausted in " << func << ": " << last_status.message();
+  return Status(last_status.code(), std::move(os).str());
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
@@ -150,8 +152,9 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
     std::this_thread::sleep_for(delay);
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in " << __func__ << ": " << last_status;
-  return Status(last_status.code(), os.str());
+  os << "Retry policy exhausted in " << __func__ << ": "
+     << last_status.message();
+  return Status(last_status.code(), std::move(os).str());
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {

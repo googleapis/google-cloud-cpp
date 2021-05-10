@@ -77,7 +77,7 @@ TEST(PostPolicyV4EscapeTest, Simple) {
   EXPECT_EQ("\127\065abcd$", *PostPolicyV4Escape("\127\065abcd$"));
   EXPECT_EQ("\\\\b\\f\\n\\r\\t\\v\\u0080\\u0119",
             *PostPolicyV4Escape(u8"\\\b\f\n\r\t\v\u0080\u0119"));
-#else  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THAT(PostPolicyV4Escape("ąę"), StatusIs(StatusCode::kUnimplemented));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }

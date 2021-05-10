@@ -18,7 +18,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
-#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -29,36 +29,15 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::oauth2::CreateAnonymousCredentials;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
 
 /**
  * Test the Projects.serviceAccount-related functions in storage::Client.
  */
-class ServiceAccountTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ = ClientOptions(CreateAnonymousCredentials());
-};
+class ServiceAccountTest
+    : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
   ServiceAccount expected =
@@ -66,7 +45,7 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
           R"""({"email_address": "test-service-account@test-domain.com"})""")
           .value();
 
-  EXPECT_CALL(*mock_, GetServiceAccount(_))
+  EXPECT_CALL(*mock_, GetServiceAccount)
       .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))
       .WillOnce(
           [&expected](internal::GetProjectServiceAccountRequest const& r) {
@@ -74,15 +53,16 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
 
             return make_status_or(expected);
           });
+  auto client = ClientForMock();
   StatusOr<ServiceAccount> actual =
-      client_->GetServiceAccountForProject("test-project");
+      client.GetServiceAccountForProject("test-project");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
   testing::TooManyFailuresStatusTest<ServiceAccount>(
-      mock_, EXPECT_CALL(*mock_, GetServiceAccount(_)),
+      mock_, EXPECT_CALL(*mock_, GetServiceAccount),
       [](Client& client) {
         return client.GetServiceAccountForProject("test-project").status();
       },
@@ -90,8 +70,9 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccountTooManyFailures) {
 }
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccountPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ServiceAccount>(
-      *client_, EXPECT_CALL(*mock_, GetServiceAccount(_)),
+      client, EXPECT_CALL(*mock_, GetServiceAccount),
       [](Client& client) {
         return client.GetServiceAccountForProject("test-project").status();
       },
@@ -104,7 +85,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
           R"""({"secretKey": "dGVzdC1zZWNyZXQ=", "resource": {}})""")
           .value();
 
-  EXPECT_CALL(*mock_, CreateHmacKey(_))
+  EXPECT_CALL(*mock_, CreateHmacKey)
       .WillOnce(
           Return(StatusOr<internal::CreateHmacKeyResponse>(TransientError())))
       .WillOnce([&expected](internal::CreateHmacKeyRequest const& r) {
@@ -113,9 +94,10 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
 
         return make_status_or(expected);
       });
+  auto client = ClientForMock();
   StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
-      client_->CreateHmacKey("test-service-account",
-                             OverrideDefaultProject("test-project"));
+      client.CreateHmacKey("test-service-account",
+                           OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.metadata, actual->first);
   EXPECT_EQ(expected.secret, actual->second);
@@ -123,7 +105,7 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
 
 TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::CreateHmacKeyResponse>(
-      mock_, EXPECT_CALL(*mock_, CreateHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, CreateHmacKey),
       [](Client& client) {
         return client.CreateHmacKey("test-service-account").status();
       },
@@ -131,8 +113,9 @@ TEST_F(ServiceAccountTest, CreateHmacKeyTooManyFailures) {
 }
 
 TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::CreateHmacKeyResponse>(
-      *client_, EXPECT_CALL(*mock_, CreateHmacKey(_)),
+      client, EXPECT_CALL(*mock_, CreateHmacKey),
       [](Client& client) {
         return client.CreateHmacKey("test-service-account").status();
       },
@@ -140,7 +123,7 @@ TEST_F(ServiceAccountTest, CreateHmacKeyPermanentFailure) {
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKey) {
-  EXPECT_CALL(*mock_, DeleteHmacKey(_))
+  EXPECT_CALL(*mock_, DeleteHmacKey)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -148,21 +131,23 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
 
         return make_status_or(internal::EmptyResponse{});
       });
-  Status actual = client_->DeleteHmacKey(
-      "test-access-id-1", OverrideDefaultProject("test-project"));
+  auto client = ClientForMock();
+  Status actual = client.DeleteHmacKey("test-access-id-1",
+                                       OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteHmacKey),
       [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
 
 TEST_F(ServiceAccountTest, DeleteHmacKeyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client_, EXPECT_CALL(*mock_, DeleteHmacKey(_)),
+      client, EXPECT_CALL(*mock_, DeleteHmacKey),
       [](Client& client) { return client.DeleteHmacKey("test-access-id"); },
       "DeleteHmacKey");
 }
@@ -173,7 +158,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
           R"""({"accessId": "test-access-id-1", "state": "ACTIVE"})""")
           .value();
 
-  EXPECT_CALL(*mock_, GetHmacKey(_))
+  EXPECT_CALL(*mock_, GetHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -181,7 +166,8 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 
         return make_status_or(expected);
       });
-  StatusOr<HmacKeyMetadata> actual = client_->GetHmacKey(
+  auto client = ClientForMock();
+  StatusOr<HmacKeyMetadata> actual = client.GetHmacKey(
       "test-access-id-1", OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
@@ -190,7 +176,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 
 TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, GetHmacKey),
       [](Client& client) {
         return client.GetHmacKey("test-access-id").status();
       },
@@ -198,8 +184,9 @@ TEST_F(ServiceAccountTest, GetHmacKeyTooManyFailures) {
 }
 
 TEST_F(ServiceAccountTest, GetHmacKeyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      *client_, EXPECT_CALL(*mock_, GetHmacKey(_)),
+      client, EXPECT_CALL(*mock_, GetHmacKey),
       [](Client& client) {
         return client.GetHmacKey("test-access-id").status();
       },
@@ -212,7 +199,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
           R"""({"accessId": "test-access-id-1", "state": "ACTIVE"})""")
           .value();
 
-  EXPECT_CALL(*mock_, UpdateHmacKey(_))
+  EXPECT_CALL(*mock_, UpdateHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateHmacKeyRequest const& r) {
         EXPECT_EQ("test-project", r.project_id());
@@ -220,7 +207,8 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
 
         return make_status_or(expected);
       });
-  StatusOr<HmacKeyMetadata> actual = client_->UpdateHmacKey(
+  auto client = ClientForMock();
+  StatusOr<HmacKeyMetadata> actual = client.UpdateHmacKey(
       "test-access-id-1", HmacKeyMetadata().set_state("ACTIVE"),
       OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
@@ -230,7 +218,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyTooManyFailures) {
   testing::TooManyFailuresStatusTest<HmacKeyMetadata>(
-      mock_, EXPECT_CALL(*mock_, UpdateHmacKey(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateHmacKey),
       [](Client& client) {
         return client.UpdateHmacKey("test-access-id", HmacKeyMetadata())
             .status();
@@ -239,8 +227,9 @@ TEST_F(ServiceAccountTest, UpdateHmacKeyTooManyFailures) {
 }
 
 TEST_F(ServiceAccountTest, UpdateHmacKeyPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<HmacKeyMetadata>(
-      *client_, EXPECT_CALL(*mock_, UpdateHmacKey(_)),
+      client, EXPECT_CALL(*mock_, UpdateHmacKey),
       [](Client& client) {
         return client.UpdateHmacKey("test-access-id", HmacKeyMetadata())
             .status();

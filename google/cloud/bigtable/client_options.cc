@@ -67,13 +67,6 @@ namespace internal {
 std::string DefaultDataEndpoint() {
   auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator.has_value()) return *std::move(emulator);
-  auto direct_path =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
-  if (direct_path.has_value()) {
-    for (auto const& token : absl::StrSplit(*std::move(direct_path), ',')) {
-      if (token == "bigtable") return "directpath-bigtable.googleapis.com";
-    }
-  }
   return "bigtable.googleapis.com";
 }
 

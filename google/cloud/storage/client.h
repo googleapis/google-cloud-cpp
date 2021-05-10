@@ -45,13 +45,11 @@
 namespace google {
 namespace cloud {
 namespace storage {
-namespace testing {
-class ClientTester;
-}  // namespace testing
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class NonResumableParallelUploadState;
 class ResumableParallelUploadState;
+struct ClientImplDetails;
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
@@ -66,7 +64,7 @@ class ResumableParallelUploadState;
  * comparable to copying a few shared pointers. The first request (or any
  * request that requires a new connection) incurs the cost of creating the
  * connection and authenticating with the service. Note that the library may
- * need to perform other bookeeping operations that may impact performance.
+ * need to perform other bookkeeping operations that may impact performance.
  * For example, access tokens need to be refreshed from time to time, and this
  * may impact the performance of some operations.
  *
@@ -227,8 +225,9 @@ class Client {
    */
   template <typename... Policies>
   explicit Client(ClientOptions options, Policies&&... policies)
-      : Client(CreateDefaultInternalClient(std::move(options)),
-               std::forward<Policies>(policies)...) {}
+      : Client(InternalOnly{}, internal::ApplyPolicies(
+                                   internal::MakeOptions(std::move(options)),
+                                   std::forward<Policies>(policies)...)) {}
 
   /**
    * Creates the default client type given the credentials and policies.
@@ -248,28 +247,58 @@ class Client {
   template <typename... Policies>
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
                   Policies&&... policies)
-      : Client(ClientOptions(std::move(credentials)),
-               std::forward<Policies>(policies)...) {}
+      : Client(InternalOnly{},
+               internal::ApplyPolicies(
+                   internal::DefaultOptions(std::move(credentials), {}),
+                   std::forward<Policies>(policies)...)) {}
+
+  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
+  static StatusOr<Client> CreateDefaultClient();
 
   /// Builds a client and maybe override the retry, idempotency, and/or backoff
   /// policies.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
   template <typename... Policies>
+#if !defined(_MSC_VER) || _MSC_VER >= 1920
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please use the constructors from ClientOptions instead."
+      " For mocking, please use testing::ClientFromMock() instead."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you have a use-case not covered by these.")
+#endif  // _MSC_VER
+  // NOLINTNEXTLINE(performance-unnecessary-value-param)
   explicit Client(std::shared_ptr<internal::RawClient> client,
                   Policies&&... policies)
-      : raw_client_(
-            Decorate(std::move(client), std::forward<Policies>(policies)...)) {}
+      : Client(InternalOnlyNoDecorations{},
+               CreateDefaultInternalClient(
+                   internal::ApplyPolicies(
+                       internal::DefaultOptions(
+                           client->client_options().credentials()),
+                       std::forward<Policies>(policies)...),
+                   client)) {
+  }
 
   /// Define a tag to disable automatic decorations of the RawClient.
   struct NoDecorations {};
 
   /// Builds a client with a specific RawClient, without decorations.
+  /// @deprecated This was intended only for test code, applications should not
+  /// use it.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
   explicit Client(std::shared_ptr<internal::RawClient> client, NoDecorations)
-      : raw_client_(std::move(client)) {}
-
-  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
-  static StatusOr<Client> CreateDefaultClient();
+      : Client(InternalOnlyNoDecorations{}, std::move(client)) {}
 
   /// Access the underlying `RawClient`.
+  /// @deprecated Only intended for implementors, do not use.
+  GOOGLE_CLOUD_CPP_DEPRECATED(
+      "applications should not need this."
+      " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+      " if you do.")
   std::shared_ptr<internal::RawClient> raw_client() const {
     return raw_client_;
   }
@@ -1160,29 +1189,8 @@ class Client {
    * option, or it provides the `#NewResumableUploadSession()` option then a new
    * resumable upload session is created.
    *
-   * To perform efficient uploads applications should consider using unbuffered
-   * I/O operations on the returned stream (aka `std::ostream::write()`).
-   * Application developers should consider the following properties of
-   * resumable uploads to use this API efficiently:
-   *
-   * - Resumable uploads are performed in "chunks" sent to GCS, these chunks
-   *   are committed and saved at least until the session is deleted (or garbage
-   *   collected, approximately after 7 days.)
-   * - The size of these chunks (except the last one) must be a multiple of the
-   *   upload quantum (256KiB).
-   * - Uploading a chunk that is not a multiple of the quantum implicitly
-   *   finalizes the upload.
-   *
-   * The library, therefore, *must* buffer any data that does not fill a full
-   * quantum. If you are interested in avoiding data copies you should always
-   * provide the library with buffers that fit in this quantum.
-   *
-   * In addition, applications should consider providing large buffers as the
-   * library waits until GCS confirms that the chunk is uploaded before
-   * returning control to the application. Naturally there is a tradeoff between
-   * copying data to prepare large buffers vs. sending many small buffers and
-   * paying the network costs for each.  We recommend that you use buffers in
-   * the 16MiB to 64MiB range for best performance.
+   * More information about buffering and recommendations around performance in
+   * the `ObjectWriteStream` class documentation.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.
@@ -3124,20 +3132,21 @@ class Client {
   //@}
 
  private:
-  Client() = default;
-  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
-      ClientOptions options);
+  friend internal::ClientImplDetails;
 
-  template <typename... Policies>
-  std::shared_ptr<internal::RawClient> Decorate(
-      std::shared_ptr<internal::RawClient> client, Policies&&... policies) {
-    if (client->client_options().enable_raw_client_tracing()) {
-      client = std::make_shared<internal::LoggingClient>(std::move(client));
-    }
-    auto retry = std::make_shared<internal::RetryClient>(
-        std::move(client), std::forward<Policies>(policies)...);
-    return retry;
-  }
+  Client() = default;
+  struct InternalOnly {};
+  struct InternalOnlyNoDecorations {};
+
+  Client(InternalOnly, Options const& opts)
+      : raw_client_(CreateDefaultInternalClient(opts)) {}
+  Client(InternalOnlyNoDecorations, std::shared_ptr<internal::RawClient> c)
+      : raw_client_(std::move(c)) {}
+
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
+      Options const& opts, std::shared_ptr<internal::RawClient> client);
+  static std::shared_ptr<internal::RawClient> CreateDefaultInternalClient(
+      Options const& opts);
 
   ObjectReadStream ReadObjectImpl(
       internal::ReadObjectRangeRequest const& request);
@@ -3220,7 +3229,6 @@ class Client {
 
   friend class internal::NonResumableParallelUploadState;
   friend class internal::ResumableParallelUploadState;
-  friend class testing::ClientTester;
 };
 
 /**
@@ -3242,6 +3250,38 @@ class Client {
 std::string CreateRandomPrefixName(std::string const& prefix = "");
 
 namespace internal {
+struct ClientImplDetails {
+  static std::shared_ptr<RawClient> GetRawClient(Client& c) {
+    return c.raw_client_;
+  }
+  static StatusOr<ObjectMetadata> UploadStreamResumable(
+      Client& client, std::istream& source,
+      internal::ResumableUploadRequest const& request) {
+    return client.UploadStreamResumable(source, request);
+  }
+  template <typename... Policies>
+  static Client CreateClient(std::shared_ptr<internal::RawClient> c,
+                             Policies&&... p) {
+    auto opts =
+        internal::ApplyPolicies(internal::MakeOptions(c->client_options()),
+                                std::forward<Policies>(p)...);
+    return Client(Client::InternalOnlyNoDecorations{},
+                  Client::CreateDefaultInternalClient(opts, std::move(c)));
+  }
+  static Client CreateWithoutDecorations(
+      std::shared_ptr<internal::RawClient> c) {
+    return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
+  }
+
+  // TODO(#6161) - this should become a public API and the *recommended* way to
+  //     create a Client.
+  static Client CreateClient(std::shared_ptr<oauth2::Credentials> credentials,
+                             Options opts = {}) {
+    opts = DefaultOptions(std::move(credentials), std::move(opts));
+    return Client(Client::InternalOnlyNoDecorations{},
+                  Client::CreateDefaultInternalClient(opts));
+  }
+};
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
 struct DeleteApplyHelper {
@@ -3318,10 +3358,10 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
   auto all_options = std::tie(options...);
 
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<
-                  NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
+              all_options))>::value == 0,
       "This functions accepts only options of type QuotaUser, UserIp, "
       "UserProject or Versions.");
   for (auto const& object :
@@ -3454,12 +3494,13 @@ StatusOr<ObjectMetadata> ComposeMany(
 
   // TODO(#3247): this list of type should somehow be generated
   static_assert(
-      std::tuple_size<decltype(
-              StaticTupleFilter<NotAmong<
-                  DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
-                  IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp,
-                  UserProject, WithObjectMetadata>::TPred>(
-                  all_options))>::value == 0,
+      std::tuple_size<
+          decltype(StaticTupleFilter<
+                   NotAmong<DestinationPredefinedAcl, EncryptionKey,
+                            IfGenerationMatch, IfMetagenerationMatch,
+                            KmsKeyName, QuotaUser, UserIp, UserProject,
+                            WithObjectMetadata>::TPred>(all_options))>::value ==
+          0,
       "This functions accepts only options of type DestinationPredefinedAcl, "
       "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
       "QuotaUser, UserIp, UserProject or WithObjectMetadata.");

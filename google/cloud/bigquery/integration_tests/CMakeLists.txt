@@ -22,7 +22,7 @@ function (google_cloud_cpp_bigquery_define_integration_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(bigquery_client_integration_tests # cmake-format: sort
-                                          big_query_read_integration_test.cc)
+                                          bigquery_read_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

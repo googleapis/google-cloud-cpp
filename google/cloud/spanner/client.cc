@@ -181,9 +181,11 @@ StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
 }
 
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
-    Transaction transaction, std::vector<SqlStatement> statements) {
+    Transaction transaction, std::vector<SqlStatement> statements,
+    Options opts) {
+  internal::CheckExpectedOptions<RequestOptionList>(opts, __func__);
   return conn_->ExecuteBatchDml(
-      {std::move(transaction), std::move(statements)});
+      {std::move(transaction), std::move(statements), std::move(opts)});
 }
 
 StatusOr<CommitResult> Client::Commit(
@@ -294,8 +296,9 @@ Status Client::Rollback(Transaction transaction) {
 }
 
 StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
-    SqlStatement statement) {
-  return conn_->ExecutePartitionedDml({std::move(statement)});
+    SqlStatement statement, QueryOptions const& opts) {
+  return conn_->ExecutePartitionedDml(
+      {std::move(statement), OverlayQueryOptions(opts)});
 }
 
 // Returns a QueryOptions struct that has each field set according to the

@@ -20,8 +20,9 @@
 CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
+BIN=.
 
-all: quickstart
+all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
@@ -31,5 +32,5 @@ PUBSUB_CXXLDFLAGS := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-L)
 PUBSUB_LIBS       := $(shell pkg-config $(PUBSUB_DEPS) --libs-only-l)
 
 # A target using the Cloud Pubsub C++ client library.
-quickstart: quickstart.cc
+$(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(PUBSUB_CXXFLAGS) $(PUBSUB_CXXLDFLAGS) -o $@ $^ $(PUBSUB_LIBS)

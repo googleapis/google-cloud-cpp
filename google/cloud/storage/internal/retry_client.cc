@@ -21,25 +21,6 @@
 #include <sstream>
 #include <thread>
 
-// Define the defaults using a pre-processor macro, this allows the application
-// developers to change the defaults for their application by compiling with
-// different values.
-#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
-#define STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD std::chrono::minutes(15)
-#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD
-
-#ifndef STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
-#define STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY std::chrono::seconds(1)
-#endif  // STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY
-
-#ifndef STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
-#define STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY std::chrono::minutes(5)
-#endif  // STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY
-
-#ifndef STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
-#define STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING 2.0
-#endif  //  STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING
-
 namespace google {
 namespace cloud {
 namespace storage {
@@ -86,7 +67,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     if (idempotency == Idempotency::kNonIdempotent) {
       std::ostringstream os;
       os << "Error in non-idempotent operation " << error_message << ": "
-         << last_status;
+         << last_status.message();
       return error(std::move(os).str());
     }
     if (!retry_policy.OnFailure(last_status)) {
@@ -95,7 +76,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
         // policy is exhausted, we call these "permanent errors", and they
         // get a special message.
         std::ostringstream os;
-        os << "Permanent error in " << error_message << ": " << last_status;
+        os << "Permanent error in " << error_message << ": "
+           << last_status.message();
         return error(std::move(os).str());
       }
       // Exit the loop immediately instead of sleeping before trying again.
@@ -105,23 +87,18 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     std::this_thread::sleep_for(delay);
   }
   std::ostringstream os;
-  os << "Retry policy exhausted in " << error_message << ": " << last_status;
+  os << "Retry policy exhausted in " << error_message << ": "
+     << last_status.message();
   return error(std::move(os).str());
 }
 }  // namespace
 
-RetryClient::RetryClient(std::shared_ptr<RawClient> client, DefaultPolicies)
-    : client_(std::move(client)) {
-  retry_policy_prototype_ =
-      LimitedTimeRetryPolicy(STORAGE_CLIENT_DEFAULT_MAXIMUM_RETRY_PERIOD)
-          .clone();
-  backoff_policy_prototype_ =
-      ExponentialBackoffPolicy(STORAGE_CLIENT_DEFAULT_INITIAL_BACKOFF_DELAY,
-                               STORAGE_CLIENT_DEFAULT_MAXIMUM_BACKOFF_DELAY,
-                               STORAGE_CLIENT_DEFAULT_BACKOFF_SCALING)
-          .clone();
-  idempotency_policy_ = AlwaysRetryIdempotencyPolicy().clone();
-}
+RetryClient::RetryClient(std::shared_ptr<RawClient> client,
+                         Options const& options)
+    : client_(std::move(client)),
+      retry_policy_prototype_(options.get<RetryPolicyOption>()->clone()),
+      backoff_policy_prototype_(options.get<BackoffPolicyOption>()->clone()),
+      idempotency_policy_(options.get<IdempotencyPolicyOption>()->clone()) {}
 
 ClientOptions const& RetryClient::client_options() const {
   return client_->client_options();

@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "config:base",
+    "docker:disable",
+    "schedule:earlyMondays"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch":  [".*\\.Dockerfile$"],
+      "matchStrings": [
+        "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz"
+      ],
+      "datasourceTemplate": "github-releases"
+    }
+  ],
+  "ignoreDeps": [ "com_google_googleapis" ]
+}

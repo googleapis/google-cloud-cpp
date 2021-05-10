@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -26,7 +26,6 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
-using ::testing::_;
 
 class MockGoldenStub
     : public google::cloud::golden_internal::GoldenThingAdminStub {
@@ -174,7 +173,7 @@ class MetadataDecoratorTest : public ::testing::Test {
 };
 
 TEST_F(MetadataDecoratorTest, GetDatabase) {
-  EXPECT_CALL(*mock_, GetDatabase(_, _))
+  EXPECT_CALL(*mock_, GetDatabase)
       .WillOnce(
           [this](grpc::ClientContext& context,
                  google::test::admin::database::v1::GetDatabaseRequest const&) {
@@ -195,7 +194,7 @@ TEST_F(MetadataDecoratorTest, GetDatabase) {
 }
 
 TEST_F(MetadataDecoratorTest, ListDatabases) {
-  EXPECT_CALL(*mock_, ListDatabases(_, _))
+  EXPECT_CALL(*mock_, ListDatabases)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -216,7 +215,7 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
 }
 
 TEST_F(MetadataDecoratorTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase(_, _))
+  EXPECT_CALL(*mock_, CreateDatabase)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -237,7 +236,7 @@ TEST_F(MetadataDecoratorTest, CreateDatabase) {
 }
 
 TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
-  EXPECT_CALL(*mock_, UpdateDatabaseDdl(_, _))
+  EXPECT_CALL(*mock_, UpdateDatabaseDdl)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            UpdateDatabaseDdlRequest const&) {
@@ -258,7 +257,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
 }
 
 TEST_F(MetadataDecoratorTest, DropDatabase) {
-  EXPECT_CALL(*mock_, DropDatabase(_, _))
+  EXPECT_CALL(*mock_, DropDatabase)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -280,7 +279,7 @@ TEST_F(MetadataDecoratorTest, DropDatabase) {
 }
 
 TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
-  EXPECT_CALL(*mock_, GetDatabaseDdl(_, _))
+  EXPECT_CALL(*mock_, GetDatabaseDdl)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -302,7 +301,7 @@ TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
 }
 
 TEST_F(MetadataDecoratorTest, SetIamPolicy) {
-  EXPECT_CALL(*mock_, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -322,7 +321,7 @@ TEST_F(MetadataDecoratorTest, SetIamPolicy) {
 }
 
 TEST_F(MetadataDecoratorTest, GetIamPolicy) {
-  EXPECT_CALL(*mock_, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -342,7 +341,7 @@ TEST_F(MetadataDecoratorTest, GetIamPolicy) {
 }
 
 TEST_F(MetadataDecoratorTest, TestIamPermissions) {
-  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock_, TestIamPermissions)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::TestIamPermissionsRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(context,
@@ -362,7 +361,7 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
 }
 
 TEST_F(MetadataDecoratorTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup(_, _))
+  EXPECT_CALL(*mock_, CreateBackup)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -383,7 +382,7 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
 }
 
 TEST_F(MetadataDecoratorTest, GetBackup) {
-  EXPECT_CALL(*mock_, GetBackup(_, _))
+  EXPECT_CALL(*mock_, GetBackup)
       .WillOnce(
           [this](grpc::ClientContext& context,
                  google::test::admin::database::v1::GetBackupRequest const&) {
@@ -404,7 +403,7 @@ TEST_F(MetadataDecoratorTest, GetBackup) {
 }
 
 TEST_F(MetadataDecoratorTest, UpdateBackup) {
-  EXPECT_CALL(*mock_, UpdateBackup(_, _))
+  EXPECT_CALL(*mock_, UpdateBackup)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -426,7 +425,7 @@ TEST_F(MetadataDecoratorTest, UpdateBackup) {
 }
 
 TEST_F(MetadataDecoratorTest, DeleteBackup) {
-  EXPECT_CALL(*mock_, DeleteBackup(_, _))
+  EXPECT_CALL(*mock_, DeleteBackup)
       .WillOnce(
           [this](
               grpc::ClientContext& context,
@@ -448,7 +447,7 @@ TEST_F(MetadataDecoratorTest, DeleteBackup) {
 }
 
 TEST_F(MetadataDecoratorTest, ListBackups) {
-  EXPECT_CALL(*mock_, ListBackups(_, _))
+  EXPECT_CALL(*mock_, ListBackups)
       .WillOnce(
           [this](grpc::ClientContext& context,
                  google::test::admin::database::v1::ListBackupsRequest const&) {
@@ -468,7 +467,7 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
 }
 
 TEST_F(MetadataDecoratorTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase(_, _))
+  EXPECT_CALL(*mock_, RestoreDatabase)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            RestoreDatabaseRequest const&) {
@@ -488,7 +487,7 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
 }
 
 TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
-  EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
+  EXPECT_CALL(*mock_, ListDatabaseOperations)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            ListDatabaseOperationsRequest const&) {
@@ -509,7 +508,7 @@ TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
 }
 
 TEST_F(MetadataDecoratorTest, ListBackupOperations) {
-  EXPECT_CALL(*mock_, ListBackupOperations(_, _))
+  EXPECT_CALL(*mock_, ListBackupOperations)
       .WillOnce([this](grpc::ClientContext& context,
                        google::test::admin::database::v1::
                            ListBackupOperationsRequest const&) {
@@ -530,7 +529,7 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
 }
 
 TEST_F(MetadataDecoratorTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation(_, _))
+  EXPECT_CALL(*mock_, GetOperation)
       .WillOnce([this](grpc::ClientContext& context,
                        google::longrunning::GetOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -548,7 +547,7 @@ TEST_F(MetadataDecoratorTest, GetOperation) {
 }
 
 TEST_F(MetadataDecoratorTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation(_, _))
+  EXPECT_CALL(*mock_, CancelOperation)
       .WillOnce([this](grpc::ClientContext& context,
                        google::longrunning::CancelOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(

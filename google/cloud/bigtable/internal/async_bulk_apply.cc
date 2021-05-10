@@ -29,11 +29,13 @@ future<std::vector<FailedMutation>> AsyncRetryBulkApply::Create(
     std::shared_ptr<bigtable::DataClient> client,
     std::string const& app_profile_id, std::string const& table_name,
     BulkMutation mut) {
+  if (mut.empty()) return make_ready_future(std::vector<FailedMutation>{});
+
   std::shared_ptr<AsyncRetryBulkApply> bulk_apply(new AsyncRetryBulkApply(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
       idempotent_policy, std::move(metadata_update_policy), std::move(client),
       app_profile_id, table_name, std::move(mut)));
-  bulk_apply->StartIterationIfNeeded(std::move(cq));
+  bulk_apply->StartIteration(std::move(cq));
   return bulk_apply->promise_.get_future();
 }
 
@@ -51,16 +53,7 @@ AsyncRetryBulkApply::AsyncRetryBulkApply(
       client_(std::move(client)),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
 
-void AsyncRetryBulkApply::StartIterationIfNeeded(CompletionQueue cq) {
-  if (!state_.HasPendingMutations()) {
-    // There is nothing to do, so just satisfy the future and return. Note that
-    // in the case of the retry policy begin expired we hit this point because
-    // the mutations are no longer "pending", they are all resolved with a
-    // error status.
-    promise_.set_value(std::move(state_).OnRetryDone());
-    return;
-  }
-
+void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
   auto context = absl::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
@@ -78,7 +71,7 @@ void AsyncRetryBulkApply::StartIterationIfNeeded(CompletionQueue cq) {
         self->OnRead(std::move(r));
         return make_ready_future(true);
       },
-      [self, cq](Status s) { self->OnFinish(cq, std::move(s)); });
+      [self, cq](Status const& s) { self->OnFinish(cq, s); });
 }
 
 void AsyncRetryBulkApply::OnRead(
@@ -86,9 +79,29 @@ void AsyncRetryBulkApply::OnRead(
   state_.OnRead(response);
 }
 
-void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status status) {
-  state_.OnFinish(std::move(status));
-  StartIterationIfNeeded(std::move(cq));
+void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
+  auto const is_retryable = status.ok() || rpc_retry_policy_->OnFailure(status);
+  state_.OnFinish(status);
+  if (!state_.HasPendingMutations() || !is_retryable) {
+    SetPromise();
+    return;
+  }
+
+  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+
+  auto self = this->shared_from_this();
+  cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
+      .then([self, cq](TimerFuture result) {
+        if (result.get()) {
+          self->StartIteration(std::move(cq));
+        } else {
+          self->SetPromise();
+        }
+      });
+}
+
+void AsyncRetryBulkApply::SetPromise() {
+  promise_.set_value(std::move(state_).OnRetryDone());
 }
 
 }  // namespace internal

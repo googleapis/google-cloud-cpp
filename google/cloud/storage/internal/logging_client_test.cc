@@ -28,7 +28,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -67,13 +66,13 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 })""";
 
   auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, GetBucketMetadata(_))
+  EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(
           Return(internal::BucketMetadataParser::FromString(text).value()));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
@@ -92,12 +91,12 @@ TEST_F(LoggingClientTest, GetBucketMetadata) {
 
 TEST_F(LoggingClientTest, GetBucketMetadataWithError) {
   auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, GetBucketMetadata(_))
+  EXPECT_CALL(*mock, GetBucketMetadata)
       .WillOnce(Return(StatusOr<BucketMetadata>(TransientError())));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("GetBucketMetadataRequest={"));
@@ -120,13 +119,13 @@ TEST_F(LoggingClientTest, InsertObjectMedia) {
 })""";
 
   auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
+  EXPECT_CALL(*mock, InsertObjectMedia)
       .WillOnce(
           Return(internal::ObjectMetadataParser::FromString(text).value()));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("InsertObjectMediaRequest={"));
@@ -166,12 +165,12 @@ TEST_F(LoggingClientTest, ListBuckets) {
           .value(),
   };
   auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, ListBuckets(_))
+  EXPECT_CALL(*mock, ListBuckets)
       .WillOnce(Return(make_status_or(ListBucketsResponse{"a-token", items})));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("ListBucketsRequest={"));
@@ -203,13 +202,13 @@ TEST_F(LoggingClientTest, ListObjects) {
           .value(),
   };
   auto mock = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(
           Return(make_status_or(ListObjectsResponse{"a-token", items, {}})));
 
   // We want to test that the key elements are logged, but do not want a
   // "change detection test", so this is intentionally not exhaustive.
-  EXPECT_CALL(*log_backend_, ProcessWithOwnership(_))
+  EXPECT_CALL(*log_backend_, ProcessWithOwnership)
       .WillOnce([](LogRecord const& lr) {
         EXPECT_THAT(lr.message, HasSubstr(" << "));
         EXPECT_THAT(lr.message, HasSubstr("ListObjectsRequest={"));

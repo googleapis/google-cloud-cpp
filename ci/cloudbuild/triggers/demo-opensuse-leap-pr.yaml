@@ -1,0 +1,14 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^(master|main|v\d+\..*)$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+name: demo-opensuse-leap-pr
+substitutions:
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-opensuse-leap
+  _TRIGGER_TYPE: pr
+tags:
+- pr

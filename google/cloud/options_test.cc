@@ -44,7 +44,7 @@ using TestOptionList = OptionList<IntOption, BoolOption, StringOption>;
 
 // This is how customers should set a simple options.
 TEST(OptionsUseCase, CustomerSettingSimpleOptions) {
-  auto opts = Options{}.set<IntOption>(123).set<BoolOption>(true);
+  auto const opts = Options{}.set<IntOption>(123).set<BoolOption>(true);
 
   EXPECT_TRUE(opts.has<IntOption>());
   EXPECT_TRUE(opts.has<BoolOption>());

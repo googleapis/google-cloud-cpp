@@ -33,14 +33,12 @@ TEST(CurlWrappers, SigpipeHandlerEnabledTest) {
   GTEST_SKIP();  // nothing to do
 #else
   auto initial_handler = std::signal(SIGPIPE, &test_handler);
-  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_sigpipe_handler(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(true));
   auto actual = std::signal(SIGPIPE, initial_handler);
   EXPECT_EQ(actual, SIG_IGN);
 
   // Also verify a second call has no effect.
-  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_sigpipe_handler(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSigpipeHandlerOption>(true));
   actual = std::signal(SIGPIPE, initial_handler);
   EXPECT_EQ(actual, initial_handler);
 #endif  // defined(SIGPIPE)

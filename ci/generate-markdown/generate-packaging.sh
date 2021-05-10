@@ -225,67 +225,40 @@ the case, the instructions describe how you can manually download and install
 these dependencies.
 END_OF_PREAMBLE
 
-readonly DOCKERFILES_DIR="${BINDIR}/../kokoro/install"
+# Extracts the part of a file between the BEGIN/DONE tags.
+function extract() {
+  sed -e '0,/^.*\[BEGIN packaging.md\].*$/d' \
+    -e '/^.*\[DONE packaging.md\].*$/,$d' "$1"
+}
 
-echo
-echo "<details>"
-echo "<summary>Fedora (33)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>openSUSE (Leap)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>Ubuntu (20.04 LTS - Focal Fossa)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-focal"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>Ubuntu (18.04 LTS - Bionic Beaver)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-bionic"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>Ubuntu (16.04 LTS - Xenial Xerus)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>Debian (Buster)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-buster"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>Debian (Stretch)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-stretch"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>CentOS (8)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-8"
-echo "</details>"
-
-echo
-echo "<details>"
-echo "<summary>CentOS (7)</summary>"
-echo "<br>"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-7"
-echo "</details>"
+# A "map" (comma separated) of dockerfile -> summary.
+DOCKER_DISTROS=(
+  "demo-fedora.Dockerfile,Fedora (33)"
+  "demo-opensuse-leap.Dockerfile,openSUSE (Leap)"
+  "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
+  "demo-ubuntu-bionic.Dockerfile,Ubuntu (18.04 LTS - Bionic Beaver)"
+  "demo-ubuntu-xenial.Dockerfile,Ubuntu (16.04 LTS - Xenial Xerus)"
+  "demo-debian-buster.Dockerfile,Debian (Buster)"
+  "demo-debian-stretch.Dockerfile,Debian (Stretch)"
+  "demo-centos-8.Dockerfile,CentOS (8)"
+  "demo-centos-7.Dockerfile,CentOS (7)"
+)
+for distro in "${DOCKER_DISTROS[@]}"; do
+  dockerfile="$(cut -f1 -d, <<<"${distro}")"
+  summary="$(cut -f2- -d, <<<"${distro}")"
+  echo
+  echo "<details>"
+  echo "<summary>${summary}</summary>"
+  echo "<br>"
+  extract "${BINDIR}/../cloudbuild/dockerfiles/${dockerfile}" |
+    "${BINDIR}/dockerfile2markdown.sh"
+  echo "#### Compile and install the main project"
+  echo
+  echo "We can now compile and install \`google-cloud-cpp\`"
+  echo
+  echo '```bash'
+  extract "${BINDIR}/../cloudbuild/builds/demo-install.sh"
+  echo '```'
+  echo
+  echo "</details>"
+done

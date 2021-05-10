@@ -30,50 +30,43 @@ git clone git@github:<github-username>/google-cloud-cpp.git
 cd google-cloud-cpp
 ```
 
-## Install the dependencies in `$HOME/local-cpp`.
+## Download and bootstrap `vcpkg`
 
-In this guide we will install the dependencies in `$HOME/local-cpp`, you can
-pick any directory where you have write permissions. We will then compile the
-project against these dependencies. The installation needs to be done every time
-the version of the dependencies is changed. Once installed you can use them for
-any build or from any other clone.
-
-Configure the super-build to install in `$HOME/local-cpp`. We recommend that
-you use Ninja for this build because it is substantially faster than Make for
-these use-cases. Note that if Ninja is not installed in your workstation you may
-need to remove the `-GNinja` flag:
+[vcpkg] is a package manager for C++ that builds from source and installs any
+binary artifacts in `$HOME`. We recommend using `vcpkg` for local development.
+In these instructions, we will install `vcpkg` descriptions in `$HOME/vcpkg`,
+you can change the `vcpkg` location, just remember to adapt these instructions
+as you go along. Download the `vcpkg` package descriptions using `git`:
 
 ```shell
-cmake -Hsuper -Bcmake-out/si \
-    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-cpp -GNinja
+git -C $HOME clone https://github.com/microsoft/vcpkg
 ```
 
-Install the dependencies:
-
-> **Note:** Ninja will parallelize the build to use all the cores in your
-> workstation, if you are not using Ninja, or want to limit the number of cores
-> used by the build use the `-j` option.
+Then bootstrap the `vcpkg` tool:
 
 ```shell
-cmake --build cmake-out/si --target project-dependencies
+$HOME/vcpkg/bootstrap-vcpkg.sh
 ```
 
-## Building with the installed dependencies
+## Building `google-cloud-cpp` with vcpkg
 
-Now you can use these dependencies from different builds. Configure your CMake
-builds with `-DCMAKE_PREFIX_PATH=$HOME/local-cpp` to build `google-cloud-cpp`:
+Now you can use `vcpkg` to compile `google-cloud-cpp`. Just add one option
+to the `cmake` configure step:
 
 ```shell
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
+cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out/home
 ```
 
-You can use these dependencies from other locations too:
+The first time you run this command it can take a significant time to download
+and compile all the dependencies (Abseil, gRPC, Protobuf, etc). Note that vcpkg
+caches binary artifacts (in `$HOME/.cache/vcpkg`) so a second build would be
+much faster:
 
 ```shell
 cd $HOME/another-google-cloud-cpp-clone
-cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
+cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out/home
 ```
 
@@ -104,12 +97,17 @@ installed, you can change the compiler using:
 
 ```shell
 CXX=clang++ CC=clang \
-    cmake -H. -Bcmake-out/clang -DCMAKE_PREFIX_PATH=$HOME/local-cpp
+    cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Then compile and test normally:
 cmake --build cmake-out/clang
 (cd cmake-out/clang && ctest --output-on-failure -LE integration-test)
 ```
+
+`vcpkg` uses the compiler as part of its binary cache inputs, that is, changing
+the compiler will require rebuilding the dependencies from source. The good
+news is that `vcpkg` can hold multiple versions of a binary artifact in its
+cache.
 
 ### Changing the build type
 

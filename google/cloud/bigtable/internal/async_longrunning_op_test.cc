@@ -34,7 +34,6 @@ namespace {
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::bigtable::v2::SampleRowKeysResponse;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::WithParamInterface;
 
 using MockAsyncLongrunningOpReader =
@@ -67,7 +66,7 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
       ClientOptions().DisableBackgroundThreads(cq_));
 
   auto longrunning_reader = absl::make_unique<MockAsyncLongrunningOpReader>();
-  EXPECT_CALL(*longrunning_reader, Finish(_, _, _))
+  EXPECT_CALL(*longrunning_reader, Finish)
       .WillOnce([success](google::longrunning::Operation* response,
                           grpc::Status* status, void*) {
         if (success) {
@@ -77,7 +76,7 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
         }
       });
 
-  EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
+  EXPECT_CALL(*client, AsyncGetOperation)
       .WillOnce([&longrunning_reader](
                     grpc::ClientContext*,
                     google::longrunning::GetOperationRequest const& request,
@@ -145,13 +144,13 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
       std::function<void(google::longrunning::Operation&, grpc::Status&)> const&
           response_filler,
       google::longrunning::Operation op) {
-    EXPECT_CALL(*longrunning_reader_, Finish(_, _, _))
+    EXPECT_CALL(*longrunning_reader_, Finish)
         .WillOnce([response_filler](google::longrunning::Operation* response,
                                     grpc::Status* status, void*) {
           response_filler(*response, *status);
         });
 
-    EXPECT_CALL(*client_, AsyncGetOperation(_, _, _))
+    EXPECT_CALL(*client_, AsyncGetOperation)
         .WillOnce(
             [this](grpc::ClientContext*,
                    google::longrunning::GetOperationRequest const& request,

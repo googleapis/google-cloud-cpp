@@ -36,7 +36,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
@@ -192,17 +191,17 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("client_class_name", "FrobberServiceClient"),
         std::make_pair("client_cc_path",
                        "google/cloud/frobber/"
-                       "frobber_client.gcpcxx.pb.cc"),
+                       "frobber_client.cc"),
         std::make_pair("client_header_path",
                        "google/cloud/frobber/"
-                       "frobber_client.gcpcxx.pb.h"),
+                       "frobber_client.h"),
         std::make_pair("connection_class_name", "FrobberServiceConnection"),
         std::make_pair("connection_cc_path",
                        "google/cloud/frobber/"
-                       "frobber_connection.gcpcxx.pb.cc"),
+                       "frobber_connection.cc"),
         std::make_pair("connection_header_path",
                        "google/cloud/frobber/"
-                       "frobber_connection.gcpcxx.pb.h"),
+                       "frobber_connection.h"),
         std::make_pair("connection_options_name",
                        "FrobberServiceConnectionOptions"),
         std::make_pair("connection_options_traits_name",
@@ -213,10 +212,10 @@ INSTANTIATE_TEST_SUITE_P(
                        "FrobberServiceConnectionIdempotencyPolicy"),
         std::make_pair("idempotency_policy_cc_path",
                        "google/cloud/frobber/"
-                       "frobber_connection_idempotency_policy.gcpcxx.pb.cc"),
+                       "frobber_connection_idempotency_policy.cc"),
         std::make_pair("idempotency_policy_header_path",
                        "google/cloud/frobber/"
-                       "frobber_connection_idempotency_policy.gcpcxx.pb.h"),
+                       "frobber_connection_idempotency_policy.h"),
         std::make_pair("limited_error_count_retry_policy_name",
                        "FrobberServiceLimitedErrorCountRetryPolicy"),
         std::make_pair("limited_time_retry_policy_name",
@@ -224,30 +223,30 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("logging_class_name", "FrobberServiceLogging"),
         std::make_pair("logging_cc_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_logging_decorator.gcpcxx.pb.cc"),
+                       "frobber_logging_decorator.cc"),
         std::make_pair("logging_header_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_logging_decorator.gcpcxx.pb.h"),
+                       "frobber_logging_decorator.h"),
         std::make_pair("metadata_class_name", "FrobberServiceMetadata"),
         std::make_pair("metadata_cc_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_metadata_decorator.gcpcxx.pb.cc"),
+                       "frobber_metadata_decorator.cc"),
         std::make_pair("metadata_header_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_metadata_decorator.gcpcxx.pb.h"),
+                       "frobber_metadata_decorator.h"),
         std::make_pair("mock_connection_class_name",
                        "MockFrobberServiceConnection"),
         std::make_pair("mock_connection_header_path",
                        "google/cloud/frobber/mocks/"
-                       "mock_frobber_connection.gcpcxx.pb.h"),
+                       "mock_frobber_connection.h"),
         std::make_pair("option_defaults_cc_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_option_defaults.gcpcxx.pb.cc"),
+                       "frobber_option_defaults.cc"),
         std::make_pair("option_defaults_header_path",
                        "google/cloud/frobber/internal/"
-                       "frobber_option_defaults.gcpcxx.pb.h"),
+                       "frobber_option_defaults.h"),
         std::make_pair("options_header_path",
-                       "google/cloud/frobber/frobber_options.gcpcxx.pb.h"),
+                       "google/cloud/frobber/frobber_options.h"),
         std::make_pair("product_namespace", "frobber"),
         std::make_pair("product_internal_namespace", "frobber_internal"),
         std::make_pair("proto_file_name",
@@ -263,18 +262,14 @@ INSTANTIATE_TEST_SUITE_P(
                        "GOOGLE_CLOUD_CPP_FROBBER_SERVICE_ENDPOINT"),
         std::make_pair("service_name", "FrobberService"),
         std::make_pair("stub_class_name", "FrobberServiceStub"),
-        std::make_pair(
-            "stub_cc_path",
-            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.cc"),
-        std::make_pair(
-            "stub_header_path",
-            "google/cloud/frobber/internal/frobber_stub.gcpcxx.pb.h"),
-        std::make_pair(
-            "stub_factory_cc_path",
-            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.cc"),
-        std::make_pair(
-            "stub_factory_header_path",
-            "google/cloud/frobber/internal/frobber_stub_factory.gcpcxx.pb.h")),
+        std::make_pair("stub_cc_path",
+                       "google/cloud/frobber/internal/frobber_stub.cc"),
+        std::make_pair("stub_header_path",
+                       "google/cloud/frobber/internal/frobber_stub.h"),
+        std::make_pair("stub_factory_cc_path",
+                       "google/cloud/frobber/internal/frobber_stub_factory.cc"),
+        std::make_pair("stub_factory_header_path",
+                       "google/cloud/frobber/internal/frobber_stub_factory.h")),
     [](const testing::TestParamInfo<CreateServiceVarsTest::ParamType>& info) {
       return std::get<0>(info.param);
     });
@@ -343,11 +338,17 @@ const char* const kServiceProto =
     "}\n"
     "// Leading comments about message Bar.\n"
     "message Bar {\n"
+    "  enum SwallowType {\n"
+    "    I_DONT_KNOW = 0;\n"
+    "    AFRICAN = 1;\n"
+    "    EUROPEAN = 2;\n"
+    "  }\n"
     "  int32 number = 1;\n"
     "  string name = 2;\n"
     "  Foo widget = 3;\n"
     "  bool toggle = 4;\n"
     "  string title = 5;\n"
+    "  repeated SwallowType swallow_types = 6;\n"
     "}\n"
     "// Leading comments about message Empty.\n"
     "message Empty {}\n"
@@ -409,6 +410,7 @@ const char* const kServiceProto =
     "    option (google.api.method_signature) = \"number,widget\";\n"
     "    option (google.api.method_signature) = \"toggle\";\n"
     "    option (google.api.method_signature) = \"name,title\";\n"
+    "    option (google.api.method_signature) = \"name,swallow_types\";\n"
     "  }\n"
     "  // Leading comments about rpc $Method6.\n"
     "  rpc Method6(Foo) returns (Empty) {\n"
@@ -540,7 +542,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method0", "method_return_doxygen_link",
             "[::google::protobuf::Empty](https://github.com/googleapis/"
-            "googleapis/blob/foo/google/foo/v1/service.proto#L22)"),
+            "googleapis/blob/foo/google/foo/v1/service.proto#L28)"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -635,9 +637,15 @@ INSTANTIATE_TEST_SUITE_P(
                              "::google::protobuf::Foo const& widget"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_signature2", "bool toggle"),
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method5", "method_signature3",
-            "std::string const& name, std::string const& title"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature3",
+                             "std::string const& name, "
+                             "std::string const& title"),
+        MethodVarsTestValues("google.protobuf.Service.Method5",
+                             "method_signature4",
+                             "std::string const& name, "
+                             "std::vector<::google::protobuf::Bar::SwallowType>"
+                             " const& swallow_types"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "method_request_setters0",
                              "  request.set_name(name);\n"),
@@ -794,7 +802,7 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
       absl::make_unique<generator_testing::MockGeneratorContext>();
   auto output =
       absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
-  EXPECT_CALL(*output, Next(_, _));
+  EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");

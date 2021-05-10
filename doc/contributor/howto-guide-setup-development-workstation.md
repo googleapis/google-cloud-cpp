@@ -37,12 +37,11 @@ to compile `google-cloud-cpp`. But for active development you may want to
 install additional tools to run the unit and integration tests.
 
 These instructions will describe how to install these tools for Ubuntu 18.04
-(Bionic Beaver). For other distributions you may consult the Dockerfile used by
-the integration tests. We use
-[Dockerfile.fedora-install](/ci/kokoro/docker/Dockerfile.fedora-install) to
-to enforce formatting for our builds. If you use a different distribution, you
-will need to use the corresponding package manager (`dnf`, `zypper`, `apk`,
-etc.) and find the corresponding package names.
+(Bionic Beaver). For other distributions you may consult the Dockerfiles in
+[ci/cloudbuild/dockerfiles/](https://github.com/googleapis/google-cloud-cpp/tree/master/ci/cloudbuild/dockerfiles)
+If you use a different distribution, you will need to use the corresponding
+package manager (`dnf`, `zypper`, `apk`, etc.) and find the corresponding
+package names.
 
 First, install the basic development tools:
 
@@ -50,7 +49,7 @@ First, install the basic development tools:
 sudo apt update
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libbenchmark-dev libcurl4-openssl-dev libssl-dev \
-        make pkg-config tar wget zlib1g-dev
+        make npm pkg-config tar wget zlib1g-dev
 ```
 
 Then install `clang-10` and some additional Clang tools that we use to enforce
@@ -72,9 +71,9 @@ sudo chmod 755 /usr/bin/buildifier
 Install shfmt tool, which we use to format our shell scripts:
 
 ```console
-curl -L -o /usr/local/bin/shfmt \
+sudo curl -L -o /usr/local/bin/shfmt \
     "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64"
-chmod 755 /usr/local/bin/shfmt
+sudo chmod 755 /usr/local/bin/shfmt
 ```
 
 Install `cmake_format` to automatically format the CMake list files. We pin this
@@ -84,7 +83,7 @@ because some third party changed something.
 
 ```console
 sudo apt install -y python3 python3-pip
-pip3 install --upgrade pip3
+pip3 install --upgrade pip
 pip3 install cmake_format==0.6.8
 ```
 
@@ -165,7 +164,7 @@ sudo usermod -aG docker $USER
 ## Windows
 
 If you mainly use Windows as your development environment, you need to install
-a number of tools.  We use [Chocolatey](https://www.chocolatey.com) to drive the
+a number of tools.  We use [Chocolatey](https://www.chocolatey.org) to drive the
 installation, so you would need to install it first.  This needs to be executed
 in a `cmd.exe` shell, running as the `Administrator`:
 

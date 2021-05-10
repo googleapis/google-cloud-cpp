@@ -30,7 +30,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -42,14 +41,23 @@ class RetryClientTest : public ::testing::Test {
   std::shared_ptr<testing::MockClient> mock_;
 };
 
+Options BasicTestPolicies() {
+  return Options{}
+      .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
+      .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
+      .set<BackoffPolicyOption>(
+          // Make the tests faster.
+          ExponentialBackoffPolicy(1_us, 2_us, 2).clone())
+      .set<IdempotencyPolicyOption>(AlwaysRetryIdempotencyPolicy{}.clone());
+}
+
 /// @test Verify that non-idempotent operations return on the first failure.
 TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
-                     // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2));
+                     BasicTestPolicies().set<IdempotencyPolicyOption>(
+                         StrictIdempotencyPolicy().clone()));
 
-  EXPECT_CALL(*mock_, DeleteObject(_))
+  EXPECT_CALL(*mock_, DeleteObject)
       .WillOnce(Return(StatusOr<EmptyResponse>(TransientError())));
 
   // Use a delete operation because this is idempotent only if the it has
@@ -62,12 +70,10 @@ TEST_F(RetryClientTest, NonIdempotentErrorHandling) {
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, PermanentErrorHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     LimitedErrorCountRetryPolicy(3),
-                     // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2));
+                     BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock_, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata)
       .WillOnce(Return(StatusOr<ObjectMetadata>(TransientError())))
       .WillOnce(Return(StatusOr<ObjectMetadata>(PermanentError())));
 
@@ -79,12 +85,10 @@ TEST_F(RetryClientTest, PermanentErrorHandling) {
 /// @test Verify that the retry loop returns on the first permanent failure.
 TEST_F(RetryClientTest, TooManyTransientsHandling) {
   RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     LimitedErrorCountRetryPolicy(3),
-                     // Make the tests faster.
-                     ExponentialBackoffPolicy(1_us, 2_us, 2));
+                     BasicTestPolicies());
 
   // Use a read-only operation because these are always idempotent.
-  EXPECT_CALL(*mock_, GetObjectMetadata(_))
+  EXPECT_CALL(*mock_, GetObjectMetadata)
       .WillRepeatedly(Return(StatusOr<ObjectMetadata>(TransientError())));
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
@@ -94,9 +98,10 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
 
 /// @test Verify that the retry loop works with exhausted retry policy.
 TEST_F(RetryClientTest, ExpiredRetryPolicy) {
-  RetryClient client(std::shared_ptr<internal::RawClient>(mock_),
-                     LimitedTimeRetryPolicy(std::chrono::milliseconds(0)),
-                     ExponentialBackoffPolicy(1_us, 2_us, 2));
+  RetryClient client(
+      std::shared_ptr<internal::RawClient>(mock_),
+      BasicTestPolicies().set<RetryPolicyOption>(
+          LimitedTimeRetryPolicy{std::chrono::milliseconds(0)}.clone()));
 
   StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
       GetObjectMetadataRequest("test-bucket", "test-object"));

@@ -34,12 +34,13 @@ TEST(KmsKeyNameTest, FromComponents) {
 }
 
 TEST(KmsKeyNameTest, MakeKmsKeyName) {
-  std::string key_str("projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1");
-  auto key = MakeKmsKeyName(key_str);
-  ASSERT_STATUS_OK(key);
-  EXPECT_EQ(key_str, key->FullName());
+  auto constexpr kValidKey =
+      "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1";
+  auto valid_key = MakeKmsKeyName(kValidKey);
+  ASSERT_STATUS_OK(valid_key);
+  EXPECT_EQ(std::string{kValidKey}, valid_key->FullName());
 
-  for (std::string const& key_str : {
+  for (std::string str : {
            "projects/p1/locations/l1/keyRings/r1/carlosKey/n1",
            "projects/p1",
            "",
@@ -48,9 +49,9 @@ TEST(KmsKeyNameTest, MakeKmsKeyName) {
            "plojects/p1/locations/l1/keyRings/r1/cryptoKeys/n1",
            "projects/p1/locations/l1/keyRings/r1/cryptoKeys/n1/",
        }) {
-    auto key = MakeKmsKeyName(key_str);
+    auto key = MakeKmsKeyName(str);
     EXPECT_THAT(key, StatusIs(StatusCode::kInvalidArgument,
-                              "Improperly formatted KmsKeyName: " + key_str));
+                              "Improperly formatted KmsKeyName: " + str));
   }
 }
 

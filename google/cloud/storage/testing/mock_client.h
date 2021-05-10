@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_MOCK_CLIENT_H
 
+#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include <gmock/gmock.h>
@@ -186,6 +187,15 @@ class MockStreambuf : public internal::ObjectWriteStreambuf {
   MOCK_METHOD(std::string const&, resumable_session_id, (), (const, override));
   MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
 };
+
+/// Create a client configured to use the given mock.
+template <typename... Policies>
+Client ClientFromMock(std::shared_ptr<MockClient> const& mock,
+                      Policies&&... p) {
+  return internal::ClientImplDetails::CreateClient(
+      mock, std::forward<Policies>(p)...);
+}
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud

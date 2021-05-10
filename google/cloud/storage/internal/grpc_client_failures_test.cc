@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
 #include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -42,18 +43,25 @@ class GrpcClientFailuresTest
  protected:
   GrpcClientFailuresTest()
       : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}),
-        rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:1"),
-        grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", "localhost:1") {}
+        rest_endpoint_("CLOUD_STORAGE_EMULATOR_ENDPOINT", {}),
+        grpc_endpoint_("CLOUD_STORAGE_GRPC_ENDPOINT", {}) {}
 
   void SetUp() override {
     std::string const grpc_config = GetParam();
     google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                     grpc_config);
-    ClientOptions client_options(oauth2::CreateAnonymousCredentials());
+    auto options =
+        Options{}
+            .set<internal::RestEndpointOption>("http://localhost:1")
+            .set<internal::IamEndpointOption>("http://localhost:1")
+            .set<EndpointOption>("localhost:1")
+            .set<internal::Oauth2CredentialsOption>(
+                oauth2::CreateAnonymousCredentials())
+            .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     if (grpc_config == "metadata") {
-      client_.reset(new GrpcClient(std::move(client_options)));
+      client_ = GrpcClient::Create(DefaultOptionsGrpc(std::move(options)));
     } else {
-      client_.reset(new HybridClient(std::move(client_options)));
+      client_ = HybridClient::Create(DefaultOptionsGrpc(std::move(options)));
     }
   }
 

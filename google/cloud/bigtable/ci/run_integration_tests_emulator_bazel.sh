@@ -51,7 +51,7 @@ production_only_targets=(
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
 # environment variables that it sets.
 pushd "${HOME}" >/dev/null
-start_emulators
+start_emulators 8480 8490
 popd >/dev/null
 
 excluded_targets=(

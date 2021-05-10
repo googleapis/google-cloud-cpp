@@ -11,12 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "generator/integration_tests/golden/golden_kitchen_sink_client.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_kitchen_sink_client.gcpcxx.pb.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>
@@ -223,6 +223,38 @@ TEST(GoldenKitchenSinkClientTest, TailLogEntries) {
   begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
+  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  std::string expected_name =
+      "/projects/my-project/serviceAccounts/foo@bar.com";
+  std::vector<::google::test::admin::database::v1::
+                  ListServiceAccountKeysRequest::KeyType>
+      expected_key_types = {::google::test::admin::database::v1::
+                                ListServiceAccountKeysRequest::SYSTEM_MANAGED};
+  EXPECT_CALL(*mock, ListServiceAccountKeys)
+      .Times(2)
+      .WillRepeatedly([expected_name, expected_key_types](
+                          ::google::test::admin::database::v1::
+                              ListServiceAccountKeysRequest const& request) {
+        EXPECT_EQ(request.name(), expected_name);
+        EXPECT_THAT(request.key_types(),
+                    testing::ElementsAreArray(expected_key_types));
+        ::google::test::admin::database::v1::ListServiceAccountKeysResponse
+            response;
+        return response;
+      });
+  GoldenKitchenSinkClient client(std::move(mock));
+  auto response =
+      client.ListServiceAccountKeys(expected_name, expected_key_types);
+  EXPECT_STATUS_OK(response);
+  ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  request.set_name(expected_name);
+  *request.mutable_key_types() = {expected_key_types.begin(),
+                                  expected_key_types.end()};
+  response = client.ListServiceAccountKeys(request);
+  EXPECT_STATUS_OK(response);
 }
 
 }  // namespace

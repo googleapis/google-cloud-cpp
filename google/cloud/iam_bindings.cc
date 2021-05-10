@@ -17,6 +17,8 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

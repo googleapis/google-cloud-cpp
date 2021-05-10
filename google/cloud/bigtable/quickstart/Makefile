@@ -20,8 +20,9 @@
 CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
+BIN=.
 
-all: quickstart
+all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Bigtable C++
 # client library.
@@ -31,5 +32,5 @@ CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
 CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
 
 # A target using the Cloud Bigtable C++ client library.
-quickstart: quickstart.cc
+$(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(CBT_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)

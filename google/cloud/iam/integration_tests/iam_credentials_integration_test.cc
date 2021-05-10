@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/iam/iam_credentials_client.gcpcxx.pb.h"
-#include "google/cloud/iam/iam_credentials_options.gcpcxx.pb.h"
-#include "google/cloud/iam/internal/iam_credentials_stub_factory.gcpcxx.pb.h"
+#include "google/cloud/iam/iam_credentials_client.h"
+#include "google/cloud/iam/iam_credentials_options.h"
+#include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"

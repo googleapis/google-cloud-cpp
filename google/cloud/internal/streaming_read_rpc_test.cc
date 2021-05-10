@@ -169,6 +169,16 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
                              HasSubstr("uh-oh"))));
 }
 
+TEST(StreamingReadRpcImpl, ErrorStream) {
+  auto under_test = StreamingReadRpcError<FakeResponse>(
+      Status(StatusCode::kPermissionDenied, "uh-oh"));
+  under_test.Cancel();  // just a smoke test
+  auto result = under_test.Read();
+  ASSERT_TRUE(absl::holds_alternative<Status>(result));
+  EXPECT_THAT(absl::get<Status>(result),
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

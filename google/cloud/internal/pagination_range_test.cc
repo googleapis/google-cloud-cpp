@@ -23,7 +23,6 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
@@ -83,7 +82,7 @@ TYPED_TEST_SUITE(PaginationRangeTest, ResponseTypes);
 TYPED_TEST(PaginationRangeTest, TypedEmpty) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
+  EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
     EXPECT_TRUE(request.testonly_page_token.empty());
     return ResponseType{};
   });
@@ -96,7 +95,7 @@ TYPED_TEST(PaginationRangeTest, TypedEmpty) {
 TYPED_TEST(PaginationRangeTest, SinglePage) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
+  EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
     EXPECT_TRUE(request.testonly_page_token.empty());
     ResponseType response;
     response.testonly_items.push_back(Item{"p1"});
@@ -118,7 +117,7 @@ TYPED_TEST(PaginationRangeTest, SinglePage) {
 TYPED_TEST(PaginationRangeTest, NonProtoRange) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_)).WillOnce([](Request const& request) {
+  EXPECT_CALL(mock, Loader).WillOnce([](Request const& request) {
     EXPECT_TRUE(request.testonly_page_token.empty());
     ResponseType response;
     response.testonly_items.push_back(Item{"p1"});
@@ -148,7 +147,7 @@ TYPED_TEST(PaginationRangeTest, NonProtoRange) {
 TYPED_TEST(PaginationRangeTest, TwoPages) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_))
+  EXPECT_CALL(mock, Loader)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
@@ -179,7 +178,7 @@ TYPED_TEST(PaginationRangeTest, TwoPages) {
 TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_))
+  EXPECT_CALL(mock, Loader)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;
@@ -219,7 +218,7 @@ TYPED_TEST(PaginationRangeTest, TwoPagesWithError) {
 TYPED_TEST(PaginationRangeTest, IteratorCoverage) {
   using ResponseType = TypeParam;
   MockRpc<ResponseType> mock;
-  EXPECT_CALL(mock, Loader(_))
+  EXPECT_CALL(mock, Loader)
       .WillOnce([](Request const& request) {
         EXPECT_TRUE(request.testonly_page_token.empty());
         ResponseType response;

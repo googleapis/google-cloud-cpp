@@ -27,10 +27,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 
-TEST(GeneratedFileSuffix, Success) {
-  EXPECT_EQ(".gcpcxx.pb", GeneratedFileSuffix());
-}
-
 TEST(LocalInclude, Success) {
   EXPECT_EQ("#include \"google/cloud/status.h\"\n",
             LocalInclude("google/cloud/status.h"));
@@ -63,6 +59,10 @@ TEST(CamelCaseToSnakeCase, Success) {
   EXPECT_EQ("a", CamelCaseToSnakeCase("A"));
   EXPECT_EQ("a_b", CamelCaseToSnakeCase("aB"));
   EXPECT_EQ("foo123", CamelCaseToSnakeCase("Foo123"));
+}
+
+TEST(CamelCaseToSnakeCase, Exceptions) {
+  EXPECT_EQ("bigquery_read", CamelCaseToSnakeCase("BigQueryRead"));
 }
 
 TEST(ServiceNameToFilePath, TrailingServiceInLastComponent) {

@@ -26,10 +26,7 @@ set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_PUBSUB_NS=v1")
 
 include(GoogleCloudCppCommon)
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 add_library(
     google_cloud_cpp_pubsub # cmake-format: sort
@@ -39,12 +36,6 @@ add_library(
     backoff_policy.h
     connection_options.cc
     connection_options.h
-    experimental/schema.cc
-    experimental/schema.h
-    experimental/schema_admin_client.cc
-    experimental/schema_admin_client.h
-    experimental/schema_admin_connection.cc
-    experimental/schema_admin_connection.h
     internal/batch_sink.h
     internal/batching_publisher_connection.cc
     internal/batching_publisher_connection.h
@@ -109,6 +100,12 @@ add_library(
     publisher_options.cc
     publisher_options.h
     retry_policy.h
+    schema.cc
+    schema.h
+    schema_admin_client.cc
+    schema_admin_client.h
+    schema_admin_connection.cc
+    schema_admin_connection.h
     snapshot.cc
     snapshot.h
     snapshot_builder.cc
@@ -169,9 +166,9 @@ add_library(google_cloud_cpp_pubsub_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_pubsub_mocks
     INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/experimental/mock_schema_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_ack_handler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_publisher_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_schema_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscription_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_topic_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_subscriber_connection.h)
@@ -226,9 +223,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(pubsub_client_unit_tests
         # cmake-format: sort
         ack_handler_test.cc
-        experimental/schema_admin_client_test.cc
-        experimental/schema_admin_connection_test.cc
-        experimental/schema_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/emulator_overrides_test.cc
@@ -254,6 +248,9 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         publisher_connection_test.cc
         publisher_option_test.cc
         publisher_test.cc
+        schema_admin_client_test.cc
+        schema_admin_connection_test.cc
+        schema_test.cc
         snapshot_builder_test.cc
         snapshot_test.cc
         subscriber_connection_test.cc

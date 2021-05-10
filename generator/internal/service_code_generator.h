@@ -74,23 +74,39 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void CcCloseNamespaces();
 
   void HeaderPrint(std::string const& text);
-  void HeaderPrint(
-      std::vector<
-          PredicatedFragment<google::protobuf::ServiceDescriptor>> const& text);
+  void HeaderPrint(std::vector<PredicatedFragment<void>> const& text);
   Status HeaderPrintMethod(google::protobuf::MethodDescriptor const& method,
                            std::vector<MethodPattern> const& patterns,
                            char const* file, int line);
+
   void CcPrint(std::string const& text);
-  void CcPrint(
-      std::vector<
-          PredicatedFragment<google::protobuf::ServiceDescriptor>> const& text);
+  void CcPrint(std::vector<PredicatedFragment<void>> const& text);
   Status CcPrintMethod(google::protobuf::MethodDescriptor const& method,
                        std::vector<MethodPattern> const& patterns,
                        char const* file, int line);
 
+  /**
+   * Determines if the service contains at least one method that returns a
+   * google::longrunning::Operation.
+   */
   bool HasLongrunningMethod() const;
+
+  /**
+   * Determines if the service contains at least one method that is paginated
+   * per https://google.aip.dev/client-libraries/4233.
+   */
   bool HasPaginatedMethod() const;
+
+  /**
+   * Determines if the service contains at least one rpc whose request or
+   * response contains a field of the proto map type.
+   */
   bool HasMessageWithMapField() const;
+
+  /**
+   * Determines if the service contains at least once rpc with a stream
+   * response.
+   */
   bool HasStreamingReadMethod() const;
 
  private:

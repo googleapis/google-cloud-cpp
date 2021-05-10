@@ -11,10 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <memory>
@@ -26,7 +27,6 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -67,8 +67,16 @@ class MockGoldenKitchenSinkStub
       (std::unique_ptr<internal::StreamingReadRpc<
            ::google::test::admin::database::v1::TailLogEntriesResponse>>),
       TailLogEntries,
-      (grpc::ClientContext & context,
+      (std::unique_ptr<grpc::ClientContext> context,
        ::google::test::admin::database::v1::TailLogEntriesRequest const&
+           request),
+      (override));
+  MOCK_METHOD(
+      StatusOr<
+          ::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+      ListServiceAccountKeys,
+      (grpc::ClientContext & context,
+       ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&
            request),
       (override));
 };
@@ -89,7 +97,7 @@ class LoggingDecoratorTest : public ::testing::Test {
 
 TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
   ::google::test::admin::database::v1::GenerateAccessTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateAccessToken(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
@@ -101,8 +109,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
 }
 
 TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
-  EXPECT_CALL(*mock_, GenerateAccessToken(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
@@ -116,7 +123,7 @@ TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
 
 TEST_F(LoggingDecoratorTest, GenerateIdToken) {
   ::google::test::admin::database::v1::GenerateIdTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
@@ -128,7 +135,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdToken) {
 }
 
 TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
-  EXPECT_CALL(*mock_, GenerateIdToken(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
@@ -142,7 +149,7 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
 
 TEST_F(LoggingDecoratorTest, WriteLogEntries) {
   ::google::test::admin::database::v1::WriteLogEntriesResponse response;
-  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
@@ -154,7 +161,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntries) {
 }
 
 TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
-  EXPECT_CALL(*mock_, WriteLogEntries(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
@@ -168,7 +175,7 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
 
 TEST_F(LoggingDecoratorTest, ListLogs) {
   ::google::test::admin::database::v1::ListLogsResponse response;
-  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(response));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
@@ -180,7 +187,7 @@ TEST_F(LoggingDecoratorTest, ListLogs) {
 }
 
 TEST_F(LoggingDecoratorTest, ListLogsError) {
-  EXPECT_CALL(*mock_, ListLogs(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(TransientError()));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
@@ -206,15 +213,15 @@ class MockTailLogEntriesStreamingReadRpc
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
   auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+  EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  grpc::ClientContext context;
   auto response = stub.TailLogEntries(
-      context, google::test::admin::database::v1::TailLogEntriesRequest());
+      absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
@@ -226,21 +233,50 @@ TEST_F(LoggingDecoratorTest, TailLogEntriesRpcNoRpcStreams) {
 TEST_F(LoggingDecoratorTest, TailLogEntriesRpcWithRpcStreams) {
   auto mock_response = new MockTailLogEntriesStreamingReadRpc;
   EXPECT_CALL(*mock_response, Read).WillOnce(Return(Status()));
-  EXPECT_CALL(*mock_, TailLogEntries(_, _))
+  EXPECT_CALL(*mock_, TailLogEntries)
       .WillOnce(Return(ByMove(
           std::unique_ptr<internal::StreamingReadRpc<
               google::test::admin::database::v1::TailLogEntriesResponse>>(
               mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  grpc::ClientContext context;
   auto response = stub.TailLogEntries(
-      context, google::test::admin::database::v1::TailLogEntriesRequest());
+      absl::make_unique<grpc::ClientContext>(),
+      google::test::admin::database::v1::TailLogEntriesRequest());
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("TailLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("null stream")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeys) {
+  ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
+  EXPECT_CALL(*mock_, ListServiceAccountKeys).WillOnce(Return(response));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_STATUS_OK(status);
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+}
+
+TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
+  EXPECT_CALL(*mock_, ListServiceAccountKeys)
+      .WillOnce(Return(TransientError()));
+  GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
+  grpc::ClientContext context;
+  auto status = stub.ListServiceAccountKeys(
+      context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  auto const log_lines = log_.ExtractLines();
+  EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
+  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
 }  // namespace

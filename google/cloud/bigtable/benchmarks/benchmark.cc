@@ -108,7 +108,6 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   }
 
   BenchmarkResult result{};
-  result.row_count = 0;
   int count = 0;
   for (auto& t : tasks) {
     auto shard_result = t.get();
@@ -258,7 +257,6 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
     bigtable::Table& table, std::int64_t begin, std::int64_t end) const {
   auto start = std::chrono::steady_clock::now();
   BenchmarkResult result{};
-  result.row_count = 0;
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   int bulk_size = 0;

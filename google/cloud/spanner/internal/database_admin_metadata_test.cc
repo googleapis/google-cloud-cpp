@@ -27,7 +27,6 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::testing_util::IsContextMDValid;
-using ::testing::_;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 class DatabaseAdminMetadataTest : public ::testing::Test {
@@ -49,7 +48,7 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
 };
 
 TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
-  EXPECT_CALL(*mock_, CreateDatabase(_, _))
+  EXPECT_CALL(*mock_, CreateDatabase)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::CreateDatabaseRequest const&) {
         EXPECT_STATUS_OK(
@@ -71,7 +70,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
-  EXPECT_CALL(*mock_, UpdateDatabase(_, _))
+  EXPECT_CALL(*mock_, UpdateDatabase)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::UpdateDatabaseDdlRequest const&) {
         EXPECT_STATUS_OK(
@@ -94,7 +93,7 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
-  EXPECT_CALL(*mock_, DropDatabase(_, _))
+  EXPECT_CALL(*mock_, DropDatabase)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::DropDatabaseRequest const&) {
         EXPECT_STATUS_OK(
@@ -117,7 +116,7 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
-  EXPECT_CALL(*mock_, ListDatabases(_, _))
+  EXPECT_CALL(*mock_, ListDatabases)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListDatabasesRequest const&) {
         EXPECT_STATUS_OK(
@@ -139,7 +138,7 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
-  EXPECT_CALL(*mock_, RestoreDatabase(_, _))
+  EXPECT_CALL(*mock_, RestoreDatabase)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::RestoreDatabaseRequest const&) {
         EXPECT_STATUS_OK(
@@ -161,7 +160,7 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
-  EXPECT_CALL(*mock_, GetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(
@@ -184,7 +183,7 @@ TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
-  EXPECT_CALL(*mock_, SetIamPolicy(_, _))
+  EXPECT_CALL(*mock_, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(
@@ -213,7 +212,7 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
-  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
+  EXPECT_CALL(*mock_, TestIamPermissions)
       .WillOnce([this](grpc::ClientContext& context,
                        google::iam::v1::TestIamPermissionsRequest const&) {
         EXPECT_STATUS_OK(
@@ -236,7 +235,7 @@ TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
-  EXPECT_CALL(*mock_, CreateBackup(_, _))
+  EXPECT_CALL(*mock_, CreateBackup)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::CreateBackupRequest const&) {
         EXPECT_STATUS_OK(
@@ -258,7 +257,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, GetBackup) {
-  EXPECT_CALL(*mock_, GetBackup(_, _))
+  EXPECT_CALL(*mock_, GetBackup)
       .WillOnce(
           [this](grpc::ClientContext& context, gcsa::GetBackupRequest const&) {
             EXPECT_STATUS_OK(IsContextMDValid(
@@ -281,7 +280,7 @@ TEST_F(DatabaseAdminMetadataTest, GetBackup) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
-  EXPECT_CALL(*mock_, DeleteBackup(_, _))
+  EXPECT_CALL(*mock_, DeleteBackup)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::DeleteBackupRequest const&) {
         EXPECT_STATUS_OK(
@@ -304,7 +303,7 @@ TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, ListBackups) {
-  EXPECT_CALL(*mock_, ListBackups(_, _))
+  EXPECT_CALL(*mock_, ListBackups)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListBackupsRequest const&) {
         EXPECT_STATUS_OK(
@@ -326,7 +325,7 @@ TEST_F(DatabaseAdminMetadataTest, ListBackups) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
-  EXPECT_CALL(*mock_, UpdateBackup(_, _))
+  EXPECT_CALL(*mock_, UpdateBackup)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::UpdateBackupRequest const&) {
         EXPECT_STATUS_OK(
@@ -349,7 +348,7 @@ TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
-  EXPECT_CALL(*mock_, ListBackupOperations(_, _))
+  EXPECT_CALL(*mock_, ListBackupOperations)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListBackupOperationsRequest const&) {
         EXPECT_STATUS_OK(
@@ -371,7 +370,7 @@ TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
-  EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
+  EXPECT_CALL(*mock_, ListDatabaseOperations)
       .WillOnce([this](grpc::ClientContext& context,
                        gcsa::ListDatabaseOperationsRequest const&) {
         EXPECT_STATUS_OK(
@@ -393,7 +392,7 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
-  EXPECT_CALL(*mock_, GetOperation(_, _))
+  EXPECT_CALL(*mock_, GetOperation)
       .WillOnce([this](grpc::ClientContext& context,
                        google::longrunning::GetOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(
@@ -411,7 +410,7 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
 }
 
 TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
-  EXPECT_CALL(*mock_, CancelOperation(_, _))
+  EXPECT_CALL(*mock_, CancelOperation)
       .WillOnce([this](grpc::ClientContext& context,
                        google::longrunning::CancelOperationRequest const&) {
         EXPECT_STATUS_OK(IsContextMDValid(

@@ -19,7 +19,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
-#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -31,36 +31,15 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
 
 /**
  * Test the BucketAccessControls-related functions in storage::Client.
  */
-class NotificationsTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
-};
+class NotificationsTest
+    : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(NotificationsTest, ListNotifications) {
   std::vector<NotificationMetadata> expected{
@@ -76,7 +55,7 @@ TEST_F(NotificationsTest, ListNotifications) {
           .value(),
   };
 
-  EXPECT_CALL(*mock_, ListNotifications(_))
+  EXPECT_CALL(*mock_, ListNotifications)
       .WillOnce(Return(
           StatusOr<internal::ListNotificationsResponse>(TransientError())))
       .WillOnce([&expected](internal::ListNotificationsRequest const& r) {
@@ -84,15 +63,16 @@ TEST_F(NotificationsTest, ListNotifications) {
 
         return make_status_or(internal::ListNotificationsResponse{expected});
       });
+  auto client = ClientForMock();
   StatusOr<std::vector<NotificationMetadata>> actual =
-      client_->ListNotifications("test-bucket");
+      client.ListNotifications("test-bucket");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::ListNotificationsResponse>(
-      mock_, EXPECT_CALL(*mock_, ListNotifications(_)),
+      mock_, EXPECT_CALL(*mock_, ListNotifications),
       [](Client& client) {
         return client.ListNotifications("test-bucket-name").status();
       },
@@ -100,8 +80,9 @@ TEST_F(NotificationsTest, ListNotificationsTooManyFailures) {
 }
 
 TEST_F(NotificationsTest, ListNotificationsPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::ListNotificationsResponse>(
-      *client_, EXPECT_CALL(*mock_, ListNotifications(_)),
+      client, EXPECT_CALL(*mock_, ListNotifications),
       [](Client& client) {
         return client.ListNotifications("test-bucket-name").status();
       },
@@ -119,7 +100,7 @@ TEST_F(NotificationsTest, CreateNotification) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, CreateNotification(_))
+  EXPECT_CALL(*mock_, CreateNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -130,7 +111,8 @@ TEST_F(NotificationsTest, CreateNotification) {
 
         return make_status_or(expected);
       });
-  StatusOr<NotificationMetadata> actual = client_->CreateNotification(
+  auto client = ClientForMock();
+  StatusOr<NotificationMetadata> actual = client.CreateNotification(
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
@@ -141,7 +123,7 @@ TEST_F(NotificationsTest, CreateNotification) {
 
 TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
-      mock_, EXPECT_CALL(*mock_, CreateNotification(_)),
+      mock_, EXPECT_CALL(*mock_, CreateNotification),
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
@@ -153,8 +135,9 @@ TEST_F(NotificationsTest, CreateNotificationTooManyFailures) {
 }
 
 TEST_F(NotificationsTest, CreateNotificationPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<NotificationMetadata>(
-      *client_, EXPECT_CALL(*mock_, CreateNotification(_)),
+      client, EXPECT_CALL(*mock_, CreateNotification),
       [](Client& client) {
         return client
             .CreateNotification("test-bucket-name", "test-topic-1",
@@ -176,7 +159,7 @@ TEST_F(NotificationsTest, GetNotification) {
       })""")
           .value();
 
-  EXPECT_CALL(*mock_, GetNotification(_))
+  EXPECT_CALL(*mock_, GetNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -184,15 +167,16 @@ TEST_F(NotificationsTest, GetNotification) {
 
         return make_status_or(expected);
       });
+  auto client = ClientForMock();
   StatusOr<NotificationMetadata> actual =
-      client_->GetNotification("test-bucket", "test-notification-1");
+      client.GetNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
 
 TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<NotificationMetadata>(
-      mock_, EXPECT_CALL(*mock_, GetNotification(_)),
+      mock_, EXPECT_CALL(*mock_, GetNotification),
       [](Client& client) {
         return client.GetNotification("test-bucket-name", "test-notification-1")
             .status();
@@ -201,8 +185,9 @@ TEST_F(NotificationsTest, GetNotificationTooManyFailures) {
 }
 
 TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<NotificationMetadata>(
-      *client_, EXPECT_CALL(*mock_, GetNotification(_)),
+      client, EXPECT_CALL(*mock_, GetNotification),
       [](Client& client) {
         return client.GetNotification("test-bucket-name", "test-notification-1")
             .status();
@@ -211,7 +196,7 @@ TEST_F(NotificationsTest, GetNotificationPermanentFailure) {
 }
 
 TEST_F(NotificationsTest, DeleteNotification) {
-  EXPECT_CALL(*mock_, DeleteNotification(_))
+  EXPECT_CALL(*mock_, DeleteNotification)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteNotificationRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -219,14 +204,14 @@ TEST_F(NotificationsTest, DeleteNotification) {
 
         return make_status_or(internal::EmptyResponse{});
       });
-  auto status =
-      client_->DeleteNotification("test-bucket", "test-notification-1");
+  auto client = ClientForMock();
+  auto status = client.DeleteNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(status);
 }
 
 TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteNotification),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
                                          "test-notification-1");
@@ -235,8 +220,9 @@ TEST_F(NotificationsTest, DeleteNotificationTooManyFailures) {
 }
 
 TEST_F(NotificationsTest, DeleteNotificationPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client_, EXPECT_CALL(*mock_, DeleteNotification(_)),
+      client, EXPECT_CALL(*mock_, DeleteNotification),
       [](Client& client) {
         return client.DeleteNotification("test-bucket-name",
                                          "test-notification-1");

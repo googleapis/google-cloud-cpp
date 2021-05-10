@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h"
+#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -51,6 +51,11 @@ TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, WriteLogEntries) {
 TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListLogs) {
   google::test::admin::database::v1::ListLogsRequest request;
   EXPECT_EQ(policy_->ListLogs(request), Idempotency::kIdempotent);
+}
+
+TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListServiceAccountKeys) {
+  google::test::admin::database::v1::ListServiceAccountKeysRequest request;
+  EXPECT_EQ(policy_->ListServiceAccountKeys(request), Idempotency::kIdempotent);
 }
 
 }  // namespace

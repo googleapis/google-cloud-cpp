@@ -21,6 +21,7 @@ import gcs as gcs_type
 import grpc_server
 import httpbin
 import utils
+from utils.handle_gzip import HandleGzipMiddleware
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
@@ -146,8 +147,9 @@ def bucket_update(bucket_name):
     return utils.common.filter_response_rest(bucket.rest(), projection, fields)
 
 
-@gcs.route("/b/<bucket_name>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>", methods=["PATCH", "POST"])
 def bucket_patch(bucket_name):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.patch(flask.request, None)
     projection = utils.common.extract_projection(
@@ -208,8 +210,9 @@ def bucket_acl_update(bucket_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PATCH", "POST"])
 def bucket_acl_patch(bucket_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.patch_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
@@ -267,8 +270,9 @@ def bucket_default_object_acl_update(bucket_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PATCH", "POST"])
 def bucket_default_object_acl_patch(bucket_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.patch_default_object_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
@@ -385,8 +389,9 @@ def object_update(bucket_name, object_name):
     return utils.common.filter_response_rest(blob.rest_metadata(), projection, fields)
 
 
-@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH"])
+@gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH", "POST"])
 def object_patch(bucket_name, object_name):
+    utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.patch(flask.request, None)
     projection = utils.common.extract_projection(
@@ -591,8 +596,11 @@ def object_acl_update(bucket_name, object_name, entity):
     return utils.common.filter_response_rest(response, None, fields)
 
 
-@gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH"])
+@gcs.route(
+    "/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH", "POST"]
+)
 def object_acl_patch(bucket_name, object_name, entity):
+    utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     acl = blob.patch_acl(flask.request, entity, None)
     response = json_format.MessageToDict(acl)
@@ -676,9 +684,9 @@ def resumable_upload_chunk(bucket_name):
     if upload.complete:
         return gcs_type.object.Object.rest(upload.metadata, upload.rest_only)
     upload.transfer.add(request.environ.get("HTTP_TRANSFER_ENCODING", ""))
-    content_length = int(request.headers.get("content-length", 0))
+    content_length = request.headers.get("content-length", None)
     data = utils.common.extract_media(request)
-    if content_length != len(data):
+    if content_length is not None and int(content_length) != len(data):
         utils.error.invalid("content-length header", None)
     content_range = request.headers.get("content-range")
     custom_header_value = request.headers.get("x-goog-emulator-custom-header")
@@ -712,10 +720,15 @@ def resumable_upload_chunk(bucket_name):
                     blob.rest_metadata(), projection, fields
                 )
             return upload.resumable_status_rest()
-        _, chunk_last_byte = [int(v) for v in items[0].split("-")]
+        _, chunk_last_byte = [v for v in items[0].split("-")]
         x_upload_content_length = int(
             upload.request.headers.get("x-upload-content-length", 0)
         )
+        if chunk_last_byte == "*":
+            x_upload_content_length = len(upload.media)
+            chunk_last_byte = len(upload.media) - 1
+        else:
+            chunk_last_byte = int(chunk_last_byte)
         total_object_size = (
             int(items[1]) if items[1] != "*" else x_upload_content_length
         )
@@ -798,16 +811,18 @@ def xml_get_object(bucket_name, object_name):
 (IAM_HANDLER_PATH, iam_app) = gcs_type.iam.get_iam_app()
 
 
-server = DispatcherMiddleware(
-    root,
-    {
-        "/httpbin": httpbin.app,
-        GCS_HANDLER_PATH: gcs,
-        DOWNLOAD_HANDLER_PATH: download,
-        UPLOAD_HANDLER_PATH: upload,
-        PROJECTS_HANDLER_PATH: projects_app,
-        IAM_HANDLER_PATH: iam_app,
-    },
+server = HandleGzipMiddleware(
+    DispatcherMiddleware(
+        root,
+        {
+            "/httpbin": httpbin.app,
+            GCS_HANDLER_PATH: gcs,
+            DOWNLOAD_HANDLER_PATH: download,
+            UPLOAD_HANDLER_PATH: upload,
+            PROJECTS_HANDLER_PATH: projects_app,
+            IAM_HANDLER_PATH: iam_app,
+        },
+    )
 )
 
 root.register_error_handler(Exception, utils.error.RestException.handler)

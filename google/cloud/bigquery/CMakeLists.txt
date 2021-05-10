@@ -26,31 +26,28 @@ set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1")
 
 include(GoogleCloudCppCommon)
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
     google_cloud_cpp_bigquery # cmake-format: sort
-    big_query_read_client.gcpcxx.pb.cc
-    big_query_read_client.gcpcxx.pb.h
-    big_query_read_connection.gcpcxx.pb.cc
-    big_query_read_connection.gcpcxx.pb.h
-    big_query_read_connection_idempotency_policy.gcpcxx.pb.cc
-    big_query_read_connection_idempotency_policy.gcpcxx.pb.h
-    big_query_read_options.gcpcxx.pb.h
-    internal/big_query_read_logging_decorator.gcpcxx.pb.cc
-    internal/big_query_read_logging_decorator.gcpcxx.pb.h
-    internal/big_query_read_metadata_decorator.gcpcxx.pb.cc
-    internal/big_query_read_metadata_decorator.gcpcxx.pb.h
-    internal/big_query_read_option_defaults.gcpcxx.pb.cc
-    internal/big_query_read_option_defaults.gcpcxx.pb.h
-    internal/big_query_read_stub.gcpcxx.pb.cc
-    internal/big_query_read_stub.gcpcxx.pb.h
-    internal/big_query_read_stub_factory.gcpcxx.pb.cc
-    internal/big_query_read_stub_factory.gcpcxx.pb.h
+    bigquery_read_client.cc
+    bigquery_read_client.h
+    bigquery_read_connection.cc
+    bigquery_read_connection.h
+    bigquery_read_connection_idempotency_policy.cc
+    bigquery_read_connection_idempotency_policy.h
+    bigquery_read_options.h
+    internal/bigquery_read_logging_decorator.cc
+    internal/bigquery_read_logging_decorator.h
+    internal/bigquery_read_metadata_decorator.cc
+    internal/bigquery_read_metadata_decorator.h
+    internal/bigquery_read_option_defaults.cc
+    internal/bigquery_read_option_defaults.h
+    internal/bigquery_read_stub.cc
+    internal/bigquery_read_stub.h
+    internal/bigquery_read_stub_factory.cc
+    internal/bigquery_read_stub_factory.h
     retry_traits.h
     streaming.cc)
 target_include_directories(
@@ -83,13 +80,11 @@ create_bazel_config(google_cloud_cpp_bigquery YEAR "2021")
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources. target_sources example:
-# ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.gcpcxx.pb.h
+# ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.h
 add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_big_query_read_connection.gcpcxx.pb.h
-)
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::experimental-bigquery GTest::gmock_main
@@ -149,7 +144,7 @@ set(GOOGLE_CLOUD_PC_NAME "The Google Cloud BigQuery C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud BigQuery.")
 set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_bigquery_protos"
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common google_cloud_cpp_cloud_bigquery_protos"
 )
 google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_bigquery)
 string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_bigquery"

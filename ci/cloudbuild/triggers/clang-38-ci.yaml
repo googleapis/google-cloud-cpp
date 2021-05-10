@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: clang-38-ci
+substitutions:
+  _BUILD_NAME: clang-38
+  _DISTRO: ubuntu-xenial
+  _TRIGGER_TYPE: ci
+tags:
+- ci

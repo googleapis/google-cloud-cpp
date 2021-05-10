@@ -22,13 +22,15 @@ main.
 
 ### Update the API baseline
 
-Run the `update-abi` build to update the API baseline. Once you cut the release
+Run the `check-api` build to update the API baseline. Once you cut the release
 any new APIs are, well, released, and we should think carefully about removing
 them.
 
 ```bash
-./ci/kokoro/docker/build.sh update-abi
+./ci/cloudbuild/build.sh -t check-api-pr --docker
 ```
+
+The updated ABI dump files will be left in the `ci/test-abi` folder.
 
 This may take a while, leave it running while you perform the next step. You
 can, but are not required to, send a single PR to update the baseline and the
@@ -121,19 +123,21 @@ Review the new release in the GitHub web UI (the link to the pre-release will
 be output from the `release.sh` script that was run in the previous step). If
 everything looks OK, uncheck the pre-release checkbox and publish.
 
-## Generate and upload the documentation to googleapis.dev
+## Check the published docs on googleapis.dev
 
-Manually run a Kokoro job
-`cloud-devrel/client-libraries/cpp/google-cloud-cpp/publish-refdocs` in the
-Cloud C++ internal testing dashboard and specify the branch name (e.g.
-`v0.11.x`) in the `Committish` field. This job will generate and upload the
-doxygen documentation to the staging bucket for googleapis.dev hosting. The
-uploaded documentation will generally be live in an hour at the following URLs:
+After the release branch is submitted, the `publish-docs` build will be
+automatically triggered, and it will upload the docs for the new release to the
+following URLs:
+
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
 * https://googleapis.dev/cpp/google-cloud-pubsub/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-spanner/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
+
+It can take up to an hour after the build finishes for the new docs to show up
+at the above URLs. You can watch the status of the build at
+https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources&query=tags%3D%22publish-docs%22
 
 ## Bump the version numbers in `main`
 
@@ -162,8 +166,8 @@ Please note that we use more strict settings for release branches than for
   * The `Require branches to be up to date before merging` sub-option
     is set. This prevents two merges that do not conflict, but nevertheless
     break if both are pushed, to actually merge.
-  * _At a minimum_ the `cla/google`, `kokoro/docker/asan`, and `kokoro/docker/clang-tidy`
-    checks are required to pass, but more may be selected.
+  * _At a minimum_ the `cla/google`, `asan-pr`, and `clang-tidy-pr` checks are
+    required to pass, but more may be selected.
 
 * The `Include administrators` checkbox is turned on, we want to stop ourselves
   from making mistakes.
@@ -194,9 +198,5 @@ cmake configuration step to update the different `version_info.h` files.
 * After merging the PR(s) with all the above changes, use the Release gui on
 github to create a pre-release along with a new tag for the release.
 * After review, publish the release.
-* Manually run a Kokoro job
-`cloud-devrel/client-libraries/cpp/google-cloud-cpp/publish-refdocs` in the
-Cloud C++ internal testing dashboard and specify the branch name (e.g.
-`v1.17.x`) in the `Committish` field.
 * Nudge coryan@ to send a PR to
 [vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).

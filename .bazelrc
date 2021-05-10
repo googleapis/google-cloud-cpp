@@ -60,6 +60,22 @@ build:ubsan --linkopt=-stdlib=libc++
 build:ubsan --linkopt=-lc++
 build:ubsan --linkopt=-lc++abi
 
+# --config xsan: Runs misc. sanitizers that aren't covered elsewhere.
+build:xsan --strip=never
+build:xsan --copt=-Og
+build:xsan --copt=-g
+build:xsan --copt=-fsanitize=float-divide-by-zero
+build:xsan --copt=-fsanitize=nullability
+build:xsan --copt=-fno-omit-frame-pointer
+build:xsan --cxxopt=-stdlib=libc++
+build:xsan --linkopt=-stdlib=libc++
+build:xsan --linkopt=-lc++
+build:xsan --linkopt=-lc++abi
+build:xsan --linkopt=-fsanitize-link-c++-runtime
+build:xsan --linkopt=-fsanitize=float-divide-by-zero
+build:xsan --linkopt=-fsanitize=nullability
+build:xsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+
 # --config msan: Memory Sanitizer
 build:msan --strip=never
 build:msan --copt=-Og

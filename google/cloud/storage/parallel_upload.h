@@ -1093,7 +1093,10 @@ struct CreateParallelUploadShards {
     // Everything ready - we've got the shared state and the files open, let's
     // prepare the returned objects.
     auto upload_buffer_size =
-        client.raw_client()->client_options().upload_buffer_size();
+        google::cloud::storage::internal::ClientImplDetails::GetRawClient(
+            client)
+            ->client_options()
+            .upload_buffer_size();
 
     file_split_points.emplace_back(file_size);
     assert(file_split_points.size() == state->shards().size());

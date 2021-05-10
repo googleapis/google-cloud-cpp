@@ -24,6 +24,7 @@ set(storage_client_integration_tests
     error_injection_integration_test.cc
     grpc_integration_test.cc
     key_file_integration_test.cc
+    minimal_iam_credentials_rest_integration_test.cc
     object_basic_crud_integration_test.cc
     object_checksum_integration_test.cc
     object_compose_many_integration_test.cc
@@ -48,7 +49,8 @@ set(storage_client_integration_tests
     slow_reader_stream_integration_test.cc
     small_reads_integration_test.cc
     storage_include_test.cc
-    thread_integration_test.cc)
+    thread_integration_test.cc
+    unified_credentials_integration_test.cc)
 
 # Signed URL conformance tests are parsed using protos. In order to simplify the
 # build files, only build these conformance tests if gRPC in GCS is compiled.
@@ -89,8 +91,13 @@ foreach (fname ${storage_client_integration_tests})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (fname # cmake-format: sort
-               key_file_integration_test.cc signed_url_integration_test.cc)
+foreach (
+    fname
+    # cmake-format: sort
+    key_file_integration_test.cc
+    minimal_iam_credentials_rest_integration_test.cc
+    signed_url_integration_test.cc
+    unified_credentials_integration_test.cc)
     google_cloud_cpp_set_target_name(target "storage" "${fname}")
     set_tests_properties(
         ${target} PROPERTIES LABELS

@@ -33,7 +33,6 @@ git remote add upstream git@github.com:googleapis/google-cloud-cpp.git
 git remote -v  # Should show 'origin' (your fork) and 'upstream' (main repo)
 ```
 
-
 To pull new commits from `upstream` into your local repo and
 [sync your fork][syncing-a-fork] you can do the following:
 
@@ -88,20 +87,23 @@ git push --force-with-lease
 
 If you are a Googler, when you submit your pull request a number (about 40 at
 last count) of builds start automatically. For non-Googlers, a project owner
-needs to set the `kokoro: run` label in your PR for these builds to start.
+needs to kickoff these builds for you.
 
 We run so many builds because we need to test the libraries under as many
 compilers, platforms, and configurations as possible. Our customers will not
 necessarily use the same environment we use to build and run these libraries.
 
-There is a completely separate [guide](howto-guide-running-ci-builds-locally.md)
-explaining how to run these builds locally in case one fails.
+There is a completely separate
+[guide](howto-guide-running-ci-builds-locally.md) explaining how to run these
+builds locally in case one fails. It's also a good idea to run some of the
+builds locally before sending a PR to verify that your change (likely) works.
+Running the following builds locally should identify most common issues:
 
-One of the builds (`clang-tidy`) is particularly useful because it enforces the
-formatting and style guide rules for the project. It does more than running
-`clang-tidy`, it also formats CMake files, `BUILD` files, the C++ code, shell
-scripts, and ensures the automatically generated documentation is up to date.
-This is covered in more detail in the [style section](README.md#style).
+```
+ci/cloudbuild/build.sh -t checkers-pr --docker
+ci/cloudbuild/build.sh -t clang-tidy-pr --docker
+ci/cloudbuild/build.sh -t asan-pr --docker
+```
 
 ## Merging the changes
 

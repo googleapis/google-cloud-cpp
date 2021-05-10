@@ -25,6 +25,7 @@ storage_client_integration_tests = [
     "error_injection_integration_test.cc",
     "grpc_integration_test.cc",
     "key_file_integration_test.cc",
+    "minimal_iam_credentials_rest_integration_test.cc",
     "object_basic_crud_integration_test.cc",
     "object_checksum_integration_test.cc",
     "object_compose_many_integration_test.cc",
@@ -50,4 +51,5 @@ storage_client_integration_tests = [
     "small_reads_integration_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",
+    "unified_credentials_integration_test.cc",
 ]

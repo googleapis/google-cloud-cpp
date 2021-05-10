@@ -24,29 +24,6 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Determines if the service contains at least one method that returns a
- * google::longrunning::Operation.
- */
-bool HasLongrunningMethod(google::protobuf::ServiceDescriptor const& service);
-
-/**
- * Determines if the service contains at least one method that is paginated
- * per https://google.aip.dev/client-libraries/4233.
- */
-bool HasPaginatedMethod(google::protobuf::ServiceDescriptor const& service);
-
-/**
- * Determines if the service contains at least one rpc whose request or response
- * contains a field of the proto map type.
- */
-bool HasMessageWithMapField(google::protobuf::ServiceDescriptor const& service);
-
-/**
- * Determines if the service contains at least once rpc with a stream response.
- */
-bool HasStreamingReadMethod(google::protobuf::ServiceDescriptor const& service);
-
-/**
  * Determines if the given method meets the criteria for pagination.
  *
  * https://google.aip.dev/client-libraries/4233
@@ -205,6 +182,35 @@ class PredicatedFragment {
 
   std::string operator()(T const& descriptor) const {
     if (predicate_(descriptor)) {
+      return fragment_if_true_;
+    }
+    return fragment_if_false_;
+  }
+
+ private:
+  PredicateFn predicate_;
+  std::string fragment_if_true_;
+  std::string fragment_if_false_;
+};
+
+template <>
+class PredicatedFragment<void> {
+ public:
+  using PredicateFn = std::function<bool(void)>;
+
+  PredicatedFragment(PredicateFn predicate, std::string fragment_if_true,
+                     std::string fragment_if_false)
+      : predicate_(std::move(predicate)),
+        fragment_if_true_(std::move(fragment_if_true)),
+        fragment_if_false_(std::move(fragment_if_false)) {}
+
+  PredicatedFragment(std::string fragment_always_true)  // NOLINT
+      : predicate_([]() { return true; }),
+        fragment_if_true_(std::move(fragment_always_true)),
+        fragment_if_false_({}) {}
+
+  std::string operator()() const {
+    if (predicate_()) {
       return fragment_if_true_;
     }
     return fragment_if_false_;

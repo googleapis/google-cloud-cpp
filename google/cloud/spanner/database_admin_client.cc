@@ -27,8 +27,10 @@ DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
     : conn_(MakeDatabaseAdminConnection(options)) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
-    Database db, std::vector<std::string> extra_statements) {
-  return conn_->CreateDatabase({std::move(db), std::move(extra_statements)});
+    Database db, std::vector<std::string> extra_statements,
+    EncryptionConfig encryption_config) {
+  return conn_->CreateDatabase({std::move(db), std::move(extra_statements),
+                                std::move(encryption_config)});
 }
 
 StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database db) {
@@ -55,13 +57,16 @@ Status DatabaseAdminClient::DropDatabase(Database db) {
 }
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
-    Database db, Backup const& backup) {
-  return conn_->RestoreDatabase({std::move(db), backup.FullName()});
+    Database db, Backup const& backup, EncryptionConfig encryption_config) {
+  return conn_->RestoreDatabase(
+      {std::move(db), backup.FullName(), std::move(encryption_config)});
 }
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
-    Database db, google::spanner::admin::database::v1::Backup const& backup) {
-  return conn_->RestoreDatabase({std::move(db), backup.name()});
+    Database db, google::spanner::admin::database::v1::Backup const& backup,
+    EncryptionConfig encryption_config) {
+  return conn_->RestoreDatabase(
+      {std::move(db), backup.name(), std::move(encryption_config)});
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
@@ -130,15 +135,16 @@ DatabaseAdminClient::TestIamPermissions(Database db,
 
 future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
     Database db, std::string backup_id, Timestamp expire_time,
-    absl::optional<Timestamp> version_time) {
+    absl::optional<Timestamp> version_time,
+    EncryptionConfig encryption_config) {
   auto expire_time_point =
       expire_time.get<std::chrono::system_clock::time_point>();
   if (!expire_time_point) {
     expire_time_point = std::chrono::system_clock::time_point::max();
   }
-  return conn_->CreateBackup({std::move(db), std::move(backup_id),
-                              *std::move(expire_time_point), expire_time,
-                              std::move(version_time)});
+  return conn_->CreateBackup(
+      {std::move(db), std::move(backup_id), *std::move(expire_time_point),
+       expire_time, std::move(version_time), std::move(encryption_config)});
 }
 
 future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(

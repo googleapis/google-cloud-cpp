@@ -86,7 +86,7 @@ Status StubGenerator::GenerateHeader() {
              {// clang-format off
    {"  virtual std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
-    "    grpc::ClientContext& context,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) = 0;\n"
     "\n"}},
              // clang-format on
@@ -153,7 +153,7 @@ Status StubGenerator::GenerateHeader() {
              {// clang-format off
    {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
-    "    grpc::ClientContext& client_context,\n"
+    "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) override;\n"
     "\n"}},
              // clang-format on
@@ -254,13 +254,12 @@ Status StubGenerator::GenerateCc() {
              {// clang-format off
    {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "Default$stub_class_name$::$method_name$(\n"
-    "    grpc::ClientContext&,\n"
+    "    std::unique_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) {\n"
-    "  auto context = absl::make_unique<grpc::ClientContext>();\n"
-    "  auto stream = grpc_stub_->$method_name$(context.get(), request);\n"
+    "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
     "  return absl::make_unique<internal::StreamingReadRpcImpl<\n"
     "      $response_type$>>(\n"
-    "      std::move(context), std::move(stream));\n"
+    "      std::move(client_context), std::move(stream));\n"
     "}\n\n"}},
              // clang-format on
              IsStreamingRead)},

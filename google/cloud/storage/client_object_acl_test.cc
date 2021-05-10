@@ -17,7 +17,7 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
-#include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,35 +28,14 @@ namespace storage {
 namespace {
 
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
-using ::testing::_;
 using ::testing::Return;
-using ::testing::ReturnRef;
 using ms = std::chrono::milliseconds;
 
 /**
  * Test the ObjectAccessControls-related functions in storage::Client.
  */
-class ObjectAccessControlsTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<testing::MockClient>();
-    EXPECT_CALL(*mock_, client_options())
-        .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{
-        std::shared_ptr<internal::RawClient>(mock_),
-        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
-                                 std::chrono::milliseconds(1), 2.0)});
-  }
-  void TearDown() override {
-    client_.reset();
-    mock_.reset();
-  }
-
-  std::shared_ptr<testing::MockClient> mock_;
-  std::unique_ptr<Client> client_;
-  ClientOptions client_options_ =
-      ClientOptions(oauth2::CreateAnonymousCredentials());
-};
+class ObjectAccessControlsTest
+    : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
   std::vector<ObjectAccessControl> expected{
@@ -76,7 +55,7 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
           .value(),
   };
 
-  EXPECT_CALL(*mock_, ListObjectAcl(_))
+  EXPECT_CALL(*mock_, ListObjectAcl)
       .WillOnce(
           Return(StatusOr<internal::ListObjectAclResponse>(TransientError())))
       .WillOnce([&expected](internal::ListObjectAclRequest const& r) {
@@ -85,15 +64,16 @@ TEST_F(ObjectAccessControlsTest, ListObjectAcl) {
 
         return make_status_or(internal::ListObjectAclResponse{expected});
       });
+  auto client = ClientForMock();
   StatusOr<std::vector<ObjectAccessControl>> actual =
-      client_->ListObjectAcl("test-bucket", "test-object");
+      client.ListObjectAcl("test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectAccessControlsTest, ListObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::ListObjectAclResponse>(
-      mock_, EXPECT_CALL(*mock_, ListObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, ListObjectAcl),
       [](Client& client) {
         return client.ListObjectAcl("test-bucket-name", "test-object-name")
             .status();
@@ -102,8 +82,9 @@ TEST_F(ObjectAccessControlsTest, ListObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, ListObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::ListObjectAclResponse>(
-      *client_, EXPECT_CALL(*mock_, ListObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, ListObjectAcl),
       [](Client& client) {
         return client.ListObjectAcl("test-bucket-name", "test-object-name")
             .status();
@@ -120,7 +101,7 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
       })""")
                       .value();
 
-  EXPECT_CALL(*mock_, CreateObjectAcl(_))
+  EXPECT_CALL(*mock_, CreateObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([&expected](internal::CreateObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -130,9 +111,10 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
 
         return make_status_or(expected);
       });
+  auto client = ClientForMock();
   StatusOr<ObjectAccessControl> actual =
-      client_->CreateObjectAcl("test-bucket", "test-object", "user-test-user-1",
-                               ObjectAccessControl::ROLE_READER());
+      client.CreateObjectAcl("test-bucket", "test-object", "user-test-user-1",
+                             ObjectAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
   // hard to predict when testing against the production environment.
@@ -144,7 +126,7 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAcl) {
 
 TEST_F(ObjectAccessControlsTest, CreateObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectAccessControl>(
-      mock_, EXPECT_CALL(*mock_, CreateObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, CreateObjectAcl),
       [](Client& client) {
         return client
             .CreateObjectAcl("test-bucket-name", "test-object-name",
@@ -161,8 +143,9 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, CreateObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectAccessControl>(
-      *client_, EXPECT_CALL(*mock_, CreateObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, CreateObjectAcl),
       [](Client& client) {
         return client
             .CreateObjectAcl("test-bucket-name", "test-object-name",
@@ -173,7 +156,7 @@ TEST_F(ObjectAccessControlsTest, CreateObjectAclPermanentFailure) {
 }
 
 TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
-  EXPECT_CALL(*mock_, DeleteObjectAcl(_))
+  EXPECT_CALL(*mock_, DeleteObjectAcl)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -182,13 +165,14 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAcl) {
 
         return make_status_or(internal::EmptyResponse{});
       });
-  client_->DeleteObjectAcl("test-bucket", "test-object", "user-test-user");
+  auto client = ClientForMock();
+  client.DeleteObjectAcl("test-bucket", "test-object", "user-test-user");
   SUCCEED();
 }
 
 TEST_F(ObjectAccessControlsTest, DeleteObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::EmptyResponse>(
-      mock_, EXPECT_CALL(*mock_, DeleteObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, DeleteObjectAcl),
       [](Client& client) {
         return client.DeleteObjectAcl("test-bucket-name", "test-object-name",
                                       "user-test-user-1");
@@ -201,8 +185,9 @@ TEST_F(ObjectAccessControlsTest, DeleteObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, DeleteObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<internal::EmptyResponse>(
-      *client_, EXPECT_CALL(*mock_, DeleteObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, DeleteObjectAcl),
       [](Client& client) {
         return client.DeleteObjectAcl("test-bucket-name", "test-object-name",
                                       "user-test-user-1");
@@ -219,7 +204,7 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
       })""")
                       .value();
 
-  EXPECT_CALL(*mock_, GetObjectAcl(_))
+  EXPECT_CALL(*mock_, GetObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([&expected](internal::GetObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -228,15 +213,16 @@ TEST_F(ObjectAccessControlsTest, GetObjectAcl) {
 
         return make_status_or(expected);
       });
+  auto client = ClientForMock();
   StatusOr<ObjectAccessControl> actual =
-      client_->GetObjectAcl("test-bucket", "test-object", "user-test-user-1");
+      client.GetObjectAcl("test-bucket", "test-object", "user-test-user-1");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectAccessControlsTest, GetObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectAccessControl>(
-      mock_, EXPECT_CALL(*mock_, GetObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, GetObjectAcl),
       [](Client& client) {
         return client
             .GetObjectAcl("test-bucket-name", "test-object-name",
@@ -247,8 +233,9 @@ TEST_F(ObjectAccessControlsTest, GetObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, GetObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectAccessControl>(
-      *client_, EXPECT_CALL(*mock_, GetObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, GetObjectAcl),
       [](Client& client) {
         return client
             .GetObjectAcl("test-bucket-name", "test-object-name",
@@ -266,7 +253,7 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
           "role": "OWNER"
       })""")
                       .value();
-  EXPECT_CALL(*mock_, UpdateObjectAcl(_))
+  EXPECT_CALL(*mock_, UpdateObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([expected](internal::UpdateObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -278,14 +265,15 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAcl) {
       });
   ObjectAccessControl acl =
       ObjectAccessControl().set_role("OWNER").set_entity("user-test-user");
-  auto actual = client_->UpdateObjectAcl("test-bucket", "test-object", acl);
+  auto client = ClientForMock();
+  auto actual = client.UpdateObjectAcl("test-bucket", "test-object", acl);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
 
 TEST_F(ObjectAccessControlsTest, UpdateObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectAccessControl>(
-      mock_, EXPECT_CALL(*mock_, UpdateObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, UpdateObjectAcl),
       [](Client& client) {
         return client
             .UpdateObjectAcl("test-bucket-name", "test-object-name",
@@ -302,8 +290,9 @@ TEST_F(ObjectAccessControlsTest, UpdateObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, UpdateObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectAccessControl>(
-      *client_, EXPECT_CALL(*mock_, UpdateObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, UpdateObjectAcl),
       [](Client& client) {
         return client
             .UpdateObjectAcl("test-bucket-name", "test-object-name",
@@ -321,7 +310,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
           "role": "OWNER"
       })""")
                     .value();
-  EXPECT_CALL(*mock_, PatchObjectAcl(_))
+  EXPECT_CALL(*mock_, PatchObjectAcl)
       .WillOnce(Return(StatusOr<ObjectAccessControl>(TransientError())))
       .WillOnce([result](internal::PatchObjectAclRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
@@ -333,7 +322,8 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
 
         return make_status_or(result);
       });
-  auto actual = client_->PatchObjectAcl(
+  auto client = ClientForMock();
+  auto actual = client.PatchObjectAcl(
       "test-bucket", "test-object", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
   ASSERT_STATUS_OK(actual);
@@ -342,7 +332,7 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAcl) {
 
 TEST_F(ObjectAccessControlsTest, PatchObjectAclTooManyFailures) {
   testing::TooManyFailuresStatusTest<ObjectAccessControl>(
-      mock_, EXPECT_CALL(*mock_, PatchObjectAcl(_)),
+      mock_, EXPECT_CALL(*mock_, PatchObjectAcl),
       [](Client& client) {
         return client
             .PatchObjectAcl("test-bucket-name", "test-object-name",
@@ -361,8 +351,9 @@ TEST_F(ObjectAccessControlsTest, PatchObjectAclTooManyFailures) {
 }
 
 TEST_F(ObjectAccessControlsTest, PatchObjectAclPermanentFailure) {
+  auto client = ClientForMock();
   testing::PermanentFailureStatusTest<ObjectAccessControl>(
-      *client_, EXPECT_CALL(*mock_, PatchObjectAcl(_)),
+      client, EXPECT_CALL(*mock_, PatchObjectAcl),
       [](Client& client) {
         return client
             .PatchObjectAcl("test-bucket-name", "test-object-name",

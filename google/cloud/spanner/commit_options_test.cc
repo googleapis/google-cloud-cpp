@@ -25,12 +25,15 @@ namespace {
 TEST(CommitOptionsTest, Defaults) {
   CommitOptions options;
   EXPECT_FALSE(options.return_stats());
+  EXPECT_FALSE(options.request_priority().has_value());
 }
 
-TEST(SessionPoolOptionsTest, Stats) {
+TEST(CommitOptionsTest, SetValues) {
   CommitOptions options;
   options.set_return_stats(true);
+  options.set_request_priority(RequestPriority::kLow);
   EXPECT_TRUE(options.return_stats());
+  EXPECT_EQ(RequestPriority::kLow, *options.request_priority());
 }
 
 }  // namespace

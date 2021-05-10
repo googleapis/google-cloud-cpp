@@ -36,6 +36,45 @@ ReadPartition::ReadPartition(std::string transaction_id, std::string session_id,
   *proto_.mutable_key_set() = spanner_internal::ToProto(std::move(key_set));
   proto_.set_limit(read_options.limit);
   proto_.set_partition_token(std::move(partition_token));
+  if (read_options.request_priority) {
+    auto* request_options = proto_.mutable_request_options();
+    switch (*read_options.request_priority) {
+      case spanner::RequestPriority::kLow:
+        request_options->set_priority(
+            google::spanner::v1::RequestOptions::PRIORITY_LOW);
+        break;
+      case spanner::RequestPriority::kMedium:
+        request_options->set_priority(
+            google::spanner::v1::RequestOptions::PRIORITY_MEDIUM);
+        break;
+      case spanner::RequestPriority::kHigh:
+        request_options->set_priority(
+            google::spanner::v1::RequestOptions::PRIORITY_HIGH);
+        break;
+    }
+  }
+}
+
+google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
+  google::cloud::spanner::ReadOptions options;
+  options.index_name = proto_.index();
+  options.limit = proto_.limit();
+  if (proto_.has_request_options()) {
+    switch (proto_.request_options().priority()) {
+      case google::spanner::v1::RequestOptions::PRIORITY_LOW:
+        options.request_priority = spanner::RequestPriority::kLow;
+        break;
+      case google::spanner::v1::RequestOptions::PRIORITY_MEDIUM:
+        options.request_priority = spanner::RequestPriority::kMedium;
+        break;
+      case google::spanner::v1::RequestOptions::PRIORITY_HIGH:
+        options.request_priority = spanner::RequestPriority::kHigh;
+        break;
+      default:
+        break;
+    }
+  }
+  return options;
 }
 
 bool operator==(ReadPartition const& lhs, ReadPartition const& rhs) {

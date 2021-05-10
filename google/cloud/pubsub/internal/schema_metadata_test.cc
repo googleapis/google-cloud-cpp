@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/schema_metadata.h"
-#include "google/cloud/pubsub/experimental/schema.h"
+#include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/testing/mock_schema_stub.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -27,7 +27,7 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::google::cloud::pubsub_experimental::Schema;
+using ::google::cloud::pubsub::Schema;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 

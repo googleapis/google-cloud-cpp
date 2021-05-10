@@ -15,11 +15,7 @@
 # ~~~
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-    # TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl
-    # release
-    set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
     find_package(absl CONFIG REQUIRED)
-    unset(FPHSA_NAME_MISMATCHED)
 
     add_library(
         storage_benchmarks # cmake-format: sort

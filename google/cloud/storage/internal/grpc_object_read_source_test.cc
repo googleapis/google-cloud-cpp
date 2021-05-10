@@ -28,68 +28,37 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
 namespace storage_proto = ::google::storage::v1;
 
-class MockMediaReader : public grpc::ClientReaderInterface<
-                            storage_proto::GetObjectMediaResponse> {
+class MockStream : public google::cloud::internal::StreamingReadRpc<
+                       storage_proto::GetObjectMediaResponse> {
  public:
-  MOCK_METHOD(void, WaitForInitialMetadata, (), (override));
-  MOCK_METHOD(grpc::Status, Finish, (), (override));
-  MOCK_METHOD(bool, NextMessageSize, (std::uint32_t*), (override));
-  MOCK_METHOD(bool, Read, (storage_proto::GetObjectMediaResponse*), (override));
-
-  using UniquePtr = std::unique_ptr<
-      grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>;
-
-  /// Return a `std::unique_ptr< mocked-class >`
-  UniquePtr AsUniqueMocked() { return UniquePtr(this); }
-
-  /**
-   * Create a lambda that returns a `std::unique_ptr< mocked-class >`.
-   *
-   * Often the test code has to create a lambda that returns one of these mocks
-   * wrapped in the correct (the base class) `std::unique_ptr<>`.
-   *
-   * We cannot use just `::testing::Return()` because that binds to the static
-   * type of the returned object, and we need to return a `std::unique_ptr<Foo>`
-   * where we have a `MockFoo*`.  And we cannot create a `std::unique_ptr<>`
-   * and pass it because `::testing::Return()` assumes copy constructions and
-   * `std::unique_ptr<>` only supports move constructors.
-   */
-  std::function<UniquePtr(grpc::ClientContext*,
-                          storage_proto::GetObjectMediaRequest const&)>
-  MakeMockReturner() {
-    return [this](grpc::ClientContext*,
-                  storage_proto::GetObjectMediaRequest const&) {
-      return UniquePtr(this);
-    };
-  }
+  using ReadReturn =
+      absl::variant<Status, storage_proto::GetObjectMediaResponse>;
+  MOCK_METHOD(ReadReturn, Read, (), (override));
+  MOCK_METHOD(void, Cancel, (), (override));
 };
 
 TEST(GrpcObjectReadSource, Simple) {
-  auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("0123456789");
-        return true;
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("0123456789");
+        return response;
       })
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content(
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(
             " The quick brown fox jumps over the lazy dog");
-        return true;
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::string expected =
       "0123456789 The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
@@ -106,16 +75,10 @@ TEST(GrpcObjectReadSource, Simple) {
 }
 
 TEST(GrpcObjectReadSource, EmptyWithError) {
-  auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish())
-      .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(1024);
   EXPECT_THAT(tested.Read(buffer.data(), buffer.size()),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
@@ -125,21 +88,15 @@ TEST(GrpcObjectReadSource, EmptyWithError) {
 }
 
 TEST(GrpcObjectReadSource, DataWithError) {
-  auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("0123456789");
-        return true;
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("0123456789");
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish())
-      .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+  GrpcObjectReadSource tested(std::move(mock));
   std::string expected = "0123456789";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -156,24 +113,20 @@ TEST(GrpcObjectReadSource, DataWithError) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBuffer) {
-  auto mock = absl::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockStream>();
   auto const trailer_size = 1024;
   std::string const expected_1 = "0123456789";
   std::string const expected_2(trailer_size, 'A');
   ASSERT_LT(expected_1.size(), expected_2.size());
   std::string const contents = expected_1 + expected_2;
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([&contents](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content(contents);
-        return true;
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&contents]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(contents);
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(trailer_size);
   auto response = tested.Read(buffer.data(), expected_1.size());
   ASSERT_STATUS_OK(response);
@@ -196,20 +149,16 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
 }
 
 TEST(GrpcObjectReadSource, UseSpillBufferMany) {
-  auto mock = absl::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockStream>();
   std::string const contents = "0123456789";
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([&contents](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content(contents);
-        return true;
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&contents]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(contents);
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), 3);
   ASSERT_STATUS_OK(response);
@@ -238,30 +187,27 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
 }
 
 TEST(GrpcObjectReadSource, PreserveChecksums) {
-  auto mock = absl::make_unique<MockMediaReader>();
+  auto mock = absl::make_unique<MockStream>();
   std::string const expected_md5 = "nhB9nTcrtoJr2B01QqQZ1g==";
   std::string const expected_crc32c = "ImIEBA==";
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([&](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("The quick brown");
-        response->mutable_object_checksums()->set_md5_hash(
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([&]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("The quick brown");
+        response.mutable_object_checksums()->set_md5_hash(
             GrpcClient::MD5ToProto(expected_md5));
-        response->mutable_object_checksums()->mutable_crc32c()->set_value(
+        response.mutable_object_checksums()->mutable_crc32c()->set_value(
             GrpcClient::Crc32cToProto(expected_crc32c));
-        return true;
+        return response;
       })
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content(
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(
             " fox jumps over the lazy dog");
-        return true;
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -289,31 +235,28 @@ TEST(GrpcObjectReadSource, PreserveChecksums) {
 }
 
 TEST(GrpcObjectReadSource, HandleEmptyResponses) {
-  auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce(Return(true))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("The quick brown ");
-        return true;
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] { return storage_proto::GetObjectMediaResponse{}; })
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("The quick brown ");
+        return response;
       })
-      .WillOnce(Return(true))
-      .WillOnce(Return(true))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("fox jumps over ");
-        return true;
+      .WillOnce([] { return storage_proto::GetObjectMediaResponse{}; })
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("fox jumps over ");
+        return response;
       })
-      .WillOnce(Return(true))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content("the lazy dog");
-        return true;
+      .WillOnce([] { return storage_proto::GetObjectMediaResponse{}; })
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content("the lazy dog");
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());
@@ -329,20 +272,16 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
 }
 
 TEST(GrpcObjectReadSource, HandleExtraRead) {
-  auto mock = absl::make_unique<MockMediaReader>();
-  EXPECT_CALL(*mock, Read(_))
-      .WillOnce([](storage_proto::GetObjectMediaResponse* response) {
-        response->mutable_checksummed_data()->set_content(
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([]() {
+        storage_proto::GetObjectMediaResponse response;
+        response.mutable_checksummed_data()->set_content(
             "The quick brown fox jumps over the lazy dog");
-        return true;
+        return response;
       })
-      .WillOnce(Return(false));
-  EXPECT_CALL(*mock, Finish()).WillOnce(Return(grpc::Status::OK));
-  GrpcObjectReadSource tested([&mock](grpc::ClientContext&) {
-    return std::unique_ptr<
-        grpc::ClientReaderInterface<storage_proto::GetObjectMediaResponse>>(
-        mock.release());
-  });
+      .WillOnce(Return(Status{}));
+  GrpcObjectReadSource tested(std::move(mock));
   std::string const expected = "The quick brown fox jumps over the lazy dog";
   std::vector<char> buffer(1024);
   auto response = tested.Read(buffer.data(), buffer.size());

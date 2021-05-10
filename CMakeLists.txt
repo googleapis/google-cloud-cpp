@@ -25,7 +25,7 @@ if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
 endif ()
 project(
     google-cloud-cpp
-    VERSION 1.26.0
+    VERSION 1.28.0
     LANGUAGES CXX C)
 
 # Configure the Compiler options, we use C++11 features by default.
@@ -44,9 +44,6 @@ if (NOT ("${GOOGLE_CLOUD_CPP_CXX_STANDARD}" STREQUAL ""))
         WARNING
             "GOOGLE_CLOUD_CPP_CXX_STANDARD is retired, use CMAKE_CXX_STANDARD")
 endif ()
-
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-include(SelectMSVCRuntime)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
@@ -68,7 +65,19 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+
+    if (CMAKE_VERSION VERSION_LESS 3.15)
+        message(
+            FATAL_ERROR
+                "MSVC builds require CMake >= 3.15."
+                " Previous versions of CMake lack a standard mechanism to"
+                " select the runtime C++ library.")
+    endif ()
 endif ()
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+include(SelectMSVCRuntime)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK
        "If enabled, check that the user has defined OPENSSL_ROOT_DIR on macOS"
@@ -150,13 +159,13 @@ option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_IAM "Enable building the IAM library." ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_LOGGING "Enable building the Logging library."
        ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." OFF)
 
 # The default list of libraries to build. These can be overridden by the user by
 # passing a comma-separated list, i.e
 # `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
 set(GOOGLE_CLOUD_CPP_ENABLE
-    "bigtable;bigquery;iam;firestore;logging;pubsub;spanner;storage;generator"
+    "bigtable;bigquery;iam;firestore;logging;pubsub;spanner;storage"
     CACHE STRING "The list of libraries to build.")
 
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")

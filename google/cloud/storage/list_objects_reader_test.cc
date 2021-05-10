@@ -30,7 +30,6 @@ using ::google::cloud::storage::internal::ListObjectsRequest;
 using ::google::cloud::storage::internal::ListObjectsResponse;
 using ::google::cloud::storage::testing::MockClient;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
-using ::testing::_;
 using ::testing::ContainerEq;
 using ::testing::Return;
 
@@ -74,7 +73,7 @@ TEST(ListObjectsReaderTest, Basic) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce(create_mock(2));
@@ -93,7 +92,7 @@ TEST(ListObjectsReaderTest, Basic) {
 
 TEST(ListObjectsReaderTest, Empty) {
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(Return(make_status_or(ListObjectsResponse{})));
 
   auto reader = google::cloud::internal::MakePaginationRange<ListObjectsReader>(
@@ -125,7 +124,7 @@ TEST(ListObjectsReaderTest, PermanentFailure) {
   };
 
   auto mock = std::make_shared<MockClient>();
-  EXPECT_CALL(*mock, ListObjects(_))
+  EXPECT_CALL(*mock, ListObjects)
       .WillOnce(create_mock(0))
       .WillOnce(create_mock(1))
       .WillOnce([](ListObjectsRequest const&) {

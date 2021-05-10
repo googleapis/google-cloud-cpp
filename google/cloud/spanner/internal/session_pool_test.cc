@@ -93,7 +93,7 @@ std::shared_ptr<SessionPool> MakeTestSessionPool(
 TEST(SessionPool, Allocate) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(
           [&db](grpc::ClientContext&,
                 spanner_proto::BatchCreateSessionsRequest const& request) {
@@ -113,7 +113,7 @@ TEST(SessionPool, Allocate) {
 TEST(SessionPool, ReleaseBadSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(
           [&db](grpc::ClientContext&,
                 spanner_proto::BatchCreateSessionsRequest const& request) {
@@ -152,7 +152,7 @@ TEST(SessionPool, ReleaseBadSession) {
 TEST(SessionPool, CreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
@@ -165,7 +165,7 @@ TEST(SessionPool, CreateError) {
 TEST(SessionPool, ReuseSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads threads;
@@ -183,7 +183,7 @@ TEST(SessionPool, ReuseSession) {
 TEST(SessionPool, Lifo) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
 
@@ -215,7 +215,7 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
   int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
   Options opts;
@@ -257,7 +257,7 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
   int const max_sessions_per_channel = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
@@ -287,7 +287,7 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
   int const max_sessions_per_channel = 1;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
 
   Options opts;
@@ -333,11 +333,11 @@ TEST(SessionPool, MultipleChannels) {
   auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock1, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock1, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s3"}))));
-  EXPECT_CALL(*mock2, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s3"}))));
@@ -361,11 +361,11 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock3 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("project", "instance", "database");
-  EXPECT_CALL(*mock1, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock1, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3"}))));
-  EXPECT_CALL(*mock2, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock2, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1", "c2s2", "c2s3"}))));
-  EXPECT_CALL(*mock3, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock3, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
 
   // note that min_sessions will effectively be reduced to 9
@@ -405,13 +405,13 @@ TEST(SessionPool, GetStubForStublessSession) {
 
 TEST(SessionPool, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
-  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+  EXPECT_CALL(*mock, BatchCreateSessions)
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
   auto reader = absl::make_unique<
       StrictMock<MockAsyncResponseReader<spanner_proto::ResultSet>>>();
-  EXPECT_CALL(*mock, AsyncExecuteSql(_, _, _))
+  EXPECT_CALL(*mock, AsyncExecuteSql)
       .WillOnce([&reader](grpc::ClientContext&,
                           spanner_proto::ExecuteSqlRequest const& request,
                           grpc::CompletionQueue*) {
@@ -421,7 +421,7 @@ TEST(SessionPool, SessionRefresh) {
             grpc::ClientAsyncResponseReaderInterface<spanner_proto::ResultSet>>(
             reader.get());
       });
-  EXPECT_CALL(*reader, Finish(_, _, _))
+  EXPECT_CALL(*reader, Finish)
       .WillOnce(
           [](spanner_proto::ResultSet* result, grpc::Status* status, void*) {
             // This is the actual spanner response to a "SELECT 1"

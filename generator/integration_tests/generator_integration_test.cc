@@ -100,6 +100,8 @@ class GeneratorIntegrationTest
     product_path_ = "generator/integration_tests/golden/";
     googleapis_commit_hash_ = "59f97e6044a1275f83427ab7962a154c00d915b5";
     copyright_year_ = CurrentCopyrightYear();
+    omit_rpc1_ = "Omitted1";
+    omit_rpc2_ = "Omitted2";
 
     std::vector<std::string> args;
     // empty arg keeps first real arg from being ignored.
@@ -112,6 +114,8 @@ class GeneratorIntegrationTest
     args.emplace_back("--cpp_codegen_opt=googleapis_commit_hash=" +
                       googleapis_commit_hash_);
     args.emplace_back("--cpp_codegen_opt=copyright_year=" + copyright_year_);
+    args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc1_);
+    args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc2_);
     args.emplace_back("generator/integration_tests/test.proto");
 
     std::vector<char const*> c_args;
@@ -132,6 +136,8 @@ class GeneratorIntegrationTest
   std::string golden_path_;
   std::string googleapis_commit_hash_;
   std::string copyright_year_;
+  std::string omit_rpc1_;
+  std::string omit_rpc2_;
 };
 
 TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
@@ -150,42 +156,38 @@ TEST_P(GeneratorIntegrationTest, CompareGeneratedToGolden) {
 INSTANTIATE_TEST_SUITE_P(
     Generator, GeneratorIntegrationTest,
     testing::Values(
-        "golden_thing_admin_client.gcpcxx.pb.h",
-        "golden_thing_admin_client.gcpcxx.pb.cc",
-        "golden_thing_admin_connection.gcpcxx.pb.h",
-        "golden_thing_admin_connection.gcpcxx.pb.cc",
-        "golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.h",
-        "golden_thing_admin_connection_idempotency_policy.gcpcxx.pb.cc",
-        "golden_thing_admin_options.gcpcxx.pb.h",
-        "internal/golden_thing_admin_logging_decorator.gcpcxx.pb.h",
-        "internal/golden_thing_admin_logging_decorator.gcpcxx.pb.cc",
-        "internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.h",
-        "internal/golden_thing_admin_metadata_decorator.gcpcxx.pb.cc",
-        "internal/golden_thing_admin_option_defaults.gcpcxx.pb.h",
-        "internal/golden_thing_admin_option_defaults.gcpcxx.pb.cc",
-        "internal/golden_thing_admin_stub_factory.gcpcxx.pb.h",
-        "internal/golden_thing_admin_stub_factory.gcpcxx.pb.cc",
-        "internal/golden_thing_admin_stub.gcpcxx.pb.h",
-        "internal/golden_thing_admin_stub.gcpcxx.pb.cc",
-        "mocks/mock_golden_thing_admin_connection.gcpcxx.pb.h",
-        "golden_kitchen_sink_client.gcpcxx.pb.h",
-        "golden_kitchen_sink_client.gcpcxx.pb.cc",
-        "golden_kitchen_sink_connection.gcpcxx.pb.h",
-        "golden_kitchen_sink_connection.gcpcxx.pb.cc",
-        "golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.h",
-        "golden_kitchen_sink_connection_idempotency_policy.gcpcxx.pb.cc",
-        "golden_kitchen_sink_options.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_logging_decorator.gcpcxx.pb.cc",
-        "internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_metadata_decorator.gcpcxx.pb.cc",
-        "internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_option_defaults.gcpcxx.pb.cc",
-        "internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_stub_factory.gcpcxx.pb.cc",
-        "internal/golden_kitchen_sink_stub.gcpcxx.pb.h",
-        "internal/golden_kitchen_sink_stub.gcpcxx.pb.cc",
-        "mocks/mock_golden_kitchen_sink_connection.gcpcxx.pb.h"),
+        "golden_thing_admin_client.h", "golden_thing_admin_client.cc",
+        "golden_thing_admin_connection.h", "golden_thing_admin_connection.cc",
+        "golden_thing_admin_connection_idempotency_policy.h",
+        "golden_thing_admin_connection_idempotency_policy.cc",
+        "golden_thing_admin_options.h",
+        "internal/golden_thing_admin_logging_decorator.h",
+        "internal/golden_thing_admin_logging_decorator.cc",
+        "internal/golden_thing_admin_metadata_decorator.h",
+        "internal/golden_thing_admin_metadata_decorator.cc",
+        "internal/golden_thing_admin_option_defaults.h",
+        "internal/golden_thing_admin_option_defaults.cc",
+        "internal/golden_thing_admin_stub_factory.h",
+        "internal/golden_thing_admin_stub_factory.cc",
+        "internal/golden_thing_admin_stub.h",
+        "internal/golden_thing_admin_stub.cc",
+        "mocks/mock_golden_thing_admin_connection.h",
+        "golden_kitchen_sink_client.h", "golden_kitchen_sink_client.cc",
+        "golden_kitchen_sink_connection.h", "golden_kitchen_sink_connection.cc",
+        "golden_kitchen_sink_connection_idempotency_policy.h",
+        "golden_kitchen_sink_connection_idempotency_policy.cc",
+        "golden_kitchen_sink_options.h",
+        "internal/golden_kitchen_sink_logging_decorator.h",
+        "internal/golden_kitchen_sink_logging_decorator.cc",
+        "internal/golden_kitchen_sink_metadata_decorator.h",
+        "internal/golden_kitchen_sink_metadata_decorator.cc",
+        "internal/golden_kitchen_sink_option_defaults.h",
+        "internal/golden_kitchen_sink_option_defaults.cc",
+        "internal/golden_kitchen_sink_stub_factory.h",
+        "internal/golden_kitchen_sink_stub_factory.cc",
+        "internal/golden_kitchen_sink_stub.h",
+        "internal/golden_kitchen_sink_stub.cc",
+        "mocks/mock_golden_kitchen_sink_connection.h"),
     [](testing::TestParamInfo<GeneratorIntegrationTest::ParamType> const&
            info) {
       return absl::StrReplaceAll(std::string(info.param),

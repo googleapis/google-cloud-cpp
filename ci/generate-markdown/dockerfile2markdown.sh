@@ -19,7 +19,7 @@ set -eu
 # shellcheck disable=SC2016
 sed_args=(
   # Delete any sections marked as ignored.
-  '-e' '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d'
+  '-e' '/^## \[BEGIN IGNORED\]/,/^## \[DONE IGNORED\]/d'
   # Remove the Docker commands to define the base image and/or copy files.
   '-e' '/^FROM /d'
   '-e' '/^ARG /d'
@@ -34,7 +34,8 @@ sed_args=(
   # Regular Dockerfile commands just become commands.
   '-e' 's/^RUN //'
   # Change some Dockerfile commands to the shell counterparts
-  '-e' 's/^WORKDIR /cd /'
+  '-e' 's;^WORKDIR /home/build/project$;cd \$HOME/google-cloud-cpp;'
+  '-e' 's/^WORKDIR \(.*\)$/mkdir -p \1 \&\& cd \1/'
   '-e' 's/^ENV /export /'
   # To workaround transient download failures the CI builds execute some
   # commands 3 times, we do not need that in the README or INSTALL
@@ -65,7 +66,7 @@ sed_args=(
   # or INSTALL instructions we prefer to use $HOME
   '-e' 's;/home/build/project;$HOME/google-cloud-cpp;'
   '-e' 's;/home/build;$HOME;'
-  '-e' 's;/var/tmp/build;$HOME/Downloads;'
+  '-e' 's;/var/tmp/build;$HOME/Downloads;g'
   # Remove additional indentation for the sudo commands. The Docker files
   # are more readable with the indentation, the markdown files not so much.
   '-e' 's/^    sudo/sudo/'

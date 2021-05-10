@@ -86,7 +86,7 @@ Status LoggingDecoratorGenerator::GenerateHeader() {
              {// clang-format off
    {"  std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
     "  $method_name$(\n"
-    "    grpc::ClientContext& context,\n"
+    "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) override;\n"
                // clang-format on
                "\n"}},
@@ -187,15 +187,15 @@ Status LoggingDecoratorGenerator::GenerateCc() {
              {// clang-format off}
               {"std::unique_ptr<internal::StreamingReadRpc<$response_type$>>\n"
                "$logging_class_name$::$method_name$(\n"
-               "    grpc::ClientContext& context,\n"
+               "    std::unique_ptr<grpc::ClientContext> context,\n"
                "    $request_type$ const& request) {\n"
                "  return google::cloud::internal::LogWrapper(\n"
-               "      [this](grpc::ClientContext& context,\n"
+               "      [this](std::unique_ptr<grpc::ClientContext> context,\n"
                "             $request_type$ const& request) ->\n"
                "      std::unique_ptr<internal::StreamingReadRpc<\n"
                "          $response_type$>> {\n"
-               "        auto stream = child_->$method_name$(context, "
-               "request);\n"
+               "        auto stream = "
+               "child_->$method_name$(std::move(context), request);\n"
                "        if (components_.count(\"rpc-streams\") > 0) {\n"
                "          stream = "
                "absl::make_unique<internal::StreamingReadRpcLogging<\n"
@@ -205,7 +205,8 @@ Status LoggingDecoratorGenerator::GenerateCc() {
                "        }\n"
                "        return stream;\n"
                "      },\n"
-               "      context, request, __func__, tracing_options_);\n"
+               "      std::move(context), request, __func__, "
+               "tracing_options_);\n"
                "}\n"
                "\n"}},
              // clang-format on

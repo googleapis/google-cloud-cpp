@@ -273,6 +273,9 @@ Status ValidateIamBinding(nlohmann::json const& binding,
 }
 }  // namespace
 
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   auto json = nlohmann::json::parse(payload, nullptr, false);
   if (!json.is_object()) {
@@ -323,6 +326,9 @@ SetBucketIamPolicyRequest::SetBucketIamPolicyRequest(
   iam["bindings"] = std::move(bindings);
   json_payload_ = iam.dump();
 }
+
+// TODO(#5929) - remove after decommission is completed
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
   os << "GetBucketIamPolicyRequest={bucket_name=" << r.bucket_name();

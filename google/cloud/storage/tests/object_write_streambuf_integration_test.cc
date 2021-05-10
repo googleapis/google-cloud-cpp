@@ -47,12 +47,15 @@ class ObjectWriteStreambufIntegrationTest
     request.set_multiple_options(IfGenerationMatch(0));
 
     StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-        client->raw_client()->CreateResumableSession(request);
+        internal::ClientImplDetails::GetRawClient(*client)
+            ->CreateResumableSession(request);
     ASSERT_STATUS_OK(session);
 
     ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
         std::move(session).value(),
-        client->raw_client()->client_options().upload_buffer_size(),
+        internal::ClientImplDetails::GetRawClient(*client)
+            ->client_options()
+            .upload_buffer_size(),
         absl::make_unique<NullHashValidator>()));
 
     std::ostringstream expected_stream;

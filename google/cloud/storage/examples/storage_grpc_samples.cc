@@ -64,10 +64,10 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
 //! [grpc-client-with-project]
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = google::cloud::storage;
-  auto options = gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!options) throw std::runtime_error(options.status().message());
   auto client = google::cloud::storage_experimental::DefaultGrpcClient(
-      options->set_project_id(std::move(project_id)));
+      google::cloud::Options{}.set<gcs::internal::ProjectIdOption>(
+          std::move(project_id)));
+  if (!client) throw std::runtime_error(client.status().message());
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";
 }
 //! [grpc-client-with-project]

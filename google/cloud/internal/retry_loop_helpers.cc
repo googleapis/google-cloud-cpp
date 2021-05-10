@@ -23,7 +23,7 @@ namespace internal {
 Status RetryLoopError(char const* loop_message, char const* location,
                       Status const& last_status) {
   std::ostringstream os;
-  os << loop_message << " " << location << ": " << last_status;
+  os << loop_message << " " << location << ": " << last_status.message();
   return Status(last_status.code(), std::move(os).str());
 }
 

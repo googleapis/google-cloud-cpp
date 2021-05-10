@@ -17,7 +17,10 @@
 
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
-#include <google/storage/v1/storage.grpc.pb.h>
+#include "google/cloud/background_threads.h"
+#include "google/cloud/internal/streaming_write_rpc.h"
+#include <google/storage/v1/storage.pb.h>
+#include <memory>
 #include <string>
 
 namespace google {
@@ -29,16 +32,16 @@ namespace internal {
 /// Determine if using DirectPath for GCS has been enabled through
 /// GOOGLE_CLOUD_DIRECT_PATH.
 bool DirectPathEnabled();
+Options DefaultOptionsGrpc(Options = {});
 
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&);
-std::shared_ptr<grpc::ChannelInterface> CreateGrpcChannel(ClientOptions const&,
-                                                          int channel_id);
+class StorageStub;
 
 class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
-  explicit GrpcClient(ClientOptions options);
-  explicit GrpcClient(ClientOptions options, int channel_id);
+  static std::shared_ptr<GrpcClient> Create(Options const& opts);
+  static std::shared_ptr<GrpcClient> Create(Options const& opts,
+                                            int channel_id);
   ~GrpcClient() override = default;
 
   //@{
@@ -48,10 +51,10 @@ class GrpcClient : public RawClient,
   // them is very different from the standard retry loop. Also note that these
   // are virtual functions only because we need to override them in the unit
   // tests.
-  using UploadWriter =
-      grpc::ClientWriterInterface<google::storage::v1::InsertObjectRequest>;
-  virtual std::unique_ptr<UploadWriter> CreateUploadWriter(
-      grpc::ClientContext&, google::storage::v1::Object&);
+  using InsertStream = google::cloud::internal::StreamingWriteRpc<
+      google::storage::v1::InsertObjectRequest, google::storage::v1::Object>;
+  virtual std::unique_ptr<InsertStream> CreateUploadWriter(
+      std::unique_ptr<grpc::ClientContext> context);
   virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
       QueryResumableUploadRequest const&);
   //@}
@@ -318,9 +321,13 @@ class GrpcClient : public RawClient,
   static std::string MD5FromProto(std::string const&);
   static std::string MD5ToProto(std::string const&);
 
+ protected:
+  explicit GrpcClient(Options const& opts, int channel_id);
+
  private:
-  ClientOptions options_;
-  std::shared_ptr<google::storage::v1::Storage::Stub> stub_;
+  ClientOptions backwards_compatibility_options_;
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<StorageStub> stub_;
 };
 
 }  // namespace internal

@@ -805,6 +805,31 @@ service GoldenKitchenSink {
     };
     option (google.api.method_signature) = "resource_names";
   }
+
+  // Does nothing and should be ommited by command line arg.
+  rpc Omitted1(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/omit:omit"
+      body: "*"
+    };
+  }
+
+  // Does nothing and should be ommited by command line arg.
+  rpc Omitted2(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/omit:omit"
+      body: "*"
+    };
+  }
+
+  // Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
+  rpc ListServiceAccountKeys(ListServiceAccountKeysRequest) returns (ListServiceAccountKeysResponse) {
+    option (google.api.http) = {
+      get: "/v1/{name=projects/*/serviceAccounts/*}/keys"
+    };
+    option (google.api.method_signature) = "name,key_types";
+  }
+
 }
 
 message GenerateAccessTokenRequest {
@@ -1223,4 +1248,42 @@ message TailLogEntriesResponse {
   // one of each reason per response. The counts represent the number of
   // suppressed entries since the last streamed response.
   repeated SuppressionInfo suppression_info = 2;
+}
+
+// The service account keys list request.
+message ListServiceAccountKeysRequest {
+  // `KeyType` filters to selectively retrieve certain varieties
+  // of keys.
+  enum KeyType {
+    // Unspecified key type. The presence of this in the
+    // message will immediately result in an error.
+    KEY_TYPE_UNSPECIFIED = 0;
+
+    // User-managed keys (managed and rotated by the user).
+    USER_MANAGED = 1;
+
+    // System-managed keys (managed and rotated by Google).
+    SYSTEM_MANAGED = 2;
+  }
+
+  // Required. The resource name of the service account in the following format:
+  // `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.
+  //
+  // Using `-` as a wildcard for the `PROJECT_ID`, will infer the project from
+  // the account. The `ACCOUNT` value can be the `email` address or the
+  // `unique_id` of the service account.
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  // Filters the types of keys the user wants to include in the list
+  // response. Duplicate key types are not allowed. If no key type
+  // is provided, all keys are returned.
+  repeated KeyType key_types = 2;
+}
+
+// The service account keys list response.
+message ListServiceAccountKeysResponse {
+  // The public keys for the service account.
+  repeated string keys = 1;
 }

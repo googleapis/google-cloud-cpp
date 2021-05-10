@@ -18,9 +18,9 @@
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <grpcpp/support/async_unary_call.h>
 #include <string>
 
@@ -56,19 +56,15 @@ struct MockAsyncFailingRpcFactory {
                                             grpc::ClientContext* context,
                                             RequestType const& request,
                                             grpc::CompletionQueue*) {
-      using ::testing::_;
       EXPECT_STATUS_OK(google::cloud::testing_util::IsContextMDValid(
           *context, method, google::cloud::internal::ApiClientHeader()));
       RequestType expected;
       // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
       EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
           expected_request, &expected));
-      std::string delta;
-      google::protobuf::util::MessageDifferencer differencer;
-      differencer.ReportDifferencesToString(&delta);
-      EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
+      EXPECT_THAT(expected, google::cloud::testing_util::IsProtoEqual(request));
 
-      EXPECT_CALL(*reader, Finish(_, _, _))
+      EXPECT_CALL(*reader, Finish)
           .WillOnce([](ResponseType* response, grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");

@@ -26,10 +26,10 @@ TEST(AppProfileConfig, MultiClusterUseAny) {
   EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
 
   // Verify that as_proto() for rvalue-references returns the right type.
-  static_assert(
-      std::is_rvalue_reference<decltype(
-          std::move(std::declval<AppProfileConfig>()).as_proto())>::value,
-      "Return type from as_proto() must be rvalue-reference");
+  static_assert(std::is_rvalue_reference<
+                    decltype(std::move(std::declval<AppProfileConfig>())
+                                 .as_proto())>::value,
+                "Return type from as_proto() must be rvalue-reference");
 }
 
 TEST(AppProfileConfig, SetIgnoreWarnings) {

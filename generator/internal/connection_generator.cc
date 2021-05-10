@@ -292,7 +292,7 @@ Status ConnectionGenerator::GenerateCc() {
         "        "
         "backoff_policy_prototype_(options.get<$service_name$"
         "BackoffPolicyOption>()->clone()),\n"},
-       {generator_internal::HasLongrunningMethod,
+       {[this] { return HasLongrunningMethod(); },
         "        "
         "polling_policy_prototype_(options.get<$service_name$"
         "PollingPolicyOption>()->clone()),\n",
@@ -407,8 +407,8 @@ Status ConnectionGenerator::GenerateCc() {
     "\n"
     "    auto factory = [stub](\n"
     "        $request_type$ const& request) {\n"
-    "      auto context = absl::make_unique<grpc::ClientContext>();\n"
-    "      return stub->$method_name$(*context, request);\n"
+    "      return stub->$method_name$(absl::make_unique<grpc::ClientContext>(),\n"
+    "          request);\n"
     "    };\n"
     "\n"
     "    auto resumable =\n"
@@ -511,7 +511,7 @@ Status ConnectionGenerator::GenerateCc() {
    {"  std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;\n"
     "  std::unique_ptr<$retry_policy_name$ const> retry_policy_prototype_;\n"
     "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"},
-   {generator_internal::HasLongrunningMethod,
+   {[this]{return HasLongrunningMethod();},
     "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n", ""},
    {"  std::unique_ptr<$idempotency_class_name$> idempotency_policy_;\n"
     "};\n"}});

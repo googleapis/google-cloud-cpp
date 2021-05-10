@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: demo-opensuse-leap-ci
+substitutions:
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-opensuse-leap
+  _TRIGGER_TYPE: ci
+tags:
+- ci

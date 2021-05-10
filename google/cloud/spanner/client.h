@@ -487,12 +487,16 @@ class Client {
    *     are visible to statement i+1. Each statement must be a DML statement.
    *     Execution will stop at the first failed statement; the remaining
    *     statements will not run. Must not be empty.
+   * @param opts The options to use for this call.  Expected options are any
+   *     of the types in the following option lists.
+   *       - `google::cloud::RequestOptionList`
    *
    * @par Example
    * @snippet samples.cc execute-batch-dml
    */
-  StatusOr<BatchDmlResult> ExecuteBatchDml(
-      Transaction transaction, std::vector<SqlStatement> statements);
+  StatusOr<BatchDmlResult> ExecuteBatchDml(Transaction transaction,
+                                           std::vector<SqlStatement> statements,
+                                           Options opts = {});
 
   /**
    * Commits a read-write transaction.
@@ -616,6 +620,9 @@ class Client {
    * @param statement the SQL statement to execute. Please see the
    *     [spanner documentation][dml-partitioned] for the restrictions on the
    *     SQL statements supported by this function.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    *
    * @par Example
    * @snippet samples.cc execute-sql-partitioned
@@ -628,7 +635,8 @@ class Client {
    * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
    * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
    */
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+      SqlStatement statement, QueryOptions const& opts = {});
 
  private:
   QueryOptions OverlayQueryOptions(QueryOptions const&);

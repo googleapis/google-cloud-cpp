@@ -25,30 +25,44 @@ set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1")
 
 include(GoogleCloudCppCommon)
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(absl CONFIG REQUIRED)
-unset(FPHSA_NAME_MISMATCHED)
 
 add_library(
     google_cloud_cpp_iam # cmake-format: sort
-    iam_credentials_client.gcpcxx.pb.cc
-    iam_credentials_client.gcpcxx.pb.h
-    iam_credentials_connection.gcpcxx.pb.cc
-    iam_credentials_connection.gcpcxx.pb.h
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.cc
-    iam_credentials_connection_idempotency_policy.gcpcxx.pb.h
-    iam_credentials_options.gcpcxx.pb.h
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_logging_decorator.gcpcxx.pb.h
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.cc
-    internal/iam_credentials_metadata_decorator.gcpcxx.pb.h
-    internal/iam_credentials_option_defaults.gcpcxx.pb.cc
-    internal/iam_credentials_option_defaults.gcpcxx.pb.h
-    internal/iam_credentials_stub.gcpcxx.pb.cc
-    internal/iam_credentials_stub.gcpcxx.pb.h
-    internal/iam_credentials_stub_factory.gcpcxx.pb.cc
-    internal/iam_credentials_stub_factory.gcpcxx.pb.h
+    iam_client.cc
+    iam_client.h
+    iam_connection.cc
+    iam_connection.h
+    iam_connection_idempotency_policy.cc
+    iam_connection_idempotency_policy.h
+    iam_credentials_client.cc
+    iam_credentials_client.h
+    iam_credentials_connection.cc
+    iam_credentials_connection.h
+    iam_credentials_connection_idempotency_policy.cc
+    iam_credentials_connection_idempotency_policy.h
+    iam_credentials_options.h
+    iam_options.h
+    internal/iam_credentials_logging_decorator.cc
+    internal/iam_credentials_logging_decorator.h
+    internal/iam_credentials_metadata_decorator.cc
+    internal/iam_credentials_metadata_decorator.h
+    internal/iam_credentials_option_defaults.cc
+    internal/iam_credentials_option_defaults.h
+    internal/iam_credentials_stub.cc
+    internal/iam_credentials_stub.h
+    internal/iam_credentials_stub_factory.cc
+    internal/iam_credentials_stub_factory.h
+    internal/iam_logging_decorator.cc
+    internal/iam_logging_decorator.h
+    internal/iam_metadata_decorator.cc
+    internal/iam_metadata_decorator.h
+    internal/iam_option_defaults.cc
+    internal/iam_option_defaults.h
+    internal/iam_stub.cc
+    internal/iam_stub.h
+    internal/iam_stub_factory.cc
+    internal/iam_stub_factory.h
     retry_traits.h)
 target_include_directories(
     google_cloud_cpp_iam
@@ -83,8 +97,8 @@ add_library(google_cloud_cpp_iam_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_iam_mocks
     INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.gcpcxx.pb.h
-)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.h)
 target_link_libraries(
     google_cloud_cpp_iam_mocks
     INTERFACE google-cloud-cpp::experimental-iam_mocks
@@ -100,6 +114,9 @@ target_compile_options(google_cloud_cpp_iam_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(samples)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

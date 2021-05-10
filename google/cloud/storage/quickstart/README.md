@@ -71,7 +71,7 @@ https://cloud.google.com/docs/authentication/production
 3. Run the example, change the place holder to appropriate values:
 
    ```bash
-   bazel run :quickstart -- [GCP PROJECT] [BUCKET NAME]
+   bazel run :quickstart -- [BUCKET NAME]
    ```
 
    Please use the plain bucket name. Do **not** include any `gs://` prefix, and
@@ -112,7 +112,7 @@ https://cloud.google.com/docs/authentication/production
 4. Run the example, change the place holder to appropriate values:
 
    ```bash
-   .build/quickstart [GCP PROJECT] [BUCKET NAME]
+   .build/quickstart [BUCKET NAME]
    ```
 
    Please use the plain bucket name. Do **not** include any `gs://` prefix, and

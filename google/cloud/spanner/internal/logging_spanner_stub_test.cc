@@ -27,7 +27,6 @@ namespace spanner_internal {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -57,7 +56,7 @@ class LoggingSpannerStubTest : public ::testing::Test {
 TEST_F(LoggingSpannerStubTest, CreateSessionSuccess) {
   spanner_proto::Session session;
   session.set_name("test-session-name");
-  EXPECT_CALL(*mock_, CreateSession(_, _)).WillOnce(Return(session));
+  EXPECT_CALL(*mock_, CreateSession).WillOnce(Return(session));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -71,7 +70,7 @@ TEST_F(LoggingSpannerStubTest, CreateSessionSuccess) {
 }
 
 TEST_F(LoggingSpannerStubTest, CreateSession) {
-  EXPECT_CALL(*mock_, CreateSession(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, CreateSession).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -85,8 +84,7 @@ TEST_F(LoggingSpannerStubTest, CreateSession) {
 }
 
 TEST_F(LoggingSpannerStubTest, BatchCreateSessions) {
-  EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, BatchCreateSessions).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -100,7 +98,7 @@ TEST_F(LoggingSpannerStubTest, BatchCreateSessions) {
 }
 
 TEST_F(LoggingSpannerStubTest, GetSession) {
-  EXPECT_CALL(*mock_, GetSession(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, GetSession).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -113,7 +111,7 @@ TEST_F(LoggingSpannerStubTest, GetSession) {
 }
 
 TEST_F(LoggingSpannerStubTest, ListSessions) {
-  EXPECT_CALL(*mock_, ListSessions(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ListSessions).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -127,7 +125,7 @@ TEST_F(LoggingSpannerStubTest, ListSessions) {
 }
 
 TEST_F(LoggingSpannerStubTest, DeleteSession) {
-  EXPECT_CALL(*mock_, DeleteSession(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, DeleteSession).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -140,7 +138,7 @@ TEST_F(LoggingSpannerStubTest, DeleteSession) {
 }
 
 TEST_F(LoggingSpannerStubTest, ExecuteSql) {
-  EXPECT_CALL(*mock_, ExecuteSql(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ExecuteSql).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -152,7 +150,7 @@ TEST_F(LoggingSpannerStubTest, ExecuteSql) {
 }
 
 TEST_F(LoggingSpannerStubTest, ExecuteStreamingSql) {
-  EXPECT_CALL(*mock_, ExecuteStreamingSql(_, _))
+  EXPECT_CALL(*mock_, ExecuteStreamingSql)
       .WillOnce(
           [](grpc::ClientContext&, spanner_proto::ExecuteSqlRequest const&) {
             return std::unique_ptr<
@@ -169,7 +167,7 @@ TEST_F(LoggingSpannerStubTest, ExecuteStreamingSql) {
 }
 
 TEST_F(LoggingSpannerStubTest, ExecuteBatchDml) {
-  EXPECT_CALL(*mock_, ExecuteBatchDml(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, ExecuteBatchDml).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -182,7 +180,7 @@ TEST_F(LoggingSpannerStubTest, ExecuteBatchDml) {
 }
 
 TEST_F(LoggingSpannerStubTest, StreamingRead) {
-  EXPECT_CALL(*mock_, StreamingRead(_, _))
+  EXPECT_CALL(*mock_, StreamingRead)
       .WillOnce([](grpc::ClientContext&, spanner_proto::ReadRequest const&) {
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
@@ -197,8 +195,7 @@ TEST_F(LoggingSpannerStubTest, StreamingRead) {
 }
 
 TEST_F(LoggingSpannerStubTest, BeginTransaction) {
-  EXPECT_CALL(*mock_, BeginTransaction(_, _))
-      .WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, BeginTransaction).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -211,7 +208,7 @@ TEST_F(LoggingSpannerStubTest, BeginTransaction) {
 }
 
 TEST_F(LoggingSpannerStubTest, Commit) {
-  EXPECT_CALL(*mock_, Commit(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, Commit).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -223,7 +220,7 @@ TEST_F(LoggingSpannerStubTest, Commit) {
 }
 
 TEST_F(LoggingSpannerStubTest, Rollback) {
-  EXPECT_CALL(*mock_, Rollback(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, Rollback).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -235,7 +232,7 @@ TEST_F(LoggingSpannerStubTest, Rollback) {
 }
 
 TEST_F(LoggingSpannerStubTest, PartitionQuery) {
-  EXPECT_CALL(*mock_, PartitionQuery(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, PartitionQuery).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;
@@ -248,7 +245,7 @@ TEST_F(LoggingSpannerStubTest, PartitionQuery) {
 }
 
 TEST_F(LoggingSpannerStubTest, PartitionRead) {
-  EXPECT_CALL(*mock_, PartitionRead(_, _)).WillOnce(Return(TransientError()));
+  EXPECT_CALL(*mock_, PartitionRead).WillOnce(Return(TransientError()));
 
   LoggingSpannerStub stub(mock_, TracingOptions{});
   grpc::ClientContext context;

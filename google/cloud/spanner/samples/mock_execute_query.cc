@@ -24,7 +24,6 @@
 namespace {
 
 //! [helper-aliases]
-using ::testing::_;
 using ::testing::Return;
 namespace spanner = ::google::cloud::spanner;
 //! [helper-aliases]
@@ -76,7 +75,7 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 
   // Setup the connection mock to return the results previously setup:
   //! [mock-execute-query]
-  EXPECT_CALL(*conn, ExecuteQuery(_))
+  EXPECT_CALL(*conn, ExecuteQuery)
       .WillOnce([&source](spanner::Connection::SqlParams const&)
                     -> spanner::RowStream {
         return spanner::RowStream(std::move(source));

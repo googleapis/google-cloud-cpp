@@ -26,8 +26,7 @@ namespace {
 TEST(CurlWrappers, LockingEnabledTest) {
   // The test cannot execute in this case.
   if (!SslLibraryNeedsLocking(CurlSslLibraryId())) GTEST_SKIP();
-  CurlInitializeOnce(ClientOptions(oauth2::CreateAnonymousCredentials())
-                         .set_enable_ssl_locking_callbacks(true));
+  CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(true));
   EXPECT_TRUE(SslLockingCallbacksInstalled());
 }
 }  // namespace

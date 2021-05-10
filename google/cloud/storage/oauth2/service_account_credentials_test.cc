@@ -46,7 +46,6 @@ using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
 using ::testing::Not;
@@ -117,7 +116,7 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
       "access_token": "access-token-value",
       "expires_in": 1234
   })""";
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce([response, assertion](std::string const& payload) {
         EXPECT_THAT(payload, HasSubstr(assertion));
         // Hard-coded in this order in ServiceAccountCredentials class.
@@ -190,7 +189,7 @@ TEST_F(ServiceAccountCredentialsTest,
     "expires_in": 1000
 })""";
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce(Return(HttpResponse{200, r1, {}}))
       .WillOnce(Return(HttpResponse{200, r2, {}}));
 
@@ -408,7 +407,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   auto mock_request = std::make_shared<MockHttpRequest::Impl>();
   auto const clock_value_1 = 10000;
   auto const clock_value_2 = 20000;
-  EXPECT_CALL(*mock_request, MakeRequest(_))
+  EXPECT_CALL(*mock_request, MakeRequest)
       .WillOnce(make_request_assertion(clock_value_1))
       .WillOnce(make_request_assertion(clock_value_2));
 

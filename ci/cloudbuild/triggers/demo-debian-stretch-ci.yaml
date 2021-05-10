@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: demo-debian-stretch-ci
+substitutions:
+  _BUILD_NAME: demo-install
+  _DISTRO: demo-debian-stretch
+  _TRIGGER_TYPE: ci
+tags:
+- ci

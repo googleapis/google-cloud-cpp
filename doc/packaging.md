@@ -237,10 +237,9 @@ export PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -259,10 +258,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -283,10 +281,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -298,13 +295,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -320,9 +318,9 @@ workstation or build server.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y automake ccache cmake gcc gcc-c++ git \
-        gzip libcurl-devel libopenssl-devel libtool make re2-devel tar wget \
-        which zlib zlib-devel-static
+sudo zypper install --allow-downgrade -y automake ccache cmake curl \
+        gcc gcc-c++ git gzip libcurl-devel libopenssl-devel \
+        libtool make re2-devel tar wget which zlib zlib-devel-static
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -341,10 +339,9 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -363,15 +360,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -383,10 +379,9 @@ Recent versions of gRPC require c-ares >= 1.11, while openSUSE/Leap
 distributes c-ares-1.9. Manually install a newer version:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -398,10 +393,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We manually install it using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -424,10 +418,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -448,10 +441,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -463,13 +455,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -484,9 +477,9 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev libssl-dev m4 \
-        make pkg-config tar wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        libssl-dev m4 make pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -494,10 +487,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -516,15 +508,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -536,10 +527,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We install it using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -562,10 +552,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -586,10 +575,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -601,13 +589,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -621,9 +610,9 @@ Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -631,10 +620,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -653,15 +641,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -672,10 +659,9 @@ sudo ldconfig
 We need a newer version of RE2 than the system package provides.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
-    tar -xf 2020-11-01.tar.gz && \
-    cd re2-2020-11-01 && \
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
@@ -691,10 +677,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We install it using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -717,10 +702,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -741,10 +725,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -756,13 +739,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -776,8 +760,8 @@ Install the minimal development tools, OpenSSL and libcurl:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libcurl4-openssl-dev libssl-dev libtool m4 make \
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 ```
 
@@ -786,10 +770,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -808,15 +791,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -828,10 +810,9 @@ Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
 distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -842,10 +823,9 @@ sudo ldconfig
 We need a newer version of RE2 than the system package provides.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
-    tar -xf 2020-11-01.tar.gz && \
-    cd re2-2020-11-01 && \
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
@@ -861,10 +841,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We can install gRPC from source using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -887,10 +866,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -911,10 +889,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
         -e '/^target_compile_features/d' \
@@ -930,13 +907,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -950,9 +928,9 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates ccache cmake git gcc g++ \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
-        pkg-config tar wget zlib1g-dev
+        automake build-essential ca-certificates ccache cmake curl git \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 \
+        make pkg-config tar wget zlib1g-dev
 ```
 
 Debian 10 includes versions of gRPC and Protobuf that support the
@@ -969,10 +947,9 @@ sudo apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev \
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -991,10 +968,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1015,10 +991,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1030,13 +1005,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_GENERATOR=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1057,9 +1033,9 @@ prevent you from compiling against openssl-1.1.0.
 ```bash
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ccache cmake ca-certificates git gcc g++ \
-        libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config tar wget \
-        zlib1g-dev
+        automake build-essential ccache cmake ca-certificates curl git \
+        gcc g++ libcurl4-openssl-dev libssl1.0-dev libtool make m4 pkg-config \
+        tar wget zlib1g-dev
 ```
 
 #### Abseil
@@ -1067,10 +1043,9 @@ sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1089,15 +1064,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1109,10 +1083,9 @@ Recent versions of gRPC require c-ares >= 1.13, while Debian Stretch
 distributes c-ares-1.12. Manually install a newer version:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -1123,10 +1096,9 @@ sudo ldconfig
 We need a newer version of RE2 than the system package provides.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/re2/archive/2020-11-01.tar.gz && \
-    tar -xf 2020-11-01.tar.gz && \
-    cd re2-2020-11-01 && \
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DRE2_BUILD_TESTING=OFF \
@@ -1142,10 +1114,9 @@ To install gRPC we first need to configure pkg-config to find the version of
 Protobuf we just installed in `/usr/local`:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -1168,10 +1139,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1192,10 +1162,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i \
         -e '1s/VERSION 3.8/VERSION 3.5/' \
         -e '/^target_compile_features/d' \
@@ -1211,13 +1180,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1254,10 +1224,9 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1276,15 +1245,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1296,10 +1264,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We manually install it using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -1322,10 +1289,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1346,10 +1312,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1361,13 +1326,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>
@@ -1416,10 +1382,9 @@ export PATH=/usr/local/bin:${PATH}
 We need a recent version of Abseil.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz && \
-    tar -xf 20200923.3.tar.gz && \
-    cd abseil-cpp-20200923.3 && \
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -sSL https://github.com/abseil/abseil-cpp/archive/20200923.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
@@ -1438,15 +1403,14 @@ We need to install a version of Protobuf that is recent enough to support the
 Google Cloud Platform proto files:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.14.0.tar.gz && \
-    tar -xf v3.14.0.tar.gz && \
-    cd protobuf-3.14.0/cmake && \
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -sSL https://github.com/google/protobuf/archive/v3.16.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out && \
+        -Hcmake -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1458,10 +1422,9 @@ Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
 distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -sSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     ./buildconf && ./configure && make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -1473,10 +1436,9 @@ We also need a version of gRPC that is recent enough to support the Google
 Cloud Platform proto files. We manually install it using:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.35.0.tar.gz && \
-    tar -xf v1.35.0.tar.gz && \
-    cd grpc-1.35.0 && \
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -sSL https://github.com/grpc/grpc/archive/v1.37.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DgRPC_INSTALL=ON \
@@ -1499,10 +1461,9 @@ The project depends on the Crc32c library, we need to compile this from
 source:
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1.0.tar.gz && \
-    cd crc32c-1.1.0 && \
+mkdir -p $HOME/Downloads/crc32c && cd $HOME/Downloads/crc32c
+curl -sSL https://github.com/google/crc32c/archive/1.1.0.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -1523,10 +1484,9 @@ Note that this is a header-only library, and often installed manually.
 This leaves your environment without support for CMake pkg-config.
 
 ```bash
-cd $HOME/Downloads
-wget -q https://github.com/nlohmann/json/archive/v3.9.0.tar.gz && \
-    tar -xzf v3.9.0.tar.gz && \
-    cd json-3.9.0 && \
+mkdir -p $HOME/Downloads/json && cd $HOME/Downloads/json
+curl -sSL https://github.com/nlohmann/json/archive/v3.9.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
@@ -1538,13 +1498,14 @@ sudo ldconfig
 
 #### Compile and install the main project
 
-We can now compile, test, and install `google-cloud-cpp`.
+We can now compile and install `google-cloud-cpp`
 
 ```bash
-cd $HOME/google-cloud-cpp
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
-cmake --build cmake-out -- -j "${NCPU:-4}"
-sudo cmake --build cmake-out --target install
+# Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
+PREFIX="${HOME}/google-cloud-cpp-installed"
+cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake --build cmake-out -- -j "$(nproc)"
+cmake --build cmake-out --target install
 ```
 
 </details>

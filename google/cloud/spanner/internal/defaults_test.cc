@@ -43,6 +43,8 @@ auto gcloud_user_agent_matcher = [] {
 };
 
 TEST(Options, Defaults) {
+  testing_util::ScopedEnvironment env(
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
@@ -68,6 +70,8 @@ TEST(Options, Defaults) {
 }
 
 TEST(Options, AdminDefaults) {
+  testing_util::ScopedEnvironment env(
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
   auto opts = spanner_internal::DefaultAdminOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want

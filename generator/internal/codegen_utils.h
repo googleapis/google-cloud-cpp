@@ -26,11 +26,6 @@ namespace cloud {
 namespace generator_internal {
 
 /**
- * Suffix for generated files to indicate what plugin generated them.
- */
-std::string GeneratedFileSuffix();
-
-/**
  * Wraps header include in "" and returns complete include line.
  */
 std::string LocalInclude(absl::string_view header);

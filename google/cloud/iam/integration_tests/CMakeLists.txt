@@ -21,8 +21,9 @@ function (google_cloud_cpp_iam_define_integration_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    set(iam_client_integration_tests # cmake-format: sort
-                                     iam_credentials_integration_test.cc)
+    set(iam_client_integration_tests
+        # cmake-format: sort
+        iam_credentials_integration_test.cc iam_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

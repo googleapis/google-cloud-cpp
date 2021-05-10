@@ -45,6 +45,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Configuring CMake wi
 cmake $cmake_flags
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "cmake config failed with exit code $LastExitCode"
+    Get-Content -Path "${binary_dir}/vcpkg-manifest-install.log"
     Exit ${LastExitCode}
 }
 

@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include <google/protobuf/util/message_differencer.h>
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -25,6 +25,7 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
@@ -391,14 +392,11 @@ TEST(FiltersTest, MoveProto) {
   ASSERT_FALSE(filter.as_proto().has_chain());
 
   // Verify that as_proto() for rvalue-references returns the right type.
-  static_assert(std::is_rvalue_reference<decltype(
-                    std::move(std::declval<F>()).as_proto())>::value,
+  static_assert(std::is_rvalue_reference<
+                    decltype(std::move(std::declval<F>()).as_proto())>::value,
                 "Return type from as_proto() must be rvalue-reference");
 
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(proto_copy, proto_move)) << delta;
+  EXPECT_THAT(proto_copy, IsProtoEqual(proto_move));
 }
 
 /// @test Verify that the ctor receiving a v2 RowFilter works as expected.
@@ -408,10 +406,7 @@ TEST(FiltersTest, RowFilterCtor) {
   btproto::RowFilter row_filter;
   row_filter.set_row_key_regex_filter("[A-Za-z][A-Za-z0-9_]*");
   auto filter = F(row_filter);
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(row_filter, filter.as_proto())) << delta;
+  EXPECT_THAT(row_filter, IsProtoEqual(filter.as_proto()));
 }
 
 }  // namespace

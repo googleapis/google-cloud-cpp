@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
@@ -310,9 +311,8 @@ CreateServiceAccountCredentialsFromJsonContents(
   auto components = AssertionComponentsFromInfo(*info, now);
   auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
-  if (!jwt_assertion) {
-    return std::move(jwt_assertion).status();
-  }
+  if (!jwt_assertion) return std::move(jwt_assertion).status();
+
   // These are supplied as extra parameters to this method, not in the JSON
   // file.
   info->subject = std::move(subject);

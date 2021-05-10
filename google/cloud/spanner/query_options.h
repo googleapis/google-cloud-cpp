@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
 
+#include "google/cloud/spanner/request_priority.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include "absl/types/optional.h"
@@ -45,7 +46,7 @@ class QueryOptions {
   }
 
   /**
-   * Sets the optimizerion version to the specified integer string. Setting to
+   * Sets the optimizer version to the specified integer string. Setting to
    * the empty string will use the database default. Use the string "latest" to
    * use the latest available optimizer version.
    */
@@ -54,8 +55,20 @@ class QueryOptions {
     return *this;
   }
 
+  /// Returns the request priority.
+  absl::optional<RequestPriority> const& request_priority() const {
+    return request_priority_;
+  }
+
+  /// Sets the request priority.
+  QueryOptions& set_request_priority(absl::optional<RequestPriority> priority) {
+    request_priority_ = std::move(priority);
+    return *this;
+  }
+
   friend bool operator==(QueryOptions const& a, QueryOptions const& b) {
-    return a.optimizer_version_ == b.optimizer_version_;
+    return a.request_priority_ == b.request_priority_ &&
+           a.optimizer_version_ == b.optimizer_version_;
   }
 
   friend bool operator!=(QueryOptions const& a, QueryOptions const& b) {
@@ -64,6 +77,7 @@ class QueryOptions {
 
  private:
   absl::optional<std::string> optimizer_version_;
+  absl::optional<RequestPriority> request_priority_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

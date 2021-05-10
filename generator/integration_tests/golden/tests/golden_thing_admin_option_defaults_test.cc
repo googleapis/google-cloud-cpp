@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/setenv.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.gcpcxx.pb.h"
 #include <gtest/gtest.h>
 #include <memory>
 
@@ -32,7 +32,7 @@ TEST(GoldenThingAdminDefaultOptions, DefaultEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
                    "foo.googleapis.com");
   Options options;
   auto updated_options = GoldenThingAdminDefaultOptions(options);
@@ -40,7 +40,7 @@ TEST(GoldenThingAdminDefaultOptions, EnvVarEndpoint) {
 }
 
 TEST(GoldenThingAdminDefaultOptions, OptionEndpoint) {
-  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_KITCHEN_SINK_ENDPOINT",
+  internal::SetEnv("GOOGLE_CLOUD_CPP_GOLDEN_THING_ADMIN_ENDPOINT",
                    "foo.googleapis.com");
   Options options;
   options.set<EndpointOption>("bar.googleapis.com");

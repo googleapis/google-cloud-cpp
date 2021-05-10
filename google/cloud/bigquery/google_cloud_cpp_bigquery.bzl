@@ -17,26 +17,26 @@
 """Automatically generated source lists for google_cloud_cpp_bigquery - DO NOT EDIT."""
 
 google_cloud_cpp_bigquery_hdrs = [
-    "big_query_read_client.gcpcxx.pb.h",
-    "big_query_read_connection.gcpcxx.pb.h",
-    "big_query_read_connection_idempotency_policy.gcpcxx.pb.h",
-    "big_query_read_options.gcpcxx.pb.h",
-    "internal/big_query_read_logging_decorator.gcpcxx.pb.h",
-    "internal/big_query_read_metadata_decorator.gcpcxx.pb.h",
-    "internal/big_query_read_option_defaults.gcpcxx.pb.h",
-    "internal/big_query_read_stub.gcpcxx.pb.h",
-    "internal/big_query_read_stub_factory.gcpcxx.pb.h",
+    "bigquery_read_client.h",
+    "bigquery_read_connection.h",
+    "bigquery_read_connection_idempotency_policy.h",
+    "bigquery_read_options.h",
+    "internal/bigquery_read_logging_decorator.h",
+    "internal/bigquery_read_metadata_decorator.h",
+    "internal/bigquery_read_option_defaults.h",
+    "internal/bigquery_read_stub.h",
+    "internal/bigquery_read_stub_factory.h",
     "retry_traits.h",
 ]
 
 google_cloud_cpp_bigquery_srcs = [
-    "big_query_read_client.gcpcxx.pb.cc",
-    "big_query_read_connection.gcpcxx.pb.cc",
-    "big_query_read_connection_idempotency_policy.gcpcxx.pb.cc",
-    "internal/big_query_read_logging_decorator.gcpcxx.pb.cc",
-    "internal/big_query_read_metadata_decorator.gcpcxx.pb.cc",
-    "internal/big_query_read_option_defaults.gcpcxx.pb.cc",
-    "internal/big_query_read_stub.gcpcxx.pb.cc",
-    "internal/big_query_read_stub_factory.gcpcxx.pb.cc",
+    "bigquery_read_client.cc",
+    "bigquery_read_connection.cc",
+    "bigquery_read_connection_idempotency_policy.cc",
+    "internal/bigquery_read_logging_decorator.cc",
+    "internal/bigquery_read_metadata_decorator.cc",
+    "internal/bigquery_read_option_defaults.cc",
+    "internal/bigquery_read_stub.cc",
+    "internal/bigquery_read_stub_factory.cc",
     "streaming.cc",
 ]

@@ -19,9 +19,12 @@ import http
 import os
 import unittest
 import urllib
-
+import gzip
 import utils
+from werkzeug.test import create_environ
 
+from werkzeug.test import create_environ
+from werkzeug.wrappers import Request
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 from google.cloud.storage_v1.proto.storage_resources_pb2 import CommonEnums
 
@@ -290,7 +293,7 @@ class TestCommonUtils(unittest.TestCase):
     def test_parse_multipart(self):
         request = utils.common.FakeRequest(
             headers={"content-type": "multipart/related; boundary=foo_bar_baz"},
-            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n{"name": "myObject", "metadata": {"test": "test"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n123456789\r\n--foo_bar_baz--\r\n',
+            data=b'--foo_bar_baz\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{"name": "myObject", "metadata": {"test": "test"}}\r\n--foo_bar_baz\r\nContent-Type: image/jpeg\r\n\r\n123456789\r\n--foo_bar_baz--\r\n',
             environ={},
         )
         metadata, media_header, media = utils.common.parse_multipart(request)
@@ -328,14 +331,37 @@ class TestCommonUtils(unittest.TestCase):
             b"\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0",
         )
 
-        # Test incorrect ending
+        # Test incorrect multipart body
         request = utils.common.FakeRequest(
             headers={"content-type": "multipart/related; boundary=1VvZTD07ltUtqMHg"},
-            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n',
+            data=b'--1VvZTD07ltUtqMHg\r\ncontent-type: application/json; charset=UTF-8\r\n{"crc32c":"4GEvYA=="}\r\n--1VvZTD07ltUtqMHg\r\ncontent-type: application/octet-stream\r\n\xa7#\x95\xec\xd5c\xe9\x90\xa8\xe2\xa89\xadF\xcc\x97\x12\xad\xf6\x9e\r\n\xf1Mhj\xf4W\x9f\x92T\xe3,\tm.\x1e\x04\xd0\r\n',
             environ={},
         )
         with self.assertRaises(utils.error.RestException):
             utils.common.parse_multipart(request)
+
+    def test_enforce_patch_override_failure(self):
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=0,
+            data="",
+            content_type="application/octet-stream",
+            method="POST",
+            headers={"X-Http-Method-Override": "other"},
+        )
+        with self.assertRaises(utils.error.RestException):
+            utils.common.enforce_patch_override(Request(environ))
+
+    def test_enforce_patch_override_success(self):
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=0,
+            data="",
+            content_type="application/octet-stream",
+            method="POST",
+            headers={"X-Http-Method-Override": "PATCH"},
+        )
+        utils.common.enforce_patch_override(Request(environ))
 
 
 class TestGeneration(unittest.TestCase):
@@ -431,7 +457,7 @@ class TestError(unittest.TestCase):
     def test_error_propagation(self):
         emulator = os.getenv("CLOUD_STORAGE_EMULATOR_ENDPOINT")
         if emulator is None:
-            self.skipTest()
+            self.skipTest("CLOUD_STORAGE_EMULATOR_ENDPOINT is not set")
         conn = http.client.HTTPConnection(emulator[len("http://") :], timeout=10)
 
         conn.request("GET", "/raise_error")
@@ -447,6 +473,27 @@ class TestError(unittest.TestCase):
         self.assertIn("Traceback (most recent call last):", body)
         self.assertIn("TypeError", body)
         self.assertIn("custom message", body)
+
+
+class TestHandleGzip(unittest.TestCase):
+    def test_handle_decompressing(self):
+        plain_text = b"hello world"
+        compressed_text = gzip.compress(plain_text)
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            content_length=len(compressed_text),
+            data=compressed_text,
+            content_type="application/octet-stream",
+            method="GET",
+            headers={"Content-Encoding": "gzip"},
+        )
+
+        def passthrough_fn(environ, _):
+            return environ
+
+        middleware = utils.handle_gzip.HandleGzipMiddleware(passthrough_fn)
+        decompressed_environ = middleware(environ, None)
+        self.assertEqual(decompressed_environ["werkzeug.request"].data, plain_text)
 
 
 if __name__ == "__main__":

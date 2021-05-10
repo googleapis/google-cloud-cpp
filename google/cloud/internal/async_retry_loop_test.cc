@@ -243,7 +243,7 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(10)).clone(),
+          LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(100)).clone(),
           ExponentialBackoffPolicy(ms(20), ms(20), 2.0).clone(),
           Idempotency::kIdempotent, background.cq(),
           [](google::cloud::CompletionQueue&,

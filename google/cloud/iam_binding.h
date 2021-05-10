@@ -23,16 +23,22 @@ namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
- * Represents a Binding which associates a `member` with a particular `role`
- * which can be used for Identity and Access management for Cloud Platform
- * Resources.
+ * Simplified view of roles and members for IAM.
  *
- * For more information about a Binding please refer to:
- * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding
+ * @deprecated this class is deprecated. Any functions that use it have also
+ *     been deprecated. The class was defined before IAM conditional bindings,
+ *     and does not support them. Nor will it be able to support future IAM
+ *     features. Please use the alternative functions.
+ *
+ * @see [Identity and Access Management](https://cloud.google.com/iam)
+ * @see [Overview of IAM Conditions][iam-conditions]
+ *
+ * [iam-conditions]: https://cloud.google.com/iam/docs/conditions-overview
  */
 class IamBinding {
  public:
-  IamBinding(std::string role, std::set<std::string> members)
+  GOOGLE_CLOUD_CPP_IAM_DEPRECATED IamBinding(std::string role,
+                                             std::set<std::string> members)
       : role_(std::move(role)), members_(std::move(members)) {}
 
   std::string const& role() const { return role_; };

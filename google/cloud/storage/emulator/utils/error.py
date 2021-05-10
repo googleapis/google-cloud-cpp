@@ -99,3 +99,8 @@ def missing(name, context, rest_code=400, grpc_code=grpc.StatusCode.INVALID_ARGU
 def notfound(name, context, rest_code=404, grpc_code=grpc.StatusCode.NOT_FOUND):
     msg = "%s does not exist." % name
     generic(msg, rest_code, grpc_code, context)
+
+
+def notallowed(context=None, rest_code=405, grpc_code=None):
+    msg = "method is not allowed"
+    generic(msg, rest_code, grpc_code, context)

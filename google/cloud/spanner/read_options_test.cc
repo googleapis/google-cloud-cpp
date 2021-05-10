@@ -25,16 +25,24 @@ TEST(ReadOptionsTest, Equality) {
   ReadOptions test_options_0{};
   ReadOptions test_options_1{};
   EXPECT_EQ(test_options_0, test_options_1);
+
   test_options_0.index_name = "secondary";
   EXPECT_NE(test_options_0, test_options_1);
   test_options_1.index_name = "secondary";
   EXPECT_EQ(test_options_0, test_options_1);
+
   test_options_0.limit = 42;
   EXPECT_NE(test_options_0, test_options_1);
   test_options_1.limit = 42;
   EXPECT_EQ(test_options_0, test_options_1);
-  test_options_1 = test_options_0;
+
+  test_options_0.request_priority = RequestPriority::kLow;
+  EXPECT_NE(test_options_0, test_options_1);
+  test_options_1.request_priority = RequestPriority::kLow;
   EXPECT_EQ(test_options_0, test_options_1);
+
+  ReadOptions test_options_2 = test_options_0;
+  EXPECT_EQ(test_options_0, test_options_2);
 }
 
 }  // namespace

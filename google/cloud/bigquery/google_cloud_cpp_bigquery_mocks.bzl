@@ -17,7 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_bigquery_mocks - DO NOT EDIT."""
 
 google_cloud_cpp_bigquery_mocks_hdrs = [
-    "mocks/mock_big_query_read_connection.gcpcxx.pb.h",
+    "mocks/mock_bigquery_read_connection.h",
 ]
 
 google_cloud_cpp_bigquery_mocks_srcs = [

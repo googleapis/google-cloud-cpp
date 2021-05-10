@@ -19,9 +19,9 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,10 +35,10 @@ namespace bt = ::google::cloud::bigtable;
 
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::_;
 using ::testing::Not;
 using ::testing::WithParamInterface;
 
@@ -150,23 +150,23 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       // returning it as a unique_ptr.
       auto* reader =
           new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
-      EXPECT_CALL(*reader, Read(_, _))
+      EXPECT_CALL(*reader, Read)
           .WillOnce([](btproto::MutateRowsResponse*, void*) {});
       // Just like in the outer loop, we need to reverse the order to counter
       // gMock's expectation matching order (from latest added to first).
       for (auto result_piece_it = exchange.res.rbegin();
            result_piece_it != exchange.res.rend(); ++result_piece_it) {
-        EXPECT_CALL(*reader, Read(_, _))
+        EXPECT_CALL(*reader, Read)
             .WillOnce(generate_response_generator(*result_piece_it))
             .RetiresOnSaturation();
       }
 
-      EXPECT_CALL(*reader, Finish(_, _))
-          .WillOnce(
-              [](grpc::Status* status, void*) { *status = grpc::Status::OK; });
-      EXPECT_CALL(*reader, StartCall(_)).Times(1);
+      EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+        *status = grpc::Status::OK;
+      });
+      EXPECT_CALL(*reader, StartCall).Times(1);
 
-      EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
+      EXPECT_CALL(*client_, PrepareAsyncMutateRows)
           .WillOnce([reader, exchange](grpc::ClientContext* context,
                                        btproto::MutateRowsRequest const& r,
                                        grpc::CompletionQueue*) {
@@ -179,12 +179,8 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
               SingleRowMutation tmp(exchange.req[i]);
               tmp.MoveTo(&expected);
 
-              std::string delta;
-              google::protobuf::util::MessageDifferencer differencer;
-              differencer.ReportDifferencesToString(&delta);
-              EXPECT_TRUE(
-                  differencer.Compare(expected, r.entries(static_cast<int>(i))))
-                  << delta;
+              EXPECT_THAT(expected,
+                          IsProtoEqual(r.entries(static_cast<int>(i))));
             }
             return std::unique_ptr<
                 MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
@@ -698,17 +694,17 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
 
   auto* reader =
       new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
-  EXPECT_CALL(*reader, Read(_, _))
+  EXPECT_CALL(*reader, Read)
       .WillOnce([](btproto::MutateRowsResponse* r, void*) {
         auto& e = *r->add_entries();
         e.set_index(0);
         e.mutable_status()->set_code(grpc::StatusCode::OK);
       })
       .WillOnce([](btproto::MutateRowsResponse*, void*) {});
-  EXPECT_CALL(*reader, Finish(_, _)).WillOnce([](grpc::Status* status, void*) {
+  EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
     *status = grpc::Status::OK;
   });
-  EXPECT_CALL(*reader, StartCall(_)).Times(1);
+  EXPECT_CALL(*reader, StartCall).Times(1);
   batcher_raw_ptr->SetOnBulkApply([this] {
     // Simulate completion queue finishing this stream before contol is
     // returned from AsyncBulkApplyImpl
@@ -723,7 +719,7 @@ TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
     }).get();
   });
 
-  EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
       .WillOnce([reader](grpc::ClientContext*,
                          btproto::MutateRowsRequest const&,
                          grpc::CompletionQueue*) {

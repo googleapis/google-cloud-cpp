@@ -23,8 +23,6 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-using ::testing::_;
-
 // Tests {copy,move}x{constructor,assignment} + equality.
 TEST(PublisherTest, ValueSemantics) {
   auto mock1 = std::make_shared<pubsub_mocks::MockPublisherConnection>();
@@ -49,12 +47,12 @@ TEST(PublisherTest, ValueSemantics) {
 
 TEST(PublisherTest, PublishSimple) {
   auto mock = std::make_shared<pubsub_mocks::MockPublisherConnection>();
-  EXPECT_CALL(*mock, Publish(_))
+  EXPECT_CALL(*mock, Publish)
       .WillOnce([&](PublisherConnection::PublishParams const& p) {
         EXPECT_EQ("test-data-0", p.message.data());
         return make_ready_future(StatusOr<std::string>("test-id-0"));
       });
-  EXPECT_CALL(*mock, Flush(_)).Times(1);
+  EXPECT_CALL(*mock, Flush).Times(1);
 
   Publisher publisher(mock);
   publisher.Flush();

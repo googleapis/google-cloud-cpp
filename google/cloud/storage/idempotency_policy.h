@@ -15,8 +15,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/internal/bucket_acl_requests.h"
+#include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/internal/default_object_acl_requests.h"
+#include "google/cloud/storage/internal/hmac_key_requests.h"
+#include "google/cloud/storage/internal/notification_requests.h"
+#include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/service_account_requests.h"
+#include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

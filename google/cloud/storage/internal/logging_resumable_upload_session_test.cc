@@ -30,7 +30,6 @@ namespace {
 
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::ReturnRef;
@@ -44,12 +43,11 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce([&](ConstBufferSequence const& p) {
-        EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
-        return StatusOr<ResumableUploadResponse>(
-            AsStatus(HttpResponse{503, "uh oh", {}}));
-      });
+  EXPECT_CALL(*mock, UploadChunk).WillOnce([&](ConstBufferSequence const& p) {
+    EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
+    return StatusOr<ResumableUploadResponse>(
+        AsStatus(HttpResponse{503, "uh oh", {}}));
+  });
 
   LoggingResumableUploadSession session(std::move(mock));
 
@@ -64,7 +62,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   auto mock = absl::make_unique<testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
-  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+  EXPECT_CALL(*mock, UploadFinalChunk)
       .WillOnce([&](ConstBufferSequence const& p, std::uint64_t s) {
         EXPECT_THAT(p, ElementsAre(ConstBuffer{payload}));
         EXPECT_EQ(513 * 1024, s);

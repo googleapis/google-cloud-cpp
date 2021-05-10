@@ -20,8 +20,9 @@
 CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
+BIN=.
 
-all: quickstart
+all: $(BIN)/quickstart
 
 # Configuration variables to compile and link against the Cloud Spanner C++
 # client library.
@@ -31,5 +32,5 @@ SPANNER_CXXLDFLAGS := $(shell pkg-config $(SPANNER_DEPS) --libs-only-L)
 SPANNER_LIBS       := $(shell pkg-config $(SPANNER_DEPS) --libs-only-l)
 
 # A target using the Cloud Spanner C++ client library.
-quickstart: quickstart.cc
+$(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(SPANNER_CXXFLAGS) $(SPANNER_CXXLDFLAGS) -o $@ $^ $(SPANNER_LIBS)

@@ -38,11 +38,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-namespace internal {
-StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
-                                              std::string const& payload,
-                                              std::string const& pem_contents);
-}  // namespace internal
 
 namespace oauth2 {
 /// Object to hold information used to instantiate an ServiceAccountCredentials.
@@ -148,8 +143,9 @@ class ServiceAccountCredentials : public Credentials {
                             ChannelOptions const& options)
       : info_(std::move(info)), clock_() {
     HttpRequestBuilderType request_builder(
-        info_.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(options));
+        info_.token_uri, storage::internal::GetDefaultCurlHandleFactory(
+                             Options{}.set<internal::SslRootPathOption>(
+                                 options.ssl_root_path())));
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account

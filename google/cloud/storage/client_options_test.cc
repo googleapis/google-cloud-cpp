@@ -28,6 +28,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 
 using ::google::cloud::testing_util::IsOk;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 namespace {
@@ -134,12 +135,13 @@ TEST_F(ClientOptionsTest, EndpointsDefault) {
                                            {});
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
+  auto o = internal::MakeOptions(std::move(options));
   EXPECT_EQ("https://storage.googleapis.com/storage/v1",
-            internal::JsonEndpoint(options));
+            internal::JsonEndpoint(o));
   EXPECT_EQ("https://storage.googleapis.com/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
+            internal::JsonUploadEndpoint(o));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
-            internal::IamEndpoint(options));
+            internal::IamEndpoint(o));
 }
 
 TEST_F(ClientOptionsTest, EndpointsOverride) {
@@ -148,13 +150,14 @@ TEST_F(ClientOptionsTest, EndpointsOverride) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_endpoint("http://127.0.0.1.nip.io:1234");
   EXPECT_EQ("http://127.0.0.1.nip.io:1234", options.endpoint());
+  auto o = internal::MakeOptions(std::move(options));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234/storage/v1",
-            internal::JsonEndpoint(options));
+            internal::JsonEndpoint(o));
   EXPECT_EQ("http://127.0.0.1.nip.io:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://127.0.0.1.nip.io:1234", internal::XmlEndpoint(options));
+            internal::JsonUploadEndpoint(o));
+  EXPECT_EQ("http://127.0.0.1.nip.io:1234", internal::XmlEndpoint(o));
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
-            internal::IamEndpoint(options));
+            internal::IamEndpoint(o));
 }
 
 TEST_F(ClientOptionsTest, EndpointsEmulator) {
@@ -162,12 +165,12 @@ TEST_F(ClientOptionsTest, EndpointsEmulator) {
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("http://localhost:1234", options.endpoint());
-  EXPECT_EQ("http://localhost:1234/storage/v1",
-            internal::JsonEndpoint(options));
+  auto o = internal::MakeOptions(std::move(options));
+  EXPECT_EQ("http://localhost:1234/storage/v1", internal::JsonEndpoint(o));
   EXPECT_EQ("http://localhost:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
-  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
+            internal::JsonUploadEndpoint(o));
+  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(o));
+  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(o));
 }
 
 TEST_F(ClientOptionsTest, OldEndpointsEmulator) {
@@ -176,22 +179,23 @@ TEST_F(ClientOptionsTest, OldEndpointsEmulator) {
                                            "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("http://localhost:1234", options.endpoint());
-  EXPECT_EQ("http://localhost:1234/storage/v1",
-            internal::JsonEndpoint(options));
+  auto o = internal::MakeOptions(std::move(options));
+  EXPECT_EQ("http://localhost:1234/storage/v1", internal::JsonEndpoint(o));
   EXPECT_EQ("http://localhost:1234/upload/storage/v1",
-            internal::JsonUploadEndpoint(options));
-  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(options));
-  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(options));
+            internal::JsonUploadEndpoint(o));
+  EXPECT_EQ("http://localhost:1234", internal::XmlEndpoint(o));
+  EXPECT_EQ("http://localhost:1234/iamapi", internal::IamEndpoint(o));
 }
 
 TEST_F(ClientOptionsTest, SetVersion) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   options.set_version("vTest");
   EXPECT_EQ("vTest", options.version());
+  auto o = internal::MakeOptions(std::move(options));
   EXPECT_EQ("https://storage.googleapis.com/storage/vTest",
-            internal::JsonEndpoint(options));
+            internal::JsonEndpoint(o));
   EXPECT_EQ("https://storage.googleapis.com/upload/storage/vTest",
-            internal::JsonUploadEndpoint(options));
+            internal::JsonUploadEndpoint(o));
 }
 
 TEST_F(ClientOptionsTest, SetIamEndpoint) {
@@ -298,6 +302,42 @@ TEST_F(ClientOptionsTest, SetMaximumDownloadStall) {
   EXPECT_NE(0, default_value.count());
   client_options.set_download_stall_timeout(std::chrono::seconds(60));
   EXPECT_EQ(60, client_options.download_stall_timeout().count());
+}
+
+TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
+  google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
+  auto const opts = internal::MakeOptions(
+      ClientOptions(oauth2::CreateAnonymousCredentials()));
+  EXPECT_EQ("https://storage.googleapis.com",
+            opts.get<internal::RestEndpointOption>());
+  EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
+            opts.get<internal::IamEndpointOption>());
+  EXPECT_TRUE(opts.has<internal::Oauth2CredentialsOption>());
+  EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
+  EXPECT_EQ("test-project-id", opts.get<internal::ProjectIdOption>());
+  EXPECT_LT(0, opts.get<internal::ConnectionPoolSizeOption>());
+  EXPECT_LT(0, opts.get<internal::DownloadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<internal::UploadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<internal::MaximumSimpleUploadSizeOption>());
+  EXPECT_TRUE(opts.has<internal::EnableCurlSslLockingOption>());
+  EXPECT_TRUE(opts.has<internal::EnableCurlSigpipeHandlerOption>());
+  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketSendSizeOption>());
+  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketRecvSizeOption>());
+  EXPECT_LT(0, opts.get<internal::DownloadStallTimeoutOption>().count());
+  EXPECT_THAT(opts.get<internal::SslRootPathOption>(), IsEmpty());
+}
+
+TEST_F(ClientOptionsTest, DefaultOptions) {
+  auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
+  EXPECT_EQ("https://storage.googleapis.com",
+            o.get<internal::RestEndpointOption>());
+
+  // Verify any set values are respected overriden.
+  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
+                               Options{}.set<internal::RestEndpointOption>(
+                                   "https://private.googleapis.com"));
+  EXPECT_EQ("https://private.googleapis.com",
+            o.get<internal::RestEndpointOption>());
 }
 
 }  // namespace

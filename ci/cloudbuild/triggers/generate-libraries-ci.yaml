@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: generate-libraries-ci
+substitutions:
+  _BUILD_NAME: generate-libraries
+  _DISTRO: fedora-33
+  _TRIGGER_TYPE: ci
+tags:
+- ci

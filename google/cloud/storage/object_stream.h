@@ -159,7 +159,77 @@ class ObjectReadStream : public std::basic_istream<char> {
 };
 
 /**
- * Defines a `std::basic_ostream<char>` to write to a GCS Object.
+ * Defines a `std::basic_ostream<char>` to write to a GCS object.
+ *
+ * This class is used to upload objects to GCS. It can handle objects of any
+ * size, but keep the following considerations in mind:
+ *
+ * * This API is designed for applications that need to stream the object
+ *   payload. If you have the payload as one large buffer consider using
+ *   `storage::Client::InsertObject()`, it is simpler and faster in most cases.
+ * * This API can be used to perform unformatted I/O, as well as formatted I/O
+ *   using the familiar `operator<<` APIs. Note that formatted I/O typically
+ *   implies some form of buffering and data copying. For best performance,
+ *   consider using the [.write()][cpp-reference-write] member function.
+ * * GCS expects to receive data in multiples of the *upload quantum* (256KiB).
+ *   Sending a buffer that is not a multiple of this quantum terminates the
+ *   upload. This constraints the implementation of buffered and unbuffered I/O
+ *   as described below.
+ *
+ * @par Unformatted I/O
+ * On a `.write()` call this class attempts to send the data immediately, this
+ * this the unbuffered API after all. If any previously buffered data and the
+ * data provided in the `.write()` call are larger than an upload quantum the
+ * class sends data immediately. Any data in excess of a multiple of the upload
+ * quantum are buffered for the next upload.
+ *
+ * These examples may clarify how this works:
+ *   -# Consider a fresh `ObjectWriteStream` that receives a `.write()` call
+ *      with 257 KiB of data. The first 256 KiB are immediately sent and the
+ *      remaining 1 KiB is buffered for a future upload.
+ *   -# If the same stream receives another `.write()` call with 256 KiB then it
+ *      will send the buffered 1 KiB of data and the first 255 KiB from the new
+ *      buffer. The last 1 KiB is buffered for a future upload.
+ *   -# Consider a fresh `ObjectWriteStream` that receives a `.write()` call
+ *      with 4 MiB of data. This data is sent immediately, and no data is
+ *      buffered.
+ *   -# Consider a stream with a 256 KiB buffer from previous buffered I/O (see
+ *      below to understand how this might happen). If this stream receives a
+ *      `.write()` call with 1024 KiB then both the 256 KiB and the 1024 KiB of
+ *      data are uploaded immediately.
+ *
+ * @par Formatted I/O
+ * When performing formatted I/O, typically used via `operator<<`, this class
+ * will buffer data based on the`ClientOptions::upload_buffer_size()` setting.
+ * Note that this setting is expressed in bytes, but it is always rounded (up)
+ * to an upload quantum.
+ *
+ * @par Recommendations
+ * For best performance uploading data we recommend using *exclusively* the
+ * unbuffered I/O API. Furthermore, we recommend that applications use data in
+ * multiples of the upload quantum in all calls to `.write()`. Larger buffers
+ * result in better performance. Note that our
+ * [empirical results][github-issue-2657] show that these improvements tapper
+ * off around 32MiB or so.
+ *
+ * @par Suspending Uploads
+ * Note that, as it is customary in C++, the destructor of this class finalizes
+ * the upload. If you want to prevent the class from finalizing an upload, use
+ * the `Suspend()` function.
+ *
+ * @par Example: starting a resumable upload.
+ * @snippet storage_object_resumable_write_samples.cc start resumable upload
+ *
+ * @par Example: resuming a resumable upload.
+ * @snippet storage_object_resumable_write_samples.cc resume resumable upload
+ *
+ * [cpp-reference-put]: https://en.cppreference.com/w/cpp/io/basic_ostream/put
+ *
+ * [cpp-reference-write]:
+ * https://en.cppreference.com/w/cpp/io/basic_ostream/write
+ *
+ * [github-issue-2657]:
+ * https://github.com/googleapis/google-cloud-cpp/issues/2657
  */
 class ObjectWriteStream : public std::basic_ostream<char> {
  public:

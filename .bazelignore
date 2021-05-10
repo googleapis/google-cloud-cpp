@@ -1,8 +1,10 @@
+build-out/
 ci/
 cmake-out/
 cmake-build-debug/
 cmake-build-coverage/
 cmake-build-release/
+google/cloud/bigquery/quickstart/
 google/cloud/bigtable/quickstart/
 google/cloud/pubsub/quickstart/
 google/cloud/spanner/quickstart/

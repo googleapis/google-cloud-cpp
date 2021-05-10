@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/storage/internal/make_jwt_assertion.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
@@ -26,29 +27,8 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
-namespace internal {
-StatusOr<std::string> MakeJWTAssertionNoThrow(std::string const& header,
-                                              std::string const& payload,
-                                              std::string const& pem_contents) {
-  std::string encoded_header = UrlsafeBase64Encode(header);
-  std::string encoded_payload = UrlsafeBase64Encode(payload);
-  auto pem_signature = internal::SignStringWithPem(
-      encoded_header + '.' + encoded_payload, pem_contents,
-      storage::oauth2::JwtSigningAlgorithms::RS256);
-  if (!pem_signature) {
-    return pem_signature.status();
-  }
-  std::string encoded_signature = UrlsafeBase64Encode(
-      internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
-                                  pem_contents,
-                                  storage::oauth2::JwtSigningAlgorithms::RS256)
-          .value());
-  return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
-}
-}  // namespace internal
-
 namespace oauth2 {
+
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {

@@ -20,7 +20,10 @@
 #include "google/cloud/storage/internal/grpc_client.h"
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/getenv.h"
+#include "absl/algorithm/container.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/str_split.h"
 #include <google/storage/v1/storage.grpc.pb.h>
 #include <curl/curl.h>
 #include <vector>
@@ -246,16 +249,32 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
   ApiName api_;
 };
 
+auto constexpr kDirectPathConfig = R"json({
+    "loadBalancingConfig": [{
+      "grpclb": {
+        "childPolicy": [{
+          "pick_first": {}
+        }]
+      }
+    }]
+  })json";
+
+bool DirectPathEnabled() {
+  auto const direct_path_settings =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
+          .value_or("");
+  return absl::c_any_of(absl::StrSplit(direct_path_settings, ','),
+                        [](absl::string_view v) { return v == "storage"; });
+}
+
 std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  gcs::ClientOptions options{gcs::oauth2::GoogleDefaultCredentials().value()};
-  return gcs::internal::CreateGrpcChannel(options, thread_id);
-#else
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", thread_id);
+  if (DirectPathEnabled()) {
+    args.SetServiceConfigJSON(kDirectPathConfig);
+  }
   return grpc::CreateCustomChannel("storage.googleapis.com",
                                    grpc::GoogleDefaultCredentials(), args);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 }
 
 class DownloadObjectRawGrpc : public ThroughputExperiment {
@@ -321,7 +340,9 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
       case ApiName::kApiRawGrpc: {
         gcs::Client grpc_client =
             google::cloud::storage_experimental::DefaultGrpcClient(
-                client_options, thread_id);
+                thread_id,
+                google::cloud::storage::internal::MakeOptions(client_options))
+                .value();
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, false));
         result.push_back(
@@ -363,7 +384,9 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       case ApiName::kApiGrpc:
         result.push_back(absl::make_unique<DownloadObject>(
             google::cloud::storage_experimental::DefaultGrpcClient(
-                client_options),
+                thread_id,
+                google::cloud::storage::internal::MakeOptions(client_options))
+                .value(),
             a));
         break;
 #else

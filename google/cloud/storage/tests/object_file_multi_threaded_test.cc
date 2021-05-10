@@ -17,6 +17,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <cstdio>
 #include <fstream>
 #include <future>
@@ -47,7 +48,7 @@ class ObjectFileMultiThreadedTest
   static int ThreadCount() {
     static int const kCount = [] {
       auto c = static_cast<int>(std::thread::hardware_concurrency());
-      return c == 0 ? 4 : 4 * c;
+      return (std::max)(c / 2, 8);
     }();
     return kCount;
   }
