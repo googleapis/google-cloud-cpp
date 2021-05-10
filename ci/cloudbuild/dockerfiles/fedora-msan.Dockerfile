@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:33
+FROM fedora:34
 ARG NCPU=4
 
 # Install the minimal packages needed to compile libcxx, install Bazel, and
@@ -36,7 +36,7 @@ WORKDIR /var/tmp/build
 
 # Install instructions from:
 # https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
-RUN git clone --depth=1 --branch llvmorg-11.0.0 https://github.com/llvm/llvm-project
+RUN git clone --depth=1 --branch llvmorg-12.0.0 https://github.com/llvm/llvm-project
 WORKDIR llvm-project/build
 # configure cmake
 RUN cmake -GNinja ../llvm \
