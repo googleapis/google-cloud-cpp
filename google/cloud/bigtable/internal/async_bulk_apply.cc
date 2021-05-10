@@ -92,7 +92,7 @@ void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
   auto self = this->shared_from_this();
   cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
       .then([self, cq](TimerFuture result) {
-        if (auto tp = result.get()) {
+        if (result.get()) {
           self->StartIteration(std::move(cq));
         } else {
           self->SetPromise();
