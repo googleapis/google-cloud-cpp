@@ -136,10 +136,10 @@ option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
        "Use relative URLs in docs for googleapis.dev" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV)
 
-# Use master as the version part of the relative URLs.
-option(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS
-       "Use master as the version part for refdoc relative links" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS)
+# Use main as the version part of the relative URLs.
+option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
+       "Use main as the version part for refdoc relative links" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 

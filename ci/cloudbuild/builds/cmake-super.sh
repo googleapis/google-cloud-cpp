@@ -29,4 +29,4 @@ cmake -GNinja \
   -Hsuper -Bcmake-out
 cmake --build cmake-out
 # Testing is automatically done by the super build itself. See
-# https://github.com/googleapis/google-cloud-cpp/blob/master/super/CMakeLists.txt
+# https://github.com/googleapis/google-cloud-cpp/blob/main/super/CMakeLists.txt

@@ -62,7 +62,7 @@ little bit, we cache these images in Google Container Registry (GCR). Builds
 triggered by GitHub pull requests download the cached image, then use that cache
 to rebuild the image (which usually results in "nothing to rebuild") and then
 run the build using the newly created image. Builds triggered by GitHub commits
-to a branch (typically `master` or a release branch) only use the cache if
+to a branch (typically `main` or a release branch) only use the cache if
 rebuilding the image from scratch fails. Such builds also push new versions of
 the cached image to GCR.
 

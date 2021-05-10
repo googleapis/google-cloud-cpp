@@ -136,7 +136,7 @@ rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 curl -sSL --retry 10 -o "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
   https://pki.google.com/roots.pem
 
-BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-master}"
+BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-main}"
 readonly BRANCH
 echo "================================================================"
 io::log_yellow "detected the branch name: ${BRANCH}."

@@ -25,7 +25,7 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-spanner/latest/
 [cloud-spanner-docs]: https://cloud.google.com/spanner/docs/
-[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/master/google/cloud/spanner
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner
 
 ## Quickstart
 

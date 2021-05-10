@@ -25,7 +25,7 @@
 #   4. Creates the "Pre-Release" in the GitHub UI.
 #
 # Before running this script the user should make sure the CHANGELOG.md on
-# master is up-to-date with the release notes for the new release that will
+# main is up-to-date with the release notes for the new release that will
 # happen. Then run this script. After running this script, the user must still
 # go to the GH UI where the new release will exist as a "pre-release", and edit
 # the release notes.
@@ -170,7 +170,7 @@ hub clone --shallow-since="${SINCE}" "${PROJECT_ARG}" "${REPO_DIR}"
 cd "${REPO_DIR}"
 
 # Figures out the most recent tagged version, and computes the next version.
-readonly TAG="$(git describe --tags --abbrev=0 origin/master)"
+readonly TAG="$(git describe --tags --abbrev=0 origin/main)"
 readonly CUR_TAG="$(test -n "${TAG}" && echo "${TAG}" || echo "v0.0.0")"
 readonly CUR_VERSION="${CUR_TAG#v}"
 
