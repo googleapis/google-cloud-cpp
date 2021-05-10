@@ -1,0 +1,11 @@
+{
+  "name": "send-build-alerts",
+  "version-string": "unversioned",
+  "dependencies": [
+    "cppcodec",
+    "curl",
+    "fmt",
+    "functions-framework-cpp",
+    "nlohmann-json"
+  ]
+}
