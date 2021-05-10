@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=20.04
-FROM ubuntu:${DISTRO_VERSION}
+FROM ubuntu:focal
 ARG NCPU=4
 
 ENV DEBIAN_FRONTEND=noninteractive

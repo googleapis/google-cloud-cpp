@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:33
+FROM fedora:34
 ARG NCPU=4
 
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
