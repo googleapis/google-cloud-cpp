@@ -59,13 +59,19 @@ class AsyncBulkApplyTest : public bigtable::testing::TableTestFixture {
     cq_impl_->SimulateCompletion(true);
   }
 
+  void SimulateIterationThatRetries() {
+    SimulateIteration();
+    // cq starts a timer for the backoff policy.
+    cq_impl_->SimulateCompletion(true);
+  }
+
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 };
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplyEmpty) {
+TEST_F(AsyncBulkApplyTest, NoMutations) {
   bigtable::BulkMutation mut;
 
   auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
@@ -77,7 +83,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyEmpty) {
   ASSERT_EQ(0U, bulk_apply_future.get().size());
 };
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
+TEST_F(AsyncBulkApplyTest, Success) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",
                                   {bigtable::SetCell("f", "c", 0_ms, "v2")}),
@@ -130,7 +136,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplySuccess) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
+TEST_F(AsyncBulkApplyTest, PartialSuccessRetry) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",
                                   {bigtable::SetCell("f", "c", 0_ms, "v2")}),
@@ -191,7 +197,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  SimulateIteration();
+  SimulateIterationThatRetries();
 
   ASSERT_EQ(1U, cq_impl_->size());
 
@@ -203,7 +209,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyPartialSuccessRetry) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplyDefaultFailureRetry) {
+TEST_F(AsyncBulkApplyTest, DefaultFailureRetry) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",
                                   {bigtable::SetCell("f", "c", 0_ms, "v2")}),
@@ -268,7 +274,7 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyDefaultFailureRetry) {
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
-  SimulateIteration();
+  SimulateIterationThatRetries();
 
   ASSERT_EQ(1U, cq_impl_->size());
 
@@ -281,14 +287,12 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyDefaultFailureRetry) {
   EXPECT_TRUE(cq_impl_->empty());
 }
 
-TEST_F(AsyncBulkApplyTest, AsyncBulkApplyTooManyFailures) {
+TEST_F(AsyncBulkApplyTest, TooManyFailures) {
   bigtable::BulkMutation mut{
       bigtable::SingleRowMutation("foo2",
                                   {bigtable::SetCell("f", "c", 0_ms, "v2")}),
       bigtable::SingleRowMutation("foo3",
                                   {bigtable::SetCell("f", "c", 0_ms, "v3")}),
-      bigtable::SingleRowMutation("foo4",
-                                  {bigtable::SetCell("f", "c", 0_ms, "v4")}),
   };
 
   // We give up on the 5th error.
@@ -301,35 +305,162 @@ TEST_F(AsyncBulkApplyTest, AsyncBulkApplyTooManyFailures) {
                           grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
-        EXPECT_CALL(*reader, Read)
-            .WillRepeatedly([](btproto::MutateRowsResponse*, void*) {});
+        EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish)
-            .WillRepeatedly([](grpc::Status* status, void*) {
+            .WillOnce([](grpc::Status* status, void*) {
               *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
             });
-        EXPECT_CALL(*reader, StartCall).Times(1);
+        EXPECT_CALL(*reader, StartCall);
         return reader;
       });
 
   auto limited_retry_policy = LimitedErrorCountRetryPolicy(limited_error_count);
-  auto short_backoff_policy = ExponentialBackoffPolicy(10_us, 40_us);
   auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
-      cq_, limited_retry_policy.clone(), short_backoff_policy.clone(),
+      cq_, limited_retry_policy.clone(), rpc_backoff_policy_->clone(),
       *idempotent_mutation_policy_, metadata_update_policy_, client_,
       "my-app-profile", "my-table", std::move(mut));
 
   for (int retry = 0; retry < limited_error_count; ++retry) {
-    SimulateIteration();
+    SimulateIterationThatRetries();
     ASSERT_EQ(1U, cq_impl_->size());
   }
 
   SimulateIteration();
 
   auto failures = bulk_apply_future.get();
-  EXPECT_EQ(3U, failures.size());
+  EXPECT_EQ(2U, failures.size());
 
   ASSERT_EQ(0U, cq_impl_->size());
   EXPECT_TRUE(cq_impl_->empty());
+}
+
+class MockBackoffPolicy : public RPCBackoffPolicy {
+ public:
+  MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
+  MOCK_METHOD(void, Setup, (grpc::ClientContext& context), (const, override));
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const& status), (override));
+  // TODO(#2344) - remove ::grpc::Status version.
+  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (grpc::Status const& status), (override));
+};
+
+TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
+  bigtable::BulkMutation mut{
+      bigtable::SingleRowMutation("foo2",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
+      bigtable::SingleRowMutation("foo3",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  };
+
+  auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+  auto error = MakeStatusFromRpcError(grpc_error);
+
+  std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
+  EXPECT_CALL(*mock, Setup).Times(2);
+  EXPECT_CALL(*mock, OnCompletion(error))
+    .WillOnce([](Status const&) {
+        return 10_ms;
+        });
+
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .WillOnce([grpc_error](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
+        EXPECT_CALL(*reader, Read).Times(2);
+        EXPECT_CALL(*reader, Finish)
+            .WillOnce([grpc_error](grpc::Status* status, void*) {
+              *status = grpc_error;
+            });
+        EXPECT_CALL(*reader, StartCall);
+        return reader;
+      })
+      .WillOnce([](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([](btproto::MutateRowsResponse* r, void*) {
+              auto& r1 = *r->add_entries();
+              r1.set_index(0);
+              r1.mutable_status()->set_code(grpc::StatusCode::OK);
+      
+              auto& r2 = *r->add_entries();
+              r2.set_index(1);
+              r2.mutable_status()->set_code(grpc::StatusCode::OK);
+            })
+            .WillOnce([](btproto::MutateRowsResponse*, void*) {});
+        EXPECT_CALL(*reader, Finish)
+            .WillOnce([](grpc::Status* status, void*) {
+              *status = grpc::Status::OK;
+            });
+        EXPECT_CALL(*reader, StartCall);
+        return reader;
+      });
+
+  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+      cq_, rpc_retry_policy_->clone(), std::move(mock),
+      *idempotent_mutation_policy_, metadata_update_policy_, client_,
+      "my-app-profile", "my-table", std::move(mut));
+
+  SimulateIterationThatRetries();
+  ASSERT_EQ(1U, cq_impl_->size());
+
+  SimulateIteration();
+  ASSERT_EQ(0U, cq_impl_->size());
+}
+
+TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
+  bigtable::BulkMutation mut{
+      bigtable::SingleRowMutation("foo2",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v2")}),
+      bigtable::SingleRowMutation("foo3",
+                                  {bigtable::SetCell("f", "c", 0_ms, "v3")}),
+  };
+
+  auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+  auto error = MakeStatusFromRpcError(grpc_error);
+
+  std::unique_ptr<MockBackoffPolicy> mock(new MockBackoffPolicy);
+  EXPECT_CALL(*mock, Setup);
+  EXPECT_CALL(*mock, OnCompletion(error))
+    .WillOnce([](Status const&) {
+        return 10_ms;
+        });
+
+  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
+      .WillOnce([grpc_error](grpc::ClientContext*,
+                          btproto::MutateRowsRequest const&,
+                          grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
+        EXPECT_CALL(*reader, Read).Times(2);
+        EXPECT_CALL(*reader, Finish)
+            .WillOnce([grpc_error](grpc::Status* status, void*) {
+              *status = grpc_error;
+            });
+        EXPECT_CALL(*reader, StartCall);
+        return reader;
+      });
+
+  auto bulk_apply_future = internal::AsyncRetryBulkApply::Create(
+      cq_, rpc_retry_policy_->clone(), std::move(mock),
+      *idempotent_mutation_policy_, metadata_update_policy_, client_,
+      "my-app-profile", "my-table", std::move(mut));
+
+  SimulateIteration();
+  ASSERT_EQ(1U, cq_impl_->size());
+
+  // cancel the future
+  bulk_apply_future.cancel();
+  // simulate the backoff timer expiring.
+  cq_impl_->SimulateCompletion(false);
+
+  ASSERT_EQ(0U, cq_impl_->size());
+
+  auto failures = bulk_apply_future.get();
+  EXPECT_EQ(2U, failures.size());
 }
 
 }  // namespace

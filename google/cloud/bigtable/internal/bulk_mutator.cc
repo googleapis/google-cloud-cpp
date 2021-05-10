@@ -127,7 +127,7 @@ std::vector<int> BulkMutatorState::OnRead(
   return res;
 }
 
-void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
+void BulkMutatorState::OnFinish(google::cloud::Status const& finish_status) {
   last_status_ = std::move(finish_status);
 
   int index = 0;

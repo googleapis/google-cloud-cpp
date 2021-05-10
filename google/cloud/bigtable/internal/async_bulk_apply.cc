@@ -80,17 +80,27 @@ void AsyncRetryBulkApply::OnRead(
   state_.OnRead(response);
 }
 
-void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status status) {
-  state_.OnFinish(std::move(status));
+void AsyncRetryBulkApply::OnFinish(CompletionQueue cq, Status const& status) {
+  std::cout << "\nStatus: " << status.code() << " | " << status.message() << "\n\n";
+  state_.OnFinish(status);
   if (!state_.HasPendingMutations() ||
       (!status.ok() && !rpc_retry_policy_->OnFailure(status))) {
     promise_.set_value(std::move(state_).OnRetryDone());
     return;
   }
 
-  // TODO : delay based on backoff policy
-  
-  StartIteration(std::move(cq));
+  std::cout << "\nStatus is still: " << status.code() << " | " << status.message() << "\n\n";
+  auto self = this->shared_from_this();
+  cq.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
+      .then([self, cq](future<StatusOr<std::chrono::system_clock::time_point>>
+                       result) {
+        std::cout << "\nTime's up\n\n";
+        if (auto tp = result.get()) {
+          self->StartIteration(std::move(cq));
+        } else {
+          self->promise_.set_value(std::move(self->state_).OnRetryDone());         
+        }
+      });
 }
 
 }  // namespace internal
