@@ -36,15 +36,15 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
   return std::make_shared<AccessTokenConfig>(access_token, expiration);
 }
 
-std::shared_ptr<ImpersonateServiceAccountConfig>
-MakeImpersonateServiceAccountCredentials(
+std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
     std::string target_service_account, Options opts) {
   opts = MergeOptions(
       std::move(opts),
       Options{}
           .set<ScopesOption>({"https://www.googleapis.com/auth/cloud-platform"})
-          .set<LifetimeOption>(std::chrono::seconds(std::chrono::hours(1))));
+          .set<AccessTokenLifetimeOption>(
+              std::chrono::seconds(std::chrono::hours(1))));
   return std::make_shared<ImpersonateServiceAccountConfig>(
       std::move(base_credentials), std::move(target_service_account),
       std::move(opts));
@@ -55,7 +55,7 @@ ImpersonateServiceAccountConfig::ImpersonateServiceAccountConfig(
     std::string target_service_account, Options opts)
     : base_credentials_(std::move(base_credentials)),
       target_service_account_(std::move(target_service_account)),
-      lifetime_(opts.get<LifetimeOption>()),
+      lifetime_(opts.get<AccessTokenLifetimeOption>()),
       scopes_(std::move(opts.lookup<ScopesOption>())),
       delegates_(std::move(opts.lookup<DelegatesOption>())) {}
 
