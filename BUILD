@@ -97,7 +97,7 @@ cc_library(
 )
 
 cc_library(
-    name = "experimental-storage_grpc",
+    name = "experimental-storage-grpc",
     tags = ["manual"],
     deps = [
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
