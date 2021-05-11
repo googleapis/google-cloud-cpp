@@ -82,13 +82,17 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}"
   )
 
-  # Adds some special GCS flags that rely on keys that we copy out of a GCS bucket
+  # Adds environment variables that need to reference a specific service
+  # account key file. The key files are copied from a GCS bucket and stored on
+  # the local machine. See the `rotate-keys.sh` script for details about how
+  # these keys are rotated.
   key_base="key-$(date +"%Y-%m")"
   readonly KEY_DIR="/dev/shm"
   readonly SECRETS_BUCKET="gs://cloud-cpp-testing-resources-secrets"
   gsutil cp "${SECRETS_BUCKET}/${key_base}.json" "${KEY_DIR}/${key_base}.json"
   gsutil cp "${SECRETS_BUCKET}/${key_base}.p12" "${KEY_DIR}/${key_base}.p12"
   args+=(
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON=${KEY_DIR}/${key_base}.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${KEY_DIR}/${key_base}.p12"
   )
@@ -153,8 +157,14 @@ function integration::bazel_with_emulators() {
     ./ci/retry-command.sh 3 0 \
     "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
-  # TODO(#6083): Run //google/cloud/bigtable/examples:bigtable_grpc_credentials
-  # separately w/ an access token.
+
+  # This test is run separately because the access token changes every time and
+  # that would mess up bazel's test cache for all the other tests.
+  io::log_h2 "Running Bigtable gRPC credential examples"
+  access_token="$(gcloud auth print-access-token)"
+  bazel "${verb}" "${args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
+    //google/cloud/bigtable/examples:bigtable_grpc_credentials
 }
 
 # Runs integration tests with CTest using emulators. This function requires a

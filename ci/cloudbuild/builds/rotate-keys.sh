@@ -24,11 +24,12 @@
 # this build by hand with:
 #   `ci/cloudbuild/build.sh --distro fedora rotate-keys --local`
 #
-# The purpose of this build is to rotate the service-account keys used by the
-# GCS integration test (see lib/integration.sh). The idea is to have p12 and
-# json keys stored in the gs://cloud-cpp-testing-resources-secrets bucket that
-# are named for each month. For example, there may be a key named
-# `key-2021-04.p12`. That key will be used for the month of April 2021 only.
+# The purpose of this build is to rotate the service-account keys used by some
+# integration tests, such as GCS and Bigtable (see lib/integration.sh). The
+# idea is to have p12 and json keys stored in the
+# gs://cloud-cpp-testing-resources-secrets bucket that are named for each
+# month. For example, there may be a key named `key-2021-04.p12`. That key will
+# be used for the month of April 2021 only.
 #
 # We need to create the keys for the next month sometime before that month
 # starts, and we need to delete the old keys sometime after we're sure they're
@@ -49,6 +50,9 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/lib/io.sh
 
 io::log_h2 "Current service account keys"
+# Note: For historical reasons this keyfile is named with "storage" in the
+# name, though it is used for more than just GCS. One day we may rename this
+# service account to something more generic.
 account="storage-key-file-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com"
 gcloud iam service-accounts keys list \
   --iam-account="${account}" \
