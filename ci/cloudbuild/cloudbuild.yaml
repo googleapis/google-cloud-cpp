@@ -77,17 +77,19 @@ steps:
   entrypoint: '/bin/true'
 
   # Restores the homedir cache into /h in parallel with the previous step.
+  # Won't break the build if this step fails.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
-  allowFailure: true
-  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  entrypoint: 'bash'
   dir: '/h'
-  args: [
-    'restore',
-    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
-    '--key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h',
-    '--fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h'
-  ]
+  args:
+    - '-c'
+    - >
+      /workspace/ci/cloudbuild/cache.sh restore
+        --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
+        --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
+        --fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h
+        || true
 
   # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
@@ -100,21 +102,23 @@ steps:
   ]
 
   # Caches some directories in the homedir, in the specified GCS bucket.
+  # Won't break the build if this step fails.
 - name: 'gcr.io/cloud-builders/gsutil'
-  allowFailure: true
-  entrypoint: '/workspace/ci/cloudbuild/cache.sh'
+  entrypoint: 'bash'
   dir: '/h'
-  args: [
-    'save',
-    '--bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp',
-    '--key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h',
-    '--path=.ccache',
-    '--path=.cache/ccache',
-    '--path=.cache/ctcache',
-    '--path=.cache/vcpkg',
-    '--path=.cache/google-cloud-cpp',
-    '--path=.local',
-  ]
+  args:
+    - '-c'
+    - >
+      /workspace/ci/cloudbuild/cache.sh save
+        --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
+        --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
+        --path=.ccache
+        --path=.cache/ccache
+        --path=.cache/ctcache
+        --path=.cache/vcpkg
+        --path=.cache/google-cloud-cpp
+        --path=.local
+        || true
 
   # Remove the images created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
