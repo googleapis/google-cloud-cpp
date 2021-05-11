@@ -14,7 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(IncludeNlohmannJson)
 find_package(absl CONFIG REQUIRED)
 
 # Generate the version information from the CMake values.
@@ -196,8 +195,7 @@ target_link_libraries(
            absl::memory
            absl::optional
            absl::time
-           Threads::Threads
-           nlohmann_json::nlohmann_json)
+           Threads::Threads)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -442,7 +440,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
                absl::time
                google-cloud-cpp::iam_protos
                google-cloud-cpp::rpc_status_protos
-               google-cloud-cpp::iam_protos
                google-cloud-cpp::common
                gRPC::grpc++
                gRPC::grpc)
