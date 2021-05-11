@@ -368,9 +368,10 @@ else ()
 
     set_target_properties(
         google_cloud_cpp_storage_grpc
-        PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc"
-                   VERSION ${PROJECT_VERSION} SOVERSION
-                                              ${PROJECT_VERSION_MAJOR})
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc")
+    set_target_properties(
+            google_cloud_cpp_storage_internal_protos
+            PROPERTIES EXPORT_NAME "google-cloud-cpp::internal-storage-protos")
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
             google_cloud_cpp_storage_grpc)
