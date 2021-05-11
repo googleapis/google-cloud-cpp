@@ -111,8 +111,14 @@ function save_cache() {
     return 0
   fi
   io::log "Saving ( ${paths[*]} ) to ${PRIMARY_CACHE_URL}"
-  tar -czf - "${paths[@]}" | gsutil cp - "${PRIMARY_CACHE_URL}"
+  # We use a temp file here so gsutil can retry failed uploads. See #6508.
+  tmpd="$(mktemp -d)"
+  tmpf="${tmpd}/cache.tar.gz"
+  tar -czf "${tmpf}" "${paths[@]}"
+  gsutil cp "${tmpf}" "${PRIMARY_CACHE_URL}"
   gsutil stat "${PRIMARY_CACHE_URL}"
+  rm "${tmpf}"
+  rmdir "${tmpd}"
 }
 
 function restore_cache() {
