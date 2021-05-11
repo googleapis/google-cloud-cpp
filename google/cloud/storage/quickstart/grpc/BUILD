@@ -16,24 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-CURRENT_TARGETS = [
-    ":bigtable",
-    ":experimental-firestore",
-    ":experimental-iam",
-    ":experimental-logging",
-    ":experimental-logging-mocks",
-    ":pubsub",
-    ":spanner",
-    ":storage",
-    ":experimental-storage-grpc",
-]
-
-[cc_test(
-    name = "verify_" + target.replace("/", "_").replace(":", "_"),
+cc_binary(
+    name = "quickstart",
     srcs = [
-        "verify_current_targets.cc",
+        "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//" + target,
+        "@com_github_googleapis_google_cloud_cpp//:storage",
     ],
-) for target in CURRENT_TARGETS]
+)

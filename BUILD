@@ -97,6 +97,14 @@ cc_library(
 )
 
 cc_library(
+    name = "experimental-storage-grpc",
+    tags = ["manual"],
+    deps = [
+        "//google/cloud/storage:google_cloud_cpp_storage_grpc",
+    ],
+)
+
+cc_library(
     name = "storage_client",
     deprecation = "this target will be removed on or around 2022-02-15, please use //:storage instead.",
     tags = ["manual"],
