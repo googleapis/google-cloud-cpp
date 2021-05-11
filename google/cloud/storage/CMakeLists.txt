@@ -189,8 +189,6 @@ add_library(
     internal/signed_url_requests.h
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.h
     internal/unified_rest_credentials.h
     lifecycle_rule.cc
     lifecycle_rule.h

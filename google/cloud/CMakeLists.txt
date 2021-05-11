@@ -128,8 +128,6 @@ add_library(
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/credentials.cc
-    internal/credentials.cc
-    internal/credentials.h
     internal/credentials.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
