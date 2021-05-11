@@ -70,13 +70,12 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& display_name,
-                    std::string const& region) {
+                    std::string const& config) {
   namespace spanner = google::cloud::spanner;
   spanner::Instance in(project_id, instance_id);
 
-  std::string region_id = region.empty() ? "us-central1" : region;
   std::string instance_config =
-      "projects/" + project_id + "/instanceConfigs/regional-" + region_id;
+      "projects/" + project_id + "/instanceConfigs/" + config;
   auto instance =
       client
           .CreateInstance(
@@ -94,12 +93,12 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
 void CreateInstanceCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3 && argv.size() != 4) {
     throw std::runtime_error(
-        "create-instance <project-id> <instance-id> <display_name> [region]");
+        "create-instance <project-id> <instance-id> <display_name> [config]");
   }
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
-  std::string region = argv.size() == 4 ? argv[3] : "";
-  CreateInstance(std::move(client), argv[0], argv[1], argv[2], region);
+  std::string config = argv.size() == 4 ? argv[3] : "regional-us-central1";
+  CreateInstance(std::move(client), argv[0], argv[1], argv[2], config);
 }
 
 //! [update-instance]
@@ -3232,37 +3231,38 @@ int RunOneCommand(std::vector<std::string> argv) {
   return 0;
 }
 
-std::string PickRegion(google::cloud::spanner::InstanceAdminClient client,
+std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
                        std::string const& project_id) {
-  // Skip non-US regions. They are too slow.
-  std::string const region_prefix = "us-";
-  // Exclude the US regions where we keep most of our test instances.
-  std::vector<std::string> const excluded{"us-central1", "us-east1"};
+  // Skip non-US configs. They are too slow.
+  std::string const included_prefix = "regional-us-";
+  // Exclude the US configs where we keep most of our test instances.
+  std::vector<std::string> const excluded{"regional-us-central1",
+                                          "regional-us-east1"};
 
   std::string const config_prefix =
-      "projects/" + project_id + "/instanceConfigs/regional-";
+      "projects/" + project_id + "/instanceConfigs/";
 
   // Use a reservoir sampler of size k==1 to pick a region at random.
   std::mt19937_64 generator(std::random_device{}());
   int i = 0;
 
-  // Log the region names to aid in troubleshooting. This is only used during
+  // Log the config names to aid in troubleshooting. This is only used during
   // an AutoRun() invocation, so it will not pollute the output for users.
   std::cout << "\n" << __func__ << ":\n";
 
-  std::string ret{};
+  std::string ret;
   for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
     if (!instance_config) break;
     if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
-    auto const region = instance_config->name().substr(config_prefix.size());
-    if (region.rfind(region_prefix, 0) != 0) continue;
-    if (std::find(excluded.begin(), excluded.end(), region) != excluded.end()) {
+    auto const config = instance_config->name().substr(config_prefix.size());
+    if (config.rfind(included_prefix, 0) != 0) continue;
+    if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
       continue;
     }
     auto const selected =
         std::uniform_int_distribution<int>(1, ++i)(generator) == 1;
-    if (selected) ret = region;
-    std::cout << "    " << i << " " << region << " " << selected << " " << ret
+    if (selected) ret = config;
+    std::cout << "    " << i << " " << config << " " << selected << " " << ret
               << "\n";
   }
   return ret;
@@ -3290,12 +3290,13 @@ void RunAllSlowInstanceTests(
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  auto const region = PickRegion(instance_admin_client, project_id);
-  if (region.empty()) throw std::runtime_error("Failed to pick a region");
+  auto const config = emulator ? "emulator-config"
+                               : PickConfig(instance_admin_client, project_id);
+  if (config.empty()) throw std::runtime_error("Failed to pick a config");
 
   std::cout << "\nRunning create-instance sample" << std::endl;
   CreateInstance(instance_admin_client, project_id, crud_instance_id,
-                 "Test Instance", region);
+                 "Test Instance", config);
 
   if (!emulator) {
     std::cout << "\nRunning update-instance sample" << std::endl;
