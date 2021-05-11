@@ -79,6 +79,7 @@ steps:
   # Restores the homedir cache into /h in parallel with the previous step.
 - name: 'gcr.io/cloud-builders/gsutil'
   waitFor: [ '-' ]
+  allowFailure: true
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
   args: [
@@ -100,6 +101,7 @@ steps:
 
   # Caches some directories in the homedir, in the specified GCS bucket.
 - name: 'gcr.io/cloud-builders/gsutil'
+  allowFailure: true
   entrypoint: '/workspace/ci/cloudbuild/cache.sh'
   dir: '/h'
   args: [
