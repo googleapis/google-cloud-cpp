@@ -3232,7 +3232,8 @@ int RunOneCommand(std::vector<std::string> argv) {
 }
 
 std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
-                       std::string const& project_id) {
+                       std::string const& project_id,
+                       google::cloud::internal::DefaultPRNG& generator) {
   // Skip non-US configs. They are too slow.
   std::string const included_prefix = "regional-us-";
   // Exclude the US configs where we keep most of our test instances.
@@ -3242,15 +3243,12 @@ std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
   std::string const config_prefix =
       "projects/" + project_id + "/instanceConfigs/";
 
-  // Use a reservoir sampler of size k==1 to pick a region at random.
-  std::mt19937_64 generator(std::random_device{}());
-  int i = 0;
-
   // Log the config names to aid in troubleshooting. This is only used during
   // an AutoRun() invocation, so it will not pollute the output for users.
   std::cout << "\n" << __func__ << ":\n";
 
   std::string ret;
+  int i = 0;
   for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
     if (!instance_config) break;
     if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
@@ -3259,6 +3257,7 @@ std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
     if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
       continue;
     }
+    // Use a reservoir sampler of size k==1 to pick a region at random.
     auto const selected =
         std::uniform_int_distribution<int>(1, ++i)(generator) == 1;
     if (selected) ret = config;
@@ -3290,8 +3289,9 @@ void RunAllSlowInstanceTests(
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  auto const config = emulator ? "emulator-config"
-                               : PickConfig(instance_admin_client, project_id);
+  auto const config =
+      emulator ? "emulator-config"
+               : PickConfig(instance_admin_client, project_id, generator);
   if (config.empty()) throw std::runtime_error("Failed to pick a config");
 
   std::cout << "\nRunning create-instance sample" << std::endl;
