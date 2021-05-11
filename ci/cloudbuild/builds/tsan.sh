@@ -20,13 +20,8 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/cloudbuild/builds/lib/integration.sh
 
-# Compile with the ThreadSanitizer enabled.
-# We need to use clang-9 for the TSAN build because:
-#   https://github.com/google/sanitizers/issues/1259
-# Using Fedora >= 32 will push us to clang-10, and Fedora < 32 is EOL.
-# Fortunately, Ubuntu:18.04 is a LTS release with clang-9 as an alternative.
-export CC=clang-9
-export CXX=clang++-9
+export CC=clang
+export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=tsan")
