@@ -67,6 +67,15 @@ io::log_h2 "Uploading ${MERGED_COVERAGE} to codecov.io"
 io::log "Flags: ${codecov_args[*]}"
 TIMEFORMAT="==> 🕑 codecov.io upload done in %R seconds"
 time {
+  # Verifies the codecov bash uploader before executing it.
+  sha256sum="d6aa3207c4908d123bd8af62ec0538e3f2b9f257c3de62fad4e29cd3b59b41d9"
+  codecov_url="https://raw.githubusercontent.com/codecov/codecov-bash/1b4b96ac38946b20043b3ca3bad88d95462259b6/codecov"
+  codecov_script="$(curl -s "${codecov_url}")"
+  if ! sha256sum -c <(echo "${sha256sum} -") <<<"${codecov_script}"; then
+    io::log_h2 "ERROR: Invalid sha256sum for codecov_script:"
+    echo "${codecov_script}"
+    exit 1
+  fi
   env -i CODECOV_TOKEN="${CODECOV_TOKEN:-}" HOME="${HOME}" \
-    bash <(curl -s https://codecov.io/bash) "${codecov_args[@]}"
+    bash <(echo "${codecov_script}") "${codecov_args[@]}"
 }
