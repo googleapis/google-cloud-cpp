@@ -125,7 +125,7 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN",
-      "GOOGLE_APPLICATION_CREDENTIALS",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON",
   });
 
   auto const project_id =
@@ -137,7 +137,9 @@ void RunAll(std::vector<std::string> const& argv) {
                                 "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN")
                                 .value();
   auto const credentials_file =
-      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS").value();
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_KEY_FILE_JSON")
+          .value();
 
   AccessToken({project_id, instance_id, access_token});
   JWTAccessToken({project_id, instance_id, credentials_file});
