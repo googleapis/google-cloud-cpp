@@ -28,12 +28,16 @@ using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::CredentialsVisitor;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
+using ::google::cloud::internal::InsecureCredentialsConfig;
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::internal::Credentials> const& credentials) {
   struct Visitor : public CredentialsVisitor {
     std::shared_ptr<oauth2::Credentials> result;
 
+    void visit(InsecureCredentialsConfig&) override {
+      result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
+    }
     void visit(GoogleDefaultCredentialsConfig&) override {
       auto credentials =
           google::cloud::storage::oauth2::GoogleDefaultCredentials();

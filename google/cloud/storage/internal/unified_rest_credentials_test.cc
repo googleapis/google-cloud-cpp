@@ -30,10 +30,12 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using google::cloud::internal::MakeAccessTokenCredentials;
-using google::cloud::internal::MakeGoogleDefaultCredentials;
-using google::cloud::testing_util::IsOk;
-using google::cloud::testing_util::ScopedEnvironment;
+using ::google::cloud::internal::MakeAccessTokenCredentials;
+using ::google::cloud::internal::MakeGoogleDefaultCredentials;
+using ::google::cloud::internal::MakeInsecureCredentials;
+using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::IsEmpty;
 
 class UnifiedRestCredentialsTest : public ::testing::Test {
  public:
@@ -49,6 +51,13 @@ class UnifiedRestCredentialsTest : public ::testing::Test {
  private:
   google::cloud::internal::DefaultPRNG generator_;
 };
+
+TEST_F(UnifiedRestCredentialsTest, Insecure) {
+  auto credentials = MapCredentials(MakeInsecureCredentials());
+  auto header = credentials->AuthorizationHeader();
+  ASSERT_THAT(header, IsOk());
+  EXPECT_THAT(*header, IsEmpty());
+}
 
 TEST_F(UnifiedRestCredentialsTest, AccessToken) {
   auto credentials = MapCredentials(
