@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/strerror.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #if GTEST_OS_LINUX
@@ -152,17 +153,23 @@ TEST(FilesystemTest, StatusRegular) {
 TEST(FilesystemTest, StatusSocket) {
 #if GTEST_OS_LINUX
   auto file_name = CreateRandomFileName();
+  sockaddr_un address{};
+  address.sun_family = AF_UNIX;
+  // Evidently on Fedora:34 the space for a unix domain socket is too small
+  // when compared to the size of the directories created by Bazel, skip the
+  // test in that case, we will catch any problems with CMake.
+  if (file_name.size() >= sizeof(address.sun_path)) GTEST_SKIP();
+
   int fd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
   ASSERT_NE(-1, fd);
 
-  sockaddr_un address{};
-  address.sun_family = AF_UNIX;
   strncpy(address.sun_path, file_name.c_str(), sizeof(address.sun_path) - 1);
   int r = bind(fd, reinterpret_cast<sockaddr*>(&address), sizeof(address));
-  EXPECT_NE(-1, r);
-  if (r == -1) {
+  if (r != 0) {
+    auto e = errno;
+    auto s = ::google::cloud::internal::strerror(e);
     (void)close(fd);
-    return;
+    FAIL() << "file_name=" << file_name << ", e=" << e << ", s=" << s;
   }
 
   std::error_code ec;
