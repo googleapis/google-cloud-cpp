@@ -86,10 +86,10 @@ steps:
     - '-c'
     - >
       /workspace/ci/cloudbuild/cache.sh restore
-        --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-        --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
-        --fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h
-        || true
+      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
+      --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
+      --fallback_key=main/${_DISTRO}-${_BUILD_NAME}/h
+      || true
 
   # Runs the specified build in the image that was created in the first step.
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
@@ -110,15 +110,15 @@ steps:
     - '-c'
     - >
       /workspace/ci/cloudbuild/cache.sh save
-        --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
-        --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
-        --path=.ccache
-        --path=.cache/ccache
-        --path=.cache/ctcache
-        --path=.cache/vcpkg
-        --path=.cache/google-cloud-cpp
-        --path=.local
-        || true
+      --bucket_url=gs://${_CACHE_BUCKET}/build-cache/google-cloud-cpp
+      --key=${_TRIGGER_SOURCE}/${_DISTRO}-${_BUILD_NAME}/h
+      --path=.ccache
+      --path=.cache/ccache
+      --path=.cache/ctcache
+      --path=.cache/vcpkg
+      --path=.cache/google-cloud-cpp
+      --path=.local
+      || true
 
   # Remove the images created by this build.
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
