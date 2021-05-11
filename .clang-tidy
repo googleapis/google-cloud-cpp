@@ -30,6 +30,13 @@
 #      class in order to document it as part of the public API, that will
 #      trigger a redundant declaration warning from this check.
 #
+#  -readability-function-cognitive-complexity: too many false positives with
+#      clang-tidy-12. We need to disable this check in macros, and that setting
+#      only appears in clang-tidy-13.
+#
+#  -bugprone-narrowing-conversions: too many false positives around
+#      `std::size_t`  vs. `*::difference_type`.
+#
 Checks: >
   -*,
   bugprone-*,
@@ -50,7 +57,9 @@ Checks: >
   -readability-braces-around-statements,
   -readability-magic-numbers,
   -readability-named-parameter,
-  -readability-redundant-declaration
+  -readability-redundant-declaration,
+  -readability-function-cognitive-complexity,
+  -bugprone-narrowing-conversions
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
