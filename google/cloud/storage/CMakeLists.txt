@@ -292,6 +292,12 @@ add_library(google-cloud-cpp::storage ALIAS google_cloud_cpp_storage)
 
 create_bazel_config(google_cloud_cpp_storage)
 
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT storage-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage"
+    COMPONENT google_cloud_cpp_development)
+
 if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     find_package(gRPC REQUIRED)
     google_cloud_cpp_proto_library(
@@ -351,7 +357,7 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
                                PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
     set_target_properties(
         google_cloud_cpp_storage_grpc
-        PROPERTIES EXPORT_VERSION "google-cloud-cpp::experimental-storage-grpc"
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc"
                    VERSION ${PROJECT_VERSION} SOVERSION
                                               ${PROJECT_VERSION_MAJOR})
 
@@ -359,11 +365,43 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 else ()
     add_library(google_cloud_cpp_storage_internal_protos INTERFACE)
     add_library(google_cloud_cpp_storage_grpc INTERFACE)
+
+    set_target_properties(
+        google_cloud_cpp_storage_grpc
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc"
+                   VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 add_library(google-cloud-cpp::experimental-storage-grpc ALIAS
             google_cloud_cpp_storage_grpc)
 add_library(google-cloud-cpp::internal-storage-protos ALIAS
             google_cloud_cpp_storage_internal_protos)
+
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_PC_NAME "The GCS (Google Cloud Storage) gRPC plugin")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+    "An extension to the GCS C++ client library using gRPC for transport.")
+string(
+    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+           "google_cloud_cpp_storage"
+           " google_cloud_cpp_grpc_utils"
+           " googleapis_cpp_storage_protos"
+           " google_cloud_cpp_rpc_status_protos"
+           " google_cloud_cpp_rpc_error_details_protos"
+           " google_cloud_cpp_common"
+           " libcurl"
+           " openssl")
+google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_storage_grpc)
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc"
+              " -lgoogle_cloud_cpp_storage_internal_protos" ${absl_pkg_config})
+
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+               "google_cloud_cpp_storage_grpc.pc" @ONLY)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_storage_grpc.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
     add_library(
@@ -584,14 +622,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-# Export the CMake targets to make it easy to create configuration files.
 install(
-    EXPORT storage-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_storage"
-    COMPONENT google_cloud_cpp_development)
-
-install(
-    TARGETS google_cloud_cpp_storage
+    TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
+            google_cloud_cpp_storage_internal_protos
     EXPORT storage-targets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             COMPONENT google_cloud_cpp_runtime
@@ -603,7 +636,8 @@ install(
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
 install(
-    TARGETS google_cloud_cpp_storage
+    TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
+            google_cloud_cpp_storage_internal_protos
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_development
             NAMELINK_ONLY
@@ -611,6 +645,8 @@ install(
             COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers(google_cloud_cpp_storage
+                                 include/google/cloud/storage)
+google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
                                  include/google/cloud/storage)
 
 # Setup global variables used in the following *.in files.
@@ -632,7 +668,13 @@ install(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_storage-config.cmake" @ONLY)
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    configure_file("config-grpc.cmake.in"
+                   "google_cloud_cpp_storage-config.cmake" @ONLY)
+else ()
+    configure_file("config.cmake.in" "google_cloud_cpp_storage-config.cmake"
+                   @ONLY)
+endif ()
 write_basic_package_version_file(
     "google_cloud_cpp_storage-config-version.cmake"
     VERSION ${PROJECT_VERSION}

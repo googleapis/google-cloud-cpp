@@ -1,0 +1,13 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^(master|main|v\d+\..*)$
+name: install-gcs-grpc-ci
+substitutions:
+  _BUILD_NAME: install-gcs-grpc
+  _DISTRO: fedora-34
+  _TRIGGER_TYPE: ci
+tags:
+- ci
