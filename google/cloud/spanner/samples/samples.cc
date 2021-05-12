@@ -56,7 +56,7 @@ void GetInstance(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [get-instance]
 
-void GetInstanceCommand(std::vector<std::string> const& argv) {
+void GetInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error("get-instance <project-id> <instance-id>");
   }
@@ -90,7 +90,7 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [END spanner_create_instance] [create-instance]
 
-void CreateInstanceCommand(std::vector<std::string> const& argv) {
+void CreateInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 3 && argv.size() != 4) {
     throw std::runtime_error(
         "create-instance <project-id> <instance-id> <display_name> [config]");
@@ -118,7 +118,7 @@ void UpdateInstance(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [update-instance]
 
-void UpdateInstanceCommand(std::vector<std::string> const& argv) {
+void UpdateInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "update-instance <project-id> <instance-id> <new_display_name>");
@@ -140,7 +140,7 @@ void DeleteInstance(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [delete-instance]
 
-void DeleteInstanceCommand(std::vector<std::string> const& argv) {
+void DeleteInstanceCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error("delete-instance <project-id> <instance-id>");
   }
@@ -167,7 +167,7 @@ void ListInstanceConfigs(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [list-instance-configs]
 
-void ListInstanceConfigsCommand(std::vector<std::string> const& argv) {
+void ListInstanceConfigsCommand(std::vector<std::string> argv) {
   if (argv.size() != 1) {
     throw std::runtime_error("list-instance-configs <project-id>");
   }
@@ -192,7 +192,7 @@ void GetInstanceConfig(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [get-instance-config]
 
-void GetInstanceConfigCommand(std::vector<std::string> const& argv) {
+void GetInstanceConfigCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error(
         "get-instance-config <project-id> <instance-config-name>");
@@ -217,7 +217,7 @@ void ListInstances(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [list-instances]
 
-void ListInstancesCommand(std::vector<std::string> const& argv) {
+void ListInstancesCommand(std::vector<std::string> argv) {
   if (argv.size() != 1) {
     throw std::runtime_error("list-instances <project-id>");
   }
@@ -239,7 +239,7 @@ void InstanceGetIamPolicy(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [instance-get-iam-policy]
 
-void InstanceGetIamPolicyCommand(std::vector<std::string> const& argv) {
+void InstanceGetIamPolicyCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error(
         "instance-get-iam-policy <project-id> <instance-id>");
@@ -295,7 +295,7 @@ void AddDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [add-database-reader]
 
-void AddDatabaseReaderCommand(std::vector<std::string> const& argv) {
+void AddDatabaseReaderCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "add-database-reader <project-id> <instance-id> <new-reader>");
@@ -344,7 +344,7 @@ void RemoveDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
 }
 //! [remove-database-reader]
 
-void RemoveDatabaseReaderCommand(std::vector<std::string> const& argv) {
+void RemoveDatabaseReaderCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "remove-database-reader <project-id> <instance-id> <existing-reader>");
@@ -371,7 +371,7 @@ void InstanceTestIamPermissions(
 }
 //! [instance-test-iam-permissions]
 
-void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
+void InstanceTestIamPermissionsCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error(
         "instance-test-iam-permissions <project-id> <instance-id>");
@@ -634,7 +634,7 @@ void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [list-databases]
 
-void ListDatabasesCommand(std::vector<std::string> const& argv) {
+void ListDatabasesCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error("list-databases <project-id> <instance-id>");
   }
@@ -662,7 +662,7 @@ void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [create-backup] [END spanner_create_backup]
 
-void CreateBackupCommand(std::vector<std::string> const& argv) {
+void CreateBackupCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
     throw std::runtime_error(
         "create-backup <project-id> <instance-id> <database-id> <backup-id>");
@@ -701,7 +701,7 @@ void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [restore-database] [END spanner_restore_backup]
 
-void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
+void RestoreDatabaseCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
     throw std::runtime_error(
         "restore-backup <project-id> <instance-id> <database-id> <backup-id>");
@@ -726,7 +726,7 @@ void GetBackup(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [get-backup] [END spanner_get_backup]
 
-void GetBackupCommand(std::vector<std::string> const& argv) {
+void GetBackupCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "get-backup <project-id> <instance-id> <backup-id>");
@@ -751,7 +751,7 @@ void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [update-backup] [END spanner_update_backup]
 
-void UpdateBackupCommand(std::vector<std::string> const& argv) {
+void UpdateBackupCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "update-backup <project-id> <instance-id> <backup-id>");
@@ -774,7 +774,7 @@ void DeleteBackup(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [delete-backup] [END spanner_delete_backup]
 
-void DeleteBackupCommand(std::vector<std::string> const& argv) {
+void DeleteBackupCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "delete-backup <project-id> <instance-id> <backup-id>");
@@ -806,7 +806,7 @@ void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
 }
 // [END spanner_cancel_backup_create]
 
-void CreateBackupAndCancelCommand(std::vector<std::string> const& argv) {
+void CreateBackupAndCancelCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
     throw std::runtime_error(
         "create-backup-and-cancel <project-id> <instance-id>"
@@ -856,8 +856,7 @@ void CreateDatabaseWithEncryptionKey(
 // [END spanner_create_database_with_encryption_key]
 //! [create-database-with-encryption-key]
 
-void CreateDatabaseWithEncryptionKeyCommand(
-    std::vector<std::string> const& argv) {
+void CreateDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
   if (argv.size() != 6) {
     throw std::runtime_error(
         "create-database-with-encryption-key <project-id> <instance-id>"
@@ -900,8 +899,7 @@ void CreateBackupWithEncryptionKey(
 // [END spanner_create_backup_with_encryption_key]
 //! [create-backup-with-encryption-key]
 
-void CreateBackupWithEncryptionKeyCommand(
-    std::vector<std::string> const& argv) {
+void CreateBackupWithEncryptionKeyCommand(std::vector<std::string> argv) {
   if (argv.size() != 7) {
     throw std::runtime_error(
         "create-backup-with-encryption-key <project-id> <instance-id>"
@@ -954,8 +952,7 @@ void RestoreDatabaseWithEncryptionKey(
 // [END spanner_restore_backup_with_encryption_key]
 //! [restore-database-with-encryption-key]
 
-void RestoreDatabaseWithEncryptionKeyCommand(
-    std::vector<std::string> const& argv) {
+void RestoreDatabaseWithEncryptionKeyCommand(std::vector<std::string> argv) {
   if (argv.size() != 7) {
     throw std::runtime_error(
         "restore-database-with-encryption-key <project-id> <instance-id>"
@@ -985,7 +982,7 @@ void ListBackups(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [list-backups] [END spanner_list_backups]
 
-void ListBackupsCommand(std::vector<std::string> const& argv) {
+void ListBackupsCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error("list-backups <project-id> <instance-id>");
   }
@@ -1033,7 +1030,7 @@ void ListDatabaseOperations(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [list-database-operations] [END spanner_list_database_operations]
 
-void ListDatabaseOperationsCommand(std::vector<std::string> const& argv) {
+void ListDatabaseOperationsCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
     throw std::runtime_error(
         "list-database-operations <project-id> <instance-id>");
@@ -1115,7 +1112,7 @@ void AddDatabaseReaderOnDatabase(
 }
 //! [add-database-reader-on-database]
 
-void AddDatabaseReaderOnDatabaseCommand(std::vector<std::string> const& argv) {
+void AddDatabaseReaderOnDatabaseCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
     throw std::runtime_error(
         "add-database-reader-on-database <project-id> <instance-id>"
@@ -1143,7 +1140,7 @@ void DatabaseTestIamPermissions(
 }
 //! [database-test-iam-permissions]
 
-void DatabaseTestIamPermissionsCommand(std::vector<std::string> const& argv) {
+void DatabaseTestIamPermissionsCommand(std::vector<std::string> argv) {
   if (argv.size() != 4) {
     throw std::runtime_error(
         "database-test-iam-permissions <project-id> <instance-id>"
@@ -1177,7 +1174,7 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
 }
 //! [quickstart] [END spanner_quickstart]
 
-void QuickstartCommand(std::vector<std::string> const& argv) {
+void QuickstartCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "quickstart <project-id> <instance-id> <database-id>");
@@ -1471,7 +1468,7 @@ void QueryWithTimestampParameter(
 }
 //! [END spanner_query_with_timestamp_parameter]
 
-void QueryWithTimestampParameterCommand(std::vector<std::string> const& argv) {
+void QueryWithTimestampParameterCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "query-with-timestamp-parameter <project-id> <instance-id>"
@@ -1983,7 +1980,7 @@ void CreateClientWithQueryOptions(std::string const& project_id,
   //! [END spanner_create_client_with_query_options]
 }
 
-void CreateClientWithQueryOptionsCommand(std::vector<std::string> const& argv) {
+void CreateClientWithQueryOptionsCommand(std::vector<std::string> argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "create-client-with-query-options <project-id> <instance-id>"
@@ -3227,7 +3224,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   }
 
   // Run the command.
-  command->second(argv);
+  command->second(std::move(argv));
   return 0;
 }
 
