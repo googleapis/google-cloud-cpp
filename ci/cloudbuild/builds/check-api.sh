@@ -23,11 +23,16 @@ export CC=gcc
 export CXX=g++
 
 INSTALL_PREFIX=/var/tmp/google-cloud-cpp
-# TODO(#6313): Compile with `-Og`, which abi-dumper wants.
+# abi-dumper wants us to use -Og, but that causes bogus warnings about
+# uninitialized values with GCC, so we disable that warning with
+# -Wno-maybe-uninitialized. See also:
+# https://github.com/googleapis/google-cloud-cpp/issues/6313
 cmake -GNinja \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DBUILD_SHARED_LIBS=ON \
-  -DCMAKE_BUILD_TYPE=Debug -S . -B cmake-out
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized" \
+  -S . -B cmake-out
 cmake --build cmake-out
 cmake --build cmake-out --target install
 
