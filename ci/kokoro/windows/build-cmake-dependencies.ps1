@@ -48,6 +48,7 @@ if ($args.count -ge 1) {
     $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
+$vcpkg_version = "2021.04.30"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
 # Download the right version of `vcpkg`
@@ -62,7 +63,7 @@ if (Test-Path "${vcpkg_dir}") {
             "Downloading vcpkg ports archive [$_]"
         try {
             (New-Object System.Net.WebClient).Downloadfile(
-                    "https://github.com/microsoft/vcpkg/archive/2021.04.30.zip",
+                    "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
                     "cmake-out\${vcpkg_version}.zip")
             break
         } catch {

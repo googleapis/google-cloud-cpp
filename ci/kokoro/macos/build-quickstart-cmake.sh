@@ -30,7 +30,7 @@ mkdir -p "${vcpkg_dir}"
 echo "Downloading vcpkg into ${vcpkg_dir}..."
 curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.04.30.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
-env CC="ccache ${CC}" CXX="ccache ${CXX}" "${vcpkg_dir}/bootstrap-vcpkg.sh"
+env CC="ccache cc" CXX="ccache c++" "${vcpkg_dir}/bootstrap-vcpkg.sh"
 
 "${vcpkg_bin}" remove --outdated --recurse
 "${PROJECT_ROOT}/ci/retry-command.sh" 2 5 \
