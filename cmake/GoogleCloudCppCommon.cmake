@@ -40,7 +40,7 @@ else ()
     find_package(Doxygen)
     if (Doxygen_FOUND)
         set(DOXYGEN_RECURSIVE YES)
-        set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.dox)
+        set(DOXYGEN_FILE_PATTERNS *.h *.cc *.dox)
         set(DOXYGEN_EXAMPLE_RECURSIVE YES)
         set(DOXYGEN_EXCLUDE
             "${CMAKE_INSTALL_PREFIX}"
@@ -64,7 +64,7 @@ else ()
         set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
         set(DOXYGEN_CLANG_OPTIONS)
         set(DOXYGEN_CLANG_DATABASE_PATH)
-        set(DOXYGEN_SEARCH_INCLUDES YES)
+        set(DOXYGEN_SEARCH_INCLUDES NO)
         set(DOXYGEN_INCLUDE_PATH
             "${CMAKE_INSTALL_PREFIX}/include" "${PROJECT_SOURCE_DIR}"
             "${PROJECT_BINARY_DIR}")
