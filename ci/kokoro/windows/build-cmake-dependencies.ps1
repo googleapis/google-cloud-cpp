@@ -49,9 +49,6 @@ if ($args.count -ge 1) {
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
 
-$vcpkg_version = "2afee4c5aad8f936ea2bbe58dcdff96d2eadc258"
-$vcpkg_tool_version = "2021-02-24-d67989bce1043b98092ac45996a8230a059a2d7e"
-
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
 # Download the right version of `vcpkg`
 if (Test-Path "${vcpkg_dir}") {
@@ -65,7 +62,7 @@ if (Test-Path "${vcpkg_dir}") {
             "Downloading vcpkg ports archive [$_]"
         try {
             (New-Object System.Net.WebClient).Downloadfile(
-                    "https://github.com/microsoft/vcpkg/archive/${vcpkg_version}.zip",
+                    "https://github.com/microsoft/vcpkg/archive/2021.04.30.zip",
                     "cmake-out\${vcpkg_version}.zip")
             break
         } catch {
@@ -88,24 +85,22 @@ if (-not (Test-Path "${vcpkg_dir}")) {
     Exit 1
 }
 
-if (Test-Path "${vcpkg_dir}\vcpkg.exe") {
-    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) vcpkg executable already exists."
-} else {
-    ForEach($_ in (1, 2, 3)) {
-        if ( $_ -ne 1) {
-            Start-Sleep -Seconds (60 * $_)
-        }
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "Downloading vcpkg executable [$_]"
-        try {
-            (New-Object System.Net.WebClient).Downloadfile(
-                    "https://github.com/microsoft/vcpkg-tool/releases/download/${vcpkg_tool_version}/vcpkg.exe",
-                    "${vcpkg_dir}\vcpkg.exe")
-            break
-        } catch {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) download error"
-        }
+# On Windows the bootstrap script simply downloads the latest release, so this
+# is not very slow:
+ForEach($_ in (1, 2, 3)) {
+    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) bootstrap vcpkg."
+    if (Test-Path "${vcpkg_dir}\vcpkg.exe") {
+        break
     }
+    try {
+        &"${vcpkg_dir}/bootstrap-vcpkg.bat"
+        if (Test-Path "${vcpkg_dir}\vcpkg.exe") {
+            break
+        }
+    } catch {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) bootstrap error"
+    }
+    Start-Sleep -Seconds (60 * $_)
 }
 if (-not (Test-Path "${vcpkg_dir}\vcpkg.exe")) {
     Write-Host -ForegroundColor Red "Missing vcpkg executable (${vcpkg_dir}\vcpkg.exe)."
