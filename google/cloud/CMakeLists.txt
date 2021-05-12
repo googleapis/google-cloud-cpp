@@ -405,6 +405,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/grpc_channel_credentials_authentication.h
         internal/grpc_impersonate_service_account.cc
         internal/grpc_impersonate_service_account.h
+        internal/grpc_service_account_authentication.cc
+        internal/grpc_service_account_authentication.h
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/minimal_iam_credentials_stub.cc
@@ -526,6 +528,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/grpc_access_token_authentication_test.cc
             internal/grpc_async_access_token_cache_test.cc
             internal/grpc_channel_credentials_authentication_test.cc
+            internal/grpc_service_account_authentication_test.cc
             internal/log_wrapper_test.cc
             internal/minimal_iam_credentials_stub_test.cc
             internal/polling_loop_test.cc

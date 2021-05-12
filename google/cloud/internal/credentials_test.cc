@@ -30,6 +30,7 @@ struct Visitor : public CredentialsVisitor {
   std::string name;
   AccessToken access_token;
   ImpersonateServiceAccountConfig* impersonate = nullptr;
+  std::string json_object;
 
   void visit(InsecureCredentialsConfig&) override {
     name = "InsecureCredentialsConfig";
@@ -44,6 +45,10 @@ struct Visitor : public CredentialsVisitor {
   void visit(ImpersonateServiceAccountConfig& cfg) override {
     name = "ImpersonateServiceAccountConfig";
     impersonate = &cfg;
+  }
+  void visit(ServiceAccountConfig& cfg) override {
+    name = "ServiceAccountConfig";
+    json_object = cfg.json_object();
   }
 };
 
@@ -104,6 +109,14 @@ TEST(Credentials, ImpersonateServiceAccountCredentialsDefaultWithOptions) {
   EXPECT_THAT(visitor.impersonate->scopes(), ElementsAre("scope1", "scope2"));
   EXPECT_THAT(visitor.impersonate->delegates(),
               ElementsAre("delegate1", "delegate2"));
+}
+
+TEST(Credentials, ServiceAccount) {
+  auto credentials = MakeServiceAccountCredentials("test-only-invalid");
+  Visitor visitor;
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  ASSERT_EQ("ServiceAccountConfig", visitor.name);
+  EXPECT_EQ("test-only-invalid", visitor.json_object);
 }
 
 }  // namespace

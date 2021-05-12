@@ -17,6 +17,7 @@
 #include "google/cloud/internal/grpc_access_token_authentication.h"
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
+#include "google/cloud/internal/grpc_service_account_authentication.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/memory/memory.h"
 
@@ -51,6 +52,10 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ImpersonateServiceAccountConfig& cfg) override {
       result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
                                                      std::move(options));
+    }
+    void visit(ServiceAccountConfig& cfg) override {
+      result = absl::make_unique<GrpcServiceAccountAuthentication>(
+          cfg.json_object());
     }
   } visitor(std::move(cq), std::move(options));
 
