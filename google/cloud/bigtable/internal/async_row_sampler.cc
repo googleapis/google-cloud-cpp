@@ -28,36 +28,25 @@ inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
 future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
-    CompletionQueue cq,
-    std::shared_ptr<DataClient> client,
+    CompletionQueue cq, std::shared_ptr<DataClient> client,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::string app_profile_id, std::string table_name
-    )
-{
+    MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+    std::string table_name) {
   std::shared_ptr<AsyncRowSampler> sampler(new AsyncRowSampler(
-      std::move(cq),
-      std::move(client),
-      std::move(rpc_retry_policy),
-      std::move(rpc_backoff_policy),
-      std::move(metadata_update_policy),
-      std::move(app_profile_id),
-      std::move(table_name)));
-
+      std::move(cq), std::move(client), std::move(rpc_retry_policy),
+      std::move(rpc_backoff_policy), std::move(metadata_update_policy),
+      std::move(app_profile_id), std::move(table_name)));
   sampler->StartIteration();
   return sampler->promise_.get_future();
 }
 
 AsyncRowSampler::AsyncRowSampler(
-    CompletionQueue cq,
-    std::shared_ptr<DataClient> client,
+    CompletionQueue cq, std::shared_ptr<DataClient> client,
     std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
     std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-    MetadataUpdatePolicy metadata_update_policy,
-    std::string app_profile_id,
-    std::string table_name
-    )
+    MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+    std::string table_name)
     : cq_(std::move(cq)),
       client_(std::move(client)),
       rpc_retry_policy_(std::move(rpc_retry_policy)),
@@ -84,22 +73,17 @@ void AsyncRowSampler::StartIteration() {
                grpc::CompletionQueue* cq) {
         return client->PrepareAsyncSampleRowKeys(context, request, cq);
       },
-      request,
-      std::move(context),
-      [self](btproto::SampleRowKeysResponse response){
+      request, std::move(context),
+      [self](btproto::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
-      [self](Status const& status){
-        self->OnFinish(status);
-      }
-      );
+      [self](Status const& status) { self->OnFinish(status); });
 }
 
 future<bool> AsyncRowSampler::OnRead(btproto::SampleRowKeysResponse response) {
   RowKeySample row_sample;
   row_sample.offset_bytes = response.offset_bytes();
   row_sample.row_key = std::move(*response.mutable_row_key());
-  // NOTE : I am assuming I will get the row keys back in order
   samples_.emplace_back(std::move(row_sample));
   return make_ready_future(true);
 }
@@ -119,14 +103,14 @@ void AsyncRowSampler::OnFinish(Status const& status) {
   samples_.clear();
   auto self = this->shared_from_this();
   auto delay = rpc_backoff_policy_->OnCompletion(std::move(status));
-  cq_.MakeRelativeTimer(delay)
-      .then([self](TimerFuture result) {
-        if (result.get()) {
-          self->StartIteration();
-        } else {
-          self->promise_.set_value(Status(StatusCode::kCancelled, "call cancelled"));
-        }
-      });
+  cq_.MakeRelativeTimer(delay).then([self](TimerFuture result) {
+    if (result.get()) {
+      self->StartIteration();
+    } else {
+      self->promise_.set_value(
+          Status(StatusCode::kCancelled, "call cancelled"));
+    }
+  });
 }
 
 }  // namespace internal

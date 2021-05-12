@@ -19,8 +19,8 @@
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
-#include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <string>
 #include <vector>
 
@@ -30,32 +30,24 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 /**
- * Objects of this class represent the state of receiving row keys via AsyncSampleRows.
- *
+ * Objects of this class represent the state of receiving row keys via
+ * AsyncSampleRows.
  */
-class AsyncRowSampler
-    : public std::enable_shared_from_this<AsyncRowSampler> {
+class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
  public:
   static future<StatusOr<std::vector<RowKeySample>>> Create(
-      CompletionQueue cq,
-      std::shared_ptr<DataClient> client,
+      CompletionQueue cq, std::shared_ptr<DataClient> client,
       std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy,
-      std::string app_profile_id, 
-      std::string table_name
-      );
+      MetadataUpdatePolicy metadata_update_policy, std::string app_profile_id,
+      std::string table_name);
 
  private:
-  AsyncRowSampler(
-                      CompletionQueue cq,
-                      std::shared_ptr<DataClient> client,
-                      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-                      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-                      MetadataUpdatePolicy metadata_update_policy,
-                      std::string app_profile_id, 
-                      std::string table_name
-                      );
+  AsyncRowSampler(CompletionQueue cq, std::shared_ptr<DataClient> client,
+                  std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+                  std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+                  MetadataUpdatePolicy metadata_update_policy,
+                  std::string app_profile_id, std::string table_name);
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);
@@ -69,7 +61,6 @@ class AsyncRowSampler
   std::string app_profile_id_;
   std::string table_name_;
 
-  Status status_;
   std::vector<RowKeySample> samples_;
   promise<StatusOr<std::vector<RowKeySample>>> promise_;
 };

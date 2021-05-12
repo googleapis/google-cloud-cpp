@@ -339,6 +339,7 @@ TEST_F(DataAsyncFutureIntegrationTest, TableSampleRowsTest) {
   auto last = samples->back();
   EXPECT_LT(0, last.offset_bytes);
 }
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

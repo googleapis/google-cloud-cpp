@@ -58,9 +58,8 @@ class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
 
 TEST_F(AsyncSampleRowKeysTest, Simple) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-    .WillOnce([](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
@@ -73,12 +72,11 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
             })
             .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
 
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status::OK;
-                });
-        return reader;
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
         });
+        return reader;
+      });
 
   auto samples_future = table_.AsyncSampleRows();
 
@@ -95,9 +93,8 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
 
 TEST_F(AsyncSampleRowKeysTest, Retry) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-    .WillOnce([](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
@@ -110,15 +107,13 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
             })
             .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
 
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-                });
-            return reader;
-            })
-    .WillOnce([](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+        });
+        return reader;
+      })
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
@@ -130,12 +125,11 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
               }
             })
             .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status::OK;
-                });
-        return reader;
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
         });
+        return reader;
+      });
 
   auto samples_future = table_.AsyncSampleRows();
 
@@ -160,23 +154,22 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
   // We give up on the 3rd error.
   auto constexpr kErrorCount = 2;
   Table custom_table(client_, "foo_table",
-      LimitedErrorCountRetryPolicy(kErrorCount));
+                     LimitedErrorCountRetryPolicy(kErrorCount));
 
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-    .Times(kErrorCount + 1)
-    .WillRepeatedly([](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+      .Times(kErrorCount + 1)
+      .WillRepeatedly([](grpc::ClientContext*,
+                         btproto::SampleRowKeysRequest const&,
+                         grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
-                });
-            return reader;
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
         });
+        return reader;
+      });
 
   auto samples_future = custom_table.AsyncSampleRows();
 
@@ -191,7 +184,7 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
 
   auto status = samples_future.get();
   ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable));
-  
+
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
@@ -215,37 +208,34 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
   EXPECT_CALL(*mock, OnCompletion(error));
 
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-    .WillOnce([grpc_error](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+      .WillOnce([grpc_error](grpc::ClientContext*,
+                             btproto::SampleRowKeysRequest const&,
+                             grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish)
             .WillOnce([grpc_error](grpc::Status* status, void*) {
-                *status = grpc_error;
-                });
-            return reader;
-            })
-    .WillOnce([](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+              *status = grpc_error;
+            });
+        return reader;
+      })
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
-        EXPECT_CALL(*reader, Finish)
-            .WillOnce([](grpc::Status* status, void*) {
-                *status = grpc::Status::OK;
-                });
-        return reader;
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
         });
+        return reader;
+      });
 
-  auto samples_future = internal::AsyncRowSampler::Create(cq_, client_,
-     rpc_retry_policy_->clone(), std::move(mock),
-     metadata_update_policy_,
-     "my-app-profile", "my-table");
+  auto samples_future = internal::AsyncRowSampler::Create(
+      cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
+      metadata_update_policy_, "my-app-profile", "my-table");
 
   SimulateIteration();
   // simulate the backoff timer
@@ -254,7 +244,7 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
   ASSERT_EQ(1U, cq_impl_->size());
 
   SimulateIteration();
-  
+
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
@@ -267,24 +257,23 @@ TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
   EXPECT_CALL(*mock, OnCompletion(error));
 
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
-    .WillOnce([grpc_error](grpc::ClientContext*,
-          btproto::SampleRowKeysRequest const&,
-          grpc::CompletionQueue*) {
+      .WillOnce([grpc_error](grpc::ClientContext*,
+                             btproto::SampleRowKeysRequest const&,
+                             grpc::CompletionQueue*) {
         auto reader = absl::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish)
             .WillOnce([grpc_error](grpc::Status* status, void*) {
-                *status = grpc_error;
-                });
-            return reader;
+              *status = grpc_error;
             });
+        return reader;
+      });
 
-  auto samples_future = internal::AsyncRowSampler::Create(cq_, client_,
-     rpc_retry_policy_->clone(), std::move(mock),
-     metadata_update_policy_,
-     "my-app-profile", "my-table");
+  auto samples_future = internal::AsyncRowSampler::Create(
+      cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
+      metadata_update_policy_, "my-app-profile", "my-table");
 
   SimulateIteration();
   ASSERT_EQ(1U, cq_impl_->size());
