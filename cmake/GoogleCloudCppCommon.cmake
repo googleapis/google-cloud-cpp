@@ -39,10 +39,14 @@ if (${CMAKE_VERSION} VERSION_LESS "3.12")
 else ()
     find_package(Doxygen)
     if (Doxygen_FOUND)
-        set(DOXYGEN_RECURSIVE YES)
+        set(DOXYGEN_RECURSIVE NO)
         set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.dox)
         set(DOXYGEN_EXAMPLE_RECURSIVE YES)
-        set(DOXYGEN_EXCLUDE "third_party" "cmake-build-debug" "cmake-out")
+        set(DOXYGEN_EXCLUDE
+            "${PROJECT_SOURCE_DIR}/third_party"
+            "${PROJECT_SOURCE_DIR}/build-out"
+            "${PROJECT_SOURCE_DIR}/cmake-build-debug"
+            "${PROJECT_SOURCE_DIR}/cmake-out")
         set(DOXYGEN_EXCLUDE_SYMLINKS YES)
         set(DOXYGEN_QUIET YES)
         set(DOXYGEN_WARN_AS_ERROR NO)
@@ -60,9 +64,9 @@ else ()
         set(DOXYGEN_CLANG_OPTIONS)
         set(DOXYGEN_CLANG_DATABASE_PATH)
         set(DOXYGEN_SEARCH_INCLUDES YES)
-        set(DOXYGEN_INCLUDE_PATH "${CMAKE_INSTALL_PREFIX}/include"
-                                 "${PROJECT_SOURCE_DIR}"
-                                 "${PROJECT_BINARY_DIR}")
+        set(DOXYGEN_INCLUDE_PATH
+            "${CMAKE_INSTALL_PREFIX}/include" "${PROJECT_SOURCE_DIR}"
+            "${PROJECT_BINARY_DIR}")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)
@@ -73,7 +77,7 @@ else ()
         set(DOXYGEN_DOT_TRANSPARENT YES)
         set(DOXYGEN_MACRO_EXPANSION YES)
         set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
-        set(DOXYGEN_HTML_TIMESTAMP)
+        set(DOXYGEN_HTML_TIMESTAMP YES)
         set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
         set(DOXYGEN_SHOW_USED_FILES NO)
         set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
