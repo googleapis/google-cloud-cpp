@@ -8,7 +8,7 @@ github:
 name: publish-docs-pr
 substitutions:
   _BUILD_NAME: publish-docs
-  _DISTRO: fedora-33
+  _DISTRO: fedora-34
   _TRIGGER_TYPE: pr
 tags:
 - pr
