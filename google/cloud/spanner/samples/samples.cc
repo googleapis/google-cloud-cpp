@@ -3248,11 +3248,13 @@ std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
   std::cout << "\n" << __func__ << ":\n";
 
   std::string ret;
+  std::string first;
   int i = 0;
   for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
     if (!instance_config) break;
     if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
     auto const config = instance_config->name().substr(config_prefix.size());
+    if (first.empty()) first = config;
     if (config.rfind(included_prefix, 0) != 0) continue;
     if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
       continue;
@@ -3264,7 +3266,7 @@ std::string PickConfig(google::cloud::spanner::InstanceAdminClient client,
     std::cout << "    " << i << " " << config << " " << selected << " " << ret
               << "\n";
   }
-  return ret;
+  return ret.empty() ? first : ret;
 }
 
 void RunAllSlowInstanceTests(
@@ -3289,9 +3291,7 @@ void RunAllSlowInstanceTests(
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  auto const config =
-      emulator ? "emulator-config"
-               : PickConfig(instance_admin_client, project_id, generator);
+  auto const config = PickConfig(instance_admin_client, project_id, generator);
   if (config.empty()) throw std::runtime_error("Failed to pick a config");
 
   std::cout << "\nRunning create-instance sample" << std::endl;
