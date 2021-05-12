@@ -39,10 +39,11 @@ if (${CMAKE_VERSION} VERSION_LESS "3.12")
 else ()
     find_package(Doxygen)
     if (Doxygen_FOUND)
-        set(DOXYGEN_RECURSIVE NO)
+        set(DOXYGEN_RECURSIVE YES)
         set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.dox)
         set(DOXYGEN_EXAMPLE_RECURSIVE YES)
         set(DOXYGEN_EXCLUDE
+            "${CMAKE_INSTALL_PREFIX}"
             "${PROJECT_SOURCE_DIR}/third_party"
             "${PROJECT_SOURCE_DIR}/build-out"
             "${PROJECT_SOURCE_DIR}/cmake-build-debug"
