@@ -41,6 +41,11 @@ python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/e
 #
 function integration::bazel_args() {
   declare -a args
+
+  readonly bazel_output=$(bazel info output_base)
+  readonly bazel_googleapis_path="${bazel_output}/external/com_google_googleapis/"
+  readonly bazel_proto_path="${bazel_output}/external/com_google_protobuf/src/"
+
   args+=(
     # "--test_tag_filters=integration-test"
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
@@ -49,6 +54,12 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc"
     "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client"
     "--test_env=HOME=${HOME}"
+
+    # Generator
+    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH=${bazel_googleapis_path}"
+    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH=${bazel_proto_path}"
+    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes"
+    "--test_env=GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH=/workspace"
 
     # IAM
     "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}"
@@ -126,11 +137,7 @@ function integration::bazel_with_emulators() {
     google/cloud:all
 
   io::log_h2 "Running Generator integration tests (with emulator)"
-  env \
-    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS=yes \
-    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH=/workspace \
-    "./generator/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+  bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test generator/...
 
   io::log_h2 "Running IAM Credentials integration tests"
   bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test \
@@ -188,8 +195,14 @@ function integration::ctest_with_emulators() {
   )
 
   io::log_h2 "Running Generator integration tests via CTest"
-  "${PROJECT_ROOT}/generator/ci/${EMULATOR_SCRIPT}" \
-    "${cmake_out}" "${ctest_args[@]}"
+  googleapis_abs_path="$(realpath "${cmake_out}")/external/googleapis/src/googleapis_download/"
+  env -C "${cmake_out}" \
+    GOOGLE_CLOUD_CPP_GENERATOR_RUN_INTEGRATION_TESTS="yes" \
+    GOOGLE_CLOUD_CPP_GENERATOR_GOOGLEAPIS_PATH="${googleapis_abs_path}" \
+    GOOGLE_CLOUD_CPP_GENERATOR_PROTO_PATH="/usr/include/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH="/workspace/" \
+    GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH="/workspace/" \
+    ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \

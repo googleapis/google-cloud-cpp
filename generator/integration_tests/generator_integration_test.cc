@@ -80,7 +80,7 @@ class GeneratorIntegrationTest
     // Path to find .proto files defined for these tests.
     auto code_path =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_GENERATOR_CODE_PATH")
-            .value_or("/v");
+            .value_or("/workspace");
 
     golden_path_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_GENERATOR_GOLDEN_PATH")
