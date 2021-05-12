@@ -19,10 +19,16 @@ set -eu
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 
+export CC=clang
+export CXX=clang++
+
+install_dir="$(mktemp -d)"
 version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
+  "-DCMAKE_INSTALL_PREFIX=${install_dir}"
+  "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )
 
 # Extract the version number if we're on a release branch.
@@ -50,10 +56,12 @@ if [[ "${TRIGGER_TYPE}" == "ci" ]]; then
   bucket="docs-staging"
 fi
 
-export CC=clang
-export CXX=clang++
 cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
+cmake --build cmake-out --target install
 cmake --build cmake-out --target doxygen-docs
+
+# Cleans up the installed artifacts, which are no longer needed.
+test -d "${install_dir}" && rm -rf "${install_dir}"
 
 io::log_h2 "Installing the docuploader package $(date)"
 python3 -m pip install --user gcp-docuploader protobuf \

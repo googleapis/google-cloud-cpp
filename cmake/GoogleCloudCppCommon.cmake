@@ -60,7 +60,8 @@ else ()
         set(DOXYGEN_CLANG_OPTIONS)
         set(DOXYGEN_CLANG_DATABASE_PATH)
         set(DOXYGEN_SEARCH_INCLUDES YES)
-        set(DOXYGEN_INCLUDE_PATH "${PROJECT_SOURCE_DIR}"
+        set(DOXYGEN_INCLUDE_PATH "${CMAKE_INSTALL_PREFIX}/include"
+                                 "${PROJECT_SOURCE_DIR}"
                                  "${PROJECT_BINARY_DIR}")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
