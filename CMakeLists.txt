@@ -170,6 +170,12 @@ set(GOOGLE_CLOUD_CPP_ENABLE
 
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
+# We no longer build the generator by default, but if it was explicitly
+# requested, we add it to the list of enabled libraries.
+if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
+    list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
+endif ()
+
 # Remove any library that's been disabled from the list.
 foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
     string(TOUPPER "${library}" _library)
