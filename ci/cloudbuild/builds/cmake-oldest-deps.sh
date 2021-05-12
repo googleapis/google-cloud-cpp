@@ -23,15 +23,25 @@ source module ci/cloudbuild/builds/lib/integration.sh
 export CC=clang
 export CXX=clang++
 
-if [[ ! -d cmake-out/vcpkg ]]; then
-  mkdir -p cmake-out
-  git -C cmake-out clone https://github.com/microsoft/vcpkg.git
+vcpkg_root="${PROJECT_ROOT}/cmake-out/vcpkg"
+if [[ ! -d "${vcpkg_root}" ]]; then
+  mkdir -p "${vcpkg_root}"
+  git clone https://github.com/microsoft/vcpkg.git "${vcpkg_root}"
 fi
+
+io::log_h2 "Bootstrapping vcpkg"
+env CC="ccache ${CC}" CXX="ccache ${CXX}" "${vcpkg_root}"/bootstrap-vcpkg.sh
+
+io::log_h2 "Configuring"
 cmake -GNinja -S . -B cmake-out/build \
-  "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/cmake-out/vcpkg/scripts/buildsystems/vcpkg.cmake" \
+  "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_root}/scripts/buildsystems/vcpkg.cmake" \
   "-DVCPKG_MANIFEST_DIR=ci/etc/oldest-deps" \
   "-DVCPKG_FEATURE_FLAGS=versions,manifest"
+
+io::log_h2 "Building"
 cmake --build cmake-out/build
+
+io::log_h2 "Testing"
 env -C cmake-out/build ctest -LE "integration-test" --parallel "$(nproc)"
 
 integration::ctest_with_emulators "cmake-out/build"
