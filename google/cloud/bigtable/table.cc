@@ -14,10 +14,12 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
+#include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
+#include "data_client.h"
 #include "row_key_sample.h"
 #include <thread>
 #include <type_traits>
@@ -382,25 +384,9 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
 
 future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
   auto cq = background_threads_->cq();
-
-  // Copy the policies in effect for this operation.
-  auto backoff_policy = clone_rpc_backoff_policy();
-  auto retry_policy = clone_rpc_retry_policy();
-  std::vector<bigtable::RowKeySample> samples;
-
-  // Build the RPC request for SampleRowKeys
-  btproto::SampleRowKeysRequest request;
-  btproto::SampleRowKeysResponse response;
-  SetCommonTableOperationRequest<btproto::SampleRowKeysRequest>(
-      request, app_profile_id_, table_name_);
-
-  auto client = client_;
-  auto metadata_update_policy = clone_metadata_update_policy();
-  
-
-  promise<StatusOr<std::vector<bigtable::RowKeySample>>> sample_promise;
-  sample_promise.set_value(Status(StatusCode::kUnimplemented, "TODO : dbolduc"));
-  return sample_promise.get_future();
+  return internal::AsyncRowSampler::Create(
+      cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_, app_profile_id_, table_name_);
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(

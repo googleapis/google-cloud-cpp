@@ -257,21 +257,22 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
 }
 
 void AsyncSampleRows(google::cloud::bigtable::Table table,
-                std::vector<std::string> const&) {
+                     std::vector<std::string> const&) {
   //! [async sample row keys]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::Table table) {
-    future<StatusOr<std::vector<cbt::RowKeySample>>> samples_future = table.AsyncSampleRows();
+    future<StatusOr<std::vector<cbt::RowKeySample>>> samples_future =
+        table.AsyncSampleRows();
 
     samples_future
         .then([](future<StatusOr<std::vector<cbt::RowKeySample>>> f) {
-          auto samples = f.get();  
+          auto samples = f.get();
           if (!samples) throw std::runtime_error(samples.status().message());
           for (auto const& sample : *samples) {
-            std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
-                      << "\n";
+            std::cout << "key=" << sample.row_key << " - "
+                      << sample.offset_bytes << "\n";
           }
         })
         .get();  // block to simplify the example.

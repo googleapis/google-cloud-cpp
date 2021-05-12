@@ -31,7 +31,7 @@ class Table;
 namespace internal {
 class AsyncBulkMutatorNoex;
 class AsyncRetryBulkApply;
-class AsyncSampleRowKeys;
+class AsyncRowSampler;
 class BulkMutator;
 template <typename ReadRowCallback,
           typename std::enable_if<
@@ -98,7 +98,7 @@ class DataClient {
   friend class Table;
   friend class internal::AsyncBulkMutatorNoex;
   friend class internal::AsyncRetryBulkApply;
-  friend class internal::AsyncSampleRowKeys;
+  friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
   friend class RowReader;
   template <typename RowFunctor, typename FinishFunctor>

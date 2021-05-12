@@ -703,7 +703,7 @@ class Table {
   StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
 
   /**
-   * Asynchronous sample of the row keys in the table, incuding approximate
+   * Asynchronous sample of the row keys in the table, including approximate
    * data sizes.
    *
    * @returns A future, that becomes satisfied when the operation completes.
