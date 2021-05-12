@@ -127,7 +127,8 @@ class ReadPartition {
       : proto_(std::move(proto)) {}
   ReadPartition(std::string transaction_id, std::string session_id,
                 std::string partition_token, std::string table_name,
-                KeySet key_set, std::vector<std::string> column_names,
+                google::cloud::spanner::KeySet key_set,
+                std::vector<std::string> column_names,
                 google::cloud::spanner::ReadOptions read_options);
 
   // Accessor methods for use by friends.
