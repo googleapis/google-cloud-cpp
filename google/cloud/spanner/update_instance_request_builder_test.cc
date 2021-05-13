@@ -106,19 +106,19 @@ TEST(UpdateInstanceRequestBuilder, SetLabels) {
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto builder = UpdateInstanceRequestBuilder(instance);
-  auto req = builder.SetNodeCount(2)
+  auto req = builder.SetProcessingUnits(500)
                  .SetDisplayName(expected_display_name)
                  .SetLabels({{"newkey", "newvalue"}})
                  .Build();
   EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_display_name, req.instance().display_name());
-  EXPECT_EQ(2, req.instance().node_count());
+  EXPECT_EQ(500, req.instance().processing_units());
   EXPECT_EQ(1, req.instance().labels_size());
   EXPECT_EQ("newvalue", req.instance().labels().at("newkey"));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
       "display_name", req.field_mask()));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
-      "node_count", req.field_mask()));
+      "processing_units", req.field_mask()));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
       "labels", req.field_mask()));
 }
@@ -133,19 +133,19 @@ TEST(UpdateInstanceRequestBuilder, SetLabelsRvalueReference) {
   instance.set_node_count(1);
   instance.mutable_labels()->insert({"key", "value"});
   auto req = UpdateInstanceRequestBuilder(instance)
-                 .SetNodeCount(2)
+                 .SetProcessingUnits(500)
                  .SetDisplayName(expected_display_name)
                  .SetLabels({{"newkey", "newvalue"}})
                  .Build();
   EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_display_name, req.instance().display_name());
-  EXPECT_EQ(2, req.instance().node_count());
+  EXPECT_EQ(500, req.instance().processing_units());
   EXPECT_EQ(1, req.instance().labels_size());
   EXPECT_EQ("newvalue", req.instance().labels().at("newkey"));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
       "display_name", req.field_mask()));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
-      "node_count", req.field_mask()));
+      "processing_units", req.field_mask()));
   EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
       "labels", req.field_mask()));
 }
