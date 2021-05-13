@@ -636,6 +636,4 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils"
         COMPONENT google_cloud_cpp_development)
-
-    add_subdirectory(samples)
 endif ()
