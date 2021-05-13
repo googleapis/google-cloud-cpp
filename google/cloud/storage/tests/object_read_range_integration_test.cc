@@ -59,7 +59,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRangeSmall) {
   ASSERT_THAT(insert, IsOk());
   EXPECT_THAT(contents.size(), insert->size());
 
-  auto size = static_cast<std::int64_t>(insert->size());
+  auto const size = static_cast<std::int64_t>(insert->size());
 
   // Read several small portions of the object, expecting specific results.
   struct Test {
@@ -97,7 +97,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
   ASSERT_THAT(insert, IsOk());
   EXPECT_THAT(contents.size(), insert->size());
 
-  auto size = static_cast<std::int64_t>(insert->size());
+  auto const size = static_cast<std::int64_t>(insert->size());
 
   // Read several small portions of the object, expecting specific results.
   struct Test {
@@ -106,7 +106,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
   } cases[] = {
       {0, contents.substr(0)},
       {4, contents.substr(4)},
-      {size - 1, contents.substr(size - 1)},
+      {size - 1, contents.substr(contents.size() - 1)},
   };
 
   for (auto const& test : cases) {
@@ -133,15 +133,15 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
   ASSERT_THAT(insert, IsOk());
   EXPECT_THAT(contents.size(), insert->size());
 
-  auto size = static_cast<std::int64_t>(insert->size());
+  auto const size = static_cast<std::int64_t>(insert->size());
 
   // Read several small portions of the object, expecting specific results.
   struct Test {
     std::int64_t offset;
     std::string expected;
   } cases[] = {
-      {1, contents.substr(size - 1)},
-      {4, contents.substr(size - 4)},
+      {1, contents.substr(contents.size() - 1)},
+      {4, contents.substr(contents.size() - 4)},
       {size, contents},
   };
 
