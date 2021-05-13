@@ -114,9 +114,12 @@ target_compile_options(google_cloud_cpp_iam_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+
+# Examples are enabled if possible, but package maintainers may want to disable
+# compilation to speed up their builds.
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

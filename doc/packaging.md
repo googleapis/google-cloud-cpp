@@ -59,7 +59,7 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
+cmake -H. -Bcmake-out -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
 cmake --build cmake-out --target install
 ```
 
@@ -300,7 +300,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -460,7 +463,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -594,7 +600,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -744,7 +753,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -912,7 +924,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1010,7 +1025,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1185,7 +1203,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1331,7 +1352,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1503,7 +1527,10 @@ We can now compile and install `google-cloud-cpp`
 ```bash
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
-cmake -DBUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX="${PREFIX}" -H. -Bcmake-out
+cmake -H. -Bcmake-out \
+  -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DCMAKE_INSTALL_PREFIX="${PREFIX}"
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```

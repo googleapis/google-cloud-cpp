@@ -374,16 +374,15 @@ endfunction ()
 if (BUILD_TESTING)
     spanner_client_define_tests()
     spanner_client_define_benchmarks()
+    add_subdirectory(integration_tests)
+    add_subdirectory(benchmarks) # macro benchmarks
 endif (BUILD_TESTING)
 
-add_subdirectory(integration_tests)
-add_subdirectory(benchmarks) # macro benchmarks
-
-# Only compile the samples if we're building with exceptions enabled. They
-# require exceptions to keep them simple and idiomatic.
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+# Examples are enabled if possible, but package maintainers may want to disable
+# compilation to speed up their builds.
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+endif ()
 
 # Export the CMake targets to make it easy to create configuration files.
 install(

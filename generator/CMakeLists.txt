@@ -170,11 +170,10 @@ function (google_cloud_cpp_generator_define_tests)
     endforeach ()
 endfunction ()
 
-add_subdirectory(integration_tests)
-
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
 # is installed from source.
 if (BUILD_TESTING)
+    add_subdirectory(integration_tests)
     google_cloud_cpp_generator_define_tests()
 endif (BUILD_TESTING)

@@ -301,16 +301,15 @@ endfunction ()
 # is installed from source.
 if (BUILD_TESTING)
     google_cloud_cpp_pubsub_client_define_tests()
+    add_subdirectory(benchmarks)
+    add_subdirectory(integration_tests)
 endif (BUILD_TESTING)
 
-add_subdirectory(benchmarks)
-add_subdirectory(integration_tests)
-
-# Only compile the samples if we're building with exceptions enabled. They
-# require exceptions to keep them simple and idiomatic.
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+# Examples are enabled if possible, but package maintainers may want to disable
+# compilation to speed up their builds.
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

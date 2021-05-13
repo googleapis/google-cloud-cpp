@@ -80,7 +80,7 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -DBUILD_TESTING=OFF -H. -Bcmake-out
+cmake -H. -Bcmake-out -DBUILD_TESTING=OFF -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
 cmake --build cmake-out --target install
 ```
 

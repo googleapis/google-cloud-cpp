@@ -223,6 +223,14 @@ endif ()
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)
 
+# The examples use exception handling to simplify the code. Therefore they
+# cannot be compiled when exceptions are disabled, and applications cannot force
+# the flag.
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
+    ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
+
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
 
@@ -237,7 +245,7 @@ endforeach ()
 
 # The examples are more readable if we use exceptions for error handling. We had
 # to tradeoff readability vs. "making them compile everywhere".
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXAMPLES
     AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_subdirectory(google/cloud/examples)

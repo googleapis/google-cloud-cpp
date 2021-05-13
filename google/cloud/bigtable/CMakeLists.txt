@@ -323,17 +323,17 @@ if (GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
         PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
 endif ()
 
+# Only compile integration tests and benchmarks if testing is enabled.
 if (BUILD_TESTING)
     add_subdirectory(tests)
+    add_subdirectory(benchmarks)
 endif ()
 
-add_subdirectory(benchmarks)
-
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    # The examples are more readable if we use exceptions for error handling. We
-    # had to tradeoff readability vs. "making them compile everywhere".
+# Examples are enabled if possible, but package maintainers may want to disable
+# compilation to speed up their builds.
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(examples)
-endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+endif ()
 
 # Export the CMake targets to make it easy to create configuration files.
 install(

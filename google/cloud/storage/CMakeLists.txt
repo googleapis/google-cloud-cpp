@@ -615,13 +615,16 @@ if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
     endif ()
 endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
-add_subdirectory(benchmarks)
+# Skip the macro benchmarks if testing is disabled.
+if (BUILD_TESTING)
+    add_subdirectory(benchmarks)
+endif ()
 
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    # The examples are more readable if we use exceptions for error handling. We
-    # had to tradeoff readability vs. "making them compile everywhere".
+# Examples are enabled if possible, but package maintainers may want to disable
+# compilation to speed up their builds.
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
     add_subdirectory(examples)
-endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+endif ()
 
 install(
     TARGETS google_cloud_cpp_storage google_cloud_cpp_storage_grpc
