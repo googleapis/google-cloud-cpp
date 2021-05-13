@@ -23,6 +23,7 @@ version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
+  "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir)"
 )
 
 # Extract the version number if we're on a release branch.
