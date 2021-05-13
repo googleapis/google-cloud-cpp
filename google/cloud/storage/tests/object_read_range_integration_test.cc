@@ -106,7 +106,6 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
   } cases[] = {
       {0, contents.substr(0)},
       {4, contents.substr(4)},
-      {0, contents},
       {size - 1, contents.substr(size - 1)},
   };
 
