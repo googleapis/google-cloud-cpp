@@ -15,12 +15,16 @@
 
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
-#include "google/cloud/bigtable/internal/async_retry_op.h"
+#include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/row_key_sample.h"
+#include "google/cloud/bigtable/rpc_backoff_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/invoke_result.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include "google/cloud/future_generic.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
+#include <memory>
 #include <string>
 #include <vector>
 

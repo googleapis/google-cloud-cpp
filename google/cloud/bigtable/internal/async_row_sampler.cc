@@ -13,11 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
-#include "google/cloud/bigtable/data_client.h"
-#include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "absl/memory/memory.h"
-#include "google/bigtable/v2/bigtable.pb.h"
+#include "grpcpp/client_context.h"
+#include "grpcpp/completion_queue.h"
 #include <chrono>
 
 namespace btproto = ::google::bigtable::v2;
