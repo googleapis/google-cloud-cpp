@@ -31,6 +31,7 @@ namespace btproto = ::google::bigtable::v2;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
 class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
  protected:
@@ -40,17 +41,6 @@ class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
         rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         metadata_update_policy_("my_table", MetadataParamTypes::NAME) {}
-
-  void SimulateIteration() {
-    // Finish Start()
-    cq_impl_->SimulateCompletion(true);
-    // Return data
-    cq_impl_->SimulateCompletion(true);
-    // Finish stream
-    cq_impl_->SimulateCompletion(false);
-    // Finish Finish()
-    cq_impl_->SimulateCompletion(true);
-  }
 
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
@@ -70,6 +60,12 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
                 r->set_offset_bytes(11);
               }
             })
+            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
+              {
+                r->set_row_key("test2");
+                r->set_offset_bytes(22);
+              }
+            })
             .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
 
         EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
@@ -80,15 +76,26 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
 
   auto samples_future = table_.AsyncSampleRows();
 
-  SimulateIteration();
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response 1
+  cq_impl_->SimulateCompletion(true);
+  // Return response 2
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
 
   auto status = samples_future.get();
   ASSERT_STATUS_OK(status);
 
   auto samples = status.value();
-  ASSERT_EQ(1U, samples.size());
+  ASSERT_EQ(2U, samples.size());
   EXPECT_EQ("test1", samples[0].row_key);
   EXPECT_EQ(11, samples[0].offset_bytes);
+  EXPECT_EQ("test2", samples[1].row_key);
+  EXPECT_EQ(22, samples[1].offset_bytes);
 }
 
 TEST_F(AsyncSampleRowKeysTest, Retry) {
@@ -133,12 +140,28 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
 
   auto samples_future = table_.AsyncSampleRows();
 
-  SimulateIteration();
-  // simulate the backoff timer
+  // Start()
   cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+  // Simulate the backoff timer
+  cq_impl_->SimulateCompletion(true);
+
   ASSERT_EQ(1U, cq_impl_->size());
 
-  SimulateIteration();
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+
   ASSERT_EQ(0U, cq_impl_->size());
 
   auto status = samples_future.get();
@@ -174,16 +197,32 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
   auto samples_future = custom_table.AsyncSampleRows();
 
   for (int retry = 0; retry < kErrorCount; ++retry) {
-    SimulateIteration();
-    // simulate the backoff timer
+    // Start()
     cq_impl_->SimulateCompletion(true);
+    // Return response
+    cq_impl_->SimulateCompletion(true);
+    // End stream
+    cq_impl_->SimulateCompletion(false);
+    // Finish()
+    cq_impl_->SimulateCompletion(true);
+    // Simulate the backoff timer
+    cq_impl_->SimulateCompletion(true);
+
     ASSERT_EQ(1U, cq_impl_->size());
   }
 
-  SimulateIteration();
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
 
   auto status = samples_future.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kUnavailable));
+  ASSERT_THAT(status,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try again")));
 
   ASSERT_EQ(0U, cq_impl_->size());
 }
@@ -237,13 +276,27 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 
-  SimulateIteration();
-  // simulate the backoff timer
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+  // Simulate the backoff timer
   cq_impl_->SimulateCompletion(true);
 
   ASSERT_EQ(1U, cq_impl_->size());
 
-  SimulateIteration();
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
 
   ASSERT_EQ(0U, cq_impl_->size());
 }
@@ -275,18 +328,118 @@ TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
       cq_, client_, rpc_retry_policy_->clone(), std::move(mock),
       metadata_update_policy_, "my-app-profile", "my-table");
 
-  SimulateIteration();
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+
   ASSERT_EQ(1U, cq_impl_->size());
 
-  // cancel the pending operation.
+  // Cancel the pending operation.
   samples_future.cancel();
-  // simulate the backoff timer expiring
+  // Simulate the backoff timer
   cq_impl_->SimulateCompletion(false);
 
   ASSERT_EQ(0U, cq_impl_->size());
 
   auto status = samples_future.get();
-  ASSERT_THAT(status, StatusIs(StatusCode::kCancelled));
+  ASSERT_THAT(status,
+              StatusIs(StatusCode::kCancelled, HasSubstr("call cancelled")));
+}
+
+TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
+  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
+        EXPECT_CALL(*reader, StartCall);
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
+              {
+                r->set_row_key("test1");
+                r->set_offset_bytes(11);
+              }
+            })
+            .WillOnce([](btproto::SampleRowKeysResponse*, void*) {});
+
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
+        return reader;
+      });
+
+  auto samples_future = table_.AsyncSampleRows();
+  // samples_future.cancel();
+
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response
+  cq_impl_->SimulateCompletion(true);
+
+  // Cancel the pending operation
+  samples_future.cancel();
+
+  // End stream
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+
+  auto status = samples_future.get();
+  ASSERT_STATUS_OK(status);
+
+  auto samples = status.value();
+  ASSERT_EQ(1U, samples.size());
+  EXPECT_EQ("test1", samples[0].row_key);
+  EXPECT_EQ(11, samples[0].offset_bytes);
+}
+
+TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
+  EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
+      .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
+                   grpc::CompletionQueue*) {
+        auto reader = absl::make_unique<
+            MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
+        EXPECT_CALL(*reader, StartCall);
+        EXPECT_CALL(*reader, Read)
+            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
+              {
+                r->set_row_key("test1");
+                r->set_offset_bytes(11);
+              }
+            })
+            .WillOnce([](btproto::SampleRowKeysResponse* r, void*) {
+              {
+                r->set_row_key("test2");
+                r->set_offset_bytes(22);
+              }
+            });
+        EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status(grpc::StatusCode::CANCELLED, "User cancelled");
+        });
+        return reader;
+      });
+
+  auto samples_future = table_.AsyncSampleRows();
+
+  // Start()
+  cq_impl_->SimulateCompletion(true);
+  // Return response 1
+  cq_impl_->SimulateCompletion(true);
+  // Cancel the pending operation
+  samples_future.cancel();
+  // Return response 2
+  cq_impl_->SimulateCompletion(false);
+  // Finish()
+  cq_impl_->SimulateCompletion(true);
+
+  auto status = samples_future.get();
+  EXPECT_THAT(status,
+              StatusIs(StatusCode::kCancelled, HasSubstr("User cancelled")));
 }
 
 }  // namespace

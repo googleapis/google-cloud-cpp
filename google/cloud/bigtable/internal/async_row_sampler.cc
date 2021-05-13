@@ -53,7 +53,9 @@ AsyncRowSampler::AsyncRowSampler(
       rpc_backoff_policy_(std::move(rpc_backoff_policy)),
       metadata_update_policy_(std::move(metadata_update_policy)),
       app_profile_id_(std::move(app_profile_id)),
-      table_name_(std::move(table_name)) {}
+      table_name_(std::move(table_name)),
+      stream_cancelled_(false),
+      promise_([&] { stream_cancelled_ = true; }) {}
 
 void AsyncRowSampler::StartIteration() {
   btproto::SampleRowKeysRequest request;
@@ -81,6 +83,8 @@ void AsyncRowSampler::StartIteration() {
 }
 
 future<bool> AsyncRowSampler::OnRead(btproto::SampleRowKeysResponse response) {
+  if (stream_cancelled_) return make_ready_future(false);
+
   RowKeySample row_sample;
   row_sample.offset_bytes = response.offset_bytes();
   row_sample.row_key = std::move(*response.mutable_row_key());
