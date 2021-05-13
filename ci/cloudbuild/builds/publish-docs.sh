@@ -61,7 +61,7 @@ cmake --build cmake-out --target install
 cmake --build cmake-out --target doxygen-docs
 
 # Cleans up the installed artifacts, which are no longer needed.
-test -d "${install_dir}" && rm -rf "${install_dir}"
+rm -rf "${install_dir}"
 
 io::log_h2 "Installing the docuploader package $(date)"
 python3 -m pip install --user gcp-docuploader protobuf \
