@@ -246,7 +246,7 @@ endforeach ()
 
 # The examples are more readable if we use exceptions for error handling. We had
 # to tradeoff readability vs. "making them compile everywhere".
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXAMPLES
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
     AND bigtable IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_subdirectory(google/cloud/examples)
