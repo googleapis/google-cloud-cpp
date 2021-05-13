@@ -47,15 +47,14 @@ class CreateInstanceRequestBuilder {
       default;
 
   /**
-   * Constructor requires Instance and Cloud Spanner instance config name. It
-   * sets node_count = 1, and display_name = instance_id as the default values.
+   * Constructor requires Instance and Cloud Spanner instance config name.
+   * The display_name is set to a default value of in.instance_id().
    */
   CreateInstanceRequestBuilder(Instance const& in, std::string config) {
     request_.set_parent("projects/" + in.project_id());
     request_.set_instance_id(in.instance_id());
     request_.mutable_instance()->set_name(in.FullName());
     request_.mutable_instance()->set_display_name(in.instance_id());
-    request_.mutable_instance()->set_node_count(1);
     request_.mutable_instance()->set_config(std::move(config));
   }
 
@@ -79,6 +78,16 @@ class CreateInstanceRequestBuilder {
     return std::move(*this);
   }
 
+  CreateInstanceRequestBuilder& SetProcessingUnits(int processing_units) & {
+    request_.mutable_instance()->set_processing_units(processing_units);
+    return *this;
+  }
+
+  CreateInstanceRequestBuilder&& SetProcessingUnits(int processing_units) && {
+    request_.mutable_instance()->set_processing_units(processing_units);
+    return std::move(*this);
+  }
+
   CreateInstanceRequestBuilder& SetLabels(
       std::map<std::string, std::string> const& labels) & {
     for (auto const& pair : labels) {
@@ -98,9 +107,21 @@ class CreateInstanceRequestBuilder {
   }
 
   google::spanner::admin::instance::v1::CreateInstanceRequest& Build() & {
+    // Preserve original behavior of defaulting node_count to 1.
+    if (request_.instance().processing_units() == 0) {
+      if (request_.instance().node_count() == 0) {
+        request_.mutable_instance()->set_node_count(1);
+      }
+    }
     return request_;
   }
   google::spanner::admin::instance::v1::CreateInstanceRequest&& Build() && {
+    // Preserve original behavior of defaulting node_count to 1.
+    if (request_.instance().processing_units() == 0) {
+      if (request_.instance().node_count() == 0) {
+        request_.mutable_instance()->set_node_count(1);
+      }
+    }
     return std::move(request_);
   }
 

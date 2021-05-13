@@ -93,6 +93,14 @@ class UpdateInstanceRequestBuilder {
     SetNodeCountImpl(node_count);
     return std::move(*this);
   }
+  UpdateInstanceRequestBuilder& SetProcessingUnits(int processing_units) & {
+    SetProcessingUnitsImpl(processing_units);
+    return *this;
+  }
+  UpdateInstanceRequestBuilder&& SetProcessingUnits(int processing_units) && {
+    SetProcessingUnitsImpl(processing_units);
+    return std::move(*this);
+  }
   UpdateInstanceRequestBuilder& AddLabels(
       std::map<std::string, std::string> const& labels) & {
     AddLabelsImpl(labels);
@@ -137,6 +145,13 @@ class UpdateInstanceRequestBuilder {
       request_.mutable_field_mask()->add_paths("node_count");
     }
     request_.mutable_instance()->set_node_count(node_count);
+  }
+  void SetProcessingUnitsImpl(int processing_units) {
+    if (!google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+            "processing_units", request_.field_mask())) {
+      request_.mutable_field_mask()->add_paths("processing_units");
+    }
+    request_.mutable_instance()->set_processing_units(processing_units);
   }
   void AddLabelsImpl(std::map<std::string, std::string> const& labels) {
     if (!google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(

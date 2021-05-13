@@ -87,7 +87,7 @@ def google_cloud_cpp_deps():
             # committed to the main branch.
             patch_tool = "patch",
             patch_args = ["-p1"],
-            patches = [],
+            patches = ["googleapis.patch"],
         )
 
     # Load protobuf.

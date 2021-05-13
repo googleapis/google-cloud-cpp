@@ -70,14 +70,14 @@ TEST(CreateInstanceRequestBuilder, Lvalue) {
 
   auto builder = CreateInstanceRequestBuilder(in, expected_config);
   auto req = builder.SetDisplayName(expected_display_name)
-                 .SetNodeCount(1)
+                 .SetProcessingUnits(500)
                  .SetLabels({{"key", "value"}})
                  .Build();
   EXPECT_EQ("projects/test-project", req.parent());
   EXPECT_EQ("test-instance", req.instance_id());
   EXPECT_EQ(expected_name, req.instance().name());
   EXPECT_EQ(expected_config, req.instance().config());
-  EXPECT_EQ(1, req.instance().node_count());
+  EXPECT_EQ(500, req.instance().processing_units());
   EXPECT_EQ(1, req.instance().labels_size());
   EXPECT_EQ("value", req.instance().labels().at("key"));
   EXPECT_EQ(expected_display_name, req.instance().display_name());
