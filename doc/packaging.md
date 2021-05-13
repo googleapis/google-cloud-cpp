@@ -211,7 +211,7 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
         zlib-devel
 ```
 
@@ -323,7 +323,7 @@ workstation or build server.
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake ccache cmake curl \
         gcc gcc-c++ git gzip libcurl-devel libopenssl-devel \
-        libtool make re2-devel tar wget which zlib zlib-devel-static
+        libtool make patch re2-devel tar wget which zlib zlib-devel-static
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -1224,7 +1224,7 @@ library (required by gRPC):
 sudo dnf makecache && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel pkgconfig \
+sudo dnf install -y ccache cmake gcc-c++ git make openssl-devel patch pkgconfig \
         re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
@@ -1377,8 +1377,8 @@ sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
 sudo yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
-        git libtool make openssl-devel pkgconfig re2-devel tar wget which \
-        zlib-devel
+        git libtool make openssl-devel patch pkgconfig re2-devel tar wget \
+        which zlib-devel
 sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 

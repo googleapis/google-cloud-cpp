@@ -28,8 +28,8 @@ RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
     yum install -y automake ccache cmake3 curl-devel devtoolset-7 gcc gcc-c++ \
-        git libtool make openssl-devel pkgconfig re2-devel tar wget which \
-        zlib-devel
+        git libtool make openssl-devel patch pkgconfig re2-devel tar wget \
+        which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
