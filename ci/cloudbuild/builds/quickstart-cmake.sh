@@ -26,11 +26,10 @@ export CXX=g++
 
 io::log_h2 "Installing vcpkg"
 vcpkg_dir="${HOME}/vcpkg-quickstart"
-vcpkg_sha="105456798402aa5f494ffeb3b19dd0d870656d39"
 vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
-io::log "Downloading vcpkg@${vcpkg_sha} into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/${vcpkg_sha}.tar.gz" |
+io::log "Downloading vcpkg into ${vcpkg_dir}..."
+curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.04.30.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
 env CC="ccache ${CC}" CXX="ccache ${CXX}" "${vcpkg_dir}"/bootstrap-vcpkg.sh
 

@@ -26,6 +26,10 @@ export CXX=clang++
 vcpkg_root="${PROJECT_ROOT}/cmake-out/vcpkg"
 if [[ ! -d "${vcpkg_root}" ]]; then
   mkdir -p "${vcpkg_root}"
+  # To enable versioning we need to clone the vcpkg history. It seems that
+  # vcpkg uses `git` to find out what was the state of their packages at a
+  # given "baseline" (totally reasonable, otherwise they would need to
+  # implement another version control system).
   git clone https://github.com/microsoft/vcpkg.git "${vcpkg_root}"
 fi
 
