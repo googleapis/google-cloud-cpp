@@ -277,7 +277,9 @@ StatusOr<ObjectMetadata> GrpcClient::InsertObjectMedia(
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
     n = (std::min)(contents_size - offset, maximum_buffer_size);
-    data.set_content(contents.substr(offset, n));
+    data.set_content(
+        contents.substr(static_cast<std::string::size_type>(offset),
+                        static_cast<std::string::size_type>(n)));
     data.mutable_crc32c()->set_value(crc32c::Crc32c(data.content()));
 
     if (offset + n >= contents_size) {
