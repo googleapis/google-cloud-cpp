@@ -36,10 +36,10 @@ inline namespace STORAGE_CLIENT_NS {
  * @note the Credentials parameter in the configuration is ignored. The gRPC
  *     client only supports Google Default Credentials.
  *
- * @param options the configuration parameters for the Client.
  * @param channel_id set the `grpc.channel_id` attribute in the underlying
  *   gRPC channel, this can be used to segregate the gRPC channels for different
  *   clients.
+ * @param opts the configuration parameters for the Client.
  *
  * @warning this is an experimental feature, and subject to change without
  *     notice.

@@ -17,8 +17,6 @@
 set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
-                       "FIRESTORE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/README.md" "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")

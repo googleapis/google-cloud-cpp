@@ -1285,7 +1285,7 @@ class InstanceAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * Use #SetNativeIamPolicy()
+   * Use #SetIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::cloud::IamPolicy>> AsyncSetIamPolicy(
