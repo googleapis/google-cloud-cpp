@@ -44,7 +44,7 @@ cc_test(
 cc_test(
     name = "grpc_credential_types",
     timeout = "long",
-    srcs = ["grpc_credential_types"],
+    srcs = ["grpc_credential_types.cc"],
     tags = [
         "integration-test",
     ],
