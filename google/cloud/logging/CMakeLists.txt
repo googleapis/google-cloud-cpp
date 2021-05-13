@@ -17,12 +17,9 @@
 set(DOXYGEN_PROJECT_NAME "Google Cloud Logging C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
                             "examples")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v1")
 
 include(GoogleCloudCppCommon)
 

@@ -40,7 +40,7 @@ else ()
     find_package(Doxygen)
     if (Doxygen_FOUND)
         set(DOXYGEN_RECURSIVE YES)
-        set(DOXYGEN_FILE_PATTERNS *.h *.cc *.proto *.dox)
+        set(DOXYGEN_FILE_PATTERNS *.h *.cc *.dox)
         set(DOXYGEN_EXAMPLE_RECURSIVE YES)
         set(DOXYGEN_EXCLUDE "third_party" "cmake-build-debug" "cmake-out")
         set(DOXYGEN_EXCLUDE_SYMLINKS YES)
@@ -72,6 +72,21 @@ else ()
         set(DOXYGEN_DOT_TRANSPARENT YES)
         set(DOXYGEN_MACRO_EXPANSION YES)
         set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
+        # Macros confuse Doxygen. We don't use too many, so we predefine them
+        # here to be noops or have simple values.
+        set(DOXYGEN_PREDEFINED
+            "GOOGLE_CLOUD_CPP_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_IAM_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_BIGTABLE_ASYNC_CQ_PARAM_DEPRECATED(x)="
+            "GOOGLE_CLOUD_CPP_GENERATED_NS=v${PROJECT_VERSION_MAJOR}"
+            "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
+            "GOOGLE_CLOUD_CPP_PUBSUB_NS=v${PROJECT_VERSION_MAJOR}"
+            "BIGTABLE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}"
+            "SPANNER_CLIENT_NS=v${PROJECT_VERSION_MAJOR}"
+            "STORAGE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
         set(DOXYGEN_HTML_TIMESTAMP YES)
         set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
         set(DOXYGEN_SHOW_USED_FILES NO)

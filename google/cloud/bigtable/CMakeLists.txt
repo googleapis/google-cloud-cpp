@@ -21,9 +21,6 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
-set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${PROJECT_VERSION_MAJOR}"
-                       "BIGTABLE_CLIENT_NS=v${PROJECT_VERSION_MAJOR}")
-
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/README.md"
     "*/google/cloud/bigtable/benchmarks/*"

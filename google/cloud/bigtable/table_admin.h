@@ -1516,7 +1516,7 @@ class TableAdmin {
    * and using different copies in each thread.
    *
    * @par Example
-   * Use #GetNativeIamPolicy()
+   * Use #GetIamPolicy()
    */
   GOOGLE_CLOUD_CPP_BIGTABLE_ADMIN_ASYNC_DEPRECATED
   future<StatusOr<google::iam::v1::Policy>> AsyncGetIamPolicy(
