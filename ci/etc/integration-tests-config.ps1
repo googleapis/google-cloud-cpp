@@ -47,3 +47,9 @@ $env:GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-d
 # Cloud IAM configuration parameters
 $env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT="iam-test-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 $env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT="invalid-test-account@cloud-cpp-testing-resources.iam.gserviceaccount.com"
+
+# Cloud IAM credential samples configuration parameters
+# An account able to invoke the Hello World service(s)
+$env:GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT="hello-world-caller@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+# The URL for the HTTP Hello World service, typically set by the CI scripts
+$envGOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=""

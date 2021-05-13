@@ -172,6 +172,20 @@ function integration::bazel_with_emulators() {
   bazel "${verb}" "${args[@]}" \
     "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
     //google/cloud/bigtable/examples:bigtable_grpc_credentials
+
+  # This test is run separately because the URL may change and that would mess
+  # up Bazel's test cache for all the other tests.
+  io::log_h2 "Running combined examples using multiple services"
+  hello_world_http="$(gcloud run services describe \
+    hello-world-http \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" --platform="managed" \
+    --format='value(status.url)')"
+
+  bazel "${verb}" "${args[@]}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
+    //google/cloud/examples/...
 }
 
 # Runs integration tests with CTest using emulators. This function requires a

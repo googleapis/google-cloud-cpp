@@ -1,0 +1,7 @@
+{
+  "name": "hello-world-http",
+  "version-string": "unversioned",
+  "dependencies": [
+    "functions-framework-cpp"
+  ]
+}
