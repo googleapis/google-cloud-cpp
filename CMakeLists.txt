@@ -215,8 +215,12 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 # Building this target results in all protobufs being compiled.
 add_custom_target(google-cloud-cpp-protos)
 
+# Each subproject adds dependencies to this target to have their docs generated.
+add_custom_target(doxygen-docs)
+
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     add_subdirectory(external/googleapis)
+    add_dependencies(doxygen-docs google-cloud-cpp-protos)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
@@ -230,9 +234,6 @@ cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
     ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-
-# Each subproject adds dependencies to this target to have their docs generated.
-add_custom_target(doxygen-docs)
 
 add_subdirectory(google/cloud)
 foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
