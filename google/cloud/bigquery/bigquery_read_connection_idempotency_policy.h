@@ -38,11 +38,11 @@ class BigQueryReadConnectionIdempotencyPolicy {
       const = 0;
 
   virtual google::cloud::internal::Idempotency CreateReadSession(
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) = 0;
 
   virtual google::cloud::internal::Idempotency SplitReadStream(
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) = 0;
 };
 

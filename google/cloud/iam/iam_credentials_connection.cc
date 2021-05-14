@@ -30,27 +30,27 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 IAMCredentialsConnection::~IAMCredentialsConnection() = default;
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsConnection::GenerateAccessToken(
-    ::google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
+    google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsConnection::GenerateIdToken(
-    ::google::iam::credentials::v1::GenerateIdTokenRequest const&) {
+    google::iam::credentials::v1::GenerateIdTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsConnection::SignBlob(
-    ::google::iam::credentials::v1::SignBlobRequest const&) {
+    google::iam::credentials::v1::SignBlobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsConnection::SignJwt(
-    ::google::iam::credentials::v1::SignJwtRequest const&) {
+    google::iam::credentials::v1::SignJwtRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -71,54 +71,54 @@ class IAMCredentialsConnectionImpl : public IAMCredentialsConnection {
 
   ~IAMCredentialsConnectionImpl() override = default;
 
-  StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->GenerateAccessToken(request),
         [this](grpc::ClientContext& context,
-               ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
+               google::iam::credentials::v1::GenerateAccessTokenRequest const&
                    request) {
           return stub_->GenerateAccessToken(context, request);
         },
         request, __func__);
   }
 
-  StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(::google::iam::credentials::v1::GenerateIdTokenRequest const&
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
+  GenerateIdToken(google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->GenerateIdToken(request),
         [this](grpc::ClientContext& context,
-               ::google::iam::credentials::v1::GenerateIdTokenRequest const&
+               google::iam::credentials::v1::GenerateIdTokenRequest const&
                    request) {
           return stub_->GenerateIdToken(context, request);
         },
         request, __func__);
   }
 
-  StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      ::google::iam::credentials::v1::SignBlobRequest const& request) override {
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->SignBlob(request),
         [this](grpc::ClientContext& context,
-               ::google::iam::credentials::v1::SignBlobRequest const& request) {
+               google::iam::credentials::v1::SignBlobRequest const& request) {
           return stub_->SignBlob(context, request);
         },
         request, __func__);
   }
 
-  StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      ::google::iam::credentials::v1::SignJwtRequest const& request) override {
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      google::iam::credentials::v1::SignJwtRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->SignJwt(request),
         [this](grpc::ClientContext& context,
-               ::google::iam::credentials::v1::SignJwtRequest const& request) {
+               google::iam::credentials::v1::SignJwtRequest const& request) {
           return stub_->SignJwt(context, request);
         },
         request, __func__);

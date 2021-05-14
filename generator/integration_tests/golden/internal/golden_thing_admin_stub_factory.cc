@@ -39,7 +39,7 @@ CreateDefaultGoldenThingAdminStub(Options const& options) {
       options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
-      ::google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
+      google::test::admin::database::v1::GoldenThingAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 

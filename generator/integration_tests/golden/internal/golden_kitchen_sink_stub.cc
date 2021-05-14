@@ -30,11 +30,11 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenKitchenSinkStub::~GoldenKitchenSinkStub() = default;
 
-StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 DefaultGoldenKitchenSinkStub::GenerateAccessToken(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-    ::google::test::admin::database::v1::GenerateAccessTokenResponse response;
+  google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenResponse response;
     auto status =
         grpc_stub_->GenerateAccessToken(&client_context, request, &response);
     if (!status.ok()) {
@@ -43,11 +43,11 @@ DefaultGoldenKitchenSinkStub::GenerateAccessToken(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 DefaultGoldenKitchenSinkStub::GenerateIdToken(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-    ::google::test::admin::database::v1::GenerateIdTokenResponse response;
+  google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+    google::test::admin::database::v1::GenerateIdTokenResponse response;
     auto status =
         grpc_stub_->GenerateIdToken(&client_context, request, &response);
     if (!status.ok()) {
@@ -56,11 +56,11 @@ DefaultGoldenKitchenSinkStub::GenerateIdToken(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 DefaultGoldenKitchenSinkStub::WriteLogEntries(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-    ::google::test::admin::database::v1::WriteLogEntriesResponse response;
+  google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+    google::test::admin::database::v1::WriteLogEntriesResponse response;
     auto status =
         grpc_stub_->WriteLogEntries(&client_context, request, &response);
     if (!status.ok()) {
@@ -69,11 +69,11 @@ DefaultGoldenKitchenSinkStub::WriteLogEntries(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::ListLogsResponse>
+StatusOr<google::test::admin::database::v1::ListLogsResponse>
 DefaultGoldenKitchenSinkStub::ListLogs(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListLogsRequest const& request) {
-    ::google::test::admin::database::v1::ListLogsResponse response;
+  google::test::admin::database::v1::ListLogsRequest const& request) {
+    google::test::admin::database::v1::ListLogsResponse response;
     auto status =
         grpc_stub_->ListLogs(&client_context, request, &response);
     if (!status.ok()) {
@@ -82,21 +82,21 @@ DefaultGoldenKitchenSinkStub::ListLogs(
     return response;
 }
 
-std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 DefaultGoldenKitchenSinkStub::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> client_context,
-    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
   auto stream = grpc_stub_->TailLogEntries(client_context.get(), request);
   return absl::make_unique<internal::StreamingReadRpcImpl<
-      ::google::test::admin::database::v1::TailLogEntriesResponse>>(
+      google::test::admin::database::v1::TailLogEntriesResponse>>(
       std::move(client_context), std::move(stream));
 }
 
-StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 DefaultGoldenKitchenSinkStub::ListServiceAccountKeys(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-    ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
+  google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+    google::test::admin::database::v1::ListServiceAccountKeysResponse response;
     auto status =
         grpc_stub_->ListServiceAccountKeys(&client_context, request, &response);
     if (!status.ok()) {

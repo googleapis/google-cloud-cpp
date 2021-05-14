@@ -48,94 +48,91 @@ class IAMConnection {
  public:
   virtual ~IAMConnection() = 0;
 
-  virtual StreamRange<::google::iam::admin::v1::ServiceAccount>
+  virtual StreamRange<google::iam::admin::v1::ServiceAccount>
   ListServiceAccounts(
-      ::google::iam::admin::v1::ListServiceAccountsRequest request);
+      google::iam::admin::v1::ListServiceAccountsRequest request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      ::google::iam::admin::v1::GetServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
+      google::iam::admin::v1::GetServiceAccountRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccount>
-  CreateServiceAccount(
-      ::google::iam::admin::v1::CreateServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
+      google::iam::admin::v1::CreateServiceAccountRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccount>
-  PatchServiceAccount(
-      ::google::iam::admin::v1::PatchServiceAccountRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
+      google::iam::admin::v1::PatchServiceAccountRequest const& request);
 
   virtual Status DeleteServiceAccount(
-      ::google::iam::admin::v1::DeleteServiceAccountRequest const& request);
+      google::iam::admin::v1::DeleteServiceAccountRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::UndeleteServiceAccountResponse>
+  virtual StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
   UndeleteServiceAccount(
-      ::google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
+      google::iam::admin::v1::UndeleteServiceAccountRequest const& request);
 
   virtual Status EnableServiceAccount(
-      ::google::iam::admin::v1::EnableServiceAccountRequest const& request);
+      google::iam::admin::v1::EnableServiceAccountRequest const& request);
 
   virtual Status DisableServiceAccount(
-      ::google::iam::admin::v1::DisableServiceAccountRequest const& request);
+      google::iam::admin::v1::DisableServiceAccountRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ListServiceAccountKeysResponse>
+  virtual StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
-      ::google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
+      google::iam::admin::v1::ListServiceAccountKeysRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
   GetServiceAccountKey(
-      ::google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::GetServiceAccountKeyRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
   CreateServiceAccountKey(
-      ::google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
   UploadServiceAccountKey(
-      ::google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request);
 
   virtual Status DeleteServiceAccountKey(
-      ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
-  virtual StatusOr<::google::iam::v1::Policy> GetIamPolicy(
-      ::google::iam::v1::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StatusOr<::google::iam::v1::Policy> SetIamPolicy(
-      ::google::iam::v1::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      ::google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual StreamRange<::google::iam::admin::v1::Role> QueryGrantableRoles(
-      ::google::iam::admin::v1::QueryGrantableRolesRequest request);
+  virtual StreamRange<google::iam::admin::v1::Role> QueryGrantableRoles(
+      google::iam::admin::v1::QueryGrantableRolesRequest request);
 
-  virtual StreamRange<::google::iam::admin::v1::Role> ListRoles(
-      ::google::iam::admin::v1::ListRolesRequest request);
+  virtual StreamRange<google::iam::admin::v1::Role> ListRoles(
+      google::iam::admin::v1::ListRolesRequest request);
 
-  virtual StatusOr<::google::iam::admin::v1::Role> GetRole(
-      ::google::iam::admin::v1::GetRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role> GetRole(
+      google::iam::admin::v1::GetRoleRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::Role> CreateRole(
-      ::google::iam::admin::v1::CreateRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role> CreateRole(
+      google::iam::admin::v1::CreateRoleRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::Role> UpdateRole(
-      ::google::iam::admin::v1::UpdateRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role> UpdateRole(
+      google::iam::admin::v1::UpdateRoleRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::Role> DeleteRole(
-      ::google::iam::admin::v1::DeleteRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role> DeleteRole(
+      google::iam::admin::v1::DeleteRoleRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::Role> UndeleteRole(
-      ::google::iam::admin::v1::UndeleteRoleRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::Role> UndeleteRole(
+      google::iam::admin::v1::UndeleteRoleRequest const& request);
 
-  virtual StreamRange<::google::iam::admin::v1::Permission>
+  virtual StreamRange<google::iam::admin::v1::Permission>
   QueryTestablePermissions(
-      ::google::iam::admin::v1::QueryTestablePermissionsRequest request);
+      google::iam::admin::v1::QueryTestablePermissionsRequest request);
 
-  virtual StatusOr<::google::iam::admin::v1::QueryAuditableServicesResponse>
+  virtual StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
   QueryAuditableServices(
-      ::google::iam::admin::v1::QueryAuditableServicesRequest const& request);
+      google::iam::admin::v1::QueryAuditableServicesRequest const& request);
 
-  virtual StatusOr<::google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      ::google::iam::admin::v1::LintPolicyRequest const& request);
+  virtual StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
+      google::iam::admin::v1::LintPolicyRequest const& request);
 };
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});

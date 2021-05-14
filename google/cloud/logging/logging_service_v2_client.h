@@ -133,13 +133,13 @@ class LoggingServiceV2Client {
    *  `entries.write`, you should try to include several log entries in this
    *  list, rather than calling this method for each individual log entry.
    * @return
-   * [::google::logging::v2::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L243)
+   * [google::logging::v2::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L243)
    */
-  StatusOr<::google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       std::string const& log_name,
-      ::google::api::MonitoredResource const& resource,
+      google::api::MonitoredResource const& resource,
       std::map<std::string, std::string> const& labels,
-      std::vector<::google::logging::v2::LogEntry> const& entries);
+      std::vector<google::logging::v2::LogEntry> const& entries);
 
   /**
    * Lists log entries.  Use this method to retrieve log entries that originated
@@ -173,7 +173,7 @@ class LoggingServiceV2Client {
    *  in order of decreasing timestamps (newest first).  Entries with equal
    *  timestamps are returned in order of their `insert_id` values.
    */
-  StreamRange<::google::logging::v2::LogEntry> ListLogEntries(
+  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
       std::vector<std::string> const& resource_names, std::string const& filter,
       std::string const& order_by);
 
@@ -196,9 +196,9 @@ class LoggingServiceV2Client {
    * before the operation will be deleted.
    *
    * @param request
-   * [::google::logging::v2::DeleteLogRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L140)
+   * [google::logging::v2::DeleteLogRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L140)
    */
-  Status DeleteLog(::google::logging::v2::DeleteLogRequest const& request);
+  Status DeleteLog(google::logging::v2::DeleteLogRequest const& request);
 
   /**
    * Writes log entries to Logging. This API method is the
@@ -210,12 +210,12 @@ class LoggingServiceV2Client {
    * folders)
    *
    * @param request
-   * [::google::logging::v2::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L162)
+   * [google::logging::v2::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L162)
    * @return
-   * [::google::logging::v2::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L243)
+   * [google::logging::v2::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L243)
    */
-  StatusOr<::google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
-      ::google::logging::v2::WriteLogEntriesRequest const& request);
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request);
 
   /**
    * Lists log entries.  Use this method to retrieve log entries that originated
@@ -224,30 +224,30 @@ class LoggingServiceV2Client {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * @param request
-   * [::google::logging::v2::ListLogEntriesRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L257)
+   * [google::logging::v2::ListLogEntriesRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L257)
    */
-  StreamRange<::google::logging::v2::LogEntry> ListLogEntries(
-      ::google::logging::v2::ListLogEntriesRequest request);
+  StreamRange<google::logging::v2::LogEntry> ListLogEntries(
+      google::logging::v2::ListLogEntriesRequest request);
 
   /**
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * @param request
-   * [::google::logging::v2::ListMonitoredResourceDescriptorsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L331)
+   * [google::logging::v2::ListMonitoredResourceDescriptorsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L331)
    */
-  StreamRange<::google::api::MonitoredResourceDescriptor>
+  StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts.
    * Only logs that have entries are listed.
    *
    * @param request
-   * [::google::logging::v2::ListLogsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L356)
+   * [google::logging::v2::ListLogsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/logging/v2/logging.proto#L356)
    */
   StreamRange<std::string> ListLogs(
-      ::google::logging::v2::ListLogsRequest request);
+      google::logging::v2::ListLogsRequest request);
 
  private:
   std::shared_ptr<LoggingServiceV2Connection> connection_;

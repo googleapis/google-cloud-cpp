@@ -33,50 +33,50 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenKitchenSinkConnection::~GoldenKitchenSinkConnection() = default;
 
-StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkConnection::GenerateAccessToken(
-    ::google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkConnection::GenerateIdToken(
-    ::google::test::admin::database::v1::GenerateIdTokenRequest const&) {
+    google::test::admin::database::v1::GenerateIdTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkConnection::WriteLogEntries(
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const&) {
+    google::test::admin::database::v1::WriteLogEntriesRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StreamRange<std::string> GoldenKitchenSinkConnection::ListLogs(
-    ::google::test::admin::database::v1::ListLogsRequest request) {
+    google::test::admin::database::v1::ListLogsRequest request) {
   return google::cloud::internal::MakePaginationRange<StreamRange<
     std::string>>(
     std::move(request),
-    [](::google::test::admin::database::v1::ListLogsRequest const&) {
-      return StatusOr<::google::test::admin::database::v1::ListLogsResponse>{};
+    [](google::test::admin::database::v1::ListLogsRequest const&) {
+      return StatusOr<google::test::admin::database::v1::ListLogsResponse>{};
     },
-    [](::google::test::admin::database::v1::ListLogsResponse const&) {
+    [](google::test::admin::database::v1::ListLogsResponse const&) {
       return std::vector<std::string>();
     });
 }
 
-StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> GoldenKitchenSinkConnection::TailLogEntries(
-    ::google::test::admin::database::v1::TailLogEntriesRequest const&) {
+StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> GoldenKitchenSinkConnection::TailLogEntries(
+    google::test::admin::database::v1::TailLogEntriesRequest const&) {
   return google::cloud::internal::MakeStreamRange<
-      ::google::test::admin::database::v1::TailLogEntriesResponse>(
+      google::test::admin::database::v1::TailLogEntriesResponse>(
       []() -> absl::variant<Status,
-      ::google::test::admin::database::v1::TailLogEntriesResponse>{
+      google::test::admin::database::v1::TailLogEntriesResponse>{
         return Status(StatusCode::kUnimplemented, "not implemented");}
       );
 }
 
-StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkConnection::ListServiceAccountKeys(
-    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
+    google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -93,47 +93,47 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
 
   ~GoldenKitchenSinkConnectionImpl() override = default;
 
-  StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override {
+      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->GenerateAccessToken(request),
         [this](grpc::ClientContext& context,
-            ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+            google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
           return stub_->GenerateAccessToken(context, request);
         },
         request, __func__);
 }
 
-  StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) override {
+      google::test::admin::database::v1::GenerateIdTokenRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->GenerateIdToken(request),
         [this](grpc::ClientContext& context,
-            ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+            google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
           return stub_->GenerateIdToken(context, request);
         },
         request, __func__);
 }
 
-  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(
-      ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override {
+      google::test::admin::database::v1::WriteLogEntriesRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->WriteLogEntries(request),
         [this](grpc::ClientContext& context,
-            ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+            google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
           return stub_->WriteLogEntries(context, request);
         },
         request, __func__);
 }
 
   StreamRange<std::string> ListLogs(
-      ::google::test::admin::database::v1::ListLogsRequest request) override {
+      google::test::admin::database::v1::ListLogsRequest request) override {
     request.clear_page_token();
     auto stub = stub_;
     auto retry =
@@ -146,16 +146,16 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         std::string>>(
         std::move(request),
         [stub, retry, backoff, idempotency, function_name]
-          (::google::test::admin::database::v1::ListLogsRequest const& r) {
+          (google::test::admin::database::v1::ListLogsRequest const& r) {
           return google::cloud::internal::RetryLoop(
               retry->clone(), backoff->clone(), idempotency,
               [stub](grpc::ClientContext& context,
-                     ::google::test::admin::database::v1::ListLogsRequest const& request) {
+                     google::test::admin::database::v1::ListLogsRequest const& request) {
                 return stub->ListLogs(context, request);
               },
               r, function_name);
         },
-        [](::google::test::admin::database::v1::ListLogsResponse r) {
+        [](google::test::admin::database::v1::ListLogsResponse r) {
           std::vector<std::string> result(r.log_names().size());
           auto& messages = *r.mutable_log_names();
           std::move(messages.begin(), messages.end(), result.begin());
@@ -163,8 +163,8 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         });
   }
 
-  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
-      ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
+  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse> TailLogEntries(
+      google::test::admin::database::v1::TailLogEntriesRequest const& request) override {
     auto stub = stub_;
     auto retry_policy =
         std::shared_ptr<GoldenKitchenSinkRetryPolicy const>(
@@ -173,33 +173,33 @@ class GoldenKitchenSinkConnectionImpl : public GoldenKitchenSinkConnection {
         backoff_policy_prototype_->clone());
 
     auto factory = [stub](
-        ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+        google::test::admin::database::v1::TailLogEntriesRequest const& request) {
       return stub->TailLogEntries(absl::make_unique<grpc::ClientContext>(),
           request);
     };
 
     auto resumable =
         internal::MakeResumableStreamingReadRpc<
-            ::google::test::admin::database::v1::TailLogEntriesResponse,
-            ::google::test::admin::database::v1::TailLogEntriesRequest>(
+            google::test::admin::database::v1::TailLogEntriesResponse,
+            google::test::admin::database::v1::TailLogEntriesRequest>(
                 retry_policy->clone(), backoff_policy->clone(),
                 [](std::chrono::milliseconds) {}, factory,
                 GoldenKitchenSinkTailLogEntriesStreamingUpdater,
                 request);
 
     return internal::MakeStreamRange(internal::StreamReader<
-        ::google::test::admin::database::v1::TailLogEntriesResponse>(
+        google::test::admin::database::v1::TailLogEntriesResponse>(
         [resumable]{return resumable->Read();}));
   }
 
-  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
-      ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override {
+      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override {
     return google::cloud::internal::RetryLoop(
         retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
         idempotency_policy_->ListServiceAccountKeys(request),
         [this](grpc::ClientContext& context,
-            ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+            google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
           return stub_->ListServiceAccountKeys(context, request);
         },
         request, __func__);

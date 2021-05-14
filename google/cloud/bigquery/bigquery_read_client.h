@@ -93,12 +93,11 @@ class BigQueryReadClient {
    * greater than the current system max limit of 1,000. Streams must be read
    * starting from offset 0.
    * @return
-   * [::google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/stream.proto#L47)
+   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/stream.proto#L47)
    */
-  StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       std::string const& parent,
-      ::google::cloud::bigquery::storage::v1::ReadSession const& read_session,
+      google::cloud::bigquery::storage::v1::ReadSession const& read_session,
       std::int32_t max_stream_count);
 
   /**
@@ -115,10 +114,10 @@ class BigQueryReadClient {
    * from Read. Requesting a larger offset is undefined. If not specified, start
    * reading from offset zero.
    * @return
-   * [::google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L185)
+   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L185)
    */
-  StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(std::string const& read_stream, std::int64_t offset);
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      std::string const& read_stream, std::int64_t offset);
 
   /**
    * Creates a new read session. A read session divides the contents of a
@@ -142,13 +141,12 @@ class BigQueryReadClient {
    * not require manual clean-up by the caller.
    *
    * @param request
-   * [::google::cloud::bigquery::storage::v1::CreateReadSessionRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L110)
+   * [google::cloud::bigquery::storage::v1::CreateReadSessionRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L110)
    * @return
-   * [::google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/stream.proto#L47)
+   * [google::cloud::bigquery::storage::v1::ReadSession](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/stream.proto#L47)
    */
-  StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request);
 
   /**
@@ -161,13 +159,12 @@ class BigQueryReadClient {
    * state of the stream.
    *
    * @param request
-   * [::google::cloud::bigquery::storage::v1::ReadRowsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L135)
+   * [google::cloud::bigquery::storage::v1::ReadRowsRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L135)
    * @return
-   * [::google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L185)
+   * [google::cloud::bigquery::storage::v1::ReadRowsResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L185)
    */
-  StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
-  ReadRows(
-      ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
+  StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse> ReadRows(
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
 
   /**
    * Splits a given `ReadStream` into two `ReadStream` objects. These
@@ -184,13 +181,13 @@ class BigQueryReadClient {
    * completion.
    *
    * @param request
-   * [::google::cloud::bigquery::storage::v1::SplitReadStreamRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L207)
+   * [google::cloud::bigquery::storage::v1::SplitReadStreamRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L207)
    * @return
-   * [::google::cloud::bigquery::storage::v1::SplitReadStreamResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L227)
+   * [google::cloud::bigquery::storage::v1::SplitReadStreamResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/cloud/bigquery/storage/v1/storage.proto#L227)
    */
-  StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request);
 
  private:

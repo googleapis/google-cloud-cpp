@@ -33,30 +33,30 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   ~GoldenKitchenSinkMetadata() override = default;
   explicit GoldenKitchenSinkMetadata(std::shared_ptr<GoldenKitchenSinkStub> child);
 
-  StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+    google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+    google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListLogsResponse> ListLogs(
+  StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListLogsRequest const& request) override;
+    google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
     TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
-    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
+  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context,

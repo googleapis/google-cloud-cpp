@@ -33,53 +33,51 @@ IAMLogging::IAMLogging(std::shared_ptr<IAMStub> child,
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<::google::iam::admin::v1::ListServiceAccountsResponse>
+StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 IAMLogging::ListServiceAccounts(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::ListServiceAccountsRequest const& request) {
+    google::iam::admin::v1::ListServiceAccountsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           grpc::ClientContext& context,
-          ::google::iam::admin::v1::ListServiceAccountsRequest const& request) {
+          google::iam::admin::v1::ListServiceAccountsRequest const& request) {
         return child_->ListServiceAccounts(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
-IAMLogging::GetServiceAccount(
+StatusOr<google::iam::admin::v1::ServiceAccount> IAMLogging::GetServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::GetServiceAccountRequest const& request) {
+    google::iam::admin::v1::GetServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context,
-          ::google::iam::admin::v1::GetServiceAccountRequest const& request) {
+      [this](grpc::ClientContext& context,
+             google::iam::admin::v1::GetServiceAccountRequest const& request) {
         return child_->GetServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
+StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMLogging::CreateServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::CreateServiceAccountRequest const& request) {
+    google::iam::admin::v1::CreateServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::CreateServiceAccountRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context,
+          google::iam::admin::v1::CreateServiceAccountRequest const& request) {
         return child_->CreateServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
+StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMLogging::PatchServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::PatchServiceAccountRequest const& request) {
+    google::iam::admin::v1::PatchServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           grpc::ClientContext& context,
-          ::google::iam::admin::v1::PatchServiceAccountRequest const& request) {
+          google::iam::admin::v1::PatchServiceAccountRequest const& request) {
         return child_->PatchServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -87,23 +85,23 @@ IAMLogging::PatchServiceAccount(
 
 Status IAMLogging::DeleteServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
+    google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::DeleteServiceAccountRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context,
+          google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
         return child_->DeleteServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::UndeleteServiceAccountResponse>
+StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 IAMLogging::UndeleteServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
+    google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::UndeleteServiceAccountRequest const&
+             google::iam::admin::v1::UndeleteServiceAccountRequest const&
                  request) {
         return child_->UndeleteServiceAccount(context, request);
       },
@@ -112,11 +110,11 @@ IAMLogging::UndeleteServiceAccount(
 
 Status IAMLogging::EnableServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::EnableServiceAccountRequest const& request) {
+    google::iam::admin::v1::EnableServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::EnableServiceAccountRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context,
+          google::iam::admin::v1::EnableServiceAccountRequest const& request) {
         return child_->EnableServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -124,62 +122,62 @@ Status IAMLogging::EnableServiceAccount(
 
 Status IAMLogging::DisableServiceAccount(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::DisableServiceAccountRequest const& request) {
+    google::iam::admin::v1::DisableServiceAccountRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::DisableServiceAccountRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context,
+          google::iam::admin::v1::DisableServiceAccountRequest const& request) {
         return child_->DisableServiceAccount(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ListServiceAccountKeysResponse>
+StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 IAMLogging::ListServiceAccountKeys(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
+    google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::ListServiceAccountKeysRequest const&
+             google::iam::admin::v1::ListServiceAccountKeysRequest const&
                  request) {
         return child_->ListServiceAccountKeys(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMLogging::GetServiceAccountKey(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::GetServiceAccountKeyRequest const&
-                 request) {
+      [this](
+          grpc::ClientContext& context,
+          google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
         return child_->GetServiceAccountKey(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMLogging::CreateServiceAccountKey(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::CreateServiceAccountKeyRequest const&
+             google::iam::admin::v1::CreateServiceAccountKeyRequest const&
                  request) {
         return child_->CreateServiceAccountKey(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMLogging::UploadServiceAccountKey(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::UploadServiceAccountKeyRequest const&
+             google::iam::admin::v1::UploadServiceAccountKeyRequest const&
                  request) {
         return child_->UploadServiceAccountKey(context, request);
       },
@@ -188,161 +186,161 @@ IAMLogging::UploadServiceAccountKey(
 
 Status IAMLogging::DeleteServiceAccountKey(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
+    google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
+             google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
                  request) {
         return child_->DeleteServiceAccountKey(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::Policy> IAMLogging::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> IAMLogging::GetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::GetIamPolicyRequest const& request) {
+             google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::Policy> IAMLogging::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> IAMLogging::SetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::SetIamPolicyRequest const& request) {
+             google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::TestIamPermissionsResponse>
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMLogging::TestIamPermissions(
     grpc::ClientContext& context,
-    ::google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::TestIamPermissionsRequest const& request) {
+             google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::QueryGrantableRolesResponse>
+StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
 IAMLogging::QueryGrantableRoles(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
+    google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           grpc::ClientContext& context,
-          ::google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
+          google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
         return child_->QueryGrantableRoles(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::ListRolesResponse> IAMLogging::ListRoles(
+StatusOr<google::iam::admin::v1::ListRolesResponse> IAMLogging::ListRoles(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::ListRolesRequest const& request) {
+    google::iam::admin::v1::ListRolesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::ListRolesRequest const& request) {
+             google::iam::admin::v1::ListRolesRequest const& request) {
         return child_->ListRoles(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::Role> IAMLogging::GetRole(
+StatusOr<google::iam::admin::v1::Role> IAMLogging::GetRole(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::GetRoleRequest const& request) {
+    google::iam::admin::v1::GetRoleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::GetRoleRequest const& request) {
+             google::iam::admin::v1::GetRoleRequest const& request) {
         return child_->GetRole(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::Role> IAMLogging::CreateRole(
+StatusOr<google::iam::admin::v1::Role> IAMLogging::CreateRole(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::CreateRoleRequest const& request) {
+    google::iam::admin::v1::CreateRoleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::CreateRoleRequest const& request) {
+             google::iam::admin::v1::CreateRoleRequest const& request) {
         return child_->CreateRole(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::Role> IAMLogging::UpdateRole(
+StatusOr<google::iam::admin::v1::Role> IAMLogging::UpdateRole(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::UpdateRoleRequest const& request) {
+    google::iam::admin::v1::UpdateRoleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::UpdateRoleRequest const& request) {
+             google::iam::admin::v1::UpdateRoleRequest const& request) {
         return child_->UpdateRole(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::Role> IAMLogging::DeleteRole(
+StatusOr<google::iam::admin::v1::Role> IAMLogging::DeleteRole(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::DeleteRoleRequest const& request) {
+    google::iam::admin::v1::DeleteRoleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::DeleteRoleRequest const& request) {
+             google::iam::admin::v1::DeleteRoleRequest const& request) {
         return child_->DeleteRole(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::Role> IAMLogging::UndeleteRole(
+StatusOr<google::iam::admin::v1::Role> IAMLogging::UndeleteRole(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::UndeleteRoleRequest const& request) {
+    google::iam::admin::v1::UndeleteRoleRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::UndeleteRoleRequest const& request) {
+             google::iam::admin::v1::UndeleteRoleRequest const& request) {
         return child_->UndeleteRole(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::QueryTestablePermissionsResponse>
+StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
 IAMLogging::QueryTestablePermissions(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
+    google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::QueryTestablePermissionsRequest const&
+             google::iam::admin::v1::QueryTestablePermissionsRequest const&
                  request) {
         return child_->QueryTestablePermissions(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::QueryAuditableServicesResponse>
+StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 IAMLogging::QueryAuditableServices(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
+    google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::QueryAuditableServicesRequest const&
+             google::iam::admin::v1::QueryAuditableServicesRequest const&
                  request) {
         return child_->QueryAuditableServices(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::admin::v1::LintPolicyResponse> IAMLogging::LintPolicy(
+StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMLogging::LintPolicy(
     grpc::ClientContext& context,
-    ::google::iam::admin::v1::LintPolicyRequest const& request) {
+    google::iam::admin::v1::LintPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::admin::v1::LintPolicyRequest const& request) {
+             google::iam::admin::v1::LintPolicyRequest const& request) {
         return child_->LintPolicy(context, request);
       },
       context, request, __func__, tracing_options_);

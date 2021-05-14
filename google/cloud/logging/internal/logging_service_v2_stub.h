@@ -34,61 +34,60 @@ class LoggingServiceV2Stub {
 
   virtual Status DeleteLog(
       grpc::ClientContext& context,
-      ::google::logging::v2::DeleteLogRequest const& request) = 0;
+      google::logging::v2::DeleteLogRequest const& request) = 0;
 
-  virtual StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+  virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
   WriteLogEntries(
       grpc::ClientContext& context,
-      ::google::logging::v2::WriteLogEntriesRequest const& request) = 0;
+      google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 
-  virtual StatusOr<::google::logging::v2::ListLogEntriesResponse>
-  ListLogEntries(
+  virtual StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
       grpc::ClientContext& context,
-      ::google::logging::v2::ListLogEntriesRequest const& request) = 0;
+      google::logging::v2::ListLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<
-      ::google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+      google::logging::v2::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
       grpc::ClientContext& context,
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
           request) = 0;
 
-  virtual StatusOr<::google::logging::v2::ListLogsResponse> ListLogs(
+  virtual StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
       grpc::ClientContext& context,
-      ::google::logging::v2::ListLogsRequest const& request) = 0;
+      google::logging::v2::ListLogsRequest const& request) = 0;
 };
 
 class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
  public:
   explicit DefaultLoggingServiceV2Stub(
-      std::unique_ptr<::google::logging::v2::LoggingServiceV2::StubInterface>
+      std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
   Status DeleteLog(
       grpc::ClientContext& client_context,
-      ::google::logging::v2::DeleteLogRequest const& request) override;
+      google::logging::v2::DeleteLogRequest const& request) override;
 
-  StatusOr<::google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
+  StatusOr<google::logging::v2::WriteLogEntriesResponse> WriteLogEntries(
       grpc::ClientContext& client_context,
-      ::google::logging::v2::WriteLogEntriesRequest const& request) override;
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
 
-  StatusOr<::google::logging::v2::ListLogEntriesResponse> ListLogEntries(
+  StatusOr<google::logging::v2::ListLogEntriesResponse> ListLogEntries(
       grpc::ClientContext& client_context,
-      ::google::logging::v2::ListLogEntriesRequest const& request) override;
+      google::logging::v2::ListLogEntriesRequest const& request) override;
 
-  StatusOr<::google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+  StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
   ListMonitoredResourceDescriptors(
       grpc::ClientContext& client_context,
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
           request) override;
 
-  StatusOr<::google::logging::v2::ListLogsResponse> ListLogs(
+  StatusOr<google::logging::v2::ListLogsResponse> ListLogs(
       grpc::ClientContext& client_context,
-      ::google::logging::v2::ListLogsRequest const& request) override;
+      google::logging::v2::ListLogsRequest const& request) override;
 
  private:
-  std::unique_ptr<::google::logging::v2::LoggingServiceV2::StubInterface>
+  std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface>
       grpc_stub_;
 };
 

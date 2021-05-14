@@ -38,18 +38,17 @@ class IAMCredentialsConnectionIdempotencyPolicy {
       const = 0;
 
   virtual google::cloud::internal::Idempotency GenerateAccessToken(
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
+      google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
 
   virtual google::cloud::internal::Idempotency GenerateIdToken(
-      ::google::iam::credentials::v1::GenerateIdTokenRequest const&
-          request) = 0;
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency SignBlob(
-      ::google::iam::credentials::v1::SignBlobRequest const& request) = 0;
+      google::iam::credentials::v1::SignBlobRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency SignJwt(
-      ::google::iam::credentials::v1::SignJwtRequest const& request) = 0;
+      google::iam::credentials::v1::SignJwtRequest const& request) = 0;
 };
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>

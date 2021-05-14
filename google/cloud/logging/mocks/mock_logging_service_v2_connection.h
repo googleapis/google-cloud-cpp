@@ -30,26 +30,25 @@ class MockLoggingServiceV2Connection
     : public logging::LoggingServiceV2Connection {
  public:
   MOCK_METHOD(Status, DeleteLog,
-              (::google::logging::v2::DeleteLogRequest const& request),
+              (google::logging::v2::DeleteLogRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<::google::logging::v2::WriteLogEntriesResponse>,
+  MOCK_METHOD(StatusOr<google::logging::v2::WriteLogEntriesResponse>,
               WriteLogEntries,
-              (::google::logging::v2::WriteLogEntriesRequest const& request),
+              (google::logging::v2::WriteLogEntriesRequest const& request),
               (override));
 
-  MOCK_METHOD(StreamRange<::google::logging::v2::LogEntry>, ListLogEntries,
-              (::google::logging::v2::ListLogEntriesRequest request),
-              (override));
+  MOCK_METHOD(StreamRange<google::logging::v2::LogEntry>, ListLogEntries,
+              (google::logging::v2::ListLogEntriesRequest request), (override));
 
   MOCK_METHOD(
-      StreamRange<::google::api::MonitoredResourceDescriptor>,
+      StreamRange<google::api::MonitoredResourceDescriptor>,
       ListMonitoredResourceDescriptors,
-      (::google::logging::v2::ListMonitoredResourceDescriptorsRequest request),
+      (google::logging::v2::ListMonitoredResourceDescriptorsRequest request),
       (override));
 
   MOCK_METHOD(StreamRange<std::string>, ListLogs,
-              (::google::logging::v2::ListLogsRequest request), (override));
+              (google::logging::v2::ListLogsRequest request), (override));
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

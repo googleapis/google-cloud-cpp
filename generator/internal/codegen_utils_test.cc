@@ -85,7 +85,7 @@ TEST(ServiceNameToFilePath, TrailingServiceInIntermediateComponent) {
 }
 
 TEST(ProtoNameToCppName, MessageType) {
-  EXPECT_EQ("::google::spanner::admin::database::v1::Request",
+  EXPECT_EQ("google::spanner::admin::database::v1::Request",
             ProtoNameToCppName("google.spanner.admin.database.v1.Request"));
 }
 

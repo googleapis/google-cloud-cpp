@@ -29,22 +29,22 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 class MockBigQueryReadConnection : public bigquery::BigQueryReadConnection {
  public:
   MOCK_METHOD(
-      StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>,
+      StatusOr<google::cloud::bigquery::storage::v1::ReadSession>,
       CreateReadSession,
-      (::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      (google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
            request),
       (override));
 
   MOCK_METHOD(
-      StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>,
+      StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>,
       ReadRows,
-      (::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
+      (google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
+      StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
       SplitReadStream,
-      (::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      (google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
            request),
       (override));
 };

@@ -31,34 +31,34 @@ GoldenThingAdminMetadata::GoldenThingAdminMetadata(
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>
+StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminMetadata::ListDatabases(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabasesRequest const& request) {
+    google::test::admin::database::v1::ListDatabasesRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListDatabases(context, request);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminMetadata::CreateDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateDatabase(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::Database>
+StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminMetadata::GetDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseRequest const& request) {
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetDatabase(context, request);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminMetadata::UpdateDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   SetMetadata(context, "database=" + request.database());
   return child_->UpdateDatabaseDdl(context, request);
 }
@@ -66,63 +66,63 @@ GoldenThingAdminMetadata::UpdateDatabaseDdl(
 Status
 GoldenThingAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
   SetMetadata(context, "database=" + request.database());
   return child_->DropDatabase(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
+StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   SetMetadata(context, "database=" + request.database());
   return child_->GetDatabaseDdl(context, request);
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
-StatusOr<::google::iam::v1::TestIamPermissionsResponse>
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
-    ::google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->TestIamPermissions(context, request);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminMetadata::CreateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateBackupRequest const& request) {
+    google::test::admin::database::v1::CreateBackupRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->CreateBackup(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::GetBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetBackupRequest const& request) {
+    google::test::admin::database::v1::GetBackupRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetBackup(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateBackupRequest const& request) {
+    google::test::admin::database::v1::UpdateBackupRequest const& request) {
   SetMetadata(context, "backup.name=" + request.backup().name());
   return child_->UpdateBackup(context, request);
 }
@@ -130,39 +130,39 @@ GoldenThingAdminMetadata::UpdateBackup(
 Status
 GoldenThingAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DeleteBackupRequest const& request) {
+    google::test::admin::database::v1::DeleteBackupRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->DeleteBackup(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminMetadata::ListBackups(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupsRequest const& request) {
+    google::test::admin::database::v1::ListBackupsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListBackups(context, request);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminMetadata::RestoreDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->RestoreDatabase(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListDatabaseOperations(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+    google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListBackupOperations(context, request);
 }

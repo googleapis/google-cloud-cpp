@@ -31,34 +31,34 @@ IAMCredentialsMetadata::IAMCredentialsMetadata(
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GenerateAccessToken(context, request);
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsMetadata::GenerateIdToken(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GenerateIdToken(context, request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsMetadata::SignBlob(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::SignBlobRequest const& request) {
+    google::iam::credentials::v1::SignBlobRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->SignBlob(context, request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsMetadata::SignJwt(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::SignJwtRequest const& request) {
+    google::iam::credentials::v1::SignJwtRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->SignJwt(context, request);
 }

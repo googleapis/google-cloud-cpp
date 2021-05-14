@@ -33,23 +33,23 @@ class BigQueryReadStub {
  public:
   virtual ~BigQueryReadStub() = 0;
 
-  virtual StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+  virtual StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
   CreateReadSession(
       grpc::ClientContext& context,
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) = 0;
 
   virtual std::unique_ptr<internal::StreamingReadRpc<
-      ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(std::unique_ptr<grpc::ClientContext> context,
-           ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
-               request) = 0;
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+  ReadRows(
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) = 0;
 
   virtual StatusOr<
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+      google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
       grpc::ClientContext& context,
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) = 0;
 };
 
@@ -57,31 +57,30 @@ class DefaultBigQueryReadStub : public BigQueryReadStub {
  public:
   explicit DefaultBigQueryReadStub(
       std::unique_ptr<
-          ::google::cloud::bigquery::storage::v1::BigQueryRead::StubInterface>
+          google::cloud::bigquery::storage::v1::BigQueryRead::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& client_context,
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) override;
 
   std::unique_ptr<internal::StreamingReadRpc<
-      ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>
   ReadRows(std::unique_ptr<grpc::ClientContext> client_context,
-           ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
-               request) override;
+           google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
-  StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
       grpc::ClientContext& client_context,
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) override;
 
  private:
   std::unique_ptr<
-      ::google::cloud::bigquery::storage::v1::BigQueryRead::StubInterface>
+      google::cloud::bigquery::storage::v1::BigQueryRead::StubInterface>
       grpc_stub_;
 };
 

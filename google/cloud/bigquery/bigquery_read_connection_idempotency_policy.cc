@@ -43,13 +43,13 @@ class DefaultBigQueryReadConnectionIdempotencyPolicy
   }
 
   Idempotency CreateReadSession(
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&)
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&)
       override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency SplitReadStream(
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&)
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&)
       override {
     return Idempotency::kIdempotent;
   }

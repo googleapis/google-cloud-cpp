@@ -30,11 +30,11 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 GoldenThingAdminStub::~GoldenThingAdminStub() = default;
 
-StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>
+StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 DefaultGoldenThingAdminStub::ListDatabases(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListDatabasesRequest const& request) {
-    ::google::test::admin::database::v1::ListDatabasesResponse response;
+  google::test::admin::database::v1::ListDatabasesRequest const& request) {
+    google::test::admin::database::v1::ListDatabasesResponse response;
     auto status =
         grpc_stub_->ListDatabases(&client_context, request, &response);
     if (!status.ok()) {
@@ -43,11 +43,11 @@ DefaultGoldenThingAdminStub::ListDatabases(
     return response;
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminStub::CreateDatabase(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-    ::google::longrunning::Operation response;
+  google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::longrunning::Operation response;
     auto status =
         grpc_stub_->CreateDatabase(&client_context, request, &response);
     if (!status.ok()) {
@@ -56,11 +56,11 @@ DefaultGoldenThingAdminStub::CreateDatabase(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::Database>
+StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminStub::GetDatabase(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::GetDatabaseRequest const& request) {
-    ::google::test::admin::database::v1::Database response;
+  google::test::admin::database::v1::GetDatabaseRequest const& request) {
+    google::test::admin::database::v1::Database response;
     auto status =
         grpc_stub_->GetDatabase(&client_context, request, &response);
     if (!status.ok()) {
@@ -69,11 +69,11 @@ DefaultGoldenThingAdminStub::GetDatabase(
     return response;
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminStub::UpdateDatabaseDdl(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-    ::google::longrunning::Operation response;
+  google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::longrunning::Operation response;
     auto status =
         grpc_stub_->UpdateDatabaseDdl(&client_context, request, &response);
     if (!status.ok()) {
@@ -85,8 +85,8 @@ DefaultGoldenThingAdminStub::UpdateDatabaseDdl(
 Status
 DefaultGoldenThingAdminStub::DropDatabase(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::DropDatabaseRequest const& request) {
-    ::google::protobuf::Empty response;
+  google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    google::protobuf::Empty response;
     auto status =
         grpc_stub_->DropDatabase(&client_context, request, &response);
     if (!status.ok()) {
@@ -95,11 +95,11 @@ DefaultGoldenThingAdminStub::DropDatabase(
     return google::cloud::Status();
 }
 
-StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
+StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 DefaultGoldenThingAdminStub::GetDatabaseDdl(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-    ::google::test::admin::database::v1::GetDatabaseDdlResponse response;
+  google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    google::test::admin::database::v1::GetDatabaseDdlResponse response;
     auto status =
         grpc_stub_->GetDatabaseDdl(&client_context, request, &response);
     if (!status.ok()) {
@@ -108,11 +108,11 @@ DefaultGoldenThingAdminStub::GetDatabaseDdl(
     return response;
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminStub::SetIamPolicy(
   grpc::ClientContext& client_context,
-  ::google::iam::v1::SetIamPolicyRequest const& request) {
-    ::google::iam::v1::Policy response;
+  google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
     auto status =
         grpc_stub_->SetIamPolicy(&client_context, request, &response);
     if (!status.ok()) {
@@ -121,11 +121,11 @@ DefaultGoldenThingAdminStub::SetIamPolicy(
     return response;
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminStub::GetIamPolicy(
   grpc::ClientContext& client_context,
-  ::google::iam::v1::GetIamPolicyRequest const& request) {
-    ::google::iam::v1::Policy response;
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
     auto status =
         grpc_stub_->GetIamPolicy(&client_context, request, &response);
     if (!status.ok()) {
@@ -134,11 +134,11 @@ DefaultGoldenThingAdminStub::GetIamPolicy(
     return response;
 }
 
-StatusOr<::google::iam::v1::TestIamPermissionsResponse>
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultGoldenThingAdminStub::TestIamPermissions(
   grpc::ClientContext& client_context,
-  ::google::iam::v1::TestIamPermissionsRequest const& request) {
-    ::google::iam::v1::TestIamPermissionsResponse response;
+  google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsResponse response;
     auto status =
         grpc_stub_->TestIamPermissions(&client_context, request, &response);
     if (!status.ok()) {
@@ -147,11 +147,11 @@ DefaultGoldenThingAdminStub::TestIamPermissions(
     return response;
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminStub::CreateBackup(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::CreateBackupRequest const& request) {
-    ::google::longrunning::Operation response;
+  google::test::admin::database::v1::CreateBackupRequest const& request) {
+    google::longrunning::Operation response;
     auto status =
         grpc_stub_->CreateBackup(&client_context, request, &response);
     if (!status.ok()) {
@@ -160,11 +160,11 @@ DefaultGoldenThingAdminStub::CreateBackup(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminStub::GetBackup(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::GetBackupRequest const& request) {
-    ::google::test::admin::database::v1::Backup response;
+  google::test::admin::database::v1::GetBackupRequest const& request) {
+    google::test::admin::database::v1::Backup response;
     auto status =
         grpc_stub_->GetBackup(&client_context, request, &response);
     if (!status.ok()) {
@@ -173,11 +173,11 @@ DefaultGoldenThingAdminStub::GetBackup(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminStub::UpdateBackup(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::UpdateBackupRequest const& request) {
-    ::google::test::admin::database::v1::Backup response;
+  google::test::admin::database::v1::UpdateBackupRequest const& request) {
+    google::test::admin::database::v1::Backup response;
     auto status =
         grpc_stub_->UpdateBackup(&client_context, request, &response);
     if (!status.ok()) {
@@ -189,8 +189,8 @@ DefaultGoldenThingAdminStub::UpdateBackup(
 Status
 DefaultGoldenThingAdminStub::DeleteBackup(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::DeleteBackupRequest const& request) {
-    ::google::protobuf::Empty response;
+  google::test::admin::database::v1::DeleteBackupRequest const& request) {
+    google::protobuf::Empty response;
     auto status =
         grpc_stub_->DeleteBackup(&client_context, request, &response);
     if (!status.ok()) {
@@ -199,11 +199,11 @@ DefaultGoldenThingAdminStub::DeleteBackup(
     return google::cloud::Status();
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 DefaultGoldenThingAdminStub::ListBackups(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListBackupsRequest const& request) {
-    ::google::test::admin::database::v1::ListBackupsResponse response;
+  google::test::admin::database::v1::ListBackupsRequest const& request) {
+    google::test::admin::database::v1::ListBackupsResponse response;
     auto status =
         grpc_stub_->ListBackups(&client_context, request, &response);
     if (!status.ok()) {
@@ -212,11 +212,11 @@ DefaultGoldenThingAdminStub::ListBackups(
     return response;
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminStub::RestoreDatabase(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-    ::google::longrunning::Operation response;
+  google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::longrunning::Operation response;
     auto status =
         grpc_stub_->RestoreDatabase(&client_context, request, &response);
     if (!status.ok()) {
@@ -225,11 +225,11 @@ DefaultGoldenThingAdminStub::RestoreDatabase(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultGoldenThingAdminStub::ListDatabaseOperations(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-    ::google::test::admin::database::v1::ListDatabaseOperationsResponse response;
+  google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    google::test::admin::database::v1::ListDatabaseOperationsResponse response;
     auto status =
         grpc_stub_->ListDatabaseOperations(&client_context, request, &response);
     if (!status.ok()) {
@@ -238,11 +238,11 @@ DefaultGoldenThingAdminStub::ListDatabaseOperations(
     return response;
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 DefaultGoldenThingAdminStub::ListBackupOperations(
   grpc::ClientContext& client_context,
-  ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-    ::google::test::admin::database::v1::ListBackupOperationsResponse response;
+  google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+    google::test::admin::database::v1::ListBackupOperationsResponse response;
     auto status =
         grpc_stub_->ListBackupOperations(&client_context, request, &response);
     if (!status.ok()) {

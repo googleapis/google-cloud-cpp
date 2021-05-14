@@ -33,71 +33,71 @@ class GoldenKitchenSinkStub {
  public:
   virtual ~GoldenKitchenSinkStub() = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
+  virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
+  virtual StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
+    google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
+  virtual StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+    google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::ListLogsResponse> ListLogs(
+  virtual StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListLogsRequest const& request) = 0;
+    google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
-  virtual std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  virtual std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
-    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
+  virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
+    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
  public:
   explicit DefaultGoldenKitchenSinkStub(
-      std::unique_ptr<::google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub)
+      std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
     grpc::ClientContext& client_context,
-    ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(
     grpc::ClientContext& client_context,
-    ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+    google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(
     grpc::ClientContext& client_context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+    google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListLogsResponse>
+  StatusOr<google::test::admin::database::v1::ListLogsResponse>
   ListLogs(
     grpc::ClientContext& client_context,
-    ::google::test::admin::database::v1::ListLogsRequest const& request) override;
+    google::test::admin::database::v1::ListLogsRequest const& request) override;
 
-  std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+  std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
   TailLogEntries(
     std::unique_ptr<grpc::ClientContext> client_context,
-    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
     grpc::ClientContext& client_context,
-    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
  private:
-  std::unique_ptr<::google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;
+  std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_GENERATED_NS

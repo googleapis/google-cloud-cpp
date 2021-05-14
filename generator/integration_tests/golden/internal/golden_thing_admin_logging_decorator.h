@@ -38,73 +38,73 @@ class GoldenThingAdminLogging : public GoldenThingAdminStub {
                        TracingOptions tracing_options,
                        std::set<std::string> components);
 
-  StatusOr<::google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
+  StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabasesRequest const& request) override;
+    google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
-  StatusOr<::google::longrunning::Operation> CreateDatabase(
+  StatusOr<google::longrunning::Operation> CreateDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
+    google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::Database> GetDatabase(
+  StatusOr<google::test::admin::database::v1::Database> GetDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseRequest const& request) override;
+    google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
-  StatusOr<::google::longrunning::Operation> UpdateDatabaseDdl(
+  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
+    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   Status DropDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DropDatabaseRequest const& request) override;
+    google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
+  StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) override;
+    google::test::admin::database::v1::GetDatabaseDdlRequest const& request) override;
 
-  StatusOr<::google::iam::v1::Policy> SetIamPolicy(
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::SetIamPolicyRequest const& request) override;
+    google::iam::v1::SetIamPolicyRequest const& request) override;
 
-  StatusOr<::google::iam::v1::Policy> GetIamPolicy(
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::GetIamPolicyRequest const& request) override;
+    google::iam::v1::GetIamPolicyRequest const& request) override;
 
-  StatusOr<::google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
     grpc::ClientContext& context,
-    ::google::iam::v1::TestIamPermissionsRequest const& request) override;
+    google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<::google::longrunning::Operation> CreateBackup(
+  StatusOr<google::longrunning::Operation> CreateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateBackupRequest const& request) override;
+    google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::Backup> GetBackup(
+  StatusOr<google::test::admin::database::v1::Backup> GetBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetBackupRequest const& request) override;
+    google::test::admin::database::v1::GetBackupRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::Backup> UpdateBackup(
+  StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateBackupRequest const& request) override;
+    google::test::admin::database::v1::UpdateBackupRequest const& request) override;
 
   Status DeleteBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DeleteBackupRequest const& request) override;
+    google::test::admin::database::v1::DeleteBackupRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListBackupsResponse> ListBackups(
+  StatusOr<google::test::admin::database::v1::ListBackupsResponse> ListBackups(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupsRequest const& request) override;
+    google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
-  StatusOr<::google::longrunning::Operation> RestoreDatabase(
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
+  StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
+    google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
 
-  StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
+  StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
+    google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
   /// Poll a long-running operation.
   StatusOr<google::longrunning::Operation> GetOperation(

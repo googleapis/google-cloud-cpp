@@ -37,24 +37,24 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
                         TracingOptions tracing_options,
                         std::set<std::string> components);
 
-  StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override;
 
-  StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(grpc::ClientContext& context,
-                  ::google::iam::credentials::v1::GenerateIdTokenRequest const&
+                  google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override;
 
-  StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::SignBlobRequest const& request) override;
+      google::iam::credentials::v1::SignBlobRequest const& request) override;
 
-  StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::SignJwtRequest const& request) override;
+      google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
   std::shared_ptr<IAMCredentialsStub> child_;

@@ -29,11 +29,11 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 IAMCredentialsStub::~IAMCredentialsStub() = default;
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 DefaultIAMCredentialsStub::GenerateAccessToken(
     grpc::ClientContext& client_context,
-    ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  ::google::iam::credentials::v1::GenerateAccessTokenResponse response;
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+  google::iam::credentials::v1::GenerateAccessTokenResponse response;
   auto status =
       grpc_stub_->GenerateAccessToken(&client_context, request, &response);
   if (!status.ok()) {
@@ -42,11 +42,11 @@ DefaultIAMCredentialsStub::GenerateAccessToken(
   return response;
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 DefaultIAMCredentialsStub::GenerateIdToken(
     grpc::ClientContext& client_context,
-    ::google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  ::google::iam::credentials::v1::GenerateIdTokenResponse response;
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+  google::iam::credentials::v1::GenerateIdTokenResponse response;
   auto status =
       grpc_stub_->GenerateIdToken(&client_context, request, &response);
   if (!status.ok()) {
@@ -55,11 +55,11 @@ DefaultIAMCredentialsStub::GenerateIdToken(
   return response;
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 DefaultIAMCredentialsStub::SignBlob(
     grpc::ClientContext& client_context,
-    ::google::iam::credentials::v1::SignBlobRequest const& request) {
-  ::google::iam::credentials::v1::SignBlobResponse response;
+    google::iam::credentials::v1::SignBlobRequest const& request) {
+  google::iam::credentials::v1::SignBlobResponse response;
   auto status = grpc_stub_->SignBlob(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -67,11 +67,11 @@ DefaultIAMCredentialsStub::SignBlob(
   return response;
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 DefaultIAMCredentialsStub::SignJwt(
     grpc::ClientContext& client_context,
-    ::google::iam::credentials::v1::SignJwtRequest const& request) {
-  ::google::iam::credentials::v1::SignJwtResponse response;
+    google::iam::credentials::v1::SignJwtRequest const& request) {
+  google::iam::credentials::v1::SignJwtResponse response;
   auto status = grpc_stub_->SignJwt(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);

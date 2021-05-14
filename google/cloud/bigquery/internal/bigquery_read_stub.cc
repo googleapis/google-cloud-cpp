@@ -30,12 +30,12 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 BigQueryReadStub::~BigQueryReadStub() = default;
 
-StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 DefaultBigQueryReadStub::CreateReadSession(
     grpc::ClientContext& client_context,
-    ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
-  ::google::cloud::bigquery::storage::v1::ReadSession response;
+  google::cloud::bigquery::storage::v1::ReadSession response;
   auto status =
       grpc_stub_->CreateReadSession(&client_context, request, &response);
   if (!status.ok()) {
@@ -45,22 +45,22 @@ DefaultBigQueryReadStub::CreateReadSession(
 }
 
 std::unique_ptr<internal::StreamingReadRpc<
-    ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+    google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 DefaultBigQueryReadStub::ReadRows(
     std::unique_ptr<grpc::ClientContext> client_context,
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto stream = grpc_stub_->ReadRows(client_context.get(), request);
   return absl::make_unique<internal::StreamingReadRpcImpl<
-      ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
       std::move(client_context), std::move(stream));
 }
 
-StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 DefaultBigQueryReadStub::SplitReadStream(
     grpc::ClientContext& client_context,
-    ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  ::google::cloud::bigquery::storage::v1::SplitReadStreamResponse response;
+  google::cloud::bigquery::storage::v1::SplitReadStreamResponse response;
   auto status =
       grpc_stub_->SplitReadStream(&client_context, request, &response);
   if (!status.ok()) {

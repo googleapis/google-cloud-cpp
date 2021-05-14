@@ -89,10 +89,10 @@ class GoldenKitchenSinkClient {
    *  Must be set to a value less than or equal to 3600 (1 hour). If a value is
    *  not specified, the token's lifetime will be set to a default value of one
    *  hour.
-   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L872)
+   * @return [google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L872)
    */
-  StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, ::google::protobuf::Duration const& lifetime);
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime);
 
   /**
    * Generates an OpenID Connect ID token for a service account.
@@ -114,9 +114,9 @@ class GoldenKitchenSinkClient {
    *  grants access to.
    * @param include_email  Include the service account email in the token. If set to `true`, the
    *  token will contain `email` and `email_verified` claims.
-   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L914)
+   * @return [google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L914)
    */
-  StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name, std::vector<std::string> const& delegates, std::string const& audience, bool include_email);
 
   /**
@@ -145,9 +145,9 @@ class GoldenKitchenSinkClient {
    *  entries in `entries`. If a log entry already has a label with the same key
    *  as a label in this parameter, then the log entry's label is not changed.
    *  See [LogEntry][google.logging.v2.LogEntry]. Test delimiter$
-   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L953)
+   * @return [google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L953)
    */
-  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(std::string const& log_name, std::map<std::string, std::string> const& labels);
 
   /**
@@ -177,9 +177,9 @@ class GoldenKitchenSinkClient {
    *      "organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
    *      "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
    *      "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-   * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1214)
+   * @return [google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1214)
    */
-  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
+  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
   TailLogEntries(std::vector<std::string> const& resource_names);
 
   /**
@@ -193,28 +193,28 @@ class GoldenKitchenSinkClient {
    * @param key_types  Filters the types of keys the user wants to include in the list
    *  response. Duplicate key types are not allowed. If no key type
    *  is provided, all keys are returned.
-   * @return [::google::test::admin::database::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1286)
+   * @return [google::test::admin::database::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1286)
    */
-  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(std::string const& name, std::vector<::google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types);
+  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types);
 
   /**
    * Generates an OAuth 2.0 access token for a service account.
    *
-   * @param request [::google::test::admin::database::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L835)
-   * @return [::google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L872)
+   * @param request [google::test::admin::database::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L835)
+   * @return [google::test::admin::database::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L872)
    */
-  StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
 
   /**
    * Generates an OpenID Connect ID token for a service account.
    *
-   * @param request [::google::test::admin::database::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L881)
-   * @return [::google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L914)
+   * @param request [google::test::admin::database::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L881)
+   * @return [google::test::admin::database::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L914)
    */
-  StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request);
+  StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
 
   /**
    * Writes log entries to Logging. This API method is the
@@ -225,39 +225,39 @@ class GoldenKitchenSinkClient {
    * different resources (projects, organizations, billing accounts or
    * folders)
    *
-   * @param request [::google::test::admin::database::v1::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L920)
-   * @return [::google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L953)
+   * @param request [google::test::admin::database::v1::WriteLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L920)
+   * @return [google::test::admin::database::v1::WriteLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L953)
    */
-  StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
+  StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
 
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts.
    * Only logs that have entries are listed.
    *
-   * @param request [::google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L956)
+   * @param request [google::test::admin::database::v1::ListLogsRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L956)
    */
   StreamRange<std::string>
-  ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request);
 
   /**
    * Streaming read of log entries as they are ingested. Until the stream is
    * terminated, it will continue reading logs.
    *
-   * @param request [::google::test::admin::database::v1::TailLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1182)
-   * @return [::google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1214)
+   * @param request [google::test::admin::database::v1::TailLogEntriesRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1182)
+   * @return [google::test::admin::database::v1::TailLogEntriesResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1214)
    */
-  StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
+  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
+  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
   /**
    * Lists every [ServiceAccountKey][google.iam.admin.v1.ServiceAccountKey] for a service account.
    *
-   * @param request [::google::test::admin::database::v1::ListServiceAccountKeysRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1254)
-   * @return [::google::test::admin::database::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1286)
+   * @param request [google::test::admin::database::v1::ListServiceAccountKeysRequest](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1254)
+   * @return [google::test::admin::database::v1::ListServiceAccountKeysResponse](https://github.com/googleapis/googleapis/blob/59f97e6044a1275f83427ab7962a154c00d915b5/generator/integration_tests/test.proto#L1286)
    */
-  StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
+  StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
 
  private:
   std::shared_ptr<GoldenKitchenSinkConnection> connection_;

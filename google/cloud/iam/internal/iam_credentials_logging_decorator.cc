@@ -33,49 +33,51 @@ IAMCredentialsLogging::IAMCredentialsLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsLogging::GenerateAccessToken(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
+             google::iam::credentials::v1::GenerateAccessTokenRequest const&
                  request) {
         return child_->GenerateAccessToken(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsLogging::GenerateIdToken(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             ::google::iam::credentials::v1::GenerateIdTokenRequest const&
-                 request) { return child_->GenerateIdToken(context, request); },
+      [this](
+          grpc::ClientContext& context,
+          google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+        return child_->GenerateIdToken(context, request);
+      },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsLogging::SignBlob(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::SignBlobRequest const& request) {
+    google::iam::credentials::v1::SignBlobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::credentials::v1::SignBlobRequest const& request) {
+             google::iam::credentials::v1::SignBlobRequest const& request) {
         return child_->SignBlob(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsLogging::SignJwt(
     grpc::ClientContext& context,
-    ::google::iam::credentials::v1::SignJwtRequest const& request) {
+    google::iam::credentials::v1::SignJwtRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::credentials::v1::SignJwtRequest const& request) {
+             google::iam::credentials::v1::SignJwtRequest const& request) {
         return child_->SignJwt(context, request);
       },
       context, request, __func__, tracing_options_);

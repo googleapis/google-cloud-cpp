@@ -48,20 +48,19 @@ class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
 
-  virtual StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  virtual StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
-          request);
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
-  virtual StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+  virtual StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      ::google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
-  virtual StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      ::google::iam::credentials::v1::SignBlobRequest const& request);
+  virtual StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request);
 
-  virtual StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      ::google::iam::credentials::v1::SignJwtRequest const& request);
+  virtual StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(

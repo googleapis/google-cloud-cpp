@@ -29,12 +29,12 @@ IAMCredentialsClient::IAMCredentialsClient(
     : connection_(std::move(connection)) {}
 IAMCredentialsClient::~IAMCredentialsClient() = default;
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsClient::GenerateAccessToken(
     std::string const& name, std::vector<std::string> const& delegates,
     std::vector<std::string> const& scope,
-    ::google::protobuf::Duration const& lifetime) {
-  ::google::iam::credentials::v1::GenerateAccessTokenRequest request;
+    google::protobuf::Duration const& lifetime) {
+  google::iam::credentials::v1::GenerateAccessTokenRequest request;
   request.set_name(name);
   *request.mutable_delegates() = {delegates.begin(), delegates.end()};
   *request.mutable_scope() = {scope.begin(), scope.end()};
@@ -42,12 +42,12 @@ IAMCredentialsClient::GenerateAccessToken(
   return connection_->GenerateAccessToken(request);
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsClient::GenerateIdToken(std::string const& name,
                                       std::vector<std::string> const& delegates,
                                       std::string const& audience,
                                       bool include_email) {
-  ::google::iam::credentials::v1::GenerateIdTokenRequest request;
+  google::iam::credentials::v1::GenerateIdTokenRequest request;
   request.set_name(name);
   *request.mutable_delegates() = {delegates.begin(), delegates.end()};
   request.set_audience(audience);
@@ -55,49 +55,49 @@ IAMCredentialsClient::GenerateIdToken(std::string const& name,
   return connection_->GenerateIdToken(request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsClient::SignBlob(std::string const& name,
                                std::vector<std::string> const& delegates,
                                std::string const& payload) {
-  ::google::iam::credentials::v1::SignBlobRequest request;
+  google::iam::credentials::v1::SignBlobRequest request;
   request.set_name(name);
   *request.mutable_delegates() = {delegates.begin(), delegates.end()};
   request.set_payload(payload);
   return connection_->SignBlob(request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsClient::SignJwt(std::string const& name,
                               std::vector<std::string> const& delegates,
                               std::string const& payload) {
-  ::google::iam::credentials::v1::SignJwtRequest request;
+  google::iam::credentials::v1::SignJwtRequest request;
   request.set_name(name);
   *request.mutable_delegates() = {delegates.begin(), delegates.end()};
   request.set_payload(payload);
   return connection_->SignJwt(request);
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsClient::GenerateAccessToken(
-    ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   return connection_->GenerateAccessToken(request);
 }
 
-StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsClient::GenerateIdToken(
-    ::google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
+    google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   return connection_->GenerateIdToken(request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignBlobResponse>
+StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsClient::SignBlob(
-    ::google::iam::credentials::v1::SignBlobRequest const& request) {
+    google::iam::credentials::v1::SignBlobRequest const& request) {
   return connection_->SignBlob(request);
 }
 
-StatusOr<::google::iam::credentials::v1::SignJwtResponse>
+StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsClient::SignJwt(
-    ::google::iam::credentials::v1::SignJwtRequest const& request) {
+    google::iam::credentials::v1::SignJwtRequest const& request) {
   return connection_->SignJwt(request);
 }
 

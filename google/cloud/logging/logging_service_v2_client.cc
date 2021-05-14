@@ -30,18 +30,17 @@ LoggingServiceV2Client::LoggingServiceV2Client(
 LoggingServiceV2Client::~LoggingServiceV2Client() = default;
 
 Status LoggingServiceV2Client::DeleteLog(std::string const& log_name) {
-  ::google::logging::v2::DeleteLogRequest request;
+  google::logging::v2::DeleteLogRequest request;
   request.set_log_name(log_name);
   return connection_->DeleteLog(request);
 }
 
-StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Client::WriteLogEntries(
-    std::string const& log_name,
-    ::google::api::MonitoredResource const& resource,
+    std::string const& log_name, google::api::MonitoredResource const& resource,
     std::map<std::string, std::string> const& labels,
-    std::vector<::google::logging::v2::LogEntry> const& entries) {
-  ::google::logging::v2::WriteLogEntriesRequest request;
+    std::vector<google::logging::v2::LogEntry> const& entries) {
+  google::logging::v2::WriteLogEntriesRequest request;
   request.set_log_name(log_name);
   *request.mutable_resource() = resource;
   *request.mutable_labels() = {labels.begin(), labels.end()};
@@ -49,11 +48,11 @@ LoggingServiceV2Client::WriteLogEntries(
   return connection_->WriteLogEntries(request);
 }
 
-StreamRange<::google::logging::v2::LogEntry>
+StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2Client::ListLogEntries(
     std::vector<std::string> const& resource_names, std::string const& filter,
     std::string const& order_by) {
-  ::google::logging::v2::ListLogEntriesRequest request;
+  google::logging::v2::ListLogEntriesRequest request;
   *request.mutable_resource_names() = {resource_names.begin(),
                                        resource_names.end()};
   request.set_filter(filter);
@@ -63,36 +62,36 @@ LoggingServiceV2Client::ListLogEntries(
 
 StreamRange<std::string> LoggingServiceV2Client::ListLogs(
     std::string const& parent) {
-  ::google::logging::v2::ListLogsRequest request;
+  google::logging::v2::ListLogsRequest request;
   request.set_parent(parent);
   return connection_->ListLogs(request);
 }
 
 Status LoggingServiceV2Client::DeleteLog(
-    ::google::logging::v2::DeleteLogRequest const& request) {
+    google::logging::v2::DeleteLogRequest const& request) {
   return connection_->DeleteLog(request);
 }
 
-StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Client::WriteLogEntries(
-    ::google::logging::v2::WriteLogEntriesRequest const& request) {
+    google::logging::v2::WriteLogEntriesRequest const& request) {
   return connection_->WriteLogEntries(request);
 }
 
-StreamRange<::google::logging::v2::LogEntry>
+StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2Client::ListLogEntries(
-    ::google::logging::v2::ListLogEntriesRequest request) {
+    google::logging::v2::ListLogEntriesRequest request) {
   return connection_->ListLogEntries(std::move(request));
 }
 
-StreamRange<::google::api::MonitoredResourceDescriptor>
+StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2Client::ListMonitoredResourceDescriptors(
-    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   return connection_->ListMonitoredResourceDescriptors(std::move(request));
 }
 
 StreamRange<std::string> LoggingServiceV2Client::ListLogs(
-    ::google::logging::v2::ListLogsRequest request) {
+    google::logging::v2::ListLogsRequest request) {
   return connection_->ListLogs(std::move(request));
 }
 

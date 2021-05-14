@@ -50,56 +50,56 @@ class GoldenThingAdminConnection {
  public:
   virtual ~GoldenThingAdminConnection() = 0;
 
-  virtual StreamRange<::google::test::admin::database::v1::Database>
-  ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request);
+  virtual StreamRange<google::test::admin::database::v1::Database>
+  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
 
-  virtual future<StatusOr<::google::test::admin::database::v1::Database>>
-  CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request);
+  virtual future<StatusOr<google::test::admin::database::v1::Database>>
+  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
 
-  virtual StatusOr<::google::test::admin::database::v1::Database>
-  GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request);
+  virtual StatusOr<google::test::admin::database::v1::Database>
+  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
 
-  virtual future<StatusOr<::google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
-
-  virtual Status
-  DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request);
-
-  virtual StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
-
-  virtual StatusOr<::google::iam::v1::Policy>
-  SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<::google::iam::v1::Policy>
-  GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<::google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual future<StatusOr<::google::test::admin::database::v1::Backup>>
-  CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const& request);
-
-  virtual StatusOr<::google::test::admin::database::v1::Backup>
-  GetBackup(::google::test::admin::database::v1::GetBackupRequest const& request);
-
-  virtual StatusOr<::google::test::admin::database::v1::Backup>
-  UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const& request);
+  virtual future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
 
   virtual Status
-  DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request);
+  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
 
-  virtual StreamRange<::google::test::admin::database::v1::Backup>
-  ListBackups(::google::test::admin::database::v1::ListBackupsRequest request);
+  virtual StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
 
-  virtual future<StatusOr<::google::test::admin::database::v1::Database>>
-  RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request);
+  virtual StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual StreamRange<::google::longrunning::Operation>
-  ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request);
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual StreamRange<::google::longrunning::Operation>
-  ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request);
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual future<StatusOr<google::test::admin::database::v1::Backup>>
+  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request);
+
+  virtual StatusOr<google::test::admin::database::v1::Backup>
+  GetBackup(google::test::admin::database::v1::GetBackupRequest const& request);
+
+  virtual StatusOr<google::test::admin::database::v1::Backup>
+  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request);
+
+  virtual Status
+  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request);
+
+  virtual StreamRange<google::test::admin::database::v1::Backup>
+  ListBackups(google::test::admin::database::v1::ListBackupsRequest request);
+
+  virtual future<StatusOr<google::test::admin::database::v1::Database>>
+  RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
 
 };
 

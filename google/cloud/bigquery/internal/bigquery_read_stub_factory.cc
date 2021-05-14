@@ -38,7 +38,7 @@ std::shared_ptr<BigQueryReadStub> CreateDefaultBigQueryReadStub(
       options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
-      ::google::cloud::bigquery::storage::v1::BigQueryRead::NewStub(channel);
+      google::cloud::bigquery::storage::v1::BigQueryRead::NewStub(channel);
   std::shared_ptr<BigQueryReadStub> stub =
       std::make_shared<DefaultBigQueryReadStub>(std::move(service_grpc_stub));
 

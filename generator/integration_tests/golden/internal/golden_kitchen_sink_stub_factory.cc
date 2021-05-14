@@ -39,7 +39,7 @@ CreateDefaultGoldenKitchenSinkStub(Options const& options) {
       options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
-      ::google::test::admin::database::v1::GoldenKitchenSink::NewStub(channel);
+      google::test::admin::database::v1::GoldenKitchenSink::NewStub(channel);
   std::shared_ptr<GoldenKitchenSinkStub> stub =
       std::make_shared<DefaultGoldenKitchenSinkStub>(
           std::move(service_grpc_stub));

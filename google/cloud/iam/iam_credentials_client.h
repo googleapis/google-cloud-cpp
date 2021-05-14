@@ -93,13 +93,13 @@ class IAMCredentialsClient {
    * value is not specified, the token's lifetime will be set to a default value
    * of one hour.
    * @return
-   * [::google::iam::credentials::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L72)
+   * [google::iam::credentials::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L72)
    */
-  StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(std::string const& name,
                       std::vector<std::string> const& delegates,
                       std::vector<std::string> const& scope,
-                      ::google::protobuf::Duration const& lifetime);
+                      google::protobuf::Duration const& lifetime);
 
   /**
    * Generates an OpenID Connect ID token for a service account.
@@ -122,9 +122,9 @@ class IAMCredentialsClient {
    * @param include_email  Include the service account email in the token. If
    * set to `true`, the token will contain `email` and `email_verified` claims.
    * @return
-   * [::google::iam::credentials::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L186)
+   * [google::iam::credentials::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L186)
    */
-  StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(std::string const& name,
                   std::vector<std::string> const& delegates,
                   std::string const& audience, bool include_email);
@@ -147,9 +147,9 @@ class IAMCredentialsClient {
    * invalid.
    * @param payload  Required. The bytes to sign.
    * @return
-   * [::google::iam::credentials::v1::SignBlobResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L109)
+   * [google::iam::credentials::v1::SignBlobResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L109)
    */
-  StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload);
 
@@ -172,9 +172,9 @@ class IAMCredentialsClient {
    * @param payload  Required. The JWT payload to sign: a JSON object that
    * contains a JWT Claims Set.
    * @return
-   * [::google::iam::credentials::v1::SignJwtResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L145)
+   * [google::iam::credentials::v1::SignJwtResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L145)
    */
-  StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       std::string const& name, std::vector<std::string> const& delegates,
       std::string const& payload);
 
@@ -182,48 +182,47 @@ class IAMCredentialsClient {
    * Generates an OAuth 2.0 access token for a service account.
    *
    * @param request
-   * [::google::iam::credentials::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L35)
+   * [google::iam::credentials::v1::GenerateAccessTokenRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L35)
    * @return
-   * [::google::iam::credentials::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L72)
+   * [google::iam::credentials::v1::GenerateAccessTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L72)
    */
-  StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
-          request);
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
   /**
    * Generates an OpenID Connect ID token for a service account.
    *
    * @param request
-   * [::google::iam::credentials::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L153)
+   * [google::iam::credentials::v1::GenerateIdTokenRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L153)
    * @return
-   * [::google::iam::credentials::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L186)
+   * [google::iam::credentials::v1::GenerateIdTokenResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L186)
    */
-  StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      ::google::iam::credentials::v1::GenerateIdTokenRequest const& request);
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
   /**
    * Signs a blob using a service account's system-managed private key.
    *
    * @param request
-   * [::google::iam::credentials::v1::SignBlobRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L81)
+   * [google::iam::credentials::v1::SignBlobRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L81)
    * @return
-   * [::google::iam::credentials::v1::SignBlobResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L109)
+   * [google::iam::credentials::v1::SignBlobResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L109)
    */
-  StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      ::google::iam::credentials::v1::SignBlobRequest const& request);
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      google::iam::credentials::v1::SignBlobRequest const& request);
 
   /**
    * Signs a JWT using a service account's system-managed private key.
    *
    * @param request
-   * [::google::iam::credentials::v1::SignJwtRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L117)
+   * [google::iam::credentials::v1::SignJwtRequest](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L117)
    * @return
-   * [::google::iam::credentials::v1::SignJwtResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L145)
+   * [google::iam::credentials::v1::SignJwtResponse](https://github.com/googleapis/googleapis/blob/6ce40ff8faf68226782f507ca6b2d497a77044de/google/iam/credentials/v1/common.proto#L145)
    */
-  StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      ::google::iam::credentials::v1::SignJwtRequest const& request);
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      google::iam::credentials::v1::SignJwtRequest const& request);
 
  private:
   std::shared_ptr<IAMCredentialsConnection> connection_;
