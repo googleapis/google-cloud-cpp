@@ -25,12 +25,18 @@ google_cloud_cpp_add_common_options(gcs2cbt)
 if (BUILD_TESTING)
     include(FindGMockWithTargets)
     include(FindCurlWithTargets)
+    include(FindgRPC)
+
+    google_cloud_cpp_grpcpp_library(
+        hello_world_protos "hello_world_grpc/hello_world.proto"
+        PROTO_PATH_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
 
     add_executable(grpc_credential_types grpc_credential_types.cc)
     target_link_libraries(
         grpc_credential_types
-        PRIVATE google_cloud_cpp_testing google-cloud-cpp::experimental-iam
-                google-cloud-cpp::spanner CURL::libcurl)
+        PRIVATE hello_world_protos google_cloud_cpp_testing
+                google-cloud-cpp::experimental-iam google-cloud-cpp::spanner
+                CURL::libcurl)
     google_cloud_cpp_add_common_options(grpc_credential_types)
 
     foreach (test gcs2cbt grpc_credential_types)
