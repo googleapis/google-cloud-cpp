@@ -227,6 +227,10 @@ endif ()
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)
 
+# Ensure that GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS is initialized since it's
+# used in the depends condition of the next option.
+include(EnableCxxExceptions)
+
 # The examples use exception handling to simplify the code. Therefore they
 # cannot be compiled when exceptions are disabled, and applications cannot force
 # the flag.
