@@ -160,7 +160,7 @@ steps:
       set -xe
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
-      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND tags=${_PR_NUMBER:-none}"
       query+=" AND tags=${_BUILD_NAME}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time > ${ctime}"
@@ -178,7 +178,7 @@ steps:
       set -xe
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
-      query+=" AND tags=${_PR_NUMBER}"
+      query+=" AND tags=${_PR_NUMBER:-none}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
       query+=" AND create_time < ${ctime}"
       gcloud builds list --ongoing --format='value(id)' --filter "${query}" | \
