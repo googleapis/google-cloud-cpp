@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
+#include "google/cloud/bigtable/testing/mock_backoff_policy.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/future.h"
@@ -33,8 +34,9 @@ namespace {
 
 namespace btproto = google::bigtable::v2;
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
 
@@ -341,17 +343,6 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
   ASSERT_EQ(0U, cq_impl_->size());
   EXPECT_TRUE(cq_impl_->empty());
 }
-
-class MockBackoffPolicy : public RPCBackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext & context), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const& status),
-              (override));
-  // TODO(#2344) - remove ::grpc::Status version.
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion,
-              (grpc::Status const& status), (override));
-};
 
 TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
   bigtable::BulkMutation mut{

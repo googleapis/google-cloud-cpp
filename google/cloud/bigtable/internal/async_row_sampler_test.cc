@@ -11,6 +11,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
+#include "google/cloud/bigtable/testing/mock_backoff_policy.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
@@ -19,6 +20,8 @@
 #include <gmock/gmock.h>
 #include <iterator>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -28,9 +31,11 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
+using ::google::cloud::bigtable::testing::MockBackoffPolicy;
 using ::google::cloud::bigtable::testing::MockClientAsyncReaderInterface;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 
 class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
@@ -44,6 +49,20 @@ class AsyncSampleRowKeysTest : public bigtable::testing::TableTestFixture {
 
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
+};
+
+struct RowKeySampleVectors {
+  explicit RowKeySampleVectors(std::vector<RowKeySample> samples) {
+    row_keys.reserve(samples.size());
+    offset_bytes.reserve(samples.size());
+    for (auto& sample : samples) {
+      row_keys.emplace_back(std::move(sample.row_key));
+      offset_bytes.emplace_back(std::move(sample.offset_bytes));
+    }
+  }
+
+  std::vector<std::string> row_keys;
+  std::vector<std::int64_t> offset_bytes;
 };
 
 TEST_F(AsyncSampleRowKeysTest, Simple) {
@@ -90,12 +109,9 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
   auto status = samples_future.get();
   ASSERT_STATUS_OK(status);
 
-  auto samples = status.value();
-  ASSERT_EQ(2U, samples.size());
-  EXPECT_EQ("test1", samples[0].row_key);
-  EXPECT_EQ(11, samples[0].offset_bytes);
-  EXPECT_EQ("test2", samples[1].row_key);
-  EXPECT_EQ(22, samples[1].offset_bytes);
+  auto samples = RowKeySampleVectors(status.value());
+  EXPECT_THAT(samples.row_keys, ElementsAre("test1", "test2"));
+  EXPECT_THAT(samples.offset_bytes, ElementsAre(11, 22));
 }
 
 TEST_F(AsyncSampleRowKeysTest, Retry) {
@@ -167,10 +183,9 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
   auto status = samples_future.get();
   ASSERT_STATUS_OK(status);
 
-  auto samples = status.value();
-  ASSERT_EQ(1U, samples.size());
-  EXPECT_EQ("test2", samples[0].row_key);
-  EXPECT_EQ(22, samples[0].offset_bytes);
+  auto samples = RowKeySampleVectors(status.value());
+  EXPECT_THAT(samples.row_keys, ElementsAre("test2"));
+  EXPECT_THAT(samples.offset_bytes, ElementsAre(22));
 }
 
 TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
@@ -226,17 +241,6 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
 
   ASSERT_EQ(0U, cq_impl_->size());
 }
-
-class MockBackoffPolicy : public RPCBackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<RPCBackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(void, Setup, (grpc::ClientContext & context), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (Status const& status),
-              (override));
-  // TODO(#2344) - remove ::grpc::Status version.
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion,
-              (grpc::Status const& status), (override));
-};
 
 TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
   auto grpc_error = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
@@ -392,10 +396,9 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   auto status = samples_future.get();
   ASSERT_STATUS_OK(status);
 
-  auto samples = status.value();
-  ASSERT_EQ(1U, samples.size());
-  EXPECT_EQ("test1", samples[0].row_key);
-  EXPECT_EQ(11, samples[0].offset_bytes);
+  auto samples = RowKeySampleVectors(status.value());
+  EXPECT_THAT(samples.row_keys, ElementsAre("test1"));
+  EXPECT_THAT(samples.offset_bytes, ElementsAre(11));
 }
 
 TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {

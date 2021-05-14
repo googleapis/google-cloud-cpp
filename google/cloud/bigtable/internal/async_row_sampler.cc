@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,12 +19,13 @@
 #include "grpcpp/completion_queue.h"
 #include <chrono>
 
-namespace btproto = ::google::bigtable::v2;
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+
+namespace btproto = ::google::bigtable::v2;
 
 future<StatusOr<std::vector<RowKeySample>>> AsyncRowSampler::Create(
     CompletionQueue cq, std::shared_ptr<DataClient> client,

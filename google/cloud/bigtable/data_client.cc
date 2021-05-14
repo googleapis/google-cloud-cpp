@@ -24,6 +24,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
+std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+    ::google::bigtable::v2::SampleRowKeysResponse>>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
+DataClient::PrepareAsyncSampleRowKeys(
+    ::grpc::ClientContext*, ::google::bigtable::v2::SampleRowKeysRequest const&,
+    ::grpc::CompletionQueue*) {
+  return nullptr;
+}
+
 /**
  * Implement a simple DataClient.
  *
@@ -143,7 +153,7 @@ class DefaultDataClient : public DataClient {
       ::google::bigtable::v2::SampleRowKeysResponse>>
   PrepareAsyncSampleRowKeys(
       ::grpc::ClientContext* context,
-      const ::google::bigtable::v2::SampleRowKeysRequest& request,
+      ::google::bigtable::v2::SampleRowKeysRequest const& request,
       ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->PrepareAsyncSampleRowKeys(context, request, cq);
   }

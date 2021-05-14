@@ -690,7 +690,7 @@ class Table {
    *     "end of table".
    *
    * @par Idempotency
-   * This operation is always treated as non-idempotent.
+   * This operation is always treated as idempotent.
    *
    * @par Thread-safety
    * Two threads concurrently calling this member function on the same instance
@@ -703,8 +703,8 @@ class Table {
   StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
 
   /**
-   * Asynchronous sample of the row keys in the table, including approximate
-   * data sizes.
+   * Asynchronously obtains a sample of the row keys in the table, including
+   * approximate data sizes.
    *
    * @returns A future, that becomes satisfied when the operation completes.
    *     Note that the sample may only include one element for small tables.
@@ -713,7 +713,7 @@ class Table {
    *     table".
    *
    * @par Idempotency
-   * This operation is always treated as non-idempotent.
+   * This operation is always treated as idempotent.
    *
    * @par Thread-safety
    * Two threads concurrently calling this member function on the same instance

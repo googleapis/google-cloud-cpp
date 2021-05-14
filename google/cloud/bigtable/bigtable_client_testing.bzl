@@ -23,6 +23,7 @@ bigtable_client_testing_hdrs = [
     "testing/inprocess_data_client.h",
     "testing/mock_admin_client.h",
     "testing/mock_async_failing_rpc_factory.h",
+    "testing/mock_backoff_policy.h",
     "testing/mock_data_client.h",
     "testing/mock_instance_admin_client.h",
     "testing/mock_mutate_rows_reader.h",
