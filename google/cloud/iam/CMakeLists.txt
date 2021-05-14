@@ -20,10 +20,10 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "iam_internal" "iam_testing" "examples")
 
-include(GoogleCloudCppCommon)
-
 # Creates the proto headers needed by doxygen.
-add_dependencies(iam-docs google-cloud-cpp::iam_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::iam_protos)
+
+include(GoogleCloudCppCommon)
 
 find_package(absl CONFIG REQUIRED)
 

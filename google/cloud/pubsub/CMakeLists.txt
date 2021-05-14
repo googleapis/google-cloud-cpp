@@ -23,11 +23,11 @@ set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing"
                             "examples")
 
-include(GoogleCloudCppCommon)
-
 # Creates the proto headers needed by doxygen.
-add_dependencies(pubsub-docs google-cloud-cpp::pubsub_protos
-                 pubsub_samples_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::pubsub_protos
+                                  pubsub_samples_protos)
+
+include(GoogleCloudCppCommon)
 
 find_package(absl CONFIG REQUIRED)
 

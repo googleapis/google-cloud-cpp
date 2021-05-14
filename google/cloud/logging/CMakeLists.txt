@@ -21,10 +21,10 @@ set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
                             "examples")
 
-include(GoogleCloudCppCommon)
-
 # Creates the proto headers needed by doxygen.
-add_dependencies(logging-docs google-cloud-cpp::logging_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::logging_protos)
+
+include(GoogleCloudCppCommon)
 
 find_package(absl CONFIG REQUIRED)
 

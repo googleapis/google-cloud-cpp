@@ -120,6 +120,12 @@ else ()
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMENT
             "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
+
+        # Extra dependencies needed by this subproject's docs target.
+        if (GOOGLE_CLOUD_CPP_DOXYGEN_DEPS)
+            add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+                             ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS})
+        endif ()
         if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
             add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "cloud-docs")
         endif ()

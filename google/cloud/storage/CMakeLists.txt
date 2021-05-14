@@ -35,11 +35,11 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storage_benchmarks")
 
-include(GoogleCloudCppCommon)
-
 # Creates the proto headers needed by doxygen.
-add_dependencies(storage-docs google-cloud-cpp::storage_protos
-                 google_cloud_cpp_storage_internal_protos)
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storage_protos
+                                  google_cloud_cpp_storage_internal_protos)
+
+include(GoogleCloudCppCommon)
 
 include(IncludeNlohmannJson)
 find_package(Crc32c)
