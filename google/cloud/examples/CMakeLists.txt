@@ -24,13 +24,13 @@ google_cloud_cpp_add_common_options(gcs2cbt)
 
 if (BUILD_TESTING)
     include(FindGMockWithTargets)
+    include(FindCurlWithTargets)
 
     add_executable(grpc_credential_types grpc_credential_types.cc)
     target_link_libraries(
         grpc_credential_types
         PRIVATE google_cloud_cpp_testing google-cloud-cpp::experimental-iam
-                google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
-                GTest::gtest)
+                google-cloud-cpp::spanner CURL::libcurl)
     google_cloud_cpp_add_common_options(grpc_credential_types)
 
     foreach (test gcs2cbt grpc_credential_types)

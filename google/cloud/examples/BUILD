@@ -47,6 +47,7 @@ cc_test(
     srcs = ["grpc_credential_types.cc"],
     tags = [
         "integration-test",
+        "integration-test-production",
     ],
     deps = [
         "//:experimental-iam",
@@ -54,6 +55,6 @@ cc_test(
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
-        "@com_google_googletest//:gtest_main",
+        "@com_github_curl_curl//:curl",
     ],
 )

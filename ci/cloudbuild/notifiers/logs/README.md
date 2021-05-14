@@ -53,7 +53,7 @@ gsutil iam ch \
 
 ## Create the Docker image
 
-We use buildspacks to compile the code in the `function/` directory into a
+We use buildpack to compile the code in the `function/` directory into a
 Docker image. At the end of this build the docker image will reside in your
 workstation. We will then push the image to GCR (Google Container Registry)
 and use it from Cloud Run.
