@@ -24,6 +24,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "bigquery_internal" "bigquery_testing"
 
 include(GoogleCloudCppCommon)
 
+# Creates the proto headers needed by doxygen.
+add_dependencies(bigquery-docs google-cloud-cpp::cloud_bigquery_protos)
+
 find_package(absl CONFIG REQUIRED)
 
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)

@@ -23,6 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
 
 include(GoogleCloudCppCommon)
 
+# Creates the proto headers needed by doxygen.
+add_dependencies(logging-docs google-cloud-cpp::logging_protos)
+
 find_package(absl CONFIG REQUIRED)
 
 # configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)

@@ -42,6 +42,10 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
+# Creates the proto headers needed by doxygen.
+add_dependencies(cloud-docs google-cloud-cpp::rpc_status_protos
+                 google-cloud-cpp::bigtable_protos)
+
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
 function (google_cloud_cpp_initialize_git_head var)

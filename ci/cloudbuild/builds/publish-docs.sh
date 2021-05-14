@@ -53,6 +53,7 @@ fi
 
 export CC=clang
 export CXX=clang++
+rm -rf cmake-out/*
 cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
 cmake --build cmake-out --target doxygen-docs
 

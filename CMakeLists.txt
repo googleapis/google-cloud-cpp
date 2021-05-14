@@ -220,7 +220,6 @@ add_custom_target(doxygen-docs)
 
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     add_subdirectory(external/googleapis)
-    add_dependencies(doxygen-docs google-cloud-cpp-protos)
 endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This

@@ -29,6 +29,9 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 
 include(GoogleCloudCppCommon)
 
+# Creates the proto headers needed by doxygen.
+add_dependencies(spanner-docs google-cloud-cpp::spanner_protos)
+
 add_library(
     google_cloud_cpp_spanner # cmake-format: sort
     backoff_policy.h
