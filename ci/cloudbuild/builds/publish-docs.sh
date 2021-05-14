@@ -55,7 +55,7 @@ export CC=clang
 export CXX=clang++
 cmake -GNinja "${doc_args[@]}" -S . -B cmake-out
 # Doxygen needs the proto-generated headers, but there are race conditions
-# between CMake generating these fiels and doxygen scanning for them. We could
+# between CMake generating these files and doxygen scanning for them. We could
 # fix this by avoiding parallelism with `-j 1`, or as we do here, we'll
 # pre-generate all the proto headers, then call doxygen.
 cmake --build cmake-out --target google-cloud-cpp-protos
