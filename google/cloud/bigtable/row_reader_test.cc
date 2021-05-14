@@ -136,14 +136,14 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 };
 
 // Match the number of expected row keys in a request in EXPECT_CALL
-Matcher<const ReadRowsRequest&> RequestWithRowKeysCount(int n) {
+Matcher<ReadRowsRequest const&> RequestWithRowKeysCount(int n) {
   return Property(
       &ReadRowsRequest::rows,
       Property(&google::bigtable::v2::RowSet::row_keys_size, Eq(n)));
 }
 
 // Match the row limit in a request
-Matcher<const ReadRowsRequest&> RequestWithRowsLimit(std::int64_t n) {
+Matcher<ReadRowsRequest const&> RequestWithRowsLimit(std::int64_t n) {
   return Property(&ReadRowsRequest::rows_limit, Eq(n));
 }
 

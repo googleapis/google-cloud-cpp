@@ -80,14 +80,14 @@ class MockDataClient : public bigtable::DataClient {
                   google::bigtable::v2::ReadRowsResponse>>,
               AsyncReadRows,
               (grpc::ClientContext*,
-               const google::bigtable::v2::ReadRowsRequest&,
+               google::bigtable::v2::ReadRowsRequest const&,
                grpc::CompletionQueue*, void*),
               (override));
   MOCK_METHOD(std::unique_ptr<::grpc::ClientAsyncReaderInterface<
                   ::google::bigtable::v2::ReadRowsResponse>>,
               PrepareAsyncReadRows,
               (::grpc::ClientContext*,
-               const ::google::bigtable::v2::ReadRowsRequest&,
+               ::google::bigtable::v2::ReadRowsRequest const&,
                ::grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<
@@ -100,7 +100,7 @@ class MockDataClient : public bigtable::DataClient {
                   google::bigtable::v2::SampleRowKeysResponse>>,
               AsyncSampleRowKeys,
               (grpc::ClientContext*,
-               const google::bigtable::v2::SampleRowKeysRequest&,
+               google::bigtable::v2::SampleRowKeysRequest const&,
                grpc::CompletionQueue*, void*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncReaderInterface<
@@ -120,14 +120,14 @@ class MockDataClient : public bigtable::DataClient {
                   google::bigtable::v2::MutateRowsResponse>>,
               AsyncMutateRows,
               (grpc::ClientContext*,
-               const google::bigtable::v2::MutateRowsRequest&,
+               google::bigtable::v2::MutateRowsRequest const&,
                grpc::CompletionQueue*, void*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncReaderInterface<
                   google::bigtable::v2::MutateRowsResponse>>,
               PrepareAsyncMutateRows,
               (grpc::ClientContext*,
-               const google::bigtable::v2::MutateRowsRequest&,
+               google::bigtable::v2::MutateRowsRequest const&,
                grpc::CompletionQueue*),
               (override));
 

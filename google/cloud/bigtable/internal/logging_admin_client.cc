@@ -363,7 +363,7 @@ std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
 LoggingAdminClient::AsyncGenerateConsistencyToken(
     grpc::ClientContext* context,
-    const google::bigtable::admin::v2::GenerateConsistencyTokenRequest& request,
+    google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncGenerateConsistencyToken(context, request, cq);
 }
@@ -372,7 +372,7 @@ std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::CheckConsistencyResponse>>
 LoggingAdminClient::AsyncCheckConsistency(
     grpc::ClientContext* context,
-    const google::bigtable::admin::v2::CheckConsistencyRequest& request,
+    google::bigtable::admin::v2::CheckConsistencyRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncCheckConsistency(context, request, cq);
 }
@@ -408,7 +408,7 @@ std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingAdminClient::AsyncGetOperation(
     grpc::ClientContext* context,
-    const google::longrunning::GetOperationRequest& request,
+    google::longrunning::GetOperationRequest const& request,
     grpc::CompletionQueue* cq) {
   auto stub = google::longrunning::Operations::NewStub(Channel());
   return std::unique_ptr<

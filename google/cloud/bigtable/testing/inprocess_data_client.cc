@@ -49,7 +49,7 @@ std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::CheckAndMutateRowResponse>>
 InProcessDataClient::AsyncCheckAndMutateRow(
     grpc::ClientContext* context,
-    const google::bigtable::v2::CheckAndMutateRowRequest& request,
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
     grpc::CompletionQueue* cq) {
   auto result = Stub()->AsyncCheckAndMutateRow(context, request, cq);
   return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -67,7 +67,7 @@ std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::ReadModifyWriteRowResponse>>
 InProcessDataClient::AsyncReadModifyWriteRow(
     grpc::ClientContext* context,
-    const google::bigtable::v2::ReadModifyWriteRowRequest& request,
+    google::bigtable::v2::ReadModifyWriteRowRequest const& request,
     grpc::CompletionQueue* cq) {
   auto result = Stub()->AsyncReadModifyWriteRow(context, request, cq);
   return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -91,7 +91,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::ReadRowsResponse>>
 InProcessDataClient::PrepareAsyncReadRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::ReadRowsRequest& request,
+    ::google::bigtable::v2::ReadRowsRequest const& request,
     ::grpc::CompletionQueue* cq) {
   return Stub()->PrepareAsyncReadRows(context, request, cq);
 }
@@ -113,7 +113,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::MutateRowsResponse>>
 InProcessDataClient::AsyncMutateRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::MutateRowsRequest& request,
+    ::google::bigtable::v2::MutateRowsRequest const& request,
     ::grpc::CompletionQueue* cq, void* tag) {
   return Stub()->AsyncMutateRows(context, request, cq, tag);
 }
@@ -122,7 +122,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::MutateRowsResponse>>
 InProcessDataClient::PrepareAsyncMutateRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::MutateRowsRequest& request,
+    ::google::bigtable::v2::MutateRowsRequest const& request,
     ::grpc::CompletionQueue* cq) {
   return Stub()->PrepareAsyncMutateRows(context, request, cq);
 }
@@ -131,7 +131,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::SampleRowKeysResponse>>
 InProcessDataClient::AsyncSampleRowKeys(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::SampleRowKeysRequest& request,
+    ::google::bigtable::v2::SampleRowKeysRequest const& request,
     ::grpc::CompletionQueue* cq, void* tag) {
   return Stub()->AsyncSampleRowKeys(context, request, cq, tag);
 }

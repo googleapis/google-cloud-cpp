@@ -59,7 +59,7 @@ class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }
-  const ReceivedMetadata& client_metadata() const { return client_metadata_; }
+  ReceivedMetadata const& client_metadata() const { return client_metadata_; }
 
  private:
   ReceivedMetadata client_metadata_;
@@ -83,7 +83,7 @@ class TableAdminImpl final
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }
-  const ReceivedMetadata& client_metadata() const { return client_metadata_; }
+  ReceivedMetadata const& client_metadata() const { return client_metadata_; }
 
  private:
   ReceivedMetadata client_metadata_;
