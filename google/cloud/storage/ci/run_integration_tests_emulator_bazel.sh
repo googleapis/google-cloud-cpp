@@ -90,6 +90,10 @@ done
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
+printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
+  curl -X POST -H "Content-Type: application/json" --data-binary @- \
+    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
+
 EMULATOR_SHA=$(git ls-files google/cloud/storage/emulator | sort | cat | sha256sum)
 emulator_args=(
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
@@ -102,11 +106,6 @@ emulator_args=(
   "--test_env=CLOUD_STORAGE_ENABLE_TRACING=raw-client"
   "--test_env=EMULATOR_SHA=${EMULATOR_SHA}"
 )
-"${BAZEL_BIN}" run "${bazel_test_args[@]}" "${emulator_args[@]}" \
-  "//google/cloud/storage/examples:storage_bucket_samples" \
-  -- create-bucket-for-project \
-  "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
-  "${GOOGLE_CLOUD_PROJECT}" >/dev/null
 
 # We need to forward some environment variables suitable for running against
 # the emulator. Note that the HMAC service account is completely invalid and

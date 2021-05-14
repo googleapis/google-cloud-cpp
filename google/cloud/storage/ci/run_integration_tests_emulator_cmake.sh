@@ -50,12 +50,9 @@ start_emulator
 # need to create the *DESTINATION_BUCKET_NAME too. Note that when the
 # `storage_bucket_samples` binary is missing the examples that use said bucket
 # are missing too.
-if [[ -x "google/cloud/storage/examples/storage_bucket_samples" ]]; then
-  google/cloud/storage/examples/storage_bucket_samples \
-    create-bucket-for-project \
-    "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
-    "${GOOGLE_CLOUD_PROJECT}" >/dev/null
-fi
+printf '{"name": "%s"}' "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" |
+  curl -X POST -H "Content-Type: application/json" --data-binary @- \
+    "${CLOUD_STORAGE_EMULATOR_ENDPOINT}/storage/v1/b?project=${GOOGLE_CLOUD_PROJECT}"
 
 ctest -R "^storage_" "${ctest_args[@]}"
 exit_status=$?
