@@ -37,89 +37,85 @@ class IAMConnectionIdempotencyPolicy {
   virtual std::unique_ptr<IAMConnectionIdempotencyPolicy> clone() const = 0;
 
   virtual google::cloud::internal::Idempotency ListServiceAccounts(
-      ::google::iam::admin::v1::ListServiceAccountsRequest request) = 0;
+      google::iam::admin::v1::ListServiceAccountsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency GetServiceAccount(
-      ::google::iam::admin::v1::GetServiceAccountRequest const& request) = 0;
+      google::iam::admin::v1::GetServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency CreateServiceAccount(
-      ::google::iam::admin::v1::CreateServiceAccountRequest const& request) = 0;
+      google::iam::admin::v1::CreateServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency PatchServiceAccount(
-      ::google::iam::admin::v1::PatchServiceAccountRequest const& request) = 0;
+      google::iam::admin::v1::PatchServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency DeleteServiceAccount(
-      ::google::iam::admin::v1::DeleteServiceAccountRequest const& request) = 0;
+      google::iam::admin::v1::DeleteServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency UndeleteServiceAccount(
-      ::google::iam::admin::v1::UndeleteServiceAccountRequest const&
-          request) = 0;
+      google::iam::admin::v1::UndeleteServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency EnableServiceAccount(
-      ::google::iam::admin::v1::EnableServiceAccountRequest const& request) = 0;
+      google::iam::admin::v1::EnableServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency DisableServiceAccount(
-      ::google::iam::admin::v1::DisableServiceAccountRequest const&
-          request) = 0;
+      google::iam::admin::v1::DisableServiceAccountRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency ListServiceAccountKeys(
-      ::google::iam::admin::v1::ListServiceAccountKeysRequest const&
-          request) = 0;
+      google::iam::admin::v1::ListServiceAccountKeysRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency GetServiceAccountKey(
-      ::google::iam::admin::v1::GetServiceAccountKeyRequest const& request) = 0;
+      google::iam::admin::v1::GetServiceAccountKeyRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency CreateServiceAccountKey(
-      ::google::iam::admin::v1::CreateServiceAccountKeyRequest const&
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const&
           request) = 0;
 
   virtual google::cloud::internal::Idempotency UploadServiceAccountKey(
-      ::google::iam::admin::v1::UploadServiceAccountKeyRequest const&
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const&
           request) = 0;
 
   virtual google::cloud::internal::Idempotency DeleteServiceAccountKey(
-      ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
           request) = 0;
 
   virtual google::cloud::internal::Idempotency GetIamPolicy(
-      ::google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency SetIamPolicy(
-      ::google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency TestIamPermissions(
-      ::google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency QueryGrantableRoles(
-      ::google::iam::admin::v1::QueryGrantableRolesRequest request) = 0;
+      google::iam::admin::v1::QueryGrantableRolesRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency ListRoles(
-      ::google::iam::admin::v1::ListRolesRequest request) = 0;
+      google::iam::admin::v1::ListRolesRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency GetRole(
-      ::google::iam::admin::v1::GetRoleRequest const& request) = 0;
+      google::iam::admin::v1::GetRoleRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency CreateRole(
-      ::google::iam::admin::v1::CreateRoleRequest const& request) = 0;
+      google::iam::admin::v1::CreateRoleRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency UpdateRole(
-      ::google::iam::admin::v1::UpdateRoleRequest const& request) = 0;
+      google::iam::admin::v1::UpdateRoleRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency DeleteRole(
-      ::google::iam::admin::v1::DeleteRoleRequest const& request) = 0;
+      google::iam::admin::v1::DeleteRoleRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency UndeleteRole(
-      ::google::iam::admin::v1::UndeleteRoleRequest const& request) = 0;
+      google::iam::admin::v1::UndeleteRoleRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency QueryTestablePermissions(
-      ::google::iam::admin::v1::QueryTestablePermissionsRequest request) = 0;
+      google::iam::admin::v1::QueryTestablePermissionsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency QueryAuditableServices(
-      ::google::iam::admin::v1::QueryAuditableServicesRequest const&
-          request) = 0;
+      google::iam::admin::v1::QueryAuditableServicesRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency LintPolicy(
-      ::google::iam::admin::v1::LintPolicyRequest const& request) = 0;
+      google::iam::admin::v1::LintPolicyRequest const& request) = 0;
 };
 
 std::unique_ptr<IAMConnectionIdempotencyPolicy>

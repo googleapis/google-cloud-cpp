@@ -29,26 +29,24 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
  public:
   MOCK_METHOD(
-      StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>,
+      StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
       GenerateAccessToken,
-      (::google::iam::credentials::v1::GenerateAccessTokenRequest const&
-           request),
+      (google::iam::credentials::v1::GenerateAccessTokenRequest const& request),
       (override));
 
   MOCK_METHOD(
-      StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>,
+      StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>,
       GenerateIdToken,
-      (::google::iam::credentials::v1::GenerateIdTokenRequest const& request),
+      (google::iam::credentials::v1::GenerateIdTokenRequest const& request),
       (override));
 
-  MOCK_METHOD(StatusOr<::google::iam::credentials::v1::SignBlobResponse>,
+  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignBlobResponse>,
               SignBlob,
-              (::google::iam::credentials::v1::SignBlobRequest const& request),
+              (google::iam::credentials::v1::SignBlobRequest const& request),
               (override));
 
-  MOCK_METHOD(StatusOr<::google::iam::credentials::v1::SignJwtResponse>,
-              SignJwt,
-              (::google::iam::credentials::v1::SignJwtRequest const& request),
+  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignJwtResponse>, SignJwt,
+              (google::iam::credentials::v1::SignJwtRequest const& request),
               (override));
 };
 

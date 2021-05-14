@@ -38,7 +38,7 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
       options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
-      ::google::logging::v2::LoggingServiceV2::NewStub(channel);
+      google::logging::v2::LoggingServiceV2::NewStub(channel);
   std::shared_ptr<LoggingServiceV2Stub> stub =
       std::make_shared<DefaultLoggingServiceV2Stub>(
           std::move(service_grpc_stub));

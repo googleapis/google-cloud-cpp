@@ -33,40 +33,40 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
 
 Status LoggingServiceV2Metadata::DeleteLog(
     grpc::ClientContext& context,
-    ::google::logging::v2::DeleteLogRequest const& request) {
+    google::logging::v2::DeleteLogRequest const& request) {
   SetMetadata(context, "log_name=" + request.log_name());
   return child_->DeleteLog(context, request);
 }
 
-StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
     grpc::ClientContext& context,
-    ::google::logging::v2::WriteLogEntriesRequest const& request) {
+    google::logging::v2::WriteLogEntriesRequest const& request) {
   SetMetadata(context, {});
   return child_->WriteLogEntries(context, request);
 }
 
-StatusOr<::google::logging::v2::ListLogEntriesResponse>
+StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListLogEntriesRequest const& request) {
+    google::logging::v2::ListLogEntriesRequest const& request) {
   SetMetadata(context, {});
   return child_->ListLogEntries(context, request);
 }
 
-StatusOr<::google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
   SetMetadata(context, {});
   return child_->ListMonitoredResourceDescriptors(context, request);
 }
 
-StatusOr<::google::logging::v2::ListLogsResponse>
+StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListLogsRequest const& request) {
+    google::logging::v2::ListLogsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListLogs(context, request);
 }

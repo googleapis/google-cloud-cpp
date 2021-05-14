@@ -31,28 +31,28 @@ BigQueryReadMetadata::BigQueryReadMetadata(
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadMetadata::CreateReadSession(
     grpc::ClientContext& context,
-    ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   SetMetadata(context, "read_session.table=" + request.read_session().table());
   return child_->CreateReadSession(context, request);
 }
 
 std::unique_ptr<internal::StreamingReadRpc<
-    ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+    google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadMetadata::ReadRows(
     std::unique_ptr<grpc::ClientContext> context,
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   SetMetadata(*context, "read_stream=" + request.read_stream());
   return child_->ReadRows(std::move(context), request);
 }
 
-StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadMetadata::SplitReadStream(
     grpc::ClientContext& context,
-    ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
   SetMetadata(context, "name=" + request.name());
   return child_->SplitReadStream(context, request);

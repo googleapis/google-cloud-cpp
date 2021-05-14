@@ -32,55 +32,55 @@ class IAMCredentialsStub {
  public:
   virtual ~IAMCredentialsStub() = 0;
 
-  virtual StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  virtual StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
+      google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
 
-  virtual StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(grpc::ClientContext& context,
-                  ::google::iam::credentials::v1::GenerateIdTokenRequest const&
-                      request) = 0;
-
-  virtual StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
+  virtual StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
+  GenerateIdToken(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::SignBlobRequest const& request) = 0;
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request) = 0;
 
-  virtual StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
+  virtual StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       grpc::ClientContext& context,
-      ::google::iam::credentials::v1::SignJwtRequest const& request) = 0;
+      google::iam::credentials::v1::SignBlobRequest const& request) = 0;
+
+  virtual StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignJwtRequest const& request) = 0;
 };
 
 class DefaultIAMCredentialsStub : public IAMCredentialsStub {
  public:
   explicit DefaultIAMCredentialsStub(
       std::unique_ptr<
-          ::google::iam::credentials::v1::IAMCredentials::StubInterface>
+          google::iam::credentials::v1::IAMCredentials::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
       grpc::ClientContext& client_context,
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override;
 
-  StatusOr<::google::iam::credentials::v1::GenerateIdTokenResponse>
+  StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(grpc::ClientContext& client_context,
-                  ::google::iam::credentials::v1::GenerateIdTokenRequest const&
+                  google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override;
 
-  StatusOr<::google::iam::credentials::v1::SignBlobResponse> SignBlob(
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
       grpc::ClientContext& client_context,
-      ::google::iam::credentials::v1::SignBlobRequest const& request) override;
+      google::iam::credentials::v1::SignBlobRequest const& request) override;
 
-  StatusOr<::google::iam::credentials::v1::SignJwtResponse> SignJwt(
+  StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
       grpc::ClientContext& client_context,
-      ::google::iam::credentials::v1::SignJwtRequest const& request) override;
+      google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:
-  std::unique_ptr<::google::iam::credentials::v1::IAMCredentials::StubInterface>
+  std::unique_ptr<google::iam::credentials::v1::IAMCredentials::StubInterface>
       grpc_stub_;
 };
 

@@ -36,7 +36,7 @@ std::shared_ptr<IAMStub> CreateDefaultIAMStub(Options const& options) {
   auto channel = grpc::CreateCustomChannel(
       options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
-  auto service_grpc_stub = ::google::iam::admin::v1::IAM::NewStub(channel);
+  auto service_grpc_stub = google::iam::admin::v1::IAM::NewStub(channel);
   std::shared_ptr<IAMStub> stub =
       std::make_shared<DefaultIAMStub>(std::move(service_grpc_stub));
 

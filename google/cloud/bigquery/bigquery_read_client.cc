@@ -29,43 +29,43 @@ BigQueryReadClient::BigQueryReadClient(
     : connection_(std::move(connection)) {}
 BigQueryReadClient::~BigQueryReadClient() = default;
 
-StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadClient::CreateReadSession(
     std::string const& parent,
-    ::google::cloud::bigquery::storage::v1::ReadSession const& read_session,
+    google::cloud::bigquery::storage::v1::ReadSession const& read_session,
     std::int32_t max_stream_count) {
-  ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
+  google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
   request.set_parent(parent);
   *request.mutable_read_session() = read_session;
   request.set_max_stream_count(max_stream_count);
   return connection_->CreateReadSession(request);
 }
 
-StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
+StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(std::string const& read_stream,
                              std::int64_t offset) {
-  ::google::cloud::bigquery::storage::v1::ReadRowsRequest request;
+  google::cloud::bigquery::storage::v1::ReadRowsRequest request;
   request.set_read_stream(read_stream);
   request.set_offset(offset);
   return connection_->ReadRows(request);
 }
 
-StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadClient::CreateReadSession(
-    ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+    google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   return connection_->CreateReadSession(request);
 }
 
-StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
+StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadClient::ReadRows(
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
+    google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   return connection_->ReadRows(request);
 }
 
-StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadClient::SplitReadStream(
-    ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+    google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
   return connection_->SplitReadStream(request);
 }

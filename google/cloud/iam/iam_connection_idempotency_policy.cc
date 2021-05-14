@@ -40,134 +40,130 @@ class DefaultIAMConnectionIdempotencyPolicy
   }
 
   Idempotency ListServiceAccounts(
-      ::google::iam::admin::v1::ListServiceAccountsRequest) override {
+      google::iam::admin::v1::ListServiceAccountsRequest) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency GetServiceAccount(
-      ::google::iam::admin::v1::GetServiceAccountRequest const&) override {
+      google::iam::admin::v1::GetServiceAccountRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency CreateServiceAccount(
-      ::google::iam::admin::v1::CreateServiceAccountRequest const&) override {
+      google::iam::admin::v1::CreateServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency PatchServiceAccount(
-      ::google::iam::admin::v1::PatchServiceAccountRequest const&) override {
+      google::iam::admin::v1::PatchServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency DeleteServiceAccount(
-      ::google::iam::admin::v1::DeleteServiceAccountRequest const&) override {
+      google::iam::admin::v1::DeleteServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency UndeleteServiceAccount(
-      ::google::iam::admin::v1::UndeleteServiceAccountRequest const&) override {
+      google::iam::admin::v1::UndeleteServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency EnableServiceAccount(
-      ::google::iam::admin::v1::EnableServiceAccountRequest const&) override {
+      google::iam::admin::v1::EnableServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency DisableServiceAccount(
-      ::google::iam::admin::v1::DisableServiceAccountRequest const&) override {
+      google::iam::admin::v1::DisableServiceAccountRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency ListServiceAccountKeys(
-      ::google::iam::admin::v1::ListServiceAccountKeysRequest const&) override {
+      google::iam::admin::v1::ListServiceAccountKeysRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency GetServiceAccountKey(
-      ::google::iam::admin::v1::GetServiceAccountKeyRequest const&) override {
+      google::iam::admin::v1::GetServiceAccountKeyRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency CreateServiceAccountKey(
-      ::google::iam::admin::v1::CreateServiceAccountKeyRequest const&)
-      override {
+      google::iam::admin::v1::CreateServiceAccountKeyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency UploadServiceAccountKey(
-      ::google::iam::admin::v1::UploadServiceAccountKeyRequest const&)
-      override {
+      google::iam::admin::v1::UploadServiceAccountKeyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency DeleteServiceAccountKey(
-      ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const&)
-      override {
+      google::iam::admin::v1::DeleteServiceAccountKeyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency GetIamPolicy(
-      ::google::iam::v1::GetIamPolicyRequest const&) override {
+      google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency SetIamPolicy(
-      ::google::iam::v1::SetIamPolicyRequest const&) override {
+      google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency TestIamPermissions(
-      ::google::iam::v1::TestIamPermissionsRequest const&) override {
+      google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency QueryGrantableRoles(
-      ::google::iam::admin::v1::QueryGrantableRolesRequest) override {
+      google::iam::admin::v1::QueryGrantableRolesRequest) override {
     return Idempotency::kNonIdempotent;
   }
 
-  Idempotency ListRoles(::google::iam::admin::v1::ListRolesRequest) override {
+  Idempotency ListRoles(google::iam::admin::v1::ListRolesRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency GetRole(
-      ::google::iam::admin::v1::GetRoleRequest const&) override {
+  Idempotency GetRole(google::iam::admin::v1::GetRoleRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency CreateRole(
-      ::google::iam::admin::v1::CreateRoleRequest const&) override {
+      google::iam::admin::v1::CreateRoleRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency UpdateRole(
-      ::google::iam::admin::v1::UpdateRoleRequest const&) override {
+      google::iam::admin::v1::UpdateRoleRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency DeleteRole(
-      ::google::iam::admin::v1::DeleteRoleRequest const&) override {
+      google::iam::admin::v1::DeleteRoleRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency UndeleteRole(
-      ::google::iam::admin::v1::UndeleteRoleRequest const&) override {
+      google::iam::admin::v1::UndeleteRoleRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency QueryTestablePermissions(
-      ::google::iam::admin::v1::QueryTestablePermissionsRequest) override {
+      google::iam::admin::v1::QueryTestablePermissionsRequest) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency QueryAuditableServices(
-      ::google::iam::admin::v1::QueryAuditableServicesRequest const&) override {
+      google::iam::admin::v1::QueryAuditableServicesRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency LintPolicy(
-      ::google::iam::admin::v1::LintPolicyRequest const&) override {
+      google::iam::admin::v1::LintPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 };

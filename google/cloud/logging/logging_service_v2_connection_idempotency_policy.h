@@ -38,20 +38,19 @@ class LoggingServiceV2ConnectionIdempotencyPolicy {
       const = 0;
 
   virtual google::cloud::internal::Idempotency DeleteLog(
-      ::google::logging::v2::DeleteLogRequest const& request) = 0;
+      google::logging::v2::DeleteLogRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency WriteLogEntries(
-      ::google::logging::v2::WriteLogEntriesRequest const& request) = 0;
+      google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency ListLogEntries(
-      ::google::logging::v2::ListLogEntriesRequest request) = 0;
+      google::logging::v2::ListLogEntriesRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency ListMonitoredResourceDescriptors(
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest
-          request) = 0;
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency ListLogs(
-      ::google::logging::v2::ListLogsRequest request) = 0;
+      google::logging::v2::ListLogsRequest request) = 0;
 };
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>

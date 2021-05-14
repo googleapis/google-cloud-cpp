@@ -29,11 +29,11 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 IAMStub::~IAMStub() = default;
 
-StatusOr<::google::iam::admin::v1::ListServiceAccountsResponse>
+StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMStub::ListServiceAccounts(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  ::google::iam::admin::v1::ListServiceAccountsResponse response;
+    google::iam::admin::v1::ListServiceAccountsRequest const& request) {
+  google::iam::admin::v1::ListServiceAccountsResponse response;
   auto status =
       grpc_stub_->ListServiceAccounts(&client_context, request, &response);
   if (!status.ok()) {
@@ -42,11 +42,11 @@ DefaultIAMStub::ListServiceAccounts(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
+StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::GetServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccount response;
+    google::iam::admin::v1::GetServiceAccountRequest const& request) {
+  google::iam::admin::v1::ServiceAccount response;
   auto status =
       grpc_stub_->GetServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -55,11 +55,11 @@ DefaultIAMStub::GetServiceAccount(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
+StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::CreateServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccount response;
+    google::iam::admin::v1::CreateServiceAccountRequest const& request) {
+  google::iam::admin::v1::ServiceAccount response;
   auto status =
       grpc_stub_->CreateServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -68,11 +68,11 @@ DefaultIAMStub::CreateServiceAccount(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccount>
+StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::PatchServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccount response;
+    google::iam::admin::v1::PatchServiceAccountRequest const& request) {
+  google::iam::admin::v1::ServiceAccount response;
   auto status =
       grpc_stub_->PatchServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -83,8 +83,8 @@ DefaultIAMStub::PatchServiceAccount(
 
 Status DefaultIAMStub::DeleteServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  ::google::protobuf::Empty response;
+    google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
+  google::protobuf::Empty response;
   auto status =
       grpc_stub_->DeleteServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -93,11 +93,11 @@ Status DefaultIAMStub::DeleteServiceAccount(
   return google::cloud::Status();
 }
 
-StatusOr<::google::iam::admin::v1::UndeleteServiceAccountResponse>
+StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 DefaultIAMStub::UndeleteServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
-  ::google::iam::admin::v1::UndeleteServiceAccountResponse response;
+    google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
+  google::iam::admin::v1::UndeleteServiceAccountResponse response;
   auto status =
       grpc_stub_->UndeleteServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -108,8 +108,8 @@ DefaultIAMStub::UndeleteServiceAccount(
 
 Status DefaultIAMStub::EnableServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-  ::google::protobuf::Empty response;
+    google::iam::admin::v1::EnableServiceAccountRequest const& request) {
+  google::protobuf::Empty response;
   auto status =
       grpc_stub_->EnableServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -120,8 +120,8 @@ Status DefaultIAMStub::EnableServiceAccount(
 
 Status DefaultIAMStub::DisableServiceAccount(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-  ::google::protobuf::Empty response;
+    google::iam::admin::v1::DisableServiceAccountRequest const& request) {
+  google::protobuf::Empty response;
   auto status =
       grpc_stub_->DisableServiceAccount(&client_context, request, &response);
   if (!status.ok()) {
@@ -130,11 +130,11 @@ Status DefaultIAMStub::DisableServiceAccount(
   return google::cloud::Status();
 }
 
-StatusOr<::google::iam::admin::v1::ListServiceAccountKeysResponse>
+StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 DefaultIAMStub::ListServiceAccountKeys(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
-  ::google::iam::admin::v1::ListServiceAccountKeysResponse response;
+    google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
+  google::iam::admin::v1::ListServiceAccountKeysResponse response;
   auto status =
       grpc_stub_->ListServiceAccountKeys(&client_context, request, &response);
   if (!status.ok()) {
@@ -143,11 +143,11 @@ DefaultIAMStub::ListServiceAccountKeys(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMStub::GetServiceAccountKey(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccountKey response;
+    google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
+  google::iam::admin::v1::ServiceAccountKey response;
   auto status =
       grpc_stub_->GetServiceAccountKey(&client_context, request, &response);
   if (!status.ok()) {
@@ -156,11 +156,11 @@ DefaultIAMStub::GetServiceAccountKey(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMStub::CreateServiceAccountKey(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccountKey response;
+    google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
+  google::iam::admin::v1::ServiceAccountKey response;
   auto status =
       grpc_stub_->CreateServiceAccountKey(&client_context, request, &response);
   if (!status.ok()) {
@@ -169,11 +169,11 @@ DefaultIAMStub::CreateServiceAccountKey(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ServiceAccountKey>
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMStub::UploadServiceAccountKey(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
-  ::google::iam::admin::v1::ServiceAccountKey response;
+    google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
+  google::iam::admin::v1::ServiceAccountKey response;
   auto status =
       grpc_stub_->UploadServiceAccountKey(&client_context, request, &response);
   if (!status.ok()) {
@@ -184,8 +184,8 @@ DefaultIAMStub::UploadServiceAccountKey(
 
 Status DefaultIAMStub::DeleteServiceAccountKey(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
-  ::google::protobuf::Empty response;
+    google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
+  google::protobuf::Empty response;
   auto status =
       grpc_stub_->DeleteServiceAccountKey(&client_context, request, &response);
   if (!status.ok()) {
@@ -194,10 +194,10 @@ Status DefaultIAMStub::DeleteServiceAccountKey(
   return google::cloud::Status();
 }
 
-StatusOr<::google::iam::v1::Policy> DefaultIAMStub::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> DefaultIAMStub::GetIamPolicy(
     grpc::ClientContext& client_context,
-    ::google::iam::v1::GetIamPolicyRequest const& request) {
-  ::google::iam::v1::Policy response;
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -205,10 +205,10 @@ StatusOr<::google::iam::v1::Policy> DefaultIAMStub::GetIamPolicy(
   return response;
 }
 
-StatusOr<::google::iam::v1::Policy> DefaultIAMStub::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> DefaultIAMStub::SetIamPolicy(
     grpc::ClientContext& client_context,
-    ::google::iam::v1::SetIamPolicyRequest const& request) {
-  ::google::iam::v1::Policy response;
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -216,11 +216,11 @@ StatusOr<::google::iam::v1::Policy> DefaultIAMStub::SetIamPolicy(
   return response;
 }
 
-StatusOr<::google::iam::v1::TestIamPermissionsResponse>
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultIAMStub::TestIamPermissions(
     grpc::ClientContext& client_context,
-    ::google::iam::v1::TestIamPermissionsRequest const& request) {
-  ::google::iam::v1::TestIamPermissionsResponse response;
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
   auto status =
       grpc_stub_->TestIamPermissions(&client_context, request, &response);
   if (!status.ok()) {
@@ -229,11 +229,11 @@ DefaultIAMStub::TestIamPermissions(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::QueryGrantableRolesResponse>
+StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
 DefaultIAMStub::QueryGrantableRoles(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
-  ::google::iam::admin::v1::QueryGrantableRolesResponse response;
+    google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
+  google::iam::admin::v1::QueryGrantableRolesResponse response;
   auto status =
       grpc_stub_->QueryGrantableRoles(&client_context, request, &response);
   if (!status.ok()) {
@@ -242,10 +242,10 @@ DefaultIAMStub::QueryGrantableRoles(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::ListRolesResponse> DefaultIAMStub::ListRoles(
+StatusOr<google::iam::admin::v1::ListRolesResponse> DefaultIAMStub::ListRoles(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::ListRolesRequest const& request) {
-  ::google::iam::admin::v1::ListRolesResponse response;
+    google::iam::admin::v1::ListRolesRequest const& request) {
+  google::iam::admin::v1::ListRolesResponse response;
   auto status = grpc_stub_->ListRoles(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -253,10 +253,10 @@ StatusOr<::google::iam::admin::v1::ListRolesResponse> DefaultIAMStub::ListRoles(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::GetRole(
+StatusOr<google::iam::admin::v1::Role> DefaultIAMStub::GetRole(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::GetRoleRequest const& request) {
-  ::google::iam::admin::v1::Role response;
+    google::iam::admin::v1::GetRoleRequest const& request) {
+  google::iam::admin::v1::Role response;
   auto status = grpc_stub_->GetRole(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -264,10 +264,10 @@ StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::GetRole(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::CreateRole(
+StatusOr<google::iam::admin::v1::Role> DefaultIAMStub::CreateRole(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::CreateRoleRequest const& request) {
-  ::google::iam::admin::v1::Role response;
+    google::iam::admin::v1::CreateRoleRequest const& request) {
+  google::iam::admin::v1::Role response;
   auto status = grpc_stub_->CreateRole(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -275,10 +275,10 @@ StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::CreateRole(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::UpdateRole(
+StatusOr<google::iam::admin::v1::Role> DefaultIAMStub::UpdateRole(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::UpdateRoleRequest const& request) {
-  ::google::iam::admin::v1::Role response;
+    google::iam::admin::v1::UpdateRoleRequest const& request) {
+  google::iam::admin::v1::Role response;
   auto status = grpc_stub_->UpdateRole(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -286,10 +286,10 @@ StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::UpdateRole(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::DeleteRole(
+StatusOr<google::iam::admin::v1::Role> DefaultIAMStub::DeleteRole(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::DeleteRoleRequest const& request) {
-  ::google::iam::admin::v1::Role response;
+    google::iam::admin::v1::DeleteRoleRequest const& request) {
+  google::iam::admin::v1::Role response;
   auto status = grpc_stub_->DeleteRole(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -297,10 +297,10 @@ StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::DeleteRole(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::UndeleteRole(
+StatusOr<google::iam::admin::v1::Role> DefaultIAMStub::UndeleteRole(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::UndeleteRoleRequest const& request) {
-  ::google::iam::admin::v1::Role response;
+    google::iam::admin::v1::UndeleteRoleRequest const& request) {
+  google::iam::admin::v1::Role response;
   auto status = grpc_stub_->UndeleteRole(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -308,11 +308,11 @@ StatusOr<::google::iam::admin::v1::Role> DefaultIAMStub::UndeleteRole(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::QueryTestablePermissionsResponse>
+StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
 DefaultIAMStub::QueryTestablePermissions(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
-  ::google::iam::admin::v1::QueryTestablePermissionsResponse response;
+    google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
+  google::iam::admin::v1::QueryTestablePermissionsResponse response;
   auto status =
       grpc_stub_->QueryTestablePermissions(&client_context, request, &response);
   if (!status.ok()) {
@@ -321,11 +321,11 @@ DefaultIAMStub::QueryTestablePermissions(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::QueryAuditableServicesResponse>
+StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 DefaultIAMStub::QueryAuditableServices(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  ::google::iam::admin::v1::QueryAuditableServicesResponse response;
+    google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
+  google::iam::admin::v1::QueryAuditableServicesResponse response;
   auto status =
       grpc_stub_->QueryAuditableServices(&client_context, request, &response);
   if (!status.ok()) {
@@ -334,11 +334,10 @@ DefaultIAMStub::QueryAuditableServices(
   return response;
 }
 
-StatusOr<::google::iam::admin::v1::LintPolicyResponse>
-DefaultIAMStub::LintPolicy(
+StatusOr<google::iam::admin::v1::LintPolicyResponse> DefaultIAMStub::LintPolicy(
     grpc::ClientContext& client_context,
-    ::google::iam::admin::v1::LintPolicyRequest const& request) {
-  ::google::iam::admin::v1::LintPolicyResponse response;
+    google::iam::admin::v1::LintPolicyRequest const& request) {
+  google::iam::admin::v1::LintPolicyResponse response;
   auto status = grpc_stub_->LintPolicy(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);

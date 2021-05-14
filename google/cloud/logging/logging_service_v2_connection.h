@@ -50,20 +50,20 @@ class LoggingServiceV2Connection {
   virtual ~LoggingServiceV2Connection() = 0;
 
   virtual Status DeleteLog(
-      ::google::logging::v2::DeleteLogRequest const& request);
+      google::logging::v2::DeleteLogRequest const& request);
 
-  virtual StatusOr<::google::logging::v2::WriteLogEntriesResponse>
-  WriteLogEntries(::google::logging::v2::WriteLogEntriesRequest const& request);
+  virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
+  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request);
 
-  virtual StreamRange<::google::logging::v2::LogEntry> ListLogEntries(
-      ::google::logging::v2::ListLogEntriesRequest request);
+  virtual StreamRange<google::logging::v2::LogEntry> ListLogEntries(
+      google::logging::v2::ListLogEntriesRequest request);
 
-  virtual StreamRange<::google::api::MonitoredResourceDescriptor>
+  virtual StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
 
   virtual StreamRange<std::string> ListLogs(
-      ::google::logging::v2::ListLogsRequest request);
+      google::logging::v2::ListLogsRequest request);
 };
 
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(

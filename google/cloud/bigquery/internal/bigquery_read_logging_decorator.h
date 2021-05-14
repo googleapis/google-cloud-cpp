@@ -37,22 +37,21 @@ class BigQueryReadLogging : public BigQueryReadStub {
                       TracingOptions tracing_options,
                       std::set<std::string> components);
 
-  StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
-  CreateReadSession(
+  StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
       grpc::ClientContext& context,
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) override;
 
   std::unique_ptr<internal::StreamingReadRpc<
-      ::google::cloud::bigquery::storage::v1::ReadRowsResponse>>
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>
   ReadRows(std::unique_ptr<grpc::ClientContext> context,
-           ::google::cloud::bigquery::storage::v1::ReadRowsRequest const&
-               request) override;
+           google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
+      override;
 
-  StatusOr<::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+  StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
       grpc::ClientContext& context,
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) override;
 
  private:

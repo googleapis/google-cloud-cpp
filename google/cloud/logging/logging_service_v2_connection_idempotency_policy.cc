@@ -42,27 +42,26 @@ class DefaultLoggingServiceV2ConnectionIdempotencyPolicy
         DefaultLoggingServiceV2ConnectionIdempotencyPolicy>(*this);
   }
 
-  Idempotency DeleteLog(
-      ::google::logging::v2::DeleteLogRequest const&) override {
+  Idempotency DeleteLog(google::logging::v2::DeleteLogRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency WriteLogEntries(
-      ::google::logging::v2::WriteLogEntriesRequest const&) override {
+      google::logging::v2::WriteLogEntriesRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency ListLogEntries(
-      ::google::logging::v2::ListLogEntriesRequest) override {
+      google::logging::v2::ListLogEntriesRequest) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency ListMonitoredResourceDescriptors(
-      ::google::logging::v2::ListMonitoredResourceDescriptorsRequest) override {
+      google::logging::v2::ListMonitoredResourceDescriptorsRequest) override {
     return Idempotency::kIdempotent;
   }
 
-  Idempotency ListLogs(::google::logging::v2::ListLogsRequest) override {
+  Idempotency ListLogs(google::logging::v2::ListLogsRequest) override {
     return Idempotency::kIdempotent;
   }
 };

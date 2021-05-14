@@ -43,23 +43,23 @@ class DefaultIAMCredentialsConnectionIdempotencyPolicy
   }
 
   Idempotency GenerateAccessToken(
-      ::google::iam::credentials::v1::GenerateAccessTokenRequest const&)
+      google::iam::credentials::v1::GenerateAccessTokenRequest const&)
       override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency GenerateIdToken(
-      ::google::iam::credentials::v1::GenerateIdTokenRequest const&) override {
+      google::iam::credentials::v1::GenerateIdTokenRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency SignBlob(
-      ::google::iam::credentials::v1::SignBlobRequest const&) override {
+      google::iam::credentials::v1::SignBlobRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency SignJwt(
-      ::google::iam::credentials::v1::SignJwtRequest const&) override {
+      google::iam::credentials::v1::SignJwtRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 };

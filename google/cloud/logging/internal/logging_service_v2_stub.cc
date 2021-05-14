@@ -31,8 +31,8 @@ LoggingServiceV2Stub::~LoggingServiceV2Stub() = default;
 
 Status DefaultLoggingServiceV2Stub::DeleteLog(
     grpc::ClientContext& client_context,
-    ::google::logging::v2::DeleteLogRequest const& request) {
-  ::google::protobuf::Empty response;
+    google::logging::v2::DeleteLogRequest const& request) {
+  google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteLog(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -40,11 +40,11 @@ Status DefaultLoggingServiceV2Stub::DeleteLog(
   return google::cloud::Status();
 }
 
-StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
 DefaultLoggingServiceV2Stub::WriteLogEntries(
     grpc::ClientContext& client_context,
-    ::google::logging::v2::WriteLogEntriesRequest const& request) {
-  ::google::logging::v2::WriteLogEntriesResponse response;
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  google::logging::v2::WriteLogEntriesResponse response;
   auto status =
       grpc_stub_->WriteLogEntries(&client_context, request, &response);
   if (!status.ok()) {
@@ -53,11 +53,11 @@ DefaultLoggingServiceV2Stub::WriteLogEntries(
   return response;
 }
 
-StatusOr<::google::logging::v2::ListLogEntriesResponse>
+StatusOr<google::logging::v2::ListLogEntriesResponse>
 DefaultLoggingServiceV2Stub::ListLogEntries(
     grpc::ClientContext& client_context,
-    ::google::logging::v2::ListLogEntriesRequest const& request) {
-  ::google::logging::v2::ListLogEntriesResponse response;
+    google::logging::v2::ListLogEntriesRequest const& request) {
+  google::logging::v2::ListLogEntriesResponse response;
   auto status = grpc_stub_->ListLogEntries(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -65,12 +65,12 @@ DefaultLoggingServiceV2Stub::ListLogEntries(
   return response;
 }
 
-StatusOr<::google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 DefaultLoggingServiceV2Stub::ListMonitoredResourceDescriptors(
     grpc::ClientContext& client_context,
-    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
-  ::google::logging::v2::ListMonitoredResourceDescriptorsResponse response;
+  google::logging::v2::ListMonitoredResourceDescriptorsResponse response;
   auto status = grpc_stub_->ListMonitoredResourceDescriptors(
       &client_context, request, &response);
   if (!status.ok()) {
@@ -79,11 +79,11 @@ DefaultLoggingServiceV2Stub::ListMonitoredResourceDescriptors(
   return response;
 }
 
-StatusOr<::google::logging::v2::ListLogsResponse>
+StatusOr<google::logging::v2::ListLogsResponse>
 DefaultLoggingServiceV2Stub::ListLogs(
     grpc::ClientContext& client_context,
-    ::google::logging::v2::ListLogsRequest const& request) {
-  ::google::logging::v2::ListLogsResponse response;
+    google::logging::v2::ListLogsRequest const& request) {
+  google::logging::v2::ListLogsResponse response;
   auto status = grpc_stub_->ListLogs(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);

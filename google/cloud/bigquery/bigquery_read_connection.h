@@ -45,26 +45,26 @@ using BigQueryReadLimitedErrorCountRetryPolicy =
         bigquery_internal::BigQueryReadRetryTraits>;
 
 void BigQueryReadReadRowsStreamingUpdater(
-    ::google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    ::google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
 
 class BigQueryReadConnection {
  public:
   virtual ~BigQueryReadConnection() = 0;
 
-  virtual StatusOr<::google::cloud::bigquery::storage::v1::ReadSession>
+  virtual StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
   CreateReadSession(
-      ::google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
+      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request);
 
-  virtual StreamRange<::google::cloud::bigquery::storage::v1::ReadRowsResponse>
+  virtual StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
   ReadRows(
-      ::google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
+      google::cloud::bigquery::storage::v1::ReadRowsRequest const& request);
 
   virtual StatusOr<
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
+      google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
-      ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
+      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request);
 };
 

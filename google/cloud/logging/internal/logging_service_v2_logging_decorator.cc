@@ -35,61 +35,60 @@ LoggingServiceV2Logging::LoggingServiceV2Logging(
 
 Status LoggingServiceV2Logging::DeleteLog(
     grpc::ClientContext& context,
-    ::google::logging::v2::DeleteLogRequest const& request) {
+    google::logging::v2::DeleteLogRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::logging::v2::DeleteLogRequest const& request) {
+             google::logging::v2::DeleteLogRequest const& request) {
         return child_->DeleteLog(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::logging::v2::WriteLogEntriesResponse>
+StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Logging::WriteLogEntries(
     grpc::ClientContext& context,
-    ::google::logging::v2::WriteLogEntriesRequest const& request) {
+    google::logging::v2::WriteLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::logging::v2::WriteLogEntriesRequest const& request) {
+             google::logging::v2::WriteLogEntriesRequest const& request) {
         return child_->WriteLogEntries(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::logging::v2::ListLogEntriesResponse>
+StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Logging::ListLogEntries(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListLogEntriesRequest const& request) {
+    google::logging::v2::ListLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::logging::v2::ListLogEntriesRequest const& request) {
+             google::logging::v2::ListLogEntriesRequest const& request) {
         return child_->ListLogEntries(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::logging::v2::ListMonitoredResourceDescriptorsResponse>
+StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Logging::ListMonitoredResourceDescriptors(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+    google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](
-          grpc::ClientContext& context,
-          ::google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
-              request) {
+      [this](grpc::ClientContext& context,
+             google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
+                 request) {
         return child_->ListMonitoredResourceDescriptors(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::logging::v2::ListLogsResponse>
+StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Logging::ListLogs(
     grpc::ClientContext& context,
-    ::google::logging::v2::ListLogsRequest const& request) {
+    google::logging::v2::ListLogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::logging::v2::ListLogsRequest const& request) {
+             google::logging::v2::ListLogsRequest const& request) {
         return child_->ListLogs(context, request);
       },
       context, request, __func__, tracing_options_);

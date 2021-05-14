@@ -38,7 +38,7 @@ std::shared_ptr<IAMCredentialsStub> CreateDefaultIAMCredentialsStub(
       options.get<EndpointOption>(), options.get<GrpcCredentialOption>(),
       internal::MakeChannelArguments(options));
   auto service_grpc_stub =
-      ::google::iam::credentials::v1::IAMCredentials::NewStub(channel);
+      google::iam::credentials::v1::IAMCredentials::NewStub(channel);
   std::shared_ptr<IAMCredentialsStub> stub =
       std::make_shared<DefaultIAMCredentialsStub>(std::move(service_grpc_stub));
 
