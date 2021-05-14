@@ -13,7 +13,7 @@ and Cloud Functions.
 
 To run integration tests and to demonstrate how these tokens are used we deploy
 a simple "Hello World" application to Cloud Run. The code for this application
-is found
+is found in the `hello_world_http/` subdirectory.
 
 ### Prerequisites
 
@@ -24,7 +24,7 @@ docker run hello-world
 # Output: Hello from Docker! and then some more informational messages.
 ```
 
-Verify the [pack tool][pack-install] is functional on our workstation. These
+Verify the [pack tool][pack-install] is functional on your workstation. These
 instructions were tested with `v0.17.0`, although they should work with newer
 versions. Some commands may not work with older versions.
 
@@ -36,7 +36,7 @@ pack version
 ### Create the Docker image
 
 We use buildpack to compile the code in the `hello_world_http/` subdirectory
-into a Docker image. At the end of this build the docker image will reside in
+into a Docker image. At the end of this build the docker image will reside on
 your workstation. We will then push the image to GCR (Google Container Registry)
 and use it from Cloud Run.
 
@@ -81,7 +81,7 @@ GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL="$(gcloud run services describe \
 ### One Time: Create Service Account and set Permissions
 
 ```shell
-# The account in the Hello World service, has not permissions
+# The account in the Hello World service, has no permissions
 gcloud iam service-accounts create hello-world-run-sa \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --display-name="Service account used by Cloud Run 'Hello World' Deployments"
