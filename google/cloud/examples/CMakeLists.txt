@@ -21,9 +21,22 @@ add_executable(gcs2cbt gcs2cbt.cc)
 target_link_libraries(gcs2cbt google-cloud-cpp::bigtable
                       google-cloud-cpp::storage google-cloud-cpp::grpc_utils)
 google_cloud_cpp_add_common_options(gcs2cbt)
+
 if (BUILD_TESTING)
-    add_test(NAME gcs2cbt COMMAND gcs2cbt)
-    set_tests_properties(
-        gcs2cbt PROPERTIES LABELS
-                           "integration-test;integration-test-production")
+    include(FindGMockWithTargets)
+
+    add_executable(grpc_credential_types grpc_credential_types.cc)
+    target_link_libraries(
+        grpc_credential_types
+        PRIVATE google_cloud_cpp_testing google-cloud-cpp::experimental-iam
+                google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
+                GTest::gtest)
+    google_cloud_cpp_add_common_options(grpc_credential_types)
+
+    foreach (test gcs2cbt grpc_credential_types)
+        add_test(NAME ${test} COMMAND ${test})
+        set_tests_properties(
+            ${test} PROPERTIES LABELS
+                               "integration-test;integration-test-production")
+    endforeach ()
 endif ()
