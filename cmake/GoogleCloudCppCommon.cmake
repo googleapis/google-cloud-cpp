@@ -60,8 +60,9 @@ else ()
         set(DOXYGEN_CLANG_OPTIONS)
         set(DOXYGEN_CLANG_DATABASE_PATH)
         set(DOXYGEN_SEARCH_INCLUDES YES)
-        set(DOXYGEN_INCLUDE_PATH "${PROJECT_SOURCE_DIR}"
-                                 "${PROJECT_BINARY_DIR}/external/googleapis")
+        set(DOXYGEN_INCLUDE_PATH
+            "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}"
+            "${PROJECT_BINARY_DIR}/external/googleapis")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)
