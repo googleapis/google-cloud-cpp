@@ -31,50 +31,50 @@ GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
     : child_(std::move(child)),
       api_client_header_(google::cloud::internal::ApiClientHeader()) {}
 
-StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GenerateAccessToken(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
+StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkMetadata::GenerateIdToken(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
+    google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   SetMetadata(context, {});
   return child_->GenerateIdToken(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
+StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkMetadata::WriteLogEntries(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
+    google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   SetMetadata(context, {});
   return child_->WriteLogEntries(context, request);
 }
 
-StatusOr<::google::test::admin::database::v1::ListLogsResponse>
+StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkMetadata::ListLogs(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListLogsRequest const& request) {
+    google::test::admin::database::v1::ListLogsRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListLogs(context, request);
 }
 
-std::unique_ptr<internal::StreamingReadRpc<::google::test::admin::database::v1::TailLogEntriesResponse>>
+std::unique_ptr<internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
 GoldenKitchenSinkMetadata::TailLogEntries(
     std::unique_ptr<grpc::ClientContext> context,
-    ::google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
   SetMetadata(*context, {});
   return child_->TailLogEntries(std::move(context), request);
 }
 
-StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
+StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
+    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->ListServiceAccountKeys(context, request);
 }

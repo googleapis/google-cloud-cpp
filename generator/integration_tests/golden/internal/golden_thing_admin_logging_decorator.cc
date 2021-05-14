@@ -33,49 +33,49 @@ GoldenThingAdminLogging::GoldenThingAdminLogging(
     : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>
+StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminLogging::ListDatabases(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabasesRequest const& request) {
+    google::test::admin::database::v1::ListDatabasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::ListDatabasesRequest const& request) {
+             google::test::admin::database::v1::ListDatabasesRequest const& request) {
         return child_->ListDatabases(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminLogging::CreateDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+    google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+             google::test::admin::database::v1::CreateDatabaseRequest const& request) {
         return child_->CreateDatabase(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::Database>
+StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminLogging::GetDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseRequest const& request) {
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::GetDatabaseRequest const& request) {
+             google::test::admin::database::v1::GetDatabaseRequest const& request) {
         return child_->GetDatabase(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminLogging::UpdateDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+             google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
         return child_->UpdateDatabaseDdl(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -84,94 +84,94 @@ GoldenThingAdminLogging::UpdateDatabaseDdl(
 Status
 GoldenThingAdminLogging::DropDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::DropDatabaseRequest const& request) {
+             google::test::admin::database::v1::DropDatabaseRequest const& request) {
         return child_->DropDatabase(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>
+StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminLogging::GetDatabaseDdl(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+    google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
+             google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
         return child_->GetDatabaseDdl(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 GoldenThingAdminLogging::SetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::SetIamPolicyRequest const& request) {
+    google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::SetIamPolicyRequest const& request) {
+             google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::Policy>
+StatusOr<google::iam::v1::Policy>
 GoldenThingAdminLogging::GetIamPolicy(
     grpc::ClientContext& context,
-    ::google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::GetIamPolicyRequest const& request) {
+             google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::iam::v1::TestIamPermissionsResponse>
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminLogging::TestIamPermissions(
     grpc::ClientContext& context,
-    ::google::iam::v1::TestIamPermissionsRequest const& request) {
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::iam::v1::TestIamPermissionsRequest const& request) {
+             google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminLogging::CreateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::CreateBackupRequest const& request) {
+    google::test::admin::database::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::CreateBackupRequest const& request) {
+             google::test::admin::database::v1::CreateBackupRequest const& request) {
         return child_->CreateBackup(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminLogging::GetBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::GetBackupRequest const& request) {
+    google::test::admin::database::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::GetBackupRequest const& request) {
+             google::test::admin::database::v1::GetBackupRequest const& request) {
         return child_->GetBackup(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::Backup>
+StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminLogging::UpdateBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::UpdateBackupRequest const& request) {
+    google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::UpdateBackupRequest const& request) {
+             google::test::admin::database::v1::UpdateBackupRequest const& request) {
         return child_->UpdateBackup(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -180,58 +180,58 @@ GoldenThingAdminLogging::UpdateBackup(
 Status
 GoldenThingAdminLogging::DeleteBackup(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::DeleteBackupRequest const& request) {
+    google::test::admin::database::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::DeleteBackupRequest const& request) {
+             google::test::admin::database::v1::DeleteBackupRequest const& request) {
         return child_->DeleteBackup(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminLogging::ListBackups(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupsRequest const& request) {
+    google::test::admin::database::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::ListBackupsRequest const& request) {
+             google::test::admin::database::v1::ListBackupsRequest const& request) {
         return child_->ListBackups(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::longrunning::Operation>
+StatusOr<google::longrunning::Operation>
 GoldenThingAdminLogging::RestoreDatabase(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+             google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
         return child_->RestoreDatabase(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::ListDatabaseOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminLogging::ListDatabaseOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+    google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
+             google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
         return child_->ListDatabaseOperations(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<::google::test::admin::database::v1::ListBackupOperationsResponse>
+StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminLogging::ListBackupOperations(
     grpc::ClientContext& context,
-    ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+    google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             ::google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
+             google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
         return child_->ListBackupOperations(context, request);
       },
       context, request, __func__, tracing_options_);

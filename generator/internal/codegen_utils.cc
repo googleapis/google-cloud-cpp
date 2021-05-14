@@ -164,7 +164,7 @@ std::string ServiceNameToFilePath(absl::string_view service_name) {
 }
 
 std::string ProtoNameToCppName(absl::string_view proto_name) {
-  return "::" + absl::StrReplaceAll(proto_name, {{".", "::"}});
+  return absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
 std::vector<std::string> BuildNamespaces(std::string const& product_path,

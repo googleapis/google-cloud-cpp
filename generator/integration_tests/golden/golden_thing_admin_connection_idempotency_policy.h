@@ -38,55 +38,55 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy> clone() const = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest request) = 0;
+  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
+  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
+  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
+  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
+  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
+  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const& request) = 0;
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const& request) = 0;
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
+  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  GetBackup(::google::test::admin::database::v1::GetBackupRequest const& request) = 0;
+  GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
+  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
+  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListBackups(::google::test::admin::database::v1::ListBackupsRequest request) = 0;
+  ListBackups(google::test::admin::database::v1::ListBackupsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
+  RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest request) = 0;
+  ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest request) = 0;
+  ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) = 0;
 
 };
 

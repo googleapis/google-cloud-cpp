@@ -39,87 +39,87 @@ class DefaultGoldenThingAdminConnectionIdempotencyPolicy : public GoldenThingAdm
   }
 
   Idempotency
-  ListDatabases(::google::test::admin::database::v1::ListDatabasesRequest) override {
+  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  CreateDatabase(::google::test::admin::database::v1::CreateDatabaseRequest const&) override {
+  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  GetDatabase(::google::test::admin::database::v1::GetDatabaseRequest const&) override {
+  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  UpdateDatabaseDdl(::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) override {
+  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  DropDatabase(::google::test::admin::database::v1::DropDatabaseRequest const&) override {
+  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  GetDatabaseDdl(::google::test::admin::database::v1::GetDatabaseDdlRequest const&) override {
+  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  SetIamPolicy(::google::iam::v1::SetIamPolicyRequest const&) override {
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  GetIamPolicy(::google::iam::v1::GetIamPolicyRequest const&) override {
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  TestIamPermissions(::google::iam::v1::TestIamPermissionsRequest const&) override {
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  CreateBackup(::google::test::admin::database::v1::CreateBackupRequest const&) override {
+  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  GetBackup(::google::test::admin::database::v1::GetBackupRequest const&) override {
+  GetBackup(google::test::admin::database::v1::GetBackupRequest const&) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  UpdateBackup(::google::test::admin::database::v1::UpdateBackupRequest const&) override {
+  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  DeleteBackup(::google::test::admin::database::v1::DeleteBackupRequest const&) override {
+  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  ListBackups(::google::test::admin::database::v1::ListBackupsRequest) override {
+  ListBackups(google::test::admin::database::v1::ListBackupsRequest) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  RestoreDatabase(::google::test::admin::database::v1::RestoreDatabaseRequest const&) override {
+  RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  ListDatabaseOperations(::google::test::admin::database::v1::ListDatabaseOperationsRequest) override {
+  ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  ListBackupOperations(::google::test::admin::database::v1::ListBackupOperationsRequest) override {
+  ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest) override {
     return Idempotency::kIdempotent;
   }
 

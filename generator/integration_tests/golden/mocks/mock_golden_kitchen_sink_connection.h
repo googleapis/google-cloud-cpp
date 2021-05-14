@@ -28,29 +28,29 @@ inline namespace GOOGLE_CLOUD_CPP_GENERATED_NS {
 
 class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnection {
  public:
-  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>,
+  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>,
   GenerateAccessToken,
-  (::google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
+  (google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>,
+  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>,
   GenerateIdToken,
-  (::google::test::admin::database::v1::GenerateIdTokenRequest const& request), (override));
+  (google::test::admin::database::v1::GenerateIdTokenRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>,
+  MOCK_METHOD(StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>,
   WriteLogEntries,
-  (::google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
+  (google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
 
   MOCK_METHOD(StreamRange<std::string>,
   ListLogs,
-  (::google::test::admin::database::v1::ListLogsRequest request), (override));
+  (google::test::admin::database::v1::ListLogsRequest request), (override));
 
-  MOCK_METHOD(StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>,
+  MOCK_METHOD(StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>,
   TailLogEntries,
-  (::google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
+  (google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
 
-  MOCK_METHOD(StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>,
+  MOCK_METHOD(StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>,
   ListServiceAccountKeys,
-  (::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
+  (google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
 
 };
 

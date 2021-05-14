@@ -39,27 +39,27 @@ class DefaultGoldenKitchenSinkConnectionIdempotencyPolicy : public GoldenKitchen
   }
 
   Idempotency
-  GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const&) override {
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const&) override {
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const&) override {
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const&) override {
     return Idempotency::kNonIdempotent;
   }
 
   Idempotency
-  ListLogs(::google::test::admin::database::v1::ListLogsRequest) override {
+  ListLogs(google::test::admin::database::v1::ListLogsRequest) override {
     return Idempotency::kIdempotent;
   }
 
   Idempotency
-  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const&) override {
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const&) override {
     return Idempotency::kIdempotent;
   }
 

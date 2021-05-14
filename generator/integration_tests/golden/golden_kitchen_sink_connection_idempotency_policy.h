@@ -37,19 +37,19 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
   virtual std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy> clone() const = 0;
 
   virtual google::cloud::internal::Idempotency
-  GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListLogs(::google::test::admin::database::v1::ListLogsRequest request) = 0;
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request) = 0;
 
   virtual google::cloud::internal::Idempotency
-  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
 };
 

@@ -44,30 +44,30 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
         golden_internal::GoldenKitchenSinkRetryTraits>;
 
 void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
-    ::google::test::admin::database::v1::TailLogEntriesResponse const& response,
-    ::google::test::admin::database::v1::TailLogEntriesRequest& request);
+    google::test::admin::database::v1::TailLogEntriesResponse const& response,
+    google::test::admin::database::v1::TailLogEntriesRequest& request);
 
 class GoldenKitchenSinkConnection {
  public:
   virtual ~GoldenKitchenSinkConnection() = 0;
 
-  virtual StatusOr<::google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(::google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
+  virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
 
-  virtual StatusOr<::google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(::google::test::admin::database::v1::GenerateIdTokenRequest const& request);
+  virtual StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
+  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
 
-  virtual StatusOr<::google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(::google::test::admin::database::v1::WriteLogEntriesRequest const& request);
+  virtual StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
+  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
 
   virtual StreamRange<std::string>
-  ListLogs(::google::test::admin::database::v1::ListLogsRequest request);
+  ListLogs(google::test::admin::database::v1::ListLogsRequest request);
 
-  virtual StreamRange<::google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(::google::test::admin::database::v1::TailLogEntriesRequest const& request);
+  virtual StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
+  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
 
-  virtual StatusOr<::google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(::google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
+  virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
+  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
 
 };
 
