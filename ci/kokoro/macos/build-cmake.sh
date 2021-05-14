@@ -109,7 +109,7 @@ if should_run_integration_tests; then
     # TODO(6062) - restore the GCS+gRPC tests (i.e. remove storage_grpc_ from the -E option)
     ctest \
       -L 'integration-test-production' \
-      -E '(bigtable_grpc_credentials|storage_service_account_samples|service_account_integration_test|storage_grpc_)' \
+      -E '(bigtable_grpc_credentials|grpc_credential_types|storage_service_account_samples|service_account_integration_test|storage_grpc_)' \
       --output-on-failure -j "${NCPU}"
   )
 fi

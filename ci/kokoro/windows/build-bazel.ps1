@@ -212,6 +212,7 @@ if (Integration-Tests-Enabled) {
         "-//google/cloud/bigtable/examples:bigtable_grpc_credentials",
         "-//google/cloud/storage/examples:storage_service_account_samples",
         "-//google/cloud/storage/tests:service_account_integration_test",
+        "-//google/cloud/examples:grpc_credential_types",
 
         # TODO(#6062) - enable gRPC integration tests again
         "-//google/cloud/storage/examples:storage_grpc_samples",
