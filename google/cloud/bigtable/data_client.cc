@@ -141,6 +141,7 @@ class DefaultDataClient : public DataClient {
                 btproto::SampleRowKeysRequest const& request) override {
     return impl_.Stub()->SampleRowKeys(context, request);
   }
+
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::SampleRowKeysResponse>>
   AsyncSampleRowKeys(
@@ -149,6 +150,7 @@ class DefaultDataClient : public DataClient {
       ::grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
+
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::SampleRowKeysResponse>>
   PrepareAsyncSampleRowKeys(
@@ -163,6 +165,7 @@ class DefaultDataClient : public DataClient {
              btproto::MutateRowsRequest const& request) override {
     return impl_.Stub()->MutateRows(context, request);
   }
+
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(::grpc::ClientContext* context,
@@ -170,6 +173,7 @@ class DefaultDataClient : public DataClient {
                   ::grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncMutateRows(context, request, cq, tag);
   }
+
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::MutateRowsResponse>>
   PrepareAsyncMutateRows(
@@ -184,6 +188,7 @@ class DefaultDataClient : public DataClient {
   ClientOptions::BackgroundThreadsFactory BackgroundThreadsFactory() override {
     return impl_.Options().background_threads_factory();
   }
+
   std::string project_;
   std::string instance_;
   Impl impl_;

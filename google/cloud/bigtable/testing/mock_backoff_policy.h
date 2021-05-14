@@ -17,9 +17,9 @@
 
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/status.h"
-#include "grpcpp/client_context.h"
-#include "grpcpp/impl/codegen/status.h"
 #include <gmock/gmock.h>
+#include <grpcpp/client_context.h>
+#include <grpcpp/impl/codegen/status.h>
 #include <chrono>
 #include <memory>
 

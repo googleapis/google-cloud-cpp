@@ -107,7 +107,7 @@ class MockDataClient : public bigtable::DataClient {
                   google::bigtable::v2::SampleRowKeysResponse>>,
               PrepareAsyncSampleRowKeys,
               (grpc::ClientContext*,
-               const google::bigtable::v2::SampleRowKeysRequest&,
+               google::bigtable::v2::SampleRowKeysRequest const&,
                grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientReaderInterface<

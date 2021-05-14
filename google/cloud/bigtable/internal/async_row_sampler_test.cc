@@ -1,3 +1,5 @@
+// Copyright 2021 Google LLC
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -16,7 +18,7 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "google/bigtable/v2/bigtable.pb.h"
+#include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
 #include <iterator>
 #include <memory>

@@ -17,10 +17,7 @@
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
-#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
-#include "data_client.h"
-#include "row_key_sample.h"
 #include <thread>
 #include <type_traits>
 

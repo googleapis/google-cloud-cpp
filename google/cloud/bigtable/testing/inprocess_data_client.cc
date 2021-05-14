@@ -140,10 +140,11 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::SampleRowKeysResponse>>
 InProcessDataClient::PrepareAsyncSampleRowKeys(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::SampleRowKeysRequest& request,
+    ::google::bigtable::v2::SampleRowKeysRequest const& request,
     ::grpc::CompletionQueue* cq) {
   return Stub()->PrepareAsyncSampleRowKeys(context, request, cq);
 }
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud
