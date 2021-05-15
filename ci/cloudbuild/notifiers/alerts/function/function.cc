@@ -93,6 +93,6 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   // Skips PR invocations and manually invoked builds (no trigger name).
   if (trigger_type == "pr" || trigger_name.empty()) return;
   auto const chat = MakeChatPayload(bs);
-  std::cout << nlohmann::json{{"severity", "INFO"}, {"chat" : chat}} << "\n";
+  std::cout << nlohmann::json{{"severity", "INFO"}, {"chat", chat}} << "\n";
   HttpPost(webhook, chat.dump());
 }
