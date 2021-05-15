@@ -31,7 +31,7 @@ class Table;
 namespace internal {
 class AsyncBulkMutatorNoex;
 class AsyncRetryBulkApply;
-class AsyncSampleRowKeys;
+class AsyncRowSampler;
 class BulkMutator;
 template <typename ReadRowCallback,
           typename std::enable_if<
@@ -98,7 +98,7 @@ class DataClient {
   friend class Table;
   friend class internal::AsyncBulkMutatorNoex;
   friend class internal::AsyncRetryBulkApply;
-  friend class internal::AsyncSampleRowKeys;
+  friend class internal::AsyncRowSampler;
   friend class internal::BulkMutator;
   friend class RowReader;
   template <typename RowFunctor, typename FinishFunctor>
@@ -166,6 +166,12 @@ class DataClient {
       ::grpc::ClientContext* context,
       const ::google::bigtable::v2::SampleRowKeysRequest& request,
       ::grpc::CompletionQueue* cq, void* tag) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::SampleRowKeysResponse>>
+  PrepareAsyncSampleRowKeys(
+      ::grpc::ClientContext* context,
+      ::google::bigtable::v2::SampleRowKeysRequest const& request,
+      ::grpc::CompletionQueue* cq);
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
   MutateRows(grpc::ClientContext* context,

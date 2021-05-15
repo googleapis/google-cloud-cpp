@@ -90,6 +90,8 @@ add_library(
     internal/async_retry_multi_page.h
     internal/async_retry_op.h
     internal/async_retry_unary_rpc_and_poll.h
+    internal/async_row_sampler.cc
+    internal/async_row_sampler.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h
@@ -185,6 +187,7 @@ if (BUILD_TESTING)
         testing/inprocess_data_client.h
         testing/mock_admin_client.h
         testing/mock_async_failing_rpc_factory.h
+        testing/mock_backoff_policy.h
         testing/mock_data_client.h
         testing/mock_instance_admin_client.h
         testing/mock_mutate_rows_reader.h
@@ -245,6 +248,7 @@ if (BUILD_TESTING)
         internal/async_poll_op_test.cc
         internal/async_retry_multi_page_test.cc
         internal/async_retry_unary_rpc_and_poll_test.cc
+        internal/async_row_sampler_test.cc
         internal/bulk_mutator_test.cc
         internal/common_client_test.cc
         internal/google_bytes_traits_test.cc

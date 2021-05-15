@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
+#include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
-#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <thread>
 #include <type_traits>
@@ -337,7 +337,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
 // successful. When RPC is finished, this function returns the SampleRowKeys
 // as a std::vector<>. If the RPC fails, it will keep retrying until the
 // policies in effect tell us to stop. Note that each retry must clear the
-// samples otherwise the result is an inconsistent set of samples row keys.
+// samples otherwise the result is an inconsistent set of sample row keys.
 StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   // Copy the policies in effect for this operation.
   auto backoff_policy = clone_rpc_backoff_policy();
@@ -377,6 +377,13 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
     std::this_thread::sleep_for(delay);
   }
   return samples;
+}
+
+future<StatusOr<std::vector<bigtable::RowKeySample>>> Table::AsyncSampleRows() {
+  auto cq = background_threads_->cq();
+  return internal::AsyncRowSampler::Create(
+      cq, client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_, app_profile_id_, table_name_);
 }
 
 StatusOr<Row> Table::ReadModifyWriteRowImpl(
@@ -447,8 +454,8 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRowImpl(
       // The `CompletionQueue`, which this object holds a reference to, should
       // not be shut down before `OnStreamFinished` is called. In order to make
       // sure of that, satisying the `promise<>` is deferred until then - the
-      // user shouldn't shutown the `CompleetionQue` before this whole
-      // operations is done.
+      // user shouldn't shutdown the `CompletionQueue` before this whole
+      // operation is done.
       return make_ready_future(false);
     }
 

@@ -690,7 +690,7 @@ class Table {
    *     "end of table".
    *
    * @par Idempotency
-   * This operation is always treated as non-idempotent.
+   * This operation is always treated as idempotent.
    *
    * @par Thread-safety
    * Two threads concurrently calling this member function on the same instance
@@ -701,6 +701,29 @@ class Table {
    * @snippet data_snippets.cc sample row keys
    */
   StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
+
+  /**
+   * Asynchronously obtains a sample of the row keys in the table, including
+   * approximate data sizes.
+   *
+   * @returns A future, that becomes satisfied when the operation completes.
+   *     Note that the sample may only include one element for small tables.
+   *     In addition, the sample may include row keys that do not exist on
+   *     the table, and may include the empty row key to indicate "end of
+   *     table".
+   *
+   * @par Idempotency
+   * This operation is always treated as idempotent.
+   *
+   * @par Thread-safety
+   * Two threads concurrently calling this member function on the same instance
+   * of this class are **not** guaranteed to work. Consider copying the object
+   * and using different copies in each thread.
+   *
+   * @par Examples
+   * @snippet data_async_snippets.cc async sample row keys
+   */
+  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows();
 
   /**
    * Atomically read and modify the row in the server, returning the

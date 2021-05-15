@@ -45,6 +45,7 @@ bigtable_client_unit_tests = [
     "internal/async_poll_op_test.cc",
     "internal/async_retry_multi_page_test.cc",
     "internal/async_retry_unary_rpc_and_poll_test.cc",
+    "internal/async_row_sampler_test.cc",
     "internal/bulk_mutator_test.cc",
     "internal/common_client_test.cc",
     "internal/google_bytes_traits_test.cc",
