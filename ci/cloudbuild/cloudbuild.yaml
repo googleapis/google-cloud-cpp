@@ -158,6 +158,7 @@ steps:
     - '-c'
     - |
       set -xe
+      test -z "${_PR_NUMBER}" && exit 0
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
@@ -176,6 +177,7 @@ steps:
     - '-c'
     - |
       set -xe
+      test -z "${_PR_NUMBER}" && exit 0
       ctime="$(gcloud builds describe --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
