@@ -17,9 +17,11 @@
 set(DOXYGEN_PROJECT_NAME "Google Cloud IAM C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud IAM")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 set(DOXYGEN_EXCLUDE_PATTERNS "*/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "iam_internal" "iam_testing" "examples")
+
+# Creates the proto headers needed by doxygen.
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::iam_protos)
 
 include(GoogleCloudCppCommon)
 

@@ -60,8 +60,9 @@ else ()
         set(DOXYGEN_CLANG_OPTIONS)
         set(DOXYGEN_CLANG_DATABASE_PATH)
         set(DOXYGEN_SEARCH_INCLUDES YES)
-        set(DOXYGEN_INCLUDE_PATH "${PROJECT_SOURCE_DIR}"
-                                 "${PROJECT_BINARY_DIR}/external/googleapis")
+        set(DOXYGEN_INCLUDE_PATH
+            "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}"
+            "${PROJECT_BINARY_DIR}/external/googleapis")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)
@@ -119,6 +120,12 @@ else ()
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMENT
             "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
         add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
+
+        # Extra dependencies needed by this subproject's docs target.
+        if (GOOGLE_CLOUD_CPP_DOXYGEN_DEPS)
+            add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+                             ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS})
+        endif ()
         if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
             add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "cloud-docs")
         endif ()

@@ -40,6 +40,10 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
+# Creates the proto headers needed by doxygen.
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::rpc_status_protos
+                                  google-cloud-cpp::bigtable_protos)
+
 include(GoogleCloudCppCommon)
 
 # Define a function to fetch the current git revision. Using a function creates

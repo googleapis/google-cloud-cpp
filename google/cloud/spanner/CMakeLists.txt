@@ -27,6 +27,9 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/spanner/benchmarks/*" "*/google/cloud/spanner/testing/*"
     "*/google/cloud/spanner/*_test.cc")
 
+# Creates the proto headers needed by doxygen.
+set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::spanner_protos)
+
 include(GoogleCloudCppCommon)
 
 add_library(
