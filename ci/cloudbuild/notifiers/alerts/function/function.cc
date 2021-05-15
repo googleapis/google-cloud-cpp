@@ -52,7 +52,8 @@ BuildStatus ParseBuildStatus(google::cloud::functions::CloudEvent event) {
 nlohmann::json MakeChatPayload(BuildStatus const& bs) {
   auto const trigger_name = bs.build["substitutions"].value("TRIGGER_NAME", "");
   auto const log_url = bs.build.value("logUrl", "");
-  auto text = fmt::format("Build failed: *{}* {}", trigger_name, log_url);
+  auto const status = bs.status;
+  auto text = fmt::format("Build `{}`: *{}* {}", status, trigger_name, log_url);
   return nlohmann::json{{"text", std::move(text)}};
 }
 
@@ -81,7 +82,11 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
     throw std::runtime_error("Missing environment variable: " + name);
   }();
   auto const bs = ParseBuildStatus(std::move(event));
-  if (bs.status != "FAILURE") return;
+  // https://cloud.google.com/build/docs/api/reference/rest/v1/projects.builds#Build.Status
+  if (bs.status == "QUEUED" || bs.status == "WORKING" ||
+      bs.status == "SUCCESS" || bs.status == "CANCELLED") {
+    return;
+  }
   auto const substitutions = bs.build["substitutions"];
   auto const trigger_type = substitutions.value("_TRIGGER_TYPE", "");
   auto const trigger_name = substitutions.value("TRIGGER_NAME", "");
