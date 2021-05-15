@@ -30,7 +30,7 @@ them.
 ./ci/cloudbuild/build.sh -t check-api-pr --docker
 ```
 
-The updated ABI dump files will be left in the `ci/test-abi` folder.
+The updated ABI dump files will be left in the `ci/abi-dumps` folder.
 
 This may take a while, leave it running while you perform the next step. You
 can, but are not required to, send a single PR to update the baseline and the
