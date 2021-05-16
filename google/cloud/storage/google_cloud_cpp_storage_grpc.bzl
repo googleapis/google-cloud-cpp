@@ -24,6 +24,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/grpc_resumable_upload_session_url.h",
     "internal/hybrid_client.h",
     "internal/storage_auth.h",
+    "internal/storage_round_robin.h",
     "internal/storage_stub.h",
 ]
 
@@ -35,5 +36,6 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/grpc_resumable_upload_session_url.cc",
     "internal/hybrid_client.cc",
     "internal/storage_auth.cc",
+    "internal/storage_round_robin.cc",
     "internal/storage_stub.cc",
 ]

@@ -26,4 +26,5 @@ storage_client_grpc_unit_tests = [
     "internal/grpc_resumable_upload_session_test.cc",
     "internal/grpc_resumable_upload_session_url_test.cc",
     "internal/storage_auth_test.cc",
+    "internal/storage_round_robin_test.cc",
 ]
