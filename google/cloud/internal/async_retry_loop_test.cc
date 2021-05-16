@@ -243,8 +243,8 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
   AutomaticallyCreatedBackgroundThreads background;
   StatusOr<int> actual =
       AsyncRetryLoop(
-          LimitedTimeRetryPolicy<TestRetryablePolicy>(ms(100)).clone(),
-          ExponentialBackoffPolicy(ms(20), ms(20), 2.0).clone(),
+          LimitedErrorCountRetryPolicy<TestRetryablePolicy>(0).clone(),
+          ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(),
           Idempotency::kIdempotent, background.cq(),
           [](google::cloud::CompletionQueue&,
              std::unique_ptr<grpc::ClientContext>, int) {
