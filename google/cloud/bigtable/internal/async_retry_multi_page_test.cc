@@ -13,19 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
-#include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
-#include "google/cloud/bigtable/testing/mock_sample_row_keys_reader.h"
-#include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <future>
 #include <thread>
-#include <typeinfo>
 
 namespace google {
 namespace cloud {
@@ -35,6 +31,7 @@ namespace internal {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::testing::Return;
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
@@ -115,8 +112,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
   };
 
   using MockAsyncListClustersReader =
-      google::cloud::bigtable::testing::MockAsyncResponseReader<
-          ListClustersResponse>;
+      MockAsyncResponseReader<ListClustersResponse>;
 
   void ExpectInteraction(std::vector<Exchange> const& interaction) {
     for (auto exchange_it = interaction.rbegin();

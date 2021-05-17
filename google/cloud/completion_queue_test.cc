@@ -17,6 +17,7 @@
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
@@ -40,6 +41,9 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::StrictMock;
 
+using MockTableReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<btadmin::Table>;
+
 class MockClient {
  public:
   MOCK_METHOD(
@@ -54,24 +58,6 @@ class MockClient {
       AsyncReadRows,
       (grpc::ClientContext*, btproto::ReadRowsRequest const&,
        grpc::CompletionQueue* cq));
-};
-
-class MockTableReader
-    : public grpc::ClientAsyncResponseReaderInterface<btadmin::Table> {
- public:
-  MOCK_METHOD(void, StartCall, (), (override));
-  MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
-  MOCK_METHOD(void, Finish, (btadmin::Table*, grpc::Status*, void*),
-              (override));
-
-  // Preserve the behavior from before https://github.com/grpc/proposal/pull/238
-  // of not destroying the object when
-  // std::unique_ptr<grpc::ClientAsyncResponseReaderInterface> goes out of
-  // scope.
-  //
-  // TODO(#6566): mark this with the override keyword once the method exists in
-  // the parent class.
-  virtual void Destroy() {}
 };
 
 class MockRowReader

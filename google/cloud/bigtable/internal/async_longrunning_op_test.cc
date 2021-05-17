@@ -16,10 +16,10 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <gmock/gmock.h>
@@ -37,7 +37,7 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::WithParamInterface;
 
 using MockAsyncLongrunningOpReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::testing_util::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
