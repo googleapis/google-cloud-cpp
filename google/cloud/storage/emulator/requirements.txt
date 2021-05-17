@@ -1,5 +1,5 @@
 git+git://github.com/googleapis/python-storage@8cf6c62a96ba3fff7e5028d931231e28e5029f1c
-flask==1.1.2
+flask==1.1.4
 httpbin==0.7.0
 requests-toolbelt==0.9.1
 scalpl==0.4.2
