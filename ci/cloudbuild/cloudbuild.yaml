@@ -178,7 +178,7 @@ steps:
     - |
       set -xe
       test -z "${_PR_NUMBER}" && exit 0
-      ctime="$(gcloud builds --region '${_REGION}' describe --format 'value(create_time)' '${BUILD_ID}')"
+      ctime="$(gcloud builds describe --region '${_REGION}' --format 'value(create_time)' '${BUILD_ID}')"
       query="tags=pr"
       query+=" AND tags=${_PR_NUMBER}"
       query+=" AND substitutions.COMMIT_SHA != ${COMMIT_SHA}"
