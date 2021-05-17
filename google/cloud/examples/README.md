@@ -36,7 +36,7 @@ docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest"
 SA="hello-world-run-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 gcloud run deploy hello-world-grpc-r2 \
     --project="${GOOGLE_CLOUD_PROJECT}" \
-    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
+    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest" \
     --region="us-central1" \
     --platform="managed" \
     --service-account="${SA}" \
