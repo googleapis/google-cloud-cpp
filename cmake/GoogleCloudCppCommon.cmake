@@ -62,6 +62,7 @@ else ()
         set(DOXYGEN_SEARCH_INCLUDES YES)
         set(DOXYGEN_INCLUDE_PATH
             "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}"
+            "${PROJECT_BINARY_DIR}/google/cloud/examples"
             "${PROJECT_BINARY_DIR}/external/googleapis")
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
