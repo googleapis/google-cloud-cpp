@@ -1,0 +1,10 @@
+{
+  "name": "hello-world-grpc",
+  "description": "A gRPC Hello World server to deploy on Cloud Run",
+  "$comment": "Facilitate local development with vcpkg",
+  "version-string": "unversioned",
+  "dependencies": [
+    { "name": "grpc", "host":  true},
+    { "name": "grpc", "host":  false}
+  ]
+}

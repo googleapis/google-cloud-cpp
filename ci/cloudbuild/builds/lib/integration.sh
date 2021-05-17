@@ -182,8 +182,15 @@ function integration::bazel_with_emulators() {
     --region="us-central1" --platform="managed" \
     --format='value(status.url)')"
 
+  hello_world_grpc="$(gcloud run services describe \
+    hello-world-grpc \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" --platform="managed" \
+    --format='value(status.url)')"
+
   bazel "${verb}" "${args[@]}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
     //google/cloud/examples/...
 }

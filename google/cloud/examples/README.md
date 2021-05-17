@@ -3,6 +3,57 @@
 This directory contains examples that combine two or more Google Cloud C++
 client libraries.
 
+## Configuring a Hello World (gRPC) Service
+
+## Prerequisites
+
+Verify the [docker tool][docker] is functional on your workstation:
+
+```shell
+docker run hello-world
+# Output: Hello from Docker! and then some more informational messages.
+```
+
+### Create the Docker image
+
+We use Docker to create an image with our "Greeter" service:
+
+```shell
+docker build -t "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
+    -f google/cloud/examples/hello_world_grpc/Dockerfile \
+    google/cloud/examples/hello_world_grpc
+```
+
+### Push the Docker image to GCR
+
+```shell
+docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest"
+```
+
+### Deploy to Cloud Run
+
+```shell
+SA="hello-world-run-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+gcloud run deploy hello-world-grpc \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
+    --region="us-central1" \
+    --platform="managed" \
+    --service-account="${SA}" \
+    --ingress=all \
+    --no-allow-unauthenticated
+```
+
+### Getting the URL
+
+```shell
+GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL="$(gcloud run services describe \
+    hello-world-grpc \
+    --project="${GOOGLE_CLOUD_PROJECT}" \
+    --region="us-central1" --platform="managed" \
+    --format='value(status.url)')"
+```
+
 
 ## Configuring Hello World (HTTP) Service
 

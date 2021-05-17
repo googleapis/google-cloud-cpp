@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"  // NOLINT(modernize-deprecated-headers)
+#include <google/cloud/examples/hello_world_grpc/hello_world.grpc.pb.h>
 #include <curl/curl.h>
 #include <chrono>
 #include <stdexcept>
@@ -164,8 +165,8 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
   }
 }
 
-void UseIdToken(google::cloud::iam::IAMCredentialsClient client,
-                std::vector<std::string> const& argv) {
+void UseIdTokenHttp(google::cloud::iam::IAMCredentialsClient client,
+                    std::vector<std::string> const& argv) {
   namespace iam = google::cloud::iam;
   [](iam::IAMCredentialsClient client, std::string const& service_account,
      std::string const& hello_world_url) {
@@ -175,9 +176,57 @@ void UseIdToken(google::cloud::iam::IAMCredentialsClient client,
         /*include_email=*/true);
     if (!token) throw std::runtime_error(token.status().message());
 
-    auto text = HttpGet(hello_world_url, token->token());
-    if (!text) throw std::runtime_error(token.status().message());
-    std::cout << "Server says: " << *text << "\n";
+    auto backoff = std::chrono::milliseconds(250);
+    for (int i = 0; i != 3; ++i) {
+      auto text = HttpGet(hello_world_url, token->token());
+      if (text.ok()) {
+        std::cout << "Server says: " << *text << "\n";
+        return;
+      }
+      std::this_thread::sleep_for(backoff);
+      backoff *= 2;
+    }
+    throw std::runtime_error("Could not contact server after 3 attempts");
+  }(std::move(client), argv.at(0), argv.at(1));
+}
+
+void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
+                    std::vector<std::string> const& argv) {
+  namespace iam = google::cloud::iam;
+  [](iam::IAMCredentialsClient client, std::string const& service_account,
+     std::string const& url) {
+    auto token = client.GenerateIdToken(
+        "projects/-/serviceAccounts/" + service_account, /*delegates=*/{},
+        /*audience=*/{url},
+        /*include_email=*/true);
+    if (!token) throw std::runtime_error(token.status().message());
+
+    auto const prefix = std::string{"https://"};
+    if (url.rfind(prefix, 0) != 0) {
+      throw std::runtime_error("Invalid URL" + url);
+    }
+    auto endpoint = url.substr(prefix.length()) + ":443";
+    auto credentials = grpc::CompositeChannelCredentials(
+        grpc::SslCredentials(grpc::SslCredentialsOptions{}),
+        grpc::AccessTokenCredentials(token->token()));
+    auto channel = grpc::CreateChannel(endpoint, credentials);
+    auto stub = Greet::NewStub(channel);
+    auto request = HelloRequest{};
+    auto backoff = std::chrono::milliseconds(250);
+    for (int i = 0; i != 3; ++i) {
+      grpc::ClientContext context;
+      HelloResponse response;
+      auto status = stub->Hello(&context, request, &response);
+      if (status.ok()) {
+        std::cout << "Servers says: " << response.greeting() << "\n";
+        return;
+      }
+      std::cout << "Server returned error=" << status.error_code()
+                << ", message=" << status.error_message() << "\n";
+      std::this_thread::sleep_for(backoff);
+      backoff *= 2;
+    }
+    throw std::runtime_error("Could not contact server after 3 attempts");
   }(std::move(client), argv.at(0), argv.at(1));
 }
 
@@ -191,14 +240,17 @@ void AutoRun(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT",
       "GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT",
       "GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL",
+      "GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL",
   });
   auto project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const test_iam_service_account =
       GetEnv("GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT").value_or("");
   auto const hello_world_service_account =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT").value_or("");
-  auto const hello_world_url =
+  auto const hello_world_http_url =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL").value_or("");
+  auto const hello_world_grpc_url =
+      GetEnv("GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL").value_or("");
 
   auto client = google::cloud::iam::IAMCredentialsClient(
       google::cloud::iam::MakeIAMCredentialsConnection(
@@ -211,8 +263,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning UseAccessTokenUntilExpired() example" << std::endl;
   UseAccessTokenUntilExpired(client, {test_iam_service_account, project_id});
 
-  std::cout << "\nRunning UseIdToken() example" << std::endl;
-  UseIdToken(client, {hello_world_service_account, hello_world_url});
+  std::cout << "\nRunning UseIdTokenHttp() example" << std::endl;
+  UseIdTokenHttp(client, {hello_world_service_account, hello_world_http_url});
+
+  std::cout << "\nRunning UseIdTokenGrpc() example" << std::endl;
+  UseIdTokenGrpc(client, {hello_world_service_account, hello_world_grpc_url});
 }
 
 }  // namespace
@@ -249,8 +304,10 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
                  UseAccessToken),
       make_entry("use-access-token-until-expired",
                  {"service-account", "project-id"}, UseAccessTokenUntilExpired),
-      make_entry("use-id-token", {"service-account", "hello-world-http-url"},
-                 UseIdToken),
+      make_entry("use-id-token-http",
+                 {"service-account", "hello-world-http-url"}, UseIdTokenHttp),
+      make_entry("use-id-token-grpc",
+                 {"service-account", "hello-world-http-url"}, UseIdTokenGrpc),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
