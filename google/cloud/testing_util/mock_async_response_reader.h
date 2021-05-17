@@ -29,9 +29,11 @@ namespace testing_util {
  * Define the interface to mock the result of starting a unary async RPC.
  *
  * Note that using this mock often requires special memory management. The
- * google mock library requires all mocks to be destroyed. In contrast, gRPC
- * specializes `std::unique_ptr<>` to *not* delete objects of type
- * `grpc::ClientAsyncResponseReaderInterface<T>`:
+ * google mock library requires all mocks to be destroyed. In contrast, grpc
+ * previously specialized `std::unique_ptr<>` to *not* delete objects of type
+ * `grpc::ClientAsyncResponseReaderInterface<T>` (and our override of the
+ * Destroy method below preserves that behavior even after
+ * https://github.com/grpc/proposal/pull/238):
  *
  *
  *     https://github.com/grpc/grpc/blob/608188c680961b8506847c135b5170b41a9081e8/include/grpcpp/impl/codegen/async_unary_call.h#L305
@@ -62,6 +64,15 @@ class MockAsyncResponseReader
   MOCK_METHOD(void, StartCall, (), (override));
   MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
   MOCK_METHOD(void, Finish, (Response*, grpc::Status*, void*), (override));
+
+  // Preserve the behavior from before https://github.com/grpc/proposal/pull/238
+  // of not destroying the object when
+  // std::unique_ptr<grpc::ClientAsyncResponseReaderInterface> goes out of
+  // scope.
+  //
+  // TODO(#6566): mark this with the override keyword once the method exists in
+  // the parent class.
+  virtual void Destroy() {}
 };
 
 }  // namespace testing_util

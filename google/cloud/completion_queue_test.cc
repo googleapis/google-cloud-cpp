@@ -63,6 +63,15 @@ class MockTableReader
   MOCK_METHOD(void, ReadInitialMetadata, (void*), (override));
   MOCK_METHOD(void, Finish, (btadmin::Table*, grpc::Status*, void*),
               (override));
+
+  // Preserve the behavior from before https://github.com/grpc/proposal/pull/238
+  // of not destroying the object when
+  // std::unique_ptr<grpc::ClientAsyncResponseReaderInterface> goes out of
+  // scope.
+  //
+  // TODO(#6566): mark this with the override keyword once the method exists in
+  // the parent class.
+  virtual void Destroy() {}
 };
 
 class MockRowReader
