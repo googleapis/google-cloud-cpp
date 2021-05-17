@@ -27,6 +27,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/generator/*"
     "*/google/cloud/README.md"
     "*/google/cloud/internal/*"
+    "*/google/cloud/examples/hello_world_grpc/*"
     "*/google/cloud/examples/hello_world_http/*"
     "*/google/cloud/testing_util/*"
     "*/google/cloud/bigtable/*"
