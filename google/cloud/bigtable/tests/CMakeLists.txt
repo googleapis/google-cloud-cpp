@@ -28,7 +28,8 @@ set(bigtable_client_integration_tests
     filters_integration_test.cc
     instance_admin_async_future_integration_test.cc
     instance_admin_integration_test.cc
-    mutations_integration_test.cc)
+    mutations_integration_test.cc
+    table_sample_rows_integration_test.cc)
 
 include(CreateBazelConfig)
 export_list_to_bazel("bigtable_client_integration_tests.bzl"
