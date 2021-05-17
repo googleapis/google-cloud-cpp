@@ -36,25 +36,10 @@ inline namespace STORAGE_CLIENT_NS {
  * @note the Credentials parameter in the configuration is ignored. The gRPC
  *     client only supports Google Default Credentials.
  *
- * @param channel_id set the `grpc.channel_id` attribute in the underlying
- *   gRPC channel, this can be used to segregate the gRPC channels for different
- *   clients.
  * @param opts the configuration parameters for the Client.
  *
  * @warning this is an experimental feature, and subject to change without
  *     notice.
- */
-StatusOr<google::cloud::storage::Client> DefaultGrpcClient(int channel_id,
-                                                           Options opts = {});
-
-/**
- * Create a `google::cloud::storage::Client` object configured to use gRPC.
- *
- * @warning this is an experimental feature, and subject to change without
- *     notice.
- *
- * @par Example
- * @snippet storage_grpc_samples.cc grpc-default-client
  */
 StatusOr<google::cloud::storage::Client> DefaultGrpcClient(Options opts = {});
 

@@ -56,7 +56,7 @@ class ThroughputExperiment {
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options, int thread_id);
+    google::cloud::storage::ClientOptions const& client_options);
 
 /**
  * Create the list of download experiments based on the @p options.

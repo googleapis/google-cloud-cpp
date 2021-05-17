@@ -40,8 +40,6 @@ class GrpcClient : public RawClient,
                    public std::enable_shared_from_this<GrpcClient> {
  public:
   static std::shared_ptr<GrpcClient> Create(Options const& opts);
-  static std::shared_ptr<GrpcClient> Create(Options const& opts,
-                                            int channel_id);
   ~GrpcClient() override = default;
 
   //@{
@@ -322,7 +320,7 @@ class GrpcClient : public RawClient,
   static std::string MD5ToProto(std::string const&);
 
  protected:
-  explicit GrpcClient(Options const& opts, int channel_id);
+  explicit GrpcClient(Options const& opts);
 
  private:
   ClientOptions backwards_compatibility_options_;
