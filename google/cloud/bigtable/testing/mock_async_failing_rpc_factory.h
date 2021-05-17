@@ -19,6 +19,7 @@
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <google/protobuf/text_format.h>
 #include <grpcpp/support/async_unary_call.h>
@@ -44,10 +45,10 @@ struct MockAsyncFailingRpcFactory {
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<ResponseType>>(
           grpc::ClientContext* context, RequestType const& request,
           grpc::CompletionQueue*);
+  using ReaderType =
+      ::google::cloud::testing_util::MockAsyncResponseReader<ResponseType>;
 
-  MockAsyncFailingRpcFactory()
-      : reader(new google::cloud::bigtable::testing::MockAsyncResponseReader<
-               ResponseType>) {}
+  MockAsyncFailingRpcFactory() : reader(new ReaderType) {}
 
   /// Refactor the boilerplate common to most tests.
   std::function<SignatureType> Create(std::string const& expected_request,
@@ -75,10 +76,9 @@ struct MockAsyncFailingRpcFactory {
     });
   }
 
-  std::unique_ptr<
-      google::cloud::bigtable::testing::MockAsyncResponseReader<ResponseType>>
-      reader;
+  std::unique_ptr<ReaderType> reader;
 };
+
 }  // namespace testing
 }  // namespace bigtable
 }  // namespace cloud

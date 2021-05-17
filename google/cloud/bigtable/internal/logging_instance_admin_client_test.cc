@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 
@@ -30,7 +31,7 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 
 using MockAsyncLongrunningOpReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::testing_util::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 namespace btadmin = google::bigtable::admin::v2;

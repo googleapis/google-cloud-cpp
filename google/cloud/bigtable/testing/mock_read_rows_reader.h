@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_READ_ROWS_READER_H
 
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 
@@ -28,7 +29,8 @@ using MockReadRowsReader =
                        google::bigtable::v2::ReadRowsRequest>;
 
 using MockAsyncReadRowsReader =
-    MockAsyncResponseReader<google::bigtable::v2::ReadRowsResponse>;
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        google::bigtable::v2::ReadRowsResponse>;
 
 }  // namespace testing
 }  // namespace bigtable

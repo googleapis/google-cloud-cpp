@@ -15,11 +15,11 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
@@ -36,8 +36,6 @@ namespace {
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
-using MockAdminClient =
-    ::google::cloud::bigtable::testing::MockInstanceAdminClient;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -49,6 +47,21 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
+
+using MockAdminClient =
+    ::google::cloud::bigtable::testing::MockInstanceAdminClient;
+using MockAsyncIamPolicyReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::Policy>;
+using MockAsyncDeleteClusterReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::protobuf::Empty>;
+using MockAsyncSetIamPolicyReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::Policy>;
+using MockAsyncTestIamPermissionsReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::TestIamPermissionsResponse>;
 
 std::string const kProjectId = "the-project";
 
@@ -654,10 +667,6 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
   EXPECT_EQ("random-tag", policy->etag());
 }
 
-using MockAsyncIamPolicyReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
-
 class AsyncGetIamPolicyTest : public ::testing::Test {
  public:
   AsyncGetIamPolicyTest()
@@ -1002,10 +1011,6 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   EXPECT_EQ(2, permission_set->size());
 }
 
-using MockAsyncDeleteClusterReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::protobuf::Empty>;
-
 class AsyncDeleteClusterTest : public ::testing::Test {
  public:
   AsyncDeleteClusterTest()
@@ -1084,10 +1089,6 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
   auto status = user_future_.get();
   ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied, status.code());
 }
-
-using MockAsyncSetIamPolicyReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
 
 class AsyncSetIamPolicyTest : public ::testing::Test {
  public:
@@ -1236,10 +1237,6 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
   auto policy = user_native_future_.get();
   ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
-
-using MockAsyncTestIamPermissionsReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::TestIamPermissionsResponse>;
 
 class AsyncTestIamPermissionsTest : public ::testing::Test {
  public:

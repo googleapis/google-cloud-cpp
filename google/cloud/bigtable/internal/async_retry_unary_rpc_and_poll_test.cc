@@ -16,12 +16,12 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_retry_op.h"
-#include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
@@ -37,8 +37,9 @@ namespace {
 namespace btproto = google::bigtable::admin::v2;
 using ::google::cloud::testing_util::IsContextMDValid;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+
 using MockAsyncLongrunningOpReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
+    ::google::cloud::testing_util::MockAsyncResponseReader<
         google::longrunning::Operation>;
 
 class AsyncStartPollAfterRetryUnaryRpcTest

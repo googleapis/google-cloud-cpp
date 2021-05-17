@@ -15,20 +15,19 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
-#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
-#include <chrono>
 // TODO(#5923) - remove after deprecation is completed
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
@@ -54,6 +53,18 @@ using ::testing::Return;
 using ::testing::ReturnRef;
 
 using MockAdminClient = ::google::cloud::bigtable::testing::MockAdminClient;
+using MockAsyncCheckConsistencyResponse =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        btadmin::CheckConsistencyResponse>;
+using MockAsyncIamPolicyReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::Policy>;
+using MockAsyncSetIamPolicyReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::Policy>;
+using MockAsyncTestIamPermissionsReader =
+    ::google::cloud::testing_util::MockAsyncResponseReader<
+        ::google::iam::v1::TestIamPermissionsResponse>;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
@@ -1169,10 +1180,6 @@ TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
   EXPECT_EQ(2, permission_set->size());
 }
 
-using MockAsyncCheckConsistencyResponse =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        btadmin::CheckConsistencyResponse>;
-
 /**
  * @test Verify that `bigtagble::TableAdmin::AsyncWaitForConsistency` works as
  * expected, with multiple asynchronous calls.
@@ -1497,10 +1504,6 @@ TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
   FinishTest(table_admin_->AsyncModifyColumnFamilies(cq_, "the-table", {}));
 }
 
-using MockAsyncIamPolicyReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
-
 class AsyncGetIamPolicyTest : public ::testing::Test {
  public:
   AsyncGetIamPolicyTest()
@@ -1582,10 +1585,6 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   auto policy = user_future_.get();
   ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
-
-using MockAsyncSetIamPolicyReader =
-    google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::Policy>;
 
 class AsyncSetIamPolicyTest : public ::testing::Test {
  public:
@@ -1676,10 +1675,6 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   auto policy = user_future_.get();
   ASSERT_THAT(policy, StatusIs(StatusCode::kPermissionDenied));
 }
-
-using MockAsyncTestIamPermissionsReader =
-    ::google::cloud::bigtable::testing::MockAsyncResponseReader<
-        ::google::iam::v1::TestIamPermissionsResponse>;
 
 class AsyncTestIamPermissionsTest : public ::testing::Test {
  public:
