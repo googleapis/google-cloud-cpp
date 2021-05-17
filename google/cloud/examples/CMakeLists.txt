@@ -30,6 +30,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_grpcpp_library(
         hello_world_protos "hello_world_grpc/hello_world.proto"
         PROTO_PATH_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
+    target_include_directories(hello_world_protos
+                               PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
 
     add_executable(grpc_credential_types grpc_credential_types.cc)
     target_link_libraries(

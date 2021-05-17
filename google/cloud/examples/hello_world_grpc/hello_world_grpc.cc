@@ -16,10 +16,11 @@
 #include <hello_world.grpc.pb.h>
 #include <iostream>
 
-class GreeterImpl final : public Greet::Service {
+class GreeterImpl final : public google::cloud::examples::Greet::Service {
  public:
-  grpc::Status Hello(grpc::ServerContext*, HelloRequest const*,
-                     HelloResponse* response) override {
+  grpc::Status Hello(
+      grpc::ServerContext*, google::cloud::examples::HelloRequest const*,
+      google::cloud::examples::HelloResponse* response) override {
     response->set_greeting("Hello World");
     return grpc::Status::OK;
   }

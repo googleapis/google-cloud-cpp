@@ -19,8 +19,8 @@
 #include "google/cloud/testing_util/example_driver.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"  // NOLINT(modernize-deprecated-headers)
-#include <google/cloud/examples/hello_world_grpc/hello_world.grpc.pb.h>
 #include <curl/curl.h>
+#include <hello_world_grpc/hello_world.grpc.pb.h>
 #include <chrono>
 #include <stdexcept>
 #include <thread>
@@ -210,12 +210,12 @@ void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
         grpc::SslCredentials(grpc::SslCredentialsOptions{}),
         grpc::AccessTokenCredentials(token->token()));
     auto channel = grpc::CreateChannel(endpoint, credentials);
-    auto stub = Greet::NewStub(channel);
-    auto request = HelloRequest{};
+    auto stub = google::cloud::examples::Greet::NewStub(channel);
+    auto request = google::cloud::examples::HelloRequest{};
     auto backoff = std::chrono::milliseconds(250);
     for (int i = 0; i != 3; ++i) {
       grpc::ClientContext context;
-      HelloResponse response;
+      google::cloud::examples::HelloResponse response;
       auto status = stub->Hello(&context, request, &response);
       if (status.ok()) {
         std::cout << "Servers says: " << response.greeting() << "\n";

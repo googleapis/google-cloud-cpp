@@ -13,6 +13,7 @@
 // limitations under the License.
 
 syntax = "proto3";
+package google.cloud.examples;
 
 service Greet {
   rpc Hello(HelloRequest) returns (HelloResponse) {}
