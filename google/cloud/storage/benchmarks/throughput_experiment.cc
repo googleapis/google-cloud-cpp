@@ -352,7 +352,6 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
 #else
       case ApiName::kApiGrpc:
       case ApiName::kApiRawGrpc:
-        (void)thread_id;
         break;
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
       case ApiName::kApiXml:
