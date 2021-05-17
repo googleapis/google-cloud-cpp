@@ -21,14 +21,12 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-std::shared_ptr<RawClient> HybridClient::Create(Options const& options,
-                                                int channel_id) {
-  return std::shared_ptr<RawClient>(new HybridClient(options, channel_id));
+std::shared_ptr<RawClient> HybridClient::Create(Options const& options) {
+  return std::shared_ptr<RawClient>(new HybridClient(options));
 }
 
-HybridClient::HybridClient(Options const& options, int channel_id)
-    : grpc_(GrpcClient::Create(options, channel_id)),
-      curl_(CurlClient::Create(options)) {}
+HybridClient::HybridClient(Options const& options)
+    : grpc_(GrpcClient::Create(options)), curl_(CurlClient::Create(options)) {}
 
 ClientOptions const& HybridClient::client_options() const {
   return curl_->client_options();

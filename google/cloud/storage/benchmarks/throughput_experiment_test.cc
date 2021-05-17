@@ -54,8 +54,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   auto const& client_options =
       google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
           ->client_options();
-  auto experiments =
-      CreateUploadExperiments(options, client_options, /*thread_id=*/0);
+  auto experiments = CreateUploadExperiments(options, client_options);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
     ThroughputExperimentConfig config{OpType::kOpInsert,

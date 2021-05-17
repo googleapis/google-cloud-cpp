@@ -246,8 +246,7 @@ TestResults RunThread(ThroughputOptions const& options,
 
   gcs::Client rest_client(*client_options);
 
-  auto uploaders =
-      gcs_bm::CreateUploadExperiments(options, *client_options, thread_id);
+  auto uploaders = gcs_bm::CreateUploadExperiments(options, *client_options);
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.

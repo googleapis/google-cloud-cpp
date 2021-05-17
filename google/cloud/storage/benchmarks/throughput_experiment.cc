@@ -326,8 +326,7 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options,
-    int thread_id) {
+    google::cloud::storage::ClientOptions const& client_options) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto contents = MakeRandomData(generator, options.maximum_write_size);
   gcs::Client rest_client(client_options);
@@ -340,7 +339,6 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
       case ApiName::kApiRawGrpc: {
         gcs::Client grpc_client =
             google::cloud::storage_experimental::DefaultGrpcClient(
-                thread_id,
                 google::cloud::storage::internal::MakeOptions(client_options))
                 .value();
         result.push_back(
@@ -354,7 +352,6 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
 #else
       case ApiName::kApiGrpc:
       case ApiName::kApiRawGrpc:
-        (void)thread_id;
         break;
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
       case ApiName::kApiXml:
@@ -384,7 +381,6 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       case ApiName::kApiGrpc:
         result.push_back(absl::make_unique<DownloadObject>(
             google::cloud::storage_experimental::DefaultGrpcClient(
-                thread_id,
                 google::cloud::storage::internal::MakeOptions(client_options))
                 .value(),
             a));

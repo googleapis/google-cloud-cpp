@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/internal/storage_auth.h"
+#include "google/cloud/storage/internal/storage_round_robin.h"
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
@@ -66,6 +67,12 @@ bool DirectPathEnabled() {
                         [](absl::string_view v) { return v == "storage"; });
 }
 
+int DefaultGrpcNumChannels() {
+  auto constexpr kMinimumChannels = 4;
+  auto const count = std::thread::hardware_concurrency();
+  return (std::max)(kMinimumChannels, static_cast<int>(count));
+}
+
 Options DefaultOptionsGrpc(Options options) {
   options = DefaultOptions(std::make_shared<oauth2::AnonymousCredentials>(),
                            std::move(options));
@@ -85,6 +92,9 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
     options.set<GrpcBackgroundThreadsFactoryOption>(
         google::cloud::internal::DefaultBackgroundThreadsFactory);
+  }
+  if (!options.has<GrpcNumChannelsOption>()) {
+    options.set<GrpcNumChannelsOption>(DefaultGrpcNumChannels());
   }
 
   return options;
@@ -112,11 +122,16 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 }
 
 std::shared_ptr<StorageStub> CreateStorageStub(CompletionQueue cq,
-                                               Options const& opts,
-                                               int channel_id) {
+                                               Options const& opts) {
   auto auth = CreateAuthenticationStrategy(std::move(cq), opts);
-  auto stub =
-      MakeDefaultStorageStub(CreateGrpcChannel(*auth, opts, channel_id));
+  std::vector<std::shared_ptr<StorageStub>> children(
+      opts.get<GrpcNumChannelsOption>());
+  int id = 0;
+  std::generate(children.begin(), children.end(), [&id, &auth, opts] {
+    return MakeDefaultStorageStub(CreateGrpcChannel(*auth, opts, id++));
+  });
+  std::shared_ptr<StorageStub> stub =
+      std::make_shared<StorageRoundRobin>(std::move(children));
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<StorageAuth>(std::move(auth), std::move(stub));
   }
@@ -124,20 +139,15 @@ std::shared_ptr<StorageStub> CreateStorageStub(CompletionQueue cq,
 }
 
 std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts) {
-  return Create(opts, /*channel_id=*/0);
-}
-
-std::shared_ptr<GrpcClient> GrpcClient::Create(Options const& opts,
-                                               int channel_id) {
   // Cannot use std::make_shared<> as the constructor is private.
-  return std::shared_ptr<GrpcClient>(new GrpcClient(opts, channel_id));
+  return std::shared_ptr<GrpcClient>(new GrpcClient(opts));
 }
 
-GrpcClient::GrpcClient(Options const& opts, int channel_id)
+GrpcClient::GrpcClient(Options const& opts)
     : backwards_compatibility_options_(
           MakeBackwardsCompatibleClientOptions(opts)),
       background_(opts.get<GrpcBackgroundThreadsFactoryOption>()()),
-      stub_(CreateStorageStub(background_->cq(), opts, channel_id)) {}
+      stub_(CreateStorageStub(background_->cq(), opts)) {}
 
 std::unique_ptr<GrpcClient::InsertStream> GrpcClient::CreateUploadWriter(
     std::unique_ptr<grpc::ClientContext> context) {
