@@ -39,6 +39,9 @@ function print_usage() {
   sed -n '17,/^$/s/^# \?//p' "${PROGRAM_PATH}"
 }
 
+io::log "Executing command:"
+printf "env -C '%s' %q\n" "$(pwd)" "$@"
+
 # Use getopt to parse and normalize all the args.
 PARSED="$(getopt -a \
   --options="h" \
