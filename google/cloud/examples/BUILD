@@ -53,7 +53,7 @@ proto_library(
         "hello_world_grpc/hello_world.proto",
     ],
     visibility = [
-        "//:__pkg__",
+        "//visibility:private",
     ],
     deps = [],
 )
