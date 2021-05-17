@@ -61,7 +61,7 @@ proto_library(
 cc_proto_library(
     name = "hello_world_cc_proto",
     visibility = [
-        "//:__pkg__",
+        "//visibility:private",
     ],
     deps = [":hello_world_protos"],
 )
@@ -71,7 +71,7 @@ cc_grpc_library(
     srcs = [":hello_world_protos"],
     grpc_only = True,
     visibility = [
-        "//:__pkg__",
+        "//visibility:private",
     ],
     deps = [":hello_world_cc_proto"],
 )
