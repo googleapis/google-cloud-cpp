@@ -101,3 +101,26 @@ while achieving high likelihood of the code working for our customers.
 * Sanitizer builds need to run integration tests
 * We want to test our user-facing instructions (i.e., how to install and use)
   as much as possible (this is difficult on macOS and Windows without docker)
+
+## GCB Worker Pool
+
+We use a lot of GCB quota, so our GCB builds are run in a [custom worker
+pool][custom-worker-pool]. You can see our worker pool(s) in the web UI at
+https://console.cloud.google.com/cloud-build/settings/worker-pool?project=cloud-cpp-testing-resources
+See `gcloud beta builds worker-pools --help` for more info about worker pools.
+
+We initially created the pool with the following command:
+
+```
+$ gcloud beta builds worker-pools create \
+  --region=us-east1 \
+  --project=cloud-cpp-testing-resources \
+  --worker-machine-type=e2-standard-32 \
+  --worker-disk-size=100 \
+  google-cloud-cpp-pool
+```
+
+Details of the pool can be changed with the **`update`** (rather than `create`)
+command.
+
+[custom-worker-pool]: https://cloud.google.com/build/docs/custom-workers/run-builds-in-custom-worker-pool
