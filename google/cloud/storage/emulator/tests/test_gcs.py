@@ -425,7 +425,7 @@ class TestHolder(unittest.TestCase):
             content_length=len(bucket_metadata),
             data=bucket_metadata,
             content_type="application/json",
-            method="GET",
+            method="POST",
         )
 
         bucket, _ = gcs.bucket.Bucket.init(Request(environ), None)
@@ -437,7 +437,7 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(cm.exception.msg, "No object name is invalid.")
@@ -449,7 +449,7 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(cm.exception.msg, "No object name is invalid.")
@@ -462,7 +462,7 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(cm.exception.msg, "No object name is invalid.")
@@ -475,7 +475,7 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(
@@ -491,7 +491,7 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(
@@ -507,28 +507,12 @@ class TestHolder(unittest.TestCase):
                 content_length=len(data),
                 data=data,
                 content_type="application/json",
-                method="GET",
+                method="POST",
             )
             upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
         self.assertEqual(
             cm.exception.msg,
             "Value 'a' in content does not agree with value ''. is invalid.",
-        )
-
-        with self.assertRaises(utils.error.RestException) as cm:
-            data = json.dumps({"name": None})
-            environ = create_environ(
-                base_url="http://localhost:8080",
-                query_string={"name": "b"},
-                content_length=len(data),
-                data=data,
-                content_type="application/json",
-                method="GET",
-            )
-            upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
-        self.assertEqual(
-            cm.exception.msg,
-            "Value '' in content does not agree with value 'b'. is invalid.",
         )
 
     def test_init_resumable_rest_correct_usage(self):
@@ -538,7 +522,7 @@ class TestHolder(unittest.TestCase):
             content_length=len(bucket_metadata),
             data=bucket_metadata,
             content_type="application/json",
-            method="GET",
+            method="POST",
         )
 
         bucket, _ = gcs.bucket.Bucket.init(Request(environ), None)
@@ -550,7 +534,7 @@ class TestHolder(unittest.TestCase):
             content_length=len(data),
             data=data,
             content_type="application/json",
-            method="GET",
+            method="POST",
         )
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
 
@@ -560,7 +544,7 @@ class TestHolder(unittest.TestCase):
             content_length=len(data),
             data=data,
             content_type="application/json",
-            method="GET",
+            method="POST",
         )
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
 
@@ -568,9 +552,21 @@ class TestHolder(unittest.TestCase):
             base_url="http://localhost:8080",
             query_string={"name": "a"},
             content_type="application/json",
-            method="GET",
+            method="POST",
         )
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+
+        data = json.dumps({"name": None})
+        environ = create_environ(
+            base_url="http://localhost:8080",
+            query_string={"name": "b"},
+            content_length=len(data),
+            data=data,
+            content_type="application/json",
+            method="POST",
+        )
+        upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
+
 
     def test_init_resumable_grpc(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})

@@ -59,31 +59,28 @@ class DataHolder(types.SimpleNamespace):
 
     @classmethod
     def init_resumable_rest(cls, request, bucket):
-        name = request.args.get("name", None)
+        query_name = request.args.get("name", None)
         rest_only = {}
+        metadata = resources_pb2.Object()
         if len(request.data) > 0:
             data = json.loads(request.data)
-            rest_only = cls.__extract_rest_only(data)
-            metadata = json_format.ParseDict(data, resources_pb2.Object())
-            if name != None and name != metadata.name:
+            data_name = data.get("name", None)
+            if query_name is not None and data_name is not None and query_name != data_name:
                 utils.error.invalid(
                     "Value '%s' in content does not agree with value '%s'."
-                    % (metadata.name, name),
+                    % (data_name, query_name),
                     context=None,
                 )
-            if not metadata.name and name:
-                metadata.name = name
-        else:
-            metadata = resources_pb2.Object()
-            if not name:
-                utils.error.invalid("No object name", context=None)
-            metadata.name = name
+            rest_only = cls.__extract_rest_only(data)
+            metadata = json_format.ParseDict(data, metadata)
+        if query_name:
+            metadata.name = query_name
+        if metadata.name == "":
+            utils.error.invalid("No object name", context=None)
         if metadata.content_type == "":
             metadata.content_type = request.headers.get(
                 "x-upload-content-type", "application/octet-stream"
             )
-        if metadata.name == "":
-            utils.error.invalid("No object name", context=None)
         upload_id = hashlib.sha256(
             ("%s/o/%s" % (bucket.name, metadata.name)).encode("utf-8")
         ).hexdigest()
