@@ -32,7 +32,7 @@ fi
 io::log_h2 "Authenticating"
 gh auth login --with-token <<<"${LOG_LINKER_PAT}"
 
-console_link="https://console.cloud.google.com/cloud-build/builds?project=cloud-cpp-testing-resources&query=tags%3D%22${PR_NUMBER}%22"
+console_link="https://console.cloud.google.com/cloud-build/builds;region=us-east1?project=cloud-cpp-testing-resources&query=tags%3D%22${PR_NUMBER}%22"
 storage_link="https://storage.googleapis.com/cloud-cpp-community-publiclogs/logs/google-cloud-cpp/${PR_NUMBER}/${COMMIT_SHA}/index.html"
 body="$(
   cat <<EOF
