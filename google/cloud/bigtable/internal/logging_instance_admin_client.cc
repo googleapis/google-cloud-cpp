@@ -297,7 +297,7 @@ LoggingInstanceAdminClient::AsyncDeleteCluster(
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncCreateCluster(
-    grpc::ClientContext* context, const btadmin::CreateClusterRequest& request,
+    grpc::ClientContext* context, btadmin::CreateClusterRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncCreateCluster(context, request, cq);
 }
@@ -305,7 +305,7 @@ LoggingInstanceAdminClient::AsyncCreateCluster(
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncCreateInstance(
-    grpc::ClientContext* context, const btadmin::CreateInstanceRequest& request,
+    grpc::ClientContext* context, btadmin::CreateInstanceRequest const& request,
     grpc::CompletionQueue* cq) {
   return LogWrapper(
       [this](grpc::ClientContext* context,
@@ -320,7 +320,7 @@ std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncUpdateInstance(
     grpc::ClientContext* context,
-    const btadmin::PartialUpdateInstanceRequest& request,
+    btadmin::PartialUpdateInstanceRequest const& request,
     grpc::CompletionQueue* cq) {
   return LogWrapper(
       [this](grpc::ClientContext* context,
@@ -334,7 +334,7 @@ LoggingInstanceAdminClient::AsyncUpdateInstance(
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncUpdateCluster(grpc::ClientContext* context,
-                                               const btadmin::Cluster& request,
+                                               btadmin::Cluster const& request,
                                                grpc::CompletionQueue* cq) {
   return child_->AsyncUpdateCluster(context, request, cq);
 }
@@ -350,7 +350,7 @@ LoggingInstanceAdminClient::AsyncDeleteInstance(
 std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<btadmin::ListClustersResponse>>
 LoggingInstanceAdminClient::AsyncListClusters(
-    grpc::ClientContext* context, const btadmin::ListClustersRequest& request,
+    grpc::ClientContext* context, btadmin::ListClustersRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncListClusters(context, request, cq);
 }
@@ -383,7 +383,7 @@ std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncUpdateAppProfile(
     grpc::ClientContext* context,
-    const btadmin::UpdateAppProfileRequest& request,
+    btadmin::UpdateAppProfileRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncUpdateAppProfile(context, request, cq);
 }
@@ -392,7 +392,7 @@ std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<btadmin::ListAppProfilesResponse>>
 LoggingInstanceAdminClient::AsyncListAppProfiles(
     grpc::ClientContext* context,
-    const btadmin::ListAppProfilesRequest& request, grpc::CompletionQueue* cq) {
+    btadmin::ListAppProfilesRequest const& request, grpc::CompletionQueue* cq) {
   return child_->AsyncListAppProfiles(context, request, cq);
 }
 
@@ -427,7 +427,7 @@ std::unique_ptr<
     grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 LoggingInstanceAdminClient::AsyncGetOperation(
     grpc::ClientContext* context,
-    const google::longrunning::GetOperationRequest& request,
+    google::longrunning::GetOperationRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncGetOperation(context, request, cq);
 }

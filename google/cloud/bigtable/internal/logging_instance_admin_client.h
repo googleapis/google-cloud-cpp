@@ -185,27 +185,27 @@ class LoggingInstanceAdminClient
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncCreateCluster(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::CreateClusterRequest& request,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncCreateInstance(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::CreateInstanceRequest& request,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateInstance(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::PartialUpdateInstanceRequest& request,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateCluster(grpc::ClientContext* context,
-                     const google::bigtable::admin::v2::Cluster& request,
+                     google::bigtable::admin::v2::Cluster const& request,
                      grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
@@ -219,7 +219,7 @@ class LoggingInstanceAdminClient
       google::bigtable::admin::v2::ListClustersResponse>>
   AsyncListClusters(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::ListClustersRequest& request,
+      google::bigtable::admin::v2::ListClustersRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -247,14 +247,14 @@ class LoggingInstanceAdminClient
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateAppProfile(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::UpdateAppProfileRequest& request,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListAppProfilesResponse>>
   AsyncListAppProfiles(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::ListAppProfilesRequest& request,
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<
@@ -279,7 +279,7 @@ class LoggingInstanceAdminClient
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncGetOperation(grpc::ClientContext* context,
-                    const google::longrunning::GetOperationRequest& request,
+                    google::longrunning::GetOperationRequest const& request,
                     grpc::CompletionQueue* cq) override;
 
  private:

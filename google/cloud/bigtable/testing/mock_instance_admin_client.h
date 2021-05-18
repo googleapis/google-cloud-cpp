@@ -56,7 +56,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncCreateInstance,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::CreateInstanceRequest&,
+               google::bigtable::admin::v2::CreateInstanceRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -70,7 +70,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncUpdateInstance,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::PartialUpdateInstanceRequest&,
+               google::bigtable::admin::v2::PartialUpdateInstanceRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -119,7 +119,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::bigtable::admin::v2::ListClustersResponse>>,
               AsyncListClusters,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::ListClustersRequest&,
+               google::bigtable::admin::v2::ListClustersRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -156,7 +156,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncCreateCluster,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::CreateClusterRequest&,
+               google::bigtable::admin::v2::CreateClusterRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -176,7 +176,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncUpdateCluster,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::Cluster&,
+               google::bigtable::admin::v2::Cluster const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -218,7 +218,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::bigtable::admin::v2::ListAppProfilesResponse>>,
               AsyncListAppProfiles,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::ListAppProfilesRequest&,
+               google::bigtable::admin::v2::ListAppProfilesRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -238,7 +238,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncUpdateAppProfile,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::UpdateAppProfileRequest&,
+               google::bigtable::admin::v2::UpdateAppProfileRequest const&,
                grpc::CompletionQueue*),
               (override));
 
@@ -295,7 +295,7 @@ class MockInstanceAdminClient : public bigtable::InstanceAdminClient {
                   google::longrunning::Operation>>,
               AsyncGetOperation,
               (grpc::ClientContext*,
-               const google::longrunning::GetOperationRequest&,
+               google::longrunning::GetOperationRequest const&,
                grpc::CompletionQueue*),
               (override));
 

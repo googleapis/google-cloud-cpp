@@ -192,14 +192,14 @@ class InProcessAdminClient : public bigtable::AdminClient {
       google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
   AsyncGenerateConsistencyToken(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::GenerateConsistencyTokenRequest&
+      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
           request,
       grpc::CompletionQueue* cq) override;
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::CheckConsistencyRequest& request,
+      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       grpc::CompletionQueue* cq) override;
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListTablesResponse>>
@@ -225,7 +225,7 @@ class InProcessAdminClient : public bigtable::AdminClient {
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncGetOperation(grpc::ClientContext* context,
-                    const google::longrunning::GetOperationRequest& request,
+                    google::longrunning::GetOperationRequest const& request,
                     grpc::CompletionQueue* cq) override;
   //@}
 

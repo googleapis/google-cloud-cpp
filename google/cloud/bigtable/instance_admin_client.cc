@@ -233,7 +233,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncCreateCluster(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::CreateClusterRequest& request,
+      google::bigtable::admin::v2::CreateClusterRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateCluster(context, request, cq);
   }
@@ -242,7 +242,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncCreateInstance(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::CreateInstanceRequest& request,
+      google::bigtable::admin::v2::CreateInstanceRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateInstance(context, request, cq);
   }
@@ -251,7 +251,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateInstance(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::PartialUpdateInstanceRequest& request,
+      google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncPartialUpdateInstance(context, request, cq);
   }
@@ -259,7 +259,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateCluster(grpc::ClientContext* context,
-                     const google::bigtable::admin::v2::Cluster& request,
+                     google::bigtable::admin::v2::Cluster const& request,
                      grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateCluster(context, request, cq);
   }
@@ -277,7 +277,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       google::bigtable::admin::v2::ListClustersResponse>>
   AsyncListClusters(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::ListClustersRequest& request,
+      google::bigtable::admin::v2::ListClustersRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListClusters(context, request, cq);
   }
@@ -313,7 +313,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncUpdateAppProfile(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::UpdateAppProfileRequest& request,
+      google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateAppProfile(context, request, cq);
   }
@@ -322,7 +322,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
       google::bigtable::admin::v2::ListAppProfilesResponse>>
   AsyncListAppProfiles(
       grpc::ClientContext* context,
-      const google::bigtable::admin::v2::ListAppProfilesRequest& request,
+      google::bigtable::admin::v2::ListAppProfilesRequest const& request,
       grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListAppProfiles(context, request, cq);
   }
@@ -355,7 +355,7 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   std::unique_ptr<
       grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
   AsyncGetOperation(grpc::ClientContext* context,
-                    const google::longrunning::GetOperationRequest& request,
+                    google::longrunning::GetOperationRequest const& request,
                     grpc::CompletionQueue* cq) override {
     auto stub = google::longrunning::Operations::NewStub(Channel());
     return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<

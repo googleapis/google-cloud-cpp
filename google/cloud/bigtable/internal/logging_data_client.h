@@ -72,7 +72,7 @@ class LoggingDataClient : public DataClient {
       google::bigtable::v2::CheckAndMutateRowResponse>>
   AsyncCheckAndMutateRow(
       grpc::ClientContext* context,
-      const google::bigtable::v2::CheckAndMutateRowRequest& request,
+      google::bigtable::v2::CheckAndMutateRowRequest const& request,
       grpc::CompletionQueue* cq) override;
 
   grpc::Status ReadModifyWriteRow(
@@ -93,13 +93,13 @@ class LoggingDataClient : public DataClient {
 
   std::unique_ptr<grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
   AsyncReadRows(grpc::ClientContext* context,
-                const google::bigtable::v2::ReadRowsRequest& request,
+                google::bigtable::v2::ReadRowsRequest const& request,
                 grpc::CompletionQueue* cq, void* tag) override;
 
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::ReadRowsResponse>>
   PrepareAsyncReadRows(::grpc::ClientContext* context,
-                       const ::google::bigtable::v2::ReadRowsRequest& request,
+                       ::google::bigtable::v2::ReadRowsRequest const& request,
                        ::grpc::CompletionQueue* cq) override;
 
   std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
@@ -110,7 +110,7 @@ class LoggingDataClient : public DataClient {
       ::google::bigtable::v2::SampleRowKeysResponse>>
   AsyncSampleRowKeys(
       ::grpc::ClientContext* context,
-      const ::google::bigtable::v2::SampleRowKeysRequest& request,
+      ::google::bigtable::v2::SampleRowKeysRequest const& request,
       ::grpc::CompletionQueue* cq, void* tag) override;
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::SampleRowKeysResponse>>
@@ -126,14 +126,14 @@ class LoggingDataClient : public DataClient {
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(::grpc::ClientContext* context,
-                  const ::google::bigtable::v2::MutateRowsRequest& request,
+                  ::google::bigtable::v2::MutateRowsRequest const& request,
                   ::grpc::CompletionQueue* cq, void* tag) override;
 
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::MutateRowsResponse>>
   PrepareAsyncMutateRows(
       ::grpc::ClientContext* context,
-      const ::google::bigtable::v2::MutateRowsRequest& request,
+      ::google::bigtable::v2::MutateRowsRequest const& request,
       ::grpc::CompletionQueue* cq) override;
 
  private:

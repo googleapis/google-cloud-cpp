@@ -231,14 +231,14 @@ class MockAdminClient : public bigtable::AdminClient {
           google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>,
       AsyncGenerateConsistencyToken,
       (grpc::ClientContext*,
-       const google::bigtable::admin::v2::GenerateConsistencyTokenRequest&,
+       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&,
        grpc::CompletionQueue*),
       (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
                   google::bigtable::admin::v2::CheckConsistencyResponse>>,
               AsyncCheckConsistency,
               (grpc::ClientContext*,
-               const google::bigtable::admin::v2::CheckConsistencyRequest&,
+               google::bigtable::admin::v2::CheckConsistencyRequest const&,
                grpc::CompletionQueue*),
               (override));
   MOCK_METHOD(std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -252,7 +252,7 @@ class MockAdminClient : public bigtable::AdminClient {
                   google::longrunning::Operation>>,
               AsyncGetOperation,
               (grpc::ClientContext*,
-               const google::longrunning::GetOperationRequest&,
+               google::longrunning::GetOperationRequest const&,
                grpc::CompletionQueue*),
               (override));
 

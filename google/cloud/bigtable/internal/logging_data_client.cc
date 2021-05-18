@@ -65,7 +65,7 @@ std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::CheckAndMutateRowResponse>>
 LoggingDataClient::AsyncCheckAndMutateRow(
     grpc::ClientContext* context,
-    const google::bigtable::v2::CheckAndMutateRowRequest& request,
+    google::bigtable::v2::CheckAndMutateRowRequest const& request,
     grpc::CompletionQueue* cq) {
   return child_->AsyncCheckAndMutateRow(context, request, cq);
 }
@@ -106,7 +106,7 @@ LoggingDataClient::ReadRows(grpc::ClientContext* context,
 std::unique_ptr<grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
 LoggingDataClient::AsyncReadRows(
     grpc::ClientContext* context,
-    const google::bigtable::v2::ReadRowsRequest& request,
+    google::bigtable::v2::ReadRowsRequest const& request,
     grpc::CompletionQueue* cq, void* tag) {
   return child_->AsyncReadRows(context, request, cq, tag);
 }
@@ -115,7 +115,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::ReadRowsResponse>>
 LoggingDataClient::PrepareAsyncReadRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::ReadRowsRequest& request,
+    ::google::bigtable::v2::ReadRowsRequest const& request,
     ::grpc::CompletionQueue* cq) {
   return child_->PrepareAsyncReadRows(context, request, cq);
 }
@@ -135,7 +135,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::SampleRowKeysResponse>>
 LoggingDataClient::AsyncSampleRowKeys(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::SampleRowKeysRequest& request,
+    ::google::bigtable::v2::SampleRowKeysRequest const& request,
     ::grpc::CompletionQueue* cq, void* tag) {
   return child_->AsyncSampleRowKeys(context, request, cq, tag);
 }
@@ -164,7 +164,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::MutateRowsResponse>>
 LoggingDataClient::AsyncMutateRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::MutateRowsRequest& request,
+    ::google::bigtable::v2::MutateRowsRequest const& request,
     ::grpc::CompletionQueue* cq, void* tag) {
   return child_->AsyncMutateRows(context, request, cq, tag);
 }
@@ -173,7 +173,7 @@ std::unique_ptr<::grpc::ClientAsyncReaderInterface<
     ::google::bigtable::v2::MutateRowsResponse>>
 LoggingDataClient::PrepareAsyncMutateRows(
     ::grpc::ClientContext* context,
-    const ::google::bigtable::v2::MutateRowsRequest& request,
+    ::google::bigtable::v2::MutateRowsRequest const& request,
     ::grpc::CompletionQueue* cq) {
   return child_->PrepareAsyncMutateRows(context, request, cq);
 }
