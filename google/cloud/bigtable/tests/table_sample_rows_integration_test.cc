@@ -34,6 +34,16 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::bigtable::testing::TableTestEnvironment;
+using ::testing::IsEmpty;
+
+Table GetTable() {
+  return Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                       TableTestEnvironment::instance_id(),
+                                       ClientOptions()),
+               TableTestEnvironment::table_id());
+}
+
 void VerifySamples(StatusOr<std::vector<RowKeySample>> samples) {
   ASSERT_STATUS_OK(samples);
 
@@ -43,7 +53,7 @@ void VerifySamples(StatusOr<std::vector<RowKeySample>> samples) {
   // and it might return row keys that have never been written to.
   // All we can check is that this is not empty, and that the offsets are in
   // ascending order.
-  EXPECT_FALSE(samples->empty());
+  ASSERT_THAT(*samples, Not(IsEmpty()));
   std::int64_t previous = 0;
   for (auto const& s : *samples) {
     EXPECT_LE(previous, s.offset_bytes);
@@ -54,30 +64,29 @@ void VerifySamples(StatusOr<std::vector<RowKeySample>> samples) {
   EXPECT_LT(0, last.offset_bytes);
 }
 
-using testing::TableTestEnvironment;
-
 class SampleRowsIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
  public:
   static void SetUpTestSuite() {
-    table_ = absl::make_unique<Table>(
-        bigtable::Table(bigtable::CreateDefaultDataClient(
-                            TableTestEnvironment::project_id(),
-                            TableTestEnvironment::instance_id(),
-                            ClientOptions().disable_tracing("rpc")),
-                        TableTestEnvironment::table_id()));
+    // Create kBatchSize * kBatchCount rows. Use a special client with tracing
+    // disabled because it simply generates too much data.
+    auto table =
+        Table(CreateDefaultDataClient(TableTestEnvironment::project_id(),
+                                      TableTestEnvironment::instance_id(),
+                                      ClientOptions().disable_tracing("rpc")),
+              TableTestEnvironment::table_id());
 
     int constexpr kBatchCount = 10;
     int constexpr kBatchSize = 5000;
     int constexpr kColumnCount = 10;
     std::string const family = "family1";
-    int rowid = 0;
+    int row_id = 0;
 
     for (int batch = 0; batch != kBatchCount; ++batch) {
       BulkMutation bulk;
       for (int row = 0; row != kBatchSize; ++row) {
         std::ostringstream os;
-        os << "row:" << std::setw(9) << std::setfill('0') << rowid;
+        os << "row:" << std::setw(9) << std::setfill('0') << row_id;
 
         // Build a mutation that creates 10 columns.
         SingleRowMutation mutation(os.str());
@@ -89,31 +98,22 @@ class SampleRowsIntegrationTest
                                         std::move(value)));
         }
         bulk.emplace_back(std::move(mutation));
-        ++rowid;
+        ++row_id;
       }
-      auto failures = table_->BulkApply(std::move(bulk));
-      for (auto const& failure : failures) {
-        std::cout << failure.original_index() << ": " << failure.status()
-                  << "\n";
-      }
-      ASSERT_THAT(failures, ::testing::IsEmpty());
+      auto failures = table.BulkApply(std::move(bulk));
+      ASSERT_THAT(failures, IsEmpty());
     }
   }
-
-  static void TearDownTestSuite() { table_ = nullptr; }
-
- protected:
-  static std::unique_ptr<Table> table_;
 };
 
-std::unique_ptr<Table> SampleRowsIntegrationTest::table_;
-
 TEST_F(SampleRowsIntegrationTest, Synchronous) {
-  VerifySamples(table_->SampleRows());
+  auto table = GetTable();
+  VerifySamples(table.SampleRows());
 };
 
 TEST_F(SampleRowsIntegrationTest, Asynchronous) {
-  auto fut = table_->AsyncSampleRows();
+  auto table = GetTable();
+  auto fut = table.AsyncSampleRows();
 
   // Block until the asynchronous operation completes. This is not what one
   // would do in a real application (the synchronous API is better in that
