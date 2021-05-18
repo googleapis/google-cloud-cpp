@@ -21,7 +21,6 @@ import unittest
 import urllib
 import gzip
 import utils
-from werkzeug.test import create_environ
 
 from werkzeug.test import create_environ
 from werkzeug.wrappers import Request

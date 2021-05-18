@@ -59,17 +59,28 @@ class DataHolder(types.SimpleNamespace):
 
     @classmethod
     def init_resumable_rest(cls, request, bucket):
-        name = request.args.get("name", "")
+        query_name = request.args.get("name", None)
         rest_only = {}
-        if len(request.data) > 0 and request.data.decode("utf-8") != "{}":
-            if name != "":
-                utils.error.invalid("name argument in non-empty payload", None)
+        metadata = resources_pb2.Object()
+        if len(request.data) > 0:
             data = json.loads(request.data)
+            data_name = data.get("name", None)
+            if (
+                query_name is not None
+                and data_name is not None
+                and query_name != data_name
+            ):
+                utils.error.invalid(
+                    "Value '%s' in content does not agree with value '%s'."
+                    % (data_name, query_name),
+                    context=None,
+                )
             rest_only = cls.__extract_rest_only(data)
-            metadata = json_format.ParseDict(data, resources_pb2.Object())
-        else:
-            metadata = resources_pb2.Object()
-            metadata.name = name
+            metadata = json_format.ParseDict(data, metadata)
+        if query_name:
+            metadata.name = query_name
+        if metadata.name == "":
+            utils.error.invalid("No object name", context=None)
         if metadata.content_type == "":
             metadata.content_type = request.headers.get(
                 "x-upload-content-type", "application/octet-stream"
