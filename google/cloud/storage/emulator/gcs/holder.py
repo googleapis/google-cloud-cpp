@@ -65,7 +65,11 @@ class DataHolder(types.SimpleNamespace):
         if len(request.data) > 0:
             data = json.loads(request.data)
             data_name = data.get("name", None)
-            if query_name is not None and data_name is not None and query_name != data_name:
+            if (
+                query_name is not None
+                and data_name is not None
+                and query_name != data_name
+            ):
                 utils.error.invalid(
                     "Value '%s' in content does not agree with value '%s'."
                     % (data_name, query_name),

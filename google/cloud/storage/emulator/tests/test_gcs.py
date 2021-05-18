@@ -567,7 +567,6 @@ class TestHolder(unittest.TestCase):
         )
         upload = gcs.holder.DataHolder.init_resumable_rest(Request(environ), bucket)
 
-
     def test_init_resumable_grpc(self):
         request = storage_pb2.InsertBucketRequest(bucket={"name": "bucket"})
         bucket, _ = gcs.bucket.Bucket.init(request, "")
