@@ -236,7 +236,8 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
   mkdir -p "${out_cmake}" "${out_home}/.config/gcloud"
   image="gcb-${DISTRO_FLAG}:latest"
   io::log_h2 "Building docker image: ${image}"
-  docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
+  io::log_and_run \
+    docker build -t "${image}" "--build-arg=NCPU=$(nproc)" \
     -f "ci/cloudbuild/dockerfiles/${DISTRO_FLAG}.Dockerfile" ci
   io::log_h2 "Starting docker container: ${image}"
   run_flags=(
@@ -277,7 +278,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     printf "\n\n"
     cmd=("bash")
   fi
-  docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
+  io::log_and_run docker run "${run_flags[@]}" "${image}" "${cmd[@]}"
   exit
 fi
 
@@ -321,4 +322,4 @@ args=(
   "--substitutions=$(printf "%s," "${subs[@]}")"
   "--project=${project}"
 )
-gcloud builds submit "${args[@]}" .
+io::log_and_run gcloud builds submit "${args[@]}" .

@@ -75,10 +75,18 @@ function io::log_red() {
   io::internal::log_impl "${IO_COLOR_RED}" "$@"
 }
 
-# Logs the arguments, in bold with a timestamp, like they were a command
-# executed under "set -x" in the shell (i.e., with a ${PS4} prefix).
-function io::log_cmdline() {
-  io::internal::log_impl "${IO_BOLD}" "${PS4}$*"
+# Logs the given message in bold with a timestamp.
+function io::log_bold() {
+  io::internal::log_impl "${IO_BOLD}" "$@"
+}
+
+# Logs the arguments, in bold with a timestamp, and then executes them.
+# This is like executing a command under "set -x" in the shell (including
+# the ${PS4} prefix).
+function io::log_and_run() {
+  local cmd="$(printf ' %q' "$@")"
+  io::log_bold "${PS4}${cmd# }"
+  "$@"
 }
 
 # Logs an "H1" heading. This looks like a blank line, followed by the message
