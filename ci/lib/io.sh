@@ -83,7 +83,7 @@ function io::log_bold() {
 # Logs the arguments, in bold with a timestamp, and then executes them.
 # This is like executing a command under "set -x" in the shell (including
 # the ${PS4} prefix).
-function io::log_and_run() {
+function io::run() {
   local cmd
   cmd="$(printf ' %q' "$@")"
   io::log_bold "${PS4}${cmd# }"
