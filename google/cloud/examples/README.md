@@ -19,7 +19,7 @@ docker run hello-world
 We use Docker to create an image with our "Greeter" service:
 
 ```shell
-docker build -t "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest" \
+docker build -t "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
     -f google/cloud/examples/hello_world_grpc/Dockerfile \
     google/cloud/examples/hello_world_grpc
 ```
@@ -27,16 +27,16 @@ docker build -t "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest" \
 ### Push the Docker image to GCR
 
 ```shell
-docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest"
+docker push "gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest"
 ```
 
 ### Deploy to Cloud Run
 
 ```shell
 SA="hello-world-run-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-gcloud run deploy hello-world-grpc-r2 \
+gcloud run deploy hello-world-grpc \
     --project="${GOOGLE_CLOUD_PROJECT}" \
-    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc-r2:latest" \
+    --image="gcr.io/${GOOGLE_CLOUD_PROJECT}/hello-world-grpc:latest" \
     --region="us-central1" \
     --platform="managed" \
     --service-account="${SA}" \
@@ -48,7 +48,7 @@ gcloud run deploy hello-world-grpc-r2 \
 
 ```shell
 GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL="$(gcloud run services describe \
-    hello-world-grpc-r2 \
+    hello-world-grpc \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --region="us-central1" --platform="managed" \
     --format='value(status.url)')"

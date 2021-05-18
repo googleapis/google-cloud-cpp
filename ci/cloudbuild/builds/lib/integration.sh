@@ -183,7 +183,7 @@ function integration::bazel_with_emulators() {
     --format='value(status.url)')"
 
   hello_world_grpc="$(gcloud run services describe \
-    hello-world-grpc-r2 \
+    hello-world-grpc \
     --project="${GOOGLE_CLOUD_PROJECT}" \
     --region="us-central1" --platform="managed" \
     --format='value(status.url)')"
