@@ -42,6 +42,7 @@ substitutions:
   _TRIGGER_SOURCE: '${_PR_NUMBER:-main}'
   _TRIGGER_TYPE: 'manual'
   _LOGS_BUCKET: 'cloud-cpp-community-publiclogs'
+  _LOG_FORMAT: 'text'
 
 timeout: 3600s
 tags: [
@@ -64,6 +65,7 @@ steps:
   # Builds the docker image that will be used by the main build step.
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
+    '--log-format=${_LOG_FORMAT}',
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
     '--cache=true',
