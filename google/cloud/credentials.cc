@@ -12,63 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/credentials_impl.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-namespace internal {
 
 Credentials::~Credentials() = default;
 
-void CredentialsVisitor::dispatch(Credentials& credentials,
-                                  CredentialsVisitor& visitor) {
-  credentials.dispatch(visitor);
-}
-
 std::shared_ptr<Credentials> MakeInsecureCredentials() {
-  return std::make_shared<InsecureCredentialsConfig>();
+  return std::make_shared<internal::InsecureCredentialsConfig>();
 }
 
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
-  return std::make_shared<GoogleDefaultCredentialsConfig>();
+  return std::make_shared<internal::GoogleDefaultCredentialsConfig>();
 }
 
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
     std::chrono::system_clock::time_point expiration) {
-  return std::make_shared<AccessTokenConfig>(access_token, expiration);
+  return std::make_shared<internal::AccessTokenConfig>(access_token,
+                                                       expiration);
 }
 
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
     std::string target_service_account, Options opts) {
-  opts = MergeOptions(
+  opts = internal::MergeOptions(
       std::move(opts),
       Options{}
           .set<ScopesOption>({"https://www.googleapis.com/auth/cloud-platform"})
           .set<AccessTokenLifetimeOption>(
               std::chrono::seconds(std::chrono::hours(1))));
-  return std::make_shared<ImpersonateServiceAccountConfig>(
+  return std::make_shared<internal::ImpersonateServiceAccountConfig>(
       std::move(base_credentials), std::move(target_service_account),
       std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object) {
-  return std::make_shared<ServiceAccountConfig>(std::move(json_object));
+  return std::make_shared<internal::ServiceAccountConfig>(
+      std::move(json_object));
 }
 
-ImpersonateServiceAccountConfig::ImpersonateServiceAccountConfig(
-    std::shared_ptr<Credentials> base_credentials,
-    std::string target_service_account, Options opts)
-    : base_credentials_(std::move(base_credentials)),
-      target_service_account_(std::move(target_service_account)),
-      lifetime_(opts.get<AccessTokenLifetimeOption>()),
-      scopes_(std::move(opts.lookup<ScopesOption>())),
-      delegates_(std::move(opts.lookup<DelegatesOption>())) {}
-
-}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

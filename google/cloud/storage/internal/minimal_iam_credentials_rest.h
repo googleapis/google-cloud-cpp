@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <chrono>

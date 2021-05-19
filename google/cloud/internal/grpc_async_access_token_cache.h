@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_ASYNC_ACCESS_TOKEN_CACHE_H
 
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>

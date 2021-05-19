@@ -33,7 +33,7 @@ using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
-    std::shared_ptr<google::cloud::internal::Credentials> const& credentials) {
+    std::shared_ptr<google::cloud::Credentials> const& credentials) {
   struct Visitor : public CredentialsVisitor {
     std::shared_ptr<oauth2::Credentials> result;
 

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_ACCESS_TOKEN_AUTHENTICATION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_ACCESS_TOKEN_AUTHENTICATION_H
 
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>

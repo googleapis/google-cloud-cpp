@@ -33,9 +33,9 @@ namespace {
 
 using ::google::bigtable::admin::v2::GetTableRequest;
 using ::google::bigtable::admin::v2::Table;
+using ::google::cloud::MakeImpersonateServiceAccountCredentials;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::LogWrapper;
-using ::google::cloud::internal::MakeImpersonateServiceAccountCredentials;
 using ::testing::IsNull;
 using ::testing::Not;
 
