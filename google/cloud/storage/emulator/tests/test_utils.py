@@ -20,6 +20,7 @@ import os
 import unittest
 import urllib
 import gzip
+import socket
 import utils
 import json
 

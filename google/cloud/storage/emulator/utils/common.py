@@ -388,6 +388,7 @@ def handle_retry_test_instruction(database, request, method):
                 fd.setsockopt(
                     socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0)
                 )
+                fd.close()
                 sys.exit(1)
             elif items[0] == "broken-stream":
 
