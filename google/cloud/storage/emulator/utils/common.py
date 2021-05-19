@@ -399,6 +399,8 @@ def handle_retry_test_instruction(database, request, method):
                         chunk_size = 4
                         for r in range(0, len(d), chunk_size):
                             if r >= 10:
+                                fd = request.environ["gunicorn.socket"]
+                                fd.close()
                                 sys.exit(1)
                             chunk_end = min(r + chunk_size, len(d))
                             yield d[r:chunk_end]
