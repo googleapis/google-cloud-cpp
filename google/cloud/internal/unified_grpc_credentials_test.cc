@@ -16,12 +16,14 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <gmock/gmock.h>
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -31,6 +33,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
+using ::testing::IsEmpty;
 
 TEST(UnifiedGrpcCredentialsTest, WithGrpcCredentials) {
   auto result =
@@ -78,6 +81,37 @@ TEST(UnifiedGrpcCredentialsTest, WithAccessTokenCredentials) {
   auto status = result->ConfigureContext(context);
   EXPECT_THAT(status, IsOk());
   ASSERT_NE(nullptr, context.credentials());
+}
+
+TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotSet) {
+  auto contents = LoadCAInfo(Options{});
+  EXPECT_FALSE(contents.has_value());
+}
+
+std::string CreateRandomFileName() {
+  static DefaultPRNG generator = MakeDefaultPRNG();
+  // When running on the internal Google CI systems we cannot write to the local
+  // directory, GTest has a good temporary directory in that case.
+  return ::testing::TempDir() +
+         Sample(generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+}
+
+TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotExist) {
+  auto filename = CreateRandomFileName();
+  auto contents = LoadCAInfo(Options{}.set<CAInfoOption>(filename));
+  ASSERT_TRUE(contents.has_value());
+  EXPECT_THAT(*contents, IsEmpty());
+}
+
+TEST(UnifiedGrpcCredentialsTest, LoadCAInfoContents) {
+  auto filename = CreateRandomFileName();
+  auto const expected =
+      std::string{"The quick brown fox jumps over the lazy dog"};
+  std::ofstream(filename) << expected;
+  auto contents = LoadCAInfo(Options{}.set<CAInfoOption>(filename));
+  (void)std::remove(filename.c_str());  // remove the temporary file
+  ASSERT_TRUE(contents.has_value());
+  EXPECT_EQ(*contents, expected);
 }
 
 }  // namespace

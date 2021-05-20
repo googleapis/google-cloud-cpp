@@ -20,6 +20,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <memory>
@@ -33,6 +34,11 @@ namespace internal {
 /// This is only intended for testing against staging or development versions
 /// of the service. It is not for public use.
 struct TargetApiVersionOption {
+  using Type = std::string;
+};
+
+/// This is only intended for testing. It is not for public use.
+struct CAPathOption {
   using Type = std::string;
 };
 
@@ -187,16 +193,6 @@ struct DownloadStallTimeoutOption {
   using Type = std::chrono::seconds;
 };
 
-/**
- * Sets the default path for the SSL root of trust.
- *
- * Some applications (say those running in a container) may not have access to
- * the SSL root of trust, or this may be installed in a non-standard location.
- */
-struct SslRootPathOption {
-  using Type = std::string;
-};
-
 /// Set the retry policy for a GCS client.
 struct RetryPolicyOption {
   using Type = std::shared_ptr<RetryPolicy>;
@@ -219,8 +215,8 @@ using ClientOptionList = ::google::cloud::OptionList<
     ConnectionPoolSizeOption, DownloadBufferSizeOption, UploadBufferSizeOption,
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
-    DownloadStallTimeoutOption, SslRootPathOption, RetryPolicyOption,
-    BackoffPolicyOption, IdempotencyPolicyOption>;
+    DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
+    IdempotencyPolicyOption, CAInfoOption>;
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

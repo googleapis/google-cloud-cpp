@@ -19,6 +19,13 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+GrpcServiceAccountAuthentication::GrpcServiceAccountAuthentication(
+    std::string const& json_object, Options const& opts)
+    : credentials_(grpc::ServiceAccountJWTAccessCredentials(json_object)) {
+  auto cainfo = LoadCAInfo(opts);
+  if (cainfo) ssl_options_.pem_root_certs = std::move(*cainfo);
+}
+
 std::shared_ptr<grpc::Channel> GrpcServiceAccountAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
   // TODO(#6311) - support setting SSL options

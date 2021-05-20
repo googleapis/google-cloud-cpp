@@ -40,7 +40,7 @@ TEST(GrpcServiceAccountAuthenticationTest, Simple) {
       "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
       "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
-  GrpcServiceAccountAuthentication auth(kJsonObject);
+  GrpcServiceAccountAuthentication auth(kJsonObject, {});
 
   auto channel = auth.CreateChannel("localhost:1", grpc::ChannelArguments{});
   EXPECT_NE(nullptr, channel.get());

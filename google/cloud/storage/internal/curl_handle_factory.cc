@@ -27,13 +27,6 @@ void CurlHandleFactory::SetCurlStringOption(CURL* handle, CURLoption option_tag,
   curl_easy_setopt(handle, option_tag, value);
 }
 
-void CurlHandleFactory::SetCurlOptions(CURL* handle,
-                                       std::string const& ssl_root_path) {
-  if (!ssl_root_path.empty()) {
-    SetCurlStringOption(handle, CURLOPT_CAINFO, ssl_root_path.c_str());
-  }
-}
-
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
   std::call_once(default_curl_handle_factory_initialized, [] {
     default_curl_handle_factory = std::make_shared<DefaultCurlHandleFactory>();
@@ -43,15 +36,20 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
     Options const& options) {
-  if (!options.get<SslRootPathOption>().empty()) {
+  if (!options.get<CAInfoOption>().empty()) {
     return std::make_shared<DefaultCurlHandleFactory>(options);
   }
   return GetDefaultCurlHandleFactory();
 }
 
+DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
+  if (o.has<CAInfoOption>()) cainfo_ = o.get<CAInfoOption>();
+  if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
+}
+
 CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
-  SetCurlOptions(curl.get(), ssl_root_path_);
+  SetCurlOptions(curl.get());
   return curl;
 }
 
@@ -71,9 +69,21 @@ CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
 
 void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) { m.reset(); }
 
+void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
+  if (cainfo_) {
+    SetCurlStringOption(handle, CURLOPT_CAINFO, cainfo_->c_str());
+  }
+  if (capath_) {
+    SetCurlStringOption(handle, CURLOPT_CAPATH, capath_->c_str());
+  }
+}
+
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
                                                  Options const& o)
-    : maximum_size_(maximum_size), ssl_root_path_(o.get<SslRootPathOption>()) {}
+    : maximum_size_(maximum_size) {
+  if (o.has<CAInfoOption>()) cainfo_ = o.get<CAInfoOption>();
+  if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
+}
 
 PooledCurlHandleFactory::~PooledCurlHandleFactory() {
   for (auto* h : handles_) {
@@ -92,11 +102,11 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
     (void)curl_easy_reset(handle);
     handles_.pop_back();
     CurlPtr curl(handle, &curl_easy_cleanup);
-    SetCurlOptions(curl.get(), ssl_root_path_);
+    SetCurlOptions(curl.get());
     return curl;
   }
   CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
-  SetCurlOptions(curl.get(), ssl_root_path_);
+  SetCurlOptions(curl.get());
   return curl;
 }
 
@@ -137,6 +147,15 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
   multi_handles_.push_back(m.get());
   // The multi_handles_ vector now has ownership, so release it.
   (void)m.release();
+}
+
+void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
+  if (cainfo_) {
+    SetCurlStringOption(handle, CURLOPT_CAINFO, cainfo_->c_str());
+  }
+  if (capath_) {
+    SetCurlStringOption(handle, CURLOPT_CAPATH, capath_->c_str());
+  }
 }
 
 }  // namespace internal

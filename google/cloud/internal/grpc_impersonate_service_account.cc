@@ -75,15 +75,17 @@ GrpcImpersonateServiceAccount::Create(
 
 GrpcImpersonateServiceAccount::GrpcImpersonateServiceAccount(
     CompletionQueue cq, ImpersonateServiceAccountConfig const& config,
-    Options const& options)
-    : cache_(MakeCache(std::move(cq), config, options)) {}
+    Options const& opts)
+    : cache_(MakeCache(std::move(cq), config, opts)) {
+  auto cainfo = LoadCAInfo(opts);
+  if (cainfo) ssl_options_.pem_root_certs = std::move(*cainfo);
+}
 
 GrpcImpersonateServiceAccount::~GrpcImpersonateServiceAccount() = default;
 
 std::shared_ptr<grpc::Channel> GrpcImpersonateServiceAccount::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
-  // TODO(#6311) - support setting SSL options
-  auto credentials = grpc::SslCredentials(grpc::SslCredentialsOptions{});
+  auto credentials = grpc::SslCredentials(ssl_options_);
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 

@@ -52,7 +52,7 @@ class GrpcImpersonateServiceAccount
  private:
   GrpcImpersonateServiceAccount(CompletionQueue cq,
                                 ImpersonateServiceAccountConfig const& config,
-                                Options const& options);
+                                Options const& opts);
 
   std::shared_ptr<grpc::CallCredentials> UpdateCallCredentials(
       std::string token);
@@ -68,6 +68,7 @@ class GrpcImpersonateServiceAccount
   std::mutex mu_;
   std::string access_token_;
   std::shared_ptr<grpc::CallCredentials> credentials_;
+  grpc::SslCredentialsOptions ssl_options_;
 };
 
 }  // namespace internal

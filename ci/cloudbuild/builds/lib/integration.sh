@@ -30,6 +30,11 @@ source module ci/lib/io.sh
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"
 
+echo "================================================================"
+io::log_yellow "getting roots.pem to test unified credentials."
+rm -f /dev/shm/roots.pem
+curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
+
 # Outputs a list of Bazel arguments that should be used when running
 # integration tests. These do not include the common `bazel::common_args`.
 #
@@ -47,7 +52,7 @@ function integration::bazel_args() {
   readonly bazel_proto_path="${bazel_output}/external/com_google_protobuf/src/"
 
   args+=(
-    # "--test_tag_filters=integration-test"
+    # Common settings
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
     "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING"
@@ -86,6 +91,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=/dev/shm/roots.pem"
 
     # Spanner
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=${GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS:-}"

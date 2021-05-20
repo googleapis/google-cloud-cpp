@@ -28,7 +28,7 @@ TEST(GrpcAccessTokenAuthenticationTest, Simple) {
   auto const expiration =
       std::chrono::system_clock::now() - std::chrono::minutes(10);
 
-  GrpcAccessTokenAuthentication auth(AccessToken{"token1", expiration});
+  GrpcAccessTokenAuthentication auth(AccessToken{"token1", expiration}, {});
 
   auto channel = auth.CreateChannel("localhost:1", grpc::ChannelArguments{});
   EXPECT_NE(nullptr, channel.get());

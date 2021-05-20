@@ -47,7 +47,6 @@ class CurlHandleFactory {
   // Only virtual for testing purposes.
   virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
                                    char const* value);
-  void SetCurlOptions(CURL* handle, std::string const& ssl_root_path);
 
   static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
   static void ResetHandle(CurlHandle& h) { h.handle_.reset(); }
@@ -68,8 +67,7 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 class DefaultCurlHandleFactory : public CurlHandleFactory {
  public:
   DefaultCurlHandleFactory() = default;
-  explicit DefaultCurlHandleFactory(Options const& o)
-      : ssl_root_path_(o.get<SslRootPathOption>()) {}
+  explicit DefaultCurlHandleFactory(Options const& o);
 
   CurlPtr CreateHandle() override;
   void CleanupHandle(CurlHandle&&) override;
@@ -83,9 +81,12 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   }
 
  private:
+  void SetCurlOptions(CURL* handle);
+
   mutable std::mutex mu_;
   std::string last_client_ip_address_;
-  std::string ssl_root_path_;
+  absl::optional<std::string> cainfo_;
+  absl::optional<std::string> capath_;
 };
 
 /**
@@ -113,12 +114,15 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   }
 
  private:
+  void SetCurlOptions(CURL* handle);
+
   std::size_t maximum_size_;
   mutable std::mutex mu_;
   std::deque<CURL*> handles_;
   std::deque<CURLM*> multi_handles_;
   std::string last_client_ip_address_;
-  std::string ssl_root_path_;
+  absl::optional<std::string> cainfo_;
+  absl::optional<std::string> capath_;
 };
 
 }  // namespace internal
