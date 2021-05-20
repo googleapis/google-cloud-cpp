@@ -16,7 +16,7 @@
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -29,11 +29,11 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::MakeAccessTokenCredentials;
+using ::google::cloud::MakeGoogleDefaultCredentials;
+using ::google::cloud::MakeServiceAccountCredentials;
+using ::google::cloud::UnifiedCredentialsOption;
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::internal::MakeAccessTokenCredentials;
-using ::google::cloud::internal::MakeGoogleDefaultCredentials;
-using ::google::cloud::internal::MakeServiceAccountCredentials;
-using ::google::cloud::internal::UnifiedCredentialsOption;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::StartsWith;
 
@@ -59,9 +59,9 @@ class UnifiedCredentialsIntegrationTest
 
   static Client MakeTestClient(Options opts) {
     std::string const client_type = GetParam();
-    // TODO(#...) - this should happen in CreateClient
+    // TODO(#6612) - this should happen in CreateClient
     auto credentials = internal::MapCredentials(
-        opts.get<google::cloud::internal::UnifiedCredentialsOption>());
+        opts.get<google::cloud::UnifiedCredentialsOption>());
     opts.set<internal::Oauth2CredentialsOption>(credentials);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     if (client_type == "grpc") {

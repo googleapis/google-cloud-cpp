@@ -30,9 +30,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::google::cloud::internal::MakeAccessTokenCredentials;
-using ::google::cloud::internal::MakeGoogleDefaultCredentials;
-using ::google::cloud::internal::MakeInsecureCredentials;
+using ::google::cloud::MakeAccessTokenCredentials;
+using ::google::cloud::MakeGoogleDefaultCredentials;
+using ::google::cloud::MakeInsecureCredentials;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;

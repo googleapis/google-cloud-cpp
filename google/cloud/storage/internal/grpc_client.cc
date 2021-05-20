@@ -112,10 +112,10 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     CompletionQueue cq, Options const& opts) {
-  if (opts.has<google::cloud::internal::UnifiedCredentialsOption>()) {
+  if (opts.has<google::cloud::UnifiedCredentialsOption>()) {
     return google::cloud::internal::CreateAuthenticationStrategy(
-        opts.get<google::cloud::internal::UnifiedCredentialsOption>(),
-        std::move(cq), opts);
+        opts.get<google::cloud::UnifiedCredentialsOption>(), std::move(cq),
+        opts);
   }
   return google::cloud::internal::CreateAuthenticationStrategy(
       opts.get<google::cloud::GrpcCredentialOption>());

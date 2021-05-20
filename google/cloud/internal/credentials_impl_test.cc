@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/credentials.h"
-#include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include <gmock/gmock.h>
 
 namespace google {

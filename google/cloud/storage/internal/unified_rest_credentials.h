@@ -17,7 +17,7 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/credentials.h"
 #include <memory>
 
 namespace google {
@@ -27,7 +27,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
-    std::shared_ptr<google::cloud::internal::Credentials> const& credentials);
+    std::shared_ptr<google::cloud::Credentials> const& credentials);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

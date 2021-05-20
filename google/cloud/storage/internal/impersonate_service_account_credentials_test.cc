@@ -24,8 +24,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::AccessTokenLifetimeOption;
 using ::google::cloud::internal::AccessToken;
-using ::google::cloud::internal::AccessTokenLifetimeOption;
 using ::google::cloud::testing_util::IsOk;
 using ::std::chrono::minutes;
 using ::testing::EndsWith;
@@ -50,7 +50,7 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
           Return(make_status_or(AccessToken{"token2", now + minutes(30)})));
 
   auto config = google::cloud::internal::ImpersonateServiceAccountConfig(
-      google::cloud::internal::MakeGoogleDefaultCredentials(),
+      google::cloud::MakeGoogleDefaultCredentials(),
       "test-only-invalid@test.invalid",
       Options{}.set<AccessTokenLifetimeOption>(std::chrono::minutes(15)));
   ImpersonateServiceAccountCredentials under_test(config, mock);

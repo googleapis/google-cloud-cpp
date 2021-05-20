@@ -18,7 +18,7 @@
 #include "google/cloud/storage/internal/minimal_iam_credentials_rest.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/credentials.h"
+#include "google/cloud/credentials.h"
 #include <mutex>
 #include <string>
 

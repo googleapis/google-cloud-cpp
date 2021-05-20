@@ -19,6 +19,7 @@
 google_cloud_cpp_common_hdrs = [
     "backoff_policy.h",
     "common_options.h",
+    "credentials.h",
     "future.h",
     "future_generic.h",
     "future_void.h",
@@ -36,7 +37,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/big_endian.h",
     "internal/build_info.h",
     "internal/compiler_info.h",
-    "internal/credentials.h",
+    "internal/credentials_impl.h",
     "internal/diagnostics_pop.inc",
     "internal/diagnostics_push.inc",
     "internal/disable_deprecation_warnings.inc",
@@ -79,12 +80,13 @@ google_cloud_cpp_common_hdrs = [
 ]
 
 google_cloud_cpp_common_srcs = [
+    "credentials.cc",
     "iam_bindings.cc",
     "iam_policy.cc",
     "internal/api_client_header.cc",
     "internal/backoff_policy.cc",
     "internal/compiler_info.cc",
-    "internal/credentials.cc",
+    "internal/credentials_impl.cc",
     "internal/filesystem.cc",
     "internal/format_time_point.cc",
     "internal/future_impl.cc",

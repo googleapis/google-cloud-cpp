@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UNIFIED_GRPC_CREDENTIALS_H
 
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/credentials.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>

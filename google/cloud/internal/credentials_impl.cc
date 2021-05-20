@@ -12,35 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H
-
-#include "google/cloud/storage/oauth2/credentials.h"
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/credentials_impl.h"
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-class AccessTokenCredentials : public oauth2::Credentials {
- public:
-  explicit AccessTokenCredentials(
-      google::cloud::internal::AccessToken const& access_token);
+void CredentialsVisitor::dispatch(Credentials& credentials,
+                                  CredentialsVisitor& visitor) {
+  credentials.dispatch(visitor);
+}
 
-  StatusOr<std::string> AuthorizationHeader() override;
-
- private:
-  std::string header_;
-};
+ImpersonateServiceAccountConfig::ImpersonateServiceAccountConfig(
+    std::shared_ptr<Credentials> base_credentials,
+    std::string target_service_account, Options opts)
+    : base_credentials_(std::move(base_credentials)),
+      target_service_account_(std::move(target_service_account)),
+      lifetime_(opts.get<AccessTokenLifetimeOption>()),
+      scopes_(std::move(opts.lookup<ScopesOption>())),
+      delegates_(std::move(opts.lookup<DelegatesOption>())) {}
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H
