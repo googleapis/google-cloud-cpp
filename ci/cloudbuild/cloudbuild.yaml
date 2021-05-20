@@ -64,6 +64,7 @@ steps:
   # Builds the docker image that will be used by the main build step.
 - name: 'gcr.io/kaniko-project/executor:edge'
   args: [
+    '--log-format=text',
     '--context=dir:///workspace/ci',
     '--dockerfile=ci/cloudbuild/dockerfiles/${_DISTRO}.Dockerfile',
     '--cache=true',
