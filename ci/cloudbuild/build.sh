@@ -315,7 +315,6 @@ subs+=("_BUILD_NAME=${BUILD_NAME}")
 subs+=("_TRIGGER_SOURCE=manual-${account}")
 subs+=("_PR_NUMBER=") # Must be empty or a number, and this is not a PR
 subs+=("_LOGS_BUCKET=${project}_cloudbuild")
-subs+=("_LOG_FORMAT=$([[ -t 0 ]] && echo color || echo text)")
 subs+=("BRANCH_NAME=${BRANCH_NAME}")
 subs+=("COMMIT_SHA=${COMMIT_SHA}")
 printf "Substitutions:\n"
