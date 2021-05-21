@@ -27,7 +27,14 @@ from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 class Database:
     def __init__(
-        self, buckets, objects, live_generations, uploads, rewrites, retry_tests, supported_methods
+        self,
+        buckets,
+        objects,
+        live_generations,
+        uploads,
+        rewrites,
+        retry_tests,
+        supported_methods,
     ):
         self.buckets = buckets
         self.objects = objects
@@ -283,16 +290,20 @@ class Database:
 
     def __validate_instructions(self, instructions):
         expected_instructions_format = [
-          utils.common.retry_return_error_code.pattern,
-          utils.common.retry_return_error_connection.pattern,
-          utils.common.retry_return_error_after_bytes.pattern,
+            utils.common.retry_return_error_code.pattern,
+            utils.common.retry_return_error_connection.pattern,
+            utils.common.retry_return_error_after_bytes.pattern,
         ]
-        search_expression = re.compile("(%s)" % ")|(".join(expected_instructions_format))
-        expected_schema = Schema({
-            And(Use(str), lambda n: n in self.supported_methods): [
-                And(Use(str), lambda n: re.match(search_expression, n))
-            ]
-        })
+        search_expression = re.compile(
+            "(%s)" % ")|(".join(expected_instructions_format)
+        )
+        expected_schema = Schema(
+            {
+                And(Use(str), lambda n: n in self.supported_methods): [
+                    And(Use(str), lambda n: re.match(search_expression, n))
+                ]
+            }
+        )
         try:
             expected_schema.validate(instructions)
         except SchemaError as e:

@@ -636,6 +636,7 @@ class TestRetryTest(unittest.TestCase):
         self.assertEqual(response.code, 400)
         self.conn.close()
 
+
 class TestHandleGzip(unittest.TestCase):
     def test_handle_decompressing(self):
         plain_text = b"hello world"

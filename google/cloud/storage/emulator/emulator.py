@@ -52,6 +52,7 @@ TODO(#6615): Introducing failures into uploads with return-XXX-after-YYYk
 def retry_test(method):
     global supported_methods
     supported_methods.append(method)
+
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
