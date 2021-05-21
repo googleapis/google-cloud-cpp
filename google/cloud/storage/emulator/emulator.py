@@ -32,6 +32,7 @@ from google.protobuf import json_format
 
 db = None
 grpc_port = 0
+supported_methods = []
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -49,6 +50,8 @@ TODO(#6615): Introducing failures into uploads with return-XXX-after-YYYk
 
 # Needs to be defined in emulator.py to keep context of flask and db global variables
 def retry_test(method):
+    global supported_methods
+    supported_methods.append(method)
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -927,15 +930,17 @@ iam_app.register_error_handler(Exception, utils.error.RestException.handler)
 
 
 def run():
-    global db
+    global db, supported_methods
     logging.basicConfig()
     db = database.Database.init()
+    db.insert_supported_methods(supported_methods)
     return server
 
 
 def run_without_gunicorn(port, database):
     global db
     db = database
+    db.insert_supported_methods(supported_methods)
     serving.run_simple(
         "localhost", int(port), server, use_reloader=False, threaded=True
     )

@@ -617,6 +617,24 @@ class TestRetryTest(unittest.TestCase):
         self.assertIn("Deleted %s" % (retry_test_id), body)
         self.conn.close()
 
+    def test_retry_test_malformed(self):
+        invalid_retry_test_method = {
+            "instructions": {"random_operation": ["returdn-503", "return-503"]}
+        }
+        request_body = json.dumps(invalid_retry_test_method)
+        self.conn.request("POST", "/retry_test", body=request_body)
+        response = self.conn.getresponse()
+        self.assertEqual(response.code, 400)
+        self.conn.close()
+
+        invalid_retry_test_instruction = {
+            "instructions": {"storage.buckets.list": ["ret-503"]}
+        }
+        request_body = json.dumps(invalid_retry_test_instruction)
+        self.conn.request("POST", "/retry_test", body=request_body)
+        response = self.conn.getresponse()
+        self.assertEqual(response.code, 400)
+        self.conn.close()
 
 class TestHandleGzip(unittest.TestCase):
     def test_handle_decompressing(self):

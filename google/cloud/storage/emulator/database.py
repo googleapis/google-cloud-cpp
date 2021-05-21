@@ -16,16 +16,18 @@ import collections
 import json
 import os
 import uuid
+import re
 
 import gcs
 import utils
 
+from schema import Schema, SchemaError, And, Use
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 
 class Database:
     def __init__(
-        self, buckets, objects, live_generations, uploads, rewrites, retry_tests
+        self, buckets, objects, live_generations, uploads, rewrites, retry_tests, supported_methods
     ):
         self.buckets = buckets
         self.objects = objects
@@ -33,10 +35,11 @@ class Database:
         self.uploads = uploads
         self.rewrites = rewrites
         self.retry_tests = retry_tests
+        self.supported_methods = supported_methods
 
     @classmethod
     def init(cls):
-        return cls({}, {}, {}, {}, {}, {})
+        return cls({}, {}, {}, {}, {}, {}, [])
 
     def raii(self, grpc_server):
         self.grpc_server = grpc_server
@@ -269,13 +272,34 @@ class Database:
             "completed": retry_test["completed"],
         }
 
+    def insert_supported_methods(self, methods):
+        self.supported_methods.extend(methods)
+
     def get_retry_test(self, retry_test_id):
         retry_test = self.retry_tests.get(retry_test_id)
         if retry_test is None:
             utils.error.notfound("Retry Test %s" % retry_test_id, context=None)
         return self.__to_serializeable_retry_test(retry_test)
 
+    def __validate_instructions(self, instructions):
+        expected_instructions_format = [
+          utils.common.retry_return_error_code.pattern,
+          utils.common.retry_return_error_connection.pattern,
+          utils.common.retry_return_error_after_bytes.pattern,
+        ]
+        search_expression = re.compile("(%s)" % ")|(".join(expected_instructions_format))
+        expected_schema = Schema({
+            And(Use(str), lambda n: n in self.supported_methods): [
+                And(Use(str), lambda n: re.match(search_expression, n))
+            ]
+        })
+        try:
+            expected_schema.validate(instructions)
+        except SchemaError as e:
+            utils.error.invalid("Invalid format used: %s" % e, context=None)
+
     def insert_retry_test(self, instructions):
+        self.__validate_instructions(instructions)
         retry_test_id = uuid.uuid4().hex
         self.retry_tests[retry_test_id] = {
             "id": retry_test_id,
