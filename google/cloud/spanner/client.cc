@@ -329,9 +329,10 @@ QueryOptions Client::OverlayQueryOptions(QueryOptions const& preferred) {
 
 std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
                                                     Options opts) {
-  internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-                                 SessionPoolOptionList,
-                                 SpannerPolicyOptionList>(opts, __func__);
+  internal::CheckExpectedOptions<
+      CommonOptionList, GrpcOptionList, SessionPoolOptionList,
+      spanner_internal::SessionPoolClockOption, SpannerPolicyOptionList>(
+      opts, __func__);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
   int num_channels = opts.get<GrpcNumChannelsOption>();
