@@ -88,29 +88,50 @@ instructions.
 
 ## Retry Test API
 
+The GCS Emulator at the time of writing (5/19/21), only provided support
+for reproducing transient errors by passing instructions through a header
+which is not easily implementable across the 8 language libraries that Cloud
+Storage currently supports. Retry Test API introduces a method to supply failure
+configuration and supplies GCS libraries with a unique identifier which is
+used to identify how to fail a specified GCS API operation. In addition,
+the Retry Test API performs accounting to tell a developer if expected
+failures occured.
+
 ### Creating a new Retry Test
 
+The following cURL request will create a Retry Test resource which emits a 503
+when a buckets list operation is received by the emulator with the returned
+retry test ID.
+
 ```bash
-    curl -X POST "http://localhost:9000/retry_test" -H 'Content-Type: application/json' \
-         -d '{"instructions":{"storage.buckets.list": ["return-503"]}}'
+curl -X POST "http://localhost:9000/retry_test" -H 'Content-Type: application/json' \
+     -d '{"instructions":{"storage.buckets.list": ["return-503"]}}'
 ```
 
 ### Get a Retry Test resource
 
+Get Retry Test resource by id "1d05c20627844214a9ff7cbcf696317d".
+
 ```bash
-    curl -X GET "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
+curl -X GET "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
 ```
 
 ### Delete a Retry Test resource
 
+Delete Retry Test resource by id "1d05c20627844214a9ff7cbcf696317d".
+
 ```bash
-    curl -X DELETE "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
+curl -X DELETE "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
 ```
 
 ### Causing a failure using x-retry-test-id header
 
+The following cURL request will attempt to list buckets and the emulator will emit
+a `503` error once based on the Retry Test created above. Subsequent list buckets
+operations will succeed.
+
 ```bash
-    curl -H "x-retry-test-id: 1d05c20627844214a9ff7cbcf696317d" "http://localhost:9100/storage/v1/b?project=test"
+curl -H "x-retry-test-id: 1d05c20627844214a9ff7cbcf696317d" "http://localhost:9100/storage/v1/b?project=test"
 ```
 
 ### Forced Failures Supported

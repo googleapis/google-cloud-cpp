@@ -519,7 +519,6 @@ class TestRetryTest(unittest.TestCase):
         self.conn.close()
 
     def test_retry_test_reset_connection(self):
-
         initial_retry_test = {
             "instructions": {"storage.buckets.list": ["return-reset-connection"]}
         }
@@ -547,7 +546,6 @@ class TestRetryTest(unittest.TestCase):
         self.conn.close()
 
     def test_retry_test_broken_stream(self):
-
         initial_retry_test = {
             "instructions": {"storage.buckets.list": ["return-broken-stream"]}
         }
@@ -577,7 +575,6 @@ class TestRetryTest(unittest.TestCase):
         self.conn.close()
 
     def test_retry_test_503(self):
-
         initial_retry_test = {
             "instructions": {"storage.buckets.list": ["return-503", "return-503"]}
         }
