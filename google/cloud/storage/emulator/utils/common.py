@@ -355,71 +355,72 @@ def __wrap_in_response_instance(data, to_wrap):
     return FlaskResponse(to_wrap)
 
 
+def __get_streamer_response_fn(database, method, conn, test_id):
+    def response_handler(data):
+        def streamer():
+            database.dequeue_next_instruction(test_id, method)
+            d = __extract_data(data)
+            chunk_size = 4
+            for r in range(0, len(d), chunk_size):
+                if r >= 10:
+                    conn.close()
+                    sys.exit(1)
+                chunk_end = min(r + chunk_size, len(d))
+                yield d[r:chunk_end]
+
+        return __wrap_in_response_instance(data, streamer())
+
+    return response_handler
+
+
+def __get_default_response_fn(data):
+    return data
+
+
 def handle_retry_test_instruction(database, request, method):
     test_id = request.headers.get("x-retry-test-id", None)
-
-    def retry_test_response_handler(data):
-        return data
-
-    if test_id and database.has_instructions_retry_test(test_id, method):
-        next_instruction = database.peek_next_instruction(test_id, method)
-        error_code_matches = utils.common.retry_return_error_code.match(
-            next_instruction
+    if not test_id or not database.has_instructions_retry_test(test_id, method):
+        return __get_default_response_fn
+    next_instruction = database.peek_next_instruction(test_id, method)
+    error_code_matches = utils.common.retry_return_error_code.match(next_instruction)
+    if error_code_matches != None:
+        database.dequeue_next_instruction(test_id, method)
+        items = list(error_code_matches.groups())
+        error_code = items[0]
+        utils.error.generic(
+            "Retry Test: Caused a {}".format(error_code),
+            rest_code=error_code,
+            grpc_code=None,
+            context=None,
         )
-        if error_code_matches != None:
+    retry_connection_matches = utils.common.retry_return_error_connection.match(
+        next_instruction
+    )
+    if retry_connection_matches != None:
+        items = list(retry_connection_matches.groups())
+        # sys.exit(1) retains database state with more than 1 thread
+        if items[0] == "reset-connection":
             database.dequeue_next_instruction(test_id, method)
-            items = list(error_code_matches.groups())
-            error_code = items[0]
-            utils.error.generic(
-                "Retry Test: Caused a {}".format(error_code),
-                rest_code=error_code,
-                grpc_code=None,
-                context=None,
-            )
-        retry_connection_matches = utils.common.retry_return_error_connection.match(
-            next_instruction
-        )
-        if retry_connection_matches != None:
-            items = list(retry_connection_matches.groups())
-            # sys.exit(1) retains database state with more than 1 thread
-            if items[0] == "reset-connection":
-                database.dequeue_next_instruction(test_id, method)
-                fd = request.environ["gunicorn.socket"]
-                fd.setsockopt(
-                    socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0)
-                )
-                fd.close()
-                sys.exit(1)
-            elif items[0] == "broken-stream":
-
-                def retry_test_response_handler(data):
-                    def streamer():
-                        database.dequeue_next_instruction(test_id, method)
-                        d = __extract_data(data)
-                        chunk_size = 4
-                        for r in range(0, len(d), chunk_size):
-                            if r >= 10:
-                                fd = request.environ["gunicorn.socket"]
-                                fd.close()
-                                sys.exit(1)
-                            chunk_end = min(r + chunk_size, len(d))
-                            yield d[r:chunk_end]
-
-                    return __wrap_in_response_instance(data, streamer())
-
-        error_after_bytes_matches = utils.common.retry_return_error_after_bytes.match(
-            next_instruction
-        )
-        if error_after_bytes_matches != None:
-            items = list(error_after_bytes_matches.groups())
-            error_code = items[0]
-            after_bytes = items[1]
-            if method == "storage.objects.insert":
-                # Upload failures should allow to not complete after certain bytes
-                upload_type = request.args.get("uploadType", None)
-                if upload_type != None and upload_type == "resumable":
-                    upload_id = request.args.get("upload_id", None)
-                    if upload_id != None:
-                        database.dequeue_next_instruction(test_id, method)
-                        utils.error.notallowed()
-    return retry_test_response_handler
+            fd = request.environ["gunicorn.socket"]
+            fd.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0))
+            fd.close()
+            sys.exit(1)
+        elif items[0] == "broken-stream":
+            conn = request.environ["gunicorn.socket"]
+            return __get_streamer_response_fn(database, method, conn, test_id)
+    error_after_bytes_matches = utils.common.retry_return_error_after_bytes.match(
+        next_instruction
+    )
+    if error_after_bytes_matches != None:
+        items = list(error_after_bytes_matches.groups())
+        error_code = items[0]
+        after_bytes = items[1]
+        if method == "storage.objects.insert":
+            # Upload failures should allow to not complete after certain bytes
+            upload_type = request.args.get("uploadType", None)
+            if upload_type != None and upload_type == "resumable":
+                upload_id = request.args.get("upload_id", None)
+                if upload_id != None:
+                    database.dequeue_next_instruction(test_id, method)
+                    utils.error.notallowed()
+    return __get_default_response_fn
