@@ -383,7 +383,7 @@ def handle_retry_test_instruction(database, request, method):
         return __get_default_response_fn
     next_instruction = database.peek_next_instruction(test_id, method)
     error_code_matches = utils.common.retry_return_error_code.match(next_instruction)
-    if error_code_matches != None:
+    if error_code_matches:
         database.dequeue_next_instruction(test_id, method)
         items = list(error_code_matches.groups())
         error_code = items[0]
@@ -396,7 +396,7 @@ def handle_retry_test_instruction(database, request, method):
     retry_connection_matches = utils.common.retry_return_error_connection.match(
         next_instruction
     )
-    if retry_connection_matches != None:
+    if retry_connection_matches:
         items = list(retry_connection_matches.groups())
         # sys.exit(1) retains database state with more than 1 thread
         if items[0] == "reset-connection":
@@ -411,16 +411,14 @@ def handle_retry_test_instruction(database, request, method):
     error_after_bytes_matches = utils.common.retry_return_error_after_bytes.match(
         next_instruction
     )
-    if error_after_bytes_matches != None:
+    if error_after_bytes_matches and method == "storage.objects.insert":
         items = list(error_after_bytes_matches.groups())
         error_code = items[0]
         after_bytes = items[1]
-        if method == "storage.objects.insert":
-            # Upload failures should allow to not complete after certain bytes
-            upload_type = request.args.get("uploadType", None)
-            if upload_type != None and upload_type == "resumable":
-                upload_id = request.args.get("upload_id", None)
-                if upload_id != None:
-                    database.dequeue_next_instruction(test_id, method)
-                    utils.error.notallowed()
+        # Upload failures should allow to not complete after certain bytes
+        upload_type = request.args.get("uploadType", None)
+        upload_id = request.args.get("upload_id", None)
+        if upload_type == "resumable" and upload_id is not None:
+            database.dequeue_next_instruction(test_id, method)
+            utils.error.notallowed()
     return __get_default_response_fn
