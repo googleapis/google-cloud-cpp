@@ -27,6 +27,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 google::pubsub::v1::StreamingPullResponse GenerateMessages(
@@ -95,25 +96,25 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
   };
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, mock,
-      std::chrono::seconds(kTestDeadline));
+      background.cq(), shutdown_manager, make_timer, mock, kTestDeadline,
+      std::chrono::seconds(600));
 
   auto done = shutdown_manager->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
 
   batch_callback(GenerateMessages("0-", 3));
-  ASSERT_EQ(1, timers.size());
+  ASSERT_THAT(timers, SizeIs(1));
 
   // Ack one of the messages and then fire the timer. The expectations set above
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
   timers[0].set_value({});
-  EXPECT_THAT(2, timers.size());
+  ASSERT_THAT(timers, SizeIs(2));
 
   // Ack one more message and trigger the new timer.
   uut->NackMessage("ack-0-2");
   timers[1].set_value({});
-  EXPECT_THAT(3, timers.size());
+  ASSERT_THAT(timers, SizeIs(3));
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
@@ -129,8 +130,6 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
     batch_callback = std::move(cb);
   });
 
-  auto constexpr kTestDeadline = 345;
-
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   std::vector<promise<Status>> timers;
   int cancel_count = 0;
@@ -143,16 +142,16 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::CreateForTesting(
       background.cq(), shutdown_manager, make_timer, mock,
-      std::chrono::seconds(kTestDeadline));
+      std::chrono::seconds(345), std::chrono::seconds(600));
 
   auto done = shutdown_manager->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
   batch_callback(GenerateMessages("0-", 3));
-  ASSERT_EQ(1, timers.size());
+  EXPECT_THAT(timers, SizeIs(1));
 
   batch_callback(StatusOr<google::pubsub::v1::StreamingPullResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh")));
-  ASSERT_EQ(1, timers.size());
+  ASSERT_THAT(timers, SizeIs(1));
 
   timers[0].set_value(Status(StatusCode::kCancelled, "test-cancel"));
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
@@ -165,9 +164,67 @@ TEST(SubscriptionLeaseManagementTest, DoesNotPropagateExtendLeases) {
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto uut = SubscriptionLeaseManagement::Create(
-      background.cq(), shutdown_manager, mock, std::chrono::seconds(30));
+      background.cq(), shutdown_manager, mock, std::chrono::seconds(30),
+      std::chrono::seconds(600));
 
   uut->ExtendLeases({"a", "b", "c"}, std::chrono::seconds(10));
+}
+
+TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriptionBatchSource>();
+  BatchCallback batch_callback;
+  EXPECT_CALL(*mock, Start).WillOnce([&](BatchCallback cb) {
+    batch_callback = std::move(cb);
+  });
+
+  auto constexpr kTestDeadline = std::chrono::seconds(345);
+  auto constexpr kTestExtension = std::chrono::seconds(100);
+  {
+    ::testing::InSequence sequence;
+    // No messages acked.
+    EXPECT_CALL(*mock, ExtendLeases)
+        // Then a simulated timer refreshes the lease for the message.
+        .WillOnce([&](std::vector<std::string> const& ack_ids,
+                      std::chrono::seconds extension) {
+          EXPECT_THAT(ack_ids, UnorderedElementsAre("ack-0-0"));
+          EXPECT_LE(std::abs((kTestExtension - extension).count()), 2);
+          return make_ready_future(Status{});
+        });
+    // Then the unhandled message is nacked on shutdown.
+    EXPECT_CALL(*mock, BulkNack(UnorderedElementsAre("ack-0-0")))
+        .WillOnce([](std::vector<std::string> const&) {
+          return make_ready_future(Status{});
+        });
+    EXPECT_CALL(*mock, Shutdown).Times(1);
+  }
+
+  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
+  std::vector<promise<Status>> timers;
+  auto make_timer = [&](std::chrono::system_clock::time_point) {
+    promise<Status> p;
+    auto f = p.get_future().then([](future<Status> f) { return f.get(); });
+    timers.push_back(std::move(p));
+    return f;
+  };
+  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
+  auto uut = SubscriptionLeaseManagement::CreateForTesting(
+      background.cq(), shutdown_manager, make_timer, mock, kTestDeadline,
+      kTestExtension);
+
+  auto done = shutdown_manager->Start({});
+  uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
+
+  batch_callback(GenerateMessages("0-", 1));
+  ASSERT_THAT(timers, SizeIs(1));
+
+  // Ignore message and then fire the timer. This will extend the deadline.
+  timers[0].set_value({});
+  ASSERT_THAT(timers, SizeIs(2));
+
+  shutdown_manager->MarkAsShutdown(__func__, Status{});
+  uut->Shutdown();
+  timers[1].set_value(Status(StatusCode::kCancelled, "test-cancel"));
+  EXPECT_THAT(done.get(), IsOk());
 }
 
 }  // namespace

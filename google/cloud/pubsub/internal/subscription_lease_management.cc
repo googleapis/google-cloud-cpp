@@ -20,7 +20,6 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kMinimumAckDeadline;
-std::chrono::seconds constexpr SubscriptionLeaseManagement::kMaximumAckDeadline;
 std::chrono::seconds constexpr SubscriptionLeaseManagement::kAckDeadlineSlack;
 
 void SubscriptionLeaseManagement::Start(BatchCallback cb) {
@@ -101,7 +100,7 @@ void SubscriptionLeaseManagement::RefreshMessageLeases(
 
   std::vector<std::string> ack_ids;
   ack_ids.reserve(leases_.size());
-  auto extension = kMaximumAckDeadline;
+  auto extension = max_deadline_extension_;
   auto const now = std::chrono::system_clock::now();
   for (auto const& kv : leases_) {
     // This message lease cannot be extended any further, and we do not want to

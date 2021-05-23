@@ -20,6 +20,15 @@ namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
+using seconds = std::chrono::seconds;
+
+SubscriberOptions& SubscriberOptions::set_max_deadline_extension(
+    seconds extension) {
+  max_deadline_extension_ =
+      (std::max)((std::min)(extension, seconds(600)), seconds(10));
+  return *this;
+}
+
 SubscriberOptions& SubscriberOptions::set_max_outstanding_messages(
     std::int64_t message_count) {
   max_outstanding_messages_ = (std::max<std::int64_t>)(0, message_count);
