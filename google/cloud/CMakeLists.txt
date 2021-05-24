@@ -341,13 +341,9 @@ set(GOOGLE_CLOUD_CPP_PC_NAME
     "Google Cloud C++ Client Library Common Components")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
-# Abseil doesn't install package config files listing the runtime deps of their
-# libraries, so we need to explicitly include them here. Here we include the
-# runtime deps of the absl::optional target (http://github.com/abseil/abseil-cpp
-# /blob/4a851046a0102cd986a5714a1af8deef28a544c4/absl/types/CMakeLists.txt#L164)
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_common)
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common"
-              ${absl_pkg_config})
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
+string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "absl_any absl_flat_hash_map"
+              " absl_memory" " absl_optional" " absl_time")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -614,12 +610,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         "gRPC Utilities for the Google Cloud C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-        "google_cloud_cpp_common google_cloud_cpp_iam_protos")
-    google_cloud_cpp_absl_pkg_config(absl_pkg_config
-                                     google_cloud_cpp_grpc_utils)
-    string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils"
-                  ${absl_pkg_config})
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+                  "google_cloud_cpp_common google_cloud_cpp_iam_protos")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
