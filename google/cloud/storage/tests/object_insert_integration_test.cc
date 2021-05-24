@@ -51,7 +51,7 @@ class ObjectInsertIntegrationTest
       // actually performs multiple operations against production.
       std::string const key_file_envvar = GetParam();
       if (UsingGrpc() && key_file_envvar.find("P12") != std::string::npos) {
-        // TODO(5116): gRPC doesn't support PKCS #12 keys.
+        // TODO(#5116): gRPC doesn't support PKCS #12 keys.
         GTEST_SKIP();
       }
       auto value =
