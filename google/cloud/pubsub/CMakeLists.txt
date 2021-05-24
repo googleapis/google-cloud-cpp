@@ -362,12 +362,10 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Pubsub C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Pubsub.")
-set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common google_cloud_cpp_pubsub_protos"
-)
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_pubsub)
-string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_pubsub"
-              ${absl_pkg_config})
+set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_pubsub")
+string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+              " google_cloud_cpp_common" " google_cloud_cpp_pubsub_protos"
+              " absl_flat_hash_map" " absl_str_format")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config.pc.in"

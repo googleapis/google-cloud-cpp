@@ -423,12 +423,16 @@ google_cloud_cpp_install_headers("google_cloud_cpp_spanner_mocks"
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Spanner.")
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_spanner_protos"
-)
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_spanner)
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_spanner"
-              ${absl_pkg_config})
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_spanner")
+string(
+    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+           "google_cloud_cpp_grpc_utils"
+           " google_cloud_cpp_common"
+           " googleapis_cpp_spanner_protos"
+           " absl_memory"
+           " absl_numeric"
+           " absl_strings"
+           " absl_time")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"

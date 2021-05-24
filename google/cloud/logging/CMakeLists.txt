@@ -142,12 +142,9 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Logging C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Logging.")
-set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_logging_protos"
-)
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_logging)
-string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_logging"
-              ${absl_pkg_config})
+set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_logging")
+string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+              " google_cloud_cpp_common" " googleapis_cpp_logging_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/logging/config.pc.in"
