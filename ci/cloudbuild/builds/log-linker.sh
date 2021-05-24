@@ -48,6 +48,4 @@ EOF
 
 io::log_h2 "Commenting on ${PR_NUMBER}"
 echo "${body}"
-# TODO(#6295): See if there's a way to edit an existing log-linker comment
-# rather than creating a new one.
 gh --repo googleapis/google-cloud-cpp pr comment "${PR_NUMBER}" --body "${body}"

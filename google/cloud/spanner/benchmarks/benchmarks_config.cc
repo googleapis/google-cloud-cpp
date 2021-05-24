@@ -93,7 +93,7 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
        [](Config& c, std::string const& v) {
          c.maximum_threads = std::stoi(v);
        }},
-      // TODO(#1193) keep the `channels` flags and remove the `clients` aliases.
+      // TODO(#4032) keep the `channels` flags and remove the `clients` aliases.
       {"--minimum-clients=",
        [](Config& c, std::string const& v) {
          c.minimum_clients = std::stoi(v);

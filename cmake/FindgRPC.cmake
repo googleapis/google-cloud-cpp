@@ -118,10 +118,7 @@ endfunction ()
 # installed. This is common on systems (or package managers) where gRPC was
 # compiled and installed with `CMake`.
 
-# TODO(#4146) - remove FPHSA_NAME_MISMATCHED manipulation on next absl release
-set(FPHSA_NAME_MISMATCHED Threads) # Quiet warning caused by Abseil
 find_package(gRPC NO_MODULE QUIET)
-unset(FPHSA_NAME_MISMATCHED)
 
 if (gRPC_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "

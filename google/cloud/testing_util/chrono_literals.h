@@ -18,7 +18,6 @@
 #include "google/cloud/version.h"
 #include <chrono>
 
-// TODO(#109) - these are generally useful, consider submitting to abseil.io
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {

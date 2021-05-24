@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#1415) Change this visibility to "//:__subpackages__" so that users are
+# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
 # required to use the top-level BUILD file rather than reaching down into this
 # one.
 package(default_visibility = ["//visibility:public"])

@@ -24,6 +24,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
 /**
  * Holds a value or a `Status` indicating why there is no value.
  *
@@ -95,10 +96,6 @@ class StatusOr final {
 
   /**
    * Initializes with an error status (UNKNOWN).
-   *
-   * TODO(#548) - currently storage::Status does not define the status codes,
-   *     they are simply integers, usually HTTP status codes. We need to map to
-   *     the well-defined set of status codes.
    */
   StatusOr() : StatusOr(Status(StatusCode::kUnknown, "default")) {}
 

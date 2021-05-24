@@ -166,7 +166,7 @@ void SessionPool::RefreshExpiringSessions() {
           // by removing the session from the pool is problematic (and would
           // not eliminate the possibility of IsSessionNotFound() elsewhere).
           // The last-use time has already been updated to throttle attempts.
-          // TODO(#1430): Re-evaluate these decisions.
+          // TODO(#4026): Re-evaluate these decisions.
           (void)result.get();
         });
   }
@@ -177,7 +177,7 @@ void SessionPool::RefreshExpiringSessions() {
  * adding them to the pool.  Note that `lk` may be released and reacquired in
  * this method.
  *
- * TODO(#1271) eliminate the `wait` parameter and do all creation
+ * TODO(#4029) eliminate the `wait` parameter and do all creation
  * asynchronously. The main obstacle is making existing tests pass.
  */
 Status SessionPool::Grow(std::unique_lock<std::mutex>& lk,
@@ -300,7 +300,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 
     // Create new sessions for the pool.
     //
-    // TODO(#307) Currently we only allow one thread to do this at a time; a
+    // TODO(#4028) Currently we only allow one thread to do this at a time; a
     // possible enhancement is tracking the number of waiters and issuing more
     // simultaneous calls if additional sessions are needed. We can also use the
     // number of waiters in the `sessions_to_create` calculation below.
