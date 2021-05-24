@@ -265,13 +265,13 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekpos(
     pos_type /*pos*/, std::ios_base::openmode /*which*/) {
-  // TODO(4013): Implement proper seeking.
+  // TODO(#4013): Implement proper seeking.
   return -1;
 }
 
 ObjectReadStreambuf::pos_type ObjectReadStreambuf::seekoff(
     off_type off, std::ios_base::seekdir dir, std::ios_base::openmode which) {
-  // TODO(4013): Implement proper seeking.
+  // TODO(#4013): Implement proper seeking.
   // Seeking is non-trivial because the hash validator and `source_` have to be
   // recreated in the general case, which doesn't fit the current code
   // organization.  We can, however, at least implement the bare minimum of this

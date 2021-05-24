@@ -16,8 +16,7 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-# TODO(googleapis/google-cloud-cpp-common#171) - remove the backwards
-#     compatibility target.
+# TODO(#3932) - remove the backwards compatibility target.
 cc_library(
     name = "google_cloud_cpp_grpc_utils",
     srcs = [],
