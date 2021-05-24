@@ -38,7 +38,7 @@ struct Config {
 
   int minimum_threads = 1;
   int maximum_threads = 1;
-  // TODO(#1193) change these variable names from `*_clients` to `*_channels`
+  // TODO(#4032) change these variable names from `*_clients` to `*_channels`
   int minimum_clients = 1;
   int maximum_clients = 1;
 

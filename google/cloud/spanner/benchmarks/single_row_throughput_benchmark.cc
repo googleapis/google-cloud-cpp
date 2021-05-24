@@ -647,7 +647,6 @@ class RunAllExperiment : public Experiment {
       config.samples = 1;
       config.iteration_duration = std::chrono::seconds(1);
       std::cout << "# Smoke test for experiment: " << kv.first << "\n";
-      // TODO(#1119) - tests disabled until we can stay within admin op quota
       if (setup_called_) {
         // Only call SetUp() on each experiment if our own SetUp() was called.
         kv.second->SetUp(config, database);
