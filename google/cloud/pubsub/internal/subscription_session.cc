@@ -179,39 +179,6 @@ future<Status> CreateSubscriptionSession(
       std::move(lease_management), std::move(p));
 }
 
-future<Status> CreateTestingSubscriptionSession(
-    pubsub::Subscription const& subscription,
-    pubsub::SubscriberOptions const& options,
-    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
-    google::cloud::CompletionQueue const& executor,
-    pubsub::SubscriberConnection::SubscribeParams p,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
-  if (!retry_policy) {
-    retry_policy = pubsub::LimitedErrorCountRetryPolicy(3).clone();
-  }
-  if (!backoff_policy) {
-    using us = std::chrono::microseconds;
-    backoff_policy =
-        pubsub::ExponentialBackoffPolicy(
-            /*initial_delay=*/us(10), /*maximum_delay=*/us(20), /*scaling=*/2.0)
-            .clone();
-  }
-  auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      executor, shutdown_manager, stub, subscription.FullName(),
-      "test-client-id", options, std::move(retry_policy),
-      std::move(backoff_policy));
-
-  auto lease_management = SubscriptionLeaseManagement::Create(
-      executor, shutdown_manager, std::move(batch), options.max_deadline_time(),
-      options.max_deadline_extension());
-
-  return SubscriptionSessionImpl::Create(
-      options, std::move(executor), std::move(shutdown_manager),
-      std::move(lease_management), std::move(p));
-}
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud

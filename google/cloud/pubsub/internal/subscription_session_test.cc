@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <atomic>
+#include <chrono>
 #include <thread>
 
 namespace google {
@@ -35,6 +36,22 @@ using ::google::cloud::testing_util::AsyncSequencer;
 using ::testing::AtLeast;
 using ::testing::AtMost;
 using ::testing::InSequence;
+
+future<Status> CreateTestingSubscriptionSession(
+    pubsub::Subscription const& subscription,
+    pubsub::SubscriberOptions const& options,
+    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
+    CompletionQueue const& executor,
+    pubsub::SubscriberConnection::SubscribeParams p) {
+  using us = std::chrono::microseconds;
+  return CreateSubscriptionSession(
+      std::move(subscription), std::move(options), std::move(stub),
+      std::move(executor), "test-client-id", std::move(p),
+      pubsub::LimitedErrorCountRetryPolicy(3).clone(),
+      pubsub::ExponentialBackoffPolicy(
+          /*initial_delay=*/us(10), /*maximum_delay=*/us(20), /*scaling=*/2.0)
+          .clone());
+}
 
 /// @test Verify callbacks are scheduled in the background threads.
 TEST(SubscriptionSessionTest, ScheduleCallbacks) {
