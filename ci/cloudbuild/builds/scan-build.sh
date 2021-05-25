@@ -16,7 +16,7 @@
 
 # NOTE: This build does not have a trigger file and is not automatically run by
 # GCB. To manually run this build use:
-#   ./ci/cloudbuild/build.sh --distro fedora scan-build --docker
+#   ci/cloudbuild/build.sh --distro fedora scan-build --docker
 
 set -eu
 

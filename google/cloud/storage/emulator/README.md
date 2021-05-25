@@ -29,7 +29,7 @@ python -m unittest tests/test_*.py
 ```bash
 cd google-cloud-cpp
 # To make sure `Keep-Alive` header works, `--threads` should not be smaller than 2.
-gunicorn --bind "localhost:9000" --worker-class sync --threads 10 --access-logfile - --chdir ./google/cloud/storage/emulator "emulator:run()"
+gunicorn --bind "localhost:9000" --worker-class sync --threads 10 --access-logfile - --chdir google/cloud/storage/emulator "emulator:run()"
 # if you want to use gRPC API, run the following command.
 curl "http://localhost:9000/start_grpc?port=8000"
 # gRPC server will start listening at port 8000.

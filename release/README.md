@@ -27,7 +27,7 @@ any new APIs are, well, released, and we should think carefully about removing
 them.
 
 ```bash
-./ci/cloudbuild/build.sh -t check-api-pr --docker
+ci/cloudbuild/build.sh -t check-api-pr --docker
 ```
 
 The updated ABI dump files will be left in the `ci/abi-dumps` folder.
@@ -95,7 +95,7 @@ to create the release at an specific point in the revision history.
 
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. These steps are handled automatically for us by the
-[`./release/release.sh`
+[`release/release.sh`
 script](https://github.com/googleapis/google-cloud-cpp/blob/main/release/release.sh).
 
 *No PR is needed for this step.*
@@ -104,14 +104,14 @@ First run the following command -- which will *NOT* make any changes to any
 repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
-$ ./release/release.sh googleapis/google-cloud-cpp
+$ release/release.sh googleapis/google-cloud-cpp
 ```
 
 If the output from the previous command looks OK, rerun the command with the
 `-f` flag, which will make the changes and push them to the remote repo.
 
 ```bash
-$ ./release/release.sh -f googleapis/google-cloud-cpp
+$ release/release.sh -f googleapis/google-cloud-cpp
 ```
 
 **NOTE:** This script can be run from any directory. It operates only on the

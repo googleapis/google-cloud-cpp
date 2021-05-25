@@ -20,7 +20,7 @@
 # `triggers/name-pr.yaml`. These files can then be uploaded to GCB to start
 # running with the `--import` flag.
 #
-# Usage: ./trigger.sh [options]
+# Usage: trigger.sh [options]
 #
 #   Options:
 #     --generate=name     Outputs CI and PR YAML configs for the named build
