@@ -20,7 +20,7 @@
 # called in one step, followed by the actual build of the code, followed by the
 # "save cache" step.
 #
-# Usage: ./cache <save|restore>
+# Usage: cache.sh <save|restore>
 #
 #   Options:
 #     --bucket_url=<url>    URL to the GCS bucket where the cache should be saved

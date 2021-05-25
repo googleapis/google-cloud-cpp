@@ -6,7 +6,7 @@
   "dictionaryDefinitions": [
     {
       "name": "custom-words",
-      "file": "./custom-words.txt",
+      "file": "custom-words.txt",
       "description": "Project Words"
     }
   ],

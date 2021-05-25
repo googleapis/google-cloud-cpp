@@ -145,11 +145,11 @@ function integration::bazel_with_emulators() {
     google/cloud/iam/...
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
-  "./google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
   io::log_h2 "Running Spanner integration tests"
@@ -162,8 +162,8 @@ function integration::bazel_with_emulators() {
     CBT=/usr/local/google-cloud-sdk/bin/cbt \
     CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
     GOPATH="${GOPATH:-}" \
-    ./ci/retry-command.sh 3 0 \
-    "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+    ci/retry-command.sh 3 0 \
+    "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     bazel "${verb}" "${args[@]}"
 
   # This test is run separately because the access token changes every time and
@@ -227,7 +227,7 @@ function integration::ctest_with_emulators() {
     ctest -R "^google_cloud_cpp_generator_integration_" "${ctest_args[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "./google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
   io::log_h2 "Running Storage integration tests (with emulator)"
@@ -242,7 +242,7 @@ function integration::ctest_with_emulators() {
   env CBT=/usr/local/google-cloud-sdk/bin/cbt \
     CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
     GOPATH="${GOPATH:-}" \
-    ./ci/retry-command.sh 3 0 \
-    "./google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+    ci/retry-command.sh 3 0 \
+    "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }
