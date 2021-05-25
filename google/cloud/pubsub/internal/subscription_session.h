@@ -43,15 +43,6 @@ future<Status> CreateSubscriptionSession(
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy);
 
-future<Status> CreateTestingSubscriptionSession(
-    pubsub::Subscription const& subscription,
-    pubsub::SubscriberOptions const& options,
-    std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
-    google::cloud::CompletionQueue const& executor,
-    pubsub::SubscriberConnection::SubscribeParams p,
-    std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
-    std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub_internal
 }  // namespace cloud
