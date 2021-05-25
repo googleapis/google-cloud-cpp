@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/subscriber_options.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -21,11 +22,25 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using seconds = std::chrono::seconds;
+
 TEST(SubscriberOptionsTest, Default) {
   SubscriberOptions const options{};
+  EXPECT_EQ(seconds(600), options.max_deadline_extension());
   EXPECT_LT(0, options.max_outstanding_messages());
   EXPECT_LT(0, options.max_outstanding_bytes());
   EXPECT_LT(0, options.max_concurrency());
+}
+
+TEST(SubscriberOptionsTest, SetDeadlineExtension) {
+  auto options = SubscriberOptions{}.set_max_deadline_extension(seconds(60));
+  EXPECT_EQ(seconds(60), options.max_deadline_extension());
+
+  options.set_max_deadline_extension(seconds(5));
+  EXPECT_EQ(seconds(10), options.max_deadline_extension());
+
+  options.set_max_deadline_extension(seconds(1000));
+  EXPECT_EQ(seconds(600), options.max_deadline_extension());
 }
 
 TEST(SubscriberOptionsTest, SetMessageCount) {

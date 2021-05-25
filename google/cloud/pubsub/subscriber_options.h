@@ -105,6 +105,26 @@ class SubscriberOptions {
   }
 
   /**
+   * Set the maximum time by which the deadline for each incoming message is
+   * extended.
+   *
+   * The Cloud Pub/Sub C++ client library will extend the deadline by at most
+   * this amount, while waiting for an ack or nack. The default extension is 10
+   * minutes. An application may wish to reduce this extension so that the
+   * Pub/Sub service will resend a message sooner when it does not hear back
+   * from a Subscriber.
+   *
+   * The value is clamped between 10 seconds and 10 minutes.
+   *
+   * @param extension the maximum time that the deadline can be extended by,
+   * measured in seconds.
+   */
+  SubscriberOptions& set_max_deadline_extension(std::chrono::seconds extension);
+  std::chrono::seconds max_deadline_extension() const {
+    return max_deadline_extension_;
+  }
+
+  /**
    * Set the maximum number of outstanding messages per streaming pull.
    *
    * The Cloud Pub/Sub C++ client library uses streaming pull requests to
@@ -191,6 +211,7 @@ class SubscriberOptions {
   }
 
   std::chrono::seconds max_deadline_time_ = std::chrono::seconds(0);
+  std::chrono::seconds max_deadline_extension_ = std::chrono::seconds(600);
   std::int64_t max_outstanding_messages_ = 1000;
   std::int64_t max_outstanding_bytes_ = 100 * 1024 * 1024L;
   std::size_t max_concurrency_ = DefaultMaxConcurrency();

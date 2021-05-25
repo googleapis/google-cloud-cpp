@@ -171,8 +171,8 @@ future<Status> CreateSubscriptionSession(
       std::move(client_id), options, std::move(retry_policy),
       std::move(backoff_policy));
   auto lease_management = SubscriptionLeaseManagement::Create(
-      executor, shutdown_manager, std::move(batch),
-      options.max_deadline_time());
+      executor, shutdown_manager, std::move(batch), options.max_deadline_time(),
+      options.max_deadline_extension());
 
   return SubscriptionSessionImpl::Create(
       options, std::move(executor), std::move(shutdown_manager),
@@ -212,7 +212,7 @@ future<Status> CreateTestingSubscriptionSession(
   };
   auto lease_management = SubscriptionLeaseManagement::CreateForTesting(
       executor, shutdown_manager, timer, std::move(batch),
-      options.max_deadline_time());
+      options.max_deadline_time(), options.max_deadline_extension());
 
   return SubscriptionSessionImpl::Create(
       options, std::move(executor), std::move(shutdown_manager),
