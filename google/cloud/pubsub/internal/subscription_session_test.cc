@@ -45,8 +45,7 @@ future<Status> CreateTestingSubscriptionSession(
     pubsub::SubscriberConnection::SubscribeParams p) {
   using us = std::chrono::microseconds;
   return CreateSubscriptionSession(
-      std::move(subscription), std::move(options), std::move(stub),
-      std::move(executor), "test-client-id", std::move(p),
+      subscription, options, stub, executor, "test-client-id", std::move(p),
       pubsub::LimitedErrorCountRetryPolicy(3).clone(),
       pubsub::ExponentialBackoffPolicy(
           /*initial_delay=*/us(10), /*maximum_delay=*/us(20), /*scaling=*/2.0)
