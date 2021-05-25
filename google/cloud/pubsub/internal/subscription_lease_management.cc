@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -135,8 +136,9 @@ void SubscriptionLeaseManagement::StartRefreshTimer(
 
   shutdown_manager_->StartOperation(__func__, "OnRefreshTimer", [&] {
     if (refresh_timer_.valid()) refresh_timer_.cancel();
-    refresh_timer_ = timer_factory_(deadline).then([weak](future<Status> f) {
-      if (auto self = weak.lock()) self->OnRefreshTimer(!f.get().ok());
+    using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+    cq_.MakeDeadlineTimer(deadline).then([weak](TimerFuture tp) {
+      if (auto self = weak.lock()) self->OnRefreshTimer(!tp.get());
     });
   });
 }

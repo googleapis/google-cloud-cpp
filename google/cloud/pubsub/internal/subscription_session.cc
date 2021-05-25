@@ -203,16 +203,9 @@ future<Status> CreateTestingSubscriptionSession(
       "test-client-id", options, std::move(retry_policy),
       std::move(backoff_policy));
 
-  auto cq = executor;  // need a copy to make it mutable
-  auto timer = [cq](std::chrono::system_clock::time_point) mutable {
-    return cq.MakeRelativeTimer(std::chrono::milliseconds(50))
-        .then([](future<StatusOr<std::chrono::system_clock::time_point>> f) {
-          return f.get().status();
-        });
-  };
-  auto lease_management = SubscriptionLeaseManagement::CreateForTesting(
-      executor, shutdown_manager, timer, std::move(batch),
-      options.max_deadline_time(), options.max_deadline_extension());
+  auto lease_management = SubscriptionLeaseManagement::Create(
+      executor, shutdown_manager, std::move(batch), options.max_deadline_time(),
+      options.max_deadline_extension());
 
   return SubscriptionSessionImpl::Create(
       options, std::move(executor), std::move(shutdown_manager),

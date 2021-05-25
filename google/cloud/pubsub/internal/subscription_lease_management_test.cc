@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/testing/mock_subscription_batch_source.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -25,9 +26,9 @@ namespace pubsub_internal {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::SizeIs;
 using ::testing::UnorderedElementsAre;
 
 google::pubsub::v1::StreamingPullResponse GenerateMessages(
@@ -85,41 +86,35 @@ TEST(SubscriptionLeaseManagementTest, NormalLifecycle) {
     EXPECT_CALL(*mock, Shutdown).Times(1);
   }
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  std::vector<promise<Status>> timers;
-  int cancel_count = 0;
-  auto make_timer = [&](std::chrono::system_clock::time_point) {
-    promise<Status> p([&cancel_count] { ++cancel_count; });
-    auto f = p.get_future().then([](future<Status> f) { return f.get(); });
-    timers.push_back(std::move(p));
-    return f;
-  };
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, mock, kTestDeadline,
-      std::chrono::seconds(600));
+  auto uut = SubscriptionLeaseManagement::Create(
+      cq, shutdown_manager, mock, kTestDeadline, std::chrono::seconds(600));
 
   auto done = shutdown_manager->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
 
   batch_callback(GenerateMessages("0-", 3));
-  ASSERT_THAT(timers, SizeIs(1));
+  ASSERT_EQ(1U, fake_cq->size());
 
   // Ack one of the messages and then fire the timer. The expectations set above
   // will verify that only the remaining messages have their lease extended.
   uut->AckMessage("ack-0-1");
-  timers[0].set_value({});
-  ASSERT_THAT(timers, SizeIs(2));
+  fake_cq->SimulateCompletion(true);
+  ASSERT_EQ(1U, fake_cq->size());
 
   // Ack one more message and trigger the new timer.
   uut->NackMessage("ack-0-2");
-  timers[1].set_value({});
-  ASSERT_THAT(timers, SizeIs(3));
+  fake_cq->SimulateCompletion(true);
+  ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  EXPECT_EQ(3, cancel_count);
-  timers[2].set_value(Status(StatusCode::kCancelled, "test-cancel"));
+
+  fake_cq->SimulateCompletion(false);
+  ASSERT_EQ(0U, fake_cq->size());
   EXPECT_THAT(done.get(), IsOk());
 }
 
@@ -130,30 +125,25 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
     batch_callback = std::move(cb);
   });
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  std::vector<promise<Status>> timers;
-  int cancel_count = 0;
-  auto make_timer = [&](std::chrono::system_clock::time_point) {
-    promise<Status> p([&cancel_count] { ++cancel_count; });
-    auto f = p.get_future().then([](future<Status> f) { return f.get(); });
-    timers.push_back(std::move(p));
-    return f;
-  };
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, mock,
-      std::chrono::seconds(345), std::chrono::seconds(600));
+  auto uut = SubscriptionLeaseManagement::Create(cq, shutdown_manager, mock,
+                                                 std::chrono::seconds(345),
+                                                 std::chrono::seconds(600));
 
   auto done = shutdown_manager->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
   batch_callback(GenerateMessages("0-", 3));
-  EXPECT_THAT(timers, SizeIs(1));
+  EXPECT_EQ(1U, fake_cq->size());
 
   batch_callback(StatusOr<google::pubsub::v1::StreamingPullResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh")));
-  ASSERT_THAT(timers, SizeIs(1));
+  ASSERT_EQ(1U, fake_cq->size());
 
-  timers[0].set_value(Status(StatusCode::kCancelled, "test-cancel"));
+  fake_cq->SimulateCompletion(false);
+  ASSERT_EQ(0U, fake_cq->size());
   EXPECT_THAT(done.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -198,32 +188,27 @@ TEST(SubscriptionLeaseManagementTest, UsesDeadlineExtension) {
     EXPECT_CALL(*mock, Shutdown).Times(1);
   }
 
-  google::cloud::internal::AutomaticallyCreatedBackgroundThreads background;
-  std::vector<promise<Status>> timers;
-  auto make_timer = [&](std::chrono::system_clock::time_point) {
-    promise<Status> p;
-    auto f = p.get_future().then([](future<Status> f) { return f.get(); });
-    timers.push_back(std::move(p));
-    return f;
-  };
+  auto fake_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq);
+
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
-  auto uut = SubscriptionLeaseManagement::CreateForTesting(
-      background.cq(), shutdown_manager, make_timer, mock, kTestDeadline,
-      kTestExtension);
+  auto uut = SubscriptionLeaseManagement::Create(cq, shutdown_manager, mock,
+                                                 kTestDeadline, kTestExtension);
 
   auto done = shutdown_manager->Start({});
   uut->Start([](StatusOr<google::pubsub::v1::StreamingPullResponse> const&) {});
 
   batch_callback(GenerateMessages("0-", 1));
-  ASSERT_THAT(timers, SizeIs(1));
+  ASSERT_EQ(1U, fake_cq->size());
 
   // Ignore message and then fire the timer. This will extend the deadline.
-  timers[0].set_value({});
-  ASSERT_THAT(timers, SizeIs(2));
+  fake_cq->SimulateCompletion(true);
+  ASSERT_EQ(1U, fake_cq->size());
 
   shutdown_manager->MarkAsShutdown(__func__, Status{});
   uut->Shutdown();
-  timers[1].set_value(Status(StatusCode::kCancelled, "test-cancel"));
+  fake_cq->SimulateCompletion(false);
+  ASSERT_EQ(0U, fake_cq->size());
   EXPECT_THAT(done.get(), IsOk());
 }
 
