@@ -12,26 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import collections
 import json
 import os
+import uuid
+import re
 
 import gcs
 import utils
 
+from schema import Schema, SchemaError, And, Use
 from google.cloud.storage_v1.proto import storage_pb2 as storage_pb2
 
 
 class Database:
-    def __init__(self, buckets, objects, live_generations, uploads, rewrites):
+    def __init__(
+        self,
+        buckets,
+        objects,
+        live_generations,
+        uploads,
+        rewrites,
+        retry_tests,
+        supported_methods,
+    ):
         self.buckets = buckets
         self.objects = objects
         self.live_generations = live_generations
         self.uploads = uploads
         self.rewrites = rewrites
+        self.retry_tests = retry_tests
+        self.supported_methods = supported_methods
 
     @classmethod
     def init(cls):
-        return cls({}, {}, {}, {}, {})
+        return cls({}, {}, {}, {}, {}, {}, [])
 
     def raii(self, grpc_server):
         self.grpc_server = grpc_server
@@ -251,3 +266,93 @@ class Database:
     def delete_rewrite(self, token, context):
         self.get_rewrite(token, context)
         del self.rewrites[token]
+
+    # ==== RETRY_TESTS ==== #
+
+    @classmethod
+    def __to_serializeable_retry_test(cls, retry_test):
+        return {
+            "id": retry_test["id"],
+            "instructions": {
+                key: list(value) for key, value in retry_test["instructions"].items()
+            },
+            "completed": retry_test["completed"],
+        }
+
+    def insert_supported_methods(self, methods):
+        self.supported_methods.extend(methods)
+
+    def get_retry_test(self, retry_test_id):
+        retry_test = self.retry_tests.get(retry_test_id)
+        if retry_test is None:
+            utils.error.notfound("Retry Test %s" % retry_test_id, context=None)
+        return self.__to_serializeable_retry_test(retry_test)
+
+    def __validate_instructions(self, instructions):
+        expected_instructions_format = [
+            utils.common.retry_return_error_code.pattern,
+            utils.common.retry_return_error_connection.pattern,
+            utils.common.retry_return_error_after_bytes.pattern,
+        ]
+        search_expression = re.compile(
+            "(%s)" % ")|(".join(expected_instructions_format)
+        )
+        expected_schema = Schema(
+            {
+                And(Use(str), lambda n: n in self.supported_methods): [
+                    And(Use(str), lambda n: re.match(search_expression, n))
+                ]
+            }
+        )
+        try:
+            expected_schema.validate(instructions)
+        except SchemaError as e:
+            utils.error.invalid("Invalid format used: %s" % e, context=None)
+
+    def insert_retry_test(self, instructions):
+        self.__validate_instructions(instructions)
+        retry_test_id = uuid.uuid4().hex
+        self.retry_tests[retry_test_id] = {
+            "id": retry_test_id,
+            "instructions": {
+                key: collections.deque(value) for key, value in instructions.items()
+            },
+            "completed": False,
+        }
+        return self.__to_serializeable_retry_test(self.retry_tests[retry_test_id])
+
+    def has_instructions_retry_test(self, retry_test_id, method):
+        self.get_retry_test(retry_test_id)
+        if len(self.retry_tests[retry_test_id]["instructions"].get(method, [])) > 0:
+            return True
+        return False
+
+    def peek_next_instruction(self, retry_test_id, method):
+        self.get_retry_test(retry_test_id)
+        if self.retry_tests[retry_test_id]["instructions"] and self.retry_tests[
+            retry_test_id
+        ]["instructions"].get(method, None):
+            return self.retry_tests[retry_test_id]["instructions"][method][0]
+        else:
+            return None
+
+    def dequeue_next_instruction(self, retry_test_id, method):
+        self.get_retry_test(retry_test_id)
+        next_instruction = self.retry_tests[retry_test_id]["instructions"][
+            method
+        ].popleft()
+        instructions_left = 0
+        for key, value in self.retry_tests[retry_test_id]["instructions"].items():
+            instructions_left += len(value)
+        if instructions_left == 0:
+            self.retry_tests[retry_test_id]["completed"] = True
+        return next_instruction
+
+    def list_retry_tests(self):
+        return [
+            self.__to_serializeable_retry_test(x) for x in self.retry_tests.values()
+        ]
+
+    def delete_retry_test(self, retry_test_id):
+        self.get_retry_test(retry_test_id)
+        del self.retry_tests[retry_test_id]

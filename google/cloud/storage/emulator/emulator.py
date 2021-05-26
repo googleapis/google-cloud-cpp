@@ -22,6 +22,7 @@ import grpc_server
 import httpbin
 import utils
 from utils.handle_gzip import HandleGzipMiddleware
+from functools import wraps
 from werkzeug import serving
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
@@ -31,6 +32,7 @@ from google.protobuf import json_format
 
 db = None
 grpc_port = 0
+supported_methods = []
 
 # === DEFAULT ENTRY FOR REST SERVER === #
 root = flask.Flask(__name__)
@@ -40,6 +42,57 @@ root.debug = False
 @root.route("/")
 def index():
     return "OK"
+
+
+"""
+TODO(#6615): Introducing failures into uploads with return-XXX-after-YYYk
+"""
+
+# Needs to be defined in emulator.py to keep context of flask and db global variables
+def retry_test(method):
+    global supported_methods
+    supported_methods.append(method)
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            response_handler = utils.common.handle_retry_test_instruction(
+                db, flask.request, method
+            )
+            return response_handler(func(*args, **kwargs))
+
+        return wrapper
+
+    return decorator
+
+
+@root.route("/retry_tests", methods=["GET"])
+def list_retry_tests():
+    response = json.dumps({"retry_test": db.list_retry_tests()})
+    return flask.Response(response, status=200)
+
+
+@root.route("/retry_test", methods=["POST"])
+def create_retry_test():
+    payload = json.loads(flask.request.data)
+    test_instruction_set = payload.get("instructions", None)
+    if not test_instruction_set:
+        return flask.Response("instructions is not defined", status=400)
+    retry_test = db.insert_retry_test(test_instruction_set)
+    retry_test_response = json.dumps(retry_test)
+    return flask.Response(retry_test_response, status=200)
+
+
+@root.route("/retry_test/<test_id>", methods=["GET"])
+def get_retry_test(test_id):
+    retry_test = json.dumps(db.get_retry_test(test_id))
+    return flask.Response(retry_test, status=200)
+
+
+@root.route("/retry_test/<test_id>", methods=["DELETE"])
+def delete_retry_test(test_id):
+    db.delete_retry_test(test_id)
+    return flask.Response("Deleted {}".format(test_id), 200)
 
 
 @root.route("/start_grpc")
@@ -99,6 +152,7 @@ gcs.debug = False
 
 
 @gcs.route("/b", methods=["GET"])
+@retry_test(method="storage.buckets.list")
 def bucket_list():
     db.insert_test_bucket(None)
     project = flask.request.args.get("project")
@@ -115,6 +169,7 @@ def bucket_list():
 
 
 @gcs.route("/b", methods=["POST"])
+@retry_test(method="storage.buckets.insert")
 def bucket_insert():
     db.insert_test_bucket(None)
     bucket, projection = gcs_type.bucket.Bucket.init(flask.request, None)
@@ -124,6 +179,7 @@ def bucket_insert():
 
 
 @gcs.route("/b/<bucket_name>")
+@retry_test(method="storage.buckets.get")
 def bucket_get(bucket_name):
     db.insert_test_bucket(None)
     db.insert_test_bucket(None)
@@ -136,6 +192,7 @@ def bucket_get(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>", methods=["PUT"])
+@retry_test(method="storage.buckets.update")
 def bucket_update(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -148,6 +205,7 @@ def bucket_update(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>", methods=["PATCH", "POST"])
+@retry_test(method="storage.buckets.patch")
 def bucket_patch(bucket_name):
     utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -160,6 +218,7 @@ def bucket_patch(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>", methods=["DELETE"])
+@retry_test(method="storage.buckets.delete")
 def bucket_delete(bucket_name):
     db.delete_bucket(flask.request, bucket_name, None)
     return ""
@@ -169,6 +228,7 @@ def bucket_delete(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/acl")
+@retry_test(method="storage.bucket_acl.list")
 def bucket_acl_list(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     response = {"kind": "storage#bucketAccessControls", "items": []}
@@ -181,6 +241,7 @@ def bucket_acl_list(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/acl", methods=["POST"])
+@retry_test(method="storage.bucket_acl.insert")
 def bucket_acl_insert(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.insert_acl(flask.request, None)
@@ -191,6 +252,7 @@ def bucket_acl_insert(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/acl/<entity>")
+@retry_test(method="storage.bucket_acl.get")
 def bucket_acl_get(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.get_acl(entity, None)
@@ -201,6 +263,7 @@ def bucket_acl_get(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PUT"])
+@retry_test(method="storage.bucket_acl.update")
 def bucket_acl_update(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.update_acl(flask.request, entity, None)
@@ -211,6 +274,7 @@ def bucket_acl_update(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/acl/<entity>", methods=["PATCH", "POST"])
+@retry_test(method="storage.bucket_acl.patch")
 def bucket_acl_patch(bucket_name, entity):
     utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -222,6 +286,7 @@ def bucket_acl_patch(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/acl/<entity>", methods=["DELETE"])
+@retry_test(method="storage.bucket_acl.delete")
 def bucket_acl_delete(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.delete_acl(entity, None)
@@ -229,6 +294,7 @@ def bucket_acl_delete(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl")
+@retry_test(method="storage.default_object_acl.list")
 def bucket_default_object_acl_list(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     response = {"kind": "storage#objectAccessControls", "items": []}
@@ -241,6 +307,7 @@ def bucket_default_object_acl_list(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl", methods=["POST"])
+@retry_test(method="storage.default_object_acl.insert")
 def bucket_default_object_acl_insert(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.insert_default_object_acl(flask.request, None)
@@ -251,6 +318,7 @@ def bucket_default_object_acl_insert(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>")
+@retry_test(method="storage.default_object_acl.get")
 def bucket_default_object_acl_get(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.get_default_object_acl(entity, None)
@@ -261,6 +329,7 @@ def bucket_default_object_acl_get(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PUT"])
+@retry_test(method="storage.default_object_acl.update")
 def bucket_default_object_acl_update(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     acl = bucket.update_default_object_acl(flask.request, entity, None)
@@ -271,6 +340,7 @@ def bucket_default_object_acl_update(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["PATCH", "POST"])
+@retry_test(method="storage.default_object_acl.patch")
 def bucket_default_object_acl_patch(bucket_name, entity):
     utils.common.enforce_patch_override(flask.request)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -282,6 +352,7 @@ def bucket_default_object_acl_patch(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/defaultObjectAcl/<entity>", methods=["DELETE"])
+@retry_test(method="storage.default_object_acl.delete")
 def bucket_default_object_acl_delete(bucket_name, entity):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.delete_default_object_acl(entity, None)
@@ -289,6 +360,7 @@ def bucket_default_object_acl_delete(bucket_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs")
+@retry_test(method="storage.notifications.list")
 def bucket_notification_list(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     response = {"kind": "storage#notifications", "items": []}
@@ -300,6 +372,7 @@ def bucket_notification_list(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs", methods=["POST"])
+@retry_test(method="storage.notifications.insert")
 def bucket_notification_insert(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     notification = bucket.insert_notification(flask.request, None)
@@ -309,6 +382,7 @@ def bucket_notification_insert(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs/<notification_id>")
+@retry_test(method="storage.notifications.get")
 def bucket_notification_get(bucket_name, notification_id):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     notification = bucket.get_notification(notification_id, None)
@@ -318,6 +392,7 @@ def bucket_notification_get(bucket_name, notification_id):
 
 
 @gcs.route("/b/<bucket_name>/notificationConfigs/<notification_id>", methods=["DELETE"])
+@retry_test(method="storage.notifications.delete")
 def bucket_notification_delete(bucket_name, notification_id):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.delete_notification(notification_id, None)
@@ -325,6 +400,7 @@ def bucket_notification_delete(bucket_name, notification_id):
 
 
 @gcs.route("/b/<bucket_name>/iam")
+@retry_test(method="storage.buckets.getIamPolicy")
 def bucket_get_iam_policy(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -334,6 +410,7 @@ def bucket_get_iam_policy(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/iam", methods=["PUT"])
+@retry_test(method="storage.buckets.setIamPolicy")
 def bucket_set_iam_policy(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket(flask.request, bucket_name, None)
@@ -344,6 +421,7 @@ def bucket_set_iam_policy(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/iam/testPermissions")
+@retry_test(method="storage.buckets.testIamPermission")
 def bucket_test_iam_permissions(bucket_name):
     db.get_bucket(flask.request, bucket_name, None)
     permissions = flask.request.args.getlist("permissions")
@@ -352,6 +430,7 @@ def bucket_test_iam_permissions(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/lockRetentionPolicy", methods=["POST"])
+@retry_test(method="storage.buckets.lockRententionPolicy")
 def bucket_lock_retention_policy(bucket_name):
     bucket = db.get_bucket(flask.request, bucket_name, None)
     bucket.metadata.retention_policy.is_locked = True
@@ -362,6 +441,7 @@ def bucket_lock_retention_policy(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/o")
+@retry_test(method="storage.objects.list")
 def object_list(bucket_name):
     db.insert_test_bucket(None)
     items, prefixes, rest_onlys = db.list_object(flask.request, bucket_name, None)
@@ -379,6 +459,7 @@ def object_list(bucket_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PUT"])
+@retry_test(method="storage.objects.update")
 def object_update(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.update(flask.request, None)
@@ -390,6 +471,7 @@ def object_update(bucket_name, object_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["PATCH", "POST"])
+@retry_test(method="storage.objects.patch")
 def object_patch(bucket_name, object_name):
     utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
@@ -402,6 +484,7 @@ def object_patch(bucket_name, object_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>", methods=["DELETE"])
+@retry_test(method="storage.objects.delete")
 def object_delete(bucket_name, object_name):
     db.delete_object(flask.request, bucket_name, object_name, None)
     return ""
@@ -411,6 +494,7 @@ def object_delete(bucket_name, object_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/compose", methods=["POST"])
+@retry_test(method="storage.objects.compose")
 def objects_compose(bucket_name, object_name):
     bucket = db.get_bucket_without_generation(bucket_name, None).metadata
     payload = json.loads(flask.request.data)
@@ -455,6 +539,7 @@ def objects_compose(bucket_name, object_name):
     "/b/<src_bucket_name>/o/<path:src_object_name>/copyTo/b/<dst_bucket_name>/o/<path:dst_object_name>",
     methods=["POST"],
 )
+@retry_test(method="storage.objects.copy")
 def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_name):
     db.insert_test_bucket(None)
     dst_bucket = db.get_bucket_without_generation(dst_bucket_name, None).metadata
@@ -488,6 +573,7 @@ def objects_copy(src_bucket_name, src_object_name, dst_bucket_name, dst_object_n
     "/b/<src_bucket_name>/o/<path:src_object_name>/rewriteTo/b/<dst_bucket_name>/o/<path:dst_object_name>",
     methods=["POST"],
 )
+@retry_test(method="storage.objects.rewrite")
 def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_object_name):
     db.insert_test_bucket(None)
     token, rewrite = flask.request.args.get("rewriteToken"), None
@@ -555,6 +641,7 @@ def objects_rewrite(src_bucket_name, src_object_name, dst_bucket_name, dst_objec
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl")
+@retry_test(method="storage.object_acl.list")
 def object_acl_list(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     response = {"kind": "storage#objectAccessControls", "items": []}
@@ -567,6 +654,7 @@ def object_acl_list(bucket_name, object_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl", methods=["POST"])
+@retry_test(method="storage.object_acl.insert")
 def object_acl_insert(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     acl = blob.insert_acl(flask.request, None)
@@ -577,6 +665,7 @@ def object_acl_insert(bucket_name, object_name):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>")
+@retry_test(method="storage.object_acl.get")
 def object_acl_get(bucket_name, object_name, entity):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     acl = blob.get_acl(entity, None)
@@ -587,6 +676,7 @@ def object_acl_get(bucket_name, object_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PUT"])
+@retry_test(method="storage.object_acl.update")
 def object_acl_update(bucket_name, object_name, entity):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     acl = blob.update_acl(flask.request, entity, None)
@@ -599,6 +689,7 @@ def object_acl_update(bucket_name, object_name, entity):
 @gcs.route(
     "/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["PATCH", "POST"]
 )
+@retry_test(method="storage.object_acl.patch")
 def object_acl_patch(bucket_name, object_name, entity):
     utils.common.enforce_patch_override(flask.request)
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
@@ -610,6 +701,7 @@ def object_acl_patch(bucket_name, object_name, entity):
 
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>/acl/<entity>", methods=["DELETE"])
+@retry_test(method="storage.object_acl.delete")
 def object_acl_delete(bucket_name, object_name, entity):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     blob.delete_acl(entity, None)
@@ -624,6 +716,7 @@ download.debug = False
 
 @gcs.route("/b/<bucket_name>/o/<path:object_name>")
 @download.route("/b/<bucket_name>/o/<path:object_name>")
+@retry_test(method="storage.objects.get")
 def object_get(bucket_name, object_name):
     blob = db.get_object(flask.request, bucket_name, object_name, False, None)
     media = flask.request.args.get("alt", None)
@@ -650,6 +743,7 @@ upload.debug = False
 
 
 @upload.route("/b/<bucket_name>/o", methods=["POST"])
+@retry_test(method="storage.objects.insert")
 def object_insert(bucket_name):
     db.insert_test_bucket(None)
     bucket = db.get_bucket_without_generation(bucket_name, None).metadata
@@ -675,6 +769,7 @@ def object_insert(bucket_name):
 
 
 @upload.route("/b/<bucket_name>/o", methods=["PUT"])
+@retry_test(method="storage.objects.insert")
 def resumable_upload_chunk(bucket_name):
     request = flask.request
     upload_id = request.args.get("upload_id")
@@ -778,6 +873,7 @@ def resumable_upload_chunk(bucket_name):
 
 
 @upload.route("/b/<bucket_name>/o", methods=["DELETE"])
+@retry_test(method="storage.objects.delete")
 def delete_resumable_upload(bucket_name):
     upload_id = flask.request.args.get("upload_id")
     db.delete_upload(upload_id, None)
@@ -835,15 +931,17 @@ iam_app.register_error_handler(Exception, utils.error.RestException.handler)
 
 
 def run():
-    global db
+    global db, supported_methods
     logging.basicConfig()
     db = database.Database.init()
+    db.insert_supported_methods(supported_methods)
     return server
 
 
 def run_without_gunicorn(port, database):
-    global db
+    global db, supported_methods
     db = database
+    db.insert_supported_methods(supported_methods)
     serving.run_simple(
         "localhost", int(port), server, use_reloader=False, threaded=True
     )

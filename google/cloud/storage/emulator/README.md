@@ -84,3 +84,65 @@ For N==1 and N==2 behave like `return-305-after-256K`, for `N>=3` ignore the
 failure instruction and return successfully. This is used to test failures during
 retry, the client cooperates by sending the retry counter in the failure
 instructions.
+
+
+## Retry Test API
+
+The "Retry Test API" offers a mechanism to describe more complex retry scenarios
+while sending a single, constant header through all the HTTP requests from a
+test program. Retry Test provides accounting of failures used to validate
+the expected failures were experienced by the emulator and not accidentally missed.
+
+Previous versions of the GCS emulator used a custom header in the RPC to
+control the behavior of each RPC, for some test scenarios this required sending
+different header with the first retry attempt vs. subsequent attempts. Producing
+different headers in each attempt is not easy to implement with some client libraries.
+
+Sending a constant header with all RPCs can be implemented across all client libraries,
+and to some degree decouples the test setup from the test execution.
+
+### Creating a new Retry Test
+
+The following cURL request will create a Retry Test resource which emits a 503
+when a buckets list operation is received by the emulator with the returned
+retry test ID.
+
+```bash
+curl -X POST "http://localhost:9000/retry_test" -H 'Content-Type: application/json' \
+     -d '{"instructions":{"storage.buckets.list": ["return-503"]}}'
+```
+
+### Get a Retry Test resource
+
+Get Retry Test resource by id "1d05c20627844214a9ff7cbcf696317d".
+
+```bash
+curl -X GET "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
+```
+
+### Delete a Retry Test resource
+
+Delete Retry Test resource by id "1d05c20627844214a9ff7cbcf696317d".
+
+```bash
+curl -X DELETE "http://localhost:9000/retry_test/1d05c20627844214a9ff7cbcf696317d"
+```
+
+### Causing a failure using x-retry-test-id header
+
+The following cURL request will attempt to list buckets and the emulator will emit
+a `503` error once based on the Retry Test created above. Subsequent list buckets
+operations will succeed.
+
+```bash
+curl -H "x-retry-test-id: 1d05c20627844214a9ff7cbcf696317d" "http://localhost:9100/storage/v1/b?project=test"
+```
+
+### Forced Failures Supported
+
+| Failure Id              | Description
+| ----------------------- | ---
+| return-X                | Emulator will fail with HTTP code provided for `X`, e.g. return-503 returns a 503
+| return-X-after-YK       | Not Supported. Return X after YKiB of uploaded data
+| return-broken-stream    | Emulator will fail after sending 10 bytes
+| return-reset-connection | Emulator will fail with a reset connection
