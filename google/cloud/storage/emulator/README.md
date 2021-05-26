@@ -88,14 +88,19 @@ instructions.
 
 ## Retry Test API
 
-The GCS Emulator at the time of writing (5/19/21), only provided support
-for reproducing transient errors by passing instructions through a header
-which is not easily implementable across the 8 language libraries that Cloud
-Storage currently supports. Retry Test API introduces a method to supply failure
-configuration and supplies GCS libraries with a unique identifier which is
-used to identify how to fail a specified GCS API operation. In addition,
-the Retry Test API performs accounting to tell a developer if expected
-failures occured.
+The "Retry Test API" offers a mechanism to describe more complex retry scenarios
+while sending a single, constant header through all the HTTP requests from a
+test program. Retry Test provides accounting of failures used to validate
+the expected failures were experienced by the emulator and not accidentally missed.
+
+Previous versions of the GCS emulator used a custom header in the RPC to
+control the behavior of each RPC, for some test scenarios this required sending
+different header with the first retry attempt vs. subsequent attempts. Producing
+different headers in each attempt is not easy to implement with some client libraries.
+
+Sending a constant header with all RPCs can be implemented across all client libraries,
+and to some degree decouples the test setup from the test execution.
+
 
 ### Creating a new Retry Test
 

@@ -939,7 +939,7 @@ def run():
 
 
 def run_without_gunicorn(port, database):
-    global db
+    global db, supported_methods
     db = database
     db.insert_supported_methods(supported_methods)
     serving.run_simple(
