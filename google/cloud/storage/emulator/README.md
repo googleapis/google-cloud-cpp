@@ -101,7 +101,6 @@ different headers in each attempt is not easy to implement with some client libr
 Sending a constant header with all RPCs can be implemented across all client libraries,
 and to some degree decouples the test setup from the test execution.
 
-
 ### Creating a new Retry Test
 
 The following cURL request will create a Retry Test resource which emits a 503
