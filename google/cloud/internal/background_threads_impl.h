@@ -42,8 +42,7 @@ class CustomerSuppliedBackgroundThreads : public BackgroundThreads {
 /// Create a background thread to perform background operations.
 class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
  public:
-  AutomaticallyCreatedBackgroundThreads();
-  explicit AutomaticallyCreatedBackgroundThreads(std::size_t thread_count);
+  explicit AutomaticallyCreatedBackgroundThreads(std::size_t thread_count = 1U);
   ~AutomaticallyCreatedBackgroundThreads() override;
 
   CompletionQueue cq() const override { return cq_; }
@@ -51,9 +50,6 @@ class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
   std::size_t pool_size() const { return pool_.size(); }
 
  private:
-  struct NormalizeTag {};
-  AutomaticallyCreatedBackgroundThreads(std::size_t thread_count, NormalizeTag);
-
   CompletionQueue cq_;
   std::vector<std::thread> pool_;
 };
