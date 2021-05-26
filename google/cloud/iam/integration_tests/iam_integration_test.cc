@@ -27,6 +27,8 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -153,6 +155,12 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
 
   auto delete_response =
       client.DeleteServiceAccount(service_account_inferred_name);
+  // Service Account may not be usable for up to 60s after creation.
+  if (delete_response.code() == StatusCode::kNotFound) {
+    std::this_thread::sleep_for(std::chrono::seconds(61));
+    delete_response =
+        client.DeleteServiceAccount(service_account_inferred_name);
+  }
   ASSERT_STATUS_OK(delete_response);
 }
 
@@ -219,6 +227,14 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
       create_response->name(),
       ::google::iam::admin::v1::ServiceAccountPublicKeyType::
           TYPE_X509_PEM_FILE);
+  // Key may not be usable for up to 60 seconds after creation.
+  if (get_response.status().code() == StatusCode::kNotFound) {
+    std::this_thread::sleep_for(std::chrono::seconds(61));
+    get_response = client.GetServiceAccountKey(
+        create_response->name(),
+        ::google::iam::admin::v1::ServiceAccountPublicKeyType::
+            TYPE_X509_PEM_FILE);
+  }
   ASSERT_STATUS_OK(get_response);
   EXPECT_GT(get_response->public_key_data().size(), 0);
 
@@ -385,6 +401,11 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   ::google::iam::admin::v1::DisableServiceAccountRequest disable_request;
   disable_request.set_name(service_account_inferred_name);
   auto disable_response = client.DisableServiceAccount(disable_request);
+  // Service Account may not be usable for up to 60s after creation.
+  if (disable_response.code() == StatusCode::kNotFound) {
+    std::this_thread::sleep_for(std::chrono::seconds(61));
+    disable_response = client.DisableServiceAccount(disable_request);
+  }
   EXPECT_STATUS_OK(disable_response);
 
   ::google::iam::admin::v1::EnableServiceAccountRequest enable_request;
