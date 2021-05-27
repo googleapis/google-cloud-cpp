@@ -69,6 +69,7 @@ popd >/dev/null
 # Run the unittests of the emulator before running integration tests.
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
   "//google/cloud/storage/emulator:test_gcs" \
+  "--flaky_test_attempts=5" \
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
 exit_status=$?
 
