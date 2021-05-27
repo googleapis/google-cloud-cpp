@@ -65,7 +65,7 @@ void GrpcReadWriteCommand(std::vector<std::string> argv) {
 void GrpcClientWithProject(std::string project_id) {
   namespace gcs = google::cloud::storage;
   auto client = google::cloud::storage_experimental::DefaultGrpcClient(
-      google::cloud::Options{}.set<gcs::internal::ProjectIdOption>(
+      google::cloud::Options{}.set<gcs::ProjectIdOption>(
           std::move(project_id)));
   if (!client) throw std::runtime_error(client.status().message());
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";

@@ -69,18 +69,11 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::StatusOr<gcs::ClientOptions> client_options =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) {
-    std::cerr << "Could not create ClientOptions, status="
-              << client_options.status() << "\n";
-    return 1;
-  }
-  client_options->SetUploadBufferSize(options->upload_buffer_size);
-  client_options->SetDownloadBufferSize(options->download_buffer_size);
-  client_options->set_project_id(options->project_id);
-
-  gcs::Client client(*std::move(client_options));
+  auto client = gcs::Client(
+      google::cloud::Options{}
+          .set<gcs::UploadBufferSizeOption>(options->upload_buffer_size)
+          .set<gcs::DownloadBufferSizeOption>(options->download_buffer_size)
+          .set<gcs::ProjectIdOption>(options->project_id));
 
   std::cout << "# Cleaning up stale benchmark buckets\n";
   google::cloud::storage::testing::RemoveStaleBuckets(

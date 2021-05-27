@@ -52,7 +52,8 @@ Options ApplyPolicies(Options opts, P&& head, Policies&&... tail) {
 }
 
 Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
-                       Options opts = {});
+                       Options opts);
+Options DefaultOptionsWithCredentials(Options opts);
 
 }  // namespace internal
 
@@ -116,26 +117,26 @@ class ClientOptions {
       ChannelOptions const& channel_options);
 
   std::shared_ptr<oauth2::Credentials> credentials() const {
-    return opts_.get<internal::Oauth2CredentialsOption>();
+    return opts_.get<Oauth2CredentialsOption>();
   }
   ClientOptions& set_credentials(std::shared_ptr<oauth2::Credentials> c) {
-    opts_.set<internal::Oauth2CredentialsOption>(std::move(c));
+    opts_.set<Oauth2CredentialsOption>(std::move(c));
     return *this;
   }
 
   std::string const& endpoint() const {
-    return opts_.get<internal::RestEndpointOption>();
+    return opts_.get<RestEndpointOption>();
   }
   ClientOptions& set_endpoint(std::string endpoint) {
-    opts_.set<internal::RestEndpointOption>(std::move(endpoint));
+    opts_.set<RestEndpointOption>(std::move(endpoint));
     return *this;
   }
 
   std::string const& iam_endpoint() const {
-    return opts_.get<internal::IamEndpointOption>();
+    return opts_.get<IamEndpointOption>();
   }
   ClientOptions& set_iam_endpoint(std::string endpoint) {
-    opts_.set<internal::IamEndpointOption>(std::move(endpoint));
+    opts_.set<IamEndpointOption>(std::move(endpoint));
     return *this;
   }
 
@@ -153,29 +154,27 @@ class ClientOptions {
   bool enable_raw_client_tracing() const;
   ClientOptions& set_enable_raw_client_tracing(bool enable);
 
-  std::string const& project_id() const {
-    return opts_.get<internal::ProjectIdOption>();
-  }
+  std::string const& project_id() const { return opts_.get<ProjectIdOption>(); }
   ClientOptions& set_project_id(std::string v) {
-    opts_.set<internal::ProjectIdOption>(std::move(v));
+    opts_.set<ProjectIdOption>(std::move(v));
     return *this;
   }
 
   std::size_t connection_pool_size() const {
-    return opts_.get<internal::ConnectionPoolSizeOption>();
+    return opts_.get<ConnectionPoolSizeOption>();
   }
   ClientOptions& set_connection_pool_size(std::size_t size) {
-    opts_.set<internal::ConnectionPoolSizeOption>(size);
+    opts_.set<ConnectionPoolSizeOption>(size);
     return *this;
   }
 
   std::size_t download_buffer_size() const {
-    return opts_.get<internal::DownloadBufferSizeOption>();
+    return opts_.get<DownloadBufferSizeOption>();
   }
   ClientOptions& SetDownloadBufferSize(std::size_t size);
 
   std::size_t upload_buffer_size() const {
-    return opts_.get<internal::UploadBufferSizeOption>();
+    return opts_.get<UploadBufferSizeOption>();
   }
   ClientOptions& SetUploadBufferSize(std::size_t size);
 
@@ -195,10 +194,10 @@ class ClientOptions {
   }
 
   std::size_t maximum_simple_upload_size() const {
-    return opts_.get<internal::MaximumSimpleUploadSizeOption>();
+    return opts_.get<MaximumSimpleUploadSizeOption>();
   }
   ClientOptions& set_maximum_simple_upload_size(std::size_t v) {
-    opts_.set<internal::MaximumSimpleUploadSizeOption>(v);
+    opts_.set<MaximumSimpleUploadSizeOption>(v);
     return *this;
   }
 
@@ -207,34 +206,34 @@ class ClientOptions {
    * callbacks for locking.
    */
   bool enable_ssl_locking_callbacks() const {
-    return opts_.get<internal::EnableCurlSslLockingOption>();
+    return opts_.get<EnableCurlSslLockingOption>();
   }
   ClientOptions& set_enable_ssl_locking_callbacks(bool v) {
-    opts_.set<internal::EnableCurlSslLockingOption>(v);
+    opts_.set<EnableCurlSslLockingOption>(v);
     return *this;
   }
 
   bool enable_sigpipe_handler() const {
-    return opts_.get<internal::EnableCurlSigpipeHandlerOption>();
+    return opts_.get<EnableCurlSigpipeHandlerOption>();
   }
   ClientOptions& set_enable_sigpipe_handler(bool v) {
-    opts_.set<internal::EnableCurlSigpipeHandlerOption>(v);
+    opts_.set<EnableCurlSigpipeHandlerOption>(v);
     return *this;
   }
 
   std::size_t maximum_socket_recv_size() const {
-    return opts_.get<internal::MaximumCurlSocketRecvSizeOption>();
+    return opts_.get<MaximumCurlSocketRecvSizeOption>();
   }
   ClientOptions& set_maximum_socket_recv_size(std::size_t v) {
-    opts_.set<internal::MaximumCurlSocketRecvSizeOption>(v);
+    opts_.set<MaximumCurlSocketRecvSizeOption>(v);
     return *this;
   }
 
   std::size_t maximum_socket_send_size() const {
-    return opts_.get<internal::MaximumCurlSocketSendSizeOption>();
+    return opts_.get<MaximumCurlSocketSendSizeOption>();
   }
   ClientOptions& set_maximum_socket_send_size(std::size_t v) {
-    opts_.set<internal::MaximumCurlSocketSendSizeOption>(v);
+    opts_.set<MaximumCurlSocketSendSizeOption>(v);
     return *this;
   }
 
@@ -252,10 +251,10 @@ class ClientOptions {
    * The default value is 2 minutes. Can be disabled by setting the value to 0.
    */
   std::chrono::seconds download_stall_timeout() const {
-    return opts_.get<internal::DownloadStallTimeoutOption>();
+    return opts_.get<DownloadStallTimeoutOption>();
   }
   ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
-    opts_.set<internal::DownloadStallTimeoutOption>(std::move(v));
+    opts_.set<DownloadStallTimeoutOption>(std::move(v));
     return *this;
   }
   //@}

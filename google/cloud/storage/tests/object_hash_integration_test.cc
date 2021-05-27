@@ -47,11 +47,7 @@ class ObjectHashIntegrationTest
 
 /// @test Verify that MD5 hashes are disabled by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -69,11 +65,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
 
 /// @test Verify that MD5 hashes are disabled by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -102,11 +94,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the header.
 TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -124,11 +112,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
 
 /// @test Verify that `DisableMD5Hash` actually disables the payload.
 TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;

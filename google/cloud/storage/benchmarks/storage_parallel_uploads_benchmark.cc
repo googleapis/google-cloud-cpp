@@ -177,18 +177,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::StatusOr<gcs::ClientOptions> client_options =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) {
-    std::cerr << "Could not create ClientOptions, status="
-              << client_options.status() << "\n";
-    return 1;
-  }
-  if (!options->project_id.empty()) {
-    client_options->set_project_id(options->project_id);
-  }
-  client_options->set_connection_pool_size(0);
-  gcs::Client client(*std::move(client_options));
+  auto client = gcs::Client(google::cloud::Options{}
+                                .set<gcs::ProjectIdOption>(options->project_id)
+                                .set<gcs::ConnectionPoolSizeOption>(0));
 
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
@@ -236,15 +227,7 @@ int main(int argc, char* argv[]) {
       google::cloud::internal::DefaultPRNG generator =
           google::cloud::internal::MakeDefaultPRNG();
 
-      google::cloud::StatusOr<gcs::ClientOptions> client_options =
-          gcs::ClientOptions::CreateDefaultClientOptions();
-      if (!client_options) {
-        std::lock_guard<std::mutex> lk(cout_mutex);
-        std::cout << "# Could not create ClientOptions, status="
-                  << client_options.status() << "\n";
-        return;
-      }
-      gcs::Client client(*std::move(client_options));
+      auto client = gcs::Client();
 
       std::uniform_int_distribution<std::uint64_t> size_generator(
           options->minimum_object_size, options->maximum_object_size);

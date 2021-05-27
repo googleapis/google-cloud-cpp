@@ -207,6 +207,8 @@ struct ClientImplDetails;
  */
 class Client {
  public:
+  explicit Client(Options opts = {});
+
   /**
    * Creates the default client type given the options.
    *
@@ -224,6 +226,7 @@ class Client {
    * @snippet storage_object_samples.cc insert object modified retry
    */
   template <typename... Policies>
+  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
   explicit Client(ClientOptions options, Policies&&... policies)
       : Client(InternalOnly{}, internal::ApplyPolicies(
                                    internal::MakeOptions(std::move(options)),
@@ -245,6 +248,7 @@ class Client {
    * @snippet storage_object_samples.cc insert object modified retry
    */
   template <typename... Policies>
+  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
                   Policies&&... policies)
       : Client(InternalOnly{},
@@ -253,6 +257,7 @@ class Client {
                    std::forward<Policies>(policies)...)) {}
 
   /// Create a Client using ClientOptions::CreateDefaultClientOptions().
+  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
   static StatusOr<Client> CreateDefaultClient();
 
   /// Builds a client and maybe override the retry, idempotency, and/or backoff
@@ -275,7 +280,7 @@ class Client {
                CreateDefaultInternalClient(
                    internal::ApplyPolicies(
                        internal::DefaultOptions(
-                           client->client_options().credentials()),
+                           client->client_options().credentials(), {}),
                        std::forward<Policies>(policies)...),
                    client)) {
   }
@@ -3134,7 +3139,6 @@ class Client {
  private:
   friend internal::ClientImplDetails;
 
-  Client() = default;
   struct InternalOnly {};
   struct InternalOnlyNoDecorations {};
 
@@ -3254,12 +3258,14 @@ struct ClientImplDetails {
   static std::shared_ptr<RawClient> GetRawClient(Client& c) {
     return c.raw_client_;
   }
+
   static StatusOr<ObjectMetadata> UploadStreamResumable(
       Client& client, std::istream& source,
       internal::ResumableUploadRequest const& request) {
     return client.UploadStreamResumable(source, request);
   }
   template <typename... Policies>
+
   static Client CreateClient(std::shared_ptr<internal::RawClient> c,
                              Policies&&... p) {
     auto opts =
@@ -3268,18 +3274,10 @@ struct ClientImplDetails {
     return Client(Client::InternalOnlyNoDecorations{},
                   Client::CreateDefaultInternalClient(opts, std::move(c)));
   }
+
   static Client CreateWithoutDecorations(
       std::shared_ptr<internal::RawClient> c) {
     return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
-  }
-
-  // TODO(#6161) - this should become a public API and the *recommended* way to
-  //     create a Client.
-  static Client CreateClient(std::shared_ptr<oauth2::Credentials> credentials,
-                             Options opts = {}) {
-    opts = DefaultOptions(std::move(credentials), std::move(opts));
-    return Client(Client::InternalOnlyNoDecorations{},
-                  Client::CreateDefaultInternalClient(opts));
   }
 };
 

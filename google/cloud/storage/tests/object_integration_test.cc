@@ -915,9 +915,7 @@ TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
   auto status = client->DeleteResumableUpload(session_id);
   EXPECT_STATUS_OK(status);
 
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client_resumable(client_options->set_maximum_simple_upload_size(0));
+  Client client_resumable(Options{}.set<MaximumSimpleUploadSizeOption>(0));
   auto stream_resumable = client_resumable.WriteObject(
       bucket_name_, object_name, RestoreResumableUploadSession(session_id));
   stream_resumable << LoremIpsum();

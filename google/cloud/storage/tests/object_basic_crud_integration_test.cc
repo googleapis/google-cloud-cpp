@@ -150,99 +150,93 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
 }
 
-StatusOr<Client> CreateNonDefaultClient() {
+Client CreateNonDefaultClient() {
   auto emulator =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  auto options = google::cloud::Options{};
   if (!emulator) {
     // Use a different spelling of the default endpoint. This disables the
     // allegedly "slightly faster" XML endpoints, but should continue to work.
-    options.set_endpoint("https://storage.googleapis.com:443");
-    auto creds = oauth2::GoogleDefaultCredentials();
-    if (!creds) return std::move(creds).status();
-    options.set_credentials(*std::move(creds));
+    options.set<RestEndpointOption>("https://storage.googleapis.com:443");
+    options.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   } else {
     // Use the emulator endpoint, but not through the environment variable
-    options.set_endpoint(*emulator);
-    options.set_credentials(oauth2::CreateAnonymousCredentials());
+    options.set<RestEndpointOption>(*emulator);
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
   }
-  return Client(options);
+  return Client(std::move(options));
 }
 
 /// @test Verify that the client works with non-default endpoints.
 TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertJSON) {
   auto client = CreateNonDefaultClient();
-  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
-  auto insert = client->InsertObject(bucket_name_, object_name, expected);
+  auto insert = client.InsertObject(bucket_name_, object_name, expected);
   ASSERT_STATUS_OK(insert);
   auto stream =
-      client->ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
+      client.ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
 TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertXml) {
   auto client = CreateNonDefaultClient();
-  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
   auto insert =
-      client->InsertObject(bucket_name_, object_name, expected, Fields(""));
+      client.InsertObject(bucket_name_, object_name, expected, Fields(""));
   ASSERT_STATUS_OK(insert);
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
 TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
   auto client = CreateNonDefaultClient();
-  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
-  auto writer = client->WriteObject(bucket_name_, object_name);
+  auto writer = client.WriteObject(bucket_name_, object_name);
   writer << expected;
   writer.Close();
   ASSERT_STATUS_OK(writer.metadata());
   auto stream =
-      client->ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
+      client.ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
 /// @test Verify that the client works with non-default endpoints.
 TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteXml) {
   auto client = CreateNonDefaultClient();
-  ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
-  auto writer = client->WriteObject(bucket_name_, object_name, Fields(""));
+  auto writer = client.WriteObject(bucket_name_, object_name, Fields(""));
   writer << expected;
   writer.Close();
   ASSERT_STATUS_OK(writer.metadata());
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(stream.status());
   std::string const actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 

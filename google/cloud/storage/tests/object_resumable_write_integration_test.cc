@@ -313,9 +313,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
   auto constexpr kMiB = 1024 * 1024L;
   auto constexpr kChunkSize = 2 * kMiB;
 
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
-  Client client(options->SetUploadBufferSize(kChunkSize));
+  Client client(Options{}.set<UploadBufferSizeOption>(kChunkSize));
 
   auto const chunk = MakeRandomData(kChunkSize);
 
@@ -349,9 +347,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
   auto constexpr kQuantum = 256 * 1024L;
   size_t constexpr kChunkSize = 2 * kQuantum;
 
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
-  Client client(options->SetUploadBufferSize(kChunkSize));
+  Client client(Options{}.set<UploadBufferSizeOption>(kChunkSize));
 
   auto const chunk = MakeRandomData(kChunkSize);
 

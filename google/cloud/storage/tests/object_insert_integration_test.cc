@@ -549,11 +549,7 @@ TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  Client client((*std::move(opts))
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -581,11 +577,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  Client client((*std::move(opts))
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -613,11 +605,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
  * on the logging facilities in the library, which is ugly to do.
  */
 TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  Client client((*std::move(opts))
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   // Make sure at least one connection was created before we run the test, the

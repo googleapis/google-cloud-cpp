@@ -182,7 +182,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto const object_name =
       examples::MakeRandomObjectName(generator, "object-") + ".txt";
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;

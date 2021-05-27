@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -210,6 +211,26 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
   return o;
 }
 
+Options DefaultOptionsWithCredentials(Options opts) {
+  if (opts.has<Oauth2CredentialsOption>()) {
+    auto credentials = opts.get<Oauth2CredentialsOption>();
+    return internal::DefaultOptions(std::move(credentials), std::move(opts));
+  }
+  if (opts.has<UnifiedCredentialsOption>()) {
+    auto credentials =
+        internal::MapCredentials(opts.get<UnifiedCredentialsOption>());
+    return internal::DefaultOptions(std::move(credentials), std::move(opts));
+  }
+  if (GetEmulator().has_value()) {
+    return internal::DefaultOptions(
+        internal::MapCredentials(google::cloud::MakeInsecureCredentials()),
+        std::move(opts));
+  }
+  return internal::DefaultOptions(
+      internal::MapCredentials(google::cloud::MakeGoogleDefaultCredentials()),
+      std::move(opts));
+}
+
 }  // namespace internal
 
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
@@ -225,7 +246,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions(
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
                              ChannelOptions channel_options)
-    : opts_(internal::DefaultOptions(std::move(credentials))),
+    : opts_(internal::DefaultOptions(std::move(credentials), {})),
       channel_options_(std::move(channel_options)) {}
 
 ClientOptions::ClientOptions(Options o)
@@ -262,13 +283,13 @@ ClientOptions& ClientOptions::set_enable_raw_client_tracing(bool enable) {
 }
 
 ClientOptions& ClientOptions::SetDownloadBufferSize(std::size_t size) {
-  opts_.set<internal::DownloadBufferSizeOption>(
+  opts_.set<DownloadBufferSizeOption>(
       size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE : size);
   return *this;
 }
 
 ClientOptions& ClientOptions::SetUploadBufferSize(std::size_t size) {
-  opts_.set<internal::UploadBufferSizeOption>(
+  opts_.set<UploadBufferSizeOption>(
       size == 0 ? GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE : size);
   return *this;
 }

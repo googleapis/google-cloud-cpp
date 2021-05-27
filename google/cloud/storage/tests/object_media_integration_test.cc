@@ -535,9 +535,11 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   ScopedEnvironment disable_emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
 
@@ -556,9 +558,11 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
   ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
 
@@ -573,9 +577,11 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
   ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
 
@@ -592,9 +598,11 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
   ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
 
@@ -609,9 +617,11 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
   google::cloud::testing_util::ScopedEnvironment endpoint(
       "CLOUD_STORAGE_EMULATOR_ENDPOINT", "http://localhost:1");
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
@@ -622,9 +632,11 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
   ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:1"),
-                LimitedErrorCountRetryPolicy(2)};
+  Client client{
+      Options{}
+          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+          .set<RestEndpointOption>("http://localhost:1")
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
 
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
@@ -645,8 +657,10 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
 
-  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
-                LimitedErrorCountRetryPolicy(3));
+  Client client(
+      Options{}
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone()));
 
   auto object_name = MakeRandomObjectName();
 
@@ -675,11 +689,10 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   if (!UsingEmulator()) GTEST_SKIP();
 
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
-
-  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
-                LimitedErrorCountRetryPolicy(10));
+  Client client(
+      Options{}
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(10).clone()));
 
   auto object_name = MakeRandomObjectName();
 
@@ -714,11 +727,10 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   if (!UsingEmulator()) GTEST_SKIP();
 
-  auto options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(options);
-
-  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
-                LimitedErrorCountRetryPolicy(5));
+  Client client(
+      Options{}
+          .set<DownloadStallTimeoutOption>(std::chrono::seconds(3))
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
 
   auto object_name = MakeRandomObjectName();
   auto contents = MakeRandomData(512 * 1024);

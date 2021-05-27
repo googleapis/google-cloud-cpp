@@ -88,7 +88,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const object_name =
       examples::MakeRandomObjectName(generator, "cloud-cpp-test-examples-");
 
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   if (examples::UsingEmulator()) {
     std::cout << "Signed URL examples are only runnable against production\n";

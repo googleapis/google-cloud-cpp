@@ -49,7 +49,9 @@ void ReadObjectUnauthenticated(std::vector<std::string> const& argv) {
   namespace gcs = google::cloud::storage;
   [](std::string const& bucket_name, std::string const& object_name) {
     // Create a client that does not authenticate with the server.
-    gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
+    auto client = gcs::Client{
+        google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
+            google::cloud::MakeInsecureCredentials())};
 
     // Read an object, the object must have been made public.
     gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
@@ -82,7 +84,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const object_name =
       examples::MakeRandomObjectName(generator, "public-object-") + ".txt";
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   auto constexpr kText = R"""(A bit of text to store in the test object.
 The actual contents are not interesting.

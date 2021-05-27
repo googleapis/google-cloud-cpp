@@ -29,10 +29,16 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
 static_assert(std::is_copy_constructible<storage::Client>::value,
               "storage::Client must be constructible");
 static_assert(std::is_copy_assignable<storage::Client>::value,
               "storage::Client must be assignable");
+
+Client::Client(Options opts)
+    : Client(Client::InternalOnlyNoDecorations{},
+             Client::CreateDefaultInternalClient(
+                 internal::DefaultOptionsWithCredentials(std::move(opts)))) {}
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts, std::shared_ptr<internal::RawClient> client) {
@@ -51,13 +57,7 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
 
-StatusOr<Client> Client::CreateDefaultClient() {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  if (!opts) {
-    return StatusOr<Client>(opts.status());
-  }
-  return StatusOr<Client>(Client(*opts));
-}
+StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {

@@ -44,9 +44,6 @@ struct CAPathOption {
 
 }  // namespace internal
 
-// TODO(#6161) - move the following options to the public API
-namespace internal {
-
 /// Configure the REST endpoint for the GCS client library.
 struct RestEndpointOption {
   using Type = std::string;
@@ -211,14 +208,13 @@ struct IdempotencyPolicyOption {
 /// The complete list of options accepted by `storage::Client`.
 using ClientOptionList = ::google::cloud::OptionList<
     RestEndpointOption, IamEndpointOption, Oauth2CredentialsOption,
-    TargetApiVersionOption, ProjectIdOption, ProjectIdOption,
-    ConnectionPoolSizeOption, DownloadBufferSizeOption, UploadBufferSizeOption,
+    ProjectIdOption, ProjectIdOption, ConnectionPoolSizeOption,
+    DownloadBufferSizeOption, UploadBufferSizeOption,
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
     IdempotencyPolicyOption, CARootsFilePathOption>;
 
-}  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

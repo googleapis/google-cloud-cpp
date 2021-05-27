@@ -54,9 +54,7 @@ TEST_F(ServiceAccountIntegrationTest, Get) {
   ASSERT_STATUS_OK(a1);
   EXPECT_FALSE(a1->email_address().empty());
 
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client_with_default(client_options->set_project_id(project_id_));
+  Client client_with_default(Options{}.set<ProjectIdOption>(project_id_));
   StatusOr<ServiceAccount> a2 = client_with_default.GetServiceAccount();
   ASSERT_STATUS_OK(a2);
   EXPECT_FALSE(a2->email_address().empty());
@@ -65,10 +63,7 @@ TEST_F(ServiceAccountIntegrationTest, Get) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-
-  Client client(client_options->set_project_id(project_id_));
+  Client client(Options{}.set<ProjectIdOption>(project_id_));
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client.CreateHmacKey(
       service_account_, OverrideDefaultProject(project_id_));
@@ -86,10 +81,7 @@ TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-
-  Client client(client_options->set_project_id(project_id_));
+  Client client(Options{}.set<ProjectIdOption>(project_id_));
 
   auto get_current_access_ids = [&client, this]() {
     std::vector<std::string> access_ids;
@@ -138,10 +130,7 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-
-  Client client(client_options->set_project_id(project_id_));
+  Client client(Options{}.set<ProjectIdOption>(project_id_));
 
   // Test failures in the HmacKey operations by using an invalid project id:
   auto create_status = client.CreateHmacKey("invalid-service-account",

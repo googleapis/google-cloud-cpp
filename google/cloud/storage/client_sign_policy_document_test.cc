@@ -61,7 +61,7 @@ StatusOr<Client> CreateClientForTest() {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   if (!creds) return std::move(creds).status();
-  return Client(*creds);
+  return Client(Options{}.set<Oauth2CredentialsOption>(*creds));
 }
 
 /**

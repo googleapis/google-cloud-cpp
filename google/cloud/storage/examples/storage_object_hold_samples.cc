@@ -133,7 +133,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const bucket_name = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                                .value();
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const object_name_1 =

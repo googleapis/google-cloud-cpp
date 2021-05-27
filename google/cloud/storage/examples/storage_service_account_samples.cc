@@ -247,7 +247,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
           .value();
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   std::cout << "\nRunning GetServiceAccountForProject() example" << std::endl;
   GetServiceAccountForProject(client, {project_id});

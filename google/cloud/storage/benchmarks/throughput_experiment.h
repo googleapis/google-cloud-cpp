@@ -56,7 +56,7 @@ class ThroughputExperiment {
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options);
+    google::cloud::Options const& client_options);
 
 /**
  * Create the list of download experiments based on the @p options.
@@ -66,7 +66,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
     ThroughputOptions const& options,
-    google::cloud::storage::ClientOptions const& client_options, int thread_id);
+    google::cloud::Options const& client_options, int thread_id);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

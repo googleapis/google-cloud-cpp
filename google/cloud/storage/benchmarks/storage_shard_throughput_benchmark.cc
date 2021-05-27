@@ -107,17 +107,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::StatusOr<gcs::ClientOptions> client_options =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) {
-    std::cerr << "Could not create ClientOptions, status="
-              << client_options.status() << "\n";
-    return 1;
-  }
-  if (!options->project_id.empty()) {
-    client_options->set_project_id(options->project_id);
-  }
-  gcs::Client client(*std::move(client_options));
+  gcs::Client client(
+      google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id));
 
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
@@ -252,14 +243,13 @@ std::vector<std::string> CreateAllObjects(
 }
 
 void WorkerThread(WorkItemQueue& work_queue) {
-  auto client = gcs::Client::CreateDefaultClient();
-  if (!client) return;
+  auto client = gcs::Client();
   std::vector<char> buffer;
   for (auto w = work_queue.Pop(); w.has_value(); w = work_queue.Pop()) {
     auto const begin = w->begin;
     auto const end = w->end;
     auto stream =
-        client->ReadObject(w->bucket, w->object, gcs::ReadRange(begin, end));
+        client.ReadObject(w->bucket, w->object, gcs::ReadRange(begin, end));
     buffer.resize(w->end - w->begin);
     stream.read(buffer.data(), buffer.size());
     stream.Close();

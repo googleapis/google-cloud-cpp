@@ -242,7 +242,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto const entity = "user-" + service_account;
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
   (void)client
