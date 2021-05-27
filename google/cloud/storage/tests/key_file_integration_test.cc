@@ -73,7 +73,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
 
-  Client client(*credentials);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*credentials));
 
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
@@ -106,7 +106,7 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
 
-  Client client(*credentials);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*credentials));
 
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();

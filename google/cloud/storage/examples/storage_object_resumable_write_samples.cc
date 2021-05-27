@@ -129,7 +129,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const object_name =
       examples::MakeRandomObjectName(generator, "ob-resumable-upload-");
 
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   std::cout << "\nRunning StartResumableUpload() example" << std::endl;
   StartResumableUpload(client, {bucket_name, object_name});

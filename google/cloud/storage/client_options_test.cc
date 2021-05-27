@@ -308,36 +308,33 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   google::cloud::internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project-id");
   auto const opts = internal::MakeOptions(
       ClientOptions(oauth2::CreateAnonymousCredentials()));
-  EXPECT_EQ("https://storage.googleapis.com",
-            opts.get<internal::RestEndpointOption>());
+  EXPECT_EQ("https://storage.googleapis.com", opts.get<RestEndpointOption>());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1",
-            opts.get<internal::IamEndpointOption>());
-  EXPECT_TRUE(opts.has<internal::Oauth2CredentialsOption>());
+            opts.get<IamEndpointOption>());
+  EXPECT_TRUE(opts.has<Oauth2CredentialsOption>());
   EXPECT_EQ("v1", opts.get<internal::TargetApiVersionOption>());
-  EXPECT_EQ("test-project-id", opts.get<internal::ProjectIdOption>());
-  EXPECT_LT(0, opts.get<internal::ConnectionPoolSizeOption>());
-  EXPECT_LT(0, opts.get<internal::DownloadBufferSizeOption>());
-  EXPECT_LT(0, opts.get<internal::UploadBufferSizeOption>());
-  EXPECT_LT(0, opts.get<internal::MaximumSimpleUploadSizeOption>());
-  EXPECT_TRUE(opts.has<internal::EnableCurlSslLockingOption>());
-  EXPECT_TRUE(opts.has<internal::EnableCurlSigpipeHandlerOption>());
-  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketSendSizeOption>());
-  EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketRecvSizeOption>());
-  EXPECT_LT(0, opts.get<internal::DownloadStallTimeoutOption>().count());
+  EXPECT_EQ("test-project-id", opts.get<ProjectIdOption>());
+  EXPECT_LT(0, opts.get<ConnectionPoolSizeOption>());
+  EXPECT_LT(0, opts.get<DownloadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<UploadBufferSizeOption>());
+  EXPECT_LT(0, opts.get<MaximumSimpleUploadSizeOption>());
+  EXPECT_TRUE(opts.has<EnableCurlSslLockingOption>());
+  EXPECT_TRUE(opts.has<EnableCurlSigpipeHandlerOption>());
+  EXPECT_EQ(0, opts.get<MaximumCurlSocketSendSizeOption>());
+  EXPECT_EQ(0, opts.get<MaximumCurlSocketRecvSizeOption>());
+  EXPECT_LT(0, opts.get<DownloadStallTimeoutOption>().count());
   EXPECT_THAT(opts.get<CARootsFilePathOption>(), IsEmpty());
 }
 
 TEST_F(ClientOptionsTest, DefaultOptions) {
   auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
-  EXPECT_EQ("https://storage.googleapis.com",
-            o.get<internal::RestEndpointOption>());
+  EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
 
   // Verify any set values are respected overriden.
-  o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(),
-                               Options{}.set<internal::RestEndpointOption>(
-                                   "https://private.googleapis.com"));
-  EXPECT_EQ("https://private.googleapis.com",
-            o.get<internal::RestEndpointOption>());
+  o = internal::DefaultOptions(
+      oauth2::CreateAnonymousCredentials(),
+      Options{}.set<RestEndpointOption>("https://private.googleapis.com"));
+  EXPECT_EQ("https://private.googleapis.com", o.get<RestEndpointOption>());
 }
 
 }  // namespace

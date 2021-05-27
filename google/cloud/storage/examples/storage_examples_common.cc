@@ -57,7 +57,7 @@ Commands::value_type CreateCommandEntry(
       }
       throw Usage{std::move(os).str()};
     }
-    auto client = google::cloud::storage::Client::CreateDefaultClient().value();
+    auto client = google::cloud::storage::Client();
     command(std::move(client), std::move(argv));
   };
   return {name, std::move(adapter)};

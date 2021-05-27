@@ -206,12 +206,13 @@ extern "C" ssize_t recv(int sockfd, void* buf, size_t len, int flags) {
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
   // Make sure buffer is at least equal to curl max buffer size (which is 2MiB)
-  opts->SetUploadBufferSize(2 * 1024 * 1024);
-
-  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(100)));
+  auto constexpr kUploadBufferSize = 2 * 1024 * 1024;
+  auto client = Client(
+      Options{}
+          .set<UploadBufferSizeOption>(kUploadBufferSize)
+          .set<RetryPolicyOption>(
+              LimitedTimeRetryPolicy(std::chrono::milliseconds(100)).clone()));
 
   auto object_name = MakeRandomObjectName();
 
@@ -222,7 +223,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   // Make sure the buffer is big enough to cause a flush.
-  std::vector<char> buf(opts->upload_buffer_size() + 1, 'X');
+  std::vector<char> buf(kUploadBufferSize + 1, 'X');
   os << buf.data();
   SymbolInterceptor::Instance().StartFailingSend(
       SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
@@ -240,12 +241,15 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   auto constexpr kInjectedErrors = 10;
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
   // Make it at least the maximum curl buffer size (which is 512KiB)
-  opts->SetDownloadBufferSize(512 * 1024);
-  Client client(*opts, LimitedErrorCountRetryPolicy(kInjectedErrors),
-                ExponentialBackoffPolicy(1_us, 2_us, 2));
+  auto constexpr kDownloadBufferSize = 512 * 1024;
+  auto client =
+      Client(Options{}
+                 .set<DownloadBufferSizeOption>(kDownloadBufferSize)
+                 .set<RetryPolicyOption>(
+                     LimitedErrorCountRetryPolicy(kInjectedErrors).clone())
+                 .set<BackoffPolicyOption>(
+                     ExponentialBackoffPolicy(1_us, 2_us, 2).clone()));
 
   auto object_name = MakeRandomObjectName();
 
@@ -256,13 +260,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   WriteRandomLines(os, expected, 80,
-                   static_cast<int>(opts->download_buffer_size()) * 3 / 80);
+                   static_cast<int>(kDownloadBufferSize) * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_STATUS_OK(os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
-  std::vector<char> read_buf(opts->download_buffer_size() + 1);
+  std::vector<char> read_buf(kDownloadBufferSize + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET,
@@ -277,11 +281,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
   // Make it at least the maximum curl buffer size (which is 512KiB)
-  opts->SetDownloadBufferSize(512 * 1024);
-  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)));
+  auto constexpr kDownloadBufferSize = 512 * 1024;
+  auto client = Client(
+      Options{}
+          .set<DownloadBufferSizeOption>(kDownloadBufferSize)
+          .set<RetryPolicyOption>(
+              LimitedTimeRetryPolicy(std::chrono::milliseconds(500)).clone()));
 
   auto object_name = MakeRandomObjectName();
 
@@ -293,14 +299,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
                                NewResumableUploadSession());
   os.exceptions(std::ios_base::badbit);
 
-  WriteRandomLines(os, expected, 80,
-                   static_cast<int>(opts->download_buffer_size()) * 3 / 80);
+  WriteRandomLines(os, expected, 80, kDownloadBufferSize * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_STATUS_OK(os.metadata());
 
   auto is = client.ReadObject(bucket_name_, object_name);
-  std::vector<char> read_buf(opts->download_buffer_size() + 1);
+  std::vector<char> read_buf(kDownloadBufferSize + 1);
   is.read(read_buf.data(), read_buf.size());
   // The failed recv will trigger a retry, which includes sending.
   SymbolInterceptor::Instance().StartFailingRecv(

@@ -86,13 +86,8 @@ int main(int argc, char* argv[]) try {
   }
   std::cout << " DONE\n";
 
-  google::cloud::StatusOr<gcs::ClientOptions> opts =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!opts) {
-    std::cerr << "Couldn't create gcs::ClientOptions, status=" << opts.status();
-    return 1;
-  }
-  gcs::Client client(opts->set_project_id(options.project_id));
+  gcs::Client client(
+      google::cloud::Options{}.set<gcs::ProjectIdOption>(options.project_id));
   // The main thread just reads the file one line at a time.
   auto is = client.ReadObject(options.bucket, options.object);
   std::string line;
@@ -274,7 +269,7 @@ Options AutoRun() {
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value();
   auto constexpr kTableId = "gcs2cbt-auto-run";
   auto constexpr kObjectName = "gcs2cbt-sample-data.csv";
-  auto gcs_client = gcs::Client::CreateDefaultClient().value();
+  auto gcs_client = gcs::Client();
   auto constexpr kTestData = R"""(RowId,Header1,Header2,Header3
 1,v1,v2,v3
 3,v1,v2,v3

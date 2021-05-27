@@ -65,10 +65,6 @@ class UnifiedCredentialsIntegrationTest
 
   static Client MakeTestClient(Options opts) {
     std::string const client_type = GetParam();
-    // TODO(#6612) - this should happen in CreateClient
-    auto credentials = internal::MapCredentials(
-        opts.get<google::cloud::UnifiedCredentialsOption>());
-    opts.set<internal::Oauth2CredentialsOption>(credentials);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     if (client_type == "grpc") {
       return google::cloud::storage_experimental::DefaultGrpcClient(
@@ -76,8 +72,7 @@ class UnifiedCredentialsIntegrationTest
           .value();
     }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    return internal::ClientImplDetails::CreateClient(std::move(credentials),
-                                                     std::move(opts));
+    return Client(std::move(opts));
   }
 
   std::string const& bucket_name() const { return bucket_name_; }
@@ -226,14 +221,13 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
   TempFile tmp(kCACertificate);
   TempFile tmp2(std::string{});
 
-  auto client =
-      MakeTestClient(Options{}
-                         .set<UnifiedCredentialsOption>(
-                             MakeAccessTokenCredentials(token, expiration))
-                         .set<CARootsFilePathOption>(tmp.name())
-                         .set<internal::CAPathOption>(tmp2.name())
-                         .set<internal::RetryPolicyOption>(
-                             LimitedErrorCountRetryPolicy(2).clone()));
+  auto client = MakeTestClient(
+      Options{}
+          .set<UnifiedCredentialsOption>(
+              MakeAccessTokenCredentials(token, expiration))
+          .set<CARootsFilePathOption>(tmp.name())
+          .set<internal::CAPathOption>(tmp2.name())
+          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone()));
 
   auto const object_name = MakeRandomObjectName();
   auto meta = client.InsertObject(bucket_name(), object_name, LoremIpsum(),

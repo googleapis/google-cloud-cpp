@@ -50,6 +50,11 @@ class ObjectFileIntegrationTest
   std::string bucket_name_;
 };
 
+// Create a client configured to always use resumable uploads for files.
+Client ClientWithSimpleUploadDisabled() {
+  return Client(Options{}.set<MaximumSimpleUploadSizeOption>(0));
+}
+
 TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -405,10 +410,7 @@ TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
-  // Create a client that always uses resumable uploads.
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client(client_options->set_maximum_simple_upload_size(0));
+  auto client = ClientWithSimpleUploadDisabled();
   auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -485,10 +487,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
-  // Create a client that always uses resumable uploads.
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client(client_options->set_maximum_simple_upload_size(0));
+  auto client = ClientWithSimpleUploadDisabled();
   auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -525,10 +524,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
-  // Create a client that always uses resumable uploads.
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client(client_options->set_maximum_simple_upload_size(0));
+  auto client = ClientWithSimpleUploadDisabled();
   auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -564,10 +560,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
-  // Create a client that always uses resumable uploads.
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client(client_options->set_maximum_simple_upload_size(0));
+  auto client = ClientWithSimpleUploadDisabled();
   auto file_name = ::testing::TempDir() + MakeRandomFilename();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();

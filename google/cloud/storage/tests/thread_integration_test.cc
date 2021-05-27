@@ -178,11 +178,7 @@ class CaptureSendHeaderBackend : public LogBackend {
 TEST_F(ThreadIntegrationTest, ReuseConnections) {
   auto log_backend = std::make_shared<CaptureSendHeaderBackend>();
 
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
 
   std::string bucket_name = MakeRandomBucketName();
 
@@ -208,9 +204,9 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   std::vector<std::chrono::steady_clock::duration> delete_elapsed;
   for (auto const& name : objects) {
     auto start = std::chrono::steady_clock::now();
-    StatusOr<ObjectMetadata> meta = client.InsertObject(
+    StatusOr<ObjectMetadata> insert = client.InsertObject(
         bucket_name, name, LoremIpsum(), IfGenerationMatch(0));
-    ASSERT_STATUS_OK(meta);
+    ASSERT_STATUS_OK(insert);
     create_elapsed.emplace_back(std::chrono::steady_clock::now() - start);
   }
   for (auto const& name : objects) {

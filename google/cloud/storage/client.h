@@ -208,6 +208,21 @@ struct ClientImplDetails;
 class Client {
  public:
   /**
+   * Build a new client.
+   *
+   * @param opts the configuration parameters for the `Client`.
+   *
+   * @see #ClientOptionList for a list of useful options.
+   *
+   * @par Idempotency Policy Example
+   * @snippet storage_object_samples.cc insert object strict idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet storage_object_samples.cc insert object modified retry
+   */
+  explicit Client(Options opts = {});
+
+  /**
    * Creates the default client type given the options.
    *
    * @param options the client options, these are used to control credentials,
@@ -217,11 +232,7 @@ class Client {
    *   retried, or what operations cannot be retried because they are not
    *   idempotent.
    *
-   * @par Idempotency Policy Example
-   * @snippet storage_object_samples.cc insert object strict idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet storage_object_samples.cc insert object modified retry
+   * @deprecated use the constructor from `google::cloud::Options` instead.
    */
   template <typename... Policies>
   explicit Client(ClientOptions options, Policies&&... policies)
@@ -238,11 +249,7 @@ class Client {
    *   retried, or what operations cannot be retried because they are not
    *   idempotent.
    *
-   * @par Idempotency Policy Example
-   * @snippet storage_object_samples.cc insert object strict idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet storage_object_samples.cc insert object modified retry
+   * @deprecated use the constructor from `google::cloud::Options` instead.
    */
   template <typename... Policies>
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
@@ -252,7 +259,11 @@ class Client {
                    internal::DefaultOptions(std::move(credentials), {}),
                    std::forward<Policies>(policies)...)) {}
 
-  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
+  /**
+   * Create a Client using ClientOptions::CreateDefaultClientOptions().
+   *
+   * @deprecated use the constructor from `google::cloud::Options` instead.
+   */
   static StatusOr<Client> CreateDefaultClient();
 
   /// Builds a client and maybe override the retry, idempotency, and/or backoff
@@ -275,7 +286,7 @@ class Client {
                CreateDefaultInternalClient(
                    internal::ApplyPolicies(
                        internal::DefaultOptions(
-                           client->client_options().credentials()),
+                           client->client_options().credentials(), {}),
                        std::forward<Policies>(policies)...),
                    client)) {
   }
@@ -3134,7 +3145,6 @@ class Client {
  private:
   friend internal::ClientImplDetails;
 
-  Client() = default;
   struct InternalOnly {};
   struct InternalOnlyNoDecorations {};
 
@@ -3254,12 +3264,14 @@ struct ClientImplDetails {
   static std::shared_ptr<RawClient> GetRawClient(Client& c) {
     return c.raw_client_;
   }
+
   static StatusOr<ObjectMetadata> UploadStreamResumable(
       Client& client, std::istream& source,
       internal::ResumableUploadRequest const& request) {
     return client.UploadStreamResumable(source, request);
   }
   template <typename... Policies>
+
   static Client CreateClient(std::shared_ptr<internal::RawClient> c,
                              Policies&&... p) {
     auto opts =
@@ -3268,18 +3280,10 @@ struct ClientImplDetails {
     return Client(Client::InternalOnlyNoDecorations{},
                   Client::CreateDefaultInternalClient(opts, std::move(c)));
   }
+
   static Client CreateWithoutDecorations(
       std::shared_ptr<internal::RawClient> c) {
     return Client(Client::InternalOnlyNoDecorations{}, std::move(c));
-  }
-
-  // TODO(#6161) - this should become a public API and the *recommended* way to
-  //     create a Client.
-  static Client CreateClient(std::shared_ptr<oauth2::Credentials> credentials,
-                             Options opts = {}) {
-    opts = DefaultOptions(std::move(credentials), std::move(opts));
-    return Client(Client::InternalOnlyNoDecorations{},
-                  Client::CreateDefaultInternalClient(opts));
   }
 };
 

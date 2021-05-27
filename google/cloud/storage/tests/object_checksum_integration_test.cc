@@ -155,11 +155,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
 
 /// @test Verify that CRC32C checksums are computed by default.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;
@@ -176,11 +172,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertXML) {
 
 /// @test Verify that CRC32C checksums are computed by default.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(client_options);
-  Client client((*client_options)
-                    .set_enable_raw_client_tracing(true)
-                    .set_enable_http_tracing(true));
+  Client client(Options{}.set<TracingComponentsOption>({"raw-client", "http"}));
   auto object_name = MakeRandomObjectName();
 
   testing_util::ScopedLog log;

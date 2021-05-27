@@ -137,11 +137,9 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client,
      std::string const& contents) {
     // Create a client that only retries idempotent operations, the default is
     // to retry all operations.
-    StatusOr<gcs::ClientOptions> options =
-        gcs::ClientOptions::CreateDefaultClientOptions();
-
-    if (!options) throw std::runtime_error(options.status().message());
-    gcs::Client client{*options, gcs::StrictIdempotencyPolicy()};
+    auto client =
+        gcs::Client(google::cloud::Options{}.set<gcs::IdempotencyPolicyOption>(
+            gcs::StrictIdempotencyPolicy().clone()));
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
                             gcs::IfGenerationMatch(0));
@@ -168,11 +166,9 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client,
      std::string const& contents) {
     // Create a client that only gives up on the third error. The default policy
     // is to retry for several minutes.
-    StatusOr<gcs::ClientOptions> options =
-        gcs::ClientOptions::CreateDefaultClientOptions();
-
-    if (!options) throw std::runtime_error(options.status().message());
-    gcs::Client client{*options, gcs::LimitedErrorCountRetryPolicy(3)};
+    auto client =
+        gcs::Client(google::cloud::Options{}.set<gcs::RetryPolicyOption>(
+            gcs::LimitedErrorCountRetryPolicy(3).clone()));
 
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
@@ -564,7 +560,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
   (void)client

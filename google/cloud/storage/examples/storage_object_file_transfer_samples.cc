@@ -132,7 +132,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const filename_1 = MakeRandomFilename(generator);
   auto const object_name = examples::MakeRandomObjectName(generator, "ob-");
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
 
   std::string const text = R"""(
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor

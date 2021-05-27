@@ -54,7 +54,7 @@ TEST_F(CreateSignedUrlTest, V2Sign) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
-  Client client(*creds);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
@@ -67,7 +67,7 @@ TEST_F(CreateSignedUrlTest, V2SignBucketOnly) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
-  Client client(*creds);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
   ASSERT_STATUS_OK(actual);
@@ -79,7 +79,7 @@ TEST_F(CreateSignedUrlTest, V2SignEscape) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContents);
   ASSERT_STATUS_OK(creds);
-  Client client(*creds);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
   ASSERT_STATUS_OK(actual);
@@ -152,7 +152,7 @@ TEST_F(CreateSignedUrlTest, V4SignGet) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContentsForV4);
   ASSERT_STATUS_OK(creds);
-  Client client(*creds);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   std::string const bucket_name = "test-bucket";
   std::string const object_name = "test-object";
@@ -195,7 +195,7 @@ TEST_F(CreateSignedUrlTest, V4SignPut) {
   auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
       kJsonKeyfileContentsForV4);
   ASSERT_STATUS_OK(creds);
-  Client client(*creds);
+  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   std::string const bucket_name = "test-bucket";
   std::string const object_name = "test-object";

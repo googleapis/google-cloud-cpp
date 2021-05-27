@@ -51,10 +51,8 @@ void DefaultClient(std::vector<std::string> const& argv) {
   //! [default-client]
   namespace gcs = google::cloud::storage;
   [](std::string const& bucket_name, std::string const& object_name) {
-    auto client = gcs::Client::CreateDefaultClient();
-    if (!client) throw std::runtime_error(client.status().message());
-
-    PerformSomeOperations(*client, bucket_name, object_name);
+    auto client = gcs::Client();
+    PerformSomeOperations(client, bucket_name, object_name);
   }
   //! [default-client]
   (argv.at(0), argv.at(1));
@@ -75,8 +73,10 @@ void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
         gcs::oauth2::CreateServiceAccountCredentialsFromFilePath(filename);
     if (!credentials) throw std::runtime_error(credentials.status().message());
 
-    PerformSomeOperations(gcs::Client(gcs::ClientOptions(*credentials)),
-                          bucket_name, object_name);
+    PerformSomeOperations(
+        gcs::Client(google::cloud::Options{}.set<gcs::Oauth2CredentialsOption>(
+            *credentials)),
+        bucket_name, object_name);
   }
   //! [service-account-keyfile-json]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -101,8 +101,10 @@ void ServiceAccountContentsJson(std::vector<std::string> const& argv) {
         gcs::oauth2::CreateServiceAccountCredentialsFromJsonContents(contents);
     if (!credentials) throw std::runtime_error(credentials.status().message());
 
-    PerformSomeOperations(gcs::Client(gcs::ClientOptions(*credentials)),
-                          bucket_name, object_name);
+    PerformSomeOperations(
+        gcs::Client(google::cloud::Options{}.set<gcs::Oauth2CredentialsOption>(
+            *credentials)),
+        bucket_name, object_name);
   }
   //! [service-account-contents-json]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -120,7 +122,7 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
   (void)client

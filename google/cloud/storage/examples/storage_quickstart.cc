@@ -31,12 +31,10 @@ void StorageQuickstart(std::string const& bucket_name) {
 
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
-  google::cloud::StatusOr<gcs::Client> client =
-      gcs::Client::CreateDefaultClient();
-  if (!client) throw std::runtime_error(client.status().message());
+  auto client = gcs::Client();
 
   // Create a bucket
-  google::cloud::StatusOr<gcs::BucketMetadata> metadata = client->CreateBucket(
+  google::cloud::StatusOr<gcs::BucketMetadata> metadata = client.CreateBucket(
       bucket_name, gcs::BucketMetadata().set_location("US").set_storage_class(
                        gcs::storage_class::Standard()));
   if (!metadata) throw std::runtime_error(metadata.status().message());
@@ -68,7 +66,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning StorageQuickStart() example" << std::endl;
   StorageQuickstartCommand({bucket_name});
 
-  auto client = gcs::Client::CreateDefaultClient().value();
+  auto client = gcs::Client();
   (void)examples::RemoveBucketAndContents(client, bucket_name);
 }
 

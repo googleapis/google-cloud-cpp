@@ -52,11 +52,10 @@ class GrpcClientFailuresTest
                                     grpc_config);
     auto options =
         Options{}
-            .set<internal::RestEndpointOption>("http://localhost:1")
-            .set<internal::IamEndpointOption>("http://localhost:1")
+            .set<RestEndpointOption>("http://localhost:1")
+            .set<IamEndpointOption>("http://localhost:1")
             .set<EndpointOption>("localhost:1")
-            .set<internal::Oauth2CredentialsOption>(
-                oauth2::CreateAnonymousCredentials())
+            .set<Oauth2CredentialsOption>(oauth2::CreateAnonymousCredentials())
             .set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     if (grpc_config == "metadata") {
       client_ = GrpcClient::Create(DefaultOptionsGrpc(std::move(options)));

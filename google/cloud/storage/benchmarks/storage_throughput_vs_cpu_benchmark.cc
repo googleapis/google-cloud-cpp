@@ -117,17 +117,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::StatusOr<gcs::ClientOptions> client_options =
-      gcs::ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) {
-    std::cerr << "Could not create ClientOptions, status="
-              << client_options.status() << "\n";
-    return 1;
-  }
-  if (!options->project_id.empty()) {
-    client_options->set_project_id(options->project_id);
-  }
-  gcs::Client client(*std::move(client_options));
+  auto client = gcs::Client(
+      google::cloud::Options{}.set<gcs::ProjectIdOption>(options->project_id));
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto bucket_name = gcs_bm::MakeRandomBucketName(generator);
@@ -234,6 +225,7 @@ void PrintResults(TestResults const& results) {
 TestResults RunThread(ThroughputOptions const& options,
                       std::string const& bucket_name, int thread_id) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
   if (!client_options) {
@@ -244,17 +236,16 @@ TestResults RunThread(ThroughputOptions const& options,
   auto const upload_buffer_size = client_options->upload_buffer_size();
   auto const download_buffer_size = client_options->download_buffer_size();
 
-  gcs::Client rest_client(*client_options);
+  auto rest_client = gcs::Client();
 
-  auto uploaders = gcs_bm::CreateUploadExperiments(options, *client_options);
+  auto uploaders = gcs_bm::CreateUploadExperiments(options, {});
   if (uploaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.
     std::cout << "# None of the APIs configured are available\n";
     return {};
   }
-  auto downloaders =
-      gcs_bm::CreateDownloadExperiments(options, *client_options, thread_id);
+  auto downloaders = gcs_bm::CreateDownloadExperiments(options, {}, thread_id);
   if (downloaders.empty()) {
     // This is possible if only gRPC is requested but the benchmark was compiled
     // without gRPC support.

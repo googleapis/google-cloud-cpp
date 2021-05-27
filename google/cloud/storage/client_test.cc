@@ -141,8 +141,8 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 TEST_F(ClientTest, DefaultDecorators) {
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
-  ClientOptions options(oauth2::CreateAnonymousCredentials());
-  Client tested(options);
+  auto tested = Client(
+      Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
 
   EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
   auto* retry = dynamic_cast<internal::RetryClient*>(
@@ -157,9 +157,10 @@ TEST_F(ClientTest, DefaultDecorators) {
 TEST_F(ClientTest, LoggingDecorators) {
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
-  ClientOptions options(oauth2::CreateAnonymousCredentials());
-  options.set_enable_raw_client_tracing(true);
-  Client tested(options);
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({"raw-client"}));
 
   EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
   auto* retry = dynamic_cast<internal::RetryClient*>(
