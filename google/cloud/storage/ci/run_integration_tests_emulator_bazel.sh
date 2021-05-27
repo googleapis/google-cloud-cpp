@@ -67,8 +67,10 @@ start_emulator 8585 8000
 popd >/dev/null
 
 # Run the unittests of the emulator before running integration tests.
+# TODO(#6641): Remove the --flaky_test_attempts flag once the flakiness is fixed.
 "${BAZEL_BIN}" test "${bazel_test_args[@]}" "//google/cloud/storage/emulator:test_utils" \
   "//google/cloud/storage/emulator:test_gcs" \
+  "--flaky_test_attempts=5" \
   "--test_env=CLOUD_STORAGE_EMULATOR_ENDPOINT=${CLOUD_STORAGE_EMULATOR_ENDPOINT}"
 exit_status=$?
 
