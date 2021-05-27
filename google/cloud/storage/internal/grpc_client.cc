@@ -74,21 +74,16 @@ int DefaultGrpcNumChannels() {
 }
 
 Options DefaultOptionsGrpc(Options options) {
-  options = DefaultOptions(std::make_shared<oauth2::AnonymousCredentials>(),
-                           std::move(options));
-  auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
-  if (env.has_value()) {
-    options.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
-    options.set<EndpointOption>(*env);
-  }
-  if (!options.has<GrpcCredentialOption>()) {
-    // Try to avoid calling grpc::GoogleDefaultCredentials() because it tries to
-    // open files and generates warnings in the CI system as they do not exist.
-    options.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
-  }
+  options = DefaultOptionsWithCredentials(std::move(options));
   if (!options.has<EndpointOption>()) {
     options.set<EndpointOption>("storage.googleapis.com");
   }
+  auto env = google::cloud::internal::GetEnv("CLOUD_STORAGE_GRPC_ENDPOINT");
+  if (env.has_value()) {
+    options.set<UnifiedCredentialsOption>(MakeInsecureCredentials());
+    options.set<EndpointOption>(*env);
+  }
+
   if (!options.has<GrpcBackgroundThreadsFactoryOption>()) {
     options.set<GrpcBackgroundThreadsFactoryOption>(
         google::cloud::internal::DefaultBackgroundThreadsFactory);
@@ -96,7 +91,6 @@ Options DefaultOptionsGrpc(Options options) {
   if (!options.has<GrpcNumChannelsOption>()) {
     options.set<GrpcNumChannelsOption>(DefaultGrpcNumChannels());
   }
-
   return options;
 }
 
