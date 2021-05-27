@@ -98,7 +98,7 @@ std::string CreateRandomFileName() {
 
 TEST(UnifiedGrpcCredentialsTest, LoadCAInfoNotExist) {
   auto filename = CreateRandomFileName();
-  auto contents = LoadCAInfo(Options{}.set<CAInfoOption>(filename));
+  auto contents = LoadCAInfo(Options{}.set<CARootsFilePathOption>(filename));
   ASSERT_TRUE(contents.has_value());
   EXPECT_THAT(*contents, IsEmpty());
 }
@@ -108,7 +108,7 @@ TEST(UnifiedGrpcCredentialsTest, LoadCAInfoContents) {
   auto const expected =
       std::string{"The quick brown fox jumps over the lazy dog"};
   std::ofstream(filename) << expected;
-  auto contents = LoadCAInfo(Options{}.set<CAInfoOption>(filename));
+  auto contents = LoadCAInfo(Options{}.set<CARootsFilePathOption>(filename));
   (void)std::remove(filename.c_str());  // remove the temporary file
   ASSERT_TRUE(contents.has_value());
   EXPECT_EQ(*contents, expected);

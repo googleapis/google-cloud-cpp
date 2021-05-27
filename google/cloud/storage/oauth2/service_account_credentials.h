@@ -145,7 +145,7 @@ class ServiceAccountCredentials : public Credentials {
     HttpRequestBuilderType request_builder(
         info_.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(
-            Options{}.set<CAInfoOption>(options.ssl_root_path())));
+            Options{}.set<CARootsFilePathOption>(options.ssl_root_path())));
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account

@@ -83,9 +83,9 @@ class AuthorizedUserCredentials : public Credentials {
                                      ChannelOptions const& channel_options = {})
       : clock_() {
     HttpRequestBuilderType request_builder(
-        info.token_uri,
-        storage::internal::GetDefaultCurlHandleFactory(
-            Options{}.set<CAInfoOption>(channel_options.ssl_root_path())));
+        info.token_uri, storage::internal::GetDefaultCurlHandleFactory(
+                            Options{}.set<CARootsFilePathOption>(
+                                channel_options.ssl_root_path())));
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload += request_builder.MakeEscapedString(info.client_id).get();

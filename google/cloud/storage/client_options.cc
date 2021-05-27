@@ -124,7 +124,7 @@ std::string IamEndpoint(Options const& options) {
 Options MakeOptions(ClientOptions o) {
   auto opts = std::move(o.opts_);
   if (!o.channel_options().ssl_root_path().empty()) {
-    opts.set<CAInfoOption>(o.channel_options().ssl_root_path());
+    opts.set<CARootsFilePathOption>(o.channel_options().ssl_root_path());
   }
   return opts;
 }
@@ -232,7 +232,7 @@ ClientOptions::ClientOptions(Options o)
     : opts_(std::move(o)),
       user_agent_prefix_(
           absl::StrJoin(opts_.get<UserAgentProductsOption>(), " ")) {
-  channel_options_.set_ssl_root_path(opts_.get<CAInfoOption>());
+  channel_options_.set_ssl_root_path(opts_.get<CARootsFilePathOption>());
 }
 
 bool ClientOptions::enable_http_tracing() const {

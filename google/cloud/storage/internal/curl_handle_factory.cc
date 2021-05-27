@@ -36,14 +36,14 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory() {
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
     Options const& options) {
-  if (!options.get<CAInfoOption>().empty()) {
+  if (!options.get<CARootsFilePathOption>().empty()) {
     return std::make_shared<DefaultCurlHandleFactory>(options);
   }
   return GetDefaultCurlHandleFactory();
 }
 
 DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
-  if (o.has<CAInfoOption>()) cainfo_ = o.get<CAInfoOption>();
+  if (o.has<CARootsFilePathOption>()) cainfo_ = o.get<CARootsFilePathOption>();
   if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
 }
 
@@ -81,7 +81,7 @@ void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
                                                  Options const& o)
     : maximum_size_(maximum_size) {
-  if (o.has<CAInfoOption>()) cainfo_ = o.get<CAInfoOption>();
+  if (o.has<CARootsFilePathOption>()) cainfo_ = o.get<CARootsFilePathOption>();
   if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
 }
 

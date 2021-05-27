@@ -30,8 +30,7 @@ source module ci/lib/io.sh
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip install --quiet --user -r "${PROJECT_ROOT}/google/cloud/storage/emulator/requirements.txt"
 
-echo "================================================================"
-io::log_yellow "getting roots.pem to test unified credentials."
+# Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
 curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 

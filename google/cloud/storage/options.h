@@ -216,7 +216,7 @@ using ClientOptionList = ::google::cloud::OptionList<
     EnableCurlSslLockingOption, EnableCurlSigpipeHandlerOption,
     MaximumCurlSocketRecvSizeOption, MaximumCurlSocketSendSizeOption,
     DownloadStallTimeoutOption, RetryPolicyOption, BackoffPolicyOption,
-    IdempotencyPolicyOption, CAInfoOption>;
+    IdempotencyPolicyOption, CARootsFilePathOption>;
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

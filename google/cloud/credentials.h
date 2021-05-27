@@ -242,7 +242,7 @@ struct UnifiedCredentialsOption {
  * [grpc::SslCredentialsOptions]:
  * https://grpc.github.io/grpc/cpp/structgrpc_1_1_ssl_credentials_options.html
  */
-struct CAInfoOption {
+struct CARootsFilePathOption {
   using Type = std::string;
 };
 

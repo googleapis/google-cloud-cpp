@@ -230,7 +230,7 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
       MakeTestClient(Options{}
                          .set<UnifiedCredentialsOption>(
                              MakeAccessTokenCredentials(token, expiration))
-                         .set<CAInfoOption>(tmp.name())
+                         .set<CARootsFilePathOption>(tmp.name())
                          .set<internal::CAPathOption>(tmp2.name())
                          .set<internal::RetryPolicyOption>(
                              LimitedErrorCountRetryPolicy(2).clone()));
@@ -267,7 +267,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
       MakeTestClient(Options{}
                          .set<UnifiedCredentialsOption>(
                              MakeAccessTokenCredentials(token, expiration))
-                         .set<CAInfoOption>(roots_pem())
+                         .set<CARootsFilePathOption>(roots_pem())
                          .set<internal::CAPathOption>(tmp2.name()));
 
   ASSERT_NO_FATAL_FAILURE(
