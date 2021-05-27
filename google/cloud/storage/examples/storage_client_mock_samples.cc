@@ -14,9 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "google/cloud/storage/well_known_parameters.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <iostream>
