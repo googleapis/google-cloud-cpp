@@ -27,8 +27,8 @@ namespace internal {
 
 class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
  public:
-  explicit GrpcAccessTokenAuthentication(AccessToken const& access_token)
-      : credentials_(grpc::AccessTokenCredentials(access_token.token)) {}
+  explicit GrpcAccessTokenAuthentication(AccessToken const& access_token,
+                                         Options const& opts);
   ~GrpcAccessTokenAuthentication() override = default;
 
   std::shared_ptr<grpc::Channel> CreateChannel(
@@ -41,6 +41,7 @@ class GrpcAccessTokenAuthentication : public GrpcAuthenticationStrategy {
 
  private:
   std::shared_ptr<grpc::CallCredentials> credentials_;
+  grpc::SslCredentialsOptions ssl_options_;
 };
 
 }  // namespace internal

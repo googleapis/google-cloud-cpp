@@ -207,7 +207,8 @@ if (Integration-Tests-Enabled) {
 
         # IAM
         "--test_env=GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_TEST_SERVICE_ACCOUNT}",
-        "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}"
+        "--test_env=GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT=${env:GOOGLE_CLOUD_CPP_IAM_INVALID_TEST_SERVICE_ACCOUNT}",
+        "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=${env:GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
     )
     $excluded_rules=@(
         "-//google/cloud/bigtable/examples:bigtable_grpc_credentials",

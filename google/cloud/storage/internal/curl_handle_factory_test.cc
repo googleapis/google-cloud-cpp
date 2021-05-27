@@ -74,7 +74,7 @@ TEST(CurlHandleFactoryTest,
 }
 
 TEST(CurlHandleFactoryTest, DefaultFactoryChannelOptionsCallsSetOptions) {
-  auto options = Options{}.set<SslRootPathOption>("foo");
+  auto options = Options{}.set<CARootsFilePathOption>("foo");
   OverriddenDefaultCurlHandleFactory object_under_test(options);
 
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
@@ -91,7 +91,7 @@ TEST(CurlHandleFactoryTest, PooledFactoryNoChannelOptionsDoesntCallSetOptions) {
 }
 
 TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
-  auto options = Options{}.set<SslRootPathOption>("foo");
+  auto options = Options{}.set<CARootsFilePathOption>("foo");
   OverriddenPooledCurlHandleFactory object_under_test(2, options);
 
   auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));

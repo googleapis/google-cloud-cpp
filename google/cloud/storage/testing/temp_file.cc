@@ -24,15 +24,14 @@ namespace storage {
 namespace testing {
 
 TempFile::TempFile(std::string const& content) {
-  // This is obviously racy, but there is no portable way to create a
-  // uniquely-named temporary file and know its name.
-  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  static auto generator =
+      google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto name = ::testing::TempDir() + MakeRandomFileName(generator);
   std::ofstream f(name, std::ios::binary | std::ios::trunc);
   assert(f.good());
-  f.write(content.data(), content.size());
+  f.write(content.data(), static_cast<std::streamsize>(content.size()));
+  f.close();
   assert(f.good());
-
   name_ = name;
 }
 

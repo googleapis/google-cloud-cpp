@@ -143,9 +143,9 @@ class ServiceAccountCredentials : public Credentials {
                             ChannelOptions const& options)
       : info_(std::move(info)), clock_() {
     HttpRequestBuilderType request_builder(
-        info_.token_uri, storage::internal::GetDefaultCurlHandleFactory(
-                             Options{}.set<internal::SslRootPathOption>(
-                                 options.ssl_root_path())));
+        info_.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(
+            Options{}.set<CARootsFilePathOption>(options.ssl_root_path())));
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account

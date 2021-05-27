@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
 
@@ -46,6 +47,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials);
+
+absl::optional<std::string> LoadCAInfo(Options const& opts);
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

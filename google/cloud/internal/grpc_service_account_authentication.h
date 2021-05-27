@@ -27,8 +27,8 @@ namespace internal {
 
 class GrpcServiceAccountAuthentication : public GrpcAuthenticationStrategy {
  public:
-  explicit GrpcServiceAccountAuthentication(std::string const& json_object)
-      : credentials_(grpc::ServiceAccountJWTAccessCredentials(json_object)) {}
+  explicit GrpcServiceAccountAuthentication(std::string const& json_object,
+                                            Options const& opts);
   ~GrpcServiceAccountAuthentication() override = default;
 
   std::shared_ptr<grpc::Channel> CreateChannel(
@@ -41,6 +41,7 @@ class GrpcServiceAccountAuthentication : public GrpcAuthenticationStrategy {
 
  private:
   std::shared_ptr<grpc::CallCredentials> credentials_;
+  grpc::SslCredentialsOptions ssl_options_;
 };
 
 }  // namespace internal

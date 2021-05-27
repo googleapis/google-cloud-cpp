@@ -324,7 +324,7 @@ TEST_F(ClientOptionsTest, MakeOptionsFromDefault) {
   EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketSendSizeOption>());
   EXPECT_EQ(0, opts.get<internal::MaximumCurlSocketRecvSizeOption>());
   EXPECT_LT(0, opts.get<internal::DownloadStallTimeoutOption>().count());
-  EXPECT_THAT(opts.get<internal::SslRootPathOption>(), IsEmpty());
+  EXPECT_THAT(opts.get<CARootsFilePathOption>(), IsEmpty());
 }
 
 TEST_F(ClientOptionsTest, DefaultOptions) {

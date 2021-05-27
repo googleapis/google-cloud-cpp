@@ -19,10 +19,16 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
+GrpcAccessTokenAuthentication::GrpcAccessTokenAuthentication(
+    AccessToken const& access_token, Options const& opts)
+    : credentials_(grpc::AccessTokenCredentials(access_token.token)) {
+  auto cainfo = LoadCAInfo(opts);
+  if (cainfo) ssl_options_.pem_root_certs = std::move(*cainfo);
+}
+
 std::shared_ptr<grpc::Channel> GrpcAccessTokenAuthentication::CreateChannel(
     std::string const& endpoint, grpc::ChannelArguments const& arguments) {
-  // TODO(#6311) - support setting SSL options
-  auto credentials = grpc::SslCredentials(grpc::SslCredentialsOptions{});
+  auto credentials = grpc::SslCredentials(ssl_options_);
   return grpc::CreateCustomChannel(endpoint, credentials, arguments);
 }
 

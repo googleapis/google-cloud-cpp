@@ -20,6 +20,7 @@
 #include "google/cloud/internal/grpc_service_account_authentication.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/memory/memory.h"
+#include <fstream>
 
 namespace google {
 namespace cloud {
@@ -46,8 +47,8 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
           grpc::GoogleDefaultCredentials());
     }
     void visit(AccessTokenConfig& cfg) override {
-      result =
-          absl::make_unique<GrpcAccessTokenAuthentication>(cfg.access_token());
+      result = absl::make_unique<GrpcAccessTokenAuthentication>(
+          cfg.access_token(), std::move(options));
     }
     void visit(ImpersonateServiceAccountConfig& cfg) override {
       result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
@@ -55,7 +56,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     }
     void visit(ServiceAccountConfig& cfg) override {
       result = absl::make_unique<GrpcServiceAccountAuthentication>(
-          cfg.json_object());
+          cfg.json_object(), std::move(options));
     }
   } visitor(std::move(cq), std::move(options));
 
@@ -66,6 +67,12 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials) {
   return std::make_shared<GrpcChannelCredentialsAuthentication>(credentials);
+}
+
+absl::optional<std::string> LoadCAInfo(Options const& opts) {
+  if (!opts.has<CARootsFilePathOption>()) return absl::nullopt;
+  std::ifstream is(opts.get<CARootsFilePathOption>());
+  return std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
 }
 
 }  // namespace internal

@@ -203,6 +203,49 @@ struct UnifiedCredentialsOption {
   using Type = std::shared_ptr<Credentials>;
 };
 
+/**
+ * Configures a custom CA (Certificates Authority) certificates file.
+ *
+ * Most applications should use the system's root certificates and should avoid
+ * setting this option unnecessarily. A common exception to this recommendation
+ * are containerized applications. These often deploy without system's root
+ * certificates and need to explicitly configure a root of trust.
+ *
+ * The value of this option should be the name of a file in [PEM format].
+ * Consult your security team and/or system administrator for the contents of
+ * this file. Be aware of the security implications of adding new CA
+ * certificates to this file. Only use trustworthy sources for the CA
+ * certificates.
+ *
+ * For REST-based libraries this configures the [CAINFO option] in libcurl.
+ * These are used for all credentials that require authentication, including the
+ * default credentials.
+ *
+ * For gRPC-based libraries this configures the `pem_roots_cert` parameter in
+ * [grpc::SslCredentialsOptions].
+ *
+ * @warning gRPC does not have a programmatic mechanism to set the CA
+ *     certificates for the default credentials. This option only has no effect
+ *     with `MakeGoogleDefaultCredentials()`, or
+ *     `MakeServiceAccountCredentials()`.
+ *     Consider using the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` environment
+ *     variable in these cases.
+ *
+ * @note CA certificates can be revoked or expire, plan for updates in your
+ *     deployment.
+ *
+ * @see https://en.wikipedia.org/wiki/Certificate_authority for a general
+ * introduction to SSL certificate authorities.
+ *
+ * [CAINFO Option]: https://curl.se/libcurl/c/CURLOPT_CAINFO.html
+ * [PEM format]: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
+ * [grpc::SslCredentialsOptions]:
+ * https://grpc.github.io/grpc/cpp/structgrpc_1_1_ssl_credentials_options.html
+ */
+struct CARootsFilePathOption {
+  using Type = std::string;
+};
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

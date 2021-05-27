@@ -40,8 +40,7 @@ StatusOr<google::cloud::storage::Client> DefaultGrpcClient(Options opts) {
   // The hybrid client might need the OAuth2 credentials
   if (!opts.has<storage::internal::Oauth2CredentialsOption>()) {
     storage::ChannelOptions channel_options;
-    channel_options.set_ssl_root_path(
-        opts.get<storage::internal::SslRootPathOption>());
+    channel_options.set_ssl_root_path(opts.get<CARootsFilePathOption>());
     auto credentials =
         storage::oauth2::GoogleDefaultCredentials(channel_options);
     if (!credentials) return std::move(credentials).status();
