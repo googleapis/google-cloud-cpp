@@ -207,6 +207,19 @@ struct ClientImplDetails;
  */
 class Client {
  public:
+  /**
+   * Build a new client.
+   *
+   * @param opts the configuration parameters for the `Client`.
+   *
+   * @see #ClientOptionList for a list of useful options.
+   *
+   * @par Idempotency Policy Example
+   * @snippet storage_object_samples.cc insert object strict idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet storage_object_samples.cc insert object modified retry
+   */
   explicit Client(Options opts = {});
 
   /**
@@ -219,14 +232,9 @@ class Client {
    *   retried, or what operations cannot be retried because they are not
    *   idempotent.
    *
-   * @par Idempotency Policy Example
-   * @snippet storage_object_samples.cc insert object strict idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet storage_object_samples.cc insert object modified retry
+   * @deprecated use the constructor from `google::cloud::Options` instead.
    */
   template <typename... Policies>
-  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
   explicit Client(ClientOptions options, Policies&&... policies)
       : Client(InternalOnly{}, internal::ApplyPolicies(
                                    internal::MakeOptions(std::move(options)),
@@ -241,14 +249,9 @@ class Client {
    *   retried, or what operations cannot be retried because they are not
    *   idempotent.
    *
-   * @par Idempotency Policy Example
-   * @snippet storage_object_samples.cc insert object strict idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet storage_object_samples.cc insert object modified retry
+   * @deprecated use the constructor from `google::cloud::Options` instead.
    */
   template <typename... Policies>
-  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
   explicit Client(std::shared_ptr<oauth2::Credentials> credentials,
                   Policies&&... policies)
       : Client(InternalOnly{},
@@ -256,8 +259,11 @@ class Client {
                    internal::DefaultOptions(std::move(credentials), {}),
                    std::forward<Policies>(policies)...)) {}
 
-  /// Create a Client using ClientOptions::CreateDefaultClientOptions().
-  GOOGLE_CLOUD_CPP_DEPRECATED("TODO(#6161)")
+  /**
+   * Create a Client using ClientOptions::CreateDefaultClientOptions().
+   *
+   * @deprecated use the constructor from `google::cloud::Options` instead.
+   */
   static StatusOr<Client> CreateDefaultClient();
 
   /// Builds a client and maybe override the retry, idempotency, and/or backoff
