@@ -29,7 +29,6 @@ namespace {
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:
