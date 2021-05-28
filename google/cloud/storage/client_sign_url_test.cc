@@ -51,10 +51,8 @@ class CreateSignedUrlTest
     : public ::google::cloud::storage::testing::ClientUnitTest {};
 
 TEST_F(CreateSignedUrlTest, V2Sign) {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  ASSERT_STATUS_OK(creds);
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  Client client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContents)));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
@@ -64,10 +62,8 @@ TEST_F(CreateSignedUrlTest, V2Sign) {
 }
 
 TEST_F(CreateSignedUrlTest, V2SignBucketOnly) {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  ASSERT_STATUS_OK(creds);
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  Client client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContents)));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "", WithAcl());
   ASSERT_STATUS_OK(actual);
@@ -76,10 +72,8 @@ TEST_F(CreateSignedUrlTest, V2SignBucketOnly) {
 }
 
 TEST_F(CreateSignedUrlTest, V2SignEscape) {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  ASSERT_STATUS_OK(creds);
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  Client client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContents)));
 
   auto actual = client.CreateV2SignedUrl("GET", "test-bucket", "test+object");
   ASSERT_STATUS_OK(actual);
@@ -149,10 +143,8 @@ constexpr char kJsonKeyfileContentsForV4[] = R"""({
 TEST_F(CreateSignedUrlTest, V4SignGet) {
   // This test uses a disabled key to create a V4 Signed URL for a GET
   // operation. The bucket name was generated at random too.
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContentsForV4);
-  ASSERT_STATUS_OK(creds);
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  Client client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContentsForV4)));
 
   std::string const bucket_name = "test-bucket";
   std::string const object_name = "test-object";
@@ -192,10 +184,8 @@ TEST_F(CreateSignedUrlTest, V4SignGet) {
 TEST_F(CreateSignedUrlTest, V4SignPut) {
   // This test uses a disabled key to create a V4 Signed URL for a PUT
   // operation. The bucket name was generated at random too.
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContentsForV4);
-  ASSERT_STATUS_OK(creds);
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  Client client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContentsForV4)));
 
   std::string const bucket_name = "test-bucket";
   std::string const object_name = "test-object";
@@ -236,9 +226,6 @@ TEST_F(CreateSignedUrlTest, V4SignPut) {
 
 /// @test Verify that CreateV4SignedUrl() uses the SignBlob API when needed.
 TEST_F(CreateSignedUrlTest, V4SignRemote) {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  ASSERT_STATUS_OK(creds);
   // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
   // string.
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
