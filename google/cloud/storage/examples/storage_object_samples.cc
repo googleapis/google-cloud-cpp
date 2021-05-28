@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/getenv.h"

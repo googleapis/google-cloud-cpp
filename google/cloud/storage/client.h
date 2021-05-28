@@ -219,6 +219,9 @@ class Client {
    *
    * @par Modified Retry Policy Example
    * @snippet storage_object_samples.cc insert object modified retry
+   *
+   * @par Change Credentials Example
+   * @snippet storage_auth_samples.cc service-account-keyfile-json
    */
   explicit Client(Options opts = {});
 

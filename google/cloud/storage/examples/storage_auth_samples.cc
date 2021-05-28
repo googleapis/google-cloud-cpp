@@ -14,12 +14,11 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
-#include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
-#include <map>
 #include <string>
 #include <thread>
 
@@ -69,44 +68,20 @@ void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
   namespace gcs = google::cloud::storage;
   [](std::string const& filename, std::string const& bucket_name,
      std::string const& object_name) {
+    auto is = std::ifstream(filename);
+    is.exceptions(std::ios::badbit);
+    auto json_string =
+        std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
     auto credentials =
-        gcs::oauth2::CreateServiceAccountCredentialsFromFilePath(filename);
-    if (!credentials) throw std::runtime_error(credentials.status().message());
+        google::cloud::MakeServiceAccountCredentials(json_string);
 
     PerformSomeOperations(
-        gcs::Client(google::cloud::Options{}.set<gcs::Oauth2CredentialsOption>(
-            *credentials)),
+        gcs::Client(
+            google::cloud::Options{}
+                .set<google::cloud::UnifiedCredentialsOption>(credentials)),
         bucket_name, object_name);
   }
   //! [service-account-keyfile-json]
-  (argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ServiceAccountContentsJson(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::storage::examples;
-  if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 3) {
-    throw examples::Usage{
-        "service-account-contents-json"
-        " <service-account-file> <bucket-name> <object-name>"};
-  }
-  //! [service-account-contents-json]
-  namespace gcs = google::cloud::storage;
-  [](std::string const& filename, std::string const& bucket_name,
-     std::string const& object_name) {
-    auto is = std::ifstream(filename);
-    is.exceptions(std::ios::badbit);
-    auto const contents =
-        std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}};
-    auto credentials =
-        gcs::oauth2::CreateServiceAccountCredentialsFromJsonContents(contents);
-    if (!credentials) throw std::runtime_error(credentials.status().message());
-
-    PerformSomeOperations(
-        gcs::Client(google::cloud::Options{}.set<gcs::Oauth2CredentialsOption>(
-            *credentials)),
-        bucket_name, object_name);
-  }
-  //! [service-account-contents-json]
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -141,9 +116,6 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const filename = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (filename.has_value()) {
-    std::cout << "\nRunning ServiceAccountContentsJson()" << std::endl;
-    ServiceAccountContentsJson({*filename, bucket_name, object_name});
-
     std::cout << "\nRunning ServiceAccountKeyfileJson()" << std::endl;
     ServiceAccountKeyfileJson({*filename, bucket_name, object_name});
   }
@@ -158,7 +130,6 @@ int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   examples::Example example({
       {"default-client", DefaultClient},
-      {"service-account-contents-json", ServiceAccountContentsJson},
       {"service-account-keyfile-json", ServiceAccountKeyfileJson},
       {"auto", RunAll},
   });
