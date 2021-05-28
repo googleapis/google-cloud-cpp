@@ -28,6 +28,13 @@ namespace testing {
 
 class MockClient : public google::cloud::storage::internal::RawClient {
  public:
+  MockClient()
+      : client_options_(
+            google::cloud::storage::oauth2::CreateAnonymousCredentials()) {
+    EXPECT_CALL(*this, client_options())
+        .WillRepeatedly(::testing::ReturnRef(client_options_));
+  }
+
   MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
   MOCK_METHOD(StatusOr<internal::ListBucketsResponse>, ListBuckets,
               (internal::ListBucketsRequest const&), (override));
@@ -149,6 +156,9 @@ class MockClient : public google::cloud::storage::internal::RawClient {
   MOCK_METHOD(
       StatusOr<std::string>, AuthorizationHeader,
       (std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&));
+
+ private:
+  ClientOptions client_options_;
 };
 
 class MockResumableUploadSession
