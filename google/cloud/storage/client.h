@@ -76,11 +76,11 @@ struct ClientImplDetails;
  *
  * @par Credentials
  * The default approach for creating a Client uses Google Application Default
- * %Credentials (ADCs). Note that a default-constructed client uses the ADCs:
+ * Credentials (ADCs). Note that a default-constructed client uses the ADCs:
  *
  * @snippet storage_auth_samples.cc default-client
  *
- * Finding or loading the ADCs can fail, this will result in run-time errors
+ * Finding or loading the ADCs can fail. This will result in run-time errors
  * when making requests.
  *
  * If you prefer to explicitly load the ADCs use:
@@ -96,7 +96,7 @@ struct ClientImplDetails;
  * - `google::cloud::MakeInsecureCredentials()` for anonymous access to public
  *   GCS buckets or objects.
  * - `google::cloud::MakeAccessTokenCredentials()` to use an access token
- *   obtained through any out-of-band mechanisms.
+ *   obtained through any out-of-band mechanism.
  * - `google::cloud::MakeImpersonateServiceAccountCredentials()` to use the IAM
  *   credentials service and [impersonate a service account].
  * - `google::cloud::MakeServiceAccountCredentials()` to use a service account

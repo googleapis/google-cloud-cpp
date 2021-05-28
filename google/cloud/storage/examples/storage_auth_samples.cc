@@ -27,7 +27,7 @@ namespace {
 void PerformSomeOperations(google::cloud::storage::Client client,
                            std::string const& bucket_name,
                            std::string const& object_name) {
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   auto constexpr kText = "The quick brown fox jumps over the lazy dog\n";
 
   auto object = client.InsertObject(bucket_name, object_name, kText).value();
@@ -48,7 +48,7 @@ void DefaultClient(std::vector<std::string> const& argv) {
         " <bucket-name> <object-name>"};
   }
   //! [default-client]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](std::string const& bucket_name, std::string const& object_name) {
     auto client = gcs::Client();
     PerformSomeOperations(client, bucket_name, object_name);
@@ -65,7 +65,7 @@ void ExplicitADCs(std::vector<std::string> const& argv) {
         " <bucket-name> <object-name>"};
   }
   //! [explicit-adcs]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   using google::cloud::Options;
   using google::cloud::UnifiedCredentialsOption;
   [](std::string const& bucket_name, std::string const& object_name) {
@@ -85,7 +85,7 @@ void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
         " <service-account-file> <bucket-name> <object-name>"};
   }
   //! [service-account-keyfile-json]
-  namespace gcs = google::cloud::storage;
+  namespace gcs = ::google::cloud::storage;
   [](std::string const& filename, std::string const& bucket_name,
      std::string const& object_name) {
     auto is = std::ifstream(filename);
