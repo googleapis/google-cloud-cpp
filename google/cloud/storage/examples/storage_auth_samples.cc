@@ -57,6 +57,26 @@ void DefaultClient(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void ExplicitADCs(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 2) {
+    throw examples::Usage{
+        "explicit-adcs"
+        " <bucket-name> <object-name>"};
+  }
+  //! [explicit-adcs]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::Options;
+  using google::cloud::UnifiedCredentialsOption;
+  [](std::string const& bucket_name, std::string const& object_name) {
+    auto client = gcs::Client(Options{}.set<UnifiedCredentialsOption>(
+        google::cloud::MakeGoogleDefaultCredentials()));
+    PerformSomeOperations(client, bucket_name, object_name);
+  }
+  //! [explicit-adcs]
+  (argv.at(0), argv.at(1));
+}
+
 void ServiceAccountKeyfileJson(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   if ((argv.size() == 1 && argv[0] == "--help") || argv.size() != 3) {
@@ -113,6 +133,9 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const object_name = examples::MakeRandomObjectName(generator, "object-");
   DefaultClient({bucket_name, object_name});
 
+  std::cout << "\nRunning ExplicitADCs()" << std::endl;
+  ExplicitADCs({bucket_name, object_name});
+
   auto const filename = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (filename.has_value()) {
@@ -130,6 +153,7 @@ int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   examples::Example example({
       {"default-client", DefaultClient},
+      {"explicit-adcs", ExplicitADCs},
       {"service-account-keyfile-json", ServiceAccountKeyfileJson},
       {"auto", RunAll},
   });

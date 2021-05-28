@@ -76,47 +76,30 @@ struct ClientImplDetails;
  *
  * @par Credentials
  * The default approach for creating a Client uses Google Application Default
- * %Credentials (ADCs). Because finding or loading ADCs can fail, the returned
- * `StatusOr<Client>` from `CreateDefaultClient()` should be verified before
- * using it. However, explicitly passing `Credentials` when creating a Client
- * does not have the same potential to fail, so the resulting `Client` is not
- * wrapped in a `StatusOr`.  If you wish to use `AnonymousCredentials` or to
- * supply a specific `Credentials` type, you can use the functions declared in
- * google_credentials.h:
- * @code
- * namespace gcs = google::cloud::storage;
+ * %Credentials (ADCs). Note that a default-constructed client uses the ADCs:
  *
- * // Implicitly use ADCs:
- * StatusOr<gcs::Client> client = gcs::Client::CreateDefaultClient();
- * if (!client) {
- *   // Handle failure and return.
- * }
+ * @snippet storage_auth_client.cc default-client
  *
- * // Or explicitly use ADCs:
- * auto creds = gcs::oauth2::GoogleDefaultCredentials();
- * if (!creds) {
- *   // Handle failure and return.
- * }
- * // Status was OK, so create a Client with the given Credentials.
- * gcs::Client client(gcs::ClientOptions(*creds));
+ * Finding or loading the ADCs can fail, this will result in run-time errors
+ * when making requests.
  *
- * // Use service account credentials from a JSON keyfile:
- * std::string path = "/path/to/keyfile.json";
- * auto creds =
- *     gcs::oauth2::CreateServiceAccountCredentialsFromJsonFilePath(path);
- * if (!creds) {
- *   // Handle failure and return.
- * }
- * gcs::Client client(gcs::ClientOptions(*creds));
+ * If you prefer to explicitly load the ADCs, use:
  *
- * // Use Compute Engine credentials for the instance's default service account.
- * gcs::Client client(
- *     gcs::ClientOptions(gcs::oauth2::CreateComputeEngineCredentials()));
+ * @snippet storage_auth_client.cc explicit-adcs
  *
- * // Use no credentials:
- * gcs::Client client(
- *     gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials()));
- * @endcode
+ * Other credential types are available, including:
+ *
+ * - `google::cloud::MakeInsecureCredentials()` for anonymous access to public
+ *   GCS buckets or objects.
+ * - `google::cloud::MakeAccessTokenCredentials()` to use an access token
+ *   obtained through any out-of-band mechanisms.
+ * - `google::cloud::MakeImpersonateServiceAccountCredentials()` to use the IAM
+ *   credentials service and [impersonate a service account].
+ * - `google::cloud::MakeServiceAccountCredentials()` to use a service account
+ *   key file.
+ *
+ * [impersonate service account]:
+ * https://cloud.google.com/iam/docs/impersonating-service-accounts
  *
  * @par Error Handling
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
