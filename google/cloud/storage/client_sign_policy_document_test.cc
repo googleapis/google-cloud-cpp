@@ -57,11 +57,9 @@ std::string Dec64(std::string const& s) {
   return std::string(res.begin(), res.end());
 };
 
-StatusOr<Client> CreateClientForTest() {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  if (!creds) return std::move(creds).status();
-  return Client(Options{}.set<Oauth2CredentialsOption>(*creds));
+Client CreateClientForTest() {
+  return Client(Options{}.set<UnifiedCredentialsOption>(
+      MakeServiceAccountCredentials(kJsonKeyfileContents)));
 }
 
 /**
@@ -90,9 +88,8 @@ PolicyDocument CreatePolicyDocumentForTest() {
 /// Test the CreateSignedPolicyDocument function in storage::Client.
 TEST(CreateSignedPolicyDocTest, Sign) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
   auto actual =
-      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com", actual->access_id);
@@ -186,8 +183,7 @@ PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
 
 TEST(CreateSignedPolicyDocTest, SignV4) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), AddExtensionFieldOption(),
       PredefinedAcl(), Scheme());
   ASSERT_STATUS_OK(actual);
@@ -233,8 +229,7 @@ TEST(CreateSignedPolicyDocTest, SignV4) {
 
 TEST(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(),
       AddExtensionField("my-field", "my-value"));
   ASSERT_STATUS_OK(actual);
@@ -244,8 +239,7 @@ TEST(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
 
 TEST(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), PredefinedAcl::BucketOwnerRead());
   ASSERT_STATUS_OK(actual);
 
@@ -255,8 +249,7 @@ TEST(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
 
 TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"));
   ASSERT_STATUS_OK(actual);
 
@@ -265,8 +258,7 @@ TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
 
 TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"),
       Scheme("http"));
   ASSERT_STATUS_OK(actual);
@@ -276,8 +268,7 @@ TEST(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
 
 TEST(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
   auto client = CreateClientForTest();
-  ASSERT_STATUS_OK(client);
-  auto actual = client->GenerateSignedPostPolicyV4(
+  auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), VirtualHostname(true));
   ASSERT_STATUS_OK(actual);
 
