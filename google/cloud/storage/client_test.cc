@@ -84,8 +84,6 @@ class ClientTest : public ::testing::Test {
 };
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
-  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
   auto client = internal::ClientImplDetails::CreateClient(
       std::shared_ptr<internal::RawClient>(mock_), ObservableRetryPolicy(3));
 
@@ -103,8 +101,6 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
-  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
   auto client = internal::ClientImplDetails::CreateClient(
       std::shared_ptr<internal::RawClient>(mock_),
       ObservableBackoffPolicy(ms(20), ms(100), 2.0));
@@ -121,8 +117,6 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
 
 TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
-  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
-  EXPECT_CALL(*mock_, client_options()).WillRepeatedly(ReturnRef(mock_options));
   auto client = internal::ClientImplDetails::CreateClient(
       std::shared_ptr<internal::RawClient>(mock_),
       ObservableBackoffPolicy(ms(20), ms(100), 2.0), ObservableRetryPolicy(3));
@@ -177,15 +171,12 @@ TEST_F(ClientTest, LoggingDecorators) {
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
-  auto options = ClientOptions(oauth2::CreateAnonymousCredentials());
   auto m1 = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*m1, client_options).WillRepeatedly(ReturnRef(options));
 
   auto c1 = storage::Client(m1, Client::NoDecorations{});
   EXPECT_EQ(c1.raw_client().get(), m1.get());
 
   auto m2 = std::make_shared<testing::MockClient>();
-  EXPECT_CALL(*m2, client_options).WillRepeatedly(ReturnRef(options));
   auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
   EXPECT_NE(c2.raw_client().get(), m2.get());
 }

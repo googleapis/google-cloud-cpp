@@ -23,20 +23,13 @@
 namespace {
 
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 //! [mock successful readobject]
 TEST(StorageMockingSamples, MockReadObject) {
   namespace gcs = google::cloud::storage;
 
-  gcs::ClientOptions client_options =
-      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
-
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  EXPECT_CALL(*mock, client_options())
-      .WillRepeatedly(ReturnRef(client_options));
-
   auto client = gcs::testing::ClientFromMock(mock);
 
   std::string const text = "this is a mock http response";
@@ -78,14 +71,9 @@ TEST(StorageMockingSamples, MockReadObject) {
 //! [mock successful writeobject]
 TEST(StorageMockingSamples, MockWriteObject) {
   namespace gcs = google::cloud::storage;
-  gcs::ClientOptions client_options =
-      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  EXPECT_CALL(*mock, client_options())
-      .WillRepeatedly(ReturnRef(client_options));
-
   auto client = gcs::testing::ClientFromMock(mock);
 
   gcs::ObjectMetadata expected_metadata;
@@ -129,14 +117,8 @@ TEST(StorageMockingSamples, MockWriteObject) {
 TEST(StorageMockingSamples, MockReadObjectFailure) {
   namespace gcs = google::cloud::storage;
 
-  gcs::ClientOptions client_options =
-      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
-
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  EXPECT_CALL(*mock, client_options())
-      .WillRepeatedly(ReturnRef(client_options));
-
   auto client = gcs::testing::ClientFromMock(mock);
 
   std::string text = "this is a mock http response";
@@ -167,14 +149,9 @@ TEST(StorageMockingSamples, MockReadObjectFailure) {
 //! [mock failed writeobject]
 TEST(StorageMockingSamples, MockWriteObjectFailure) {
   namespace gcs = google::cloud::storage;
-  gcs::ClientOptions client_options =
-      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  EXPECT_CALL(*mock, client_options())
-      .WillRepeatedly(ReturnRef(client_options));
-
   auto client = gcs::testing::ClientFromMock(mock);
 
   EXPECT_CALL(*mock, CreateResumableSession)
