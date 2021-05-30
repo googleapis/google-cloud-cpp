@@ -25,7 +25,8 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/etc/install-config.sh"
 
-readonly KERNEL="$(uname -s | tr '[:upper:]' '[:lower:]')"
+KERNEL="$(uname -s | tr '[:upper:]' '[:lower:]')"
+readonly KERNEL
 MACHINE="$(uname -m)"
 if [[ "${KERNEL}" = "darwin" ]]; then
   # Bazel currently doesn't offer a darwin + arm package, but the x86_64

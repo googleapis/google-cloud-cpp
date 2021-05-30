@@ -16,7 +16,8 @@
 
 set -eu
 
-readonly BINDIR=$(dirname "$0")
+BINDIR=$(dirname "$0")
+readonly BINDIR
 
 # The initial portion of the preamble needs variable expansion:
 cat <<EOF

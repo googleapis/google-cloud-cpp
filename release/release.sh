@@ -47,7 +47,8 @@
 set -eu
 
 # Extracts all the documentation at the top of this file as the usage text.
-readonly USAGE="$(sed -n '3,/^$/s/^# \?//p' "$0")"
+USAGE="$(sed -n '3,/^$/s/^# \?//p' "$0")"
+readonly USAGE
 
 # Takes an optional list of strings to be printed with a trailing newline and
 # exits the program with code 1
@@ -90,7 +91,8 @@ declare -r PROJECT_ARG
 declare -r VERSION_ARG
 
 readonly CLONE_URL="git@github.com:${PROJECT_ARG}.git"
-readonly TMP_DIR="$(mktemp -d "/tmp/${PROJECT_ARG//\//-}-release.XXXXXXXX")"
+TMP_DIR="$(mktemp -d "/tmp/${PROJECT_ARG//\//-}-release.XXXXXXXX")"
+readonly TMP_DIR
 readonly REPO_DIR="${TMP_DIR}/repo"
 
 function banner() {
@@ -165,13 +167,16 @@ fi
 banner "Starting release for ${PROJECT_ARG} (${CLONE_URL})"
 # Only clones the last 90 days worth of commits, which should be more than
 # enough to get the most recent release tags.
-readonly SINCE="$(date --date="90 days ago" +"%Y-%m-%d")"
+SINCE="$(date --date="90 days ago" +"%Y-%m-%d")"
+readonly SINCE
 hub clone --shallow-since="${SINCE}" "${PROJECT_ARG}" "${REPO_DIR}"
 cd "${REPO_DIR}"
 
 # Figures out the most recent tagged version, and computes the next version.
-readonly TAG="$(git describe --tags --abbrev=0 origin/main)"
-readonly CUR_TAG="$(test -n "${TAG}" && echo "${TAG}" || echo "v0.0.0")"
+TAG="$(git describe --tags --abbrev=0 origin/main)"
+readonly TAG
+CUR_TAG="$(test -n "${TAG}" && echo "${TAG}" || echo "v0.0.0")"
+readonly CUR_TAG
 readonly CUR_VERSION="${CUR_TAG#v}"
 
 NEW_VERSION=""
@@ -205,7 +210,8 @@ run git checkout -b "${NEW_BRANCH}" "${NEW_TAG}"
 run git push --set-upstream origin "${NEW_BRANCH}"
 
 banner "Using release notes for ${NEW_TAG}"
-readonly RELEASE_NOTES="$(get_release_notes "${NEW_TAG}")"
+RELEASE_NOTES="$(get_release_notes "${NEW_TAG}")"
+readonly RELEASE_NOTES
 echo "${RELEASE_NOTES}"
 
 banner "Creating release"

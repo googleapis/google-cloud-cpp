@@ -46,7 +46,8 @@ curl -sSL --retry 10 -o /dev/shm/roots.pem https://pki.google.com/roots.pem
 function integration::bazel_args() {
   declare -a args
 
-  readonly bazel_output=$(bazel info output_base)
+  bazel_output=$(bazel info output_base)
+  readonly bazel_output
   readonly bazel_googleapis_path="${bazel_output}/external/com_google_googleapis/"
   readonly bazel_proto_path="${bazel_output}/external/com_google_protobuf/src/"
 

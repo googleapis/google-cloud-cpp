@@ -16,7 +16,8 @@
 
 set -eu
 
-readonly BINDIR=$(dirname "$0")
+BINDIR=$(dirname "$0")
+readonly BINDIR
 
 cat <<_EOF_
 # Google Cloud Spanner C++ Client Library
