@@ -30,13 +30,8 @@ int main(int argc, char* argv[]) {
   // Create a client to communicate with Google Cloud Storage. This client
   // uses the default configuration for authentication and project id.
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
 
-  auto writer = client->WriteObject(bucket_name, "quickstart-grpc.txt");
+  auto writer = client.WriteObject(bucket_name, "quickstart-grpc.txt");
   writer << "Hello World!";
   writer.Close();
   if (writer.metadata()) {
@@ -47,7 +42,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto reader = client->ReadObject(bucket_name, "quickstart-grpc.txt");
+  auto reader = client.ReadObject(bucket_name, "quickstart-grpc.txt");
   if (!reader) {
     std::cerr << "Error reading object: " << reader.status() << "\n";
     return 1;
