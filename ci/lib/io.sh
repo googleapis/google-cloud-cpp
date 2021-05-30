@@ -30,18 +30,23 @@ fi # include guard
 # logging functions below instead. For example, prefer `io::log_green "..."`
 # over `echo "${IO_COLOR_GREEN}...${IO_RESET}"`.
 if [ -t 0 ] && command -v tput >/dev/null; then
-  readonly IO_BOLD="$(tput bold)"
-  readonly IO_COLOR_RED="$(tput setaf 1)"
-  readonly IO_COLOR_GREEN="$(tput setaf 2)"
-  readonly IO_COLOR_YELLOW="$(tput setaf 3)"
-  readonly IO_RESET="$(tput sgr0)"
+  IO_BOLD="$(tput bold)"
+  IO_COLOR_RED="$(tput setaf 1)"
+  IO_COLOR_GREEN="$(tput setaf 2)"
+  IO_COLOR_YELLOW="$(tput setaf 3)"
+  IO_RESET="$(tput sgr0)"
 else
-  readonly IO_BOLD=""
-  readonly IO_COLOR_RED=""
-  readonly IO_COLOR_GREEN=""
-  readonly IO_COLOR_YELLOW=""
-  readonly IO_RESET=""
+  IO_BOLD=""
+  IO_COLOR_RED=""
+  IO_COLOR_GREEN=""
+  IO_COLOR_YELLOW=""
+  IO_RESET=""
 fi
+readonly IO_BOLD
+readonly IO_COLOR_RED
+readonly IO_COLOR_GREEN
+readonly IO_COLOR_YELLOW
+readonly IO_RESET
 
 # Logs a message using the given terminal capability. The first argument
 # must be one of the IO_* variables defined above, such as "${IO_COLOR_RED}".

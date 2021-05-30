@@ -16,7 +16,8 @@
 
 set -eu
 
-readonly BINDIR=$(dirname "$0")
+BINDIR=$(dirname "$0")
+readonly BINDIR
 
 cat <<'END_OF_PREAMBLE'
 # Packaging `google-cloud-cpp`
