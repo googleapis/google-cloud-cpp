@@ -68,8 +68,7 @@ class UnifiedCredentialsIntegrationTest
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     if (client_type == "grpc") {
       return google::cloud::storage_experimental::DefaultGrpcClient(
-                 std::move(opts))
-          .value();
+          std::move(opts));
     }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     return Client(std::move(opts));
