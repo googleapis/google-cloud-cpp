@@ -82,7 +82,7 @@ std::string FormatMethodCommentsFromRpcComments(
 struct ResourceRoutingInfo {
   std::string url_path;
   std::string param_key;
-  std::string url_substituion;
+  std::string url_substitution;
   std::string body;
 };
 /**

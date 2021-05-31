@@ -616,7 +616,7 @@ TEST(BucketMetadataTest, SetIamConfigurationUBLA) {
 }
 
 /// @test Verify we can reset the IAM Configuration in BucketMetadata.
-TEST(BucketMetadataTest, ResetIamConfiguraiton) {
+TEST(BucketMetadataTest, ResetIamConfiguration) {
   auto expected = CreateBucketMetadataForTest();
   EXPECT_TRUE(expected.has_encryption());
   auto copy = expected;

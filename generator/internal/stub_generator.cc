@@ -177,7 +177,7 @@ Status StubGenerator::GenerateHeader() {
     // clang-format on
   }
 
-  // private members and close default stub class defintion
+  // private members and close default stub class definition
   HeaderPrint(  // clang-format off
     " private:\n"
     "  std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub_;\n"

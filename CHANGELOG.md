@@ -385,7 +385,7 @@ No user-facing changes.
 * feat(pubsub): more efficient callback dispatch (#5458)
 * feat(pubsub): batch acks and nacks in streams (#5464)
 * feat(pubsub): increase default buffer sizes (#5449)
-* feat(pubsub): pace publisher in throughtput benchmark (#5447)
+* feat(pubsub): pace publisher in throughput benchmark (#5447)
 * feat(pubsub): improve lease management performance (#5454)
 * feat(pubsub): more details in throughput benchmark (#5451)
 * feat(pubsub): import throughput benchmark reports (#5450)

@@ -20,7 +20,7 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
-TEST(SignedUrlOptions, QueryParamters) {
+TEST(SignedUrlOptions, QueryParameters) {
   auto mp = [](char const* k, char const* v) {
     return std::pair<std::string, std::string>(k, v);
   };

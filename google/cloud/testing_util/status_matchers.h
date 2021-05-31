@@ -48,7 +48,7 @@ class StatusIsMatcher {
     // Because StatusOr<T> does not have a printer, gMock will render the
     // value using RawBytesPrinter as "N-byte object <...>", which is not
     // very useful. Accordingly, we print the enclosed Status so that a
-    // failing expection does not require further explanation.
+    // failing expectation does not require further explanation.
     Status const& status = value.status();
     *listener << "whose status is " << ::testing::PrintToString(status);
 

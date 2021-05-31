@@ -19,11 +19,11 @@ ARG NCPU=4
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker abi-dumper autoconf automake ccache \
-        clang clang-analyzer clang-tools-extra \
+    dnf install -y abi-compliance-checker abi-dumper autoconf automake \
+        cargo ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
-        libasan libubsan libtsan libcurl-devel make ninja-build npm \
+        libasan libubsan libtsan libcurl-devel make ninja-build \
         openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
         python-pip ShellCheck tar unzip w3m wget which zip zlib-devel
 
@@ -57,8 +57,8 @@ RUN pip3 install black==19.3b0
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install setuptools wheel
 
-# Install cspell for spell checking.
-RUN npm install -g cspell@5.2.4
+# Install typos for spell checking.
+RUN cargo install typos-cli --version 1.0.3 --root /usr/local
 
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
