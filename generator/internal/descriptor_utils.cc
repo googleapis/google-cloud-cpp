@@ -225,7 +225,7 @@ void SetResourceRoutingMethodVars(
   auto result = ParseResourceRoutingHeader(method);
   if (result.has_value()) {
     method_vars["method_request_url_path"] = result->url_path;
-    method_vars["method_request_url_substitution"] = result->url_substituion;
+    method_vars["method_request_url_substitution"] = result->url_substitution;
     std::string param = result->param_key;
     method_vars["method_request_param_key"] = param;
     std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));

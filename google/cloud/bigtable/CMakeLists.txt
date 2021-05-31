@@ -35,7 +35,7 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
-# Configure the location of proto files, particulary the googleapis protos.
+# Configure the location of proto files, particularly the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
      "${PROJECT_SOURCE_DIR}")
 

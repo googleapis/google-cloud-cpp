@@ -1564,7 +1564,7 @@ void MakeUpdateMutation(google::cloud::spanner::Client client) {
           "Albums", {"SingerId", "AlbumId", "MarketingBudget"}, 1, 1, 200000),
   });
   if (!commit) throw std::runtime_error(commit.status().message());
-  std::cout << "make-update-mutation was succesful\n";
+  std::cout << "make-update-mutation was successful\n";
 }
 //! [make-update-mutation]
 
@@ -2255,7 +2255,7 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
-  std::cout << "Write then read suceeded [spanner_dml_write_then_read]\n";
+  std::cout << "Write then read succeeded [spanner_dml_write_then_read]\n";
 }
 //! [END spanner_dml_write_then_read]
 

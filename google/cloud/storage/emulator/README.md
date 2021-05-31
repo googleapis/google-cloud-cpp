@@ -37,7 +37,7 @@ curl "http://localhost:9000/start_grpc?port=8000"
 
 ### Client
 
-For `google-cloud-cpp`, please set the following enviroment variable
+For `google-cloud-cpp`, please set the following environment variable
 
 ```bash
 CLOUD_STORAGE_EMULATOR_ENDPOINT=http://localhost:9000 # For JSON and XML API

@@ -50,7 +50,7 @@ namespace {
 //   A a = {1, 2};  // <-- Warning, missing initializer for A::c.
 //
 // To make the test code in this file more readable, we disable this warning
-// and rely on the guranteed behavior of aggregate initialization.
+// and rely on the guaranteed behavior of aggregate initialization.
 // https://en.cppreference.com/w/cpp/language/aggregate_initialization
 // Note: "pragma GCC" works for both GCC and clang. MSVC doesn't warn.
 #if defined(__GNUC__) || defined(__clang__)

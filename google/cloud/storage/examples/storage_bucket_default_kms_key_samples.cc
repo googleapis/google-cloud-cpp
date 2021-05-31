@@ -36,7 +36,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
     if (!updated->has_encryption()) {
       std::cerr << "The change to set the encryption attribute on bucket "
                 << updated->name()
-                << " was sucessful, but the encryption is not set."
+                << " was successful, but the encryption is not set."
                 << "This is unexpected, maybe a concurrent change?\n";
       return;
     }

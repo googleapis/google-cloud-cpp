@@ -358,12 +358,12 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto immediatelly_admitted =
+  auto immediately_admitted =
       ApplyMany(mutations.begin() + 1, mutations.begin() + 3);
   auto initially_not_admitted = Apply(mutations[3]);
 
-  EXPECT_TRUE(immediatelly_admitted.AllAdmitted());
-  EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
+  EXPECT_TRUE(immediately_admitted.AllAdmitted());
+  EXPECT_TRUE(immediately_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->admitted);
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -371,14 +371,14 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   FinishSingleItemStream();
 
   EXPECT_TRUE(state0->completed);
-  EXPECT_TRUE(immediatelly_admitted.NoneCompleted());
+  EXPECT_TRUE(immediately_admitted.NoneCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_TRUE(initially_not_admitted->admitted);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
   FinishSingleItemStream();
 
-  EXPECT_TRUE(immediatelly_admitted.AllCompleted());
+  EXPECT_TRUE(immediately_admitted.AllCompleted());
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 

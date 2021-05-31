@@ -122,7 +122,7 @@ ccache --show-stats
 ccache --zero-stats
 
 echo "================================================================"
-io::log_green "Build finished sucessfully"
+io::log_green "Build finished successfully"
 echo "================================================================"
 
 exit 0

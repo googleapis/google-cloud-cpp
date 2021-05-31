@@ -20,7 +20,7 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
 
-# Replaces a file only if it changed. This is needed becuase sed -i and perl -i
+# Replaces a file only if it changed. This is needed because sed -i and perl -i
 # will modify the mtime even if no edits are made, which will cause code to be
 # recompiled unnecessarily.
 function replace_original_if_changed() {
@@ -49,6 +49,16 @@ readonly TIMEFORMAT="... %R seconds"
 # with bash sometimes buffering output from its builtins. See
 # https://github.com/googleapis/google-cloud-cpp/issues/4152
 enable -n printf
+
+# Check for typos first so we don't generate more new files w/ the same typos.
+printf "%-30s" "Running typos:" >&2
+time {
+  # See https://github.com/crate-ci/typos for more details.
+  # A couple useful invocations:
+  #  $ typos --write-changes  # writes spelling fixes back to disk
+  #  $ typos --dump-config -  # dumps effective config to stdout
+  typos
+}
 
 printf "%-30s" "Running markdown generators:" >&2
 time {
@@ -139,12 +149,6 @@ time {
       --exclude=SC2034 \
       --exclude=SC2153 \
       --exclude=SC2181
-}
-
-printf "%-30s" "Running cspell:" >&2
-time {
-  git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 cspell --no-summary --no-progress -c ci/cspell.json
 }
 
 # Apply several transformations that cannot be enforced by clang-format:

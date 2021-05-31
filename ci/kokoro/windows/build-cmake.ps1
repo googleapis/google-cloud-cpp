@@ -51,7 +51,7 @@ if ($LastExitCode) {
 
 # Workaround some flaky / broken tests in the CI builds, some of the
 # tests where (reported) successfully created during the build,
-# only to be missing when runing the tests. This is probably a toolchain
+# only to be missing when running the tests. This is probably a toolchain
 # bug, and this seems to workaround it.
 $workaround_targets=(
     # Failed around 2020-07-29

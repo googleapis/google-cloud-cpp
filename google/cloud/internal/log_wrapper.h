@@ -37,7 +37,7 @@ std::string DebugString(google::protobuf::Message const& m,
 
 char const* DebugFutureStatus(std::future_status s);
 
-// Create a unique ID that can be used to match asynchronous requests/reponse
+// Create a unique ID that can be used to match asynchronous requests/response
 // pairs.
 std::string RequestIdForLogging();
 

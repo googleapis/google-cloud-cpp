@@ -330,7 +330,7 @@ TEST_F(ClientOptionsTest, DefaultOptions) {
   auto o = internal::DefaultOptions(oauth2::CreateAnonymousCredentials(), {});
   EXPECT_EQ("https://storage.googleapis.com", o.get<RestEndpointOption>());
 
-  // Verify any set values are respected overriden.
+  // Verify any set values are respected overridden.
   o = internal::DefaultOptions(
       oauth2::CreateAnonymousCredentials(),
       Options{}.set<RestEndpointOption>("https://private.googleapis.com"));
