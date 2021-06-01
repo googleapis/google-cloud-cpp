@@ -43,8 +43,6 @@ io::log "Using Bazel in ${BAZEL_BIN}"
 bazel_args=(
   # On macOS gRPC does not compile correctly unless one defines this:
   "--copt=-DGRPC_BAZEL_BUILD"
-  # https://github.com/abseil/abseil-cpp/issues/965
-  "--features=-supports_dynamic_linker"
   # We need this environment variable because on macOS gRPC crashes if it
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.

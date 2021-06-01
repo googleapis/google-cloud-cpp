@@ -48,7 +48,7 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.1.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20210324.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
