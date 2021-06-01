@@ -87,9 +87,9 @@
 * fix(bigtable): async bulk apply retry, backoff policy fix  (#6510)
 
 ### IAM
-**NOTE** This release includes an **experimental** IAM client library. This 
-library is **NOT GA** and is likely to have breaking changes in the coming 
-months. Feel free to take a look, file issues, ask questions, and even 
+**NOTE** This release includes an **experimental** IAM client library. This
+library is **NOT GA** and is likely to have breaking changes in the coming
+months. Feel free to take a look, file issues, ask questions, and even
 experiment with it, but do not ship production code using it yet.
 
 * feature(iam): generate iam admin code (#6430)
