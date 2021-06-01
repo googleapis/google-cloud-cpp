@@ -77,7 +77,7 @@ class BasicExperiment : public Experiment {
                                                         config.maximum_threads);
 
     std::uniform_int_distribution<int> channel_count_gen(
-        config.minimum_clients, config.maximum_clients);
+        config.minimum_channels, config.maximum_channels);
     for (int i = 0; i != config.samples; ++i) {
       auto const thread_count = thread_count_gen(generator_);
       auto const channel_count = channel_count_gen(generator_);

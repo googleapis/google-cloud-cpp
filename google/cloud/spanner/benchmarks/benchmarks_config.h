@@ -38,9 +38,8 @@ struct Config {
 
   int minimum_threads = 1;
   int maximum_threads = 1;
-  // TODO(#4032) change these variable names from `*_clients` to `*_channels`
-  int minimum_clients = 1;
-  int maximum_clients = 1;
+  int minimum_channels = 1;
+  int maximum_channels = 1;
 
   std::int32_t table_size = 1000 * 1000L;
   std::int32_t query_size = 1000;
