@@ -94,11 +94,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-3.17.0",
+            strip_prefix = "protobuf-3.17.1",
             urls = [
-                "https://github.com/google/protobuf/archive/v3.17.0.tar.gz",
+                "https://github.com/google/protobuf/archive/v3.17.1.tar.gz",
             ],
-            sha256 = "eaba1dd133ac5167e8b08bc3268b2d33c6e9f2dcb14ec0f97f3d3eed9b395863",
+            sha256 = "036d66d6eec216160dd898cfb162e9d82c1904627642667cc32b104d407bb411",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
