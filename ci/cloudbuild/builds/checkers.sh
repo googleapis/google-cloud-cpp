@@ -32,6 +32,7 @@ function sed_edit() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
     -e)
+      test -z "$2" && return 1
       expressions+=("-e" "$2")
       shift 2
       ;;
@@ -119,7 +120,7 @@ time {
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$0 \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -176,7 +177,7 @@ time {
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
   expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$0 \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply transformations to fix whitespace formatting in files not handled by
@@ -186,7 +187,7 @@ time {
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \$0 \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
 }
 
 # Report the differences, which should break the build.
