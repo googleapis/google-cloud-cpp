@@ -24,7 +24,7 @@ source module ci/cloudbuild/builds/lib/git.sh
 # in place. This function is exported so it can be run in subshells, such as
 # with xargs -P. Example:
 #
-#   sed_edit -e 's/foo/bar/g' hello.txt
+#   sed_edit -e 's/foo/bar/g' -e 's,baz,blah,' hello.txt
 #
 function sed_edit() {
   local expressions=()
@@ -119,7 +119,7 @@ time {
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$0 \$@"
 }
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -172,11 +172,11 @@ time {
 #       `grpc::` namespace do not exist inside google.
 printf "%-30s" "Running include fixes:" >&2
 time {
-  expressions=("-e" "s/grpc::\\([A-Z][A-Z_][A-Z_]*\\)/grpc::StatusCode::\\1/g")
-  expressions+=("-e" "s;#include <grpc\\\+\\\+/grpc\\+\\+.h>;#include <grpcpp/grpcpp.h>;")
-  expressions+=("-e" "s;#include <grpc\\\+\\\+/;#include <grpcpp/;")
+  expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
+  expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
+  expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$0 \$@"
 }
 
 # Apply transformations to fix whitespace formatting in files not handled by
@@ -186,7 +186,7 @@ time {
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\\+$//' \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \$0 \$@"
 }
 
 # Report the differences, which should break the build.
