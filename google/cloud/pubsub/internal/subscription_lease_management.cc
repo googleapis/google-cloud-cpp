@@ -135,11 +135,12 @@ void SubscriptionLeaseManagement::StartRefreshTimer(
   auto deadline = new_server_deadline - kAckDeadlineSlack;
 
   shutdown_manager_->StartOperation(__func__, "OnRefreshTimer", [&] {
-    if (refresh_timer_.valid()) refresh_timer_.cancel();
     using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-    cq_.MakeDeadlineTimer(deadline).then([weak](TimerFuture tp) {
-      if (auto self = weak.lock()) self->OnRefreshTimer(!tp.get());
-    });
+    if (refresh_timer_.valid()) refresh_timer_.cancel();
+    refresh_timer_ =
+        cq_.MakeDeadlineTimer(deadline).then([weak](TimerFuture tp) {
+          if (auto self = weak.lock()) self->OnRefreshTimer(!tp.get());
+        });
   });
 }
 
