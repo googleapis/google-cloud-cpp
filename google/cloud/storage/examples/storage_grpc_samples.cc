@@ -35,11 +35,11 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   auto client = google::cloud::storage_experimental::DefaultGrpcClient();
   //! [grpc-default-client]
 
-  auto object = client->InsertObject(bucket_name, "lorem.txt", kText);
+  auto object = client.InsertObject(bucket_name, "lorem.txt", kText);
   if (!object) throw std::runtime_error(object.status().message());
 
-  auto input = client->ReadObject(bucket_name, "lorem.txt",
-                                  gcs::Generation(object->generation()));
+  auto input = client.ReadObject(bucket_name, "lorem.txt",
+                                 gcs::Generation(object->generation()));
   std::string const actual(std::istreambuf_iterator<char>{input}, {});
   std::cout << "The contents read back are:\n"
             << actual
@@ -67,7 +67,6 @@ void GrpcClientWithProject(std::string project_id) {
   auto client = google::cloud::storage_experimental::DefaultGrpcClient(
       google::cloud::Options{}.set<gcs::ProjectIdOption>(
           std::move(project_id)));
-  if (!client) throw std::runtime_error(client.status().message());
   std::cout << "Successfully created a gcs::Client configured to use gRPC\n";
 }
 //! [grpc-client-with-project]

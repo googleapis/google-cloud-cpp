@@ -41,7 +41,7 @@ inline namespace STORAGE_CLIENT_NS {
  * @warning this is an experimental feature, and subject to change without
  *     notice.
  */
-StatusOr<google::cloud::storage::Client> DefaultGrpcClient(Options opts = {});
+google::cloud::storage::Client DefaultGrpcClient(Options opts = {});
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage_experimental

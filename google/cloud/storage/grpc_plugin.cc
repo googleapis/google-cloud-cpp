@@ -31,20 +31,11 @@ bool UseGrpcForMetadata() {
 }
 }  // namespace
 
-StatusOr<google::cloud::storage::Client> DefaultGrpcClient(Options opts) {
+google::cloud::storage::Client DefaultGrpcClient(Options opts) {
   opts = google::cloud::storage::internal::DefaultOptionsGrpc(std::move(opts));
   if (UseGrpcForMetadata()) {
     return storage::internal::ClientImplDetails::CreateClient(
         storage::internal::GrpcClient::Create(opts));
-  }
-  // The hybrid client might need the OAuth2 credentials
-  if (!opts.has<storage::Oauth2CredentialsOption>()) {
-    storage::ChannelOptions channel_options;
-    channel_options.set_ssl_root_path(opts.get<CARootsFilePathOption>());
-    auto credentials =
-        storage::oauth2::GoogleDefaultCredentials(channel_options);
-    if (!credentials) return std::move(credentials).status();
-    opts.set<storage::Oauth2CredentialsOption>(*std::move(credentials));
   }
   return storage::internal::ClientImplDetails::CreateClient(
       storage::internal::HybridClient::Create(opts));

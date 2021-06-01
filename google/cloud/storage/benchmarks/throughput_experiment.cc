@@ -339,8 +339,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
       case ApiName::kApiRawGrpc: {
         gcs::Client grpc_client =
             google::cloud::storage_experimental::DefaultGrpcClient(
-                client_options)
-                .value();
+                client_options);
         result.push_back(
             absl::make_unique<UploadObject>(grpc_client, a, contents, false));
         result.push_back(
@@ -380,8 +379,7 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
       case ApiName::kApiGrpc:
         result.push_back(absl::make_unique<DownloadObject>(
             google::cloud::storage_experimental::DefaultGrpcClient(
-                client_options)
-                .value(),
+                client_options),
             a));
         break;
 #else
