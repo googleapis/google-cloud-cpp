@@ -99,14 +99,6 @@ time {
     xargs -0 awk -f "ci/check-include-guards.gawk"
 }
 
-# Apply cmake_format to all the CMake list files.
-#     https://github.com/cheshirekow/cmake_format
-printf "%-30s" "Running cmake-format:" >&2
-time {
-  git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
-    xargs -P "$(nproc)" -n 1 -0 cmake-format -i
-}
-
 # TODO(#4501) - this fixup can be removed if #include <absl/...> works
 # Apply transformations to fix errors on MSVC+x86. See the bug for a detailed
 # explanation as to why this is needed:
@@ -123,13 +115,28 @@ time {
     xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
-# Apply clang-format(1) to fix whitespace and other formatting rules.
-# The version of clang-format is important, different versions have slightly
-# different formatting output (sigh).
-printf "%-30s" "Running clang-format:" >&2
+# Apply several transformations that cannot be enforced by clang-format:
+#     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
+#       are obsoleted by the gRPC team, so we should not use them in our code.
+#     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
+#       `grpc::` namespace do not exist inside google.
+printf "%-30s" "Running include fixes:" >&2
 time {
+  expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
+  expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
+  expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 clang-format -i
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+}
+
+# Apply transformations to fix whitespace formatting in files not handled by
+# clang-format(1) above.  For now we simply remove trailing blanks.  Note that
+# we do not expand TABs (they currently only appear in Makefiles and Makefile
+# snippets).
+printf "%-30s" "Running whitespace fixes:" >&2
+time {
+  git ls-files -z | grep -zv '\.gz$' |
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
 }
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
@@ -158,7 +165,7 @@ time {
 printf "%-30s" "Running shellcheck:" >&2
 time {
   git ls-files -z | grep -z '\.sh$' |
-    xargs -0 shellcheck \
+    xargs -P "$(nproc)" -n 1 -0 shellcheck \
       --exclude=SC1090 \
       --exclude=SC1091 \
       --exclude=SC2034 \
@@ -166,28 +173,20 @@ time {
       --exclude=SC2181
 }
 
-# Apply several transformations that cannot be enforced by clang-format:
-#     - Replace any #include for grpc++/* with grpcpp/*. The paths with grpc++
-#       are obsoleted by the gRPC team, so we should not use them in our code.
-#     - Replace grpc::<BLAH> with grpc::StatusCode::<BLAH>, the aliases in the
-#       `grpc::` namespace do not exist inside google.
-printf "%-30s" "Running include fixes:" >&2
+# The version of clang-format is important, different versions have slightly
+# different formatting output (sigh).
+printf "%-30s" "Running clang-format:" >&2
 time {
-  expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
-  expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
-  expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+    xargs -P "$(nproc)" -n 1 -0 clang-format -i
 }
 
-# Apply transformations to fix whitespace formatting in files not handled by
-# clang-format(1) above.  For now we simply remove trailing blanks.  Note that
-# we do not expand TABs (they currently only appear in Makefiles and Makefile
-# snippets).
-printf "%-30s" "Running whitespace fixes:" >&2
+# Apply cmake_format to all the CMake list files.
+#     https://github.com/cheshirekow/cmake_format
+printf "%-30s" "Running cmake-format:" >&2
 time {
-  git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
+  git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
+    xargs -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 
 # Report the differences, which should break the build.
