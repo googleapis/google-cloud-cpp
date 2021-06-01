@@ -31,11 +31,11 @@ function sed_edit() {
   shift
   for file in "$@"; do
     local tmp="${file}.tmp"
-    cp -p "${file}" "${tmp}"
-    sed -i -e "${expression}" "${tmp}"
+    sed -e "${expression}" "${file}" >"${tmp}"
     if cmp -s "${file}" "${tmp}"; then
       rm -f "${tmp}"
     else
+      chmod --reference="${file}" "${tmp}"
       mv -f "${tmp}" "${file}"
     fi
   done
@@ -88,11 +88,11 @@ time {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-printf "%-30s" "Running cmake-format:" >&2
-time {
-  git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
-    xargs -P "$(nproc)" -n 1 -0 cmake-format -i
-}
+# printf "%-30s" "Running cmake-format:" >&2
+# time {
+#   git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
+#     xargs -P "$(nproc)" -n 1 -0 cmake-format -i
+# }
 
 # TODO(#4501) - this fixup can be removed if #include <absl/...> works
 # Apply transformations to fix errors on MSVC+x86. See the bug for a detailed
@@ -105,13 +105,13 @@ time {
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -0 \
-      bash -c "sed_edit 's;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";' \$0"
+    xargs -P "$(nproc)" -n 50 -0 \
+      bash -c "sed_edit 's;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";' \$@"
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -0 \
-      bash -c "sed_edit 's;#include \"absl/container/\(flat_hash_map\).h\";#include \"google/cloud/internal/absl_\1_quiet.h\";' \$0"
+    xargs -P "$(nproc)" -n 50 -0 \
+      bash -c "sed_edit 's;#include \"absl/container/\\(flat_hash_map\\).h\";#include \"google/cloud/internal/absl_\\1_quiet.h\";' \$@"
 }
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -165,14 +165,14 @@ time {
 printf "%-30s" "Running include fixes:" >&2
 time {
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -0 \
-      bash -c "sed_edit 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \$0"
+    xargs -P "$(nproc)" -n 50 -0 \
+      bash -c "sed_edit 's/grpc::\\([A-Z][A-Z_][A-Z_]*\\)/grpc::StatusCode::\\1/g' \$@"
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -0 \
-      bash -c "sed_edit 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \$0"
+    xargs -P "$(nproc)" -n 50 -0 \
+      bash -c "sed_edit 's;#include <grpc\\\+\\\+/grpc\\+\\+.h>;#include <grpcpp/grpcpp.h>;' \$@"
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -0 \
-      bash -c "sed_edit 's;#include <grpc\\+\\+/;#include <grpcpp/;' \$0"
+    xargs -P "$(nproc)" -n 50 -0 \
+      bash -c "sed_edit 's;#include <grpc\\\+\\\+/;#include <grpcpp/;' \$@"
 }
 
 # Apply transformations to fix whitespace formatting in files not handled by
@@ -182,7 +182,7 @@ time {
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -0 bash -c "sed_edit 's/[[:blank:]]\+$//' \$0"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit 's/[[:blank:]]\\+$//' \$@"
 }
 
 # Report the differences, which should break the build.
