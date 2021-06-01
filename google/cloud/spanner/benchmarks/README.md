@@ -87,7 +87,7 @@ of type `STRING` you would run:
     --project=${GOOGLE_CLOUD_PROJECT} \
     --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --table-size=1000000 \
-    --maximum-clients=8 \
+    --maximum-channels=8 \
     --maximum-threads=16 \
     --iteration-duration=5 \
     --samples=60 --experiment=read-string | tee mrcb-read-string.csv
@@ -102,7 +102,7 @@ for exp in read-bool read-bytes read-date read-float64 \
     --project=${GOOGLE_CLOUD_PROJECT} \
     --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --table-size=1000000 \
-    --maximum-clients=8 \
+    --maximum-channels=8 \
     --maximum-threads=16 \
     --iteration-duration=5 \
     --samples=60 --experiment=${exp} | tee mrcb-${exp}.csv; \
@@ -136,7 +136,7 @@ ggsave('read-data-types.png')
 ## Single Row Throughput Experiment
 
 This experiment measures the throughput of either single-row inserts or
-single-row reads using different numbers of clients and threads. The objective
+single-row reads using different numbers of channels and threads. The objective
 is to verify the client library scales well with more threads and those not
 introduce bottlenecks.
 
@@ -149,7 +149,7 @@ of 15 seconds each:
     --instance=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID} \
     --iteration-duration=15 \
     --table-size=10000000 \
-    --maximum-clients=32 \
+    --maximum-channels=32 \
     --maximum-threads=1024 \
     --samples=20 2>&1 \
     --experiment=read | tee srtp-read.csv

@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -56,7 +57,7 @@ using ::google::cloud::Status;
 using ::google::cloud::spanner_benchmarks::Config;
 
 struct RowCpuSample {
-  int client_count;
+  int channel_count;
   int thread_count;
   bool using_stub;
   int row_count;
@@ -66,7 +67,7 @@ struct RowCpuSample {
 };
 
 std::ostream& operator<<(std::ostream& os, RowCpuSample const& s) {
-  return os << s.client_count << ',' << s.thread_count << ',' << s.using_stub
+  return os << s.channel_count << ',' << s.thread_count << ',' << s.using_stub
             << ',' << s.row_count << ',' << s.elapsed.count() << ','
             << s.cpu_time.count() << ',' << s.status.code();
 }
@@ -88,8 +89,6 @@ class Experiment {
   virtual std::string AdditionalDdlStatement() = 0;
   virtual Status SetUp(Config const& config,
                        spanner::Database const& database) = 0;
-  virtual Status TearDown(Config const& config,
-                          spanner::Database const& database) = 0;
   virtual Status Run(Config const& config,
                      spanner::Database const& database) = 0;
 };
@@ -208,7 +207,7 @@ int main(int argc, char* argv[]) {
     }
   }
 
-  std::cout << "ClientCount,ThreadCount,UsingStub"
+  std::cout << "ChannelCount,ThreadCount,UsingStub"
             << ",RowCount,ElapsedTime,CpuTime,StatusCode\n"
             << std::flush;
 
@@ -227,9 +226,6 @@ int main(int argc, char* argv[]) {
   if (setup_status.ok()) {
     auto run_status = experiment->Run(config, database);
     if (!run_status.ok()) exit_status = EXIT_FAILURE;
-    if (database_created) {
-      (void)experiment->TearDown(config, database);
-    }
   }
 
   if (!user_specified_database) {
@@ -441,10 +437,40 @@ class ExperimentImpl {
         config.minimum_threads, config.maximum_threads)(generator_);
   }
 
-  int ClientCount(Config const& config) {
+  int ChannelCount(Config const& config) {
     std::lock_guard<std::mutex> lk(mu_);
     return std::uniform_int_distribution<int>(
-        config.minimum_clients, config.maximum_clients)(generator_);
+        config.minimum_channels, config.maximum_channels)(generator_);
+  }
+
+  spanner::Client MakeClient(Config const& config,
+                             spanner::Database const& database) {
+    auto num_channels = config.maximum_channels;
+    std::cout << "# Creating 1 client using shared connection with "
+              << num_channels << " channels\n"
+              << std::flush;
+
+    auto connection = spanner::MakeConnection(
+        database, spanner::ConnectionOptions().set_num_channels(num_channels),
+        // This pre-creates all the Sessions we will need (one per thread).
+        spanner::SessionPoolOptions().set_min_sessions(config.maximum_threads));
+    return spanner::Client(std::move(connection));
+  }
+
+  std::vector<std::shared_ptr<spanner_internal::SpannerStub>> MakeStubs(
+      Config const& config, spanner::Database const& db) {
+    auto num_channels = config.maximum_channels;
+    std::cout << "# Creating " << num_channels << " stubs\n" << std::flush;
+    auto opts = google::cloud::internal::MakeOptions(
+        spanner::ConnectionOptions().set_num_channels(num_channels));
+    opts = spanner_internal::DefaultOptions(std::move(opts));
+    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
+    stubs.reserve(num_channels);
+    for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
+      stubs.push_back(
+          spanner_internal::CreateDefaultSpannerStub(db, opts, channel_id));
+    }
+    return stubs;
   }
 
   /// Get a snapshot of the random bit generator
@@ -469,29 +495,6 @@ class ExperimentImpl {
   void LogError(std::string const& s) {
     std::lock_guard<std::mutex> lk(mu_);
     std::cout << "# " << s << std::endl;
-  }
-
-  std::pair<std::vector<spanner::Client>,
-            std::vector<std::shared_ptr<spanner_internal::SpannerStub>>>
-  CreateClientsAndStubs(Config const& config,
-                        spanner::Database const& database) {
-    std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-    std::cout << "# Creating clients and stubs " << std::flush;
-    for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = spanner::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
-      clients.emplace_back(
-          spanner::Client(spanner::MakeConnection(database, options)));
-      auto opts = google::cloud::internal::MakeOptions(options);
-      opts = spanner_internal::DefaultOptions(std::move(opts));
-      stubs.emplace_back(
-          spanner_internal::CreateDefaultSpannerStub(database, opts,
-                                                     /*channel_id=*/0));
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
-    return {clients, stubs};
   }
 
  private:
@@ -591,15 +594,9 @@ class ReadExperiment : public Experiment {
     return impl_.FillTable(config, database, table_name_);
   }
 
-  Status TearDown(Config const&, spanner::Database const&) override {
-    return {};
-  }
-
   Status Run(Config const& config, spanner::Database const& database) override {
-    // Create enough clients and stubs for the worst case
-    std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
+    auto client = impl_.MakeClient(config, database);
+    auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     Timer overall;
@@ -607,16 +604,14 @@ class ReadExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config);
+      auto const channel_count = impl_.ChannelCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
-            iteration_stubs(stubs.begin(), stubs.begin() + client_count);
+            iteration_stubs(stubs.begin(), stubs.begin() + channel_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
       }
-      std::vector<spanner::Client> iteration_clients(
-          clients.begin(), clients.begin() + client_count);
-      RunIterationViaClients(config, iteration_clients, thread_count);
+      RunIterationViaClient(config, client, thread_count, channel_count);
     }
     overall.Stop();
     std::cout << overall.annotations();
@@ -644,7 +639,7 @@ class ReadExperiment : public Experiment {
   }
 
   std::vector<RowCpuSample> ReadRowsViaStub(
-      Config const& config, int thread_count, int client_count,
+      Config const& config, int thread_count, int channel_count,
       spanner::Database const& database,
       std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     auto session = [&]() -> google::cloud::StatusOr<std::string> {
@@ -719,32 +714,29 @@ class ReadExperiment : public Experiment {
       auto final = stream->Finish();
       timer.Stop();
       samples.push_back(RowCpuSample{
-          client_count, thread_count, true, row_count, timer.elapsed_time(),
+          channel_count, thread_count, true, row_count, timer.elapsed_time(),
           timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
 
-  void RunIterationViaClients(Config const& config,
-                              std::vector<spanner::Client> const& clients,
-                              int thread_count) {
+  void RunIterationViaClient(Config const& config,
+                             spanner::Client const& client, int thread_count,
+                             int channel_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
-    int task_id = 0;
     for (auto& t : tasks) {
-      auto client = clients[task_id++ % clients.size()];
-      t = std::async(std::launch::async, &ReadExperiment::ReadRowsViaClients,
-                     this, config, thread_count,
-                     static_cast<int>(clients.size()), client);
+      t = std::async(std::launch::async, &ReadExperiment::ReadRowsViaClient,
+                     this, config, thread_count, channel_count, client);
     }
     for (auto& t : tasks) {
       impl_.DumpSamples(t.get());
     }
   }
 
-  std::vector<RowCpuSample> ReadRowsViaClients(Config const& config,
-                                               int thread_count,
-                                               int client_count,
-                                               spanner::Client client) {
+  std::vector<RowCpuSample> ReadRowsViaClient(Config const& config,
+                                              int thread_count,
+                                              int channel_count,
+                                              spanner::Client client) {
     std::vector<std::string> const column_names{
         "Key",   "Data0", "Data1", "Data2", "Data3", "Data4",
         "Data5", "Data6", "Data7", "Data8", "Data9"};
@@ -774,7 +766,7 @@ class ReadExperiment : public Experiment {
         ++row_count;
       }
       timer.Stop();
-      samples.push_back(RowCpuSample{client_count, thread_count, false,
+      samples.push_back(RowCpuSample{channel_count, thread_count, false,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), std::move(status)});
     }
@@ -797,6 +789,7 @@ class ReadExperiment : public Experiment {
  *     `config.query_size` rows
  *   - Measure the CPU time required by the previous step
  */
+
 template <typename Traits>
 class SelectExperiment : public Experiment {
  public:
@@ -813,14 +806,9 @@ class SelectExperiment : public Experiment {
     return impl_.FillTable(config, database, table_name_);
   }
 
-  Status TearDown(Config const&, spanner::Database const&) override {
-    return {};
-  }
-
   Status Run(Config const& config, spanner::Database const& database) override {
-    std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
+    auto client = impl_.MakeClient(config, database);
+    auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     Timer overall;
@@ -828,16 +816,14 @@ class SelectExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config);
+      auto const channel_count = impl_.ChannelCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
-            iteration_stubs(stubs.begin(), stubs.begin() + client_count);
+            iteration_stubs(stubs.begin(), stubs.begin() + channel_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
       }
-      std::vector<spanner::Client> iteration_clients(
-          clients.begin(), clients.begin() + client_count);
-      RunIterationViaClients(config, iteration_clients, thread_count);
+      RunIterationViaClient(config, client, thread_count, channel_count);
     }
     overall.Stop();
     std::cout << overall.annotations();
@@ -865,7 +851,7 @@ class SelectExperiment : public Experiment {
   }
 
   std::vector<RowCpuSample> ViaStub(
-      Config const& config, int thread_count, int client_count,
+      Config const& config, int thread_count, int channel_count,
       spanner::Database const& database,
       std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     auto session = [&]() -> google::cloud::StatusOr<std::string> {
@@ -944,31 +930,28 @@ class SelectExperiment : public Experiment {
       auto final = stream->Finish();
       timer.Stop();
       samples.push_back(RowCpuSample{
-          client_count, thread_count, true, row_count, timer.elapsed_time(),
+          channel_count, thread_count, true, row_count, timer.elapsed_time(),
           timer.cpu_time(), google::cloud::MakeStatusFromRpcError(final)});
     }
     return samples;
   }
 
-  void RunIterationViaClients(Config const& config,
-                              std::vector<spanner::Client> const& clients,
-                              int thread_count) {
+  void RunIterationViaClient(Config const& config,
+                             spanner::Client const& client, int thread_count,
+                             int channel_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
-    int task_id = 0;
     for (auto& t : tasks) {
-      auto client = clients[task_id++ % clients.size()];
-      t = std::async(std::launch::async, &SelectExperiment::ViaClients, this,
-                     config, thread_count, static_cast<int>(clients.size()),
-                     client);
+      t = std::async(std::launch::async, &SelectExperiment::ViaClient, this,
+                     config, thread_count, channel_count, client);
     }
     for (auto& t : tasks) {
       impl_.DumpSamples(t.get());
     }
   }
 
-  std::vector<RowCpuSample> ViaClients(Config const& config, int thread_count,
-                                       int client_count,
-                                       spanner::Client client) {
+  std::vector<RowCpuSample> ViaClient(Config const& config, int thread_count,
+                                      int channel_count,
+                                      spanner::Client client) {
     auto const statement = CreateStatement();
 
     using T = typename Traits::native_type;
@@ -998,7 +981,7 @@ class SelectExperiment : public Experiment {
         ++row_count;
       }
       timer.Stop();
-      samples.push_back(RowCpuSample{client_count, thread_count, false,
+      samples.push_back(RowCpuSample{channel_count, thread_count, false,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), std::move(status)});
     }
@@ -1035,6 +1018,7 @@ class SelectExperiment : public Experiment {
  *
  * The values of K, M, N are configurable.
  */
+
 template <typename Traits>
 class UpdateExperiment : public Experiment {
  public:
@@ -1052,14 +1036,9 @@ class UpdateExperiment : public Experiment {
     return impl_.FillTable(config, database, table_name_);
   }
 
-  Status TearDown(Config const&, spanner::Database const&) override {
-    return {};
-  }
-
   Status Run(Config const& config, spanner::Database const& database) override {
-    std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
+    auto client = impl_.MakeClient(config, database);
+    auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     Timer overall;
@@ -1067,16 +1046,14 @@ class UpdateExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config);
+      auto const channel_count = impl_.ChannelCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
-            iteration_stubs(stubs.begin(), stubs.begin() + client_count);
+            iteration_stubs(stubs.begin(), stubs.begin() + channel_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
       }
-      std::vector<spanner::Client> iteration_clients(
-          clients.begin(), clients.begin() + client_count);
-      RunIterationViaClients(config, iteration_clients, thread_count);
+      RunIterationViaClient(config, client, thread_count, channel_count);
     }
     overall.Stop();
     std::cout << overall.annotations();
@@ -1104,7 +1081,7 @@ class UpdateExperiment : public Experiment {
   }
 
   std::vector<RowCpuSample> UpdateRowsViaStub(
-      Config const& config, int thread_count, int client_count,
+      Config const& config, int thread_count, int channel_count,
       spanner::Database const& database,
       std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     std::string const statement = CreateStatement();
@@ -1196,23 +1173,20 @@ class UpdateExperiment : public Experiment {
       }
 
       timer.Stop();
-      samples.push_back(RowCpuSample{client_count, thread_count, true,
+      samples.push_back(RowCpuSample{channel_count, thread_count, true,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), status});
     }
     return samples;
   }
 
-  void RunIterationViaClients(Config const& config,
-                              std::vector<spanner::Client> const& clients,
-                              int thread_count) {
+  void RunIterationViaClient(Config const& config,
+                             spanner::Client const& client, int thread_count,
+                             int channel_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
-    int task_id = 0;
     for (auto& t : tasks) {
-      auto client = clients[task_id++ % clients.size()];
       t = std::async(std::launch::async, &UpdateExperiment::UpdateRowsViaClient,
-                     this, config, thread_count,
-                     static_cast<int>(clients.size()), client);
+                     this, config, thread_count, channel_count, client);
     }
     for (auto& t : tasks) {
       impl_.DumpSamples(t.get());
@@ -1221,7 +1195,7 @@ class UpdateExperiment : public Experiment {
 
   std::vector<RowCpuSample> UpdateRowsViaClient(Config const& config,
                                                 int thread_count,
-                                                int client_count,
+                                                int channel_count,
                                                 spanner::Client client) {
     std::string const statement = CreateStatement();
 
@@ -1267,7 +1241,7 @@ class UpdateExperiment : public Experiment {
           });
       timer.Stop();
       samples.push_back(RowCpuSample{
-          client_count, thread_count, false, row_count, timer.elapsed_time(),
+          channel_count, thread_count, false, row_count, timer.elapsed_time(),
           timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
@@ -1301,6 +1275,7 @@ class UpdateExperiment : public Experiment {
  *
  * The values of K, M, N are configurable.
  */
+
 template <typename Traits>
 class MutationExperiment : public Experiment {
  public:
@@ -1315,19 +1290,9 @@ class MutationExperiment : public Experiment {
 
   Status SetUp(Config const&, spanner::Database const&) override { return {}; }
 
-  Status TearDown(Config const&, spanner::Database const&) override {
-    return {};
-  }
-
   Status Run(Config const& config, spanner::Database const& database) override {
-    std::vector<spanner::Client> clients;
-    std::vector<std::shared_ptr<spanner_internal::SpannerStub>> stubs;
-    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
-
-    random_keys_.resize(config.table_size);
-    std::iota(random_keys_.begin(), random_keys_.end(), 0);
-    auto generator = impl_.Generator();
-    std::shuffle(random_keys_.begin(), random_keys_.end(), generator);
+    auto client = impl_.MakeClient(config, database);
+    auto stubs = impl_.MakeStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     Timer overall;
@@ -1335,16 +1300,14 @@ class MutationExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config);
+      auto const channel_count = impl_.ChannelCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<spanner_internal::SpannerStub>>
-            iteration_stubs(stubs.begin(), stubs.begin() + client_count);
+            iteration_stubs(stubs.begin(), stubs.begin() + channel_count);
         RunIterationViaStubs(config, iteration_stubs, thread_count);
         continue;
       }
-      std::vector<spanner::Client> iteration_clients(
-          clients.begin(), clients.begin() + client_count);
-      RunIterationViaClients(config, iteration_clients, thread_count);
+      RunIterationViaClient(config, client, thread_count, channel_count);
     }
     overall.Stop();
     std::cout << overall.annotations();
@@ -1372,7 +1335,7 @@ class MutationExperiment : public Experiment {
   }
 
   std::vector<RowCpuSample> InsertRowsViaStub(
-      Config const& config, int thread_count, int client_count,
+      Config const& config, int thread_count, int channel_count,
       spanner::Database const& database,
       std::shared_ptr<spanner_internal::SpannerStub> const& stub) {
     std::vector<std::string> const column_names{
@@ -1451,22 +1414,20 @@ class MutationExperiment : public Experiment {
 
       timer.Stop();
       samples.push_back(RowCpuSample{
-          client_count, thread_count, true, commit_request.mutations_size(),
+          channel_count, thread_count, true, commit_request.mutations_size(),
           timer.elapsed_time(), timer.cpu_time(), response.status()});
     }
     return samples;
   }
 
-  void RunIterationViaClients(Config const& config,
-                              std::vector<spanner::Client> const& clients,
-                              int thread_count) {
+  void RunIterationViaClient(Config const& config,
+                             spanner::Client const& client, int thread_count,
+                             int channel_count) {
     std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
-    int task_id = 0;
     for (auto& t : tasks) {
-      auto client = clients[task_id++ % clients.size()];
       t = std::async(std::launch::async,
                      &MutationExperiment::InsertRowsViaClient, this, config,
-                     thread_count, static_cast<int>(clients.size()), client);
+                     thread_count, channel_count, client);
     }
     for (auto& t : tasks) {
       impl_.DumpSamples(t.get());
@@ -1475,7 +1436,7 @@ class MutationExperiment : public Experiment {
 
   std::vector<RowCpuSample> InsertRowsViaClient(Config const& config,
                                                 int thread_count,
-                                                int client_count,
+                                                int channel_count,
                                                 spanner::Client client) {
     std::vector<std::string> const column_names{
         "Key",   "Data0", "Data1", "Data2", "Data3", "Data4",
@@ -1519,7 +1480,7 @@ class MutationExperiment : public Experiment {
               values[9])});
       timer.Stop();
       samples.push_back(RowCpuSample{
-          client_count, thread_count, false, row_count, timer.elapsed_time(),
+          channel_count, thread_count, false, row_count, timer.elapsed_time(),
           timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
@@ -1539,9 +1500,6 @@ class RunAllExperiment : public Experiment {
   std::string AdditionalDdlStatement() override { return {}; }
   Status SetUp(Config const&, spanner::Database const&) override {
     setup_called_ = true;
-    return {};
-  }
-  Status TearDown(Config const&, spanner::Database const&) override {
     return {};
   }
 
@@ -1567,8 +1525,8 @@ class RunAllExperiment : public Experiment {
       config.iteration_duration = std::chrono::seconds(1);
       config.minimum_threads = 1;
       config.maximum_threads = 1;
-      config.minimum_clients = 1;
-      config.maximum_clients = 1;
+      config.minimum_channels = 1;
+      config.maximum_channels = 1;
       config.table_size = 10;
       config.query_size = 1;
 
@@ -1591,7 +1549,6 @@ class RunAllExperiment : public Experiment {
       config.use_only_clients = false;
       config.use_only_stubs = true;
       experiment->Run(config, database);
-      experiment->TearDown(config, database);
     }
 
     return last_error;

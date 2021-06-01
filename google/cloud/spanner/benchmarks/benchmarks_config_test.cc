@@ -28,8 +28,8 @@ TEST(BenchmarkConfigTest, ParseAll) {
   auto config = ParseArgs(
       {"placeholder", "--experiment=test-experiment", "--project=test-project",
        "--instance=test-instance", "--samples=50", "--iteration-duration=10",
-       "--minimum-threads=1", "--maximum-threads=1", "--minimum-clients=2",
-       "--maximum-clients=8", "--table-size=1000", "--query-size=10"});
+       "--minimum-threads=1", "--maximum-threads=1", "--minimum-channels=2",
+       "--maximum-channels=8", "--table-size=1000", "--query-size=10"});
   ASSERT_STATUS_OK(config);
 
   EXPECT_EQ("test-experiment", config->experiment);
@@ -39,8 +39,8 @@ TEST(BenchmarkConfigTest, ParseAll) {
   EXPECT_EQ(10, config->iteration_duration.count());
   EXPECT_EQ(1, config->minimum_threads);
   EXPECT_EQ(1, config->maximum_threads);
-  EXPECT_EQ(2, config->minimum_clients);
-  EXPECT_EQ(8, config->maximum_clients);
+  EXPECT_EQ(2, config->minimum_channels);
+  EXPECT_EQ(8, config->maximum_channels);
   EXPECT_EQ(1000, config->table_size);
   EXPECT_EQ(10, config->query_size);
 }
@@ -89,13 +89,13 @@ TEST(BenchmarkConfigTest, InvalidMaximumThreads) {
 
 TEST(BenchmarkConfigTest, InvalidMinimumClients) {
   auto config = ParseArgs(
-      {"placeholder", "--project=test-project", "--minimum-clients=-7"});
+      {"placeholder", "--project=test-project", "--minimum-channels=-7"});
   EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BenchmarkConfigTest, InvalidMaximumClients) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
-                           "--minimum-clients=100", "--maximum-clients=5"});
+                           "--minimum-channels=100", "--maximum-channels=5"});
   EXPECT_THAT(config, StatusIs(StatusCode::kInvalidArgument));
 }
 

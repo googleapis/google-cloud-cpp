@@ -32,8 +32,8 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Samples: " << config.samples
             << "\n# Minimum Threads: " << config.minimum_threads
             << "\n# Maximum Threads: " << config.maximum_threads
-            << "\n# Minimum Clients/Channels: " << config.minimum_clients
-            << "\n# Maximum Clients/Channels: " << config.maximum_clients
+            << "\n# Minimum Channels: " << config.minimum_channels
+            << "\n# Maximum Channels: " << config.maximum_channels
             << "\n# Iteration Duration: " << config.iteration_duration.count()
             << "s"
             << "\n# Table Size: " << config.table_size
@@ -93,22 +93,13 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
        [](Config& c, std::string const& v) {
          c.maximum_threads = std::stoi(v);
        }},
-      // TODO(#4032) keep the `channels` flags and remove the `clients` aliases.
-      {"--minimum-clients=",
-       [](Config& c, std::string const& v) {
-         c.minimum_clients = std::stoi(v);
-       }},
       {"--minimum-channels=",
        [](Config& c, std::string const& v) {
-         c.minimum_clients = std::stoi(v);
-       }},
-      {"--maximum-clients=",
-       [](Config& c, std::string const& v) {
-         c.maximum_clients = std::stoi(v);
+         c.minimum_channels = std::stoi(v);
        }},
       {"--maximum-channels=",
        [](Config& c, std::string const& v) {
-         c.maximum_clients = std::stoi(v);
+         c.maximum_channels = std::stoi(v);
        }},
       {"--table-size=",
        [](Config& c, std::string const& v) { c.table_size = std::stoi(v); }},
@@ -165,17 +156,17 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
     return invalid_argument(os.str());
   }
 
-  if (config.minimum_clients <= 0) {
+  if (config.minimum_channels <= 0) {
     std::ostringstream os;
-    os << "The minimum number of clients (" << config.minimum_clients << ")"
+    os << "The minimum number of channels (" << config.minimum_channels << ")"
        << " must be greater than zero";
     return invalid_argument(os.str());
   }
-  if (config.maximum_clients < config.minimum_clients) {
+  if (config.maximum_channels < config.minimum_channels) {
     std::ostringstream os;
-    os << "The maximum number of clients (" << config.maximum_clients << ")"
-       << " must be greater or equal than the minimum number of clients ("
-       << config.minimum_clients << ")";
+    os << "The maximum number of channels (" << config.maximum_channels << ")"
+       << " must be greater or equal than the minimum number of channels ("
+       << config.minimum_channels << ")";
     return invalid_argument(os.str());
   }
 
