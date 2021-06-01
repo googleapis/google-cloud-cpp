@@ -789,7 +789,6 @@ class ReadExperiment : public Experiment {
  *     `config.query_size` rows
  *   - Measure the CPU time required by the previous step
  */
-
 template <typename Traits>
 class SelectExperiment : public Experiment {
  public:
@@ -1018,7 +1017,6 @@ class SelectExperiment : public Experiment {
  *
  * The values of K, M, N are configurable.
  */
-
 template <typename Traits>
 class UpdateExperiment : public Experiment {
  public:
@@ -1275,7 +1273,6 @@ class UpdateExperiment : public Experiment {
  *
  * The values of K, M, N are configurable.
  */
-
 template <typename Traits>
 class MutationExperiment : public Experiment {
  public:
