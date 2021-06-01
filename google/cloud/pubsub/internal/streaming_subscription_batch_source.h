@@ -169,8 +169,6 @@ class StreamingSubscriptionBatchSource
   bool pending_read_ = false;
   Status status_;
   std::shared_ptr<AsyncPullStream> stream_;
-  std::vector<std::string> ack_queue_;
-  std::vector<std::string> nack_queue_;
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
 };
 
