@@ -20,18 +20,30 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
 
-# Runs a single sed expression over the given files, editing them in place, and
-# updating the file's mtime only if edits were made. Tis function is exported
-# so it can be run in subshells, such as with xargs -P. Example:
+# Runs sed expressions (specified after -e) over the given files, editing them
+# in place. This function is exported so it can be run in subshells, such as
+# with xargs -P. Example:
 #
-#   sed_edit 's/foo/bar/g' hello.txt
+#   sed_edit -e 's/foo/bar/g' hello.txt
 #
 function sed_edit() {
-  local expression="$1"
-  shift
-  for file in "$@"; do
+  local expressions=()
+  local files=()
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -e)
+      expressions+=("-e" "$2")
+      shift 2
+      ;;
+    *)
+      files+=("$1")
+      shift
+      ;;
+    esac
+  done
+  for file in "${files[@]}"; do
     local tmp="${file}.tmp"
-    sed -e "${expression}" "${file}" >"${tmp}"
+    sed "${expressions[@]}" "${file}" >"${tmp}"
     if cmp -s "${file}" "${tmp}"; then
       rm -f "${tmp}"
     else
@@ -88,11 +100,11 @@ time {
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
-# printf "%-30s" "Running cmake-format:" >&2
-# time {
-#   git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
-#     xargs -P "$(nproc)" -n 1 -0 cmake-format -i
-# }
+printf "%-30s" "Running cmake-format:" >&2
+time {
+  git ls-files -z | grep -zE '((^|/)CMakeLists\.txt|\.cmake)$' |
+    xargs -P "$(nproc)" -n 1 -0 cmake-format -i
+}
 
 # TODO(#4501) - this fixup can be removed if #include <absl/...> works
 # Apply transformations to fix errors on MSVC+x86. See the bug for a detailed
@@ -102,16 +114,12 @@ time {
 # includes.
 printf "%-30s" "Running Abseil header fixes:" >&2
 time {
+  expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
+  expressions+=("-e" "'s;#include \"absl/container/\\(flat_hash_map\\).h\";#include \"google/cloud/internal/absl_\\1_quiet.h\";'")
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -n 50 -0 \
-      bash -c "sed_edit 's;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";' \$@"
-  git ls-files -z |
-    grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
-    grep -zE '\.(h|cc)$' |
-    xargs -P "$(nproc)" -n 50 -0 \
-      bash -c "sed_edit 's;#include \"absl/container/\\(flat_hash_map\\).h\";#include \"google/cloud/internal/absl_\\1_quiet.h\";' \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$@"
 }
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -164,15 +172,11 @@ time {
 #       `grpc::` namespace do not exist inside google.
 printf "%-30s" "Running include fixes:" >&2
 time {
+  expressions=("-e" "s/grpc::\\([A-Z][A-Z_][A-Z_]*\\)/grpc::StatusCode::\\1/g")
+  expressions+=("-e" "s;#include <grpc\\\+\\\+/grpc\\+\\+.h>;#include <grpcpp/grpcpp.h>;")
+  expressions+=("-e" "s;#include <grpc\\\+\\\+/;#include <grpcpp/;")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 \
-      bash -c "sed_edit 's/grpc::\\([A-Z][A-Z_][A-Z_]*\\)/grpc::StatusCode::\\1/g' \$@"
-  git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 \
-      bash -c "sed_edit 's;#include <grpc\\\+\\\+/grpc\\+\\+.h>;#include <grpcpp/grpcpp.h>;' \$@"
-  git ls-files -z | grep -zE '\.(cc|h)$' |
-    xargs -P "$(nproc)" -n 50 -0 \
-      bash -c "sed_edit 's;#include <grpc\\\+\\\+/;#include <grpcpp/;' \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \$@"
 }
 
 # Apply transformations to fix whitespace formatting in files not handled by
@@ -182,7 +186,7 @@ time {
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   git ls-files -z | grep -zv '\.gz$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit 's/[[:blank:]]\\+$//' \$@"
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\\+$//' \$@"
 }
 
 # Report the differences, which should break the build.
