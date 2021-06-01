@@ -20,22 +20,40 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/cloudbuild/builds/lib/git.sh
 
-# Replaces a file only if it changed. This is needed because sed -i and perl -i
-# will modify the mtime even if no edits are made, which will cause code to be
-# recompiled unnecessarily.
-function replace_original_if_changed() {
-  if [[ $# != 2 ]]; then
-    return 1
-  fi
-  local original="$1"
-  local reformatted="$2"
-  if cmp -s "${original}" "${reformatted}"; then
-    rm -f "${reformatted}"
-  else
-    chmod --reference="${original}" "${reformatted}"
-    mv -f "${reformatted}" "${original}"
-  fi
+# Runs sed expressions (specified after -e) over the given files, editing them
+# in place. This function is exported so it can be run in subshells, such as
+# with xargs -P. Example:
+#
+#   sed_edit -e 's/foo/bar/g' -e 's,baz,blah,' hello.txt
+#
+function sed_edit() {
+  local expressions=()
+  local files=()
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -e)
+      test -z "$2" && return 1
+      expressions+=("-e" "$2")
+      shift 2
+      ;;
+    *)
+      files+=("$1")
+      shift
+      ;;
+    esac
+  done
+  for file in "${files[@]}"; do
+    local tmp="${file}.tmp"
+    sed "${expressions[@]}" "${file}" >"${tmp}"
+    if cmp -s "${file}" "${tmp}"; then
+      rm -f "${tmp}"
+    else
+      chmod --reference="${file}" "${tmp}"
+      mv -f "${tmp}" "${file}"
+    fi
+  done
 }
+export -f sed_edit
 
 # TODO(#6513): Delete this once we have clang-format version 13 and can use:
 # https://github.com/googleapis/google-cloud-cpp/issues/6513
@@ -97,15 +115,12 @@ time {
 # includes.
 printf "%-30s" "Running Abseil header fixes:" >&2
 time {
+  expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
+  expressions+=("-e" "'s;#include \"absl/container/\(flat_hash_map\).h\";#include \"google/cloud/internal/absl_\1_quiet.h\";'")
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
-    while IFS= read -r -d $'\0' file; do
-      sed -e 's;#include "absl/strings/str_\(cat\|replace\|join\).h";#include "google/cloud/internal/absl_str_\1_quiet.h";' \
-        -e 's;#include "absl/container/\(flat_hash_map\).h";#include "google/cloud/internal/absl_\1_quiet.h";' \
-        "${file}" >"${file}.tmp"
-      replace_original_if_changed "${file}" "${file}.tmp"
-    done
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
@@ -158,18 +173,11 @@ time {
 #       `grpc::` namespace do not exist inside google.
 printf "%-30s" "Running include fixes:" >&2
 time {
+  expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
+  expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
+  expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
   git ls-files -z | grep -zE '\.(cc|h)$' |
-    while IFS= read -r -d $'\0' file; do
-      # We used to run run `sed -i` to apply these changes, but that touches the
-      # files even if there are no changes applied, forcing a rebuild each time.
-      # So we first apply the change to a temporary file, and replace the original
-      # only if something changed.
-      sed -e 's/grpc::\([A-Z][A-Z_][A-Z_]*\)/grpc::StatusCode::\1/g' \
-        -e 's;#include <grpc\\+\\+/grpc\+\+.h>;#include <grpcpp/grpcpp.h>;' \
-        -e 's;#include <grpc\\+\\+/;#include <grpcpp/;' \
-        "${file}" >"${file}.tmp"
-      replace_original_if_changed "${file}" "${file}.tmp"
-    done
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply transformations to fix whitespace formatting in files not handled by
@@ -179,11 +187,7 @@ time {
 printf "%-30s" "Running whitespace fixes:" >&2
 time {
   git ls-files -z | grep -zv '\.gz$' |
-    while IFS= read -r -d $'\0' file; do
-      sed -e 's/[[:blank:]][[:blank:]]*$//' \
-        "${file}" >"${file}.tmp"
-      replace_original_if_changed "${file}" "${file}.tmp"
-    done
+    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit -e 's/[[:blank:]]\+$//' \"\$0\" \"\$@\""
 }
 
 # Report the differences, which should break the build.
