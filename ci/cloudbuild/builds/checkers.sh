@@ -115,7 +115,7 @@ time {
 printf "%-30s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  expressions+=("-e" "'s;#include \"absl/container/\\(flat_hash_map\\).h\";#include \"google/cloud/internal/absl_\\1_quiet.h\";'")
+  expressions+=("-e" "'s;#include \"absl/container/\(flat_hash_map\).h\";#include \"google/cloud/internal/absl_\1_quiet.h\";'")
   git ls-files -z |
     grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
     grep -zE '\.(h|cc)$' |
