@@ -20,12 +20,12 @@ ARG NCPU=4
 # tools to compile the dependencies:
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker abi-dumper autoconf automake \
-        ccache clang clang-analyzer clang-tools-extra \
+        cargo ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         grpc-devel grpc-plugins lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
         openssl-devel patch pkgconfig protobuf-compiler python python3.8 \
-        python-pip tar unzip w3m wget which zip zlib-devel
+        python-pip ShellCheck tar unzip w3m wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -33,10 +33,32 @@ RUN dnf makecache && \
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
 
+# Install the buildifier tool to detect formatting errors in BUILD files.
+RUN wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
+RUN chmod 755 /usr/bin/buildifier
+
+# Install shfmt to automatically format the Shell scripts.
+RUN curl -L -o /usr/local/bin/shfmt \
+    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64" && \
+    chmod 755 /usr/local/bin/shfmt
+
+# Install cmake_format to automatically format the CMake list files.
+#     https://github.com/cheshirekow/cmake_format
+# Pin this to an specific version because the formatting changes when the
+# "latest" version is updated, and we do not want the builds to break just
+# because some third party changed something.
+RUN pip3 install --upgrade pip
+RUN pip3 install cmake_format==0.6.8
+
+# Install black to automatically format the Python files.
+RUN pip3 install black==19.3b0
+
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
-RUN pip3 install --upgrade pip
 RUN pip3 install setuptools wheel
+
+# Install typos for spell checking.
+RUN cargo install typos-cli --version 1.0.3 --root /usr/local
 
 # Install Abseil, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
