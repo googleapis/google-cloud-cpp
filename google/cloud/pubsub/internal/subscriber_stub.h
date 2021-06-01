@@ -80,6 +80,18 @@ class SubscriberStub {
       google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::pubsub::v1::StreamingPullRequest const& request) = 0;
 
+  /// Acknowledge exactly one message.
+  virtual future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::AcknowledgeRequest const& request) = 0;
+
+  /// Modify the acknowledgement deadline for many messages.
+  virtual future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
+
   /// Create a new snapshot.
   virtual StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       grpc::ClientContext& client_context,

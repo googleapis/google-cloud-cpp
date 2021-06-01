@@ -164,6 +164,48 @@ TEST(SubscriberMetadataTest, AsyncStreamingPull) {
   EXPECT_TRUE(stream);
 }
 
+TEST(SubscriberMetadataTest, AsyncAcknowledge) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext> context,
+                   google::pubsub::v1::AcknowledgeRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context, "google.pubsub.v1.Subscriber.Acknowledge",
+            google::cloud::internal::ApiClientHeader()));
+        return make_ready_future(Status{});
+      });
+  SubscriberMetadata stub(mock);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::AcknowledgeRequest request;
+  request.set_subscription(
+      pubsub::Subscription("test-project", "test-subscription").FullName());
+  auto response = stub.AsyncAcknowledge(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_STATUS_OK(response.get());
+}
+
+TEST(SubscriberMetadataTest, AsyncModifyAckDeadline) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext> context,
+                   google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        EXPECT_STATUS_OK(IsContextMDValid(
+            *context, "google.pubsub.v1.Subscriber.ModifyAckDeadline",
+            google::cloud::internal::ApiClientHeader()));
+        return make_ready_future(Status{});
+      });
+  SubscriberMetadata stub(mock);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(
+      pubsub::Subscription("test-project", "test-subscription").FullName());
+  auto response = stub.AsyncModifyAckDeadline(
+      cq, absl::make_unique<grpc::ClientContext>(), request);
+  EXPECT_STATUS_OK(response.get());
+}
+
 TEST(SubscriberMetadataTest, CreateSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, CreateSnapshot)

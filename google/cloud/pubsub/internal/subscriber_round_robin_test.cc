@@ -45,7 +45,7 @@ std::vector<std::shared_ptr<SubscriberStub>> AsPlainStubs(
                                                       mocks.end());
 }
 
-TEST(SubscriberLoggingTest, CreateSubscription) {
+TEST(SubscriberRoundRobinTest, CreateSubscription) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -63,7 +63,7 @@ TEST(SubscriberLoggingTest, CreateSubscription) {
   }
 }
 
-TEST(SubscriberLoggingTest, GetSubscription) {
+TEST(SubscriberRoundRobinTest, GetSubscription) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -81,7 +81,7 @@ TEST(SubscriberLoggingTest, GetSubscription) {
   }
 }
 
-TEST(SubscriberLoggingTest, UpdateSubscription) {
+TEST(SubscriberRoundRobinTest, UpdateSubscription) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -99,7 +99,7 @@ TEST(SubscriberLoggingTest, UpdateSubscription) {
   }
 }
 
-TEST(SubscriberLoggingTest, ListSubscriptions) {
+TEST(SubscriberRoundRobinTest, ListSubscriptions) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -119,7 +119,7 @@ TEST(SubscriberLoggingTest, ListSubscriptions) {
   }
 }
 
-TEST(SubscriberLoggingTest, DeleteSubscription) {
+TEST(SubscriberRoundRobinTest, DeleteSubscription) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -137,7 +137,7 @@ TEST(SubscriberLoggingTest, DeleteSubscription) {
   }
 }
 
-TEST(SubscriberLoggingTest, ModifyPushConfig) {
+TEST(SubscriberRoundRobinTest, ModifyPushConfig) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -155,7 +155,7 @@ TEST(SubscriberLoggingTest, ModifyPushConfig) {
   }
 }
 
-TEST(SubscriberLoggingTest, AsyncStreamingPull) {
+TEST(SubscriberRoundRobinTest, AsyncStreamingPull) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -178,7 +178,55 @@ TEST(SubscriberLoggingTest, AsyncStreamingPull) {
   }
 }
 
-TEST(SubscriberLoggingTest, CreateSnapshot) {
+TEST(SubscriberRoundRobinTest, AsyncAcknowledge) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncAcknowledge)
+          .WillOnce([](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext>,
+                       google::pubsub::v1::AcknowledgeRequest const&) {
+            return make_ready_future(Status{});
+          });
+    }
+  }
+  CompletionQueue cq;
+  SubscriberRoundRobin stub(AsPlainStubs(mocks));
+  for (std::size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::pubsub::v1::AcknowledgeRequest request;
+    auto status = stub.AsyncAcknowledge(
+                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                      .get();
+    EXPECT_STATUS_OK(status);
+  }
+}
+
+TEST(SubscriberRoundRobinTest, AsyncModifyAckDeadline) {
+  auto mocks = MakeMocks();
+  InSequence sequence;
+  for (int i = 0; i != kRepeats; ++i) {
+    for (auto& m : mocks) {
+      EXPECT_CALL(*m, AsyncModifyAckDeadline)
+          .WillOnce([](google::cloud::CompletionQueue&,
+                       std::unique_ptr<grpc::ClientContext>,
+                       google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+            return make_ready_future(Status{});
+          });
+    }
+  }
+  CompletionQueue cq;
+  SubscriberRoundRobin stub(AsPlainStubs(mocks));
+  for (std::size_t i = 0; i != kRepeats * mocks.size(); ++i) {
+    google::pubsub::v1::ModifyAckDeadlineRequest request;
+    auto status = stub.AsyncModifyAckDeadline(
+                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                      .get();
+    EXPECT_STATUS_OK(status);
+  }
+}
+
+TEST(SubscriberRoundRobinTest, CreateSnapshot) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -196,7 +244,7 @@ TEST(SubscriberLoggingTest, CreateSnapshot) {
   }
 }
 
-TEST(SubscriberLoggingTest, GetSnapshot) {
+TEST(SubscriberRoundRobinTest, GetSnapshot) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -214,7 +262,7 @@ TEST(SubscriberLoggingTest, GetSnapshot) {
   }
 }
 
-TEST(SubscriberLoggingTest, ListSnapshots) {
+TEST(SubscriberRoundRobinTest, ListSnapshots) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -234,7 +282,7 @@ TEST(SubscriberLoggingTest, ListSnapshots) {
   }
 }
 
-TEST(SubscriberLoggingTest, UpdateSnapshot) {
+TEST(SubscriberRoundRobinTest, UpdateSnapshot) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -252,7 +300,7 @@ TEST(SubscriberLoggingTest, UpdateSnapshot) {
   }
 }
 
-TEST(SubscriberLoggingTest, DeleteSnapshot) {
+TEST(SubscriberRoundRobinTest, DeleteSnapshot) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
@@ -269,7 +317,7 @@ TEST(SubscriberLoggingTest, DeleteSnapshot) {
   }
 }
 
-TEST(SubscriberLoggingTest, Seek) {
+TEST(SubscriberRoundRobinTest, Seek) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
