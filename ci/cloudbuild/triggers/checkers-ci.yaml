@@ -7,7 +7,7 @@ github:
 name: checkers-ci
 substitutions:
   _BUILD_NAME: checkers
-  _DISTRO: fedora-34
+  _DISTRO: checkers
   _TRIGGER_TYPE: ci
 tags:
 - ci
