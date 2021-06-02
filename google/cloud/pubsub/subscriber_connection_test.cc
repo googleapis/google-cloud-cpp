@@ -147,9 +147,9 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&,
-                   std::unique_ptr<grpc::ClientContext>,
-                   google::pubsub::v1::AcknowledgeRequest const&) {
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
