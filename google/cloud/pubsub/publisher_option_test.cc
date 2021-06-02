@@ -43,6 +43,47 @@ TEST(PublisherOptions, Setters) {
   EXPECT_FALSE(b1.message_ordering());
 }
 
+TEST(PublisherOptions, MaximumPendingBytes) {
+  auto const b0 = PublisherOptions{};
+  EXPECT_NE(0, b0.maximum_pending_bytes());
+
+  auto const b1 = PublisherOptions{}.set_maximum_pending_bytes(10000000);
+  EXPECT_EQ(10000000, b1.maximum_pending_bytes());
+
+  auto const b2 = PublisherOptions{}.set_maximum_pending_bytes(0);
+  EXPECT_NE(0, b2.maximum_pending_bytes());
+}
+
+TEST(PublisherOptions, MaximumPendingMessages) {
+  auto const b0 = PublisherOptions{};
+  EXPECT_NE(0, b0.maximum_pending_messages());
+
+  auto const b1 = PublisherOptions{}.set_maximum_pending_messages(1000);
+  EXPECT_EQ(1000, b1.maximum_pending_messages());
+
+  auto const b2 = PublisherOptions{}.set_maximum_pending_messages(0);
+  EXPECT_NE(0, b2.maximum_pending_messages());
+}
+
+TEST(PublisherOptions, FullPublisherAction) {
+  auto const b0 = PublisherOptions{};
+  EXPECT_EQ(PublisherOptions::kFullPublisherBlocks, b0.full_publisher_action());
+
+  EXPECT_EQ(
+      PublisherOptions::kFullPublisherIgnored,
+      PublisherOptions{}.full_publisher_ignored().full_publisher_action());
+  EXPECT_EQ(PublisherOptions::kFullPublisherBlocks,
+            PublisherOptions{}.full_publisher_blocks().full_publisher_action());
+  EXPECT_EQ(
+      PublisherOptions::kFullPublisherRejects,
+      PublisherOptions{}.full_publisher_rejects().full_publisher_action());
+  EXPECT_EQ(PublisherOptions::kFullPublisherIgnored,
+            PublisherOptions{}
+                .full_publisher_rejects()
+                .full_publisher_ignored()
+                .full_publisher_action());
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

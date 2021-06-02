@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/testing/mock_publisher_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -27,6 +28,8 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::AsyncSequencer;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::Contains;
@@ -112,6 +115,47 @@ TEST(PublisherConnectionTest, Logging) {
   ASSERT_STATUS_OK(response);
 
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncPublish")));
+}
+
+TEST(PublisherConnectionTest, FlowControl) {
+  auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
+  Topic const topic("test-project", "test-topic");
+  testing_util::ScopedLog log;
+
+  AsyncSequencer<void> publish;
+  EXPECT_CALL(*mock, AsyncPublish)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](google::cloud::CompletionQueue&,
+                          std::unique_ptr<grpc::ClientContext>,
+                          google::pubsub::v1::PublishRequest const& request) {
+        return publish.PushBack().then([request](future<void>) {
+          google::pubsub::v1::PublishResponse response;
+          for (auto const& m : request.messages()) {
+            response.add_message_ids("ack-" + m.message_id());
+          }
+          return make_status_or(response);
+        });
+      });
+
+  auto publisher = pubsub_internal::MakePublisherConnection(
+      topic,
+      PublisherOptions{}.full_publisher_rejects().set_maximum_pending_messages(
+          4),
+      ConnectionOptions{}, mock, pubsub_testing::TestRetryPolicy(),
+      pubsub_testing::TestBackoffPolicy());
+
+  std::vector<future<StatusOr<std::string>>> pending(4);
+  std::generate(pending.begin(), pending.end(), [publisher] {
+    return publisher->Publish({MessageBuilder{}.SetData("test-only").Build()});
+  });
+  auto rejected = publisher->Publish({MessageBuilder{}.SetData("mr").Build()});
+  EXPECT_THAT(rejected.get(), StatusIs(StatusCode::kFailedPrecondition));
+
+  publisher->Flush({});
+  publish.PopFront().set_value();
+  for (auto& p : pending) {
+    EXPECT_THAT(p.get(), IsOk());
+  }
 }
 
 TEST(PublisherConnectionTest, OrderingKey) {

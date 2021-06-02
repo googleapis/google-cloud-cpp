@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/batching_publisher_connection.h"
 #include "google/cloud/pubsub/internal/default_batch_sink.h"
 #include "google/cloud/pubsub/internal/default_retry_policies.h"
+#include "google/cloud/pubsub/internal/flow_controlled_publisher_connection.h"
 #include "google/cloud/pubsub/internal/ordering_key_publisher_connection.h"
 #include "google/cloud/pubsub/internal/publisher_logging.h"
 #include "google/cloud/pubsub/internal/publisher_metadata.h"
@@ -145,8 +146,14 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
     return RejectsWithOrderingKey::Create(BatchingPublisherConnection::Create(
         std::move(topic), std::move(options), {}, sink, std::move(cq)));
   };
+  auto connection = make_connection();
+  if (options.full_publisher_action() !=
+      pubsub::PublisherOptions::kFullPublisherIgnored) {
+    connection = FlowControlledPublisherConnection::Create(
+        options, std::move(connection));
+  }
   return std::make_shared<pubsub::ContainingPublisherConnection>(
-      std::move(background), make_connection());
+      std::move(background), std::move(connection));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

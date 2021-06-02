@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_PUBLISHER_OPTIONS_H
 
 #include "google/cloud/pubsub/version.h"
+#include <algorithm>
 #include <chrono>
 #include <cstddef>
 #include <limits>
@@ -47,7 +48,14 @@ class PublisherOptions {
  public:
   PublisherOptions() = default;
 
-  /// The maximum hold time.
+  //@{
+  /**
+   * @name Publisher batch control
+   *
+   * It is more efficient (in terms of client CPU and client network usage) to
+   * send multiple messages in a single "batch" to the service. The following
+   * configuration options can be used To improve throughput (as
+   */
   std::chrono::microseconds maximum_hold_time() const {
     return maximum_hold_time_;
   }
@@ -109,6 +117,21 @@ class PublisherOptions {
     maximum_batch_bytes_ = v;
     return *this;
   }
+  //@}
+
+  //@{
+  /**
+   * @name Publisher message ordering.
+   *
+   * To guarantee messages are received by the service in the same order that
+   * the application gives them to a publisher the client library needs to wait
+   * until a batch of messages is successfully delivered before sending the next
+   * batch. Otherwise batches may arrive out of order as the is no guarantee the
+   * same channel or network path is used for each batch.
+   *
+   * For applications that do not care about message ordering, this can limit
+   * the throughput. Therefore, the behavior is disabled by default.
+   */
 
   /// Return `true` if message ordering is enabled.
   bool message_ordering() const { return message_ordering_; }
@@ -132,16 +155,84 @@ class PublisherOptions {
     message_ordering_ = false;
     return *this;
   }
+  //@}
+
+  //@{
+  /**
+   * @name Publisher flow control.
+   *
+   * After a publisher flushes a batch of messages the batch is (obviously) not
+   * received immediately by the service. While the batch remains pending it
+   * potentially consumes memory resources in the client (and/or the service).
+   *
+   * Some applications may have constraints on the number of bytes and/or
+   * messages they can tolerate in this pending state, and may prefer to block
+   * or reject messages
+   */
+
+  /// Flow control based on pending bytes.
+  PublisherOptions& set_maximum_pending_bytes(std::size_t v) {
+    maximum_pending_bytes_ = (std::max)(v, kDefaultMinimumMessageSize);
+    return *this;
+  }
+
+  /// Flow control based on pending messages.
+  PublisherOptions& set_maximum_pending_messages(std::size_t v) {
+    maximum_pending_messages_ = (std::max)(v, std::size_t{1});
+    return *this;
+  }
+
+  std::size_t maximum_pending_bytes() const { return maximum_pending_bytes_; }
+  std::size_t maximum_pending_messages() const {
+    return maximum_pending_messages_;
+  }
+
+  static int constexpr kFullPublisherIgnored = 0;
+  static int constexpr kFullPublisherBlocks = 1;
+  static int constexpr kFullPublisherRejects = 2;
+
+  /// The current action for a full publisher
+  int full_publisher_action() const { return full_publisher_action_; }
+
+  /// Ignore full publishers, continue as usual
+  PublisherOptions& full_publisher_ignored() {
+    full_publisher_action_ = kFullPublisherIgnored;
+    return *this;
+  }
+
+  /// Configure the publisher to block the caller when full.
+  PublisherOptions& full_publisher_blocks() {
+    full_publisher_action_ = kFullPublisherBlocks;
+    return *this;
+  }
+
+  /// Configure the publisher to reject new messages when full.
+  PublisherOptions& full_publisher_rejects() {
+    full_publisher_action_ = kFullPublisherRejects;
+    return *this;
+  }
+  //@}
 
  private:
   static auto constexpr kDefaultMaximumHoldTime = std::chrono::milliseconds(10);
   static std::size_t constexpr kDefaultMaximumMessageCount = 100;
   static std::size_t constexpr kDefaultMaximumMessageSize = 1024 * 1024L;
+  static std::size_t constexpr kDefaultMaximumPendingBytes =
+      (std::numeric_limits<std::size_t>::max)();
+  static std::size_t constexpr kDefaultMaximumPendingMessages =
+      (std::numeric_limits<std::size_t>::max)();
+  // See https://cloud.google.com/pubsub/pricing, the minimum legal size for a
+  // message is 21 bytes. Setting the pending message bytes size to less than
+  // this number leads to deadlocks.
+  static std::size_t constexpr kDefaultMinimumMessageSize = 21;
 
   std::chrono::microseconds maximum_hold_time_ = kDefaultMaximumHoldTime;
   std::size_t maximum_batch_message_count_ = kDefaultMaximumMessageCount;
   std::size_t maximum_batch_bytes_ = kDefaultMaximumMessageSize;
   bool message_ordering_ = false;
+  std::size_t maximum_pending_bytes_ = kDefaultMaximumPendingBytes;
+  std::size_t maximum_pending_messages_ = kDefaultMaximumPendingMessages;
+  int full_publisher_action_ = kFullPublisherBlocks;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

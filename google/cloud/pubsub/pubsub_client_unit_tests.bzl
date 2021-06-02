@@ -21,6 +21,7 @@ pubsub_client_unit_tests = [
     "internal/batching_publisher_connection_test.cc",
     "internal/default_batch_sink_test.cc",
     "internal/emulator_overrides_test.cc",
+    "internal/flow_controlled_publisher_connection_test.cc",
     "internal/ordering_key_publisher_connection_test.cc",
     "internal/publisher_logging_test.cc",
     "internal/publisher_metadata_test.cc",
