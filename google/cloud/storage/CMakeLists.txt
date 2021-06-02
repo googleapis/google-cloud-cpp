@@ -396,9 +396,8 @@ string(
            " google_cloud_cpp_common"
            " libcurl"
            " openssl")
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_storage_grpc)
 string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage_grpc"
-              " -lgoogle_cloud_cpp_storage_internal_protos" ${absl_pkg_config})
+              " -lgoogle_cloud_cpp_storage_internal_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
@@ -662,10 +661,16 @@ google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Storage.")
-set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_storage)
-string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c"
-              ${absl_pkg_config})
+string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_storage" " -lcrc32c")
+string(
+    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
+           "google_cloud_cpp_common"
+           " libcurl openssl"
+           " absl_memory"
+           " absl_strings"
+           " absl_str_format"
+           " absl_time"
+           " absl_variant")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"

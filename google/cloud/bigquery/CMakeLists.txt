@@ -144,12 +144,10 @@ set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(GOOGLE_CLOUD_PC_NAME "The Google Cloud BigQuery C++ Client Library")
 set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud BigQuery.")
-set(GOOGLE_CLOUD_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common google_cloud_cpp_cloud_bigquery_protos"
-)
-google_cloud_cpp_absl_pkg_config(absl_pkg_config google_cloud_cpp_bigquery)
-string(CONCAT GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_bigquery"
-              ${absl_pkg_config})
+set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_bigquery")
+string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
+              " google_cloud_cpp_common"
+              " google_cloud_cpp_cloud_bigquery_protos")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config.pc.in"
