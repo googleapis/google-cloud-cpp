@@ -83,8 +83,11 @@
 
 ### Bigtable
 
-* feat(bigtable): add async sample rows (#6561)
-* fix(bigtable): async bulk apply retry, backoff policy fix  (#6510)
+* feat(bigtable): Add asynchronous method for sampling row keys (#6561). Users
+  that extend `bigtable::DataClient` and wish to use the new method will need to
+  override `PrepareAsyncSampleRowKeys()`.
+* fix(bigtable): `bigtable::Table::AsyncBulkApply()` now respects the Retry and
+  Backoff policies (#6510)
 
 ### IAM
 **NOTE** This release includes an **experimental** IAM client library. This
@@ -101,38 +104,30 @@ experiment with it, but do not ship production code using it yet.
 
 ### Spanner
 
-* feat(spanner): use multiple channels instead of multiple client for the multiple rows cpu benchmark (#6659)
+* feat(spanner): use multiple channels instead of multiple client for the
+  multiple rows cpu benchmark (#6659)
 * fix(spanner): do not warn about SessionPoolClockOption (#6619)
 
 ### Storage
 
 * feat(storage): recommend `g::c::Options` (#6640)
-* feat: custom trust store with unified credentials (#6617)
-* feat(storage): add Retry Test API to emulator (#6611)
-* fix(storage): address behavior bugs (#6574)
 * feat(storage): support multiple channels in GCS+gRPC (#6593)
 * feat(storage): round-robin stub for GCS+gRPC (#6584)
 * fix(storage): compile GCS+gRPC with Windows+x86 (#6556)
-* feat: implement unified service account credentials (#6531)
 * feat(storage): install rules for GCS+gRPC plugin (#6527)
-* feat: implement unified insecure credentials (#6518)
 * fix(storage): compile with GCC 11 in C++17 mode (#6501)
-* feat(storage): support service account impersonation (#6488)
-* feat(storage): support method overrides in emulator (#6474)
-* fix(storage): support gzip request body in emulator (#6472)
-* fix(storage): update emulator to use MultipartDecoder (#6453)
-* feat(storage): impersonate service account credentials (#6441)
+* feat: Support unified credentials (`google::cloud::Credentials`) to initialize
+  both the REST and gRPC plugins with the same classes. (#6518)(#6531)(#6617)(#6488)(#6441)
 
 ### Common Libraries
 
-* feat: custom trust store with unified credentials (#6617)
-* feat(common): make unified Credentials public (#6614)
+* feat: Add support for "unified" credentials, which allow applications to
+  Configure the REST and gRPC-based libraries using the same credential classes
+  Support complex credential types, such as service account impersonation
+  With this release, only usable in the `storage` library supports these classes.
+  (#6617)(#6614)(#6531)(#6518)
 * feat: an example using identity tokens with gRPC (#6583)
 * feat: example using identity tokens (#6569)
-* feat: implement unified service account credentials (#6531)
-* feat: implement unified insecure credentials (#6518)
-* feat(common): streaming RPCs that always fail (#6473)
-* feat(common): a wrapper for streaming write RPCs (#6455)
 
 ## v1.27.0 - 2021-05
 
