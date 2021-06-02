@@ -114,6 +114,7 @@ target_compile_options(google_cloud_cpp_iam_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 add_subdirectory(integration_tests)
+add_subdirectory(samples)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

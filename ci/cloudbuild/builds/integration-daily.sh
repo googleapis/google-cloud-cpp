@@ -35,6 +35,7 @@ source module ci/lib/io.sh
 export CC=clang
 export CXX=clang++
 
+export GOOGLE_CLOUD_CPP_IAM_QUOTA_LIMITED_SAMPLES="yes"
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 
