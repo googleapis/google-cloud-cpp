@@ -67,6 +67,20 @@ SubscriberRoundRobin::AsyncStreamingPull(
   return Child()->AsyncStreamingPull(cq, std::move(context), request);
 }
 
+future<Status> SubscriberRoundRobin::AsyncAcknowledge(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::AcknowledgeRequest const& request) {
+  return Child()->AsyncAcknowledge(cq, std::move(context), request);
+}
+
+future<Status> SubscriberRoundRobin::AsyncModifyAckDeadline(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
+  return Child()->AsyncModifyAckDeadline(cq, std::move(context), request);
+}
+
 StatusOr<google::pubsub::v1::Snapshot> SubscriberRoundRobin::CreateSnapshot(
     grpc::ClientContext& context,
     google::pubsub::v1::CreateSnapshotRequest const& request) {

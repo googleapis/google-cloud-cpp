@@ -63,6 +63,16 @@ class SubscriberLogging : public SubscriberStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::pubsub::v1::StreamingPullRequest const& request) override;
 
+  future<Status> AsyncAcknowledge(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::AcknowledgeRequest const& request) override;
+
+  future<Status> AsyncModifyAckDeadline(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
+
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       grpc::ClientContext& context,
       google::pubsub::v1::CreateSnapshotRequest const& request) override;

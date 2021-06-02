@@ -193,6 +193,50 @@ TEST_F(SubscriberLoggingTest, AsyncStreamingPull) {
   EXPECT_THAT(log_.ExtractLines(), Contains(HasSubstr("Cancel")));
 }
 
+TEST_F(SubscriberLoggingTest, AsyncAcknowledge) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   google::pubsub::v1::AcknowledgeRequest const&) {
+        return make_ready_future(Status{});
+      });
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                         false);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::AcknowledgeRequest request;
+  request.set_subscription("test-subscription-name");
+  auto status = stub.AsyncAcknowledge(
+                        cq, absl::make_unique<grpc::ClientContext>(), request)
+                    .get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(log_.ExtractLines(),
+              Contains(AllOf(HasSubstr("AsyncAcknowledge"),
+                             HasSubstr("test-subscription-name"))));
+}
+
+TEST_F(SubscriberLoggingTest, AsyncModifyAckDeadline) {
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  SubscriberLogging stub(mock, TracingOptions{}.SetOptions("single_line_mode"),
+                         false);
+  google::cloud::CompletionQueue cq;
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription("test-subscription-name");
+  auto status = stub.AsyncModifyAckDeadline(
+                        cq, absl::make_unique<grpc::ClientContext>(), request)
+                    .get();
+  EXPECT_STATUS_OK(status);
+  EXPECT_THAT(log_.ExtractLines(),
+              Contains(AllOf(HasSubstr("AsyncModifyAckDeadline"),
+                             HasSubstr("test-subscription-name"))));
+}
+
 TEST_F(SubscriberLoggingTest, CreateSnapshot) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, CreateSnapshot)
