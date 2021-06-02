@@ -6,7 +6,10 @@
   ],
   "regexManagers": [
     {
-      "fileMatch":  [".*\\.Dockerfile$"],
+      "fileMatch":  [
+        ".*\\.Dockerfile$",
+        ".*packaging.md$"
+      ],
       "matchStrings": [
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz"
       ],
