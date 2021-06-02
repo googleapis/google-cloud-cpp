@@ -77,7 +77,57 @@
   the call site. See [#5929] for more details.
 </details>
 
-## v1.28.0 - TBD
+## v1.29.0 - TBD
+
+## v1.28.0 - 2021-06
+
+### Bigtable
+
+* feat(bigtable): Add asynchronous method for sampling row keys (#6561). Users
+  that extend `bigtable::DataClient` and wish to use the new method will need to
+  override `PrepareAsyncSampleRowKeys()`.
+* fix(bigtable): `bigtable::Table::AsyncBulkApply()` now respects the Retry and
+  Backoff policies (#6510)
+
+### IAM
+**NOTE** This release includes an **experimental** IAM client library. This
+library is **NOT GA** and is likely to have breaking changes in the coming
+months. Feel free to take a look, file issues, ask questions, and even
+experiment with it, but do not ship production code using it yet.
+
+* feature(iam): generate iam admin code (#6430)
+
+### Pub/Sub
+
+* fix(pubsub): save refresh timer for cancellation (#6662)
+* feat(pubsub): add ability to set the ack deadline extension (#6620)
+
+### Spanner
+
+* feat(spanner): use multiple channels instead of multiple client for the
+  multiple rows cpu benchmark (#6659)
+* fix(spanner): do not warn about SessionPoolClockOption (#6619)
+
+### Storage
+
+* feat(storage): recommend `g::c::Options` (#6640)
+* feat(storage): support multiple channels in GCS+gRPC (#6593)
+* feat(storage): round-robin stub for GCS+gRPC (#6584)
+* fix(storage): compile GCS+gRPC with Windows+x86 (#6556)
+* feat(storage): install rules for GCS+gRPC plugin (#6527)
+* fix(storage): compile with GCC 11 in C++17 mode (#6501)
+* feat: Support unified credentials (`google::cloud::Credentials`) to initialize
+  both the REST and gRPC plugins with the same classes. (#6518)(#6531)(#6617)(#6488)(#6441)
+
+### Common Libraries
+
+* feat: Add support for "unified" credentials, which allow applications to
+  Configure the REST and gRPC-based libraries using the same credential classes
+  Support complex credential types, such as service account impersonation
+  With this release, only the `storage` library supports unified credentials.
+  (#6617)(#6614)(#6531)(#6518)
+* feat: an example using identity tokens with gRPC (#6583)
+* feat: example using identity tokens (#6569)
 
 ## v1.27.0 - 2021-05
 
