@@ -124,7 +124,7 @@ experiment with it, but do not ship production code using it yet.
 * feat: Add support for "unified" credentials, which allow applications to
   Configure the REST and gRPC-based libraries using the same credential classes
   Support complex credential types, such as service account impersonation
-  With this release, only usable in the `storage` library supports these classes.
+  With this release, only the `storage` library supports unified credentials.
   (#6617)(#6614)(#6531)(#6518)
 * feat: an example using identity tokens with gRPC (#6583)
 * feat: example using identity tokens (#6569)
