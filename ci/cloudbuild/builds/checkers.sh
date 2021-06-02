@@ -32,7 +32,7 @@ function sed_edit() {
   while [[ $# -gt 0 ]]; do
     case "$1" in
     -e)
-      test -z "$2" && return 1
+      test $# -gt 1 || return 1
       expressions+=("-e" "$2")
       shift 2
       ;;
