@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/timer.h"
@@ -73,7 +74,6 @@ std::ostream& operator<<(std::ostream& os, RowCpuSample const& s) {
             << s.cpu_time.count() << ',' << s.status.code();
 }
 
-namespace {
 bool SupportPerThreadUsage() {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   return true;
@@ -81,7 +81,6 @@ bool SupportPerThreadUsage() {
   return false;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
-}  // namespace
 
 struct BoolTraits {
   using native_type = bool;
@@ -422,9 +421,10 @@ template <typename Traits>
 class BasicExperiment : public Experiment {
  public:
   explicit BasicExperiment(google::cloud::internal::DefaultPRNG generator,
-                           std::string table_name)
+                           std::string table_prefix)
       : impl_(generator),
-        table_name_(std::move(table_name) + Traits::TableSuffix()) {}
+        table_name_(absl::StrCat(std::move(table_prefix), "Experiment_",
+                                 Traits::TableSuffix())) {}
 
   std::string AdditionalDdlStatement() override {
     return impl_.CreateTableStatement(table_name_);
@@ -530,7 +530,7 @@ template <typename Traits>
 class ReadExperiment : public BasicExperiment<Traits> {
  public:
   explicit ReadExperiment(google::cloud::internal::DefaultPRNG generator)
-      : BasicExperiment<Traits>(generator, "ReadExperiment_") {}
+      : BasicExperiment<Traits>(generator, "Read") {}
 
  protected:
   std::vector<RowCpuSample> ViaStub(
@@ -671,7 +671,7 @@ template <typename Traits>
 class SelectExperiment : public BasicExperiment<Traits> {
  public:
   explicit SelectExperiment(google::cloud::internal::DefaultPRNG generator)
-      : BasicExperiment<Traits>(generator, "SelectExperiment_") {}
+      : BasicExperiment<Traits>(generator, "Select") {}
 
  protected:
   std::vector<RowCpuSample> ViaStub(
@@ -830,7 +830,7 @@ template <typename Traits>
 class UpdateExperiment : public BasicExperiment<Traits> {
  public:
   explicit UpdateExperiment(google::cloud::internal::DefaultPRNG generator)
-      : BasicExperiment<Traits>(generator, "UpdateExperiment_") {}
+      : BasicExperiment<Traits>(generator, "Update") {}
 
  protected:
   std::vector<RowCpuSample> ViaStub(
@@ -1015,7 +1015,7 @@ template <typename Traits>
 class MutationExperiment : public BasicExperiment<Traits> {
  public:
   explicit MutationExperiment(google::cloud::internal::DefaultPRNG generator)
-      : BasicExperiment<Traits>(generator, "MutationExperiment_") {}
+      : BasicExperiment<Traits>(generator, "Mutation") {}
 
  protected:
   std::vector<RowCpuSample> ViaStub(
