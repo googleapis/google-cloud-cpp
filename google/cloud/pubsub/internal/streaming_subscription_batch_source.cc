@@ -41,24 +41,30 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 }
 
 void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
-  std::unique_lock<std::mutex> lk(mu_);
-  ack_queue_.push_back(ack_id);
-  DrainQueues(std::move(lk), false);
+  google::pubsub::v1::AcknowledgeRequest request;
+  request.set_subscription(subscription_full_name_);
+  *request.add_ack_ids() = ack_id;
+  (void)stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
+                                request);
 }
 
 void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
-  std::unique_lock<std::mutex> lk(mu_);
-  nack_queue_.push_back(ack_id);
-  DrainQueues(std::move(lk), false);
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(subscription_full_name_);
+  *request.add_ack_ids() = ack_id;
+  request.set_ack_deadline_seconds(0);
+  (void)stub_->AsyncModifyAckDeadline(
+      cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
 void StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
-  std::unique_lock<std::mutex> lk(mu_);
-  for (auto& a : ack_ids) {
-    nack_queue_.push_back(std::move(a));
-  }
-  DrainQueues(std::move(lk), false);
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(subscription_full_name_);
+  for (auto& a : ack_ids) *request.add_ack_ids() = std::move(a);
+  request.set_ack_deadline_seconds(0);
+  (void)stub_->AsyncModifyAckDeadline(
+      cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
 void StreamingSubscriptionBatchSource::ExtendLeases(
@@ -302,30 +308,17 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
 }
 
 void StreamingSubscriptionBatchSource::DrainQueues(
-    std::unique_lock<std::mutex> lk, bool force_flush) {
-  auto const threshold = force_flush ? 1 : ack_batching_config_.max_batch_size;
-  if (ack_queue_.size() < threshold && nack_queue_.size() < threshold &&
-      deadlines_queue_.empty()) {
-    return;
-  }
+    std::unique_lock<std::mutex> lk, bool /*force_flush*/) {
+  if (deadlines_queue_.empty()) return;
   if (stream_state_ != StreamState::kActive || pending_write_) return;
   auto stream = stream_;
   pending_write_ = true;
 
-  std::vector<std::string> acks;
-  acks.swap(ack_queue_);
-  std::vector<std::string> nacks;
-  nacks.swap(nack_queue_);
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
   deadlines.swap(deadlines_queue_);
   lk.unlock();
 
   google::pubsub::v1::StreamingPullRequest request;
-  for (auto& a : acks) request.add_ack_ids(std::move(a));
-  for (auto& n : nacks) {
-    request.add_modify_deadline_ack_ids(std::move(n));
-    request.add_modify_deadline_seconds(0);
-  }
   for (auto& d : deadlines) {
     request.add_modify_deadline_ack_ids(std::move(d.first));
     request.add_modify_deadline_seconds(
