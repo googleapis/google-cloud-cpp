@@ -34,8 +34,8 @@ echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
 brew install openssl
-brew install cmake
-brew install ninja
+brew install cmake || cmake --version
+brew install ninja || ninja --version
 
 echo "================================================================"
 io::log_yellow "ccache stats"
