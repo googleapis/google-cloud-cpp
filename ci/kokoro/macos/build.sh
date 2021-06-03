@@ -61,6 +61,7 @@ fi
 echo "================================================================"
 io::log_yellow "Update or reinstall 'google-cloud-sdk'."
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew --config
 # Ignore errors, maybe the local version is functional.
 brew reinstall google-cloud-sdk || brew install google-cloud-sdk || true
