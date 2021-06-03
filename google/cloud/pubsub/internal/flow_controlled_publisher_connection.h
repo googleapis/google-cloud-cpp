@@ -42,6 +42,12 @@ class FlowControlledPublisherConnection
   void Flush(FlushParams p) override;
   void ResumePublish(ResumePublishParams p) override;
 
+  // These two functions may appear dangerous, returning a value after
+  // locking is inherently racy. Keep in mind:
+  // - Other than in test, only the `PublisherConnection` member functions are
+  //   used, so these functions are really "test-only"
+  // - In tests the functions are just used at the end of the test, once things
+  //   have quieted down.
   std::size_t max_pending_messages() const {
     std::unique_lock<std::mutex> lk(mu_);
     return max_pending_messages_;
@@ -59,23 +65,15 @@ class FlowControlledPublisherConnection
 
   void OnPublish(std::size_t message_size);
   bool IsFull() const {
-    return pending_bytes_ >= options_.maximum_pending_bytes() ||
-           pending_messages_ >= options_.maximum_pending_messages();
+    return pending_messages_ > options_.maximum_pending_messages() ||
+           pending_bytes_ > options_.maximum_pending_bytes();
   }
   bool MakesFull(std::size_t message_size) const {
-    if (pending_messages_ + 1 > options_.maximum_pending_messages()) {
-      return true;
-    }
-    return pending_bytes_ + message_size > options_.maximum_pending_bytes();
+    return pending_messages_ + 1 > options_.maximum_pending_messages() ||
+           pending_bytes_ + message_size > options_.maximum_pending_bytes();
   }
-  bool RejectWhenFull() const {
-    return options_.full_publisher_action() ==
-           pubsub::PublisherOptions::kFullPublisherRejects;
-  }
-  bool BlockWhenFull() const {
-    return options_.full_publisher_action() ==
-           pubsub::PublisherOptions::kFullPublisherBlocks;
-  }
+  bool RejectWhenFull() const { return options_.full_publisher_rejects(); }
+  bool BlockWhenFull() const { return options_.full_publisher_blocks(); }
   std::weak_ptr<FlowControlledPublisherConnection> WeakFromThis() {
     return shared_from_this();
   }

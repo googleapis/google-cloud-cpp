@@ -27,8 +27,8 @@ StatusOr<std::string> RejectMessage() {
 
 future<StatusOr<std::string>> FlowControlledPublisherConnection::Publish(
     PublishParams p) {
-  std::unique_lock<std::mutex> lk(mu_);
   auto const message_size = MessageSize(p.message);
+  std::unique_lock<std::mutex> lk(mu_);
   if (MakesFull(message_size)) {
     if (RejectWhenFull()) return make_ready_future(RejectMessage());
     if (BlockWhenFull()) {

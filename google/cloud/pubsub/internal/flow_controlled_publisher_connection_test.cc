@@ -50,7 +50,7 @@ TEST(FlowControlledPublisherConnection, FullPublisherIgnored) {
       pubsub::PublisherOptions{}
           .set_maximum_pending_bytes(128 * 1024)
           .set_maximum_pending_messages(8)
-          .full_publisher_ignored(),
+          .set_full_publisher_ignored(),
       mock);
   under_test->Flush({});
   under_test->ResumePublish({"test-ordering-key"});
@@ -75,7 +75,7 @@ TEST(FlowControlledPublisherConnection, RejectOnBytes) {
 
   auto under_test = FlowControlledPublisherConnection::Create(
       pubsub::PublisherOptions{}
-          .full_publisher_rejects()
+          .set_full_publisher_rejects()
           .set_maximum_pending_bytes(128 * 1024),
       mock);
   auto m0 = under_test->Publish({MakeTestMessage(64 * 1024)});
@@ -100,7 +100,7 @@ TEST(FlowControlledPublisherConnection, RejectOnMessages) {
 
   auto under_test = FlowControlledPublisherConnection::Create(
       pubsub::PublisherOptions{}
-          .full_publisher_rejects()
+          .set_full_publisher_rejects()
           .set_maximum_pending_messages(4)
           .set_maximum_pending_bytes(128 * 1024),
       mock);
@@ -164,7 +164,7 @@ std::shared_ptr<FlowControlledPublisherConnection> TestFlowControl(
 TEST(FlowControlledPublisherConnection, BlockOnBytes) {
   auto const actual =
       TestFlowControl(pubsub::PublisherOptions{}
-                          .full_publisher_blocks()
+                          .set_full_publisher_blocks()
                           .set_maximum_pending_bytes(kExpectedMaxBytes));
   EXPECT_LE(actual->max_pending_bytes(), kExpectedMaxBytes);
 }
@@ -172,7 +172,7 @@ TEST(FlowControlledPublisherConnection, BlockOnBytes) {
 TEST(FlowControlledPublisherConnection, BlockOnMessages) {
   auto const actual =
       TestFlowControl(pubsub::PublisherOptions{}
-                          .full_publisher_blocks()
+                          .set_full_publisher_blocks()
                           .set_maximum_pending_messages(kExpectedMaxMessages));
   EXPECT_LE(actual->max_pending_messages(), kExpectedMaxMessages);
 }

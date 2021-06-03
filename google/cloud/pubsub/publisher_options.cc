@@ -24,10 +24,6 @@ std::size_t constexpr PublisherOptions::kDefaultMaximumMessageCount;
 std::size_t constexpr PublisherOptions::kDefaultMaximumMessageSize;
 std::size_t constexpr PublisherOptions::kDefaultMinimumMessageSize;
 
-int constexpr PublisherOptions::kFullPublisherIgnored;
-int constexpr PublisherOptions::kFullPublisherBlocks;
-int constexpr PublisherOptions::kFullPublisherRejects;
-
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
 }  // namespace cloud

@@ -54,7 +54,11 @@ class PublisherOptions {
    *
    * It is more efficient (in terms of client CPU and client network usage) to
    * send multiple messages in a single "batch" to the service. The following
-   * configuration options can be used To improve throughput (as
+   * configuration options can be used to improve throughput: sending larger
+   * batches reduces CPU and network overhead. Note that batches are subject
+   * to [quota limits]
+   *
+   * [quota limits]: https://cloud.google.com/pubsub/quotas#resource_limits
    */
   std::chrono::microseconds maximum_hold_time() const {
     return maximum_hold_time_;
@@ -124,10 +128,10 @@ class PublisherOptions {
    * @name Publisher message ordering.
    *
    * To guarantee messages are received by the service in the same order that
-   * the application gives them to a publisher the client library needs to wait
+   * the application gives them to a publisher, the client library needs to wait
    * until a batch of messages is successfully delivered before sending the next
-   * batch. Otherwise batches may arrive out of order as the is no guarantee the
-   * same channel or network path is used for each batch.
+   * batch, otherwise batches may arrive out of order as there is no guarantee
+   * the same channel or network path is used for each batch.
    *
    * For applications that do not care about message ordering, this can limit
    * the throughput. Therefore, the behavior is disabled by default.
@@ -167,7 +171,7 @@ class PublisherOptions {
    *
    * Some applications may have constraints on the number of bytes and/or
    * messages they can tolerate in this pending state, and may prefer to block
-   * or reject messages
+   * or reject messages.
    */
 
   /// Flow control based on pending bytes.
@@ -187,28 +191,32 @@ class PublisherOptions {
     return maximum_pending_messages_;
   }
 
-  static int constexpr kFullPublisherIgnored = 0;
-  static int constexpr kFullPublisherBlocks = 1;
-  static int constexpr kFullPublisherRejects = 2;
-
   /// The current action for a full publisher
-  int full_publisher_action() const { return full_publisher_action_; }
-
-  /// Ignore full publishers, continue as usual
-  PublisherOptions& full_publisher_ignored() {
-    full_publisher_action_ = kFullPublisherIgnored;
-    return *this;
+  bool full_publisher_ignored() const {
+    return full_publisher_action_ == FullPublisherAction::kIgnored;
+  }
+  bool full_publisher_rejects() const {
+    return full_publisher_action_ == FullPublisherAction::kRejects;
+  }
+  bool full_publisher_blocks() const {
+    return full_publisher_action_ == FullPublisherAction::kBlocks;
   }
 
-  /// Configure the publisher to block the caller when full.
-  PublisherOptions& full_publisher_blocks() {
-    full_publisher_action_ = kFullPublisherBlocks;
+  /// Ignore full publishers, continue as usual
+  PublisherOptions& set_full_publisher_ignored() {
+    full_publisher_action_ = FullPublisherAction::kIgnored;
     return *this;
   }
 
   /// Configure the publisher to reject new messages when full.
-  PublisherOptions& full_publisher_rejects() {
-    full_publisher_action_ = kFullPublisherRejects;
+  PublisherOptions& set_full_publisher_rejects() {
+    full_publisher_action_ = FullPublisherAction::kRejects;
+    return *this;
+  }
+
+  /// Configure the publisher to block the caller when full.
+  PublisherOptions& set_full_publisher_blocks() {
+    full_publisher_action_ = FullPublisherAction::kBlocks;
     return *this;
   }
   //@}
@@ -221,10 +229,12 @@ class PublisherOptions {
       (std::numeric_limits<std::size_t>::max)();
   static std::size_t constexpr kDefaultMaximumPendingMessages =
       (std::numeric_limits<std::size_t>::max)();
-  // See https://cloud.google.com/pubsub/pricing, the minimum legal size for a
-  // message is 21 bytes. Setting the pending message bytes size to less than
-  // this number leads to deadlocks.
+  // According to https://cloud.google.com/pubsub/pricing, the minimum legal
+  // size for a message is 21 bytes. Setting the pending message bytes size to
+  // less than this number leads to deadlocks.
   static std::size_t constexpr kDefaultMinimumMessageSize = 21;
+
+  enum class FullPublisherAction { kIgnored, kRejects, kBlocks };
 
   std::chrono::microseconds maximum_hold_time_ = kDefaultMaximumHoldTime;
   std::size_t maximum_batch_message_count_ = kDefaultMaximumMessageCount;
@@ -232,7 +242,7 @@ class PublisherOptions {
   bool message_ordering_ = false;
   std::size_t maximum_pending_bytes_ = kDefaultMaximumPendingBytes;
   std::size_t maximum_pending_messages_ = kDefaultMaximumPendingMessages;
-  int full_publisher_action_ = kFullPublisherBlocks;
+  FullPublisherAction full_publisher_action_ = FullPublisherAction::kBlocks;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS

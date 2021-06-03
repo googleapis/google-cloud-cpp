@@ -139,8 +139,9 @@ TEST(PublisherConnectionTest, FlowControl) {
 
   auto publisher = pubsub_internal::MakePublisherConnection(
       topic,
-      PublisherOptions{}.full_publisher_rejects().set_maximum_pending_messages(
-          4),
+      PublisherOptions{}
+          .set_full_publisher_rejects()
+          .set_maximum_pending_messages(4),
       ConnectionOptions{}, mock, pubsub_testing::TestRetryPolicy(),
       pubsub_testing::TestBackoffPolicy());
 

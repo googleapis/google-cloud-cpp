@@ -67,21 +67,16 @@ TEST(PublisherOptions, MaximumPendingMessages) {
 
 TEST(PublisherOptions, FullPublisherAction) {
   auto const b0 = PublisherOptions{};
-  EXPECT_EQ(PublisherOptions::kFullPublisherBlocks, b0.full_publisher_action());
+  EXPECT_FALSE(b0.full_publisher_ignored());
+  EXPECT_FALSE(b0.full_publisher_rejects());
+  EXPECT_TRUE(b0.full_publisher_blocks());
 
-  EXPECT_EQ(
-      PublisherOptions::kFullPublisherIgnored,
-      PublisherOptions{}.full_publisher_ignored().full_publisher_action());
-  EXPECT_EQ(PublisherOptions::kFullPublisherBlocks,
-            PublisherOptions{}.full_publisher_blocks().full_publisher_action());
-  EXPECT_EQ(
-      PublisherOptions::kFullPublisherRejects,
-      PublisherOptions{}.full_publisher_rejects().full_publisher_action());
-  EXPECT_EQ(PublisherOptions::kFullPublisherIgnored,
-            PublisherOptions{}
-                .full_publisher_rejects()
-                .full_publisher_ignored()
-                .full_publisher_action());
+  EXPECT_TRUE(
+      PublisherOptions{}.set_full_publisher_ignored().full_publisher_ignored());
+  EXPECT_TRUE(
+      PublisherOptions{}.set_full_publisher_rejects().full_publisher_rejects());
+  EXPECT_TRUE(
+      PublisherOptions{}.set_full_publisher_blocks().full_publisher_blocks());
 }
 
 }  // namespace

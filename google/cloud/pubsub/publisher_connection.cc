@@ -147,8 +147,7 @@ std::shared_ptr<pubsub::PublisherConnection> MakePublisherConnection(
         std::move(topic), std::move(options), {}, sink, std::move(cq)));
   };
   auto connection = make_connection();
-  if (options.full_publisher_action() !=
-      pubsub::PublisherOptions::kFullPublisherIgnored) {
+  if (options.full_publisher_rejects() || options.full_publisher_blocks()) {
     connection = FlowControlledPublisherConnection::Create(
         options, std::move(connection));
   }
