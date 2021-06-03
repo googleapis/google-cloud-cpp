@@ -448,8 +448,10 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
   uut->Start(handler);
   uut->Read(kMaxCallbacks);
 
-  auto worker = [batch_callback](std::string const& key, int count) {
-    auto gen = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  using SeedType = std::seed_seq::result_type;
+  auto worker = [batch_callback](std::string const& key, int count,
+                                 SeedType seed) {
+    auto gen = google::cloud::internal::DefaultPRNG(seed);
     using random = std::uniform_int_distribution<int>;
     for (int i = 0; i < count;) {
       auto step = random(0, count - i)(gen);
@@ -459,13 +461,28 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
           std::chrono::microseconds(random(0, 50)(gen)));
     }
   };
-  std::vector<std::thread> tasks;
+  auto key_generator = [](int id) {
+    if (id == 0) return std::string{};
+    return absl::StrFormat("%06d", id);
+  };
+  auto seeds = [key_count] {
+    std::random_device rd;
+    std::seed_seq seq{rd(), rd(), rd(), rd()};
+    std::vector<std::uint32_t> seeds(key_count);
+    seq.generate(seeds.begin(), seeds.end());
+    return seeds;
+  }();
+
   auto constexpr kMinMessages = 100;
   auto const per_key_count = message_count / key_count + kMinMessages;
-  tasks.emplace_back(worker, std::string{}, per_key_count);
-  for (int i = 1; i != key_count; ++i) {
-    tasks.emplace_back(worker, absl::StrFormat("%06d", i), per_key_count);
-  }
+
+  int id = 0;
+  std::vector<std::thread> tasks;
+  std::transform(seeds.begin(), seeds.end(), std::back_inserter(tasks),
+                 [&](std::uint32_t seed) {
+                   return std::thread(worker, key_generator(id++),
+                                      per_key_count, seed);
+                 });
 
   {
     std::unique_lock<std::mutex> lk(mu);
