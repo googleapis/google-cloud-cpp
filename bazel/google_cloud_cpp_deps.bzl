@@ -101,6 +101,20 @@ def google_cloud_cpp_deps():
             sha256 = "036d66d6eec216160dd898cfb162e9d82c1904627642667cc32b104d407bb411",
         )
 
+    # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
+    # gRPC does not compile with GCC-11
+    if "boringssl" not in native.existing_rules():
+        http_archive(
+            name = "boringssl",
+            # Use github mirror instead of https://boringssl.googlesource.com/boringssl
+            # to obtain a boringssl archive with consistent sha256
+            sha256 = "f0f433106f98f6f50ed6bbc2169f7c42dd73d13d0f09d431082519b5649903a6",
+            strip_prefix = "boringssl-56eb68f64215738552be452e311da12047934ab4",
+            urls = [
+                "https://github.com/google/boringssl/archive/56eb68f64215738552be452e311da12047934ab4.tar.gz",
+            ],
+        )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
