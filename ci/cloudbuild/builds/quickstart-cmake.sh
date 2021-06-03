@@ -26,16 +26,15 @@ export CXX=g++
 
 io::log_h2 "Installing vcpkg"
 vcpkg_dir="${HOME}/vcpkg-quickstart"
-vcpkg_bin="${vcpkg_dir}/vcpkg"
 mkdir -p "${vcpkg_dir}"
 io::log "Downloading vcpkg into ${vcpkg_dir}..."
-curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.04.30.tar.gz" |
+curl -sSL "https://github.com/microsoft/vcpkg/archive/2021.05.12.tar.gz" |
   tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
-env CC="ccache ${CC}" CXX="ccache ${CXX}" "${vcpkg_dir}"/bootstrap-vcpkg.sh
+env -C "${vcpkg_dir}" CC="ccache ${CC}" CXX="ccache ${CXX}" ./bootstrap-vcpkg.sh
 
 io::log_h2 "Installing google-cloud-cpp with vcpkg"
-"${vcpkg_bin}" remove --outdated --recurse
-"${vcpkg_bin}" install google-cloud-cpp
+env -C "${vcpkg_dir}" ./vcpkg remove --outdated --recurse
+env -C "${vcpkg_dir}" ./vcpkg install google-cloud-cpp
 
 # Compiles and runs all the quickstart CMake builds.
 for lib in $(quickstart::libraries); do
