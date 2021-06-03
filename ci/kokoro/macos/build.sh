@@ -60,14 +60,13 @@ fi
 # it is just partially installed. This gives us a more consistent environment.
 echo "================================================================"
 io::log_yellow "Update or reinstall 'google-cloud-sdk'."
-brew --version
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+brew --config
 # Ignore errors, maybe the local version is functional.
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew reinstall google-cloud-sdk ||
-  env "HOMEBREW_NO_AUTO_UPDATE=1" brew cask install google-cloud-sdk ||
-  true
-
+brew reinstall google-cloud-sdk || brew install google-cloud-sdk || true
 # Continue despite `brew doctor` errors and warnings.
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew doctor || true
+brew doctor || true
 
 echo "================================================================"
 io::log_yellow "change working directory to project root."
@@ -150,6 +149,7 @@ CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
 echo "================================================================"
+brew install coreutils # To get gtimeout
 gtimeout 1200 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
   "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
