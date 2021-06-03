@@ -33,9 +33,9 @@ readonly NCPU
 echo "================================================================"
 io::log_yellow "Update or install dependencies."
 
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew install openssl
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew install cmake || cmake --version
-env "HOMEBREW_NO_AUTO_UPDATE=1" brew install ninja || ninja --version
+brew install openssl
+brew install cmake
+brew install ninja
 
 echo "================================================================"
 io::log_yellow "ccache stats"
@@ -44,7 +44,12 @@ ccache --zero-stats
 
 echo "================================================================"
 cd "${PROJECT_ROOT}"
-export OPENSSL_ROOT_DIR=/usr/local/opt/openssl
+
+# Sets OPENSSL_ROOT_DIR to its install path from homebrew.
+homebrew_prefix="$(brew --config | grep HOMEBREW_PREFIX | awk '{print $2}')"
+test -n "${homebrew_prefix}"
+export OPENSSL_ROOT_DIR="${homebrew_prefix}/opt/openssl"
+
 cmake_flags=(
   "-DCMAKE_INSTALL_PREFIX=$HOME/staging"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
