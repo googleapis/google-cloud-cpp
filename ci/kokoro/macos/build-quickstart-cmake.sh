@@ -20,7 +20,7 @@ source module /ci/lib/io.sh
 source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 
-io::log_h2 "Update or install dependencies."
+io::log_h2 "Update or install dependencies"
 
 # Fetch vcpkg at the specified hash.
 vcpkg_dir="${HOME}/vcpkg-quickstart"
@@ -62,17 +62,17 @@ build_quickstart() {
   local ninja
   ninja="$("${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja)"
 
-  io::log_h2 "Configure CMake for ${library}'s quickstart."
+  io::log_h2 "Configure CMake for ${library}'s quickstart"
   "${cmake}" "-GNinja" "-DCMAKE_MAKE_PROGRAM=${ninja}" \
     "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
   echo
-  io::log_h2 "Compiling ${library}'s quickstart."
+  io::log_h2 "Compiling ${library}'s quickstart"
   "${cmake}" --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    io::log_h2 "Running ${library}'s quickstart."
+    io::log_h2 "Running ${library}'s quickstart"
     args=()
     while IFS="" read -r line; do
       args+=("${line}")

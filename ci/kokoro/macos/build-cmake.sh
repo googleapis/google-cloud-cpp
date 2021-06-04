@@ -30,7 +30,7 @@ readonly BINARY_DIR="$2"
 NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
-io::log_h2 "Update or install dependencies."
+io::log_h2 "Update or install dependencies"
 brew install openssl
 brew install cmake || cmake --version
 brew install ninja || ninja --version
@@ -85,7 +85,7 @@ should_run_integration_tests() {
 }
 
 if should_run_integration_tests; then
-  io::log_h2 "Running integration tests."
+  io::log_h2 "Running integration tests"
   (
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="${TEST_KEY_FILE_JSON}"
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="${TEST_KEY_FILE_P12}"

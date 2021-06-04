@@ -198,7 +198,7 @@ if [[ "${LOCAL_FLAG}" = "true" ]]; then
   }
   function google_time() {
     # Extracts the time that Google thinks it is.
-    curl -sI google.com | grep "^Date:" | cut -f2- -d:
+    curl -sI google.com | sed -n 's/Date: \(.*\)\r/\1/p'
   }
   io::log_h1 "Machine Info"
   printf "%10s %s\n" "host:" "$(date -u --rfc-3339=seconds)"

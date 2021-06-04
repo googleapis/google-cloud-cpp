@@ -19,7 +19,7 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module /ci/etc/integration-tests-config.sh
 source module /ci/lib/io.sh
 
-io::log_h2 "update or install Bazel."
+io::log_h2 "update or install Bazel"
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
@@ -77,7 +77,7 @@ for repeat in 1 2 3; do
     @go_sdk//...
     @remotejdk11_macos//:jdk
   )
-  io::log_yellow "Fetch bazel dependencies [${repeat}/3]."
+  io::log_yellow "Fetch bazel dependencies [${repeat}/3]"
   if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
     break
   else
@@ -86,12 +86,12 @@ for repeat in 1 2 3; do
   sleep $((120 * repeat))
 done
 
-io::log_h2 "build and run unit tests."
+io::log_h2 "build and run unit tests"
 echo "bazel test " "${bazel_args[@]}"
 "${BAZEL_BIN}" test \
   "${bazel_args[@]}" "--test_tag_filters=-integration-test" ...
 
-io::log_h2 "build all targets."
+io::log_h2 "build all targets"
 "${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
 should_run_integration_tests() {
@@ -104,7 +104,7 @@ should_run_integration_tests() {
 }
 
 if should_run_integration_tests; then
-  io::log_h2 "running integration tests."
+  io::log_h2 "running integration tests"
 
   bazel_args+=(
     # Common configuration

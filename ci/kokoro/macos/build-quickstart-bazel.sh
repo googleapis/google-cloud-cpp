@@ -20,7 +20,7 @@ source module /ci/etc/integration-tests-config.sh
 source module /ci/etc/quickstart-config.sh
 source module /ci/lib/io.sh
 
-io::log_h2 "update or install Bazel."
+io::log_h2 "update or install Bazel"
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
@@ -88,7 +88,7 @@ build_quickstart() {
       @go_sdk//...
       @remotejdk11_macos//:jdk
     )
-    io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]."
+    io::log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]"
     if "${BAZEL_BIN}" fetch ... "${external[@]}"; then
       break
     else
@@ -102,7 +102,7 @@ build_quickstart() {
 
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
-    io::log_yellow "Running ${library}'s quickstart."
+    io::log_yellow "Running ${library}'s quickstart"
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
