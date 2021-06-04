@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/options.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/connection_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -50,6 +51,12 @@ void SetBasicDefaults(Options& opts) {
   }
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(4);
+  }
+  if (!opts.has<TracingComponentsOption>()) {
+    opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
+  }
+  if (!opts.has<GrpcTracingOptionsOption>()) {
+    opts.set<GrpcTracingOptionsOption>(internal::DefaultTracingOptions());
   }
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();

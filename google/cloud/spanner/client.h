@@ -686,8 +686,8 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
  * @see `Connection`
  *
  * @param db See `Database`.
- * @param connection_options (optional) configure the `Connection` created by
- *     this function.
+ * @param connection_options configure the `Connection` created by this
+ *     function.
  * @param session_pool_options (optional) configure the `SessionPool` created
  *     by the `Connection`.
  */
