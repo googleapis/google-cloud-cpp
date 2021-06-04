@@ -49,6 +49,7 @@ if ($args.count -ge 1) {
 }
 $vcpkg_dir = "cmake-out\${vcpkg_base}"
 $vcpkg_version = "2021.05.12"
+$Env:VCPKG_FEATURE_FLAGS = "-manifests"
 
 New-Item -ItemType Directory -Path "cmake-out" -ErrorAction SilentlyContinue
 # Download the right version of `vcpkg`
@@ -125,52 +126,42 @@ if ($RunningCI -and $HasBuildCache) {
 }
 
 # Integrate installed packages into the build environment.
-Push-Location "${vcpkg_dir}"
-&".\vcpkg.exe" integrate install
+&"${vcpkg_dir}\vcpkg.exe" integrate install
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg integrate failed with exit code $LastExitCode"
     Exit ${LastExitCode}
 }
-Pop-Location
 
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
-Push-Location "${vcpkg_dir}"
-&".\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
+&"${vcpkg_dir}\vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
     Exit ${LastExitCode}
 }
-Pop-Location
 
-Push-Location "${vcpkg_dir}"
 ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Warmup vcpkg [$_]"
     # Additional dependencies, these are not downloaded by `bazel fetch ...`,
     # but are needed to compile the code
-    &".\vcpkg.exe" install ${vcpkg_flags} "crc32c"
+    &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "crc32c"
     if ($LastExitCode -eq 0) {
         break
     }
     Start-Sleep -Seconds (60 * $_)
 }
-Pop-Location
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg packages."
-Push-Location "${vcpkg_dir}"
 foreach ($pkg in $packages) {
-    &".\vcpkg.exe" install ${vcpkg_flags} "${pkg}"
+    &"${vcpkg_dir}\vcpkg.exe" install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
         Write-Host -ForegroundColor Red "vcpkg install $pkg failed with exit code $LastExitCode"
         Exit ${LastExitCode}
     }
 }
-Pop-Location
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
-Push-Location "${vcpkg_dir}"
-&".\vcpkg.exe" list
-Pop-Location
+&"${vcpkg_dir}\vcpkg.exe" list
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup vcpkg buildtrees"
 Get-ChildItem -Recurse -File `
