@@ -54,7 +54,6 @@ done
 readonly UPLOAD="cmake-out/upload"
 mkdir -p "${UPLOAD}"
 
-echo "================================================================"
 io::log "Preparing cache tarball for ${CACHE_NAME}"
 tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 
