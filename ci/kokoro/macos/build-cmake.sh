@@ -94,7 +94,7 @@ if should_run_integration_tests; then
     export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
     export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
     export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
-    export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc"
+    export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
     export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
     export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
 
