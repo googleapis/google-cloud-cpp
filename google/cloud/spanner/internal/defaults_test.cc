@@ -31,6 +31,7 @@ namespace {
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::StartsWith;
 
 // Returns a matcher that will match our user-agent string. This is a lambda so
@@ -43,9 +44,16 @@ auto gcloud_user_agent_matcher = [] {
 };
 
 TEST(Options, Defaults) {
-  testing_util::ScopedEnvironment env(
+  testing_util::ScopedEnvironment endpoint_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  testing_util::ScopedEnvironment tracing_options_env(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+  testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
+                                               absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
+
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
@@ -53,6 +61,8 @@ TEST(Options, Defaults) {
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
   EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
@@ -70,9 +80,16 @@ TEST(Options, Defaults) {
 }
 
 TEST(Options, AdminDefaults) {
-  testing_util::ScopedEnvironment env(
+  testing_util::ScopedEnvironment endpoint_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", absl::nullopt);
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", absl::nullopt);
+  testing_util::ScopedEnvironment tracing_options_env(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS", absl::nullopt);
+  testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
+                                               absl::nullopt);
   auto opts = spanner_internal::DefaultAdminOptions();
+
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
   // In Google's testing environment `expected` can be `nullptr`, we just want
   // to verify that both are `nullptr` or neither is `nullptr`.
@@ -80,6 +97,8 @@ TEST(Options, AdminDefaults) {
   EXPECT_EQ(!!opts.get<GrpcCredentialOption>(), !!expected);
   EXPECT_NE(opts.get<GrpcBackgroundThreadsFactoryOption>(), nullptr);
   EXPECT_EQ(opts.get<GrpcNumChannelsOption>(), 4);
+  EXPECT_THAT(opts.get<TracingComponentsOption>(), IsEmpty());
+  EXPECT_EQ(opts.get<GrpcTracingOptionsOption>(), TracingOptions{});
   EXPECT_THAT(opts.get<UserAgentProductsOption>(),
               ElementsAre(gcloud_user_agent_matcher()));
 
@@ -97,17 +116,44 @@ TEST(Options, AdminDefaults) {
 }
 
 TEST(Options, EndpointFromEnv) {
-  testing_util::ScopedEnvironment env(
+  testing_util::ScopedEnvironment endpoint_env(
       "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "foo.bar.baz");
+  testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
+                                               absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
 }
 
 TEST(Options, SpannerEmulatorHost) {
-  testing_util::ScopedEnvironment env("SPANNER_EMULATOR_HOST", "foo.bar.baz");
+  testing_util::ScopedEnvironment endpoint_env(
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "no.thank.you");
+  testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
+                                               "foo.bar.baz");
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
   EXPECT_NE(opts.get<GrpcCredentialOption>(), nullptr);
+}
+
+TEST(Options, TracingComponentsFromEnv) {
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "c1,c2,c3");
+  auto opts = spanner_internal::DefaultOptions();
+  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+              ElementsAre("c1", "c2", "c3"));
+}
+
+TEST(Options, TracingOptionsFromEnv) {
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+      ",single_line_mode=F"
+      ",use_short_repeated_primitives=n"
+      ",truncate_string_field_longer_than=256");
+  auto opts = spanner_internal::DefaultOptions();
+  auto options = opts.get<GrpcTracingOptionsOption>();
+  EXPECT_NE(options, TracingOptions{});
+  EXPECT_FALSE(options.single_line_mode());
+  EXPECT_FALSE(options.use_short_repeated_primitives());
+  EXPECT_EQ(256, options.truncate_string_field_longer_than());
 }
 
 TEST(Options, PassThroughUnknown) {
@@ -120,6 +166,10 @@ TEST(Options, PassThroughUnknown) {
 }
 
 TEST(Options, OverrideEndpoint) {
+  testing_util::ScopedEnvironment endpoint_env(
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT", "no.thank.you");
+  testing_util::ScopedEnvironment emulator_env("SPANNER_EMULATOR_HOST",
+                                               absl::nullopt);
   auto opts = Options{}.set<EndpointOption>("foo.bar.baz");
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ("foo.bar.baz", opts.get<EndpointOption>());
@@ -150,6 +200,35 @@ TEST(Options, OverrideNumChannels) {
   auto opts = Options{}.set<GrpcNumChannelsOption>(42);
   opts = spanner_internal::DefaultOptions(std::move(opts));
   EXPECT_EQ(42, opts.get<GrpcNumChannelsOption>());
+}
+
+TEST(Options, OverrideTracingComponents) {
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_ENABLE_TRACING", "n1,n2,n3");
+  std::set<std::string> components{"c1", "c2", "c3"};
+  auto opts = Options{}.set<TracingComponentsOption>(components);
+  opts = spanner_internal::DefaultOptions(std::move(opts));
+  EXPECT_THAT(opts.get<TracingComponentsOption>(),
+              ElementsAre("c1", "c2", "c3"));
+}
+
+TEST(Options, OverrideTracingOptions) {
+  testing_util::ScopedEnvironment tracing_components_env(
+      "GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+      ",single_line_mode=T"
+      ",use_short_repeated_primitives=y"
+      ",truncate_string_field_longer_than=128");
+  auto options = TracingOptions().SetOptions(
+      ",single_line_mode=F"
+      ",use_short_repeated_primitives=n"
+      ",truncate_string_field_longer_than=256");
+  auto opts = Options{}.set<GrpcTracingOptionsOption>(std::move(options));
+  opts = spanner_internal::DefaultOptions(std::move(opts));
+  options = opts.get<GrpcTracingOptionsOption>();
+  EXPECT_NE(options, TracingOptions{});
+  EXPECT_FALSE(options.single_line_mode());
+  EXPECT_FALSE(options.use_short_repeated_primitives());
+  EXPECT_EQ(256, options.truncate_string_field_longer_than());
 }
 
 TEST(Options, AppendToUserAgent) {
