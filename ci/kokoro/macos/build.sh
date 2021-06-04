@@ -81,7 +81,7 @@ NCPU="$(sysctl -n hw.logicalcpu)"
 readonly NCPU
 
 function google_time() {
-  curl -sI google.com | sed -n 's/Date: \(.*\)\r/\1/p'
+  curl -sI google.com | tr -d '\r' | sed -n 's/Date: \(.*\)/\1/p'
 }
 io::log_h1 "Machine Info"
 printf "%10s %s\n" "host:" "$(date -u -R)"
