@@ -55,6 +55,8 @@ add_library(
     internal/default_retry_policies.h
     internal/emulator_overrides.cc
     internal/emulator_overrides.h
+    internal/flow_controlled_publisher_connection.cc
+    internal/flow_controlled_publisher_connection.h
     internal/ordering_key_publisher_connection.cc
     internal/ordering_key_publisher_connection.h
     internal/publisher_logging.cc
@@ -234,6 +236,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
         internal/emulator_overrides_test.cc
+        internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
         internal/publisher_logging_test.cc
         internal/publisher_metadata_test.cc
