@@ -32,6 +32,7 @@ readonly NCPU
 
 io::log_h2 "Update or install dependencies"
 brew install openssl
+brew install ccache || ccache --version
 brew install cmake || cmake --version
 brew install ninja || ninja --version
 
