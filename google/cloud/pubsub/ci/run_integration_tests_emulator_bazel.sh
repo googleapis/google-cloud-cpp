@@ -55,7 +55,7 @@ done
   --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
   --test_env="GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes" \
   --test_env="GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=lastN,100,WARNING" \
-  --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc" \
+  --test_env="GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams" \
   --test_env="GOOGLE_CLOUD_CPP_TRACING_OPTIONS=truncate_string_field_longer_than=512" \
   --test_tag_filters="integration-test" -- \
   "//google/cloud/pubsub/...:all" \
