@@ -48,6 +48,11 @@ readonly IO_COLOR_GREEN
 readonly IO_COLOR_YELLOW
 readonly IO_RESET
 
+# Prints the current time as a string.
+function io::internal::timestamp() {
+  date -u "+%Y-%m-%dT%H:%M:%SZ"
+}
+
 # Logs a message using the given terminal capability. The first argument
 # must be one of the IO_* variables defined above, such as "${IO_COLOR_RED}".
 # The remaining arguments will be logged using the given capability. The
@@ -56,7 +61,7 @@ function io::internal::log_impl() {
   local termcap="$1"
   shift
   local timestamp
-  timestamp="$(date -u "+%Y-%m-%dT%H:%M:%SZ")"
+  timestamp="$(io::internal::timestamp)"
   echo "${termcap}${timestamp}: $*${IO_RESET}"
 }
 
@@ -95,27 +100,33 @@ function io::run() {
   "$@"
 }
 
-# Logs an "H1" heading. This looks like a blank line, followed by the message
-# in a double-lined box.
+# Logs an "H1" heading. This looks like a blank line and the current time,
+# followed by the message in a double-lined box.
 #
+# 2021-06-04T17:16:00Z
 # ========================================
 # |   This is an example of io::log_h1   |
 # ========================================
 function io::log_h1() {
+  local timestamp
+  timestamp="$(io::internal::timestamp)"
   local msg="|   $*   |"
   local line
   line="$(printf -- "=%.0s" $(seq 1 ${#msg}))"
-  printf "\n%s\n%s\n%s\n" "${line}" "${msg}" "${line}"
+  printf "\n%s\n%s\n%s\n%s\n" "${timestamp}" "${line}" "${msg}" "${line}"
 }
 
 # Logs an "H2" heading. Same as H1, but uses a single-lined box.
 #
+# 2021-06-04T17:16:00Z
 # ----------------------------------------
 # |   This is an example of io::log_h2   |
 # ----------------------------------------
 function io::log_h2() {
+  local timestamp
+  timestamp="$(io::internal::timestamp)"
   local msg="|   $*   |"
   local line
   line="$(printf -- "-%.0s" $(seq 1 ${#msg}))"
-  printf "\n%s\n%s\n%s\n" "${line}" "${msg}" "${line}"
+  printf "\n%s\n%s\n%s\n%s\n" "${timestamp}" "${line}" "${msg}" "${line}"
 }
